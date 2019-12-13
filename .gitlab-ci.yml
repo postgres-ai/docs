@@ -1,0 +1,120 @@
+# 2019 © Postgres.ai
+
+image: docker:18.09.7
+
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  ENV: "local" # Should be overwritten by environment template.
+  NAMESPACE: "default" # Should be overwritten by environment template.
+  TAG: ":${NAMESPACE}-${CI_PIPELINE_IID}"
+  DOCS_NAME: "docs"
+
+# Stages templates.
+.job_template: &test_definition
+  stage: test
+  image: node:10.17.0-jessie
+  script:
+    - source ./deploy/configs/review.sh
+    - cd ./website
+    - npm install
+    - npm build
+
+.job_template: &build_definition
+  stage: build
+  services:
+    - docker:dind
+  script:
+    # Login to Google Container Registry.
+    - echo $GCP_SERVICE_ACCOUNT | base64 -d > ./key.json
+    - docker login -u _json_key --password-stdin https://gcr.io < ./key.json
+    # Build the image.
+    - docker build -t gcr.io/postgres-ai/docs$TAG .
+    # Push the image.
+    - docker push gcr.io/postgres-ai/docs$TAG
+
+.job_template: &deploy_definition
+  stage: deploy
+  image: dtzar/helm-kubectl:2.14.1
+  script:
+    # Substitute env variables in deploy config.
+    - bash ./do.sh subs_envs ./deploy/docs.yaml /tmp/deploy.yaml
+    # Deploy to k8s cluster.
+    - kubectl apply --filename /tmp/deploy.yaml -n $NAMESPACE
+
+# Environments.
+.environment_template: &env_production
+  environment:
+    name: production
+    url: https://postgres.ai
+  variables:
+    ENV: production
+    NAMESPACE: production
+
+.environment_template: &env_staging
+  environment:
+    name: staging
+    url: http://staging.postgres-ai
+  variables:
+    ENV: staging
+    NAMESPACE: staging
+
+# TODO(anatoly): Kill reviewed pods.
+.environment_template: &env_review
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    url: http://docs-${CI_COMMIT_REF_SLUG}.review.svc.cluster.local
+  variables:
+    ENV: review
+    NAMESPACE: review
+    TAG: ":${NAMESPACE}-${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_IID}"
+    DOCS_NAME: "docs-${CI_COMMIT_REF_SLUG}"
+
+# Stages with branch policies.
+test:
+  <<: *test_definition
+
+build_production:
+  <<: *build_definition
+  <<: *env_production
+  only:
+    - release
+
+build_staging:
+  <<: *build_definition
+  <<: *env_staging
+  only:
+    - master
+
+build_review:
+  <<: *build_definition
+  <<: *env_review
+  only:
+    - branches
+  except:
+    - release
+    - master
+
+deploy_production:
+  <<: *deploy_definition
+  <<: *env_production
+  only:
+    - release
+
+deploy_staging:
+  <<: *deploy_definition
+  <<: *env_staging
+  only:
+    - master
+
+deploy_review:
+  <<: *deploy_definition
+  <<: *env_review
+  only:
+    - branches
+  except:
+    - release
+    - master

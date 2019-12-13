@@ -1,0 +1,11 @@
+{
+  "docs": {
+    "Platform": ["doc1"],
+    "DB Lab": ["doc2", "doc3"],
+    "Joe Bot": ["doc3"],
+    "Postgres-checkup": ["doc3"]
+  },
+  "docs-other": {
+    "First Category": ["doc4", "doc5"]
+  }
+}
