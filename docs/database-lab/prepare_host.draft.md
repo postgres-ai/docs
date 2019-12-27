@@ -111,19 +111,31 @@ make all
 ### Create a snapshot
 ```bash
 sudo -u postgres /usr/lib/postgresql/12/bin/pg_ctl -D /var/lib/dblab/data -w stop
-ZFS_POOL="dblab_pool"
+
+## TODO P-1 !!! if it is already the master, we need to specify the timestamp "DB state at" manually
+##   for testing, use DATA_STATE_AT="$(date +%s)"
+ZFS_POOL="dblab_pool" \
   PGDATA_SUBDIR="/" \
   MOUNT_DIR="/var/lib/dblab/clones" \
   PG_BIN_DIR="/usr/lib/postgresql/12/bin" \
   bash ./scripts/create_zfs_snapshot.sh
+
+## Check: `sudo zfs list -o name,creation,mountpoint -t all`
+
 sudo -u postgres /usr/lib/postgresql/12/bin/pg_ctl -D /var/lib/dblab/data -W start
 ```
 
 ### Configure Database Lab
 ```bash
+cd ~/database-lab
 cp ./config/config.sample.yml ./config/config.yml
 ```
 Important: `pool`, `mountDir`, `logsDir`, `pgVersion`, `pgBindir`, `pgDataSubdir`.
+
+### Run
+```bash
+./bin/dblab -v some_token
+```
 
 ### Install and configure Nginx
 ```bash
@@ -159,11 +171,6 @@ sudo systemctl restart nginx
 
 # see also (though here it was not used, it might be helpful):
 # https://nginxconfig.io/
-```
-
-### Run
-```bash
-./bin/dblab -v some_token
 ```
 
 ### Usage
