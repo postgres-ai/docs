@@ -113,7 +113,8 @@ make all
 sudo -u postgres /usr/lib/postgresql/12/bin/pg_ctl -D /var/lib/dblab/data -w stop
 
 ## TODO P-1 !!! if it is already the master, we need to specify the timestamp "DB state at" manually
-##   for testing, use DATA_STATE_AT="$(date +%s)"
+##   for testing, add the following to the list of constants:
+##       DATA_STATE_AT="$(date +%s)"
 ZFS_POOL="dblab_pool" \
   PGDATA_SUBDIR="/" \
   MOUNT_DIR="/var/lib/dblab/clones" \
