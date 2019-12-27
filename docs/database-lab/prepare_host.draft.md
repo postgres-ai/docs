@@ -1,3 +1,8 @@
+## AWS Setup
+
+...
+
+
 ## GCP Setup
 
 ### Create instance
@@ -18,6 +23,11 @@ Compute Engine -> Disks -> Create Disk
 - In Additional disks click Attach existing disk and select `dblab-dev1-zfs` disk.
 - Add your SSH key to the instance or use web shell to connect. 
 
+
+
+
+## Prepare host – nstructions for Ubuntu 18.04
+
 ### Install Postgres
 ```bash
 cd ~
@@ -34,7 +44,8 @@ sudo apt-key add ACCC4CF8.asc
 # fetch the metadata from the new repo
 sudo apt-get update
 
-sudo apt install postgresql-12
+sudo apt install -y postgresql-12
+sudo systemctl stop postgresql
 ```
 
 ### Install ZFS
@@ -44,19 +55,24 @@ sudo apt-get install -y zfsutils-linux
 
 ### Create ZFS pool
 ```bash
-sudo zpool create \
+sudo mkdir -p /var/lib/dblab/data
+
+# AWS: check with `lsblk` and use 
+# GCP: just use `/dev/disk/by-id/google-DISK-NAME-YOU-PROVIDED-ABOVE`
+# TODO describe all the options
+sudo zpool create -f \
   -O compression=on \
   -O atime=off \
   -O recordsize=8k \
   -O logbias=throughput \
   -m /var/lib/dblab/data \
-  dblab_pool "/dev/disk/by-id/google-dblab-dev1-zfs" \
-  -f
+  dblab_pool \
+  "/dev/disk/by-id/google-dblab-dev1-zfs"
+
+# To verify: `df -hT`
 
 sudo chown postgres:postgres /var/lib/dblab/data
 sudo chmod 0700 /var/lib/dblab/data
-
-sudo systemctl stop postgresql
 
 # Use your own PGDATA instead of following line.
 sudo -u postgres /usr/lib/postgresql/12/bin/initdb -D /var/lib/dblab/data
@@ -67,8 +83,9 @@ echo "log_destination = 'stderr'" >> /var/lib/dblab/data/postgresql.conf
 echo "log_directory = 'log'" >> /var/lib/dblab/data/postgresql.conf
 ADD
 
+ # TODO ensure that we won't lose Postgres process if we close our SSH session / screen / tmux
 sudo -u postgres /usr/lib/postgresql/12/bin/pg_ctl -D /var/lib/dblab/data -w start
-# Check with psql: psql -U postgres
+# Check with psql: `psql -U postgres -c 'select now()'`
 
 # Only for tests.
 psql -U postgres -c 'create database test'
@@ -79,10 +96,10 @@ pgbench -U postgres -i -s 100 test
 ```bash
 # Install golang. DB Lab requires +1.12 golang.
 cd ~
-sudo apt-get install build-essential
+sudo apt-get install -y build-essential
 wget https://dl.google.com/go/go1.12.7.linux-amd64.tar.gz
 sudo tar -C /usr/local -xzf go1.12.7.linux-amd64.tar.gz
-echo 'echo 'GOPATH="$HOME/joe/"' >> ~/.bashrc' >> ~/.bashrc
+### GOPATH – will be used default (`~/go`)
 echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
 bash --login
 
