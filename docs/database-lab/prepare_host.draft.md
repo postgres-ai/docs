@@ -137,6 +137,11 @@ Important: `pool`, `mountDir`, `logsDir`, `pgVersion`, `pgBindir`, `pgDataSubdir
 ./bin/dblab -v some_token
 ```
 
+### Simple check
+```bash
+curl -X GET -H 'Verification-Token: some_token' -i http://localhost:3000/status
+```
+
 ### Install and configure Nginx
 ```bash
 sudo apt-get install -y nginx openssl
@@ -171,11 +176,4 @@ sudo systemctl restart nginx
 
 # see also (though here it was not used, it might be helpful):
 # https://nginxconfig.io/
-```
-
-### Usage
-```bash
-curl -X POST -H 'Verification-Token: some_token' \
-  -d '{"name":"clone1", "db":{"username":"new_user", "password":"some_password"}}' \
-  -i https://host/status
 ```
