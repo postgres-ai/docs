@@ -45,7 +45,7 @@ Compute Engine -> Disks -> Create Disk
 
 ### Install Postgres
 
-Install Postgres version you need. If we are going to use an existing PGDATA, the major version of Postgres must match: 12, 11, 10, 9.6, 9.5, etc.
+Install Postgres version that is needed. If we are going to use an existing PGDATA, the major version of Postgres must match: 12, 11, 10, 9.6, 9.5, etc.
 
 ```bash
 cd ~
