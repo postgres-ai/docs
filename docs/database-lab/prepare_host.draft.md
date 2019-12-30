@@ -1,6 +1,21 @@
 ## AWS Setup
 
-...
+### Create instance with additional EBS volume
+
+TBD (suggest using Spot Instances)
+
+Get the name of the EBS volume, example:
+```bash
+ubuntu@ip-123-45-56-78:~$ lsblk
+NAME    MAJ:MIN   RM  SIZE RO TYPE MOUNTPOINT
+loop0     7:0      0 87.9M  1 loop /snap/core/5328
+loop1     7:1      0 12.7M  1 loop /snap/amazon-ssm-agent/495
+xvda    202:0      0    8G  0 disk
+└─xvda1 202:1      0    8G  0 part /
+xvdb    202:16     0   30G  0 disk
+xvdba   202:13312  0   10G  0 disk
+```
+– here, `xvdba` is the name that we are going to use as Database Lab storage.
 
 
 ## GCP Setup
