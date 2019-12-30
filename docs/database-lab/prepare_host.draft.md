@@ -44,6 +44,9 @@ Compute Engine -> Disks -> Create Disk
 ## Prepare host – nstructions for Ubuntu 18.04
 
 ### Install Postgres
+
+Install Postgres version you need. If we are going to use an existing PGDATA, the major version of Postgres must match: 12, 11, 10, 9.6, 9.5, etc.
+
 ```bash
 cd ~
 
