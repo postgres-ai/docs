@@ -99,20 +99,33 @@ sudo zpool create -f \
 
 sudo chown postgres:postgres /var/lib/dblab/data
 sudo chmod 0700 /var/lib/dblab/data
+```
 
+In case of using the existing PGDATA, we now need to copy (or restore using WAL-G/Barman/pgBackRest/any other archiving tool) data to `/var/lib/dblab/data`.
+
+If we are going just to test some synthetic database, we now need to initiate a fresh Postgres cluster in `/var/lib/dblab/data`. For example, below we are using `pgbench` to generate some database of size ~1.5 GiB:
+
+```bash
 # Use your own PGDATA instead of following line.
 sudo -u postgres /usr/lib/postgresql/12/bin/initdb -D /var/lib/dblab/data
+```
 
+```bash
 # Tweak config.
 sudo -u postgres sh -f - <<ADD
 echo "log_destination = 'stderr'" >> /var/lib/dblab/data/postgresql.conf
 echo "log_directory = 'log'" >> /var/lib/dblab/data/postgresql.conf
 ADD
 
- # TODO ensure that we won't lose Postgres process if we close our SSH session / screen / tmux
+# TODO ensure that we won't lose Postgres process if we close our SSH session / screen / tmux
 sudo -u postgres /usr/lib/postgresql/12/bin/pg_ctl -D /var/lib/dblab/data -w start
-# Check with psql: `psql -U postgres -c 'select now()'`
 
+# Check with psql: `psql -U postgres -c 'select now()'`
+```
+
+Again, if we are just testing, then let's generate some data using `pgbench`, the database size will be ~1.5 GiB:
+
+```bash
 # Only for tests.
 psql -U postgres -c 'create database test'
 pgbench -U postgres -i -s 100 test
@@ -140,7 +153,7 @@ sudo -u postgres /usr/lib/postgresql/12/bin/pg_ctl -D /var/lib/dblab/data -w sto
 
 ## TODO P-1 !!! if it is already the master, we need to specify the timestamp "DB state at" manually
 ##   for testing, add the following to the list of constants:
-##       DATA_STATE_AT="$(date +%s)"
+##       export DATA_STATE_AT="$(date +%s)"
 ZFS_POOL="dblab_pool" \
   PGDATA_SUBDIR="/" \
   MOUNT_DIR="/var/lib/dblab/clones" \
