@@ -4,7 +4,7 @@
 
 TBD (suggest using Spot Instances)
 
-Get the name of the EBS volume, example:
+Get the name of the EBS volume using `lsblk` or `sudo fdisk -l`. For example:
 ```bash
 ubuntu@ip-123-45-56-78:~$ lsblk
 NAME    MAJ:MIN   RM  SIZE RO TYPE MOUNTPOINT
@@ -15,7 +15,11 @@ xvda    202:0      0    8G  0 disk
 xvdb    202:16     0   30G  0 disk
 xvdba   202:13312  0   10G  0 disk
 ```
-– here, `xvdba` is the name that we are going to use as Database Lab storage.
+– here, `xvdba` is the name that we are going to use as Database Lab storage. Remember the path to this device in `DBLAB_DISK` variable:
+
+```bash
+export DBLAB_DISK="/dev/xvdba"
+```
 
 
 ## GCP Setup
@@ -37,7 +41,11 @@ Compute Engine -> Disks -> Create Disk
 - Go to edit mode.
 - In Additional disks click Attach existing disk and select `dblab-dev1-zfs` disk.
 - Add your SSH key to the instance or use web shell to connect. 
+- Remember the path to this device in `DBLAB_DISK` variable: 
 
+```bash
+export DBLAB_DISK="/dev/disk/by-id/google-dblab-dev1-zfs"
+```
 
 
 
@@ -85,7 +93,7 @@ sudo zpool create -f \
   -O logbias=throughput \
   -m /var/lib/dblab/data \
   dblab_pool \
-  "/dev/disk/by-id/google-dblab-dev1-zfs"
+  "${DBLAB_DISK}"
 
 # To verify: `df -hT`
 
