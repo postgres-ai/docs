@@ -49,7 +49,7 @@ export DBLAB_DISK="/dev/disk/by-id/google-dblab-dev1-zfs"
 
 
 
-## Prepare host – nstructions for Ubuntu 18.04
+## Prepare host – Instructions for Ubuntu 18.04
 
 ### Install Postgres
 
