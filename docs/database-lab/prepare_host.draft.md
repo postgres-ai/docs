@@ -165,12 +165,17 @@ ZFS_POOL="dblab_pool" \
 sudo -u postgres /usr/lib/postgresql/12/bin/pg_ctl -D /var/lib/dblab/data -W start
 ```
 
+For each snapshot need to setup data state timestamp
+`sudo zfs set dblab:datastateat="20200107113750" dblab_pool@snapshot_20200107113750_pre`
+Timestam should be like `YYYYMMDDHH24MISS`.
+
 ### Configure Database Lab
 ```bash
 cd ~/database-lab
 cp ./config/config.sample.yml ./config/config.yml
 ```
-Important: `pool`, `mountDir`, `logsDir`, `pgVersion`, `pgBindir`, `pgDataSubdir`.
+Important: `pool`, `mountDir`, `logsDir`, `pgVersion`, `pgBindir`, `pgDataSubdir`. 
+These options should have actual values, please check it.
 
 ### Run
 ```bash
