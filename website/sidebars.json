@@ -1,11 +1,25 @@
 {
   "docs": {
-    "Platform": ["doc1"],
-    "DB Lab": ["doc2", "doc3"],
-    "Joe Bot": ["doc3"],
-    "Postgres-checkup": ["doc3"]
-  },
-  "docs-other": {
-    "First Category": ["doc4", "doc5"]
+    "Get started": [
+      "get-started"
+    ],
+    "Database Lab": [
+      {
+        "type": "subcategory",
+        "label": "Tutorials",
+        "ids": [
+          "database-lab/1_tutorial"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "Installation and Configuration",
+        "ids": [
+          "database-lab/2_setup_aws",
+          "database-lab/2_setup_gcp",
+          "database-lab/2b_ubuntu_zfs"
+        ]
+      }
+    ]
   }
 }

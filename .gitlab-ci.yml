@@ -54,14 +54,6 @@ variables:
     ENV: production
     NAMESPACE: production
 
-.environment_template: &env_staging
-  environment:
-    name: staging
-    url: http://staging.postgres-ai
-  variables:
-    ENV: staging
-    NAMESPACE: staging
-
 # TODO(anatoly): Kill reviewed pods.
 .environment_template: &env_review
   environment:
@@ -81,12 +73,6 @@ build_production:
   <<: *build_definition
   <<: *env_production
   only:
-    - release
-
-build_staging:
-  <<: *build_definition
-  <<: *env_staging
-  only:
     - master
 
 build_review:
@@ -95,18 +81,11 @@ build_review:
   only:
     - branches
   except:
-    - release
     - master
 
 deploy_production:
   <<: *deploy_definition
   <<: *env_production
-  only:
-    - release
-
-deploy_staging:
-  <<: *deploy_definition
-  <<: *env_staging
   only:
     - master
 
@@ -116,5 +95,4 @@ deploy_review:
   only:
     - branches
   except:
-    - release
     - master

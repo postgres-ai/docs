@@ -11,6 +11,14 @@ h2.headerTitleWithLogo {
 	display: none !important;
 }
 
+div.headerWrapper {
+	padding-top: 2px;
+}
+
+.fixedHeaderContainer header img {
+	margin-top: 2px;
+}
+
 @media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
 }
 

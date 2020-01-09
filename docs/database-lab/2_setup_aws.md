@@ -1,4 +1,6 @@
-## AWS Setup
+---
+title: AWS Setup
+---
 
 Consider using [AWS Spot Instances](https://aws.amazon.com/en/ec2/spot/) if you want to spend up to 90% less. However, keep in mind that such instances may be deleted at arbitrary moment, so avoid using them if you need a better uptime for your Database Lab service or use multiple Spot Instances of different EC2 families to and prepare for using "switch and retry" philosophy in all your manual and automated use cases of Database Lab.
 
@@ -8,7 +10,7 @@ Below, we describe the process of preparing an EC2 instance with database locate
 
 Go to EC2 service section in AWS console, proceed to Instances, and press Launch Instance. Choose Ubuntu 18.04 LTS.
 
-![Screen_Shot_2020-01-07_at_15.31.17](/uploads/1cbb1e226c8de8f492d42ff1ea0b75aa/Screen_Shot_2020-01-07_at_15.31.17.png)
+![AWS - Choose an Amazon Machine Image (AMI)](assets/setup-aws-1.png)
 
 At the next step, choose the instance type you need. The best option is to choose the same type that you are using on production (if your production is on AWS; if not, a type which is as close to your production machine as possible in terms of CPU, RAM, network). However, you may choose a different type of instance based on your usage. See Capacity Planning (!!! TODO link) section for more details.
 
@@ -16,21 +18,21 @@ Next, you need to configure the instance: network, public IP if needed, and so o
 
 On the next step, press `Add New Volume` to add an EBS volume and specify the size of the disk you will need. The rule of thumb here is using the same size of the disk as you are using on production now (Capacity Planning (!!! TODO link)).
 
-![Screen_Shot_2020-01-07_at_22.45.03](/uploads/c0de3b866f68470e13bb917151e318ef/Screen_Shot_2020-01-07_at_22.45.03.png)
+![AWS - Add storage](assets/setup-aws-2.png)
 
 The next step is Tags, you may skip unless you need them. The next step is important, Security Group configuration:
 
-![Screen_Shot_2020-01-07_at_15.44.32](/uploads/25415a1a7a56d39fbceda7b577c46346/Screen_Shot_2020-01-07_at_15.44.32.png)
+![AWS - Configure security groups](assets/setup-aws-3.png)
 
 Add PostgreSQL and HTTPS. SSH is also needed because we will need to connect to the instance using SSH to install the Database Lab. Additionally, you may consider adding HTTP instead of HTTPS if you are planning to use HTTP for Database Lab API, but this is not recommended. As for IP addresses, restrict them as much as possible (on the picture above, we chose `Anywhere` in the `Source` column for demonstration purposes).
 
 Review your request and then upload your public SSH key or choose an existing one if any:
 
-![Screen_Shot_2020-01-07_at_15.49.47](/uploads/c69ceae04006adcb0e427975171ee1b6/Screen_Shot_2020-01-07_at_15.49.47.png)
+![AWS - Configure SSH keys](assets/setup-aws-4.png)
 
 Finally, launch your instance. After a minute or two, it should be presented in the Instances section with `running` status and all checks passed:
 
-![Screen_Shot_2020-01-07_at_15.56.23](/uploads/24ce3ee6b767611920eb891c87a2c491/Screen_Shot_2020-01-07_at_15.56.23.png)
+![AWS - Status](assets/setup-aws-5.png)
 
 Get its IP address or hostname and connect using your private SSH key:
 
