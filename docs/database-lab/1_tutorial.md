@@ -207,9 +207,9 @@ sudo systemctl restart nginx
 # https://nginxconfig.io/
 ```
 
-### Start Cloning!
+## Start Cloning!
 
-#### Test with Postman
+### Test with Postman
 
 Now you can use HTTPS to communicate with your Database Lab instance using Database Lab API (!!! TODO link). Keep in mind that not any client allows using a self-signed SSL certificate. For testing, use [Postman](https://www.getpostman.com/), with disabled "SSL certificate verification" in its Preferences:
 
@@ -219,12 +219,13 @@ Once SSL certificate verification is disabled in Postman, you can use it to work
 
 ![Screen_Shot_2020-01-07_at_16.52.30](/uploads/8f4bb91a5dc668029135d78d5c2ffbb9/Screen_Shot_2020-01-07_at_16.52.30.png)
 
-#### Basic Actions
+### Basic Actions
 
 An example of requesting for a new clone:
 
 ```http
 POST /clone HTTP/1.1
+
 Host: {{ip_or_hostname}}
 Verification-Token: {{token}}
 Content-Type: application/json
@@ -244,6 +245,7 @@ After a second or two check the status of cloning, if everything is configured c
 
 ```http
 GET /clone/{{clone_id}} HTTP/1.1
+
 Host: {{ip_or_hostname}}
 Verification-Token: {{token}}
 Content-Type: application/json
@@ -253,6 +255,7 @@ To see the full information about the Database Lab instance, including the list 
 
 ```http
 GET /status HTTP/1.1
+
 Host: {{ip_or_hostname}}
 Verification-Token: {{token}}
 Content-Type: application/json
@@ -262,6 +265,7 @@ To delete a clone:
 
 ```http
 DELETE /clone/{{clone_id}} HTTP/1.1
+
 Host: {{ip_or_hostname}}
 Verification-Token: {{token}}
 Content-Type: application/json
