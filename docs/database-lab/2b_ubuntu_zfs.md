@@ -1,3 +1,7 @@
+---
+title: Set up on Ubuntu
+---
+
 ## Prepare OS, FS, and Postgres (Ubuntu 18.04 LTS with ZFS module)
 
 ### Install Postgres

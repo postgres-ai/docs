@@ -1,4 +1,6 @@
-## GCP Setup
+---
+title: GCP Setup
+---
 
 ### Create an instance
 Compute Engine -> VM instances -> Create Instance

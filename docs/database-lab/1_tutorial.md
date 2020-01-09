@@ -1,4 +1,6 @@
-# Database Lab Tutorial
+---
+title: Database Lab Tutorial
+---
 
 Database Lab boosts aims to boost software development and testing processes via enabling ultra-fast provisioning of multi-terabyte databases. Currently, only PostgreSQL versions 9.6 and newer are supported.
 
@@ -22,7 +24,7 @@ Below we assume that two environment variables are defined:
 - `$EC2_ADDRESS`: either hostname or IP address that we will use to connect to the instance,
 - `$DBLAB_DISK`: EBS volume device name where we will store the database with clones (for example, `export DBLAB_DISK="/dev/xvdb"`).
 
-Next, we need to install Postgres and ZFS. Detailed instructions you can find in [Prepare OS, FS, and Postgres (Ubuntu 18.04 LTS with ZFS module)](./2b_ununtu_zfs.md). here we provide just a shell snippet.
+Next, we need to install Postgres and ZFS. Detailed instructions you can find in [Prepare OS, FS, and Postgres (Ubuntu 18.04 LTS with ZFS module)](./2b_ubuntu_zfs.md). here we provide just a shell snippet.
 
 Connect to the EC2 instance we have just provisioned:
 
@@ -213,11 +215,11 @@ sudo systemctl restart nginx
 
 Now you can use HTTPS to communicate with your Database Lab instance using Database Lab API (!!! TODO link). Keep in mind that not any client allows using a self-signed SSL certificate. For testing, use [Postman](https://www.getpostman.com/), with disabled "SSL certificate verification" in its Preferences:
 
-![Screen_Shot_2020-01-07_at_16.47.55](/uploads/00b12dc17f36629105fdf81f6ebef5fe/Screen_Shot_2020-01-07_at_16.47.55.png)
+![Postman - Disable SSL verification](assets/tutorial-1-postman-1.png)
 
 Once SSL certificate verification is disabled in Postman, you can use it to work with the Database Lab API:
 
-![Screen_Shot_2020-01-07_at_16.52.30](/uploads/8f4bb91a5dc668029135d78d5c2ffbb9/Screen_Shot_2020-01-07_at_16.52.30.png)
+![Postman - Request and response](assets/tutorial-1-postman-2.png)
 
 ### Basic Actions
 
