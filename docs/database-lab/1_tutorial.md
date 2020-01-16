@@ -10,7 +10,7 @@ In this tutorial, we will:
 1. generate some PostgreSQL database for testing purposes,
 1. install Database Lab,
 1. prepare at least one snapshot needed for cloning,
-1. configure and launch the Database Lab instance (with NGXIN and self-signed SSL certificate,
+1. configure and launch the Database Lab instance (with NGINX and self-signed SSL certificate,
 1. and, finally, start using its API for the fast cloning of the Postgres database.
 
 If you want to use any other cloud platform (like GCP) or run your Database Lab on VMWare, or on bare metal, only the first step will slightly differ. In general, the overall procedure will be pretty much the same.
