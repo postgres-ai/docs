@@ -8,6 +8,7 @@ In this tutorial, we will:
 
 1. prepare an EC2 instance on AWS, with Ubuntu 18.04 LTS, ZFS module for thin provisioning, and Postgres 12,
 1. generate some PostgreSQL database for testing purposes,
+1. install Docker,
 1. install Database Lab,
 1. prepare at least one snapshot needed for cloning,
 1. configure and launch the Database Lab instance (with NGXIN and self-signed SSL certificate,
@@ -21,15 +22,15 @@ Create an EC2 instance with Ubuntu 18.04 and with an attached EBS volume. You ca
 
 Below we assume that two environment variables are defined:
 
-- `$EC2_ADDRESS`: either hostname or IP address that we will use to connect to the instance,
-- `$DBLAB_DISK`: EBS volume device name where we will store the database with clones (for example, `export DBLAB_DISK="/dev/xvdb"`).
+- `$IP_OR_HOSTNAME`: either hostname or IP address that we will use to connect to the instance,
+- `$DBLAB_DISK`: EBS volume device name where we will store the database with clones (for example, `export DBLAB_DISK="/dev/xvdb"`, or `export DBLAB_DISK="/dev/disk/by-id/google-DISK-NAME"` for GCP).
 
 Next, we need to install Postgres and ZFS. Detailed instructions you can find in [Prepare OS, FS, and Postgres (Ubuntu 18.04 LTS with ZFS module)](./2b_ubuntu_zfs.md). here we provide just a shell snippet.
 
 Connect to the EC2 instance we have just provisioned:
 
 ```bash
-ssh -i /path/to/private-key ubuntu@ip_or_hostname
+ssh -i /path/to/private-key ubuntu@$IP_OR_HOSTNAME
 ```
 
 Then install Postgres 12, ZFS, and create a ZFS storage pool:
@@ -106,6 +107,11 @@ psql -U postgres -c 'create database test'
 pgbench -U postgres -i -s 100 test # initializes DB: 10,000,000 accounts, ~1.4 GiB of data
 ```
 
+## Step 2. Install Docker
+
+Database Lab uses Docker containers to provision thin clones. Before we will launch Database Lab we need to install Docker.
+See [official installation guide](https://docs.docker.com/install/linux/docker-ce/ubuntu/).
+
 ## Step 3. Install Database Lab
 
 Compile Database Lab from sources (Go 1.12+ is needed):
@@ -119,7 +125,9 @@ sudo tar -C /usr/local -xzf go1.12.15.linux-amd64.tar.gz
 ### GOPATH – will be used default (`~/go`)
 echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
 bash --login
+```
 
+```bash
 git clone https://gitlab.com/postgres-ai/database-lab.git
 cd ./database-lab
 make all
@@ -161,15 +169,37 @@ cd ~/database-lab
 cp ./configs/config.sample.yml ./configs/config.yml
 ```
 
-Important: `pool`, `mountDir`, `logsDir`, `pgVersion`, `pgBindir`, `pgDataSubdir`. These options should have actual values; please check them.
+If you are using exactly the same parameters provided in this tutorial and created
+database using pgbench for testing purposes it is not required to change default values of
+the config.
+
+However, here is a short guide to most important options:
+
+### mode
+Currently, only ZFS mode is supported. More provision modes (e.g. LVM, enterprise storage snapshots/clones) will be implemented in the future. Contributions are welcome! 
+
+### dockerImage
+Database Lab provisions thin-clones using Docker containers, we need to specify which image
+is to be used when cloning.
+
+We can use any official Docker image of Postgres (see https://hub.docker.com/_/postgres),
+or any custom Docker image that runs Postgres with PGDATA located at `/var/lib/postgresql/pgdata` directory
+(our Dockerfile recommended in this case https://gitlab.com/postgres-ai/database-lab/snippets/1932037).
+
+### pool
+Name of your ZFS pool.
+
+### pgDataSubdir
+In case if PGDATA was put not in root directory of ZFS pool, we should specify a subdirectory in pool to PGDATA.
 
 Launch your Database Lab instance:
 
 ```bash
-./bin/dblab -v some_token
+./bin/dblab-server -v some_token
 ```
 
 Simple check:
+*CLI usage instructions are coming soon.*
 ```bash
 curl -X GET -H 'Verification-Token: some_token' -i http://localhost:3000/status
 ```
@@ -178,17 +208,24 @@ To make your work with Database Lab API secure, install and configure NGINX with
 
 ```bash
 sudo apt-get install -y nginx openssl
+```
 
-sudo mkdir /etc/nginx/ssl || true # dir exists?
+```bash
+# YOUR_OWN_PASS="set your passphrase here"
 
-# To generate certificates, use, for instance, Letsencrypt (e.g. https://zerossl.com/free-ssl/#crt)
-# Here we are generating a self-signed certificate
+mkdir -p ~/ssl
+cd ~/ssl
+
+# TODO: Use https://github.com/suyashkumar/ssl-proxy instead.
+# To generate certificates, use, for instance, Let's Encrypt (e.g. https://zerossl.com/free-ssl/#crt).
+# Here we are generating a self-signed certificate.
 openssl genrsa -des3 -passout pass:${YOUR_OWN_PASS} -out server.pass.key 2048
 openssl rsa -passin pass:${YOUR_OWN_PASS} -in server.pass.key -out server.key
 rm server.pass.key
-openssl req -new -key server.key -out server.csr # will ask a bunch of questions
+openssl req -new -key server.key -out server.csr # will ask a bunch of questions which should be filled with answers
 openssl x509 -req -sha256 -days 365 -in server.csr -signkey server.key -out server.crt
 
+sudo mkdir -p /etc/nginx/ssl
 sudo cp server.crt /etc/nginx/ssl
 sudo cp server.key /etc/nginx/ssl
 
@@ -199,7 +236,7 @@ echo "server {
   ssl_certificate /etc/nginx/ssl/server.crt; 
   ssl_certificate_key /etc/nginx/ssl/server.key;
 
-  server_name your_very_own_domain.com;
+  server_name $IP_OR_HOSTNAME;
   access_log /var/log/nginx/database_lab.access.log;
   error_log /var/log/nginx/database_lab.error.log;
   location / {
@@ -235,8 +272,8 @@ An example of requesting for a new clone:
 ```http
 POST /clone HTTP/1.1
 
-Host: {{ip_or_hostname}}
-Verification-Token: {{token}}
+Host: {{IP_OR_HOSTNAME}}
+Verification-Token: {{TOKEN}}
 Content-Type: application/json
 
 {
@@ -253,10 +290,10 @@ Content-Type: application/json
 After a second or two, check the status of cloning, if everything is configured correctly, you should see that it's ready to be used:
 
 ```http
-GET /clone/{{clone_id}} HTTP/1.1
+GET /clone/{{CLONE_ID}} HTTP/1.1
 
-Host: {{ip_or_hostname}}
-Verification-Token: {{token}}
+Host: {{IP_OR_HOSTNAME}}
+Verification-Token: {{TOKEN}}
 Content-Type: application/json
 ```
 
@@ -265,17 +302,17 @@ To see the full information about the Database Lab instance, including the list 
 ```http
 GET /status HTTP/1.1
 
-Host: {{ip_or_hostname}}
-Verification-Token: {{token}}
+Host: {{IP_OR_HOSTNAME}}
+Verification-Token: {{TOKEN}}
 Content-Type: application/json
 ```
 
 To delete a clone:
 
 ```http
-DELETE /clone/{{clone_id}} HTTP/1.1
+DELETE /clone/{{CLONE_ID}} HTTP/1.1
 
-Host: {{ip_or_hostname}}
-Verification-Token: {{token}}
+Host: {{IP_OR_HOSTNAME}}
+Verification-Token: {{TOKEN}}
 Content-Type: application/json
 ```
