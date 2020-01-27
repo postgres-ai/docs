@@ -6,7 +6,7 @@ Database Lab aims to boost software development and testing processes via enabli
 
 In this tutorial, we will:
 
-1. prepare an EC2 instance on AWS, with Ubuntu 18.04 LTS, ZFS module for thin provisioning, and Postgres 12,
+1. prepare a machine with Ubuntu 18.04 LTS, ZFS module for thin provisioning, and Postgres 12 (we will do it on AWS, but you can do it on any machine with two disks, one is for system and one is for the database),
 1. generate some PostgreSQL database for testing purposes,
 1. install Docker,
 1. install Database Lab,
@@ -16,7 +16,7 @@ In this tutorial, we will:
 
 If you want to use any other cloud platform (like GCP) or run your Database Lab on VMWare, or on bare metal, only the first step will slightly differ. In general, the overall procedure will be pretty much the same.
 
-## Step 1. Preparations. EC2 Instance Provisioning, OS and FS Setup
+## Step 1. Prepare Machine, Install Software
 
 Create an EC2 instance with Ubuntu 18.04 and with an attached EBS volume. You can use either of the available methods (AWS CLI, API, or manually). More detailed instructions you can find in [AWS Setup](2_setup_aws.md) chapter (for GCP, respectively, see [GCP Setup](2_setup_gcp.md)). Note that we will need to be able to connect to this instance using SSH and HTTPS, so ensure that ports 22 and 443 are open for the machine you are going to connect from.
 
@@ -33,27 +33,38 @@ Connect to the EC2 instance we have just provisioned:
 ssh -i /path/to/private-key ubuntu@$IP_OR_HOSTNAME
 ```
 
-Then install Postgres 12, ZFS, and create a ZFS storage pool:
+Then install Postgres 12, ZFS, Docker, and create a ZFS storage pool:
 
 ```bash
-cd ~
+# Install Postgres 12 and ZFS driver
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc \
+  | sudo apt-key add -
+wget --quiet -O - https://download.docker.com/linux/ubuntu/gpg \
+  | sudo apt-key add -
+sudo add-apt-repository \
+   "deb http://apt.postgresql.org/pub/repos/apt/ \
+   $(lsb_release -cs)-pgdg \
+   main"
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
 
-# add the repository
-sudo tee /etc/apt/sources.list.d/pgdg.list <<END
-deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main
-END
-
-# get the signing key and import it
-wget https://www.postgresql.org/media/keys/ACCC4CF8.asc
-sudo apt-key add ACCC4CF8.asc
-
-# fetch the metadata from the new repo
 sudo apt-get update
 
-sudo apt install -y postgresql-12
+sudo apt install -y \
+  apt-transport-https \
+  ca-certificates \
+  curl \
+  gnupg-agent \
+  software-properties-common \
+  docker-ce \
+  docker-ce-cli \
+  containerd.io \
+  build-essential \
+  zfsutils-linux \
+  postgresql-12
 sudo systemctl stop postgresql
-
-sudo apt-get install -y zfsutils-linux
 
 sudo mkdir -p /var/lib/dblab/data
 
@@ -85,15 +96,7 @@ sudo -u postgres /usr/lib/postgresql/12/bin/initdb -D /var/lib/dblab/data
 ```
 
 ```bash
-# Tweak config.
-sudo -u postgres sh -f - <<ADD
-echo "log_destination = 'stderr'" >> /var/lib/dblab/data/postgresql.conf
-echo "log_directory = 'log'" >> /var/lib/dblab/data/postgresql.conf
-echo "log_statement = 'none'" >> /var/lib/dblab/data/postgresql.conf
-echo "log_min_duration_statement = 0" >> /var/lib/dblab/data/postgresql.conf
-ADD
-
-# TODO ensure that we won't lose Postgres process if we close our SSH session / screen / tmux
+# TODO: docker
 sudo -u postgres /usr/lib/postgresql/12/bin/pg_ctl -D /var/lib/dblab/data -w start
 
 # Check with psql: `psql -U postgres -c 'select now()'`
@@ -107,11 +110,6 @@ psql -U postgres -c 'create database test'
 pgbench -U postgres -i -s 100 test # initializes DB: 10,000,000 accounts, ~1.4 GiB of data
 ```
 
-## Step 2. Install Docker
-
-Database Lab uses Docker containers to provision thin clones. Before we will launch Database Lab we need to install Docker.
-See [official installation guide](https://docs.docker.com/install/linux/docker-ce/ubuntu/).
-
 ## Step 3. Install Database Lab
 
 Compile Database Lab from sources (Go 1.12+ is needed):
@@ -119,15 +117,12 @@ Compile Database Lab from sources (Go 1.12+ is needed):
 ```bash
 # Install Golang. Database Lab requires version at least 1.12.
 cd ~
-sudo apt-get install -y build-essential
 wget https://dl.google.com/go/go1.12.15.linux-amd64.tar.gz
 sudo tar -C /usr/local -xzf go1.12.15.linux-amd64.tar.gz
 ### GOPATH – will be used default (`~/go`)
 echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
 bash --login
-```
 
-```bash
 git clone https://gitlab.com/postgres-ai/database-lab.git
 cd ./database-lab
 make all
@@ -211,7 +206,7 @@ sudo apt-get install -y nginx openssl
 ```
 
 ```bash
-# YOUR_OWN_PASS="set your passphrase here"
+YOUR_OWN_PASS="set_your_passphrase_here" # edit
 
 mkdir -p ~/ssl
 cd ~/ssl
@@ -251,6 +246,8 @@ sudo systemctl restart nginx
 
 # see also (though here it was not used, it might be helpful):
 # https://nginxconfig.io/
+
+### TODO: how to check?
 ```
 
 ## Start Cloning!
