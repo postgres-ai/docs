@@ -112,6 +112,9 @@ const siteConfig = {
   //   repoUrl: 'https://github.com/facebook/test-site',
 
   docsUrl: '',
+
+  gaTrackingId: 'UA-143456998-1',
+  gaGtag: true
 };
 
 module.exports = siteConfig;
