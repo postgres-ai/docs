@@ -20,11 +20,13 @@
   },
 ];*/
 
+const BASE_URL = (!!process.env.BASE_URL ? process.env.BASE_URL : '/')
+
 const siteConfig = {
   title: 'Postgres.ai', // Title for your website.
   tagline: 'Boost your development process eliminating Postgres-related roadblocks on the way of developers, DBAs and QA specialists',
   url: (!!process.env.URL ? process.env.URL : 'https://postgres.ai/docs'), // Your website URL
-  baseUrl: (!!process.env.BASE_URL ? process.env.BASE_URL : '/'), // Base URL for your project */
+  baseUrl: BASE_URL, // Base URL for your project */
   // For github.io type URLs, you would set the url and baseUrl like:
   //   url: 'https://facebook.github.io',
   //   baseUrl: '/test-site/',
@@ -83,7 +85,7 @@ const siteConfig = {
   scripts: [
     'https://buttons.github.io/buttons.js',
     'https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js',
-    '/js/code-block-buttons.js',
+    BASE_URL + 'js/code-block-buttons.js',
   ],
 
   stylesheets: ['/css/code-block-buttons.css'],
