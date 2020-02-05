@@ -31,6 +31,8 @@
 
 ## API Reference
 
+## [CLI Reference](./6_cli_reference.md)
+
 ## Contacts, How to Get Help
 
 ## Bug Reporting Guideline
