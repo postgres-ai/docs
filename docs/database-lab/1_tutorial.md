@@ -57,6 +57,8 @@ sudo apt-get update && sudo apt-get install -y \
   gnupg-agent \
   software-properties-common
 
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
 sudo add-apt-repository \
   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) \
@@ -73,8 +75,14 @@ Now it is time ot create a ZFS pool:
 
 ```bash
 # To specify $DBLAB_DISK, check the list of disks using `lsblk`
-# AWS: `/dev/xvdb` for EBS, `/dev/nvm1e0` for local ephimeral NVMe
-# GCP: `/dev/disk/by-id/google-DISK-NAME-YOU-PROVIDED-ABOVE` for PD
+#
+# AWS: 
+#   - for EBS volume:  export DBLAB_DISK=/dev/xvd
+#   - for NVMe:       export DBLAB_DISK=/dev/nvme0n1
+#
+# GCP:
+#   - PD disk:   export DBLAB_DISK=/dev/disk/by-id/google-YOUR-DISK-NAME
+#
 sudo zpool create -f \
   -O compression=on \
   -O atime=off \
@@ -114,34 +122,9 @@ sudo docker stop dblab_pg_initdb
 Create the first snapshot for our database:
 
 ```bash
-### The script is WIP. Using it will currently require Postgres install
-### on the machine.
-
-# "stop" is not actually needed if the "sync" instance is not in standby mode
-####### TODO: docker here!
-sudo -u postgres /usr/lib/postgresql/12/bin/pg_ctl -D /var/lib/dblab/data -w stop
-
-### !!! Use this line if your database is NOT in standby mode.
-### Keep in mind that in this case, DATA_STATE_AT is not fully accurate – the real
-### state of the data is older (TODO: describe a better way of getting this timestamp).
-### The timestamp needs to have the following format: `YYYYMMDDHH24MISS`.
-# export DATA_STATE_AT="$(TZ=UTC date '+%Y%m%d%H%M%S')"
-
-
-####### TODO: docker must also be here!! pass docker image name
-ZFS_POOL="dblab_pool" \
-  PGDATA_SUBDIR="/" \
-  MOUNT_DIR="/var/lib/dblab/clones" \
-  PG_BIN_DIR="/usr/lib/postgresql/12/bin" \
-  PGUSERNAME="postgres" \
-  bash ./scripts/create_zfs_snapshot.sh
-
-### Check: `sudo zfs list -o name,creation,mountpoint,dblab:datastateat -t all`
-
-# "start" is not actually needed if the "sync" instance is not in standby mode reading the
-# data from an archive of from another Postgres instance -- feel free to omit it
-####### TODO: docker here!
-sudo -u postgres /usr/lib/postgresql/12/bin/pg_ctl -D /var/lib/dblab/data -W start
+DATA_STATE_AT="$(TZ=UTC date '+%Y%m%d%H%M%S')"
+sudo zfs snapshot dblab_pool@initdb
+sudo zfs set dblab:datastateat="${DATA_STATE_AT}" dblab_pool@initdb
 ```
 
 ## Step 4. Configure and launch the Database Lab server
@@ -217,7 +200,7 @@ sudo docker run \
   --volume ~/.dblab/configs/config.yml:/home/dblab/configs/config.yml \
   --env VERIFICATION_TOKEN=secret_token \
   --detach \
-  postgresai/dblab_server:latest
+  postgresai/dblab-server:latest
 ```
 
 Observe the logs:
@@ -228,8 +211,10 @@ sudo docker logs dblab_server -f
 
 Now we can check the status of the Database Lab server using a simple API call:
 ```bash
-curl -X -i \
-  GET -H 'Verification-Token: secret_token' \
+curl \
+  --include \
+  --request GET \
+  --header 'Verification-Token: secret_token' \
   http://localhost:3000/status
 ```
 
@@ -293,12 +278,24 @@ sudo systemctl restart nginx
 # https://nginxconfig.io/
 ```
 
+Now we can check the status using HTTPS connection (here we use `--insecure` flag
+to allow working with the self-signed certificate we have generated above):
+```bash
+curl \
+  --insecure \
+  --include \
+  --request GET \
+  --header 'Verification-Token: secret_token' \
+  https://${IP_OR_HOSTNAME}/status
+```
+
 ## Step 6. Start cloning!
 
 Install Database Lab client CLI:
 
 ```bash
 curl https://gitlab.com/postgres-ai/database-lab/-/raw/master/cli-install.sh | bash
+sudo mv ~/.dblab/dblab /usr/local/bin/dblab
 ```
 
 Initialize it (`$IP_OR_HOSTNAME` should be defined in Step 2):
@@ -313,9 +310,10 @@ dblab init \
 Request a new clone:
 
 ```bash
-dblab clone create \
+dblab --insecure clone create \
   --username dblab_user_1 \
-  --password secret_password
+  --password secret_password \
+  --id my_first_clone
 ```
 
 After a second or two, if everything is configured correctly, you will see
@@ -351,15 +349,22 @@ that the clone is ready to be used:
 }
 ```
 
+Now you can work with this clone using any PostgreSQL client, for example `psql`:
+```bash
+PGPASSWORD=secret_password \
+  psql "host=${IP_OR_HOSTNAME} port=6000 user=dblab_user_1 dbname=test" \
+  -c '\l+'
+```
+
 To see the full information about the Database Lab instance, including
 the list of all currently available clones:
 
 ```bash
-dblab instance status
+dblab --insecure instance status
 ```
 
-A clone can be deleted by its ID:
+Finally, let's manually delete the clone:
 
 ```bash
-dblab clone delete CLONE_ID
+dblab --insecure clone destroy my_first_clone
 ```
