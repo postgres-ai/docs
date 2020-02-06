@@ -223,6 +223,9 @@ curl \
   http://localhost:3000/status
 ```
 
+See the full API reference [here](https://postgres.ai/swagger-ui/dblab/).
+
+
 ## Step 5. Configure secure access to Database Lab API (optional)
 
 This step is optional. However, it is highly recommended if you work with real-life databases.
@@ -373,3 +376,5 @@ Finally, let's manually delete the clone:
 ```bash
 dblab --insecure clone destroy my_first_clone
 ```
+
+See the full client CLI reference [here](./6_cli_reference).

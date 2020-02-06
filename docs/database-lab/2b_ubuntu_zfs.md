@@ -36,11 +36,15 @@ sudo apt-get install -y zfsutils-linux
 
 ### Create ZFS pool
 ```bash
-sudo mkdir -p /var/lib/dblab/data
-
-# AWS: check with `lsblk` and use 
-# GCP: just use `/dev/disk/by-id/google-DISK-NAME-YOU-PROVIDED-ABOVE`
-# TODO describe all the options
+# To specify $DBLAB_DISK, check the list of disks using `lsblk`
+#
+# AWS: 
+#   - for EBS volume:  export DBLAB_DISK=/dev/xvd
+#   - for NVMe:       export DBLAB_DISK=/dev/nvme0n1
+#
+# GCP:
+#   - PD disk:   export DBLAB_DISK=/dev/disk/by-id/google-YOUR-DISK-NAME
+#
 sudo zpool create -f \
   -O compression=on \
   -O atime=off \
@@ -49,8 +53,6 @@ sudo zpool create -f \
   -m /var/lib/dblab/data \
   dblab_pool \
   "${DBLAB_DISK}"
-
-# To verify: `df -hT`
 ```
 
 ### Database Provisioning
