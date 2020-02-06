@@ -35,6 +35,12 @@
           "database-lab/6_cli_reference"
         ]
       }
+    ],
+    "Joe bot": [
+      "joe-bot/README"
+    ],
+    "postgres-checkup": [
+      "postgres-checkup/README"
     ]
   }
 }

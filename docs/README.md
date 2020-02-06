@@ -1,6 +1,6 @@
 Documentation:
 
 - [Database Lab](./database-lab/)
-- Joe bot
+- [Joe Bot](./joe-bot/)
 - [postgres-checkup](./postgres-checkup)
 - Postgres.ai Platform
