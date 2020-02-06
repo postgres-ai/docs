@@ -6,6 +6,14 @@
     "Database Lab": [
       {
         "type": "subcategory",
+        "label": "Overview",
+        "ids": [
+          "database-lab/what_is_database_lab",
+          "database-lab/supported_databases"
+        ]
+      }
+      {
+        "type": "subcategory",
         "label": "Tutorials",
         "ids": [
           "database-lab/1_tutorial"
