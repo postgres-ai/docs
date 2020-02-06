@@ -18,7 +18,7 @@ Database Lab allows superfast cloning of large databases to solve the following 
 
 - Works well both on premise and in clouds.
 - Thin provisioning in seconds thanks to copy-on-write (CoW) provided by ZFS filesystem and special methodology of preparing PostgreSQL database snapshots.
-- Unlimited size of databases (Postgres database size [is unlimited](https://www.postgresql.org/docs/current/limits.html), ZFS volume can be up to 21<sup>28</sup> bytes, or [256 trillion yobibytes](https://en.wikipedia.org/wiki/ZFS)).
+- Unlimited size of databases (Postgres database size [is unlimited](https://www.postgresql.org/docs/current/limits.html), ZFS volume can be up to 21^28 bytes, or [256 trillion yobibytes](https://en.wikipedia.org/wiki/ZFS)).
 - Supports PostgreSQL 9.6, 10, 11, and 12.
 - Thin cloning takes only a few seconds, regardless of the database size.
 - REST API.
