@@ -11,8 +11,8 @@ and client CLI install and usage.
 
 
 ## Usage examples
-- Perform SQL optimization in a convenient way (see [https://gitlab.com/postgres-ai/joe](postgres-ai/joe))
-- Check database schema changes (database migrations) on full-sized database clones using Database Lab in CI (see [https://gitlab.com/postgres-ai/ci-example](postgres-ai/ci-example))
+- Perform SQL optimization in a convenient way (see [postgres-ai/joe](https://gitlab.com/postgres-ai/joe))
+- Check database schema changes (database migrations) on full-sized database clones using Database Lab in CI (see [postgres-ai/ci-example](https://gitlab.com/postgres-ai/ci-example))
 
 
 ## Workflow overview and requirements
