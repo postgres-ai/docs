@@ -4,27 +4,29 @@ title: Set up on Ubuntu
 
 ## Prepare OS, FS, and Postgres (Ubuntu 18.04 LTS with ZFS module)
 
-### Install Postgres
+### Install Docker
 
-Install Postgres version that is needed. If we are going to use an existing PGDATA, the major version of Postgres must match: 12, 11, 10, 9.6, 9.5, etc. Below an example of Postgres 12 installation is provided.
+See [official installation guide](https://docs.docker.com/install/linux/docker-ce/ubuntu/) for Docker.
 
 ```bash
-cd ~
+sudo apt-get update && sudo apt-get install -y \
+  apt-transport-https \
+  ca-certificates \
+  curl \
+  gnupg-agent \
+  software-properties-common
 
-# add the repository
-sudo tee /etc/apt/sources.list.d/pgdg.list <<END
-deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main
-END
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
-# get the signing key and import it
-wget https://www.postgresql.org/media/keys/ACCC4CF8.asc
-sudo apt-key add ACCC4CF8.asc
+sudo add-apt-repository \
+  "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) \
+  stable"
 
-# fetch the metadata from the new repo
-sudo apt-get update
-
-sudo apt install -y postgresql-12
-sudo systemctl stop postgresql
+sudo apt-get update && sudo apt-get install -y \
+  docker-ce \
+  docker-ce-cli \
+  containerd.io
 ```
 
 ### Install ZFS
@@ -49,9 +51,6 @@ sudo zpool create -f \
   "${DBLAB_DISK}"
 
 # To verify: `df -hT`
-
-sudo chown postgres:postgres /var/lib/dblab/data
-sudo chmod 0700 /var/lib/dblab/data
 ```
 
 ### Database Provisioning
