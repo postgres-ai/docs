@@ -1,4 +1,6 @@
-# postgres-checkup
+---
+title: postgres-checkup
+---
 
 ## General
 
