@@ -1,5 +1,5 @@
 ---
-title: Database Lab CLI Reference
+title: Client CLI Reference
 ---
 
 ## Description
@@ -16,7 +16,6 @@ dblab [global options] command [command options] [arguments...]
 Use Database Lab CLI command `help` for information on a specific command. The synopsis for each command shows its parameters and their usage. Optional parameters are shown in square brackets.
 
 To list available commands, either run `dblab` with no parameters or with flag `dblab --help`
-
 
 
 ## Global options
@@ -37,13 +36,14 @@ To list available commands, either run `dblab` with no parameters or with flag `
 
 - `--version`, `-v` (boolean, default: false) - print the version.
 
-Examples: 
+**Examples**
 ```bash
 dblab --url "127.0.0.1:3000" --token "SECRET_TOKEN" --insecure clone list
 ```
 ```bash
 DBLAB_INSTANCE_URL="example.com" DBLAB_VERIFICATION_TOKEN="SECRET_TOKEN" dblab clone list
 ```
+
 
 ## Command Overview
 ```
@@ -56,21 +56,22 @@ COMMANDS:
    help, h   Shows a list of commands or help for one command.
 ```
 
+
 ## Command: `init`
 Initialize a working directory containing Database Lab configuration files. This is the first command that should be run before managing clones or changing the Database Lab configuration.
 
 It is safe to run this command multiple times.
 
-### Usage
+**Usage**
 ```bash
 dblab init [command options] [arguments...]
 ```
-### Options
+**Options**
    - `--environment_id` (string, required) - an arbitrary environment ID of Database Lab instance's API.
    - `--url` (string, required) - URL of Database Lab instance's API.
    - `--token` (string, required) - verification token of Database Lab instance.
 
-### Example
+**Example**
 ```bash
 dblab init --environment_id dev --url "127.0.0.1:3000" --token "SECRET_TOKEN"
 ```
@@ -79,12 +80,12 @@ dblab init --environment_id dev --url "127.0.0.1:3000" --token "SECRET_TOKEN"
 ## Command: `clone`
 Manage Database Lab clones. 
 
-### Usage
+**Usage**
 ```bash
 dblab clone command [command options] [arguments...]
 ```
 
-### Subcommands
+**Subcommands**
 - `list` - list all existing clones.
 - `status` - display clone's information.
 - `create` - create new clone.
@@ -95,9 +96,9 @@ dblab clone command [command options] [arguments...]
 
 ---
 ### Subcommand `list`
-Lists all existing clones.
+List all existing clones.
 
-### Usage
+**Usage**
 ```bash
 dblab clone list
 ```
@@ -105,23 +106,23 @@ dblab clone list
 ---
 ### Subcommand `status`
 Display the clone's information.
-### Usage
+**Usage**
 ```bash
 dblab clone status CLONE_ID
 ```
 
-### Arguments
+**Arguments**
 - `CLONE_ID` (string, required) - an ID of the Database Lab clone to display information.
 
 ---
 ### Subcommand `create`
 Create a new clone.
-### Usage
+**Usage**
 ```bash
 dblab clone create [command options]
 ```
 
-### Options
+**Options**
 - `--username` (string, required) - database username.
 - `--password` (string, required) - database password.
 - `--id` (string, optional) - clone ID.
@@ -130,7 +131,7 @@ dblab clone create [command options]
 - `--async` , `-a` (boolean, default: false) - run the command asynchronously.
 - `--help` , `-h` (boolean, default: false) - show help.
 
-### Example
+**Example**
 ```bash
 dblab clone create --username someuser --password somepassword
 ```
@@ -138,18 +139,18 @@ dblab clone create --username someuser --password somepassword
 ---
 ### Subcommand `update`
 Update the specified clone.
-### Usage
+**Usage**
 ```bash
 dblab clone update [command options] CLONE_ID
 ```
-### Arguments
+**Arguments**
 - `CLONE_ID` (string, required) - an ID of the Database Lab clone to update parameters.
 
-### Options
+**Options**
 - `--protected` , `-p` (boolean, optional) - mark instance as protected from deletion.
 - `--help` , `-h` (boolean, default: false) - show help.
 
-### Example
+**Example**
 ```bash
 dblab clone update --name newName --protected true TestCloneID
 ```
@@ -157,18 +158,18 @@ dblab clone update --name newName --protected true TestCloneID
 ---
 ### Subcommand `reset`
 Reset the clone's state.
-### Usage
+**Usage**
 ```bash
 dblab clone reset [command options] CLONE_ID
 ```
-### Arguments
+**Arguments**
 - `CLONE_ID` (string, required) - an ID of the Database Lab clone to reset state.
 
-### Options
+**Options**
 - `--async` , `-a` (boolean, default: false) - run the command asynchronously.
 - `--help` , `-h` (boolean, default: false) - show help.
 
-### Example
+**Example**
 ```bash
 dblab clone reset TestCloneID
 ```
@@ -176,18 +177,18 @@ dblab clone reset TestCloneID
 ---
 ### Subcommand `destroy`
 Destroy the specified clone.
-### Usage
+**Usage**
 ```bash
 dblab clone destroy [command options] CLONE_ID
 ```
-### Arguments
+**Arguments**
 - `CLONE_ID` (string, required) - an ID of the Database Lab clone to destroy.
 
-### Options
+**Options**
 - `--async` , `-a` (boolean, default: false) - run the command asynchronously.
 - `--help` , `-h` (boolean, default: false) - show help.
 
-### Example
+**Example**
 ```bash
 dblab clone destroy TestCloneID
 ```
@@ -195,7 +196,7 @@ dblab clone destroy TestCloneID
 ---
 ### Subcommand `help` , `h`
 Show help for the specified command.
-### Usage
+**Usage**
 ```bash
 dblab clone help
 ```
@@ -204,12 +205,12 @@ dblab clone help
 ## Command: `instance`
 Display the instance information.
 
-### Usage
+**Usage**
 ```bash
 dblab instance command [command options] [arguments...]
 ```
 
-### Subcommands
+**Subcommands**
 - `status` - display instance's status.
 - `help` , `h` -  shows a list of commands or help for one command.
 
@@ -217,7 +218,7 @@ dblab instance command [command options] [arguments...]
 ### Subcommand `status`
 Get the status of the instance we are working with.
 
-### Usage
+**Usage**
 ```bash
 dblab instance status
 ```
@@ -225,7 +226,7 @@ dblab instance status
 ---
 ### Subcommand `help` , `h`
 Show help for the command.
-### Usage
+**Usage**
 ```bash
 dblab instance help
 ```
@@ -234,12 +235,12 @@ dblab instance help
 ## Command: `snapshot`
 Manage snapshots.
 
-### Usage
+**Usage**
 ```bash
 dblab snapshot command [command options] [arguments...]
 ```
 
-### Subcommands
+**Subcommands**
 - `list` - list all existing snapshots.
 - `help` , `h` -  shows a list of commands or help for one command.
 
@@ -247,7 +248,7 @@ dblab snapshot command [command options] [arguments...]
 ### Subcommand `list`
 Get the list of snapshots.
 
-### Usage
+**Usage**
 ```bash
 dblab snapshot list
 ```
@@ -255,7 +256,7 @@ dblab snapshot list
 ---
 ### Subcommand `help` , `h`
 Show help for the command.
-### Usage
+**Usage**
 ```bash
 dblab snapshot help
 ```
@@ -264,12 +265,12 @@ dblab snapshot help
 ## Command: `config`
 Configure CLI environments.
 
-### Usage
+**Usage**
 ```bash
 dblab config command [command options] [arguments...]
 ```
 
-### Subcommands
+**Subcommands**
 - `create` - create new CLI environment.
 - `update` - update an existing CLI environment.
 - `view` - view status of CLI environment.
@@ -282,18 +283,18 @@ dblab config command [command options] [arguments...]
 ### Subcommand `create`
 Create a new CLI environment.
 
-### Usage
+**Usage**
 ```bash
 dblab config create [command options] ENVIRONMENT_ID
 ```
-### Arguments
+**Arguments**
 - `ENVIRONMENT_ID` (string, required) - an ID of the Database Lab CLI environment to create.
 
-### Options
+**Options**
 - `--url` (string, required) - URL of Database Lab instance's API.
 - `--token` (string, required) - verification token of Database Lab instance.
 
-### Example
+**Example**
 ```bash
 dblab config create --url "http://127.0.0.1:3001" --token SECRET_TOKEN dev
 ```
@@ -302,18 +303,18 @@ dblab config create --url "http://127.0.0.1:3001" --token SECRET_TOKEN dev
 ### Subcommand `update`
 Update an existing CLI environment.
 
-### Usage
+**Usage**
 ```bash
 dblab config update [command options] ENVIRONMENT_ID
 ```
-### Arguments
+**Arguments**
 - `ENVIRONMENT_ID` (string, required) - an ID of the Database Lab CLI environment to update.
 
-### Options
+**Options**
 - `--url` (string) - URL of Database Lab instance's API.
 - `--token` (string) - verification token of Database Lab instance.
 
-### Example
+**Example**
 ```bash
 dblab config update --url "http://127.0.0.1:3001" --token SECRET_TOKEN dev
 ```
@@ -322,11 +323,11 @@ dblab config update --url "http://127.0.0.1:3001" --token SECRET_TOKEN dev
 ### Subcommand `view`
 Display status of CLI environment.
 
-### Usage
+**Usage**
 ```bash
 dblab config view [ENVIRONMENT_ID]
 ```
-### Arguments
+**Arguments**
 - `ENVIRONMENT_ID` (string) - an ID of the Database Lab CLI environment to view. By default, the current environment will be shown.
 
 
@@ -334,7 +335,7 @@ dblab config view [ENVIRONMENT_ID]
 ### Subcommand `list`
 Display list of all available CLI environments.
 
-### Usage
+**Usage**
 ```bash
 dblab config list
 ```
@@ -343,28 +344,28 @@ dblab config list
 ### Subcommand `switch`
 Switch to another CLI environment.
 
-### Usage
+**Usage**
 ```bash
 dblab config switch ENVIRONMENT_ID
 ```
-### Arguments
+**Arguments**
 - `ENVIRONMENT_ID` (string, required) - an ID of the Database Lab CLI environment to switch.
 
 ---
 ### Subcommand `remove`
 Remove CLI environment.
 
-### Usage
+**Usage**
 ```bash
 dblab config remove ENVIRONMENT_ID
 ```
-### Arguments
+**Arguments**
 - `ENVIRONMENT_ID` (string, required) - an ID of the Database Lab CLI environment to remove.
 
 ---
 ### Subcommand `help` , `h`
 Show help for the command.
-### Usage
+**Usage**
 ```bash
 dblab config help
 ```
