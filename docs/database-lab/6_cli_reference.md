@@ -369,3 +369,19 @@ Show help for the command.
 ```bash
 dblab config help
 ```
+
+## Command: `help`
+Show help for the Client CLI subcommands.
+
+**Usage**
+```bash
+dblab help command [command options] [arguments...]
+```
+
+**Subcommands**
+- `init` -       initialize Database Lab CLI.
+- `clone` -      manage clones.
+- `instance` -   display instance info.
+- `snapshot` -   manage snapshots.
+- `config` -     configure CLI environments.
+- `help` , `h` - show a list of commands or help for one command.
