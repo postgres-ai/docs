@@ -27,6 +27,13 @@
           "database-lab/2_setup_gcp",
           "database-lab/2b_ubuntu_zfs"
         ]
+      },
+      {
+        "type": "subcategory",
+        "label": "Reference",
+        "ids": [
+          "database-lab/6_cli_reference"
+        ]
       }
     ]
   }
