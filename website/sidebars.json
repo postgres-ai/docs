@@ -32,6 +32,7 @@
         "type": "subcategory",
         "label": "Reference",
         "ids": [
+          "database-lab/5_api_reference",
           "database-lab/6_cli_reference"
         ]
       }
