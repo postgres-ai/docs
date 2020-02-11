@@ -1,5 +1,5 @@
 ---
-title: Joe Bot
+title: Overview
 ---
 
 ## Tutorial. Get Started in a Few Minutes

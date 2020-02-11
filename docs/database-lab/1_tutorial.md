@@ -141,7 +141,8 @@ the default config. Otherwise, inspect all configuration options and adjust if n
 mkdir -p ~/.dblab/configs
 
 cat <<CONFIG > ~/.dblab/configs/config.yml
-# Database Lab configuration.
+# Database Lab server configuration.
+
 server:
   port: 3000
 
@@ -153,24 +154,33 @@ provision:
   # Subdir where PGDATA located relative to the pool root dir.
   pgDataSubdir: "/"
 
+  # Username that will be used for Postgres management connections.
+  # The user should exist.
+  pgMgmtUsername: "postgres"
+
   # ZFS mode related parameters.
   zfs:
     # Name of your ZFS pool.
     pool: "dblab_pool"
 
+    # Pool of ports for Postgres clones.
     portPool:
       from: 6000
       to: 6100
 
+    # Clones PGDATA mount directory.
     mountDir: "/var/lib/dblab/clones"
 
+    # Unix sockets directory for secure connection to Postgres clones.
     unixSocketDir: "/var/lib/dblab/sockets"
 
+    # Snapshots with the suffix will not be accessible to use for cloning.
     snapshotFilterSuffix: "_pre"
 
     # Database Lab provisions thin clones using Docker containers, we need
     # to specify which Postgres Docker image is to be used when cloning.
-    # The default is the official Postgres image (See https://hub.docker.com/_/postgres).
+    # The default is the official Postgres image
+    # (See https://hub.docker.com/_/postgres).
     # Any custom Docker image that runs Postgres with PGDATA located
     # in "/var/lib/postgresql/pgdata" directory. Our Dockerfile
     # (See https://gitlab.com/postgres-ai/database-lab/snippets/1932037)
@@ -185,9 +195,10 @@ cloning:
 
   # Auto-delete clones after the specified minutes of inactivity.
   # 0 - disable automatic deletion.
-  idleTime: 10
+  idleTime: 20
 
 debug: true
+
 CONFIG
 ```
 
