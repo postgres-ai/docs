@@ -1,5 +1,5 @@
 ---
-title: postgres-checkup
+title: Overview
 ---
 
 ## General
