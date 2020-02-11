@@ -32,12 +32,15 @@ Example:
 
 ```bash
 docker run \
+  --name joe_bot \
+  --publish 3001:3001 \
+  --restart=on-failure \
   --env DBLAB_URL="https://dblab.domain.com" \
   --env DBLAB_TOKEN="DBLAB_SECRET_TOKEN" \
   --env CHAT_TOKEN="YOUR_SLACK_CHAT_TOKEN" \
   --env CHAT_VERIFICATION_TOKEN="YOUR_SLACK_VERIFICATION_TOKEN" \
-  --env SERVER_PORT=3000 \
-  -p 3000:3000 \
+  --env SERVER_PORT=3001 \
+  --detach \
   postgresai/joe:latest
 ```
 
