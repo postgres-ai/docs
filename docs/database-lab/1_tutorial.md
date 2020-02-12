@@ -23,6 +23,7 @@ Our steps:
 1. prepare at least one snapshot to be used for cloning,
 1. configure and launch the Database Lab server,
 1. setup NGINX and self-signed SSL certificate (optional),
+1. setup client CLI,
 1. and, finally, start using its API and client CLI for the fast cloning
 of the Postgres database.
 
@@ -340,7 +341,7 @@ curl \
   https://${IP_OR_HOSTNAME}/status
 ```
 
-## Step 6. Start cloning!
+## Step 6. Setup Database Lab client CLI
 
 Install Database Lab client CLI:
 
@@ -349,19 +350,30 @@ curl https://gitlab.com/postgres-ai/database-lab/-/raw/master/cli-install.sh | b
 sudo mv ~/.dblab/dblab /usr/local/bin/dblab
 ```
 
-Initialize it (`$IP_OR_HOSTNAME` should be defined in Step 2):
+Initialize CLI (`$IP_OR_HOSTNAME` should be defined in Step 2) and allow HTTP
+enabling `insecure` option in config (not recommended for real-life use):
 
 ```bash
 dblab init \
   --environment_id=tutorial \
   --url=http://$IP_OR_HOSTNAME:3000 \
   --token=secret_token
+
+dblab config update --insecure tutorial
 ```
+
+Check:
+
+```bash
+dblab instance status
+```
+
+## Step 7. Start cloning!
 
 Request a new clone:
 
 ```bash
-dblab --insecure clone create \
+dblab clone create \
   --username dblab_user_1 \
   --password secret_password \
   --id my_first_clone
@@ -411,13 +423,13 @@ To see the full information about the Database Lab instance, including
 the list of all currently available clones:
 
 ```bash
-dblab --insecure instance status
+dblab instance status
 ```
 
 Finally, let's manually delete the clone:
 
 ```bash
-dblab --insecure clone destroy my_first_clone
+dblab clone destroy my_first_clone
 ```
 
 See the full client CLI reference [here](./6_cli_reference).
