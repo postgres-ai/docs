@@ -293,10 +293,11 @@ dblab config create [command options] ENVIRONMENT_ID
 **Options**
 - `--url` (string, required) - URL of Database Lab instance's API.
 - `--token` (string, required) - verification token of Database Lab instance.
+- `--insecure` (boolean, optional) - allow insecure server connections when using SSL.
 
 **Example**
 ```bash
-dblab config create --url "http://127.0.0.1:3001" --token SECRET_TOKEN dev
+dblab config create --url "http://127.0.0.1:3001" --token SECRET_TOKEN --insecure=true dev
 ```
 
 ---
@@ -313,10 +314,11 @@ dblab config update [command options] ENVIRONMENT_ID
 **Options**
 - `--url` (string) - URL of Database Lab instance's API.
 - `--token` (string) - verification token of Database Lab instance.
+- `--insecure` (boolean, optional) - allow insecure server connections when using SSL.
 
 **Example**
 ```bash
-dblab config update --url "http://127.0.0.1:3001" --token SECRET_TOKEN dev
+dblab config update --url "http://127.0.0.1:3001" --token SECRET_TOKEN --insecure=true dev
 ```
 
 ---
