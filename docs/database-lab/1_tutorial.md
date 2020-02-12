@@ -52,7 +52,9 @@ or `export DBLAB_DISK="/dev/disk/by-id/google-DISK-NAME"` for a PD disk on GCP).
 Next, we have to install ZFS and Docker. If needed, you can find detailed
 installation guides:
 - [for Docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/),
-- [for ZFS on Ubuntu](./2b_ubuntu_zfs.md)
+- [for ZFS on Ubuntu](./2b_ubuntu_zfs.md).
+
+Install dependencies:
 
 ```bash
 sudo apt-get update && sudo apt-get install -y \
@@ -61,7 +63,11 @@ sudo apt-get update && sudo apt-get install -y \
   curl \
   gnupg-agent \
   software-properties-common
+```
 
+Install Docker and ZFS:
+
+```bash
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
 sudo add-apt-repository \
@@ -83,11 +89,11 @@ Now it is time ot create a ZFS pool:
 #
 # AWS: 
 #   - for EBS volume:  export DBLAB_DISK=/dev/xvd
-#   - for NVMe:       export DBLAB_DISK=/dev/nvme0n1
+#   - for NVMe:        export DBLAB_DISK=/dev/nvme0n1
 #
 # GCP:
 #   - PD disk:   export DBLAB_DISK=/dev/disk/by-id/google-YOUR-DISK-NAME
-#
+
 sudo zpool create -f \
   -O compression=on \
   -O atime=off \
@@ -106,6 +112,8 @@ the database size will be ~1.4 GiB.
 
 Alternatively, you can take an existing PostgreSQL database and just copy it to `/var/lib/dblab/data`.
 
+Run "initdb" container:
+
 ```bash
 sudo docker run \
   --name dblab_pg_initdb \
@@ -114,11 +122,18 @@ sudo docker run \
   --volume /var/lib/dblab/data:/var/lib/postgresql/pgdata \
   --detach \
   postgres:12-alpine
+```
 
+Initialize database with pgbench:
+
+```bash
+# Create "test" database.
 sudo docker exec -it dblab_pg_initdb psql -U postgres -c 'create database test'
+
 # Initializes DB: 10,000,000 accounts, ~1.4 GiB of data.
 sudo docker exec -it dblab_pg_initdb pgbench -U postgres -i -s 100 test
 
+# Stop "initdb" container.
 sudo docker stop dblab_pg_initdb
 ```
 
@@ -131,6 +146,12 @@ DATA_STATE_AT="$(TZ=UTC date '+%Y%m%d%H%M%S')"
 sudo zfs snapshot dblab_pool@initdb
 sudo zfs set dblab:datastateat="${DATA_STATE_AT}" dblab_pool@initdb
 ```
+
+>In case if you setting up Database Lab on a real database you may need to promote
+>your instance upon creation of the final snapshot.
+>
+>See [create_zfs_snapshot.sh](https://gitlab.com/postgres-ai/database-lab/-/blob/master/scripts/create_zfs_snapshot.sh) for more details.
+>Separate tutorial for this case is coming soon.
 
 ## Step 4. Configure and launch the Database Lab server
 
@@ -244,11 +265,17 @@ This step is optional. However, it is highly recommended if you work with real-l
 To make your work with Database Lab API secure, install and configure NGINX
 with a self-signed SSL certicate.
 
+Install NGINX:
+
 ```bash
 sudo apt-get install -y nginx openssl
+```
 
-YOUR_OWN_PASS="set_your_passphrase_here" # Edit this.
+Define `$YOUR_OWN_PASS` environment variable for certificate generation.
 
+Generate SSL certificate request:
+
+```bash
 mkdir -p ~/ssl
 cd ~/ssl
 
@@ -263,6 +290,11 @@ rm server.pass.key
 
 # Will ask a bunch of questions which should be filled with answers.
 openssl req -new -key server.key -out server.csr
+```
+
+Finish SSL certificate generation and setup NGINX:
+
+```bash
 openssl x509 -req -sha256 -days 365 -in server.csr -signkey server.key \
   -out server.crt
 
