@@ -38,7 +38,21 @@
       }
     ],
     "Joe bot": [
-      "joe-bot/README"
+      {
+        "type": "subcategory",
+        "label": "Overview",
+        "ids": [
+          "joe-bot/what_is_joe",
+          "joe-bot/usage"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "Tutorial",
+        "ids": [
+          "joe-bot/tutorial"
+        ]
+      }
     ],
     "postgres-checkup": [
       "postgres-checkup/README"
