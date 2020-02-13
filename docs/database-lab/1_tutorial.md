@@ -357,9 +357,8 @@ enabling `insecure` option in config (not recommended for real-life use):
 dblab init \
   --environment_id=tutorial \
   --url=http://$IP_OR_HOSTNAME:3000 \
-  --token=secret_token
-
-dblab config update --insecure tutorial
+  --token=secret_token \
+  --insecure
 ```
 
 Check:

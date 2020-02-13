@@ -32,6 +32,10 @@ To list available commands, either run `dblab` with no parameters or with flag `
 
     The environment variable `DBLAB_INSECURE_SKIP_VERIFY` can be used as well. The flags `--insecure` and `-k` override config/env settings.
 
+- `--debug` (boolean, default: false) - run CLI in the debug mode.
+
+    The environment variable `DBLAB_CLI_DEBUG` can be used as well.
+
 - `--help`, `-h` (boolean, default: false) - show help.
 
 - `--version`, `-v` (boolean, default: false) - print the version.
@@ -70,10 +74,11 @@ dblab init [command options] [arguments...]
    - `--environment_id` (string, required) - an arbitrary environment ID of Database Lab instance's API.
    - `--url` (string, required) - URL of Database Lab instance's API.
    - `--token` (string, required) - verification token of Database Lab instance.
+   - `--insecure` (boolean, optional, default: false) - allow insecure server connections when using SSL.
 
 **Example**
 ```bash
-dblab init --environment_id dev --url "127.0.0.1:3000" --token "SECRET_TOKEN"
+dblab init --environment_id dev --url "http://127.0.0.1:3000" --token "SECRET_TOKEN" --insecure
 ```
 
 
