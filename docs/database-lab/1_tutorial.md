@@ -346,7 +346,7 @@ curl \
 Install Database Lab client CLI:
 
 ```bash
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/master/cli-install.sh | bash
+curl https://gitlab.com/postgres-ai/database-lab/-/raw/master/scripts/cli_install.sh | bash
 sudo mv ~/.dblab/dblab /usr/local/bin/dblab
 ```
 
