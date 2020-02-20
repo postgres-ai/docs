@@ -44,7 +44,7 @@ Configure a new Slack App in order to use Joe in Slack and add the app to your t
 
     * You will get `Bot User OAuth Access Token` which is required to run the Joe app (use as `CHAT_TOKEN`).
 
-    * Go to the "Basic Information" page to get `Verification Token` from the "App Credentials" section (use as `CHAT_VERIFICATION_TOKEN`).
+    * Go to the "Basic Information" page to get `Signing Secret` from the "App Credentials" section (use as `CHAT_SIGNING_SECRET`).
 
 Now we have all tokens and ready to run Joe Bot.
 
@@ -62,7 +62,7 @@ Now we have all tokens and ready to run Joe Bot.
         --env DBLAB_TOKEN="DBLAB_SECRET_TOKEN" \
         --env DBLAB_DBNAME="DBLAB_DBNAME" \
         --env CHAT_TOKEN="YOUR_SLACK_CHAT_TOKEN" \
-        --env CHAT_VERIFICATION_TOKEN="YOUR_SLACK_VERIFICATION_TOKEN" \
+        --env CHAT_SIGNING_SECRET="YOUR_SLACK_SIGNING_SECRET" \
         --env SERVER_PORT=3001 \
         --detach \
     postgresai/joe:latest
