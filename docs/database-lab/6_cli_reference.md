@@ -71,14 +71,14 @@ It is safe to run this command multiple times.
 dblab init [command options] [arguments...]
 ```
 **Options**
-   - `--environment_id` (string, required) - an arbitrary environment ID of Database Lab instance's API.
+   - `--environment-id` (string, required) - an arbitrary environment ID of Database Lab instance's API.
    - `--url` (string, required) - URL of Database Lab instance's API.
    - `--token` (string, required) - verification token of Database Lab instance.
    - `--insecure` (boolean, optional, default: false) - allow insecure server connections when using SSL.
 
 **Example**
 ```bash
-dblab init --environment_id dev --url "http://127.0.0.1:3000" --token "SECRET_TOKEN" --insecure
+dblab init --environment-id dev --url "http://127.0.0.1:3000" --token "SECRET_TOKEN" --insecure
 ```
 
 
@@ -131,6 +131,7 @@ dblab clone create [command options]
 - `--username` (string, required) - database username.
 - `--password` (string, required) - database password.
 - `--id` (string, optional) - clone ID.
+- `--snapshot-id` (string, optional) - snapshot ID.
 - `--project` (string, default: "") - project name.
 - `--protected` , `-p` (boolean, default: false) - mark instance as protected from deletion.
 - `--async` , `-a` (boolean, default: false) - run the command asynchronously.
@@ -157,7 +158,7 @@ dblab clone update [command options] CLONE_ID
 
 **Example**
 ```bash
-dblab clone update --name newName --protected true TestCloneID
+dblab clone update --name newName --protected TestCloneID
 ```
 
 ---
