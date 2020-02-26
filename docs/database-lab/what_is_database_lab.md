@@ -32,3 +32,10 @@ Database Lab allows superfast cloning of large databases to solve the following 
 ## Comparison of Database Lab to Other Options of Testing on Large Databases
 
 ![Comparison of Database Lab to Other Options of Testing on Large Databases](/docs/assets/database-lab-comparison-matrix.png)
+
+## Resources
+
+- Database Lab repository: https://gitlab.com/postgres-ai/database-lab.
+- Issue tracker (for bugs reports, feature proposals): https://gitlab.com/postgres-ai/database-lab/issues.
+- Slack (English): https://database-lab-team-slack-invite.herokuapp.com/.
+- Telegram (Russian): https://t.me/databaselabru.
