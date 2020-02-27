@@ -2,6 +2,10 @@
 title: What Is Database Lab
 ---
 
+## Summary
+
+<img src="assets/database-lab/dblab.png" width="256" align="right" vspace="20" hspace="20" />
+
 Database Lab aims to speed up software development in fast-growing organizations that use large PostgreSQL databases. It is achieved by enabling extremely fast and low-budget cloning of large databases.
 
 As an example, the cloning of 10 TiB PostgreSQL database takes less than 2 seconds. Moreover, such cloning (called "thin cloning") does not increase budgets: on a single mid-size machine with a single physical copy of the database, it is possible to run dozens of thin clones simultaneously.
