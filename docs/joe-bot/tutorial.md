@@ -2,7 +2,7 @@
 title: Joe Tutorial
 ---
 
->Please support the project giving a GitLab star (it's on [the main page](https://gitlab.com/postgres-ai/joe),
+>Please support the project giving a GitLab star (it's on [the main page of the project repository](https://gitlab.com/postgres-ai/joe),
 >at the upper right corner):
 >
 >![Add a star](assets/star.gif)

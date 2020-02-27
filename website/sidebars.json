@@ -43,7 +43,7 @@
         "label": "Overview",
         "ids": [
           "joe-bot/what_is_joe",
-          "joe-bot/usage"
+          "joe-bot/example"
         ]
       },
       {
@@ -51,6 +51,13 @@
         "label": "Tutorial",
         "ids": [
           "joe-bot/tutorial"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "Reference",
+        "ids": [
+          "joe-bot/usage"
         ]
       }
     ],
