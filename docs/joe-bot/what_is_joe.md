@@ -1,5 +1,5 @@
 ---
-title: What Is Joe Bot
+title: What Is Joe Bot?
 ---
 
 ## Summary

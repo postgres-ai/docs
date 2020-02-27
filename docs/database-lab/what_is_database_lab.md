@@ -1,5 +1,5 @@
 ---
-title: What Is Database Lab
+title: What Is Database Lab?
 ---
 
 ## Summary
