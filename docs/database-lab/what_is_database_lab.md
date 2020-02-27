@@ -4,7 +4,7 @@ title: What Is Database Lab
 
 ## Summary
 
-<img src="assets/database-lab/dblab.png" width="256" align="right" vspace="20" hspace="20" />
+<img src="/docs/assets/database-lab/dblab.png" width="256" align="right" vspace="20" hspace="20" />
 
 Database Lab aims to speed up software development in fast-growing organizations that use large PostgreSQL databases. It is achieved by enabling extremely fast and low-budget cloning of large databases.
 
