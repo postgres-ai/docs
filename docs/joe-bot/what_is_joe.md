@@ -2,11 +2,16 @@
 title: What Is Joe Bot
 ---
 
+## Overview
+
 Joe is a Postgres query optimization assistant. Joe allows to boost the development process:
+
 - eliminating annoying waiting time needed to provision copies of large databases for development and testing purposes,
 - helping engineers understand details of SQL query performance.
 
-Joe works on top of [Database Lab](https://postgres.ai/docs/database-lab/what_is_database_lab). Thanks to Database Lab, each time an engineer communicates with Joe, a new full-size copy of database is provisioned. This process is fully automated and takes only a few seconds, even for multi-terabyte databases. Such clones are called "thin clones" because multiple clones share the same data blocks, so provisioning is super fast, and disk space consumption is very low. These clones are fully independent, so developers can modify databases. Finally, SQL execution plans are identical to production, which makes possible to troubleshoot and optimize queries reliably without involving production databases.
+Joe works on top of [Database Lab](https://postgres.ai/docs/database-lab/what_is_database_lab). Every time when an engineer starts communicating with Joe, a new full-size copy of the database is provisioned.
+
+This process is fully automated and takes only a few seconds, even for multi-terabyte databases. Such database copies are called "thin clones" because multiple clones share the same data blocks, so provisioning is super fast, and disk space consumption is very low. The clones are fully independent, so developers can modify databases. Finally, SQL execution plans are identical to production, which makes possible to troubleshoot and optimize queries reliably without involving production databases.
 
 ## Features
 

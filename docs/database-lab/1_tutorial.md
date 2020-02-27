@@ -11,7 +11,7 @@ and with additional EBS volume for PostgreSQL data directory.
 However, it is possible to use any Linux machine
 with two disks, one is for system and one is for the database.
 
->Please support the project giving a GitLab star (it's on [the main page](https://gitlab.com/postgres-ai/database-lab),
+>Please support the project giving a GitLab star (it's on [the main page of the project repository](https://gitlab.com/postgres-ai/database-lab),
 >at the upper right corner):
 >
 >![Add a star](assets/star.gif)
