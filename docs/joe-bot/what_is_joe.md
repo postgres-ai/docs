@@ -2,7 +2,9 @@
 title: What Is Joe Bot
 ---
 
-## Overview
+## Summary
+
+<img src="assets/joe-bot/joe.png" width="256" align="right" vspace="20" hspace="20" />
 
 Joe is a Postgres query optimization assistant. Joe allows to boost the development process:
 
