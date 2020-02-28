@@ -16,7 +16,8 @@
         "type": "subcategory",
         "label": "Tutorials",
         "ids": [
-          "database-lab/1_tutorial"
+          "database-lab/1_tutorial",
+          "database-lab/1_tutorial_lvm"
         ]
       },
       {
@@ -24,8 +25,7 @@
         "label": "Installation and Configuration",
         "ids": [
           "database-lab/2_setup_aws",
-          "database-lab/2_setup_gcp",
-          "database-lab/2b_ubuntu_zfs"
+          "database-lab/2_setup_gcp"
         ]
       },
       {
