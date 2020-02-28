@@ -1,6 +1,8 @@
 ---
-title: Database Lab on ZFS Tutorial
+title: Database Lab on LVM Tutorial
 ---
+
+>LVM support as an alternative to ZFS first appeared in [version 0.3.0 of Database Lab](https://gitlab.com/postgres-ai/database-lab/-/releases).
 
 Database Lab aims to boost software development and testing processes via
 enabling ultra-fast provisioning of multi-terabyte databases.
@@ -11,16 +13,16 @@ and with additional EBS volume for PostgreSQL data directory.
 However, it is possible to use any Linux machine
 with two disks, one is for system and one is for the database.
 
->Please support the project giving a GitLab star (it's on [the main page of the project repository](https://gitlab.com/postgres-ai/database-lab),
+>Please support the project giving a GitLab star (it's on [the main page](https://gitlab.com/postgres-ai/database-lab),
 >at the upper right corner):
 >
 >![Add a star](assets/star.gif)
 
 Our steps:
 
-1. prepare a machine with two disks, Docker and ZFS,
+1. prepare a machine with two disks, Docker and LVM2,
 1. generate some PostgreSQL database for testing purposes,
-1. prepare at least one snapshot to be used for cloning,
+1. prepare PGDATA to be used for cloning,
 1. configure and launch the Database Lab server,
 1. setup NGINX and self-signed SSL certificate (optional),
 1. setup client CLI,
@@ -32,7 +34,7 @@ on VMWare, or on bare metal, only the first step will slightly differ.
 In general, the overall procedure will be pretty much the same.
 
 
-## Step 1. Prepare a machine with two disks, Docker and ZFS
+## Step 1. Prepare a machine with two disks, Docker and LVM2
 
 Create an EC2 instance with Ubuntu 18.04 and with an additionally attached
 EBS volume. You can use either of the available methods (AWS CLI, API,
@@ -52,7 +54,7 @@ to connect to the instance,
 with clones (for example, `export DBLAB_DISK="/dev/xvdb"` for an EBS volume on AWS,
 or `export DBLAB_DISK="/dev/disk/by-id/google-DISK-NAME"` for a PD disk on GCP).
 
-Next, we have to install ZFS and Docker. If needed, you can find the detailed
+Next, we have to install LVM2 and Docker. If needed, you can find the detailed
 installation guides for Docker [here](https://docs.docker.com/install/linux/docker-ce/ubuntu/).
 
 Install dependencies:
@@ -66,7 +68,7 @@ sudo apt-get update && sudo apt-get install -y \
   software-properties-common
 ```
 
-Install Docker and ZFS:
+Install Docker and LVM2:
 
 ```bash
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -80,10 +82,10 @@ sudo apt-get update && sudo apt-get install -y \
   docker-ce \
   docker-ce-cli \
   containerd.io \
-  zfsutils-linux
+  lvm2
 ```
 
-Now it is time ot create a ZFS pool:
+Now it is time ot create a LVM volume:
 
 ```bash
 # To specify $DBLAB_DISK, check the list of disks using `lsblk`
@@ -95,23 +97,31 @@ Now it is time ot create a ZFS pool:
 # GCP:
 #   - PD disk:   export DBLAB_DISK=/dev/disk/by-id/google-YOUR-DISK-NAME
 
-sudo zpool create -f \
-  -O compression=on \
-  -O atime=off \
-  -O recordsize=8k \
-  -O logbias=throughput \
-  -m /var/lib/dblab/data \
-  dblab_pool \
-  "${DBLAB_DISK}"
+# Create Physical Volume and Volume Group.
+sudo pvcreate "${DBLAB_DISK}"
+sudo vgcreate dblab_vg "${DBLAB_DISK}"
+
+# Create Logical Volume for PGDATA.
+sudo lvcreate -l 10%FREE -n pg_lv dblab_vg
+sudo mkfs.ext4 /dev/dblab_vg/pg_lv
+sudo mkdir -p /var/lib/dblab/{data,clones,sockets}
+sudo mount /dev/dblab_vg/pg_lv /var/lib/dblab/data
+
+# Create PGDATA directory.
+sudo mkdir -p /var/lib/dblab/data/pgdata
+
+# Bootstrap LVM snapshots so they could be used inside Docker containers.
+sudo lvcreate --snapshot --extents 10%FREE --yes --name dblab_bootstrap dblab_vg/pg_lv
+sudo lvremove --yes dblab_vg/dblab_bootstrap
 ```
 
 ## Step 2. Generate an example database for testing purposes
 
-Let's generate some synthetic database with data directory located at `/var/lib/dblab/data`.
+Let's generate some synthetic database with data directory located at `/var/lib/dblab/data/pgdata`.
 To do so we will use standard PostgreSQL tool called `pgbench`. With scale factor `-s 100`,
 the database size will be ~1.4 GiB.
 
-Alternatively, you can take an existing PostgreSQL database and just copy it to `/var/lib/dblab/data`.
+Alternatively, you can take an existing PostgreSQL database and just copy it to `/var/lib/dblab/data/pgdata`.
 
 Let's run "initdb" container to generate PGDATA with `pgbench`. `POSTGRES_HOST_AUTH_METHOD=trust` will be used for connection; once the generation is done, the container will be stopped and we will use our `pg_hba.conf` for authorization configuration.
 
@@ -121,7 +131,7 @@ sudo docker run \
   --label dblab_sync \
   --env PGDATA=/var/lib/postgresql/pgdata \
   --env POSTGRES_HOST_AUTH_METHOD=trust \
-  --volume /var/lib/dblab/data:/var/lib/postgresql/pgdata \
+  --volume /var/lib/dblab/data/pgdata:/var/lib/postgresql/pgdata \
   --detach \
   postgres:12-alpine
 ```
@@ -138,23 +148,7 @@ sudo docker exec -it dblab_pg_initdb pgbench -U postgres -i -s 100 test
 sudo docker stop dblab_pg_initdb
 ```
 
-## Step 3. Prepare the first snapshot
-
-Create the first snapshot for our database:
-
-```bash
-DATA_STATE_AT="$(TZ=UTC date '+%Y%m%d%H%M%S')"
-sudo zfs snapshot dblab_pool@initdb
-sudo zfs set dblab:datastateat="${DATA_STATE_AT}" dblab_pool@initdb
-```
-
->In case if you setting up Database Lab on a real database you may need to promote
->your instance upon creation of the final snapshot.
->
->See [create_zfs_snapshot.sh](https://gitlab.com/postgres-ai/database-lab/-/blob/master/scripts/create_zfs_snapshot.sh) for more details.
->Separate tutorial for this case is coming soon.
-
-## Step 4. Configure and launch the Database Lab server
+## Step 3. Configure and launch the Database Lab server
 
 If you followed the steps described above without modification, you can use
 the default config. Otherwise, inspect all configuration options and adjust if needed.
@@ -173,21 +167,21 @@ provision:
   mode: "local"
 
   # Subdir where PGDATA located relative to the pool root dir.
-  pgDataSubdir: "/"
+  pgDataSubdir: "/pgdata/"
 
   # Username that will be used for Postgres management connections.
   # The user should exist.
   pgMgmtUsername: "postgres"
 
-  # ZFS mode related parameters.
+  # "Local" mode related parameters.
   local:
     # Which thin-clone manager to use.
     # Available options: "zfs", "lvm".
-    thinCloneManager: "zfs"
+    thinCloneManager: "lvm"
 
     # Name of your pool (in the case of ZFS) or volume group
     # with logic volume name (e.g. "dblab_vg/pg_lv", in the case of LVM).
-    pool: "dblab_pool"
+    pool: "dblab_vg/pg_lv"
 
     # Pool of ports for Postgres clones.
     portPool:
@@ -199,9 +193,6 @@ provision:
 
     # Unix sockets directory for secure connection to Postgres clones.
     unixSocketDir: "/var/lib/dblab/sockets"
-
-    # Snapshots with the suffix will not be accessible to use for cloning.
-    snapshotFilterSuffix: "_pre"
 
     # Database Lab provisions thin clones using Docker containers, we need
     # to specify which Postgres Docker image is to be used when cloning.
@@ -263,7 +254,7 @@ curl \
 See the full API reference [here](https://postgres.ai/swagger-ui/dblab/).
 
 
-## Step 5. Configure secure access to Database Lab API (optional)
+## Step 4. Configure secure access to Database Lab API (optional)
 
 This step is optional. However, it is highly recommended if you work with real-life databases.
 
@@ -345,7 +336,7 @@ curl \
   https://${IP_OR_HOSTNAME}/status
 ```
 
-## Step 6. Setup Database Lab client CLI
+## Step 5. Setup Database Lab client CLI
 
 Install Database Lab client CLI:
 
@@ -371,7 +362,7 @@ Check:
 dblab instance status
 ```
 
-## Step 7. Start cloning!
+## Step 6. Start cloning!
 
 Request a new clone:
 
@@ -386,7 +377,7 @@ After a second or two, if everything is configured correctly, you will see
 that the clone is ready to be used:
 ```json
 {
-    "id": "botcmi54uvgmo17htcl0",
+    "id": "my_first_clone",
     "snapshot": {
         "id": "dblab_pool@initdb",
         "createdAt": "2020-02-04 23:20:04 UTC",
