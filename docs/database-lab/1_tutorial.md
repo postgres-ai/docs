@@ -221,7 +221,7 @@ cloning:
 
   # Auto-delete clones after the specified minutes of inactivity.
   # 0 - disable automatic deletion.
-  idleTime: 20
+  maxIdleMinutes: 20
 
 debug: true
 
