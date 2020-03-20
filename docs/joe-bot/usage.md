@@ -33,3 +33,20 @@ The following `psql` meta-commands are supported:
 -`\l`, `\l+`.
 
 See [the official PostgreSQL documentation](https://www.postgresql.org/docs/current/app-psql.html#APP-PSQL-META-COMMANDS) for details.
+
+
+---
+
+### Extensions
+
+### `hypo`
+Create hypothetical indexes using the [HypoPG extension](https://hypopg.readthedocs.io/en/latest/). This allows verifying index ideas without actually building large indexes.
+
+> :warning: Note that an extended Postgres image for Database Lab is required. For a quick start, you can use [prepared images](https://hub.docker.com/repository/docker/postgresai/extended-postgres) created by Postgres.ai, or prepare your own.
+
+The following subcommands are supported:
+- `hypo [CREATE_INDEX_QUERY]` – create a hypothetical index. For example, `hypo create index hypo_index_test on table1 using btree (id)`.
+- `hypo desc` – describe all hypothetical indexes.
+- `hypo desc [OID]` – describe the specified hypothetical index. For example, `hypo desc 18284`.
+- `hypo drop [OID]` – drop the specified hypothetical index. For example, `hypo drop 18284`.
+- `hypo reset` – drop all hypothetical indexes.
