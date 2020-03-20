@@ -12,6 +12,15 @@ First, `EXPLAIN` is applied, immediately providing the plan without execution, t
 
 The final result is provided in both JSON and textual forms. The data is never provided, only meta-data (the detailed plans, timing).
 
+### `plan` 
+Analyze the specified query (`SELECT`, `INSERT`, `DELETE`, `UPDATE`, or `WITH`) without execution.
+
+First, `EXPLAIN` is applied, immediately providing the plan without execution, to understand the plan structure and the planner costs and estimated row numbers for each node in the plan.
+
+If the plan uses a HypoPG index, an additional `EXPLAIN` for the same query will be executed to obtain the plan without execution, with the HypoPG extension turned off.
+
+The final result is provided with all available plans without execution. The data is never provided, users get only meta-data.
+
 ### `exec`
 Execute any query (for example, `CREATE INDEX`).
 
