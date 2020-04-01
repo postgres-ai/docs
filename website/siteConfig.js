@@ -40,9 +40,9 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    {doc: 'get-started', label: 'Docs'},
-    {doc: 'wip', label: 'API'},
-    //{page: 'help', label: 'Help'},
+    {href: '/', label: 'Home'},
+    {doc: 'database-lab/6_cli_reference', label: 'CLI'},
+    {doc: 'database-lab/5_api_reference', label: 'API'},
   ],
 
   // If you have users set above, you add it here:
