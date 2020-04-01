@@ -115,6 +115,19 @@ sudo lvcreate --snapshot --extents 10%FREE --yes --name dblab_bootstrap dblab_vg
 sudo lvremove --yes dblab_vg/dblab_bootstrap
 ```
 
+>Logical volume size needs to be defined at volume creation time. By default, we allocate 10% of the available memory. If the volume size exceeds the allocated memory volume will be destroyed, potentially leading to data losses. To prevent volumes from being destroyed, consider enabling the LVM auto-extend feature.
+
+To enable the auto-extend feature, the following LVM configuration options need to be updated:
+- `snapshot_autoextend_threshold`: auto-extend a "snapshot" volume when its usage exceeds the specified percentage,
+- `snapshot_autoextend_percent`: auto-extend a "snapshot" volume by the specified percentage of the available space once the usage exceeds the threshold.
+
+Update LVM configuration (located in `/etc/lvm/lvm.conf` by default):
+
+```bash
+sudo sed -i 's/snapshot_autoextend_threshold.*/snapshot_autoextend_threshold = 70/g' /etc/lvm/lvm.conf
+sudo sed -i 's/snapshot_autoextend_percent.*/snapshot_autoextend_percent = 20/g' /etc/lvm/lvm.conf
+```
+
 ## Step 2. Generate an example database for testing purposes
 
 Let's generate some synthetic database with data directory located at `/var/lib/dblab/data/pgdata`.
