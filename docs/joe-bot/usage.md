@@ -45,6 +45,15 @@ See [the official PostgreSQL documentation](https://www.postgresql.org/docs/curr
 
 
 ---
+### Enterprise Edition commands (not supported in the Community Edition version)
+
+### `activity`
+Show currently running sessions in Postgres (states: `active`, `idle in transaction`).
+
+### `terminate [PID]`
+Terminate Postgres backend that has the specified PID.
+
+---
 
 ### Extensions
 
