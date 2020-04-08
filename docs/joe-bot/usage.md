@@ -26,6 +26,12 @@ Execute any query (for example, `CREATE INDEX`).
 
 The data output is never provided, users see only the time spent on the execution or errors, if any.
 
+### `activity`
+Show currently running sessions in Postgres (states: `active`, `idle in transaction`, `disabled`).
+
+### `terminate [PID]`
+Terminate Postgres backend that has the specified PID.
+
 ### `reset`
 Revert the database to the initial state. Usually takes less than a minute.
 
@@ -42,16 +48,6 @@ The following `psql` meta-commands are supported:
 -`\l`, `\l+`.
 
 See [the official PostgreSQL documentation](https://www.postgresql.org/docs/current/app-psql.html#APP-PSQL-META-COMMANDS) for details.
-
-
----
-### Enterprise Edition commands (not supported in Community Edition)
-
-### `activity`
-Show currently running sessions in Postgres (states: `active`, `idle in transaction`, `disabled`).
-
-### `terminate [PID]`
-Terminate Postgres backend that has the specified PID.
 
 ---
 
