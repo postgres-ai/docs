@@ -35,21 +35,22 @@ In general, the overall procedure will be pretty much the same.
 ## Step 1. Prepare a machine with two disks, Docker and ZFS
 
 Create an EC2 instance with Ubuntu 18.04 and with an additionally attached
-EBS volume. You can use either of the available methods (AWS CLI, API,
-or manually). More detailed instructions you can find in
-[AWS Setup](2_setup_aws.md) chapter (for GCP, respectively, see
+EBS volume. If you need detailed instructions on setting up a cloud instances,
+see [AWS Setup](2_setup_aws.md) chapter (for GCP, respectively, see
 [GCP Setup](2_setup_gcp.md)). Note that we will need to be able to connect
 to this instance using SSH and HTTPS, so ensure that ports 22 and 443 are open
-for the machine you are going to connect from. In case if Postgres clones should
-be accessible from outside you need to ensure that clones port pool (default:
-6000-6100) are open.
+for the machine you are going to connect from. Postgres clones will be running
+listening TCP/IP ports in the range 6000-6100 (configurable), so if need to connect to Postgres
+clones from outside, ensure that ports from this range are also whitelisted in the
+firewall settings.
 
-Below we assume that two environment variables are defined:
+Below we assume that the following two environment variables are defined:
 
 - `$IP_OR_HOSTNAME`: either hostname or IP address that we will use
-to connect to the instance,
+to connect to the instance using SSH and HTTPS protocols,
 - `$DBLAB_DISK`: EBS volume device name where we will store the database
 with clones (for example, `export DBLAB_DISK="/dev/xvdb"` for an EBS volume on AWS,
+`export DBLAB_DISK="/dev/nvme0n1"` for a local NVMe disk on AWS,
 or `export DBLAB_DISK="/dev/disk/by-id/google-DISK-NAME"` for a PD disk on GCP).
 
 Next, we have to install ZFS and Docker. If needed, you can find the detailed
@@ -107,13 +108,11 @@ sudo zpool create -f \
 
 ## Step 2. Generate an example database for testing purposes
 
-Let's generate some synthetic database with data directory located at `/var/lib/dblab/data`.
-To do so we will use standard PostgreSQL tool called `pgbench`. With scale factor `-s 100`,
-the database size will be ~1.4 GiB.
+Let's generate some synthetic database with data directory located at `/var/lib/dblab/data`. To do so we will use standard PostgreSQL tool called `pgbench`. With scale factor `-s 100`, the database size will be ~1.4 GiB.
 
-Alternatively, you can take an existing PostgreSQL database and just copy it to `/var/lib/dblab/data`.
+Alternatively, you can take an existing PostgreSQL database and just copy it to `/var/lib/dblab/data` using any convenient method.
 
-Let's run "initdb" container to generate PGDATA with `pgbench`. `POSTGRES_HOST_AUTH_METHOD=trust` will be used for connection; once the generation is done, the container will be stopped and we will use our `pg_hba.conf` for authorization configuration.
+Let's run a temporary Postgres container to generate PGDATA with `pgbench`. `POSTGRES_HOST_AUTH_METHOD=trust` will be used for connection; once the generation is done, the container will be stopped, after that we can use `pg_hba.conf`  to control make the configuration secure (for the sake of simplicity, we are going to skip such configuration in this demo).
 
 ```bash
 sudo docker run \
@@ -131,11 +130,12 @@ Create the `test` database:
 sudo docker exec -it dblab_pg_initdb psql -U postgres -c 'create database test'
 ```
 
-Generate data in the `test` database using pgbench and stop the container:
+Generate data in the `test` database using `pgbench`, then stop and delete the container:
 ```bash
 # 10,000,000 accounts, ~1.4 GiB of data.
 sudo docker exec -it dblab_pg_initdb pgbench -U postgres -i -s 100 test
 sudo docker stop dblab_pg_initdb
+sudo docker rm dblab_pg_initdb
 ```
 
 ## Step 3. Prepare the first snapshot
@@ -148,16 +148,11 @@ sudo zfs snapshot dblab_pool@initdb
 sudo zfs set dblab:datastateat="${DATA_STATE_AT}" dblab_pool@initdb
 ```
 
->In case if you setting up Database Lab on a real database you may need to promote
->your instance upon creation of the final snapshot.
->
->See [create_zfs_snapshot.sh](https://gitlab.com/postgres-ai/database-lab/-/blob/master/scripts/create_zfs_snapshot.sh) for more details.
->Separate tutorial for this case is coming soon.
+> In a real-life case, you may need to promote your Postgres cluster when preparing a snapshot. This will dramatically improve the timing of the creation of your thin clones. See [./scripts/create_zfs_snapshot.sh](https://gitlab.com/postgres-ai/database-lab/-/blob/master/scripts/create_zfs_snapshot.sh) in the repository as an example how this process can be automated. Feel free to modify it if needed. There is also an ability to add any kind of data processing during snapshot preparation; for example, you can remove sensitive data. Finally, you can have multiple ZFS snapshots at any time, but remember to ensure that at least 20% of disk space is always free.
 
 ## Step 4. Configure and launch the Database Lab server
 
-If you followed the steps described above without modification, you can use
-the default config. Otherwise, inspect all configuration options and adjust if needed.
+If you followed the steps described above without modification, you can use the default config. Otherwise, inspect all configuration options and adjust if needed.
 
 ```bash
 mkdir -p ~/.dblab/configs
@@ -166,6 +161,7 @@ cat <<CONFIG > ~/.dblab/configs/config.yml
 # Database Lab server configuration.
 
 server:
+  verificationToken: "secret_token"  # Warning! Insecure value – edit it.
   port: 3000
 
 provision:
@@ -240,7 +236,6 @@ sudo docker run \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   --volume /var/lib/dblab:/var/lib/dblab:rshared \
   --volume ~/.dblab/configs/config.yml:/home/dblab/configs/config.yml \
-  --env VERIFICATION_TOKEN=secret_token \
   --detach \
   postgresai/dblab-server:latest
 ```
@@ -267,8 +262,7 @@ See the full API reference [here](https://postgres.ai/swagger-ui/dblab/).
 
 This step is optional. However, it is highly recommended if you work with real-life databases.
 
-To make your work with Database Lab API secure, install and configure NGINX
-with a self-signed SSL certicate.
+To make your work with Database Lab API secure, install and configure NGINX with a self-signed SSL certicate.
 
 Install NGINX:
 
@@ -297,7 +291,7 @@ rm server.pass.key
 openssl req -new -key server.key -out server.csr
 ```
 
-Finish SSL certificate generation and setup NGINX:
+Finish SSL certificate generation and setup NGINX (do not forget to set `$IP_OR_HOSTNAME` as described above!):
 
 ```bash
 openssl x509 -req -sha256 -days 365 -in server.csr -signkey server.key \
@@ -347,7 +341,7 @@ curl \
 
 ## Step 6. Setup Database Lab client CLI
 
-Install Database Lab client CLI:
+Install Database Lab client CLI. This can be done on any machine, you just need to be able to reach your Database Lab API (`https://IP_OR_HOSTNAME` in this example) from that machine:
 
 ```bash
 curl https://gitlab.com/postgres-ai/database-lab/-/raw/master/scripts/cli_install.sh | bash
@@ -382,8 +376,7 @@ dblab clone create \
   --id my_first_clone
 ```
 
-After a second or two, if everything is configured correctly, you will see
-that the clone is ready to be used:
+After a second or two, if everything is configured correctly, you will see that the clone is ready to be used. It should look like this:
 ```json
 {
     "id": "botcmi54uvgmo17htcl0",
@@ -422,8 +415,7 @@ PGPASSWORD=secret_password \
   -c '\l+'
 ```
 
-To see the full information about the Database Lab instance, including
-the list of all currently available clones:
+To see the full information about the Database Lab instance, including the list of all currently available clones:
 
 ```bash
 dblab instance status
