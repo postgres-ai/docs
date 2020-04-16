@@ -57,6 +57,7 @@
         "type": "subcategory",
         "label": "Reference",
         "ids": [
+          "joe-bot/configuration_options",
           "joe-bot/usage"
         ]
       }
