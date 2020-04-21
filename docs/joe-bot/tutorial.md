@@ -109,6 +109,13 @@ channelMapping:
               dbname: postgres
               sslmode: disable
 
+  # Running Database Lab instances.
+  dblabServers:
+    # Database Lab instance alias and parameters to connect to the API
+    prod1:
+      url: "https://dblab.domain.com"
+      token: "secret_token"
+
 # Enterprise options (changing these options you confirm that you have active
 # subscription to Postgres.ai Platform Enterprise Edition https://postgres.ai).
 enterprise:
