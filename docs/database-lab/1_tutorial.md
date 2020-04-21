@@ -400,7 +400,7 @@ After a second or two, if everything is configured correctly, you will see that 
         "password": ""
     },
     "metadata": {
-        "cloneSize": 479232,
+        "cloneDiffSize": 479232,
         "cloningTime": 2.892935211,
         "maxIdleMinutes": 0
     },
