@@ -1,80 +1,35 @@
 ---
 id: get-started
-title: Get started
-hide_title: true
-sidebar_label: Postgres.ai
+title: Getting Started
+hide_title: false
+sidebar_label: Getting Started
 ---
-## Get started with Postgres.ai
-Try our [Database Lab Tutorial](./database-lab/1_tutorial) that covers
-Database Lab server installation, database generation, snapshotting,
-and client CLI install and usage.
+## What is Postgres.ai
 
+We aim to eliminate database-related roadblocks on the way of developers, DBAs, and QA engineers. Two major components of it are:
 
-## Usage examples
-- Perform SQL optimization in a convenient way (see [postgres-ai/joe](https://gitlab.com/postgres-ai/joe))
-- Check database schema changes (database migrations) on full-sized database clones using Database Lab in CI (see [postgres-ai/ci-example](https://gitlab.com/postgres-ai/ci-example))
+1. `postgres-checkup` – a powerful tool automating health checks of PostgreSQL databases. Its key features are unobtrusiveness, "zero install", and complex and deep analysis of a whole PostgreSQL set of nodes (primary plus its followers). With `postgres-checkup`, an experienced DBA spends only 4 hours instead of 2 weeks to analyze a heavily-loaded PostgreSQL setup when seeing it for the first time.
+1. Database Lab – the core component based on which powerful, state-of-the-art development and testing environments are built. It is based on a simple idea: with modern thin cloning technologies, it becomes possible to iterate 100x faster in development and testing. It is extremely helpful for larger companies that want to achieve high development velocity and the most competitive "time to market" characteristics.
 
+Additional projects included in the Postgres.ai platform and based on Database Lab:
 
-## Workflow overview and requirements
-**TL;DR:** you need:
+- Joe bot – an innovative chatbot helping developers troubleshoot and optimize SQL queries without direct access to the data,
+- SQL optimization knowledge base – a history of Joe sessions, including details of `EXPLAIN` plans, recommendations, various visualization of query plans, and additional meta-data, to support "team memory" and collaboration within particular engineering teams and between various teams/departments in an organization (e.g., between DBA and Development teams),
+- CI integrator – a set of solutions that allows the use of full-size database clones in various CI tools (e.g., CircleCI, Jenkins, GitLab CI/CD).
 
-- any machine with a separate disk that is big enough to store a single copy of your database,
-- Linux with Docker and ZFS,
-- the initial copy of your Postgres database.
+## How to start
 
-Details:
+[Enter Postgres.ai](https://postgres.ai/signin/) using one of the following supported ways to authenticate: Google, LinkedIn, GitLab, GitHub.
 
-- for each Database Lab instance, a separate machine (either physical or virtual) is needed,
-- both on-premise and cloud setups are possible,
-- for each Postgres cluster (a single Postgres server with databases), a separate Database Lab instance is required,
-- the machine needs to have a separate disk partition with size enough to store the target Postgres directory (PGDATA),
-- any modern Linux is supported,
-- Docker needs to be installed on the machine,
-- currently, you need to take care yourself of the initial copying of the database to this disk ("thick cloning" stage),
-- use pg_basebackup, restoration from an archive (such as WAL-G, Barman, pgBackRest or any), or dump/restore (the only way
-- supported for RDS, until AWS guys decide to allow replication connections),
-- upon request, Database Lab will do "thin cloning" of PGDATA, providing fully independent writable Postgres clones to users,
-- currently, the only technology supported for thin cloning is ZFS, so ZFS on Linux needs to be installed on the machine,
-- however, it is easy to extend and add, say, LVM or Ceph - please write us if you need it; also, contributions are highly welcome).
+When you first time do it, make sure to read and comply with [Postgres.ai Terms of the Service](https://postgres.ai/tos/).
 
+Once you are in, you can create an organization (or use an automatically generated one). Alternatively, you can ask your colleague, who is already using Postgres.ai, to invite you to an existing organization. In the latter case, you will receive an email with the link clicking on which you will join that organization.
 
-## Q&A
-### Do we need ZFS on production?
-ZFS is used only for thin-provisioning, therefore it is needed only on the Database Lab instance.
-Production can be located anywhere: in clouds (including managed options like AWS RDS), on-premise,
-running on any operating system and using any filesystem.
+Organizations on the Postgres.ai platform can be considered as teams or companies. All activities happen in the context of an organization.
 
-ZFS is an efficient filesystem with rich capabilities, simple installation, and
-easy to use CLI. It makes ZFS perfectly suitable for use in development
-environments. We will add support of different thin-provision methods
-in the future, e.g., LVM, Ceph (Contribution are welcome).
+To start using Posgres.ai, you can choose one of two options:
 
-### What does thin cloning mean? Thin vs. thick clones. Why is thin cloning so fast?
-There are two types of cloning used in Database Lab:
+1. Read and follow the [Database Lab Tutorial](./database-lab/1_tutorial) that covers Database Lab server installation, database generation, snapshotting, and client CLI install and usage.
+1. Install `postgres-checkup` tool to automatically check the health of one of your Postgres setups.
 
-1. Thick cloning is how data being copied to a Database Lab instance initially.
-There is a lot of options: dump/restore, pg_basebackup, restore from an archive
-(e.g., WAL-G or Barman or pg_probackup) or simple rsync with `pg_start_backup() / pg_stop_backup()`.
-Should be done at least one or periodically.
-
-If thick cloning is performed on the physical level (pg_basebackup or recovered from an archive),
-then we can use `restore_command` in `recovery.conf` (in Postgres versions 12 or newer, it's in `postgresql.conf`).
-In this case, we will use Database Lab "sync" instance to fetch and replay WALs.
-In fact, we have a full replica of production based on WAL shipping.
-
-2. Thin cloning is how we get local clones of Postgres in a couple of seconds.
-Currently, Database Lab supports only one method for thin clone provisioning: ZFS.
-We periodically prepare a snapshot of PGDATA, which was thick cloned (and optionally
-being kept up in an actual state using `restore_command`) and then can be used
-for fast thin cloning.
-
-### Cloud vs on-premise?
-You can install Database Lab on any machine which matches our requirements listed
-above. It doesn't matter whether this machine is in clouds or on-premise.
-
-### Where to get help?
-Our team is happy to help you with Database Lab and related products setup
-and usage, you can reach us at:
-- support@postgres.ai
-- [Community Slack (English)](https://database-lab-team-slack-invite.herokuapp.com/)
-- [Telegram (Russian)](https://t.me/databaselabru)
+Both solutions can be integrated with Postgres.ai GUI, so you will have all the meta-data collected in centralized storage. Note that Postgres.ai does not connect to your databases, and only metadata is transferred to Postgres.ai storage. This metadata contains technical details about your database operations. This metadata is encrypted and stored securely and transferred using secure methods (HTTPS). If you have any concerns, please reach out Postgres.ai support using the Intercom widget, which you can find it on the right bottom corner.
