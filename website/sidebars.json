@@ -1,7 +1,8 @@
 {
   "docs": {
-    "Get started": [
-      "get-started"
+    "Preface": [
+      "get-started",
+      "questions-and-answers"
     ],
     "Database Lab": [
       {
