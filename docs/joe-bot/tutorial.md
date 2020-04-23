@@ -8,7 +8,8 @@ title: Joe Bot Tutorial
 >![Add a star](assets/star.gif)
 
 ## Step 1. Requirements:
-- Install and setup [Database Lab](./../database-lab/1_tutorial) (e.g., running by address https://dblab.domain.com) before configuring Joe bot.
+- Set up [Database Lab](./../database-lab/1_tutorial) (e.g., running by address https://dblab.domain.com) before configuring Joe Bot.
+  > ⚠ Make sure the address used in `accessHost` is accessible from where you are going to run Joe Bot.
 - Prepare any Linux machine with Docker. See the official documentation on [how to install Docker on Linux](https://docs.docker.com/engine/install/).
 
 ## Step 2. Configure communication channels
@@ -48,8 +49,8 @@ platform:
   project: "demo"
 
   # Enable sending command and queries history to the Postgres.ai Platform 
-  # for collaboration and visualization. By default: false.
-  historyEnabled: false
+  # for collaboration and visualization. By default: true.
+  historyEnabled: true
 
 # Channel Mapping section.
 # Feel free to choose any name for Database Lab instances from the `dblabServers` section,
@@ -78,36 +79,37 @@ channelMapping:
             # The password is not needed, it will be randomly generated 
             # each time a new clone is created.
             dblabParams:
-              dbname: postgres
-              sslmode: disable
+              dbname: test
+              sslmode: prefer
 
-    # Slack communication type configuration.
-    slack:
-        # Workspace name. Feel free to choose any name.
-      - name: Workspace
-
-        credentials:
-          # Bot User OAuth Access Token ("xoxb-TOKEN").
-          accessToken: access_token
-          
-          # Slack App Signing Secret.
-          signingSecret: secret_signing
-
-        channels:
-            # Slack channel ID. In Slack app, right-click on the channel name,
-            # and choose "Additional options < Copy link". From that link, we
-            # need the last part consisting of 9 letters starting with "C".
-          - channelID: CXXXXXXXX
-
-            # Database Lab alias from the dblabServers section.
-            dblabServer: prod1
-
-            # Postgres connection parameters used to connect to a clone.
-            # The password is not needed, it will be randomly generated 
-            # each time a new clone is created.
-            dblabParams:
-              dbname: postgres
-              sslmode: disable
+#    # Slack communication type configuration.
+#    slack:
+#        # Workspace name. Feel free to choose any name.
+#      - name: Workspace
+#
+#        credentials:
+#          # Bot User OAuth Access Token ("xoxb-TOKEN").
+#          accessToken: access_token
+#          
+#          # Slack App Signing Secret. 
+#          # See more: https://api.slack.com/authentication/verifying-requests-from-slack
+#          signingSecret: secret_signing
+#
+#        channels:
+#            # Slack channel ID. In Slack app, right-click on the channel name,
+#            # and choose "Additional options > Copy link". From that link, we
+#            # need the last part consisting of 9 letters starting with "C".
+#          - channelID: CXXXXXXXX
+#
+#            # Database Lab alias from the dblabServers section.
+#            dblabServer: prod1
+#
+#            # Postgres connection parameters used to connect to a clone.
+#            # The password is not needed, it will be randomly generated 
+#            # each time a new clone is created.
+#            dblabParams:
+#              dbname: test
+#              sslmode: prefer
 
   # Running Database Lab instances.
   dblabServers:
@@ -142,9 +144,13 @@ Then, configure ways of communication with Joe.
 ### Step 2a. Set up Joe in Postgres.ai Console ("Web UI")
 If you don't need Web UI and prefer working with Joe only in messengers (such as Slack), comment out `channelMapping: communicationTypes: webui` subsection in Jog config, and proceed to the next step.
 
+Before configuring Web UI make sure you have a Postgres.ai account.
+
+If you don't have a Postgres.ai account yet, see the guide on how to start working with [Postgres.ai Console](https://postgres.ai/docs/get-started#how-to-start).
+
 To configure Web UI:
 
-1. First, get your `PLATFORM_TOKEN`. In [Postgres.ai Console](https://postgres.ai/console/), switch to proper organization and open the `Access Tokens` page. Save it to Joe config (`platform: token`).
+1. First, get your `PLATFORM_TOKEN`. This token lets Joe Bot talk to Postgres.ai Platform to enable Web UI chat window, save the history of commands, and visualize query plans. In [Postgres.ai Console](https://postgres.ai/console/), switch to proper organization and open the `Access Tokens` page. Save it to Joe config (`platform: token`).
 1. Then, go to the `Joe instances` page in the `SQL Optimization` sidebar section.
 1. Choose a project from the dropdown menu and press the `Add instance` button.
 1. Generate `Signing secret`. Put it in the configuration file (`channelMapping: webui: <your channel name>: credentials: signingSecret`). We will add and verify the URL on the last step, so do not close the page.
@@ -153,7 +159,7 @@ To configure Web UI:
 
 
 ### Step 2b. Set up Joe bot in Slack
-If you don't need to work with Joe bot in Slack, comment out `channelMapping: communicationTypes: slack` subsection in Jog config, and 
+If you need to work with Joe bot in Slack, uncomment `channelMapping: communicationTypes: slack` subsection in Jog config, and follow these instructions.
 
 Configure a new Slack App in order to use Joe in Slack and add the app to your team Workspace. Joe Bot should be available with public URL calls from Slack.
 
