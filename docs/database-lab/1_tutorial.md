@@ -46,15 +46,15 @@ firewall settings.
 
 Below we assume that the following two environment variables are defined:
 
-- `$IP_OR_HOSTNAME`: either hostname or IP address that we will use
-to connect to the instance using SSH and HTTPS protocols,
-- `$DBLAB_DISK`: EBS volume device name where we will store the database
-with clones (for example, `export DBLAB_DISK="/dev/xvdb"` for an EBS volume on AWS,
-`export DBLAB_DISK="/dev/nvme0n1"` for a local NVMe disk on AWS,
-or `export DBLAB_DISK="/dev/disk/by-id/google-DISK-NAME"` for a PD disk on GCP).
+- `$IP_OR_HOSTNAME`: either hostname or IP address that we will use to connect to the instance using SSH and HTTPS protocols (or HTTP, if we don't care about security or operate in a safe environment). In the case of AWS, it is a good idea to use the public IP address assigned to your EC2 instance. You can find it in EC2 Management Console looking at the Description of the instance. Do not use `localhost` or `127.0.0.1` here, use local or public IP address, or a hostname associated with it.
+- `$DBLAB_DISK`: EBS volume device name where we will store the database with clones. To specify $DBLAB_DISK, check the list of disks using `lsblk`. Some examples:
+    - on AWS, if you use an EBS volume, `lsblk` will show something like `/dev/xvdb`, so you need to run `export DBLAB_DISK="/dev/xvdb"`;
+    - another option on AWS is a local ephimeral NVMe disk, in this case, you would need something like `export DBLAB_DISK="/dev/nvme0n1"`;
+    - finally, in the case of PD disk on GCP, you are going to need `export DBLAB_DISK="/dev/disk/by-id/google-DISK-NAME"`.
 
-Next, we have to install ZFS and Docker. If needed, you can find the detailed
-installation guides for Docker [here](https://docs.docker.com/install/linux/docker-ce/ubuntu/).
+> ⚠ Be careful with defining the value of `$DBLAB_DISK`. If you choose a wrong device and this device stores essential data, you may lose the data in the further steps, when we start writing new data to the device.
+
+Next, we have to install ZFS and Docker. If needed, you can find the detailed installation guides for Docker [here](https://docs.docker.com/install/linux/docker-ce/ubuntu/).
 
 Install dependencies:
 
@@ -87,15 +87,7 @@ sudo apt-get update && sudo apt-get install -y \
 Now it is time ot create a ZFS pool:
 
 ```bash
-# To specify $DBLAB_DISK, check the list of disks using `lsblk`
-#
-# AWS: 
-#   - for EBS volume:  export DBLAB_DISK=/dev/xvd
-#   - for NVMe:        export DBLAB_DISK=/dev/nvme0n1
-#
-# GCP:
-#   - PD disk:   export DBLAB_DISK=/dev/disk/by-id/google-YOUR-DISK-NAME
-
+# Important: environment variable $DBLAB_DISK must be defined!
 sudo zpool create -f \
   -O compression=on \
   -O atime=off \
@@ -106,13 +98,18 @@ sudo zpool create -f \
   "${DBLAB_DISK}"
 ```
 
+And check the result:
+```bash
+sudo zfs list
+```
+
 ## Step 2. Generate an example database for testing purposes
 
-Let's generate some synthetic database with data directory located at `/var/lib/dblab/data`. To do so we will use standard PostgreSQL tool called `pgbench`. With scale factor `-s 100`, the database size will be ~1.4 GiB.
+Let's generate some synthetic database with data directory ("PGDATA") located at `/var/lib/dblab/data`. To do so we will use standard PostgreSQL tool called `pgbench`. With scale factor `-s 100`, the database size will be ~1.4 GiB.
 
 Alternatively, you can take an existing PostgreSQL database and just copy it to `/var/lib/dblab/data` using any convenient method.
 
-Let's run a temporary Postgres container to generate PGDATA with `pgbench`. `POSTGRES_HOST_AUTH_METHOD=trust` will be used for connection; once the generation is done, the container will be stopped, after that we can use `pg_hba.conf`  to control make the configuration secure (for the sake of simplicity, we are going to skip such configuration in this demo).
+To generate PGDATA with `pgbench`, we are going to launch a regular Docker container with Postgres temporarily. We are going to use `POSTGRES_HOST_AUTH_METHOD=trust` to allow connection without authentication; once the generation is done, the container will be stopped, after that we can modify `pg_hba.conf` to control make the configuration secure (for the sake of simplicity, we are going to skip such configuration in this demo).
 
 ```bash
 sudo docker run \
@@ -134,6 +131,10 @@ Generate data in the `test` database using `pgbench`, then stop and delete the c
 ```bash
 # 10,000,000 accounts, ~1.4 GiB of data.
 sudo docker exec -it dblab_pg_initdb pgbench -U postgres -i -s 100 test
+```
+
+PGDATA is ready and now it is time to delete the temporary container with Postgres:
+```bash
 sudo docker stop dblab_pg_initdb
 sudo docker rm dblab_pg_initdb
 ```
@@ -148,13 +149,15 @@ sudo zfs snapshot dblab_pool@initdb
 sudo zfs set dblab:datastateat="${DATA_STATE_AT}" dblab_pool@initdb
 ```
 
-> In a real-life case, you may need to promote your Postgres cluster when preparing a snapshot. This will dramatically improve the timing of the creation of your thin clones. See [./scripts/create_zfs_snapshot.sh](https://gitlab.com/postgres-ai/database-lab/-/blob/master/scripts/create_zfs_snapshot.sh) in the repository as an example how this process can be automated. Feel free to modify it if needed. There is also an ability to add any kind of data processing during snapshot preparation; for example, you can remove sensitive data. Finally, you can have multiple ZFS snapshots at any time, but remember to ensure that at least 20% of disk space is always free.
+> In a real-life case, you may need to promote your Postgres database when preparing a snapshot if it was in a "replica" state. This will dramatically improve the timing of the creation of your thin clones. See [./scripts/create_zfs_snapshot.sh](https://gitlab.com/postgres-ai/database-lab/-/blob/master/scripts/create_zfs_snapshot.sh) in the repository as an example how this process can be automated. Feel free to modify it if needed. There is also an ability to add any kind of data processing during snapshot preparation; for example, you can remove sensitive data. Finally, you can have multiple ZFS snapshots at any time, but remember to ensure that at least 20% of disk space is always free.
 
 ## Step 4. Configure and launch the Database Lab server
 
-If you followed the steps described above without modification, you can use the default config. Otherwise, inspect all configuration options and adjust if needed.
+If you followed the steps described above without modification, you can use the default config with only correction: you need to put the value stored in the `$IP_OR_HOSTNAME` variable to `accessHost`. You may want to inspect all configuration options and adjust if needed. Must you need to reconfigure, edit the config file `~/.dblab/configs/config.yml`, and then re-launch the container to start using the new configuration.
 
 ```bash
+# Important: environment variable $IP_OR_HOSTNAME must be specified!
+
 mkdir -p ~/.dblab/configs
 
 cat <<CONFIG > ~/.dblab/configs/config.yml
@@ -213,7 +216,7 @@ cloning:
   mode: "base"
 
   # Host which will be specified in clone connection info.
-  accessHost: "localhost"
+  accessHost: "${IP_OR_HOSTNAME}"
 
   # Auto-delete clones after the specified minutes of inactivity.
   # 0 - disable automatic deletion.
@@ -395,8 +398,8 @@ After a second or two, if everything is configured correctly, you will see that 
         "message": "Clone is ready to accept Postgres connections."
     },
     "db": {
-        "connStr": "host=localhost port=6000 user=dblab_user_1",
-        "host": "localhost",
+        "connStr": "host=111.222.000.123 port=6000 user=dblab_user_1",
+        "host": "111.222.000.123",
         "port": "6000",
         "username": "dblab_user_1",
         "password": ""
