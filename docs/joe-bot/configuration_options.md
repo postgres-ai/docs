@@ -35,8 +35,8 @@ platform:
   project: "demo"
 
   # Enable sending command and queries history to the Postgres.ai Platform 
-  # for collaboration and visualization. By default: false.
-  historyEnabled: false
+  # for collaboration and visualization. By default: true.
+  historyEnabled: true
 
 # Channel Mapping section.
 # Feel free to choose any name for Database Lab instances from the `dblabServers` section,
@@ -66,7 +66,7 @@ channelMapping:
             # each time a new clone is created.
             dblabParams:
               dbname: postgres
-              sslmode: disable
+              sslmode: prefer
 
     # Slack communication type configuration.
     slack:
@@ -94,7 +94,7 @@ channelMapping:
             # each time a new clone is created.
             dblabParams:
               dbname: postgres
-              sslmode: disable
+              sslmode: prefer
 
   # Running Database Lab instances.
   dblabServers:
@@ -141,7 +141,7 @@ enterprise:
 - (string), Postgres.ai Platform project to assign user sessions.
 
 ### `HISTORY_ENABLED`
-- (boolean, default: `false`), enable sending command history to Postgres.ai Platform for collaboration and visualization.
+- (boolean, default: `true`), enable sending command history to Postgres.ai Platform for collaboration and visualization. Requires setting proper `PLATFORM_TOKEN`. See the [Joe Bot Tutorial](https://postgres.ai/docs/joe-bot/tutorial#step-2a-set-up-joe-in-postgresai-console-web-ui) for the token.
 
 ### `JOE_DEBUG` 
 - (boolean, default: `false`), enable debug mode.
@@ -161,4 +161,4 @@ Changing these options you confirm that you have active subscription to [Postgre
 - (boolean, default: `false`), enable command logging for audit purposes.
 
 ### `EE_DBLAB_INSTANCE_LIMIT` 
-- (integer, default: `1`), limit the number of Database Lab instances. Joe bot CE supports working with only 1 Database Lab instance.
+- (integer, default: `1`), limit the number of Database Lab instances. Joe Bot CE supports working with only 1 Database Lab instance.

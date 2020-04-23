@@ -224,6 +224,8 @@ debug: true
 CONFIG
 ```
 
+> ⚠ Make sure that the address used in `accessHost` is accessible from where you are going to connect to Database Lab clones (e.g., if you are going to install Joe Bot, `accessHost` must be accessible from the machine where you install Joe).
+
 Launch your Database Lab instance:
 
 ```bash
