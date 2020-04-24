@@ -6,6 +6,17 @@ title: Client CLI Reference
 
 The Database Lab Command Line Interface is a tool to manage your Database Lab instance.
 
+## Installation
+
+```bash
+curl https://gitlab.com/postgres-ai/database-lab/-/raw/master/scripts/cli_install.sh | bash
+```
+
+### Available platforms:
+- Linux
+- MacOS
+- Windows
+- FreeBSD
 
 ## Synopsis
 
