@@ -29,8 +29,8 @@ mkdir -p ~/.dblab/configs
 
 cat <<'JOE_CONFIG' > ~/.dblab/configs/joe_config.yml
 app:
-  # HTTP server port. By default: 3001.
-  port: 3001
+  # HTTP server port. By default: 2400.
+  port: 2400
 
   # Time interval to notify a user about the finish of a long query. By default: 60s.
   minNotifyDuration: 60s
@@ -205,14 +205,14 @@ Now we have all tokens and ready to run Joe Bot.
     ```bash
     sudo docker run \
         --name joe_bot \
-        --publish 3001:3001 \
+        --publish 2400:2400 \
         --restart=on-failure \
         --volume ~/.dblab/configs/joe_config.yml:/home/config/config.yml \
         --detach \
     postgresai/joe:latest
     ``` 
 
-1. Make a publicly accessible HTTP(S) server port specified in the configuration to receive requests from communication channels Request URL (e.g., http://35.200.200.200:3001, https://joe.dev.domain.com).
+1. Make a publicly accessible HTTP(S) server port specified in the configuration to receive requests from communication channels Request URL (e.g., http://35.200.200.200:2400, https://joe.dev.domain.com).
 
 Instead of working using insecure HTTP, you can set up NGINX with SSL enabled and open port 443, similarly as it was described in [Database Lab tutorial](./../database-lab/1_tutorial#step-5-configure-secure-access-to-database-lab-api-optional). 
 

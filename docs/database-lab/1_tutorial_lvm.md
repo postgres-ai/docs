@@ -173,7 +173,7 @@ cat <<CONFIG > ~/.dblab/configs/config.yml
 # Database Lab server configuration.
 
 server:
-  port: 3000
+  port: 2345
 
 provision:
   # Provision mode to use.
@@ -239,7 +239,7 @@ sudo docker run \
   --name dblab_server \
   --label dblab_control \
   --privileged \
-  --publish 3000:3000 \
+  --publish 2345:2345 \
   --restart on-failure \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   --volume /var/lib/dblab:/var/lib/dblab:rshared \
@@ -261,7 +261,7 @@ curl \
   --include \
   --request GET \
   --header 'Verification-Token: secret_token' \
-  http://localhost:3000/status
+  http://localhost:2345/status
 ```
 
 See the full API reference [here](https://postgres.ai/swagger-ui/dblab/).
@@ -325,7 +325,7 @@ server {
   location / {
     proxy_set_header   X-Forwarded-For \$remote_addr;
     proxy_set_header   Host \$http_host;
-    proxy_pass         "http://127.0.0.1:3000";
+    proxy_pass         "http://127.0.0.1:2345";
   }
 }
 CONFIG
@@ -364,7 +364,7 @@ enabling `insecure` option in config (not recommended for real-life use):
 ```bash
 dblab init \
   --environment-id=tutorial \
-  --url=http://$IP_OR_HOSTNAME:3000 \
+  --url=http://$IP_OR_HOSTNAME:2345 \
   --token=secret_token \
   --insecure
 ```

@@ -53,7 +53,7 @@ To list available commands, either run `dblab` with no parameters or with flag `
 
 **Examples**
 ```bash
-dblab --url "127.0.0.1:3000" --token "SECRET_TOKEN" --insecure clone list
+dblab --url "127.0.0.1:2345" --token "SECRET_TOKEN" --insecure clone list
 ```
 ```bash
 DBLAB_INSTANCE_URL="example.com" DBLAB_VERIFICATION_TOKEN="SECRET_TOKEN" dblab clone list
@@ -89,7 +89,7 @@ dblab init [command options] [arguments...]
 
 **Example**
 ```bash
-dblab init --environment-id dev --url "http://127.0.0.1:3000" --token "SECRET_TOKEN" --insecure
+dblab init --environment-id dev --url "http://127.0.0.1:2345" --token "SECRET_TOKEN" --insecure
 ```
 
 
@@ -314,7 +314,7 @@ dblab config create [command options] ENVIRONMENT_ID
 
 **Example**
 ```bash
-dblab config create --url "http://127.0.0.1:3001" --token SECRET_TOKEN --insecure=true dev
+dblab config create --url "http://127.0.0.1:2345" --token SECRET_TOKEN --insecure=true dev
 ```
 
 ---
@@ -335,7 +335,7 @@ dblab config update [command options] ENVIRONMENT_ID
 
 **Example**
 ```bash
-dblab config update --url "http://127.0.0.1:3001" --token SECRET_TOKEN --insecure=true dev
+dblab config update --url "http://127.0.0.1:2345" --token SECRET_TOKEN --insecure=true dev
 ```
 
 ---

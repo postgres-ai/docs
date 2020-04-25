@@ -15,8 +15,8 @@ Use both of them to get the best experience.
 
 ```yml
 app:
-  # HTTP server port. By default: 3001.
-  port: 3001
+  # HTTP server port. By default: 2400.
+  port: 2400
 
   # Time interval to notify a user about the finish of a long query. By default: 60s.
   minNotifyDuration: 60s
@@ -126,7 +126,7 @@ enterprise:
 ## General environment variables
 
 ### `SERVER_PORT`
-- (integer, default: `3001`), HTTP server port used to serve requests to Joe bot API.
+- (integer, default: `2400`), HTTP server port used to serve requests to Joe bot API.
 
 ### `MIN_NOTIFY_DURATION`
 - (string, default: `60s`), if the processing of command takes longer than the specified value, a notification will be issued to the user.
