@@ -23,14 +23,6 @@
       },
       {
         "type": "subcategory",
-        "label": "Installation and Configuration",
-        "ids": [
-          "database-lab/2_setup_aws",
-          "database-lab/2_setup_gcp"
-        ]
-      },
-      {
-        "type": "subcategory",
         "label": "Reference",
         "ids": [
           "database-lab/5_api_reference",
