@@ -198,19 +198,27 @@ Configure a new Slack App in order to use Joe in Slack and add the app to your t
 Now we have all tokens and ready to run Joe Bot.
 
 
-## Step 3. Run
-1. Launch the Joe container which immediately connects to the Database Lab instance(s) you've specified in Joe config file.
-    * Pass environment variables according to the [Postgres.ai Console](https://postgres.ai/console/) configuration if you are using Web UI.
+## Step 3. Run Joe Bot container
 
-    ```bash
-    sudo docker run \
-        --name joe_bot \
-        --publish 2400:2400 \
-        --restart=on-failure \
-        --volume ~/.dblab/configs/joe_config.yml:/home/config/config.yml \
-        --detach \
-    postgresai/joe:latest
-    ``` 
+1. Launch Joe Bot container which immediately connects to the Database Lab instance(s) you've specified in the config file.
+
+```bash
+sudo docker run \
+    --name joe_bot \
+    --publish 2400:2400 \
+    --restart=on-failure \
+    --volume ~/.dblab/configs/joe_config.yml:/home/config/config.yml \
+    --detach \
+postgresai/joe:latest
+```
+
+To observe Joe logs use:
+
+```bash
+sudo docker logs -f joe_bot
+```
+
+Need you to reconfigure or upgrade, you can stop and remove the container any time using `sudo docker stop joe_bot` and `sudo docker rm joe_bot` and then launching it again as described above.
 
 1. Make a publicly accessible HTTP(S) server port specified in the configuration to receive requests from communication channels Request URL (e.g., http://35.200.200.200:2400, https://joe.dev.domain.com).
 
