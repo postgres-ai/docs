@@ -411,7 +411,7 @@ that the clone is ready to be used:
         "password": ""
     },
     "metadata": {
-        "cloneSize": 479232,
+        "cloneDiffSize": 479232,
         "cloningTime": 2.892935211,
         "maxIdleMinutes": 0
     },
