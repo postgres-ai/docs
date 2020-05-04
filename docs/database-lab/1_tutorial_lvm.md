@@ -36,15 +36,7 @@ In general, the overall procedure will be pretty much the same.
 
 ## Step 1. Prepare a machine with two disks, Docker and LVM2
 
-Create an EC2 instance with Ubuntu 18.04 and with an additionally attached
-EBS volume. You can use either of the available methods (AWS CLI, API,
-or manually). More detailed instructions you can find in
-[AWS Setup](2_setup_aws.md) chapter (for GCP, respectively, see
-[GCP Setup](2_setup_gcp.md)). Note that we will need to be able to connect
-to this instance using SSH and HTTPS, so ensure that ports 22 and 443 are open
-for the machine you are going to connect from. In case if Postgres clones should
-be accessible from outside you need to ensure that clones port pool (default:
-6000-6100) are open.
+Create an EC2 instance with Ubuntu 18.04 and with an additionally attached EBS volume (you can find detailed instructions in [the official AWS documentation](https://docs.aws.amazon.com/efs/latest/ug/gs-step-one-create-ec2-resources.html); if you are using Google Cloud, use [the GCP documentation](https://cloud.google.com/compute/docs/instances/create-start-instance)). Note that we will need to be able to connect to this instance using SSH and HTTPS, so ensure that ports 22 and 443 are open for the machine you are going to connect from. Postgres clones will be running listening TCP/IP ports in the range 6000-6100 (configurable), so if need to connect to Postgres clones from outside, ensure that ports from this range are also whitelisted in the firewall settings.
 
 Below we assume that two environment variables are defined:
 
