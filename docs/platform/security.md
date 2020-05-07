@@ -26,6 +26,8 @@ In the case of a SaaS setup (Postgres.ai) of the Platform, the components that c
 
 ![Postgres.ai SaaS Security Model](/docs/assets/saas-security-model.png)
 
+By default, ports 2400 and 2345 operate using HTTP, which is not secure. It is highly recommended that HTTP connections are not available to public, and all communication happens using HTTPS (consider using NGINX with SSL certificates as a proxy option to allow only encrypted communication between the Platform and Database Lab / Joe).
+
 Further, we discuss all Postgres.ai components that are to be installed in your infrastructure, and what kind of information can be transferred to Postgres.ai.
 
 #### Database Lab
