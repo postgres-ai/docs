@@ -4,6 +4,10 @@
       "get-started",
       "questions-and-answers"
     ],
+    "Postgres.ai Platform": [
+      "platform/postgres-ai-platform-overview",
+      "platform/security"
+    ],
     "Database Lab": [
       {
         "type": "subcategory",
@@ -56,7 +60,7 @@
       }
     ],
     "postgres-checkup": [
-      "postgres-checkup/README"
+      "postgres-checkup/postgres-checkup-overview"
     ]
   }
 }
