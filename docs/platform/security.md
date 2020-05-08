@@ -1,5 +1,5 @@
 ---
-title: Platform.ai Security Aspects
+title: Postgres.ai Security Aspects
 ---
 
 Postgres.ai Platform and its components are developed with a strong focus on security. To ensure that your data is secure, please carefully read this document and 
