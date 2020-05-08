@@ -32,7 +32,7 @@ Further, we discuss all Postgres.ai components that are to be installed in your 
 
 #### Database Lab
 
-When integrated, the Database Lab component may receive only control signals such as "create clone", "destroy clone", "refresh clone", "list snapshots". The full list of capabilities you may find in [Database Lab CLI Reference](/docs/database-lab/6_cli_reference). By no means, data from the databases you use is available to the Platform.
+When integrated, the Database Lab component may receive only control signals such as "create clone", "destroy clone", "refresh clone", "list snapshots". The full list of capabilities you may find in [Database Lab CLI Reference](/docs/database-lab/6_cli_reference). By no means is data from your databases available to the Platform.
 
 To be able to connect to a clone, users need to work inside your infrastructure, where connections to Database Lab clones (by default, ports 6000..6100) are possible, using the username and the password defined at clone creation time. Postgres.ai never stores passwords for clones, and it is the users' responsibility to remember them.
 
@@ -51,10 +51,10 @@ At the same time, some data can be still revealed indirectly:
 
 To mitigate these aspects, consider the following:
 
-1. allow working with Joe Bot only to whom you can trust (your organization's team members),
+1. only people you can trust to work with Joe Bot (your organization's team members),
 1. use audit logs Joe Bot provides to review all the activity periodically,
 1. ensure that you use only secure connections (HTTPS), with valid SSL certificates,
-1. if needed, cleanup Joe Bot history or disable it completely,
+1. if needed, you can clean up Joe Bot history or disable it completely,
 1. finally, you may want to consider removing sensitive data at snapshot creation time in Database Lab instances. In this case, the sensitive data won't be available at all (however, this approach changes the physical layout, affecting EXPLAIN plans; in some cases, they may change and not be identical to production anymore).
 
 #### postgres-checkup
