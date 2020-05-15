@@ -15,6 +15,11 @@ Use both of them to get the best experience.
 
 ```yml
 app:
+  # The host which the Joe server accepts HTTP connections from.
+  # By default: "127.0.0.1", accepts only local connections. 
+  # Use an empty string to accept all connections.
+  host: "127.0.0.1"
+
   # HTTP server port. By default: 2400.
   port: 2400
 
@@ -124,6 +129,9 @@ enterprise:
 ```
 
 ## General environment variables
+
+### `SERVER_HOST`
+- (string, default: `127.0.0.1`), host that Joe bot API accepts HTTP connections from. It can be defined either as an IP address or domain name. By default, it accepts only local connections. Use an empty string to accept all connections.
 
 ### `SERVER_PORT`
 - (integer, default: `2400`), HTTP server port used to serve requests to Joe bot API.
