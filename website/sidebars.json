@@ -30,7 +30,8 @@
         "label": "Reference",
         "ids": [
           "database-lab/5_api_reference",
-          "database-lab/6_cli_reference"
+          "database-lab/6_cli_reference",
+          "database-lab/how-to-manage-database-lab"
         ]
       }
     ],
@@ -54,8 +55,9 @@
         "type": "subcategory",
         "label": "Reference",
         "ids": [
-          "joe-bot/configuration_options",
-          "joe-bot/usage"
+          "joe-bot/configuration-options",
+          "joe-bot/usage",
+          "joe-bot/how-to-manage-joe-bot"
         ]
       }
     ],

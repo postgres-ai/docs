@@ -159,7 +159,7 @@ To configure Web UI:
 
 
 ### Step 2b. Set up Joe bot in Slack
-If you need to work with Joe bot in Slack, uncomment `channelMapping: communicationTypes: slack` subsection in Jog config, and follow these instructions.
+If you need to work with Joe bot in Slack, uncomment `channelMapping: communicationTypes: slack` subsection in Joe config, and follow these instructions.
 
 Configure a new Slack App in order to use Joe in Slack and add the app to your team Workspace. Joe Bot should be available with public URL calls from Slack.
 
@@ -179,7 +179,6 @@ Configure a new Slack App in order to use Joe in Slack and add the app to your t
     * `users:read`
 
     ![Slack App - Bot Token Scopes](assets/joe/tutorial-oauth-bot-token-scopes.png)
-    
 
 1. Go to the "App Home" page and edit "App Display Name".
     * Use "Joe Bot" as Display Name and "joe-bot" as the default username.
@@ -202,23 +201,23 @@ Now we have all tokens and ready to run Joe Bot.
 
 1. Launch Joe Bot container which immediately connects to the Database Lab instance(s) you've specified in the config file.
 
-```bash
-sudo docker run \
-    --name joe_bot \
-    --publish 2400:2400 \
-    --restart=on-failure \
-    --volume ~/.dblab/configs/joe_config.yml:/home/config/config.yml \
-    --detach \
-postgresai/joe:latest
-```
+    ```bash
+    sudo docker run \
+        --name joe_bot \
+        --publish 2400:2400 \
+        --restart=on-failure \
+        --volume ~/.dblab/configs/joe_config.yml:/home/config/config.yml \
+        --detach \
+    postgresai/joe:latest
+    ``` 
 
-To observe Joe logs use:
+    To observe Joe logs use:
 
-```bash
-sudo docker logs -f joe_bot
-```
-
-Need you to reconfigure or upgrade, you can stop and remove the container any time using `sudo docker stop joe_bot` and `sudo docker rm joe_bot` and then launching it again as described above.
+    ```bash
+    sudo docker logs -f joe_bot
+    ```
+    
+    Need you to reconfigure or upgrade, you can stop and remove the container any time using `sudo docker stop joe_bot` and `sudo docker rm joe_bot` and then launching it again as described above.
 
 1. Make a publicly accessible HTTP(S) server port specified in the configuration to receive requests from communication channels Request URL (e.g., http://35.200.200.200:2400, https://joe.dev.domain.com).
 
@@ -251,4 +250,4 @@ See also (it might be helpful): https://nginxconfig.io/
     ![Run command](assets/joe/tutorial-example-help.png)
 
 
-See available configuration options [here](./configuration_options).
+See available configuration options [here](./configuration-options).
