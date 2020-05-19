@@ -15,12 +15,14 @@ Use both of them to get the best experience.
 
 ```yml
 app:
-  # HTTP server IP address or host. 
+  # HTTP server IP address or host.
+  # Used only for Web UI and Slack Events API communication types.
   # Default: "127.0.0.1" (only local connections).
   # Use empty string to listen all network interfaces.
   host: "127.0.0.1"
 
-  # HTTP server port. Default: 2400.
+  # HTTP server port. Used only for Web UI and Slack Events API communication types.
+  # Default: 2400.
   port: 2400
 
   # Minimal duration of long query processing used for notifications.
@@ -41,9 +43,6 @@ platform:
   # Postgres.ai Platform API secret token.
   token: "platform_secret_token"
 
-  # Postgres.ai Platform project to which user sessions are to be assigned.
-  project: "demo"
-
   # Enable command history in Postgres.ai Platform for collaboration and
   # visualization. Default: true.
   historyEnabled: true
@@ -63,7 +62,7 @@ channelMapping:
       # Secret token used to communicate with Database Lab API
       token: "secret_token"
 
-  # Available communication types ("webui", "slack", etc.)
+  # Available communication types ("webui", "slack", "slackrtm", etc.)
   communicationTypes:
     # Communication type: Web UI (part of Postgres.ai Platform).
     webui:
@@ -78,6 +77,9 @@ channelMapping:
           # Web UI channel ID. Feel free to choose any name, it is just an alias.
           # This is what users see in browser.
           - channelID: ProductionDB
+
+            # Postgres.ai Platform project to which user sessions are to be assigned.
+            project: "demo"
 
             # Database Lab alias from the "dblabServers" section.
             dblabServer: prod1
@@ -94,7 +96,7 @@ channelMapping:
               # See https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-SSLMODE-STATEMENTS
               sslmode: prefer
 
-    # Communication type: Slack.
+    # Communication type: Slack Events API.
     slack:
       # Workspace name. Feel free to choose any name, it is just an alias.
       - name: Workspace
@@ -113,6 +115,43 @@ channelMapping:
           # and choose "Additional options > Copy link". From that link, we
           # need the last part consisting of 9 letters starting with "C".
           - channelID: CXXXXXXXX
+
+            # Postgres.ai Platform project to which user sessions are to be assigned.
+            project: "demo"
+
+            # Database Lab alias from the "dblabServers" section.
+            dblabServer: prod1
+
+            # PostgreSQL connection parameters used to connect to a clone.
+            # The username/password are not needed; they will be randomly
+            # generated each time a new clone is created.
+            dblabParams:
+              # It is recommended to leave "postgres" here, because this DB
+              # usually exists in any PostgreSQL setup.
+              dbname: postgres
+              # It is NOT recommended to work without SSL. This value will be
+              # used in a clone's pg_hba.conf. 
+              # See https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-SSLMODE-STATEMENTS
+              sslmode: prefer
+
+    # Communication type: Slack RTM.
+    slackrtm:
+      # Workspace name. Feel free to choose any name, it is just an alias.
+      - name: Workspace
+
+        credentials:
+          # Bot User OAuth Access.
+          # See https://api.slack.com/authentication/token-types
+          accessToken: xoxb-XXXX
+
+        channels:
+          # Slack channel ID. In Slack app, right-click on the channel name,
+          # and choose "Additional options > Copy link". From that link, we
+          # need the last part consisting of 9 letters starting with "C".
+          - channelID: CXXXXXXXX
+
+            # Postgres.ai Platform project to which user sessions are to be assigned.
+            project: "demo"
 
             # Database Lab alias from the "dblabServers" section.
             dblabServer: prod1
@@ -154,10 +193,10 @@ enterprise:
 ## General environment variables
 
 ### `SERVER_HOST`
-- (string, default: `127.0.0.1`), host that Joe bot API accepts HTTP connections from. It can be defined either as an IP address or domain name. By default, it accepts only local connections. Use an empty string to accept all connections.
+- (string, default: `127.0.0.1`), host that Joe bot API accepts HTTP connections from. Used only for Web UI and Slack Events API communication types. It can be defined either as an IP address or domain name. By default, it accepts only local connections. Use an empty string to accept all connections.
 
 ### `SERVER_PORT`
-- (integer, default: `2400`), HTTP server port used to serve requests to Joe bot API.
+- (integer, default: `2400`), HTTP server port used to serve requests to Joe bot API. Used only for Web UI and Slack Events API communication types.
 
 ### `MIN_NOTIFY_DURATION`
 - (string, default: `60s`), if the processing of command takes longer than the specified value, a notification will be issued to the user.
