@@ -68,4 +68,4 @@ Both SaaS and Self-managed options include two offerings, as of May 2020:
     - unlimited number of Joe Bot instances, with unlimited channel mapping,
     - unlimited Joe Bot History,
     - "auto-join" feature is available: if configured, members with verified email addresses belonging to your company (`username@your-company-name.com`) join your organization automatically.
-
+1. EE "Platinum": to be defined (stay tuned!).
