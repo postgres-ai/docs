@@ -59,6 +59,7 @@ dblab --url "127.0.0.1:2345" --token "SECRET_TOKEN" --insecure clone list
 DBLAB_INSTANCE_URL="example.com" DBLAB_VERIFICATION_TOKEN="SECRET_TOKEN" dblab clone list
 ```
 
+> ⚠ If you register a Database Lab instance on the Postgres.ai Platform through the Platform server tunnel, it means that to use Database Lab API and CLI, your users need to be able to reach your infrastructure somehow. Consider use of VPN or custom SSH [port forwarding](https://en.wikipedia.org/wiki/Port_forwarding).
 
 ## Command Overview
 ```
