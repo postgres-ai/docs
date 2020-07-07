@@ -61,7 +61,7 @@ Both SaaS and Self-managed options include two offerings, as of May 2020:
     - Joe Bot History shows with retention 14 days (individual pages are infinitely available via direct URLs).
 1. EE (Enterprise Edition) "Gold":
     - this is a paid version:
-        - $20 / user / month on Postgres.ai, each organization has independent billing, and license applies to an organization as a whole (example: if you have two organizations, one consisting of 15 members, and another of 10 members, and you decide to use all EE features in the first one, you need to pay 15 x $20 = $300 each month, in this case, you will have the first organization working in "EE" mode, while the second one remains in "CE" mode),
+        - $95 / user / month on Postgres.ai, each organization has independent billing, and license applies to an organization as a whole (example: if you have two organizations, one consisting of 15 members, and another of 10 members, and you decide to use all EE features in the first one, you need to pay 15 x $95 = $1425 each month, in this case, you will have the first organization working in "EE" mode, while the second one remains in "CE" mode),
         - EE offering for Self-managed setup is available upon request. Please contact Postgres.ai Support.
     - all features included to CE,
     - unlimited number of Database Lab instances,
