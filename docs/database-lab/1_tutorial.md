@@ -39,9 +39,9 @@ Create an EC2 instance with Ubuntu 18.04 and with an additionally attached EBS v
 Below we assume that the following two environment variables are defined:
 
 - `$IP_OR_HOSTNAME`: either hostname or IP address that we will use to connect to the instance using SSH and HTTPS protocols (or HTTP, if we don't care about security or operate in a safe environment). In the case of AWS, it is a good idea to use the public IP address assigned to your EC2 instance. You can find it in EC2 Management Console looking at the Description of the instance. Do not use `localhost` or `127.0.0.1` here, use local or public IP address, or a hostname associated with it.
-- `$DBLAB_DISK`: EBS volume device name where we will store the database with clones. To specify $DBLAB_DISK, check the list of disks using `lsblk`. Some examples:
+- `$DBLAB_DISK`: EBS volume device that will be used to store the database data directory being used to create thin clones. To specify `$DBLAB_DISK`, check the list of disks using `lsblk`. Some examples:
     - on AWS, if you use an EBS volume, `lsblk` will show something like `/dev/xvdb`, so you need to run `export DBLAB_DISK="/dev/xvdb"`;
-    - another option on AWS is a local ephimeral NVMe disk, in this case, you would need something like `export DBLAB_DISK="/dev/nvme0n1"`;
+    - another option on AWS is a local ephemeral NVMe disk, in this case, you would need something like `export DBLAB_DISK="/dev/nvme0n1"`;
     - finally, in the case of PD disk on GCP, you are going to need `export DBLAB_DISK="/dev/disk/by-id/google-DISK-NAME"`.
 
 > ⚠ Be careful with defining the value of `$DBLAB_DISK`. If you choose a wrong device and this device stores essential data, you may lose the data in the further steps, when we start writing new data to the device.
@@ -95,11 +95,15 @@ And check the result:
 sudo zfs list
 ```
 
-## Step 2. Generate an example database for testing purposes
+## Step 2. Prepare database data directory
 
-Let's generate some synthetic database with data directory ("PGDATA") located at `/var/lib/dblab/data`. To do so we will use standard PostgreSQL tool called `pgbench`. With scale factor `-s 100`, the database size will be ~1.4 GiB.
+Next, we need to bring the data to the Database Lab server somehow. For our testing needs, we have two options:
+- generate a synthetic database, or
+- copy an existing database from somewhere (perform "think cloning" once), using either physical or logical method, as described below.
 
-Alternatively, you can take an existing PostgreSQL database and just copy it to `/var/lib/dblab/data` using any convenient method.
+### Option 1: generate a synthetic database
+
+If you don't have an existing database for testing, then let's just generate some synthetic database in the data directory ("PGDATA") located at `/var/lib/dblab/data`. A simple way of doing it is to use PostgreSQL standard for benchmarking, `pgbench`. With scale factor `-s 100`, the database size will be ~1.4 GiB; feel free to adjust the scale factor value according to your needs.
 
 To generate PGDATA with `pgbench`, we are going to launch a regular Docker container with Postgres temporarily. We are going to use `POSTGRES_HOST_AUTH_METHOD=trust` to allow connection without authentication; once the generation is done, the container will be stopped, after that we can modify `pg_hba.conf` to control make the configuration secure (for the sake of simplicity, we are going to skip such configuration in this demo).
 
@@ -130,6 +134,18 @@ PGDATA is ready and now it is time to delete the temporary container with Postgr
 sudo docker stop dblab_pg_initdb
 sudo docker rm dblab_pg_initdb
 ```
+
+### Option 2: copy an existing database
+
+IF you have a real database and want to try it with the Database Lab, you need to copy the data to PostgreSQL data directory on the Database Lab server, `/var/lib/dblab/data`). This step is called "thick cloning" and it is needed just once. Again, there are two basic options here, we can use either the logical method of thick cloning or the physical method.
+- logical method:
+    - dump/restore (for example, using `pg_dump` and `pg_restore` tools)
+- physical method. Can be done using one of the following:
+    - standard `pg_basebackup` tool,
+    - restoring from a physical archive created by some backup tool (e.g., WAL-G, Barman, pgBackRest).
+
+
+> Optionally, you might decide to keep PGDATA up-to-date, being continuously updated. Right now, this is supported only if chose the physical method of thick cloning. To have PGDATA updated continuously, you need to run the so-called "sync instance" of PostgreSQL, running on the same machine. Take a look at [prepared images](https://hub.docker.com/repository/docker/postgresai/sync-instance) to set it up.
 
 ## Step 3. Prepare the first snapshot
 
