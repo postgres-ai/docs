@@ -4,12 +4,12 @@ title: Getting Started
 hide_title: false
 sidebar_label: Getting Started
 ---
-## What is Postgres.ai
+## What is Postgres.ai?
 
-We aim to eliminate database-related roadblocks on the way of developers, DBAs, and QA engineers. Two major components of it are:
+The Postgres.ai Platform aims to eliminate all the database-related roadblocks on the way of developers, DBAs, and QA engineers. Two major components of the Platform can be mapped to "Dev" and "Ops" in DevOps lifecycle with respect to databases:
 
-1. `postgres-checkup` – a powerful tool automating health checks of PostgreSQL databases. Its key features are unobtrusiveness, "zero install", and complex and deep analysis of a whole PostgreSQL set of nodes (primary plus its followers). With `postgres-checkup`, an experienced DBA spends only 4 hours instead of 2 weeks to analyze a heavily-loaded PostgreSQL setup when seeing it for the first time.
-1. Database Lab – the core component based on which powerful, state-of-the-art development and testing environments are built. It is based on a simple idea: with modern thin cloning technologies, it becomes possible to iterate 100x faster in development and testing. It is extremely helpful for larger companies that want to achieve high development velocity and the most competitive "time to market" characteristics.
+1. (Dev) **Database Lab** – the core component based on which powerful, state-of-the-art development and testing environments are built. It is based on a simple idea: with modern thin cloning technologies, it becomes possible to iterate 100x faster in development and testing. It is extremely helpful for larger companies that want to achieve high development velocity and the most competitive "time to market" characteristics.
+1. (Ops) **`postgres-checkup`** – a powerful tool automating health checks of PostgreSQL databases. Its key features are unobtrusiveness, "zero install", and complex and deep analysis of a whole PostgreSQL set of nodes (primary plus its followers). With `postgres-checkup`, an experienced DBA spends only 4 hours instead of 2 weeks to analyze a heavily-loaded PostgreSQL setup when seeing it for the first time.
 
 Additional projects included in the Postgres.ai platform and based on Database Lab:
 
