@@ -19,7 +19,7 @@ curl https://gitlab.com/postgres-ai/database-lab/-/raw/master/scripts/cli_instal
 
 In a separate terminal tab laucnh SSH port forwarding. Use `http://localhost:2344` as URL in a step 3 below.
 ```
-ssh -NTML 2344:localhost:2345 ssh://USERNAME@dev2.postgres.ai:22 -i ~/.ssh/id_rsa
+ssh -NTML 2344:localhost:2345 ssh://USERNAME@HOSTNAME:22 -i ~/.ssh/id_rsa
 ```
 
 3. Initialize configuration. Use URL and verification token of your instance. Instead of using verification token you can generate and use your personal access token. See details [here](/personal_tokens).

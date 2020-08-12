@@ -14,7 +14,7 @@ title: Resetting a Database Lab clone state
 Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/guides/cli_install_init).
 
 ### Reference
-- Command [`dblab clone create`](/docs/database-lab/6_cli_reference#subcommand-reset)
+- Command [`dblab clone reset`](/docs/database-lab/6_cli_reference#subcommand-reset)
 
 ### Reset a clone
 
