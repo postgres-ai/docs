@@ -13,7 +13,35 @@ Database Lab clones could be protected from manual and automatical deletion by e
 From the **Database Lab clone** page enable or disable the **Enable deletion protection** checkbox.
   ![Database Lab engine page / Create clone](/docs/assets/guides/clone_protection_1.png)
 <!--CLI-->
-Use [`dblab clone update --protected CLONE_ID`](/docs/database-lab/6_cli_reference#subcommand-update) command.
+Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/guides/cli_install_init).
+
+### Reference
+- Command [`dblab clone update`](/docs/database-lab/6_cli_reference#subcommand-update)
+
+### Protect a clone
+```bash
+dblab clone update --protected CLONE_ID
+```
+
+```
+{
+    "id": "CLONE_ID",
+    "protected": true,
+}
+```
+
+### Unprotect a clone
+```bash
+dblab clone update CLONE_ID
+```
+
+```
+{
+    "id": "CLONE_ID",
+    "protected": false,
+}
+```
+
 <!--END_DOCUSAURUS_CODE_TABS-->
 
 Also, clones could be made protected during clone creation. See [Create clone](/docs/guides/create_clone) guide.

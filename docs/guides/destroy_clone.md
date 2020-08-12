@@ -12,7 +12,19 @@ title: Destroy a Database Lab clone
   ![Database Lab engine page / Create clone](/docs/assets/guides/create_clone_1.png)
 1. Accept confirmation dialog and wait for it. You will be redirect to the **Database Lab instance** page.
 <!--CLI-->
-Use [`dblab clone destroy`](/docs/database-lab/6_cli_reference#subcommand-destroy) command.
+Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/guides/cli_install_init).
+
+### Reference
+- Command [`dblab clone destroy`](/docs/database-lab/6_cli_reference#subcommand-destroy)
+
+### Destroy a clone
+```bash
+dblab clone destroy CLONE_ID
+```
+
+```
+The clone has been successfully destroyed: CLONE_ID
+```
 <!--END_DOCUSAURUS_CODE_TABS-->
 
 ## Related
