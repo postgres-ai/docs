@@ -2,6 +2,9 @@
 title: Guides
 ---
 
+# Instance
+- [Get information about instance](/docs/guides/get_instance_info)
+
 # Clones
 - [Create a Database Lab clone](/docs/guides/create_clone)
 - [Connect to a Database Lab clone](/docs/guides/connect_clone)

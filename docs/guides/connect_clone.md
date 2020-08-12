@@ -12,12 +12,55 @@ title: Connect to a Database Lab clone
 1. Test established connection by listing tables in the database with `\d` command.
   ![Terminal / psql](/docs/assets/guides/connect_clone_2.png)
 <!--CLI-->
-TBD
+Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/guides/cli_install_init).
+
+### Reference
+- Command [`dblab clone status`](/docs/database-lab/6_cli_reference#subcommand-status)
+
+### Connection
+
+1. Get connection information for a clone.
+
+```bash
+dblab clone status CLONE_ID
+```
+
+```json
+{
+    "id": "CLONE_ID",
+    "status": {
+        "code": "OK",
+        "message": "Clone is ready to accept Postgres connections."
+    },
+    "db": {
+        "connStr": "host=HOSTNAME port=6000 user=USERNAME dbname=DBNAME",
+        "host": "HOSTNAME",
+        "port": "6000",
+        "username": "USERNAME",
+        "password": ""
+    },
+    ...
+}
+```
+
+2. Connect to the clone using any Postgres client, e.g. psql. Change the database name `DBNAME` parameter, you can always use `postgres` for the initial connection. Type password you've set during clone creation.
+
+```bash
+psql "host=HOSTNAME port=6000 user=USERNAME dbname=DBNAME"
+```
+
+```text
+Password for user USERNAME:
+psql (12.1, server 12.3)
+Type "help" for help.
+
+DBNAME=#
+```
+
+3. Test established connection by listing tables in the database with `\d` command.
 <!--END_DOCUSAURUS_CODE_TABS-->
 
 ## Direct connection (JDBC)
-<!--DOCUSAURUS_CODE_TABS-->
-<!--GUI-->
 1. From the **Database Lab clone** page under section **Connection info** copy **JDBC connection string** field contents by clicking the **Copy** button.
   ![Database Lab clone page / JDBC connection string](/docs/assets/guides/connect_clone_3.png)
 1. Use any Java-based PostgreSQL client to connect. For this guide, we will use [CloudBeaver](https://demo.cloudbeaver.io). Open the client.
@@ -27,9 +70,6 @@ TBD
   ![CloudBeaver / New connection](/docs/assets/guides/connect_clone_5.png)
 1. Test the connection by fetching tables.
   ![CloudBeaver / Tables](/docs/assets/guides/connect_clone_6.png)
-<!--CLI-->
-TBD
-<!--END_DOCUSAURUS_CODE_TABS-->
 
 ## SSH port forwarding
 > SSH keys should be on the server with Database Lab engine in order to use this connection option.
@@ -49,7 +89,58 @@ TBD
 1. Test established connection by fetching the list of tables with `\d` command.
   ![Terminal / psql with port forward](/docs/assets/guides/connect_clone_10.png)
 <!--CLI-->
-TBD
+Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/guides/cli_install_init).
+
+### Reference
+- Command [`dblab clone status`](/docs/database-lab/6_cli_reference#subcommand-status)
+
+### Connection
+
+1. In the first tab of terminal start SSH port forwarding using the provided command. Change `USERNAME` to match the username of your SSH key. Change the path to the SSH key if needed.
+
+```bash
+ssh -NTML 6000:localhost:6000 ssh://USERNAME@HOSTNAME:22 -i ~/.ssh/id_rsa
+```
+
+2. Get connection information of a clone.
+
+```bash
+dblab clone status CLONE_ID
+```
+
+```json
+{
+    "id": "CLONE_ID",
+    "status": {
+        "code": "OK",
+        "message": "Clone is ready to accept Postgres connections."
+    },
+    "db": {
+        "connStr": "host=HOSTNAME port=6000 user=USERNAME dbname=DBNAME",
+        "host": "HOSTNAME",
+        "port": "6000",
+        "username": "USERNAME",
+        "password": ""
+    },
+    ...
+}
+```
+
+2. Connect to the clone using any Postgres client, e.g. psql launched from a second tab. Change the database name `DBNAME` parameter, you can always use `postgres` for the initial connection. Type password you've set during clone creation. Make sure that `host=localhost`, as we need to connect to the local port forwarding tunnel.
+
+```bash
+psql "host=localhost port=6000 user=USERNAME dbname=DBNAME"
+```
+
+```text
+Password for user USERNAME:
+psql (12.1, server 12.3)
+Type "help" for help.
+
+DBNAME=#
+```
+
+3. Test established connection by listing tables in the database with `\d` command.
 <!--END_DOCUSAURUS_CODE_TABS-->
 
 
