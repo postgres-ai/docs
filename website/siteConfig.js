@@ -50,7 +50,7 @@ const siteConfig = {
 
   /* path to images for header/footer */
   headerIcon: 'img/white-logo.svg',
-  footerIcon: 'img/white-logo.svg',
+  footerIcon: 'img/transparent-logo.svg',
   favicon: 'img/favicon.ico',
 
   /* Colors for website */
@@ -85,7 +85,7 @@ const siteConfig = {
   scripts: [
     'https://buttons.github.io/buttons.js',
     'https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js',
-    BASE_URL + 'js/code-block-buttons.js',
+    BASE_URL + 'js/code-block-buttons.js'
   ],
 
   stylesheets: ['/css/code-block-buttons.css'],
