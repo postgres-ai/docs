@@ -2,8 +2,7 @@
 title: Create a Database Lab clone
 ---
 
-<!--DOCUSAURUS_CODE_TABS-->
-<!--GUI-->
+## GUI
 1. Go to **Database Lab instance** page.
 1. Click the **Create clone** button.
   ![Database Lab engine page / Create clone](/docs/assets/guides/create_clone_1.png)
@@ -15,7 +14,8 @@ title: Create a Database Lab clone
 ![Database Lab engine clone creation page](/docs/assets/guides/create_clone_2.png)
 1. You will be redirected on **Database Lab clone** page.
   ![Database Lab engine clone page](/docs/assets/guides/create_clone_3.png)
-<!--CLI-->
+
+## CLI
 Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/guides/cli_install_init).
 
 ### Reference
@@ -114,8 +114,6 @@ $ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --pro
     ...
 }
 ```
-
-<!--END_DOCUSAURUS_CODE_TABS-->
 
 ## Related
 - Guide: [Connect to a clone](/docs/guides/connect_clone)
