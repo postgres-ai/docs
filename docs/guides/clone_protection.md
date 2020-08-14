@@ -8,11 +8,11 @@ Database Lab clones could be protected from manual and automatical deletion by e
 
 > Please be careful: abandoned protected clones may cause out-of-disk-space events. Check disk space on a daily basis and delete protected clones once the work is done.
 
-<!--DOCUSAURUS_CODE_TABS-->
-<!--GUI-->
+## GUI
 From the **Database Lab clone** page enable or disable the **Enable deletion protection** checkbox.
   ![Database Lab engine page / Create clone](/docs/assets/guides/clone_protection_1.png)
-<!--CLI-->
+
+## CLI
 Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/guides/cli_install_init).
 
 ### Reference

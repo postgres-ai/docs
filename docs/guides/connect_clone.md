@@ -3,21 +3,22 @@ title: Connect to a Database Lab clone
 ---
 
 ## Direct connection (psql)
-<!--DOCUSAURUS_CODE_TABS-->
-<!--GUI-->
+
+### GUI
 1. From the **Database Lab clone** page under section **Connection info** copy **psql connection string** field contents by clicking the **Copy** button.
   ![Database Lab clone page / psql connection string](/docs/assets/guides/connect_clone_1.png)
 1. In terminal type `psql` and paste **psql connection string** field contents. Change the database name `DBNAME` parameter, you can always use `postgres` for the initial connection.
 1. Run the command and type password you've set during clone creation.
 1. Test established connection by listing tables in the database with `\d` command.
   ![Terminal / psql](/docs/assets/guides/connect_clone_2.png)
-<!--CLI-->
+
+### CLI
 Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/guides/cli_install_init).
 
-### Reference
+#### Reference
 - Command [`dblab clone status`](/docs/database-lab/6_cli_reference#subcommand-status)
 
-### Connection
+#### Connection
 
 1. Get connection information for a clone.
 
@@ -58,7 +59,6 @@ DBNAME=#
 ```
 
 3. Test established connection by listing tables in the database with `\d` command.
-<!--END_DOCUSAURUS_CODE_TABS-->
 
 ## Direct connection (JDBC)
 1. From the **Database Lab clone** page under section **Connection info** copy **JDBC connection string** field contents by clicking the **Copy** button.
@@ -76,8 +76,7 @@ DBNAME=#
 
 > If clone ports are not closed on your server you can use direct connections described above.
 
-<!--DOCUSAURUS_CODE_TABS-->
-<!--GUI-->
+### GUI
 1. From the **Database Lab clone** page under section **Connection info** copy **SSH port forwarding** field contents by clicking the **Copy** button.
   ![Database Lab clone page / SSH port forward](/docs/assets/guides/connect_clone_7.png)
 1. In the first tab of terminal start SSH port forwarding using the provided command. Change `USERNAME` to match the username of your SSH key. Change the path to the SSH key if needed.
@@ -88,13 +87,14 @@ DBNAME=#
 1. Run the command and type password you've set during clone creation.
 1. Test established connection by fetching the list of tables with `\d` command.
   ![Terminal / psql with port forward](/docs/assets/guides/connect_clone_10.png)
-<!--CLI-->
+
+### CLI
 Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/guides/cli_install_init).
 
-### Reference
+#### Reference
 - Command [`dblab clone status`](/docs/database-lab/6_cli_reference#subcommand-status)
 
-### Connection
+#### Connection
 
 1. In the first tab of terminal start SSH port forwarding using the provided command. Change `USERNAME` to match the username of your SSH key. Change the path to the SSH key if needed.
 
@@ -141,7 +141,6 @@ DBNAME=#
 ```
 
 3. Test established connection by listing tables in the database with `\d` command.
-<!--END_DOCUSAURUS_CODE_TABS-->
 
 
 ## Related
