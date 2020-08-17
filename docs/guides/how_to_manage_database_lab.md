@@ -64,3 +64,5 @@ If the instance is configured properly, you will get the response with status co
     "version":"0.3.1-20200428-1333"
 }
 ```
+
+[↵ Back to Guides](/docs/guides/)

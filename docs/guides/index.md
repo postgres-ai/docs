@@ -11,3 +11,6 @@ title: Guides
 
 # CLI
 - [CLI install and init](/docs/guides/cli_install_init)
+
+# Database Lab engine administration
+- [How to manage Database Lab engine](/docs/guides/how_to_manage_database_lab)

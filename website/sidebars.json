@@ -2,7 +2,8 @@
   "docs": {
     "Preface": [
       "get-started",
-      "questions-and-answers"
+      "questions-and-answers",
+      "guides/index"
     ],
     "Postgres.ai Platform": [
       "platform/postgres-ai-platform-overview",
