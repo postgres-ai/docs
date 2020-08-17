@@ -3,16 +3,16 @@ title: Create a Database Lab clone
 ---
 
 ## GUI
-1. Go to **Database Lab instance** page.
+1. Go to the **Database Lab instance** page.
 1. Click the **Create clone** button.
   ![Database Lab engine page / Create clone](/docs/assets/guides/create_clone_1.png)
-1. Fill **ID** field with a meaningful name.
-1. (optional) By default latest data snapshot (closest to production state) will be use to provision a clone. You can select any other available snapshot.
-1. Fill **database credentials**. Remember the password it will not be available later, but you will need to use it to connect to the clone.
-1. (optional) Enable protected status (it can be done later if needed). Please be careful: abandoned protected clones may cause out-of-disk-space events. Read details [here](/docs/guides/clone_protection).
-1. Click the **Create clone** button and wait for clone to provision.
+1. Fill the **ID** field with a meaningful name.
+1. (optional) By default latest data snapshot (closest to production state) will be used to provision a clone. You can select any other available snapshot.
+1. Fill **database credentials**. Remember the password, it will not be available later, but you will need to use it to connect to the clone.
+1. (optional) Enable protected status (it can be done later if needed). Please be careful: abandoned protected clones may cause out-of-disk-space events. Read the details [here](/docs/guides/clone_protection).
+1. Click the **Create clone** button and wait for a clone to provision.
 ![Database Lab engine clone creation page](/docs/assets/guides/create_clone_2.png)
-1. You will be redirected on **Database Lab clone** page.
+1. You will be redirected on the **Database Lab clone** page.
   ![Database Lab engine clone page](/docs/assets/guides/create_clone_3.png)
 
 ## CLI
@@ -23,7 +23,7 @@ Before you run any commands, install Database Lab CLI and initialize configurati
 - Command [`dblab snapshot list`](/docs/database-lab/6_cli_reference#subcommand-list-1)
 
 ### Basic clone creation
-Create a clone using `dblab clone create` command. You need to specify username and password that will be used to connect to the clone. Remember the password it will not be available later, but you will need to use it to connect to the clone.
+Create a clone using `dblab clone create` command. You need to specify the username and password that will be used to connect to the clone. Remember the password, it will not be available later, but you will need to use it to connect to the clone.
 
 ```bash
 $ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID
@@ -47,9 +47,9 @@ $ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID
 }
 ```
 
-### Create a clone with non-default snapshot
+### Create a clone with a non-default snapshot
 
-By default latest data snapshot (closest to production state) will be use to provision a clone. You can select any other available snapshot.
+By default latest data snapshot (closest to production state) will be used to provision a clone. You can select any other available snapshot.
 
 1. List available snapshots.
 
@@ -73,7 +73,7 @@ $ dblab snapshot list
 ]
 ```
 
-2. Create a clone with state based on desired snapshot.
+2. Create a clone with the state, based on the desired snapshot.
 
 ```bash
 $ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --snapshot-id SNAPSHOT_ID
@@ -97,7 +97,7 @@ $ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --sna
 
 ### Protected status
 
-You can make clone protected during the creation or later (if needed). Please be careful: abandoned protected clones may cause out-of-disk-space events. Read details [here](/docs/guides/clone_protection).
+You can make clone protected during the creation or later (if needed). Please be careful: abandoned protected clones may cause out-of-disk-space events. Read the details [here](/docs/guides/clone_protection).
 
 ```bash
 $ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --protected

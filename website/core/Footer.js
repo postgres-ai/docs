@@ -46,6 +46,9 @@ class Footer extends React.Component {
             <a href={this.docUrl('questions-and-answers')}>
               Q&A
             </a>
+            <a href={this.docUrl('guides/index')}>
+              Guides
+            </a>
           </div>
           <div>
             <h5>Reference</h5>
