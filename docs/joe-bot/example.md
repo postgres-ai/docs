@@ -1,5 +1,6 @@
 ---
-title: Joe Bot Demo and Example
+title: Joe Bot demo and example
+sidebar_label: Demo and example
 ---
 
 ## Demonstration
@@ -31,7 +32,7 @@ where likes > 10 and created > '2019-10-01';
 
 #### Use the `explain` command
 
-![Use case - Initial EXPLAIN](assets/joe/tutorial-use-case-1-initial-explain.png)
+![Use case - Initial EXPLAIN](/docs/assets/joe/tutorial-use-case-1-initial-explain.png)
 
 #### Read the summary
 - Execution Time: *2.5 minutes*
@@ -70,7 +71,7 @@ where likes > 10 and created > '2019-10-01';
     create index improved_ix_posts on posts(likes, created desc);
     ```
 
-    ![Use case - Create index](assets/joe/tutorial-use-case-1-create-index.png)
+    ![Use case - Create index](/docs/assets/joe/tutorial-use-case-1-create-index.png)
 
 #### Check the results: `explain` the query again
 

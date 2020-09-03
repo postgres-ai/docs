@@ -1,17 +1,12 @@
 ---
-title: Guides
+title: Cloning guides
+sidebar_label: Cloning
 ---
 
-# Clones
 - [Create a Database Lab clone](/docs/guides/cloning/create-clone)
 - [Connect to a Database Lab clone](/docs/guides/cloning/connect-clone)
 - [Resetting a Database Lab clone state](/docs/guides/cloning/reset-clone)
 - [Destroy a Database Lab clone](/docs/guides/cloning/destroy-clone)
 - [Clone protection from manual and automatic deletion](/docs/guides/cloning/clone-protection)
 
-# CLI
-- [CLI install and init](/docs/guides/cli/cli-install-init)
-
-# Administration
-- [How to manage Database Lab Engine](/docs/guides/administration/engine-manage)
-- [How to manage Joe Bot](/docs/guides/administration/manage-joe)
+[↵ Back to Guides](/docs/guides/)
