@@ -1,69 +1,57 @@
 {
   "docs": {
-    "Preface": [
+    "Overview": [
       "get-started",
       "questions-and-answers",
-      "guides/index"
+      "pricing"
     ],
-    "Postgres.ai Platform": [
-      "platform/postgres-ai-platform-overview",
+    "Tutorials": [
+      "tutorials/engine-setup-rds",
+      "tutorials/engine-setup"
+    ],
+    "Guides": [
+      "guides/cloning/index",
+      "guides/cli/index",
+      "guides/administration/index"
+    ],
+    "Database Lab Platform": [
+      "platform/index",
       "platform/security"
     ],
-    "Database Lab": [
-      {
-        "type": "subcategory",
-        "label": "Overview",
-        "ids": [
-          "database-lab/what_is_database_lab",
-          "database-lab/supported_databases"
-        ]
-      },
-      {
-        "type": "subcategory",
-        "label": "Tutorials",
-        "ids": [
-          "database-lab/1_tutorial",
-          "database-lab/1_tutorial_lvm"
-        ]
-      },
+    "Database Lab Engine": [
+      "database-lab/index",
+      "database-lab/supported-databases",
       {
         "type": "subcategory",
         "label": "Reference",
         "ids": [
-          "database-lab/5_api_reference",
-          "database-lab/6_cli_reference",
-          "database-lab/how-to-manage-database-lab"
+          "database-lab/api-reference",
+          "database-lab/cli-reference",
+          "database-lab/config-reference"
         ]
       }
     ],
+    "Staging with superpowers": [
+      "staging/index"
+    ],
     "Joe Bot": [
-      {
-        "type": "subcategory",
-        "label": "Overview",
-        "ids": [
-          "joe-bot/what_is_joe",
-          "joe-bot/example"
-        ]
-      },
-      {
-        "type": "subcategory",
-        "label": "Tutorial",
-        "ids": [
-          "joe-bot/tutorial"
-        ]
-      },
+      "joe-bot/index",
+      "joe-bot/example",
       {
         "type": "subcategory",
         "label": "Reference",
         "ids": [
-          "joe-bot/configuration-options",
-          "joe-bot/usage",
+          "joe-bot/config-reference",
+          "joe-bot/commands-reference",
           "joe-bot/how-to-manage-joe-bot"
         ]
       }
     ],
-    "postgres-checkup": [
-      "postgres-checkup/postgres-checkup-overview"
+    "Other": [
+      "checkup/index",
+      "database-changes-cicd/index",
+      "data-recovery/index",
+      "data-access/index"
     ]
   }
 }

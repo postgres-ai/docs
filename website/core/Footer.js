@@ -52,10 +52,10 @@ class Footer extends React.Component {
           </div>
           <div>
             <h5>Reference</h5>
-            <a href={this.docUrl('database-lab/5_api_reference')}>
+            <a href={this.docUrl('database-lab/api-reference')}>
               API reference
             </a>
-            <a href={this.docUrl('database-lab/6_cli_reference')}>
+            <a href={this.docUrl('database-lab/cli-reference')}>
               CLI reference
             </a>
           </div>

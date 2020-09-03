@@ -1,8 +1,7 @@
 ---
-id: questions-and-answers
 title: Q&A
-hide_title: false
 sidebar_label: Q&A
+hide_title: false
 ---
 
 ## What does "thin cloning" mean? Thin vs. thick clones. Why is thin cloning so fast?
@@ -38,7 +37,7 @@ As an alternative to ZFS, Database Lab supports LVM to enable thin-provisioning.
 
 - for each Database Lab instance, a separate machine is needed, either physical or virtual, either on-premise or in clouds;
 - for each Postgres production source database, a separate Database Lab instance is required;
-- a Database Lab machine needs to have a separate disk partition with size enough to store the target Postgres directory (PGDATA), see [Database Lab Tutorial](https://postgres.ai/docs/database-lab/1_tutorial) for more details;
+- a Database Lab machine needs to have a separate disk partition with size enough to store the target Postgres directory (PGDATA), see [Database Lab Tutorial](/docs/tutorials/engine-setup) for more details;
 - any modern Linux is supported, with ZFS module (if you are going to use ZFS to support thin cloning, which is the default method) and Docker installed;
 - currently, you need to take care of the initial copying of the database to this disk yourself (the "thick cloning" stage), use either of the following:
     - dump/restore procedure (`pg_dump`/`pg_dumpall` and `pg_restore`/`psql`),
@@ -46,7 +45,11 @@ As an alternative to ZFS, Database Lab supports LVM to enable thin-provisioning.
     - restore from a physical archive (e.g., WAL-G, Barman, pgBackRest), or
     - put the source database into "backup" mode using then `pg_start_backup()` function, then copy PGDATA to Database Lab instance (e.g., using `rsync`), and then stop the "backup" mode (`pg_stop_backup()`).
 
-For more details, see [Database Lab Tutorial](https://postgres.ai/docs/database-lab/1_tutorial).
+For more details, see [Database Lab Tutorial](/docs/tutorials/engine-setup).
+
+## What is needed to use Database Lab with RDS?
+
+For more details, see [Database Lab RDS Tutorial](/docs/tutorials/engine-setup-rds).
 
 ## Cloud vs. on-premise
 

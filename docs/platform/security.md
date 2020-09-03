@@ -1,5 +1,6 @@
 ---
-title: Postgres.ai Security Aspects
+title: Postgres.ai security aspects
+sidebar_label: Security aspects
 ---
 
 Postgres.ai Platform and its components are developed with a strong focus on security. To ensure that your data is secure, please carefully read this document and 
@@ -38,7 +39,7 @@ Further, we discuss all Postgres.ai components that are to be installed in your 
 
 #### Database Lab
 
-When integrated, the Database Lab component may receive only control signals such as "create clone", "destroy clone", "refresh clone", "list snapshots". The full list of capabilities you may find in [Database Lab CLI Reference](/docs/database-lab/6_cli_reference). By no means is data from your databases available to the Platform.
+When integrated, the Database Lab component may receive only control signals such as "create clone", "destroy clone", "refresh clone", "list snapshots". The full list of capabilities you may find in [Database Lab CLI Reference](/docs/database-lab/cli-reference). By no means is data from your databases available to the Platform.
 
 To be able to connect to a clone, users need to work inside your infrastructure, where connections to Database Lab clones (by default, ports 6000..6100) are possible, using the username and the password defined at clone creation time. Postgres.ai never stores passwords for clones, and it is the users' responsibility to remember them.
 
