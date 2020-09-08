@@ -135,6 +135,7 @@ Prepares a snapshot for physical restored PostgreSQL database.
 
 Options:
 - `promote`  (boolean, optional, default: false) - promotes PGDATA after data fetching.
+- `dockerImage` (string, optional) - specifies the Docker image containing the promotion-compatible PostgreSQL instance.
 - `preprocessingScript` (string, optional) - path on the host machine to a pre-precessing script.
 - `configs` (key-value, optional) - applies PostgreSQL configuration parameters to snapshot.
 - `scheduler` (key-value, required) - contains tasks which run on a schedule.
