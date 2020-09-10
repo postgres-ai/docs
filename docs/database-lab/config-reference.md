@@ -124,8 +124,6 @@ Options:
 - `envs` (key-value, optional) - passes custom environment variables to the Docker container with the restoring tool.
 - `walg` (key-value, optional) - defines WAL-G configuration options:
   - `backupName` (string, required) - defines the backup name to restore. 
-  - `storage` (string, optional) - specifies the storage where the archive stores.
-  - `credentialsFile` (string, optional) - specifies the location of the file providing service credentials.
 - `custom` (key-value, optional) - defines configuration options for custom restoring tool:
   - `command` (string, required) - defines the command to restore data using a custom tool. 
   - `restore_command` (string, optional) - defines the PostgreSQL "restore_command" configuration option to refresh data.
