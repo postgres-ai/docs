@@ -1,13 +1,13 @@
 ---
 title: Database Lab tutorial for Amazon RDS
-sidebar_label: Setup for Amazon RDS
+sidebar_label: Tutorial for Amazon RDS
 ---
 
 Database Lab is used to boost software development and testing processes via enabling ultra-fast provisioning of databases of any size.
 
 In this tutorial, we are going to set up a Database Lab Engine for an existing PostgreSQL DB instance on Amazon RDS. If you don't have an RDS instance and want to have one to follow the steps in this tutorial, read [the official RDS documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_GettingStarted.CreatingConnecting.PostgreSQL.html). Database Lab Engine will be installed on an AWS EC2 instance with Ubuntu 18.04, and an additional EBS volume to store PostgreSQL data directory. The data will be automatically retrieved from the RDS database.
 
->⭐️ Please support the project giving a star on GitLab! ⭐
+>⭐️ Please support the project giving a star on GitLab! ⭐<br/>
 >It's on [the main page of the Database Lab Enginer repository](https://gitlab.com/postgres-ai/database-lab), at the upper right corner:
 >
 >![Add a GitLab star](/docs/assets/star.gif)
@@ -426,4 +426,7 @@ Now check the database objects you've dropped or partially deleted – everythin
 
 For more, see [the full client CLI reference](/docs/database-lab/cli-reference).
 
-Have questions? Reach out our team, we'll be happy to help!
+>Have questions? Reach out our team, we'll be happy to help! Use the Intercom widget located at the right bottom corner.
+
+## 👋 Database Lab "Private Beta" program
+Database Lab Platform (SaaS) is currently in a "private beta" mode, being tested by several hundred engineers. Want to become an early adopter? Join Database Lab by Postgres.ai "Private Beta" program today: https://postgres.ai/console/.

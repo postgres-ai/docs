@@ -84,6 +84,7 @@ class Footer extends React.Component {
           <div>
             <h5>Support</h5>
             <a href="https://database-lab-team-slack-invite.herokuapp.com/">Community Slack</a>
+            <a href="https://postgres.ai/console">Private beta 👋</a>
           </div>
         </section>
 

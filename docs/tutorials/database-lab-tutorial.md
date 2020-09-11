@@ -1,6 +1,6 @@
 ---
 title: Database Lab tutorial for any PostgreSQL database
-sidebar_label: Setup for any PostgreSQL database
+sidebar_label: Tutorial for any PostgreSQL database
 ---
 > Working with Amazon RDS? See [Database Lab tutorial for Amazon RDS](/docs/tutorials/database-lab-tutorial-amazon-rds).
 
@@ -8,7 +8,7 @@ Database Lab is used to boost software development and testing processes via ena
 
 In this tutorial, we are going to create a "demo" PostgreSQL database and then set up a Database Lab Engine for it. Database Lab Engine will be installed on an AWS EC2 instance (alternatively, it can be an instance on another cloud platfor such as GCP, or a bare-metal machine) with Ubuntu 18.04, and an additional EBS volume to store PostgreSQL data directory. Optionally, you'll be able to skip creating the "demo" database and use an existing database instead.
 
->⭐️ Please support the project giving a star on GitLab! ⭐
+>⭐️ Please support the project giving a star on GitLab! ⭐<br/>
 >It's on [the main page of the Database Lab Enginer repository](https://gitlab.com/postgres-ai/database-lab), at the upper right corner:
 >
 >![Add a GitLab star](/docs/assets/star.gif)
@@ -479,5 +479,7 @@ To use GUI, you need to [sign up](https://postgres.ai/console) to Database Lab P
 1. Test established connection by listing tables in the database using `\d`.
     ![Terminal / psql](/docs/assets/guides/connect-clone-2.png)
 
+> Have questions? Reach out our team, we'll be happy to help! Use the Intercom widget located at the right bottom corner.
 
-Have questions? Reach out our team, we'll be happy to help!
+## 👋 Database Lab "Private Beta" program
+Database Lab Platform (SaaS) is currently in a "private beta" mode, being tested by several hundred engineers. Want to become an early adopter? Join Database Lab by Postgres.ai "Private Beta" program today: https://postgres.ai/console/.

@@ -40,6 +40,7 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
+    {href: 'https://postgres.ai/console', label: '👋 Private beta'},
     {href: '/', label: 'Home'},
     {doc: 'database-lab/cli-reference', label: 'CLI'},
     {doc: 'database-lab/api-reference', label: 'API'},
