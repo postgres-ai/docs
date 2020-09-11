@@ -49,7 +49,7 @@ Here is how the configuration file is structured:
 - `jobs` - declares the set of running jobs. Stages must be defined in the `spec` section.
 - `spec` - contains a configuration spec for each job.
 
-### Data retrival jobs
+### Data retrieval jobs
 Available job names:
 - `logicalDump`
 - `logicalRestore`
@@ -134,6 +134,7 @@ Prepares a snapshot for physical restored PostgreSQL database.
 Options:
 - `promote`  (boolean, optional, default: false) - promotes PGDATA after data fetching.
 - `dockerImage` (string, optional) - specifies the Docker image containing the promotion-compatible PostgreSQL instance.
+- `sysctls` (key-value, optional) - allows configuring namespaced kernel parameters (sysctls) of Docker container for a promotion stage of taking a snapshot. See supported parameters: https://docs.docker.com/engine/reference/commandline/run/#configure-namespaced-kernel-parameters-sysctls-at-runtime
 - `preprocessingScript` (string, optional) - path on the host machine to a pre-precessing script.
 - `configs` (key-value, optional) - applies PostgreSQL configuration parameters to snapshot.
 - `scheduler` (key-value, required) - contains tasks which run on a schedule.
@@ -141,7 +142,7 @@ Options:
       - `timetable` (string, required) - defines a timetable in crontab format: https://en.wikipedia.org/wiki/Cron#Overview
    - `retention` (key-value, optional) - defines rules to clean up old snapshots on a schedule.
       - `timetable` (string, required) - defines a timetable in crontab format: https://en.wikipedia.org/wiki/Cron#Overview
-      - `limit` (integer, required) -  defines how many snapshots should be hold.
+      - `limit` (integer, required) -  defines how many snapshots should be held.
 
 ## Section `cloning`: thin cloning policies
 ...
