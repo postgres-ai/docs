@@ -13,7 +13,7 @@ title: Database Lab guides
 - [Protect clones from manual and automatic deletion](/docs/guides/cloning/clone-protection)
 
 ## Database Lab CLI
-- [CLI install and init](/docs/guides/cli/cli-install-init)
+- [How to install and initialize Database Lab CLI](/docs/guides/cli/cli-install-init)
 
 ## Administration
 - [How to manage Database Lab Engine](/docs/guides/administration/engine-manage)
