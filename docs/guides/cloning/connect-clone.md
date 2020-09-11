@@ -1,5 +1,5 @@
 ---
-title: Connect to a Database Lab clone
+title: How to connect to Database Lab clones
 ---
 
 [↵ Back to Cloning guides](/docs/guides/cloning)

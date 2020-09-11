@@ -3,7 +3,7 @@ title: Start using Database Lab (Postgres.ai) Platform
 sidebar_label: Start using Platform
 ---
 
-[↵ Back to Cloning guides](/docs/guides/cloning)
+[↵ Back to Platform guides](/docs/guides/platform)
 
 [Enter Postgres.ai](https://postgres.ai/signin/) using one of the following supported ways to authenticate: Google, LinkedIn, GitLab, GitHub.
 
@@ -20,4 +20,4 @@ To start using Posgres.ai, you can choose one of two options:
 
 Both solutions can be integrated with Postgres.ai GUI, so you will have all the meta-data collected in centralized storage. Note that Postgres.ai does not connect to your databases, and only metadata is transferred to Postgres.ai storage. This metadata contains technical details about your database operations. This metadata is encrypted and stored securely and transferred using secure methods (HTTPS). If you have any concerns, please reach out Postgres.ai support using the Intercom widget, which you can find it on the right bottom corner.
 
-[↵ Back to Cloning guides](/docs/guides/cloning)
+[↵ Back to Platform guides](/docs/guides/platform)

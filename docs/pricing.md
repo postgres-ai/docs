@@ -16,6 +16,7 @@ sidebar_label: Pricing
 
 | Features | Community<br>Edition | Enterprise<br>Edition |
 | :------- | :------------------: | :-------------------: |
+| **Features** | **Community<br>Edition** | **Enterprise<br>Edition** |
 |Price|Free|$2.6624 /<br>per TiB per hour|
 ||||
 |**Platform – centralized GUI for management of all components**|❌|✅|

@@ -1,5 +1,5 @@
 ---
-title: Resetting a Database Lab clone state
+title: How to reset Database Lab clone
 ---
 
 [↵ Back to Cloning guides](/docs/guides/cloning)

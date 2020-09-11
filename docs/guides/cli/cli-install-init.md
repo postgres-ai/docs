@@ -1,5 +1,5 @@
 ---
-title: Install and initialize Database Lab CLI
+title: How to install and initialize Database Lab CLI
 ---
 
 [↵ Back to CLI guides](/docs/guides/cli)

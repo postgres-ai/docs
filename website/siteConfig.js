@@ -23,7 +23,7 @@
 const BASE_URL = (!!process.env.BASE_URL ? process.env.BASE_URL : '/')
 
 const siteConfig = {
-  title: 'Postgres.ai', // Title for your website.
+  title: 'Database Lab Docs · Fast clones of PostgreSQL databases · Postgres.ai', // Title for your website.
   tagline: 'Boost your development process eliminating Postgres-related roadblocks on the way of developers, DBAs and QA specialists',
   url: (!!process.env.URL ? process.env.URL : 'https://postgres.ai/docs'), // Your website URL
   baseUrl: BASE_URL, // Base URL for your project */

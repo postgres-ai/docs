@@ -1,5 +1,5 @@
 ---
-title: Clone protection from manual and automatic deletion
+title: Protect clones from manual and automatic deletion
 ---
 
 [↵ Back to Cloning guides](/docs/guides/cloning)
