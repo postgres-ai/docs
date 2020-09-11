@@ -8,7 +8,7 @@ Database Lab is used to boost software development and testing processes via ena
 In this tutorial, we are going to set up a Database Lab Engine for an existing PostgreSQL DB instance on Amazon RDS. If you don't have an RDS instance and want to have one to follow the steps in this tutorial, read [the official RDS documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_GettingStarted.CreatingConnecting.PostgreSQL.html). Database Lab Engine will be installed on an AWS EC2 instance with Ubuntu 18.04, and an additional EBS volume to store PostgreSQL data directory. The data will be automatically retrieved from the RDS database.
 
 >⭐️ Please support the project giving a star on GitLab! ⭐<br/>
->It's on [the main page of the Database Lab Enginer repository](https://gitlab.com/postgres-ai/database-lab), at the upper right corner:
+>It's on [the main page of the Database Lab Engine repository](https://gitlab.com/postgres-ai/database-lab), at the upper right corner:
 >
 >![Add a GitLab star](/docs/assets/star.gif)
 
@@ -26,11 +26,11 @@ Create an EC2 instance with Ubuntu 18.04 and an additional EBS volume to store d
 You will need to allow working with the following ports (outbound rules in your Security Group):
 - `22`: to connect to the instance using SSH;
 - `2345`: to work with Database Lab Engine API (can be changed in the Database Lab Engine configuration file);
-- `6000-6100`: to connect to PostgreSQL clones (this is default port range used in the Database Lab Engine configuration file, can be chanfed if needed).
+- `6000-6100`: to connect to PostgreSQL clones (this is the default port range used in the Database Lab Engine configuration file, can be changed if needed).
 
 > For real-life use, it is not a good idea to open ports to the public. Instead, it is recommended to use VPN or SSH port forwarding to access both Database Lab API and PostgreSQL clones, or to enforce encryption for all connections using NGINX with SSL and configuring SSL in PostgreSQL configuration.
 
-Additionally, to be able to install software, allow accessing external resources using HTTP/HTTPS (edit inbound rule in your Security Group):
+Additionally, to be able to install software, allow accessing external resources using HTTP/HTTPS (edit the inbound rule in your Security Group):
 - `80` for HTTP;
 - `443` for HTTPS.
 
@@ -69,7 +69,7 @@ sudo apt-get update && sudo apt-get install -y \
 ```
 
 ### Set $DBLAB_DISK
-Further, we will need `$DBLAB_DISK` environment variable. It must contain the device name corresponding the disk where all the Database Lab Engine data will be stored.
+Further, we will need `$DBLAB_DISK` environment variable. It must contain the device name corresponding to the disk where all the Database Lab Engine data will be stored.
 
 To understand what needs to be specified in `$DBLAB_DISK` in your case, check the output of `lsblk`:
 ```bash
@@ -137,10 +137,10 @@ nvme0n1     259:0  0   777G  0 disk
 ## Step 2. Configure and launch the Database Lab Engine
 >To make your work with Database Lab API secure, do not open Database Lab API and Postgres clones ports to the public and use VPN or SSH port forwarding. It is also a good idea to encrypt all the traffic: for Postgres clones, set up SSL in the configuration files; and for Database Lab API, install, and configure NGINX with a self-signed SSL certificate. See the [How to Secure Database Lab Engine](/docs/guides/administration/engine-secure).
 
-We have two options to connect to the RDS database: password-based, and IAM-based. The former is always available, while the latter is more secure and recommended, but it is available only if you specified it inn **Database Authentication Options** when creating your RDS instance (it is not selected by default). To learn if IAM-based option is available for already created RDS instance, open "Configuration" tab and check if "IAM db authentication" is `Enabled`.
+We have two options to connect to the RDS database: password-based, and IAM-based. The former is always available, while the latter is more secure and recommended, but it is available only if you specified it in **Database Authentication Options** when creating your RDS instance (it is not selected by default). To see if the IAM-based option is available for already created RDS instance, open the "Configuration" tab and check if "IAM db authentication" is `Enabled`.
 
 Options:
-- **IAM database authentication**. This option can be used only if **Password and IAM database authentication** was specified during creation of the RDS instance, it requires AWS user credentials and does not require the master password, use this option for granular control of the access to your database.
+- **IAM database authentication**. This option can be used only if **Password and IAM database authentication** was specified during the creation of the RDS instance, it requires AWS user credentials and does not require the master password, use this option for granular control of the access to your database.
 - **Password authentication (master password)**. This option can always be used. It requires specifying of database master password in the Database Lab Engine configuration file or in `PGPASSWORD` environment variable.
 
 For the sake of simplicity, we will use the password-based authentication in this tutorial. If you want to use IAM database authentication, read how to enable it [here](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.Enabling.html).
@@ -259,7 +259,7 @@ sudo docker run \
 ```
 <!--END_DOCUSAURUS_CODE_TABS-->
 
-### How to check Databaes Lab Engine logs
+### How to check Database Lab Engine logs
 ```bash
 sudo docker logs dblab_server -f
 ```
@@ -273,21 +273,21 @@ sudo docker ps -aq | xargs --no-run-if-empty sudo docker rm -f
 # Remove all Docker images
 sudo docker images -q | xargs --no-run-if-empty sudo docker rmi
 
-# Clean up data directory
+# Clean up the data directory
 sudo rm -rf /var/lib/dblab/data/*
 
 # Remove dump file
 sudo umount /var/lib/dblab/db.dump
 sudo rm -rf /var/lib/dblab/db.dump
 
-# To start from very beginning: destroy ZFS storage pool
+# To start from the very beginning: destroy ZFS storage pool
 sudo zpool destroy dblab_pool
 ```
 
 ## Step 3. Start cloning!
 
 ### Option 1: GUI (Database Lab Platform)
-To use GUI, you need to [sign up](https://postgres.ai/console) to Database Lab Platform.
+To use GUI, you need to [sign up for Database Lab Platform](https://postgres.ai/console).
 
 >Currently, Database Lab GUI is in "private beta" mode. The onboarding consists of two steps. Step 1: you sign up using either Google, or LinkedIn, or GitLab, or GitHub account. Step 2: the Postgres.ai team contacts you and schedules a demo, during which your account will be activated.
 
@@ -307,7 +307,7 @@ To use GUI, you need to [sign up](https://postgres.ai/console) to Database Lab P
 1. Click the **Create clone** button.
   ![Database Lab engine page / Create clone](/docs/assets/guides/create-clone-1.png)
 1. Fill the **ID** field with a meaningful name.
-1. (optional) By default, the latest data snapshot (closest to production state) will be used to provision a clone. You can choose another snapshot, if any.
+1. (optional) By default, the latest data snapshot (closest to production state) will be used to provision a clone. You can choose another snapshot if any.
 1. Fill **database credentials**. Remember the password (it will not be available later, Database Lab Platform does not store it!) – you will need to use it to connect to the clone.
 1. Click the **Create clone** button and wait for a clone to be provisioned. The process should take only a few seconds.
 ![Database Lab engine clone creation page](/docs/assets/guides/create-clone-2.png)
@@ -317,7 +317,7 @@ To use GUI, you need to [sign up](https://postgres.ai/console) to Database Lab P
 #### Connect to a clone
 1. From the **Database Lab clone** page under section **Connection info** copy **psql connection string** field contents by clicking the **Copy** button.
     ![Database Lab clone page / psql connection string](/docs/assets/guides/connect-clone-1.png)
-1. Here we assume that you have `psql` installed on your working machine. In terminal, type `psql` and paste **psql connection string** field contents. Change the database name `DBNAME` parameter, you can always use `postgres` for the initial connection.
+1. Here we assume that you have `psql` installed on your working machine. In the terminal, type `psql` and paste **psql connection string** field contents. Change the database name `DBNAME` parameter, you can always use `postgres` for the initial connection.
 1. Run the command and type the password you've set during the clone creation.
 1. Test established connection by listing tables in the database using `\d`.
     ![Terminal / psql](/docs/assets/guides/connect-clone-2.png)
@@ -392,7 +392,7 @@ Install psql:
 sudo apt-get install postgresql-client
 ```
 
-Now you can work with this clone using any PostgreSQL client, for example `psql`. Use connection info (`db` section of the response of the `dblab clone create` command):
+Now you can work with this clone using any PostgreSQL client, for example, `psql`. Use connection info (`db` section of the response of the `dblab clone create` command):
 ```bash
 PGPASSWORD=secret_password psql \
   "host=localhost port=6000 user=dblab_user_1 dbname=test"
@@ -405,7 +405,7 @@ Check the available table:
 
 Now let's see how quickly we can reset the state of the clone. Delete some data or drop some table.
 
-To reset, use the `clone reset` command (replace `my_first_clone` with the ID of your clone if you changed it). You can do it not leaving psql -- for that, use `\!` macrocommand:
+To reset, use the `clone reset` command (replace `my_first_clone` with the ID of your clone if you changed it). You can do it not leaving psql -- for that, use the `\!` command:
 ```bash
 \! dblab clone reset my_first_clone
 ```
@@ -426,7 +426,7 @@ Now check the database objects you've dropped or partially deleted – everythin
 
 For more, see [the full client CLI reference](/docs/database-lab/cli-reference).
 
->Have questions? Reach out our team, we'll be happy to help! Use the Intercom widget located at the right bottom corner.
+>Have questions? Reach out to our team, we'll be happy to help! Use the Intercom widget located at the right bottom corner.
 
 ## 👋 Database Lab "Private Beta" program
 Database Lab Platform (SaaS) is currently in a "private beta" mode, being tested by several hundred engineers. Want to become an early adopter? Join Database Lab by Postgres.ai "Private Beta" program today: https://postgres.ai/console/.
