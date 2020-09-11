@@ -9,8 +9,8 @@ In this tutorial, we are going to set up a Database Lab Engine for an existing P
 
 Compared to RDS clones, Database Lab clones are ultra-fast (RDS cloning is "thick": it takes many minutes, and, depending on the database size, additional dozens of minutes or even hours to warm up, see ["Lazy load"](https://docs.amazonaws.cn/en_us/AWSEC2/latest/WindowsGuide/ebs-creating-volume.html#ebs-create-volume-from-snapshot)) and do not require additional storage and instance. A single Database Lan instance can be used by dozens of engineers simultaneously working with dozens of thin clones located on a single instance and single storage vole. [RDS Aurora clones](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Managing.Clone.html) are "thin" by nature, which is great for development and testing. However, they also require additional instances, meaning significant extra costs. Database Lab clones are high-speed ("thin"), budget-saving ("local"), and can be used for a source database located anywhere.
 
->⭐️ Please support the project giving a star on GitLab! ⭐<br/>
->It's on [the main page of the Database Lab Engine repository](https://gitlab.com/postgres-ai/database-lab), at the upper right corner:
+>Database Lab Engine is hosted and developed on GitLab.com. Why? GitLab Inc. is our (Postgres.ai) long-term client and early adopter (see [GitLab Development Docs](https://docs.gitlab.com/ee/development/understanding_explain_plans.html#database-lab)). GitLab is open-source. Last but not least: GitLab uses PostgreSQL.<br/><br/>
+>However, nowadays, not many open-source projects are hosted at GitLab.com unfortunately.<br/> ⭐️ Please support the project giving a star on GitLab! It's on [the main page of the Database Lab Engine repository](https://gitlab.com/postgres-ai/database-lab), at the upper right corner:
 >
 >![Add a GitLab star](/docs/assets/star.gif)
 
