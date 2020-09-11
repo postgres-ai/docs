@@ -10,7 +10,7 @@ hide_title: false
 ## Guides
 
 - [Start using Database Lab](/docs/tutorials/engine-setup)
-- [Start using Database Lab with AWS RDS](/docs/tutorials/engine-setup-rds)
+- [Start using Database Lab with AWS RDS](/docs/tutorials/database-lab-tutorial-amazon-rds)
 
 
 ## References
@@ -22,7 +22,7 @@ hide_title: false
 
 ## Overview
 
-**Database Lab** – the core component based on which powerful, state-of-the-art development and testing environments are built. It is based on a simple idea: with modern thin cloning technologies, it becomes possible to iterate 100x faster in development and testing. It is extremely helpful for larger companies that want to achieve high development velocity and the most competitive "time to market" characteristics.
+**Database Lab Engine** – the core component based on which powerful, state-of-the-art development and testing environments are built. It is based on a simple idea: with modern thin cloning technologies, it becomes possible to iterate 100x faster in development and testing. It is extremely helpful for larger companies that want to achieve high development velocity and the most competitive "time to market" characteristics.
 
 Database Lab aims to speed up software development in fast-growing organizations that use large PostgreSQL databases. It is achieved by enabling extremely fast and low-budget cloning of large databases.
 

@@ -1,19 +1,19 @@
 ---
 id: get-started
-title: Getting Started
+title: Getting started with Database Lab
 hide_title: false
-sidebar_label: Getting Started
+sidebar_label: Getting started
 ---
 
-## Use cases & products
-- [Database Lab engine / Thin clones provisioning framework](/docs/database-lab)
-- [Staging with superpowers / Deploy disposable databases for development and review in seconds](/docs/staging)
-- [Joe bot / SQL optimization made simple](/docs/joe-bot)
-- [Checkup / Detect database bottlenecks before they appear](/docs/checkup)
-- [Data recovery /  Instantaneously recover lost data](/docs/data-recovery)
-- [Database changes CI/CD  / Minimize downtime and code refactoring caused by database migrations](/docs/database-changes-cicd)
-- [Data access / Analyze your data without affecting production](/docs/data-access)
+|   |  |
+| ----------- | ----------- |
+| [Database Lab Engine](/docs/database-lab)<br>Open-source technology to clone databases of any size in seconds | [Joe, SQL optimization chatbot](/docs/joe-bot)<br>Run `EXPLAIN ANALYZE` and optimize SQL on instantly provisioned full-size database copies |
+| [Dev/QA/Staging databases with superpowers](/docs/staging)<br>Develop and test using full-size database copies provisioned in seconds | [CI/CD observer for DB schema changes](/docs/database-changes-cicd)<br>Prevent performance degrataion and downtime when deploying database schema changes | 
+| [postgres-checkup](/docs/checkup)<br>Automated health-checks and query analsysis for heavily-loaded PostgreSQL databases | [Detached replicas](/docs/data-access)<br>Use BI tools, run analytical queries, perform data export without replication lags and bloat |
 
+<!--#### [Data recovery /  Instantaneously recover lost data](/docs/data-recovery)
+Recover accidentally deleted data. Using thin cloning, the point-in-time recovery (PITR) can be performed without long waiting.
+-->
 
 ## What is Database Lab?
 

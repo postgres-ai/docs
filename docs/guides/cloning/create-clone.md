@@ -1,5 +1,5 @@
 ---
-title: Create a Database Lab clone
+title: How to create Database Lab clones
 ---
 
 [↵ Back to Cloning guides](/docs/guides/cloning)

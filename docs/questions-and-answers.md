@@ -1,15 +1,13 @@
 ---
-title: Q&A
+title: Database Lab Q&A
 sidebar_label: Q&A
 hide_title: false
 ---
 
 ## What does "thin cloning" mean? Thin vs. thick clones. Why is thin cloning so fast?
-
 There are two types of cloning used by Database Lab:
 
 1. Thick cloning is how data is copied to a Database Lab instance initially. There are many options:
-
 - dump/restore (using `pg_dump`/`pg_dumpall` and `pg_restore`/`psql`),
 - `pg_basebackup`,
 - restoring from a physical archive (e.g., WAL-G or Barman or `pg_probackup`),
@@ -25,7 +23,6 @@ Currently, Database Lab supports two methods for thin cloning: ZFS and LVM. <!--
 
 
 ## Do I need ZFS on production?
-
 If you are going to use Database Lab with ZFS, you do not need to install ZFS on production servers. ZFS is needed only to enable thin provisioning. Therefore, ZFS is needed only on the Database Lab instances. Production machines do not need any changes. They can be located anywhere: in clouds (including managed options like AWS RDS), on-premise; and they may use any operating system and any filesystem.
 
 ZFS is an efficient filesystem with rich capabilities, simple installation, and an easy-to-use CLI. It makes ZFS perfectly suitable for use in development and testing environments.
@@ -34,7 +31,6 @@ As an alternative to ZFS, Database Lab supports LVM to enable thin-provisioning.
 
 
 ## What is needed to use Database Lab?
-
 - for each Database Lab instance, a separate machine is needed, either physical or virtual, either on-premise or in clouds;
 - for each Postgres production source database, a separate Database Lab instance is required;
 - a Database Lab machine needs to have a separate disk partition with size enough to store the target Postgres directory (PGDATA), see [Database Lab Tutorial](/docs/tutorials/engine-setup) for more details;
@@ -48,17 +44,14 @@ As an alternative to ZFS, Database Lab supports LVM to enable thin-provisioning.
 For more details, see [Database Lab Tutorial](/docs/tutorials/engine-setup).
 
 ## What is needed to use Database Lab with RDS?
-
-For more details, see [Database Lab RDS Tutorial](/docs/tutorials/engine-setup-rds).
+For more details, see [Database Lab RDS Tutorial](/docs/tutorials/database-lab-tutorial-amazon-rds).
 
 ## Cloud vs. on-premise
-
 You can install Database Lab on any machine which matches our requirements listed above. It doesn't matter whether this machine is in clouds or on-premise.
 
 <!-- Q&A for Joe, for Platform GUI -->
 
 ## Where to get help?
-
 Our team is happy to help you with Database Lab and related products setup and usage. Reach us using the following resources:
 
 - email: support@postgres.ai,

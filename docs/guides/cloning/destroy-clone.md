@@ -1,5 +1,5 @@
 ---
-title: Destroy a Database Lab clone
+title: How to destroy Database Lab clone
 ---
 
 [↵ Back to Cloning guides](/docs/guides/cloning)

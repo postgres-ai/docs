@@ -6,13 +6,14 @@
       "pricing"
     ],
     "Tutorials": [
-      "tutorials/engine-setup-rds",
-      "tutorials/engine-setup"
+      "tutorials/database-lab-tutorial-amazon-rds",
+      "tutorials/database-lab-tutorial"
     ],
     "Guides": [
       "guides/cloning/index",
       "guides/cli/index",
-      "guides/administration/index"
+      "guides/administration/index",
+      "guides/data/index"
     ],
     "Database Lab Platform": [
       "platform/index",
@@ -20,6 +21,7 @@
     ],
     "Database Lab Engine": [
       "database-lab/index",
+      "database-lab/masking",
       "database-lab/supported-databases",
       {
         "type": "subcategory",

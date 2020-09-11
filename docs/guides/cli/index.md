@@ -1,8 +1,8 @@
 ---
-title: CLI guides
-sidebar_label: CLI
+title: How to work with Database Lab CLI
+sidebar_label: Database Lab CLI
 ---
 
-- [CLI install and init](/docs/guides/cli/cli-install-init)
+- [How to install and initialize Database Lab CLI](/docs/guides/cli/cli-install-init)
 
 [↵ Back to Guides](/docs/guides/)
