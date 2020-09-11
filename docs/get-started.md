@@ -10,7 +10,7 @@ sidebar_label: Getting started
 | [Database Lab Engine](/docs/database-lab) (open source)<br/>Open-source technology to clone databases of any size in seconds | [Joe, SQL optimization chatbot](/docs/joe-bot) (open source)<br/>Run `EXPLAIN ANALYZE` and optimize SQL on instantly provisioned full-size database copies |
 | [Dev/QA/Staging databases with superpowers](/docs/staging)<br/>Develop and test using full-size database copies provided in seconds | [CI/CD observer for DB schema changes](/docs/database-changes-cicd)<br/>Prevent performance degradation and downtime when deploying database schema changes | 
 | [postgres-checkup](/docs/checkup) (open source)<br/>Automated health-checks and query analysis for heavily-loaded PostgreSQL databases | [Detached replicas](/docs/data-access)<br/>Use BI tools, run analytical queries, perform data export without replication lags and bloat |
-| [Database Lab tutorial for Amazon RDS](/docs/tutorials/-amazon-rds)<br/>Get started to use Database Lab for Amazon RDS PostgreSQL | [Database Lab tutorial](/docs/tutorials/database-lab-tutorial)<br/>Get started to use Database Lab for any PostgreSQL |
+| [Database Lab tutorial for Amazon RDS](/docs/tutorials/database-lab-tutorial-amazon-rds)<br/>Get started to use Database Lab for Amazon RDS PostgreSQL | [Database Lab tutorial](/docs/tutorials/database-lab-tutorial)<br/>Get started to use Database Lab for any PostgreSQL |
 
 <!--#### [Data recovery /  Instantaneously recover lost data](/docs/data-recovery)
 Recover accidentally deleted data. Using thin cloning, the point-in-time recovery (PITR) can be performed without long waiting.
