@@ -34,6 +34,7 @@ div.headerWrapper {
 @media only screen and (min-width: 1500px) {
 }
 
+/* hide table headers, manually create headers if needed */
 thead {
 	display: none;
 }
