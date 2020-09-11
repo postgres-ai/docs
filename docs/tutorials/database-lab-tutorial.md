@@ -9,7 +9,7 @@ Database Lab is used to boost software development and testing processes via ena
 In this tutorial, we are going to create a "demo" PostgreSQL database and then set up a Database Lab Engine for it. Database Lab Engine will be installed on an AWS EC2 instance (alternatively, it can be an instance on another cloud platfor such as GCP, or a bare-metal machine) with Ubuntu 18.04, and an additional EBS volume to store PostgreSQL data directory. Optionally, you'll be able to skip creating the "demo" database and use an existing database instead.
 
 >⭐️ Please support the project giving a star on GitLab! ⭐<br/>
->It's on [the main page of the Database Lab Enginer repository](https://gitlab.com/postgres-ai/database-lab), at the upper right corner:
+>It's on [the main page of the Database Lab Engine repository](https://gitlab.com/postgres-ai/database-lab), at the upper right corner:
 >
 >![Add a GitLab star](/docs/assets/star.gif)
 
@@ -31,11 +31,11 @@ Create an EC2 instance with Ubuntu 18.04 and an additional EBS volume to store d
 You will need to allow working with the following ports (outbound rules in your Security Group):
 - `22`: to connect to the instance using SSH;
 - `2345`: to work with Database Lab Engine API (can be changed in the Database Lab Engine configuration file);
-- `6000-6100`: to connect to PostgreSQL clones (this is default port range used in the Database Lab Engine configuration file, can be chanfed if needed).
+- `6000-6100`: to connect to PostgreSQL clones (this is the default port range used in the Database Lab Engine configuration file, can be changed if needed).
 
 > For real-life use, it is not a good idea to open ports to the public. Instead, it is recommended to use VPN or SSH port forwarding to access both Database Lab API and PostgreSQL clones, or to enforce encryption for all connections using NGINX with SSL and configuring SSL in PostgreSQL configuration.
 
-Additionally, to be able to install software, allow accessing external resources using HTTP/HTTPS (edit inbound rule in your Security Group):
+Additionally, to be able to install software, allow accessing external resources using HTTP/HTTPS (edit the inbound rule in your Security Group):
 - `80` for HTTP;
 - `443` for HTTPS.
 
@@ -74,7 +74,7 @@ sudo apt-get update && sudo apt-get install -y \
 ```
 
 ### Set $DBLAB_DISK
-Further, we will need `$DBLAB_DISK` environment variable. It must contain the device name corresponding the disk where all the Database Lab Engine data will be stored.
+Further, we will need `$DBLAB_DISK` environment variable. It must contain the device name corresponding to the disk where all the Database Lab Engine data will be stored.
 
 To understand what needs to be specified in `$DBLAB_DISK` in your case, check the output of `lsblk`:
 ```bash
@@ -324,14 +324,14 @@ sudo docker ps -aq | xargs --no-run-if-empty sudo docker rm -f
 # Remove all Docker images
 sudo docker images -q | xargs --no-run-if-empty sudo docker rmi
 
-# Clean up data directory
+# Clean up the data directory
 sudo rm -rf /var/lib/dblab/data/*
 
 # Remove dump file
 sudo umount /var/lib/dblab/db.dump
 sudo rm -rf /var/lib/dblab/db.dump
 
-# To start from very beginning: destroy ZFS storage pool
+# To start from the very beginning: destroy ZFS storage pool
 sudo zpool destroy dblab_pool
 ```
 
@@ -408,7 +408,7 @@ Install psql:
 sudo apt-get install postgresql-client
 ```
 
-Now you can work with this clone using any PostgreSQL client, for example `psql`. Use connection info (`db` section of the response of the `dblab clone create` command):
+Now you can work with this clone using any PostgreSQL client, for example, `psql`. Use connection info (`db` section of the response of the `dblab clone create` command):
 ```bash
 PGPASSWORD=secret_password psql \
   "host=localhost port=6000 user=dblab_user_1 dbname=test"
@@ -421,7 +421,7 @@ Check the available table:
 
 Now let's see how quickly we can reset the state of the clone. Delete some data or drop some table.
 
-To reset, use the `clone reset` command (replace `my_first_clone` with the ID of your clone if you changed it). You can do it not leaving psql -- for that, use `\!` macrocommand:
+To reset, use the `clone reset` command (replace `my_first_clone` with the ID of your clone if you changed it). You can do it not leaving psql -- for that, use the `\!` command:
 ```bash
 \! dblab clone reset my_first_clone
 ```
@@ -444,7 +444,7 @@ For more, see [the full client CLI reference](/docs/database-lab/cli-reference).
 
 
 ### GUI (Database Lab Platform)
-To use GUI, you need to [sign up](https://postgres.ai/console) to Database Lab Platform.
+To use GUI, you need to [sign up for Database Lab Platform](https://postgres.ai/console).
 
 >Currently, Database Lab GUI is in "private beta" mode. The onboarding consists of two steps. Step 1: you sign up using either Google, or LinkedIn, or GitLab, or GitHub account. Step 2: the Postgres.ai team contacts you and schedules a demo, during which your account will be activated.
 
@@ -464,7 +464,7 @@ To use GUI, you need to [sign up](https://postgres.ai/console) to Database Lab P
 1. Click the **Create clone** button.
   ![Database Lab engine page / Create clone](/docs/assets/guides/create-clone-1.png)
 1. Fill the **ID** field with a meaningful name.
-1. (optional) By default, the latest data snapshot (closest to production state) will be used to provision a clone. You can choose another snapshot, if any.
+1. (optional) By default, the latest data snapshot (closest to production state) will be used to provision a clone. You can choose another snapshot if any.
 1. Fill **database credentials**. Remember the password (it will not be available later, Database Lab Platform does not store it!) – you will need to use it to connect to the clone.
 1. Click the **Create clone** button and wait for a clone to be provisioned. The process should take only a few seconds.
 ![Database Lab engine clone creation page](/docs/assets/guides/create-clone-2.png)
@@ -479,7 +479,7 @@ To use GUI, you need to [sign up](https://postgres.ai/console) to Database Lab P
 1. Test established connection by listing tables in the database using `\d`.
     ![Terminal / psql](/docs/assets/guides/connect-clone-2.png)
 
-> Have questions? Reach out our team, we'll be happy to help! Use the Intercom widget located at the right bottom corner.
+> Have questions? Reach out to our team, we'll be happy to help! Use the Intercom widget located at the right bottom corner.
 
 ## 👋 Database Lab "Private Beta" program
 Database Lab Platform (SaaS) is currently in a "private beta" mode, being tested by several hundred engineers. Want to become an early adopter? Join Database Lab by Postgres.ai "Private Beta" program today: https://postgres.ai/console/.
