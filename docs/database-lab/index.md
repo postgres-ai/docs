@@ -33,6 +33,13 @@ Database Lab Engine is distributed under AGPL v3 license. Repositories:
 - GitLab: https://gitlab.com/postgres-ai/database-lab,
 - GitHub https://github.com/postgres-ai/database-lab (mirror).
 
+>Database Lab Engine is hosted and developed on GitLab.com. Why? GitLab Inc. is our (Postgres.ai) long-term client and early adopter (see [GitLab Development Docs](https://docs.gitlab.com/ee/development/understanding_explain_plans.html#database-lab)). GitLab is open-source. Last but not least: GitLab uses PostgreSQL.<br/><br/>
+>However, nowadays, not many open-source projects are hosted at GitLab.com unfortunately.<br/> ⭐️ Please support the project giving a star on GitLab! It's on [the main page of the Database Lab Engine repository](https://gitlab.com/postgres-ai/database-lab), at the upper right corner:
+>
+>![Add a GitLab star](/docs/assets/star.gif)
+
+However, nowadays, not many open-source projects are hosted at GitLab.com unfortunately. Please support the project giving a GitLab star! It's on [the main page](https://gitlab.com/postgres-ai/database-lab), at the upper right corner:
+
 Database Lab Engine provides the server with API, and client CLI, with basic single-user authentication.
 
 As an example, cloning of 10 TiB PostgreSQL database takes less than 2 seconds when a single user is using the Database Lab Engine instance, and up to 30 seconds when 15 users are working with it at the same time. Moreover, such cloning (called "thin cloning") does not increase budgets: on a single mid-size machine with a single physical copy of the database, it is possible to run dozens of thin clones simultaneously.
