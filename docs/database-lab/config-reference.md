@@ -36,7 +36,8 @@ Here is how the configuration file is structured:
 
 ## Section `global`: global parameters
 - `engine` - defines the Database Lab Engine. Supported engines: `postgres`.
-- `dataDir` - specifies the location of restored data by Database Lab Engine.
+- `mountDir` - specifies the location of the pool mount directory.
+- `dataSubDir` - specifies the location of restored data by Database Lab Engine relative to the pool mount directory (`mountDir`).
 - `debug` - allows seeing more in the Database Lab Engine logs.
 
 ## Section `server`: Database Lab Engine API server
@@ -89,7 +90,7 @@ Options:
 - `partial` (key-value, optional) - defines options for partial dumping. Available options: `tables`:
    - `tables` (list of strings, optional) - dumps definition and/or data of only the listed tables.
 - `immediateRestore` (key-value, optional) - provides options for direct restore to a Database Lab Engine instance. 
-   - `forceInit` (boolean, optional, default: false) - init data even if the Postgres directory (see the configuration option `global.dataDir`) is not empty. Note the existing data might be overwritten.   
+   - `forceInit` (boolean, optional, default: false) - init data even if the Postgres directory (see the configuration options `global.mountDir` and `global.dataSubDir`) is not empty. Note the existing data might be overwritten.   
 
 ### Job `logicalRestore`
 Restores a PostgreSQL database from an archive created by pg_dump in one of the non-plain-text formats.
@@ -98,7 +99,7 @@ Options:
 - `dbname` (string, required) - defines the database dbname to be restored.
 - `dumpLocation` (string, required) - specifies the location of the archive file (or directory, for a directory-format archive) on the host machine to be restored.
 - `dockerImage` (string, required) - specifies the Docker image containing the restore-required tool.
-- `forceInit` (boolean, optional, default: false) - init data even if the Postgres directory (see the configuration option `global.dataDir`) is not empty. Note the existing data might be overwritten.
+- `forceInit` (boolean, optional, default: false) - init data even if the Postgres directory (see the configuration options `global.mountDir` and `global.dataSubDir`) is not empty. Note the existing data might be overwritten.
 - `parallelJobs` (integer, optional, default: 1) - defines the number of concurrent jobs using the `pg_restore` option `jobs`. This option can dramatically reduce the time to restore a large database to a server running on a multiprocessor machine.
 - `partial` (key-value, optional) - defines options for partial restoring. Available options: `tables`:
    - `tables` (list of strings, optional) - restores definition and/or data of only the listed tables.
