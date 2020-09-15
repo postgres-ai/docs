@@ -3,73 +3,85 @@ title: Database Lab data masking
 sidebar_label: Data masking
 ---
 
-##  Premasking
-Allows to easialy setup dynamic masking rules, without actual data changing. Data is masked only during logical dump on the side of the database.
+## Data masking
+###  Pre-masking
+Allows setting up dynamic masking rules without actual data changes. According to these rules, PII (personally identifiable information) data is masked only when certain users access it.
 
-### Option 1а. Anonymized dump
-Database Lab retrieves the data from production in the form of an anonymized logical dump. Requires additional masking set up on the production.
+#### Option 1а. Dump without PII directly from a production server
+Database Lab retrieves the data from production in the form of an anonymized logical dump. This approach requires additional masking set up on the primary production database. Dumping may happen on a replica.
 
-![Premasking / Option 1а. Anonymized dump](/docs/assets/masking-1a-dump.png)
+![Pre-masking / Option 1а. Anonymized dump](/docs/assets/masking-1a-dump.png)
 
-#### Pros
-- PII only on production
-- Identical data structure for development and optimization
+##### Pros
+- Very secure: PII is stored only on production and does not reach the Database Lab Engine.
+- In some cases, easier to set up: does not require an additional Database Lab Engine.
 
-#### Cons
-- Anonymization affects production performance
+##### Cons
+- May require installation of additional extensions on production servers.
+- Anonymization affects production servers' performance: increased disk IO, bloat growth and/or replication lags.
+- Data structure is not identical to production, making SQL troubleshooting and optimization less reliable.
 
-### Option 1b. Anonymized dump using additional Database Lab Engine
+#### Option 1b. Anonymized dump using additional Database Lab Engine
 Database Lab Engine in the production infrastructure is used to create an anonymized dump. Database Lab Engine in the test/dev/staging environment retrieves the data from the production in the form of an anonymized dump.
 
-![Premasking / Option 1b. Anonymized dump using additional Database Lab Engine](/docs/assets/masking-1b-dump-add.png)
+![Pre-masking / Option 1b. Anonymized dump using additional Database Lab Engine](/docs/assets/masking-1b-dump-add.png)
 
-#### Pros
-- PII only on production
-- Identical data structure for development and optimization
-- Data anonymization without affecting the production database
-- Data recovery and heavy analytics queries without affecting the production database
+##### Pros
+- Very secure: PII is stored only on production and does not reach the Database Lab Engine.
+- Data anonymization is not affecting production servers.
+- Data recovery and heavy analytics queries are not affecting production servers (executed on the "production" Database Lab Engine server).
 
-#### Cons
- Deployment of additional Database Lab Engine
+##### Cons
+- Requires an additional Database Lab Engine.
+- Data structure is not identical to production, making SQL troubleshooting and optimization less reliable.
 
-## Postmasking
+### Post-masking
 Allows to set up dynamic masking rules, without actual data changing. Data is dynamically masked on the side of the Database Lab Engine.
 
-### Option 2a. Database Lab Engine on production
-Database Lab Engine deployed only on production infrastructure and works with PII. Depending on the access level developers may or may not have access to the unmasked data.
+#### Option 2a. Database Lab Engine on production
+Database Lab Engine is deployed only on production infrastructure, and it physically stores PII. Depending on the access level, developers may or may not have access to the unmasked data.
 
-![Postmasking / Option 2a. Database Lab Engine on production](/docs/assets/masking-2a-production.png)
+![Post-masking / Option 2a. Database Lab Engine on production](/docs/assets/masking-2a-production.png)
 
-#### Pros
-- PII only on production
-- Identical data structure for development and optimization
-- Data anonymization without affecting the production database
-- Data recovery and heavy analytics queries without affecting the production database
-- Easy to deploy
+##### Pros
+- Very secure: PII is stored only on the production environment (the Database Lab server also has it, but it also resides in the production environment).
+- Physical data layout is identical to production, best conditions for SQL troubleshooting, and optimization.
+- Data anonymization is not affecting production servers.
 
-#### Cons
-- High requirements for security administration
-- Harder to configure access for developers to use the Database Lab
+##### Cons
+- High requirements for security administration.
+- More difficult to configure and maintain access (developers need to deal with the production environment; automation scripts need to reach the Database Lab Engine, which may cause complications).
 
-### Option 2b. Database Lab Engine in Test/Dev/Staging
-Database Lab Engine deployed only on test/dev/staging infrastructure and works with PII. Developers work with masked data.
+#### Option 2b. Database Lab Engine in Test/Dev/Staging
+Database Lab Engine is deployed only on test/dev/staging infrastructure, and it physically stores PII. Developers work with masked data.
 
-![Postmasking / Option 2b. Database Lab Engine in Test/Dev/Staging](/docs/assets/masking-2b-staging.png)
+![Post-masking / Option 2b. Database Lab Engine in Test/Dev/Staging](/docs/assets/masking-2b-staging.png)
 
-#### Pros
-- Identical data structure for development and optimization
-- Data anonymization without affecting the production database
-- Data recovery and heavy analytics queries without affecting the production database
-- Easy to deploy
+##### Pros
+- Identical data structure for development and optimization.
+- Physical data layout is identical to production, best conditions for SQL troubleshooting, and optimization.
+- Data anonymization is not affecting production servers.
+- Data recovery and heavy analytics queries are not affecting production servers.
 
-#### Cons
-- PII physically copied from the production infrastructure (but cannot be accessed by developers)
-- High requirements for security administration of test/dev/staging environments
+##### Cons
+- PII is physically copied from the production infrastructure and stored non-production (but cannot be accessed by developers).
+- High requirements for security administration of test/dev/staging environments.
 
-## Obfuscation
+## Data obfuscation
+Instead of masking, the data can be deleted permanently, e.g., during snapshot creation. Usually, this is a massive change requiring significant time and disk space.
 
-Instead of masking, the data can be deleted permanently, e.g. during snapshot creation.
+Database Lab Engine supports obfuscation of any type via injecting an SQL transformation to the process of preparation of snapshots for thin clones.
 
 Options:
 - Use custom obfuscation script (define it using `preprocessingScript` option of [`logicalSnapshot`](/docs/database-lab/config-reference#job-logicalsnapshot) or [`physicalSnapshot`](/docs/database-lab/config-reference#job-physicalsnapshot) jobs);
 - Use the [In-place anonymization](https://postgresql-anonymizer.readthedocs.io/en/latest/in_place_anonymization/) of PostgreSQL Anonymizer.
+
+##### Pros
+- PII data anonymization not affecting production servers.
+- Data recovery and heavy analytics queries are not affecting production servers.
+- Moderately difficult to set up.
+
+##### Cons
+- Data structure is not identical to production, making SQL troubleshooting and optimization less reliable.
+- PII is physically copied from the production infrastructure (but cannot be accessed by developers).
+- High requirements for security administration of test/dev/staging environments.
