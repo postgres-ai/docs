@@ -1,6 +1,6 @@
 ---
 title: Database Lab Client CLI reference (dblab)
-sidebar_label: CLI reference
+sidebar_label: Database Lab Client CLI
 ---
 
 ## Description

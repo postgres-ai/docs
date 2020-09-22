@@ -1,6 +1,6 @@
 ---
-title: Joe Bot commands reference
-sidebar_label: Commands reference
+title: Joe bot commands reference
+sidebar_label: Chatbot commands
 ---
 
 ### `help`
@@ -46,7 +46,7 @@ The following `psql` meta-commands are supported:
 - `\di`, `\di+` – indexes,
 - `\dv`, `\dv+` – views,
 - `\dm`, `\dm+` – materialized views,
--`\l`, `\l+`.
+- `\l`, `\l+` - databases.
 
 See [the official PostgreSQL documentation](https://www.postgresql.org/docs/current/app-psql.html#APP-PSQL-META-COMMANDS) for details.
 

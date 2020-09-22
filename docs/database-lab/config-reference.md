@@ -1,6 +1,6 @@
 ---
 title: Database Lab Engine configuration reference
-sidebar_label: Configuration reference
+sidebar_label: Database Lab Engine configuration
 ---
 
 ## Overview
@@ -23,7 +23,7 @@ sudo docker run \
   "docker pull postgresai/dblab-server:2.0.0-beta.1"
 ```
 
-## Sections list
+## The list of configuration sections
 Here is how the configuration file is structured:
 
 | Section | Description |
@@ -109,7 +109,8 @@ Prepares a snapshot for logical restored PostgreSQL database.
 
 Options:
 - `preprocessingScript` (string, optional) - path on the host machine to a pre-precessing script.
-- `configs` (key-value, optional) - applies PostgreSQL configuration parameters to snapshot.
+- `configs` (key-value, optional) - applies PostgreSQL configuration parameters when preparing a working snapshot. These parameters are inherited by all clones. See also: [How to configure PostgreSQL used by Database Lab Engine](/docs/guides/administration/postgresql-configuration).
+
 
 ### Job `physicalRestore`
 Restores data from a physical backup.
@@ -127,7 +128,7 @@ Options:
   - `backupName` (string, required) - defines the backup name to restore. 
 - `custom` (key-value, optional) - defines configuration options for custom restoring tool:
   - `command` (string, required) - defines the command to restore data using a custom tool. 
-  - `restore_command` (string, optional) - defines the PostgreSQL "restore_command" configuration option to refresh data.
+  - `restore_command` (string, optional) - defines the PostgreSQL [`restore_command`](https://postgresqlco.nf/en/doc/param/restore_command/) configuration option to refresh data. Database Lab Engine automatucally propagates the specified value to proper location, depending the version of PostgreSQL: in versions 11 and older, it is to be stored in `recovery.conf`, while in 12 and newer, it is part of the main file, `postgresql.conf`.
 
 ### Job `physicalSnapshot`
 Prepares a snapshot for physical restored PostgreSQL database.
@@ -137,7 +138,7 @@ Options:
 - `dockerImage` (string, optional) - specifies the Docker image containing the promotion-compatible PostgreSQL instance.
 - `sysctls` (key-value, optional) - allows configuring namespaced kernel parameters (sysctls) of Docker container for a promotion stage of taking a snapshot. See supported parameters: https://docs.docker.com/engine/reference/commandline/run/#configure-namespaced-kernel-parameters-sysctls-at-runtime
 - `preprocessingScript` (string, optional) - path on the host machine to a pre-precessing script.
-- `configs` (key-value, optional) - applies PostgreSQL configuration parameters to snapshot.
+- `configs` (key-value, optional) - applies PostgreSQL configuration parameters to snapshot. These parameters are inherited by all clones. See also: [How to configure PostgreSQL used by Database Lab Engine](/docs/guides/administration/postgresql-configuration).
 - `scheduler` (key-value, required) - contains tasks which run on a schedule.
    - `snapshot` (key-value, optional) - defines rules to create a new snapshot on a schedule.
       - `timetable` (string, required) - defines a timetable in crontab format: https://en.wikipedia.org/wiki/Cron#Overview
@@ -147,3 +148,4 @@ Options:
 
 ## Section `cloning`: thin cloning policies
 ...
+
