@@ -1,9 +1,17 @@
 ---
 title: Database Lab guides
+sidebar_label: All
 ---
 
 ## Datbase Lab / Postgres.ai Platform
 - [Start using Postgres.ai Platform](/docs/guides/platform/start-using-platform)
+
+## Administration
+- [How to configure PostgreSQL used by Database Lab Engine](/docs/guides/administration/postgresql-configuration)
+- [How to manage Database Lab Engine](/docs/guides/administration/engine-manage)
+- [How to manage Joe Bot](/docs/guides/administration/manage-joe)
+- [Secure Database Lab Engine](/docs/guides/administration/engine-secure)
+- [Set up machine for Database Lab Engine](/docs/guides/administration/machine-setup)
 
 ## How to work with Database Lab clones
 - [How to create Database Lab clones](/docs/guides/cloning/create-clone)
@@ -12,14 +20,18 @@ title: Database Lab guides
 - [How to destroy Database Lab clone](/docs/guides/cloning/destroy-clone)
 - [Protect clones from manual and automatic deletion](/docs/guides/cloning/clone-protection)
 
+## How to work with Joe bot
+- [How to get a query execution plan (EXPLAIN)](/docs/guides/joe-bot/get-query-plan)
+- [How to create an index using Joe bot](/docs/guides/joe-bot/create-index)
+- [How to reset the state of a Joe session / clone](/docs/guides/joe-bot/reset-session)
+- [How to get a list of active queries in a Joe session and stop long-running queries](/docs/guides/joe-bot/query-activity-and-termination)
+- [How to visualize a query plan](/docs/guides/joe-bot/visualize-query-plan)
+- [How to work with SQL optimization history](/docs/guides/joe-bot/sql-optimization-history)
+- [How to get row counts for arbitrary SELECTs](/docs/guides/joe-bot/count-rows)
+- [How to get sizes of PostgreSQL databases, tables, and indexes with psql commands](/docs/guides/joe-bot/get-database-table-index-size)
+
 ## Database Lab CLI
 - [How to install and initialize Database Lab CLI](/docs/guides/cli/cli-install-init)
-
-## Administration
-- [How to manage Database Lab Engine](/docs/guides/administration/engine-manage)
-- [How to manage Joe Bot](/docs/guides/administration/manage-joe)
-- [Secure Database Lab Engine](/docs/guides/administration/engine-secure)
-- [Set up machine for Database Lab Engine](/docs/guides/administration/machine-setup)
 
 ## Obtaining data for Database Lab
 ### Logical retrieval

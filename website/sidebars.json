@@ -10,9 +10,11 @@
       "tutorials/database-lab-tutorial"
     ],
     "Guides": [
-      "guides/cloning/index",
-      "guides/cli/index",
+      "guides/index",
       "guides/administration/index",
+      "guides/cloning/index",
+      "guides/joe-bot/index",
+      "guides/cli/index",
       "guides/data/index"
     ],
     "Database Lab Platform": [

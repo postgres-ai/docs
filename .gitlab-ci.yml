@@ -87,7 +87,7 @@ build_staging:
   <<: *build_definition
   <<: *env_staging
   only:
-    - use-cases
+    - staging
 
 build_review:
   <<: *build_definition
@@ -96,7 +96,7 @@ build_review:
     - branches
   except:
     - master
-    - use-cases
+    - staging
 
 deploy_production:
   <<: *deploy_definition
@@ -108,7 +108,7 @@ deploy_staging:
   <<: *deploy_definition
   <<: *env_staging
   only:
-    - use-cases
+    - staging
 
 deploy_review:
   <<: *deploy_definition
@@ -117,4 +117,4 @@ deploy_review:
     - branches
   except:
     - master
-    - use-cases
+    - staging
