@@ -34,6 +34,6 @@ The clone has been successfully reset: CLONE_ID
 3. The data will be recovered to the initial state.
 
 ## Related
-- Guide: [Destroy a clone](/docs/cloning/destroy-clone)
+- Guide: [Destroy a clone](/docs/guides/cloning/destroy-clone)
 
 [↵ Back to Cloning guides](/docs/guides/cloning)
