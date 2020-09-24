@@ -99,7 +99,7 @@ $ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --sna
 
 ### Protected status
 
-You can make clone protected during the creation or later (if needed). Please be careful: abandoned protected clones may cause out-of-disk-space events. Read the details [here](/docs/guides/clone-protection).
+You can make clone protected during the creation or later (if needed). Please be careful: abandoned protected clones may cause out-of-disk-space events. Read the details [here](/docs/guides/cloning/clone-protection).
 
 ```bash
 $ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --protected
