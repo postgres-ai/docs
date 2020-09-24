@@ -11,14 +11,14 @@ title: How to create Database Lab clones
 1. Fill the **ID** field with a meaningful name.
 1. (optional) By default, the latest data snapshot (closest to production state) will be used to provision a clone. You can select any other available snapshot.
 1. Fill **database credentials**. Remember the password, it will not be available later, but you will need to use it to connect to the clone.
-1. (optional) Enable protected status (it can be done later if needed). Please be careful: abandoned protected clones may cause out-of-disk-space events. Read the details [here](/docs/guides/clone-protection).
+1. (optional) Enable protected status (it can be done later if needed). Please be careful: abandoned protected clones may cause out-of-disk-space events. Read the details [here](/docs/guides/cloning/clone-protection).
 1. Click the **Create clone** button and wait for a clone to provision.
 ![Database Lab engine clone creation page](/assets/guides/create-clone-2.png)
 1. You will be redirected to the **Database Lab clone** page.
   ![Database Lab engine clone page](/assets/guides/create-clone-3.png)
 
 ## CLI
-Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/guides/cli_install_init).
+Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/guides/cli/cli-install-init).
 
 ### Reference
 - Command [`dblab clone create`](/docs/database-lab/cli-reference#subcommand-create)
@@ -118,7 +118,7 @@ $ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --pro
 ```
 
 ## Related
-- Guide: [Connect to a clone](/docs/guides/connect-clone)
-- Guide: [Destroy a clone](/docs/guides/destroy-clone)
+- Guide: [Connect to a clone](/docs/guides/cloning/connect-clone)
+- Guide: [Destroy a clone](/docs/guides/cloning/destroy-clone)
 
 [↵ Back to Cloning guides](/docs/guides/cloning)
