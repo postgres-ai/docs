@@ -11,7 +11,7 @@ sidebar_label: Start using Joe Bot
 >![Add a star](/assets/star.gif)
 
 ## Step 1. Requirements:
-- Set up [Database Lab Engine](/docs/tutorials/engine-setup) (e.g., running by address https://dblab.domain.com) before configuring Joe Bot.
+- Set up [Database Lab Engine](/docs/tutorials/database-lab-tutorial) (e.g., running on address https://dblab.domain.com) before configuring Joe Bot.
   > ⚠&nbsp;Make sure the address used in `accessHost` is accessible from where you are going to run Joe Bot.
 - Prepare any Linux machine with Docker. See the official documentation on [how to install Docker on Linux](https://docs.docker.com/engine/install/).
 
@@ -215,7 +215,7 @@ If you don't need Web UI and prefer working with Joe only in messengers (such as
 
 Before configuring Web UI make sure you have a Postgres.ai account.
 
-If you don't have a Postgres.ai account yet, see the guide on how to start working with [Postgres.ai Console](/docs/platform/how-to-start).
+If you don't have a Postgres.ai account yet, see the guide on how to start working with [Postgres.ai Console](/docs/platform).
 
 To configure Web UI:
 

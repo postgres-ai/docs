@@ -44,9 +44,9 @@ dblab clone update CLONE_ID
 }
 ```
 
-Also, clones could be made protected during clone creation. See [Create clone](/docs/guides/create-clone) guide.
+Also, clones could be made protected during clone creation. See [Create clone](/docs/guides/cloning/create-clone) guide.
 
 ## Related
-- Guide: [Destroy a clone](/docs/guides/destroy-clone)
+- Guide: [Destroy a clone](/docs/guides/cloning/destroy-clone)
 
 [↵ Back to Cloning guides](/docs/guides/cloning)
