@@ -2,6 +2,9 @@
 title: How to get row counts for arbitrary SELECTs
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 [↵ Back to **How to work with Joe chatbot** guides](/docs/guides/joe-bot)
 
 One of the good side-effects of using Joe bot is the ability that any EXPLAIN plan with actual execution provides: one can get row counts for any SELECT without having direct access to the data.
@@ -18,21 +21,48 @@ In the following steps let's assume that we need to answer the question: "How ma
 
 >Keep in mind that the clone you are working with might be, depending on the settings and the state of Database Lab Engine, somewhat outdated. In the very beginning, Joe reports the timestamp to help you understand the version of data you are working with: `Snapshot data state at: 2020-01-02 03:04:05 UTC.`
 
-<!--DOCUSAURUS_CODE_TABS-->
-<!--Web UI-->
-![Run command / Automatic session creation / Web UI](/docs/assets/guides/explain-count-rows-web-1.png)
-<!--Slack-->
-![Run command / Automatic session creation / Slack](/docs/assets/guides/explain-count-rows-slack-1.png)
-<!--END_DOCUSAURUS_CODE_TABS-->
+<Tabs
+  groupId="joe-mode"
+  defaultValue="web"
+  values={[
+    {label: 'Web UI', value: 'web'},
+    {label: 'Slack', value: 'slack'},
+  ]
+}>
+<TabItem value="web">
+
+![Run command / Automatic session creation / Web UI](/assets/guides/explain-count-rows-web-1.png)
+
+</TabItem>
+<TabItem value="slack">
+
+![Run command / Automatic session creation / Slack](/assets/guides/explain-count-rows-slack-1.png)
+
+</TabItem>
+</Tabs>
 
 2. Open the **full execution plan**. You can get the rows number from the first line. For example, if you see `(actual ... rows=1000)`, it means that 1000 rows match the specified criteria.
 
 This recipe may be very useful for quite complex queries. You can benefit from one of the key features of Database Lab Engine and Joe bot: your session is fully independent, your work doesn't affect the production performance of your colleague's work, even if the query your use is suboptimal and runs many hours.
-<!--DOCUSAURUS_CODE_TABS-->
-<!--Web UI-->
-![Query plan with execution / Web UI](/docs/assets/guides/explain-count-rows-web-2.png)
-<!--Slack-->
-![Query plan with execution / Slack](/docs/assets/guides/explain-count-rows-slack-2.png)
-<!--END_DOCUSAURUS_CODE_TABS-->
+
+<Tabs
+  groupId="joe-mode"
+  defaultValue="web"
+  values={[
+    {label: 'Web UI', value: 'web'},
+    {label: 'Slack', value: 'slack'},
+  ]
+}>
+<TabItem value="web">
+
+![Query plan with execution / Web UI](/assets/guides/explain-count-rows-web-2.png)
+
+</TabItem>
+<TabItem value="slack">
+
+![Query plan with execution / Slack](/assets/guides/explain-count-rows-slack-2.png)
+
+</TabItem>
+</Tabs>
 
 [↵ Back to **How to work with Joe chatbot** guides](/docs/guides/joe-bot)

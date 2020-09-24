@@ -1,6 +1,7 @@
 ---
-title: Overview of database changes CI/CD verifications
-sidebar_label: Database changes CI/CD
+title: "Overview of database changes CI/CD verifications"
+sidebar_label: "Database changes CI/CD"
+slug: /database-changes-cicd
 ---
 
 Database changes CI/CD – a set of solutions that allows the use of full-size database clones in various CI tools (e.g., CircleCI, Jenkins, GitLab CI/CD).

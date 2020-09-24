@@ -1,6 +1,6 @@
 ---
-title: Data source: RDS
-sidebar_label: Data source: RDS
+title: "Data source: RDS"
+sidebar_label: "Data source: RDS"
 ---
 
 [↵ Back to Data source guides](/docs/guides/data)

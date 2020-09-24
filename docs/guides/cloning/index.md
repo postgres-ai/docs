@@ -1,6 +1,7 @@
 ---
 title: How to work with Database Lab clones
 sidebar_label: How to work with clones
+slug: /guides/cloning
 ---
 
 - [How to create Database Lab clones](/docs/guides/cloning/create-clone)

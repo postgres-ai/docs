@@ -2,9 +2,12 @@
 title: Database Lab Engine
 sidebar_label: Overview
 hide_title: false
+slug: /database-lab
 ---
 
-<img src="/docs/assets/database-lab/dblab.png" width="256" align="right" vspace="20" hspace="20" />
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+<img src={useBaseUrl('assets/database-lab/dblab.png')} width="256" align="right" vspace="20" hspace="20" />
 
 ## Tutorials
 - [Database Lab tutorial for Amazon RDS Postgres](/docs/tutorials/database-lab-tutorial-amazon-rds)
@@ -36,7 +39,7 @@ Database Lab Engine is distributed under AGPL v3 license. Repositories:
 >Database Lab Engine is hosted and developed on GitLab.com. Why? GitLab Inc. is our (Postgres.ai) long-term client and early adopter (see [GitLab Development Docs](https://docs.gitlab.com/ee/development/understanding_explain_plans.html#database-lab)). GitLab has an open-source version. Last but not least: GitLab uses PostgreSQL.<br/><br/>
 >However, nowadays, not many open-source projects are hosted at GitLab.com unfortunately.<br/> ⭐️ Please support the project giving a star on GitLab! It's on [the main page of the Database Lab Engine repository](https://gitlab.com/postgres-ai/database-lab), at the upper right corner:
 >
->![Add a GitLab star](/docs/assets/star.gif)
+>![Add a GitLab star](/assets/star.gif)
 
 However, nowadays, not many open-source projects are hosted at GitLab.com unfortunately. Please support the project giving a GitLab star! It's on [the main page](https://gitlab.com/postgres-ai/database-lab), at the upper right corner:
 

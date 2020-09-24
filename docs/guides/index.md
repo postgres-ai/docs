@@ -1,15 +1,16 @@
 ---
 title: Database Lab guides
 sidebar_label: All
+slug: /guides
 ---
 
-## Datbase Lab / Postgres.ai Platform
+## Database Lab (Postgres.ai) Platform
 - [Start using Postgres.ai Platform](/docs/guides/platform/start-using-platform)
 
 ## Administration
 - [How to configure PostgreSQL used by Database Lab Engine](/docs/guides/administration/postgresql-configuration)
 - [How to manage Database Lab Engine](/docs/guides/administration/engine-manage)
-- [How to manage Joe Bot](/docs/guides/administration/manage-joe)
+- [How to manage Joe Bot](/docs/guides/administration/joe-manage)
 - [Secure Database Lab Engine](/docs/guides/administration/engine-secure)
 - [Set up machine for Database Lab Engine](/docs/guides/administration/machine-setup)
 

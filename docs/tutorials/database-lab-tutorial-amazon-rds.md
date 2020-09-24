@@ -3,6 +3,9 @@ title: Database Lab tutorial for Amazon RDS
 sidebar_label: Tutorial for Amazon RDS
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 Database Lab is used to boost software development and testing processes via enabling ultra-fast provisioning of databases of any size.
 
 In this tutorial, we are going to set up a Database Lab Engine for an existing PostgreSQL DB instance on Amazon RDS. If you don't have an RDS instance and want to have one to follow the steps in this tutorial, read [the official RDS documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_GettingStarted.CreatingConnecting.PostgreSQL.html). Database Lab Engine will be installed on an AWS EC2 instance with Ubuntu 18.04, and an additional EBS volume to store PostgreSQL data directory. The data will be automatically retrieved from the RDS database.
@@ -10,9 +13,9 @@ In this tutorial, we are going to set up a Database Lab Engine for an existing P
 Compared to RDS clones, Database Lab clones are ultra-fast (RDS cloning is "thick": it takes many minutes, and, depending on the database size, additional dozens of minutes or even hours to warm up, see ["Lazy load"](https://docs.amazonaws.cn/en_us/AWSEC2/latest/WindowsGuide/ebs-creating-volume.html#ebs-create-volume-from-snapshot)) and do not require additional storage and instance. A single Database Lan instance can be used by dozens of engineers simultaneously working with dozens of thin clones located on a single instance and single storage vole. [RDS Aurora clones](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Managing.Clone.html) are "thin" by nature, which is great for development and testing. However, they also require additional instances, meaning significant extra costs. Database Lab clones are high-speed ("thin"), budget-saving ("local"), and can be used for a source database located anywhere.
 
 >Database Lab Engine is hosted and developed on GitLab.com. Why? GitLab Inc. is our (Postgres.ai) long-term client and early adopter (see [GitLab Development Docs](https://docs.gitlab.com/ee/development/understanding_explain_plans.html#database-lab)). GitLab has an open-source version. Last but not least: GitLab uses PostgreSQL.<br/><br/>
->However, nowadays, not many open-source projects are hosted at GitLab.com unfortunately.<br/> ⭐️ Please support the project giving a star on GitLab! It's on [the main page of the Database Lab Engine repository](https://gitlab.com/postgres-ai/database-lab), at the upper right corner:
+>However, nowadays, not many open-source projects are hosted at GitLab.com unfortunately.<br/> ⭐️&nbsp;Please support the project giving a star on GitLab! It's on [the main page of the Database Lab Engine repository](https://gitlab.com/postgres-ai/database-lab), at the upper right corner:
 >
->![Add a GitLab star](/docs/assets/star.gif)
+>![Add a GitLab star](/assets/star.gif)]
 
 Our steps:
 
@@ -38,9 +41,9 @@ Additionally, to be able to install software, allow accessing external resources
 
 Here is how the inbound and outbound rules in your Security Group may look like:
 
-![Database Lab architecture](/docs/assets/ec2_security_group_inbound.png)
+![EC2 security group inbound](/assets/ec2-security-group-inbound.png)
 
-![Database Lab architecture](/docs/assets/ec2_security_group_outbound.png)
+![EC2 security group outbound](/assets/ec2-security-group-outbound.png)
 
 ### Install Docker
 If needed, you can find the detailed installation guides for Docker [here](https://docs.docker.com/install/linux/docker-ce/ubuntu/).
@@ -147,8 +150,16 @@ Options:
 
 For the sake of simplicity, we will use the password-based authentication in this tutorial. If you want to use IAM database authentication, read how to enable it [here](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.Enabling.html).
 
-<!--DOCUSAURUS_CODE_TABS-->
-<!--password-->
+<Tabs
+  groupId="rds-authentication"
+  defaultValue="password"
+  values={[
+    {label: 'password', value: 'password'},
+    {label: 'iam-based', value: 'iam-based'},
+  ]
+}>
+<TabItem value="password">
+
 ### Option 1: Password authentication
 >You need to know the **master password**. If you lost the password it [can be reset](https://aws.amazon.com/premiumsupport/knowledge-center/reset-master-user-password-rds/).
 
@@ -192,7 +203,9 @@ sudo docker run \
   postgresai/dblab-server:2.0.0-beta.2
 ```
 
-<!--iam-based-->
+</TabItem>
+<TabItem value="iam-based">
+
 ### Option 2: IAM database authentication
 #### Prepare AWS user and IAM database access policy
 1. Create an AWS user (or use an existing one).
@@ -259,7 +272,9 @@ sudo docker run \
   --restart on-failure \
   postgresai/dblab-server:2.0.0-beta.2
 ```
-<!--END_DOCUSAURUS_CODE_TABS-->
+
+</TabItem>
+</Tabs>
 
 ### How to check Database Lab Engine logs
 ```bash
@@ -295,34 +310,34 @@ To use GUI, you need to [sign up for Database Lab Platform](https://postgres.ai/
 
 #### Add Database Lab Engine to the Platform
 1. On the **Database Lab instances** page of your organization click the **Add instance** button.
-![Database Lab Engine / Database Lab instances](/docs/assets/guides/add-engine-instance-1.png)
+![Database Lab Engine / Database Lab instances](/assets/guides/add-engine-instance-1.png)
 1. One the **Add instance** page fill the following:
     - `Project`: choose any project name, it will be created automatically;
     - `Verification token`: specify the same verification token that you've used in the Database Lab Engine configuration file;
     - `URL`: Database Lab API server (EC2 instance public IP or hostname).
-![Database Lab Engine / Add instance](/docs/assets/guides/add-engine-instance-2.png)
+![Database Lab Engine / Add instance](/assets/guides/add-engine-instance-2.png)
 1. Click the **Verify URL** button to check the availability of the Engine. Ignore the warning about insecure connection – in this Tutorial, we have skipped some security-related steps.
 1. Click the **Add** button to add the instance to the Platform.
 
 #### Create a clone
 1. Go to the **Database Lab instance** page.
 1. Click the **Create clone** button.
-  ![Database Lab engine page / Create clone](/docs/assets/guides/create-clone-1.png)
+  ![Database Lab engine page / Create clone](/assets/guides/create-clone-1.png)
 1. Fill the **ID** field with a meaningful name.
 1. (optional) By default, the latest data snapshot (closest to production state) will be used to provision a clone. You can choose another snapshot if any.
 1. Fill **database credentials**. Remember the password (it will not be available later, Database Lab Platform does not store it!) – you will need to use it to connect to the clone.
 1. Click the **Create clone** button and wait for a clone to be provisioned. The process should take only a few seconds.
-![Database Lab engine clone creation page](/docs/assets/guides/create-clone-2.png)
+![Database Lab engine clone creation page](/assets/guides/create-clone-2.png)
 1. You will be redirected to the **Database Lab clone** page.
-    ![Database Lab engine clone page](/docs/assets/guides/create-clone-3.png)
+    ![Database Lab engine clone page](/assets/guides/create-clone-3.png)
 
 #### Connect to a clone
 1. From the **Database Lab clone** page under section **Connection info** copy **psql connection string** field contents by clicking the **Copy** button.
-    ![Database Lab clone page / psql connection string](/docs/assets/guides/connect-clone-1.png)
+    ![Database Lab clone page / psql connection string](/assets/guides/connect-clone-1.png)
 1. Here we assume that you have `psql` installed on your working machine. In the terminal, type `psql` and paste **psql connection string** field contents. Change the database name `DBNAME` parameter, you can always use `postgres` for the initial connection.
 1. Run the command and type the password you've set during the clone creation.
 1. Test established connection by listing tables in the database using `\d`.
-    ![Terminal / psql](/docs/assets/guides/connect-clone-2.png)
+    ![Terminal / psql](/assets/guides/connect-clone-2.png)
 
 ### Option 2: CLI
 #### Install Database Lab client CLI

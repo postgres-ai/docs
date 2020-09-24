@@ -25,7 +25,7 @@ In the case of a Self-managed setup, all the components are installed and operat
 
 In the case of a SaaS setup (Postgres.ai) of the Platform, the components that can connect to database clones are installed inside your infrastructure. The Platform works "outside" and *cannot* reach your databases and read or modify anything in your databases (including temporary clones):
 
-![Postgres.ai SaaS Security Model](/docs/assets/saas-security-model.png)
+![Postgres.ai SaaS Security Model](/assets/saas-security-model.png)
 
 By default, ports 2400 and 2345 operate using HTTP, which is not secure. It is highly recommended that HTTP connections are not available to public, and all communication happens using HTTPS (consider using NGINX with SSL certificates as a proxy option to allow only encrypted communication between the Platform and Database Lab / Joe).
 
@@ -33,7 +33,7 @@ What if you do not want to open ports to the world at all? In this case, you nee
 It may be useful for communication Database Lab and Joe instances behind firewalls when making exclusions for specific ports is impossible or prohibited.
 The connection to the Platform is established by starting the tunnel client with a registration key. Please contact Postgres.ai support to obtain your registration key and detailed installation instructions. This option is available for paid customers (Enterprise Edition) only.
 
-![Postgres.ai SaaS Security Model](/docs/assets/saas-security-tunnel-model.png)
+![Postgres.ai SaaS Security Model](/assets/saas-security-tunnel-model.png)
 
 Further, we discuss all Postgres.ai components that are to be installed in your infrastructure, and what kind of information can be transferred to Postgres.ai.
 

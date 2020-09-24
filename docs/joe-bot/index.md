@@ -1,11 +1,15 @@
 ---
 title: Joe Bot
 sidebar_label: Overview
+slug: /joe-bot
 ---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 ## Summary
 
-<img src="/docs/assets/joe/joe.png" width="128" align="right" vspace="20" hspace="20" />
+<img src={useBaseUrl('assets/joe/joe.png')} width="128" align="right" vspace="20" hspace="20" />
+
 Joe is a Postgres query optimization assistant. Joe allows to boost the development process:
 
 - eliminating annoying waiting time needed to provision copies of large databases for development and testing purposes,
@@ -17,7 +21,7 @@ This process is fully automated and takes only a few seconds, even for multi-ter
 
 ## Comparison of Database Lab to Other Options of Testing on Large Databases
 
-![Comparison of Database Lab to Other Options of Testing on Large Databases](/docs/assets/joe/comparison-matrix.png)
+![Comparison of Database Lab to Other Options of Testing on Large Databases](/assets/joe/comparison-matrix.png)
 
 ## Features
 

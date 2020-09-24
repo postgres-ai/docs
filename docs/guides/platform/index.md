@@ -1,6 +1,7 @@
 ---
-title: Database Lab data sources
-sidebar_label: Data sources
+title: Database Lab Platform
+sidebar_label: Platform
+slug: /guides/platform
 ---
 
 ## Guides

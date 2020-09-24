@@ -10,7 +10,7 @@ title: How to destroy Database Lab clone
 
 ## GUI
 1. On the **Database Lab clone** page click the **Destroy** button.
-  ![Database Lab engine page / Create clone](/docs/assets/guides/create-clone-1.png)
+  ![Database Lab engine page / Create clone](/assets/guides/create-clone-1.png)
 1. Accept confirmation dialog and wait for it. You will be redirected to the **Database Lab instance** page.
 
 ## CLI

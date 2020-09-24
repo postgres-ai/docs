@@ -8,11 +8,11 @@ sidebar_label: Start using Joe Bot
 >Please support the project giving a GitLab star (it's on [the main page of the project repository](https://gitlab.com/postgres-ai/joe),
 >at the upper right corner):
 >
->![Add a star](/docs/assets/star.gif)
+>![Add a star](/assets/star.gif)
 
 ## Step 1. Requirements:
 - Set up [Database Lab Engine](/docs/tutorials/engine-setup) (e.g., running by address https://dblab.domain.com) before configuring Joe Bot.
-  > ⚠ Make sure the address used in `accessHost` is accessible from where you are going to run Joe Bot.
+  > ⚠&nbsp;Make sure the address used in `accessHost` is accessible from where you are going to run Joe Bot.
 - Prepare any Linux machine with Docker. See the official documentation on [how to install Docker on Linux](https://docs.docker.com/engine/install/).
 
 ## Step 2. Configure communication channels
@@ -224,7 +224,7 @@ To configure Web UI:
 1. Choose a project from the dropdown menu and press the `Add instance` button.
 1. Generate `Signing secret`. Put it in the configuration file (`channelMapping: webui: <your channel name>: credentials: signingSecret`). We will add and verify the URL on the last step, so do not close the page.
 
-    ![WebUI - Generate a signing token](/docs/assets/joe/tutorial-webui-signing-secret.png)
+    ![WebUI - Generate a signing token](/assets/joe/tutorial-webui-signing-secret.png)
 
 
 ### Step 2b. Set up Joe bot in Slack
@@ -247,17 +247,17 @@ Configure a new Slack App in order to use Joe in Slack and add the app to your t
     * `users.profile:read`
     * `users:read`
 
-    ![Slack App - Bot Token Scopes](/docs/assets/joe/tutorial-oauth-bot-token-scopes.png)
+    ![Slack App - Bot Token Scopes](/assets/joe/tutorial-oauth-bot-token-scopes.png)
 
 1. Go to the "App Home" page and edit "App Display Name".
     * Use "Joe Bot" as Display Name and "joe-bot" as the default username.
 
 1. Enable Incoming Webhooks Feature.
     * Go to the "OAuth & Permissions" page and press "Install App to Workspace".
-        ![Slack App - OAuth & permissions](/docs/assets/joe/tutorial-oauth-permissions.png)
+        ![Slack App - OAuth & permissions](/assets/joe/tutorial-oauth-permissions.png)
 
     * Allow access to your Workspace with requested permissions.
-        ![Slack App - Permissions request](/docs/assets/joe/tutorial-permissions-request.png)
+        ![Slack App - Permissions request](/assets/joe/tutorial-permissions-request.png)
 
     * You will get `Bot User OAuth Access Token` which is required to run the Joe app (use as `SLACK_CHAT_TOKEN`).
 
@@ -290,9 +290,7 @@ Now we have all tokens and ready to run Joe Bot.
 
 1. Make a publicly accessible HTTP(S) server port specified in the configuration to receive requests from communication channels Request URL (e.g., http://35.200.200.200:2400, https://joe.dev.domain.com).
 
-Instead of working using insecure HTTP, you can set up NGINX with SSL enabled and open port 443, similarly as it was described in [Database Lab tutorial](/docs/database-lab/tutorial#step-5-configure-secure-access-to-database-lab-api-optional). 
-
-See also (it might be helpful): https://nginxconfig.io/
+Instead of working using insecure HTTP, you can set up NGINX with SSL enabled and open port 443, similarly as described in ["Secure Database Lab Engine"](/docs/guides/administration/engine-secure).
 
 ## Step 4. Verify the configuration
 
@@ -302,7 +300,7 @@ See also (it might be helpful): https://nginxconfig.io/
 1. Press the `Verify` button to check connection and `Add` the instance after the verification is passed.
 1. Choose the created instance and send a command.
 
-    ![Run command](/docs/assets/joe/tutorial-webui-example-command.png)
+    ![Run command](/assets/joe/tutorial-webui-example-command.png)
 
 ### Step 4b. Finish the Slack configuration
 1. Enable Event Subscriptions Feature.
@@ -310,13 +308,13 @@ See also (it might be helpful): https://nginxconfig.io/
     * Specify Request URL adding the specific path, `/slack/` (for example, `https://joe.dev.domain.com/slack/`). URL will be verified by Slack API.
     * In the "Subscribe to Bot Events" dropdown-tab add `message.channels`.
     * Press "Save Changes".
-    ![Slack App - Event Subscriptions](/docs/assets/joe/tutorial-event-subscriptions.png)
+    ![Slack App - Event Subscriptions](/assets/joe/tutorial-event-subscriptions.png)
 
 1. Invite "Joe Bot" to "#db-lab" channel.
 
 1. Send a command to the #db-lab channel. For example, `help`.
 
-    ![Run command](/docs/assets/joe/tutorial-example-help.png)
+    ![Run command](/assets/joe/tutorial-example-help.png)
 
 
 See available configuration options [here](/docs/joe-bot/config-reference).

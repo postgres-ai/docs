@@ -1,6 +1,6 @@
 ---
-title: Data source: Custom
-sidebar_label: Data source: Custom
+title: "Data source: Custom"
+sidebar_label: "Data source: Custom"
 ---
 
 [↵ Back to Data source guides](/docs/guides/data)
