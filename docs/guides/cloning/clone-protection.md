@@ -15,7 +15,7 @@ From the **Database Lab clone** page enable or disable the **Enable deletion pro
   ![Database Lab engine page / Create clone](/assets/guides/clone-protection-1.png)
 
 ## CLI
-Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/guides/cli_install_init).
+Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/guides/cli/cli-install-init).
 
 ### Reference
 - Command [`dblab clone update`](/docs/database-lab/cli-reference#subcommand-update)
