@@ -3,6 +3,9 @@ title: Setup machine for the Database Lab Engine
 sidebar_label: Setup machine for the Database Lab Engine
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 [↵ Back to Administration guides](/docs/guides/administration)
 
 ## Prepare a machine
@@ -22,9 +25,9 @@ Additionally, to be able to install software, allow accessing external resources
 
 Here is how the inbound and outbound rules in your Security Group may look like:
 
-![Database Lab architecture](/docs/assets/ec2_security_group_inbound.png)
+![Database Lab architecture](/assets/ec2-security-group-inbound.png)
 
-![Database Lab architecture](/docs/assets/ec2_security_group_outbound.png)
+![Database Lab architecture](/assets/ec2-security-group-outbound.png)
 
 ## Install Docker
 If needed, you can find the detailed installation guides for Docker [here](https://docs.docker.com/install/linux/docker-ce/ubuntu/).
@@ -91,9 +94,16 @@ ZFS is a recommended way to enable thin cloning in Database Lab. LVM is also ava
 - much less flexible disk space consumption and risks for a clone to be destroyed during massive operations in it,
 - inability to work with multiple snapshots ("time travel"), cloning always happens based on the most recent version of data.
 
-<!--DOCUSAURUS_CODE_TABS-->
-<!--ZFS-->
-## Option 1: Use ZFS
+<Tabs
+  groupId="file-systems"
+  defaultValue="zfs"
+  values={[
+    {label: 'ZFS', value: 'zfs'},
+    {label: 'LVM', value: 'lvm'},
+  ]
+}>
+<TabItem value="zfs">
+
 Install ZFS:
 ```bash
 sudo apt-get install -y zfsutils-linux
@@ -127,8 +137,9 @@ nvme0n1     259:0  0   777G  0 disk
 └─nvme0n1p9 259:4  0     8M  0 part
 ```
 
-<!--LVM-->
-## Option 1: Use LVM
+</TabItem>
+<TabItem value="lvm">
+
 Install LVM2:
 ```bash
 sudo apt-get install -y lvm2
@@ -165,7 +176,9 @@ Update LVM configuration (located in `/etc/lvm/lvm.conf` by default):
 sudo sed -i 's/snapshot_autoextend_threshold.*/snapshot_autoextend_threshold = 70/g' /etc/lvm/lvm.conf
 sudo sed -i 's/snapshot_autoextend_percent.*/snapshot_autoextend_percent = 20/g' /etc/lvm/lvm.conf
 ```
-<!--END_DOCUSAURUS_CODE_TABS-->
+
+</TabItem>
+</Tabs>
 
 ## Related
 - [Data sources](/docs/guides/data)

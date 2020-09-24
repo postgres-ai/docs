@@ -1,6 +1,6 @@
 ---
-title: Data source: pg_basebackup
-sidebar_label: Data source: pg_basebackup
+title: "Data source: pg_basebackup"
+sidebar_label: "Data source: pg_basebackup"
 ---
 
 [↵ Back to Data source guides](/docs/guides/data)

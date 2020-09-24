@@ -1,6 +1,6 @@
 ---
-title: Data source: rsync
-sidebar_label: Data source: rsync
+title: "Data source: rsync"
+sidebar_label: "Data source: rsync"
 ---
 
 [↵ Back to Data source guides](/docs/guides/data)

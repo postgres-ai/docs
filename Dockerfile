@@ -1,11 +1,11 @@
-FROM node:10.17.0-jessie
+FROM node:10.22
 
-WORKDIR /app/website
+WORKDIR /app/
 
 EXPOSE 3000
-COPY ./docs /app/docs
-COPY ./website /app/website
+COPY ./ /app/
 
 RUN npm install
+RUN npm run build
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "serveserve"]

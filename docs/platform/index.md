@@ -1,6 +1,7 @@
 ---
 title: Postgres.ai Platform overview
 sidebar_label: Overview
+slug: /platform
 ---
 
 ## Summary

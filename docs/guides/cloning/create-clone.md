@@ -7,15 +7,15 @@ title: How to create Database Lab clones
 ## GUI
 1. Go to the **Database Lab instance** page.
 1. Click the **Create clone** button.
-  ![Database Lab engine page / Create clone](/docs/assets/guides/create-clone-1.png)
+  ![Database Lab engine page / Create clone](/assets/guides/create-clone-1.png)
 1. Fill the **ID** field with a meaningful name.
 1. (optional) By default, the latest data snapshot (closest to production state) will be used to provision a clone. You can select any other available snapshot.
 1. Fill **database credentials**. Remember the password, it will not be available later, but you will need to use it to connect to the clone.
 1. (optional) Enable protected status (it can be done later if needed). Please be careful: abandoned protected clones may cause out-of-disk-space events. Read the details [here](/docs/guides/clone-protection).
 1. Click the **Create clone** button and wait for a clone to provision.
-![Database Lab engine clone creation page](/docs/assets/guides/create-clone-2.png)
+![Database Lab engine clone creation page](/assets/guides/create-clone-2.png)
 1. You will be redirected to the **Database Lab clone** page.
-  ![Database Lab engine clone page](/docs/assets/guides/create-clone-3.png)
+  ![Database Lab engine clone page](/assets/guides/create-clone-3.png)
 
 ## CLI
 Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/guides/cli_install_init).

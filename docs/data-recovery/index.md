@@ -1,6 +1,7 @@
 ---
 title: Overview of data recovery use case
 sidebar_label: Data recovery
+slug: /data-recovery
 ---
 
 Recover accidentally deleted data

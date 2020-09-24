@@ -1,6 +1,7 @@
 ---
 title: Overview of postgres-checkup
 sidebar_label: Checkup
+slug: /checkup
 ---
 
 **`postgres-checkup`** – a powerful tool automating health checks of PostgreSQL databases. Its key features are unobtrusiveness, "zero install", and complex and deep analysis of a whole PostgreSQL set of nodes (primary plus its followers). With `postgres-checkup`, an experienced DBA spends only 4 hours instead of 2 weeks to analyze a heavily-loaded PostgreSQL setup when seeing it for the first time.

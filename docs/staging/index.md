@@ -1,6 +1,7 @@
 ---
 title: Staging with superpowers
 sidebar_label: Overview
+slug: /staging
 ---
 
 TBD

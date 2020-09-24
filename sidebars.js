@@ -1,13 +1,14 @@
-{
-  "docs": {
+module.exports = {
+  baseSidebar: {
     "Overview": [
       "get-started",
       "questions-and-answers",
-      "pricing"
+      "pricing",
     ],
     "Tutorials": [
       "tutorials/database-lab-tutorial-amazon-rds",
-      "tutorials/database-lab-tutorial"
+      "tutorials/database-lab-tutorial",
+      "tutorials/joe-setup",
     ],
     "Guides": [
       "guides/index",
@@ -15,47 +16,42 @@
       "guides/cloning/index",
       "guides/joe-bot/index",
       "guides/cli/index",
-      "guides/data/index"
+      "guides/data/index",
     ],
     "Database Lab Platform": [
       "platform/index",
-      "platform/security"
+      "platform/security",
     ],
     "Database Lab Engine": [
       "database-lab/index",
       "database-lab/masking",
       "database-lab/supported-databases",
       {
-        "type": "subcategory",
-        "label": "Reference",
-        "ids": [
+        "Reference": [
           "database-lab/api-reference",
           "database-lab/cli-reference",
-          "database-lab/config-reference"
-        ]
-      }
+          "database-lab/config-reference",
+        ],
+      },
     ],
     "Staging with superpowers": [
-      "staging/index"
+      "staging/index",
     ],
     "Joe Bot": [
       "joe-bot/index",
       "joe-bot/example",
       {
-        "type": "subcategory",
-        "label": "Reference",
-        "ids": [
+        "Reference": [
           "joe-bot/config-reference",
           "joe-bot/commands-reference",
-          "joe-bot/how-to-manage-joe-bot"
-        ]
-      }
+        ],
+      },
     ],
     "Other": [
       "checkup/index",
       "database-changes-cicd/index",
       "data-recovery/index",
-      "data-access/index"
+      "data-access/index",
     ]
-  }
-}
+  },
+};

@@ -1,6 +1,6 @@
 ---
-title: Data source: dump
-sidebar_label: Data source: dump
+title: "Data source: dump"
+sidebar_label: "Data source: dump"
 ---
 
 [↵ Back to Data source guides](/docs/guides/data)

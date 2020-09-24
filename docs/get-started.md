@@ -3,6 +3,7 @@ id: get-started
 title: Getting started with Database Lab
 hide_title: false
 sidebar_label: Getting started
+slug: /
 ---
 
 |   |   |
@@ -19,14 +20,14 @@ Recover accidentally deleted data. Using thin cloning, the point-in-time recover
 ## What is Database Lab?
 Database Lab is used to boost software development via enabling ultra-fast provisioning of databases of any size. Developers, DBAs, and QA engineers work with full-sized independent clones of PostgreSQL databases. Development and testing tasks are accomplished much faster, with more iterations done, with better quality achieved and with much less money spent.
 
-![CI/CD transformation with Database Lab](/docs/assets/cicd-transform.png)
+![CI/CD transformation with Database Lab](/assets/cicd-transform.png)
 
 - Optimize non-production infrastructure costs by 10x.
 - Drastically improve development quality.
 - Get rid of downtimes and avoid performance degradation.
 - Cut half of the TTM (time to market), develop 2x faster than competitors.
 
-![Database Lab architecture](/docs/assets/architecture.png)
+![Database Lab architecture](/assets/architecture.png)
 
-## 👋 Database Lab "Private Beta" program
+## 👋&nbsp;Database Lab "Private Beta" program
 Database Lab Platform (SaaS) is currently in a "private beta" mode, being tested by several hundred engineers. Want to become an early adopter? Join Database Lab by Postgres.ai "Private Beta" program today: https://postgres.ai/console/.

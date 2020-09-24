@@ -8,11 +8,11 @@ title: How to connect to Database Lab clones
 
 ### GUI
 1. From the **Database Lab clone** page under section **Connection info** copy **psql connection string** field contents by clicking the **Copy** button.
-  ![Database Lab clone page / psql connection string](/docs/assets/guides/connect-clone-1.png)
+  ![Database Lab clone page / psql connection string](/assets/guides/connect-clone-1.png)
 1. In terminal type `psql` and paste **psql connection string** field contents. Change the database name `DBNAME` parameter, you can always use `postgres` for the initial connection.
 1. Run the command and type the password you've set during clone creation.
 1. Test established connection by listing tables in the database with `\d` command.
-  ![Terminal / psql](/docs/assets/guides/connect-clone-2.png)
+  ![Terminal / psql](/assets/guides/connect-clone-2.png)
 
 ### CLI
 Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/guides/cli-install-init).
@@ -64,14 +64,14 @@ DBNAME=#
 
 ## Direct connection (JDBC)
 1. From the **Database Lab clone** page under section **Connection info** copy **JDBC connection string** field contents by clicking the **Copy** button.
-  ![Database Lab clone page / JDBC connection string](/docs/assets/guides/connect-clone-3.png)
+  ![Database Lab clone page / JDBC connection string](/assets/guides/connect-clone-3.png)
 1. Use any Java-based PostgreSQL client to connect. For this guide, we will use [CloudBeaver](https://demo.cloudbeaver.io). Open the client.
 1. Click **Connection** / **New connection** / **Custom**.
-  ![CloudBeaver / New connection](/docs/assets/guides/connect-clone-4.png)
+  ![CloudBeaver / New connection](/assets/guides/connect-clone-4.png)
 1. Select the **URL** radio button and paste **JDBC connection string** field contents to **JDBC URL**. Change the database name `DBNAME` parameter, you can always use `postgres` for the initial connection. Change the password `DBPASSWORD` parameter to the password you've set during clone creation.
-  ![CloudBeaver / New connection](/docs/assets/guides/connect-clone-5.png)
+  ![CloudBeaver / New connection](/assets/guides/connect-clone-5.png)
 1. Test the connection by fetching tables.
-  ![CloudBeaver / Tables](/docs/assets/guides/connect-clone-6.png)
+  ![CloudBeaver / Tables](/assets/guides/connect-clone-6.png)
 
 ## SSH port forwarding
 > SSH keys should be on the server with the Database Lab engine to use this connection option.
@@ -80,15 +80,15 @@ DBNAME=#
 
 ### GUI
 1. From the **Database Lab clone** page under section **Connection info** copy **SSH port forwarding** field contents by clicking the **Copy** button.
-  ![Database Lab clone page / SSH port forward](/docs/assets/guides/connect-clone-7.png)
+  ![Database Lab clone page / SSH port forward](/assets/guides/connect-clone-7.png)
 1. In the first tab of terminal start SSH port forwarding using the provided command. Change `USERNAME` to match the username of your SSH key. Change the path to the SSH key if needed.
-  ![Terminal / SSH port forward](/docs/assets/guides/connect-clone-8.png)
+  ![Terminal / SSH port forward](/assets/guides/connect-clone-8.png)
 1. From the **Database Lab clone** page under section **Connection info** copy **psql connection string** (will work the same with JDBC).
-  ![Database Lab clone page / psql connection string](/docs/assets/guides/connect-clone-9.png)
+  ![Database Lab clone page / psql connection string](/assets/guides/connect-clone-9.png)
 1. In the second tab of terminal type `psql` and paste **psql connection string** field contents. Change the database name `DBNAME` parameter, you can always use `postgres` for the initial connection. Make sure that `host=localhost`, as we need to connect to the local port forwarding tunnel.
 1. Run the command and type password you've set during clone creation.
 1. Test established connection by fetching the list of tables with `\d` command.
-  ![Terminal / psql with port forward](/docs/assets/guides/connect-clone-10.png)
+  ![Terminal / psql with port forward](/assets/guides/connect-clone-10.png)
 
 ### CLI
 Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/guides/cli-install-init).

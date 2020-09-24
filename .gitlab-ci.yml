@@ -19,7 +19,6 @@ variables:
   image: node:10.17.0-jessie
   script:
     - source ./deploy/configs/review.sh
-    - cd ./website
     - npm install
     - npm build
 

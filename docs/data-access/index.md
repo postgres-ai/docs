@@ -1,6 +1,7 @@
 ---
 title: Overview of data access use case
 sidebar_label: Data access
+slug: /data-access
 ---
 
 Better performance for analytics
