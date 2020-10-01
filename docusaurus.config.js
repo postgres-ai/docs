@@ -1,11 +1,11 @@
 const URL = (!!process.env.URL ? process.env.URL : 'https://postgres.ai/');
-const BASE_URL = (!!process.env.BASE_URL ? process.env.BASE_URL : '/');
+const BASE_URL = (!!process.env.BASE_URL ? process.env.BASE_URL : '/docs/');
 
 module.exports = {
   title: 'Database Lab Docs · Fast clones of PostgreSQL databases · Postgres.ai', // Title for your website.
   tagline: 'Boost your development process eliminating Postgres-related roadblocks on the way of developers, DBAs and QA specialists',
   url: URL, // Your website URL.
-  baseUrl: '/docs/', //BASE_URL, // Base URL for your project.
+  baseUrl: BASE_URL, // Base URL for your project.
   onBrokenLinks: 'log', //'throw',
   favicon: 'img/favicon.ico',
   organizationName: 'postgres-ai',

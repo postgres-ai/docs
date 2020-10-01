@@ -1,8 +1,7 @@
 ---
 title: How to configure PostgreSQL used by Database Lab Engine
+sidebar_label: Configure PostgreSQL used by Database Lab Engine
 ---
-
-[↵ Back to Administration guides](/docs/guides/administration)
 
 ## PostgreSQL configuration
 It is important to properly configure all PostgreSQL instances managed by Database Lan Engine: the single "sync" instance, and clones.
@@ -103,4 +102,3 @@ An example of `configs` option:
           work_mem: "102400"
 ...
 ```
-

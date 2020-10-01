@@ -1,9 +1,7 @@
 ---
 title: "Data source: pg_basebackup"
-sidebar_label: "Data source: pg_basebackup"
+sidebar_label: "pg_basebackup"
 ---
-
-[↵ Back to Data source guides](/docs/guides/data)
 
 >You need to set up machine for Database Lab instance first. Check the [Setup machine for the Database Lab Engine](/docs/guides/administration/machine-setup) guide for the details.
 
@@ -51,5 +49,3 @@ sudo docker run \
 ```bash
 TBD
 ```
-
-[↵ Back to Data source guides](/docs/guides/data)

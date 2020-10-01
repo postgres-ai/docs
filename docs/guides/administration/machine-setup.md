@@ -6,8 +6,6 @@ sidebar_label: Setup machine for the Database Lab Engine
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-[↵ Back to Administration guides](/docs/guides/administration)
-
 ## Prepare a machine
 Create an EC2 instance with Ubuntu 18.04 and an additional EBS volume to store data. You can find detailed instructions on how to create an AWS EC2 instance [here](https://docs.aws.amazon.com/efs/latest/ug/gs-step-one-create-ec2-resources.html) (if you want to use Google Cloud, see [the GCP documentation](https://cloud.google.com/compute/docs/instances/create-start-instance)).
 
@@ -184,5 +182,3 @@ sudo sed -i 's/snapshot_autoextend_percent.*/snapshot_autoextend_percent = 20/g'
 - [Data sources](/docs/guides/data)
 - [Database Lab tutorial for Amazon RDS](/docs/tutorials/database-lab-tutorial-amazon-rds)
 - [Database Lab tutorial (generic)](/docs/tutorials/database-lab-tutorial)
-
-[↵ Back to Administration guides](/docs/guides/administration)

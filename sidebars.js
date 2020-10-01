@@ -12,11 +12,62 @@ module.exports = {
     ],
     "Guides": [
       "guides/index",
-      "guides/administration/index",
-      "guides/cloning/index",
-      "guides/joe-bot/index",
-      "guides/cli/index",
-      "guides/data/index",
+      {
+        "Administration": [
+          "guides/administration/index",
+          "guides/administration/postgresql-configuration",
+          "guides/administration/engine-manage",
+          "guides/administration/joe-manage",
+          "guides/administration/engine-secure",
+          "guides/administration/machine-setup",
+        ],
+      },
+      {
+        "Cloning": [
+          "guides/cloning/index",
+          "guides/cloning/create-clone",
+          "guides/cloning/connect-clone",
+          "guides/cloning/reset-clone",
+          "guides/cloning/destroy-clone",
+          "guides/cloning/clone-protection",
+        ],
+      },
+      {
+        "Joe bot": [
+          "guides/joe-bot/index",
+          "guides/joe-bot/get-query-plan",
+          "guides/joe-bot/create-index",
+          "guides/joe-bot/reset-session",
+          "guides/joe-bot/query-activity-and-termination",
+          "guides/joe-bot/visualize-query-plan",
+          "guides/joe-bot/sql-optimization-history",
+          "guides/joe-bot/count-rows",
+          "guides/joe-bot/get-database-table-index-size",
+        ],
+      },
+      {
+        "CLI": [
+          "guides/cli/index",
+          "guides/cli/cli-install-init",
+        ],
+      },
+      {
+        "Data sources": [
+          "guides/data/index",
+          "guides/data/rds",
+          "guides/data/dump",
+          "guides/data/pg_basebackup",
+          "guides/data/wal-g",
+          "guides/data/custom",
+        ],
+      },
+      {
+        "Platform": [
+          "guides/platform/index",
+          "guides/platform/start-using-platform",
+          "guides/platform/tokens",
+        ],
+      },
     ],
     "Database Lab Platform": [
       "platform/index",

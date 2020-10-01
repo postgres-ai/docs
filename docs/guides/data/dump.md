@@ -1,9 +1,7 @@
 ---
-title: "Data source: dump"
-sidebar_label: "Data source: dump"
+title: "Data source: pg_dump"
+sidebar_label: "pg_dump"
 ---
-
-[↵ Back to Data source guides](/docs/guides/data)
 
 >You need to set up machine for Database Lab instance first. Check the [Setup machine for the Database Lab Engine](/docs/guides/administration/machine-setup) guide for the details.
 
@@ -63,5 +61,3 @@ sudo rm -rf /var/lib/dblab/data/*
 sudo umount /var/lib/dblab/db.dump
 sudo rm -rf /var/lib/dblab/db.dump
 ```
-
-[↵ Back to Data source guides](/docs/guides/data)

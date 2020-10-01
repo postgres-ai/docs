@@ -1,8 +1,7 @@
 ---
 title: How to work with SQL optimization history
+sidebar_label: Work with SQL optimizatino history
 ---
-
-[↵ Back to **How to work with Joe chatbot** guides](/docs/guides/joe-bot)
 
 >Enable History functionality with [`HISTORY_ENABLED`](https://postgres.ai/docs/joe-bot/config-reference#history_enabled) and [`PLATFORM_`](https://postgres.ai/docs/joe-bot/config-reference#platform_url) configuration options.
 
@@ -40,5 +39,3 @@ Select the **Only members of the organization can view** option to make the comm
 You can save queries to discover them faster in the future.
 1. On the **SQL optimization history** page with a list of commands, click the **Bookmark** button to add the command to the favorites list.
 1. Click the **Favorites** button on the top of the page or use the `is:favorite` label to see your favorites list.
-
-[↵ Back to **How to work with Joe chatbot** guides](/docs/guides/joe-bot)

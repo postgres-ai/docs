@@ -1,9 +1,7 @@
 ---
 title: "Data source: rsync"
-sidebar_label: "Data source: rsync"
+sidebar_label: "rsync"
 ---
-
-[↵ Back to Data source guides](/docs/guides/data)
 
 >You need to set up machine for Database Lab instance first. Check the [Setup machine for the Database Lab Engine](/docs/guides/administration/machine-setup) guide for the details.
 
@@ -60,5 +58,3 @@ sudo docker run \
 ```bash
 TBD
 ```
-
-[↵ Back to Data source guides](/docs/guides/data)

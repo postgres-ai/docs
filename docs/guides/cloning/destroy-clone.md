@@ -1,8 +1,7 @@
 ---
-title: How to destroy Database Lab clone
+title: How to destroy a Database Lab clone
+sidebar_label: Destroy a clone
 ---
-
-[↵ Back to Cloning guides](/docs/guides/cloning)
 
 > Database Lab clone will be automatically deleted after an idle interval defined in the configuration in order to avoid it [protect a clone](/docs/guides/cloning/clone-protection).
 
@@ -31,5 +30,3 @@ The clone has been successfully destroyed: CLONE_ID
 ## Related
 - Guide: [Clone protection from manual and automatic deletion](/docs/guides/cloning/clone-protection)
 - Guide: [Resetting a clone state](/docs/guides/cloning/reset-clone)
-
-[↵ Back to Cloning guides](/docs/guides/cloning)

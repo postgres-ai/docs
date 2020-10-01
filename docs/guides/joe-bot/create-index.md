@@ -1,8 +1,7 @@
 ---
 title: How to create an index using Joe bot
+sidebar_label: Create an index
 ---
-
-[↵ Back to **How to work with Joe chatbot** guides](/docs/guides/joe-bot)
 
 With Joe, it is possible not only to gather query performance metrics but also to change the database schema, create indexes, etc. It can be done with the [`exec`](/docs/joe-bot/commands-reference#exec) command. All changes are done against fully-independent clones and will not affect other Joe users, feel free to experiment with the database.
 
@@ -26,5 +25,3 @@ In the case of big tables when index creation may take many hours you can experi
 - [How to reset the state of a Joe session](/docs/guides/joe-bot/reset-session)
 - [How to get a plan of a query using Joe bot](/docs/guides/joe-bot/get-query-plan)
 - [How to get a list of active queries in a Joe session and stop long-running queries](/docs/guides/joe-bot/query-activity-and-termination)
-
-[↵ Back to **How to work with Joe chatbot** guides](/docs/guides/joe-bot)

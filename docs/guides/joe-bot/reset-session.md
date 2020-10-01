@@ -1,11 +1,10 @@
 ---
-title: How to reset Database Lab clone
+title: How to reset Joe session
+sidebar_label: Reset a session
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-
-[↵ Back to **How to work with Joe chatbot** guides](/docs/guides/joe-bot)
 
 ## GUI
 1. With Joe chatbot sessions (based Database Lab clones) you can perform any changes and not be afraid to damage the data. For example, connect to your clone and drop any table.
@@ -77,5 +76,3 @@ import TabItem from '@theme/TabItem';
 
 ## Reference
 - Command [`reset`](/docs/joe-bot/commands-reference#reset)
-
-[↵ Back to **How to work with Joe chatbot** guides](/docs/guides/joe-bot)

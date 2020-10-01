@@ -1,11 +1,8 @@
 ---
 title: Database Lab guides
-sidebar_label: All
+sidebar_label: Overview
 slug: /guides
 ---
-
-## Database Lab (Postgres.ai) Platform
-- [Start using Postgres.ai Platform](/docs/guides/platform/start-using-platform)
 
 ## Administration
 - [How to configure PostgreSQL used by Database Lab Engine](/docs/guides/administration/postgresql-configuration)
@@ -43,3 +40,6 @@ slug: /guides
 - [pg_basebackup](/docs/guides/data/pg_basebackup)
 - [WAL-G](/docs/guides/data/wal-g)
 - [Custom](/docs/guides/data/custom)
+
+## Database Lab (Postgres.ai) Platform
+- [Start using Postgres.ai Platform](/docs/guides/platform/start-using-platform)

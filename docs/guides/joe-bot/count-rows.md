@@ -1,11 +1,10 @@
 ---
 title: How to get row counts for arbitrary SELECTs
+sidebar_label: Get row counts for arbitrary SELECTs
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-
-[↵ Back to **How to work with Joe chatbot** guides](/docs/guides/joe-bot)
 
 One of the good side-effects of using Joe bot is the ability that any EXPLAIN plan with actual execution provides: one can get row counts for any SELECT without having direct access to the data.
 
@@ -64,5 +63,3 @@ This recipe may be very useful for quite complex queries. You can benefit from o
 
 </TabItem>
 </Tabs>
-
-[↵ Back to **How to work with Joe chatbot** guides](/docs/guides/joe-bot)

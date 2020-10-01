@@ -1,8 +1,7 @@
 ---
 title: How to get a query execution plan (EXPLAIN)
+sidebar_label: Get row counts for arbitrary SELECTs
 ---
-
-[↵ Back to **How to work with Joe chatbot** guides](/docs/guides/joe-bot)
 
 Joe bot is built to boost the process of SQL query troubleshooting and optimization. To get an EXPLAIN plan, you need to use the [`explain`](/docs/joe-bot/commands-reference#explain) command with the query you want to optimize. Once you have sent the command, Joe requests a new thin clone and start working with it to bring the EXPLAIN plan to you:
 
@@ -34,5 +33,3 @@ Let's analyze how it works step by step.
 - [How to create an index using Joe bot](/docs/guides/joe-bot/create-index)
 - [How to reset the state of a Joe session / clone](/docs/guides/joe-bot/reset-session)
 - [How to get a list of active queries in a Joe session and stop long-running queries](/docs/guides/joe-bot/query-activity-and-termination)
-
-[↵ Back to **How to work with Joe chatbot** guides](/docs/guides/joe-bot)

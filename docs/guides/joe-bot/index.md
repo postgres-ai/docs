@@ -1,6 +1,6 @@
 ---
 title: How to work with Joe chatbot
-sidebar_label: How to work with Joe chatbot
+sidebar_label: Overview
 slug: /guides/joe-bot
 ---
 
