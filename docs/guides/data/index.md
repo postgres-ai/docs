@@ -1,6 +1,6 @@
 ---
 title: Database Lab data sources
-sidebar_label: Data sources
+sidebar_label: Overview
 slug: /guides/data
 ---
 

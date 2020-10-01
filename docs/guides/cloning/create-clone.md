@@ -1,8 +1,7 @@
 ---
 title: How to create Database Lab clones
+sidebar_label: Create a clones
 ---
-
-[↵ Back to Cloning guides](/docs/guides/cloning)
 
 ## GUI
 1. Go to the **Database Lab instance** page.
@@ -120,5 +119,3 @@ $ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --pro
 ## Related
 - Guide: [Connect to a clone](/docs/guides/cloning/connect-clone)
 - Guide: [Destroy a clone](/docs/guides/cloning/destroy-clone)
-
-[↵ Back to Cloning guides](/docs/guides/cloning)

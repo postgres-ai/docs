@@ -1,12 +1,11 @@
 ---
-title: How to Manage Database Lab
+title: How to manage Database Lab Engine
+sidebar_label: Manage Database Lab
 ---
 
-[↵ Back to Administration guides](/docs/guides/administration)
+## Set up and start a Database Lab Engine instance
 
-## Start Database Lab instance
-
-Define config file `~/.dblab/server.yml` according to [example](https://gitlab.com/postgres-ai/database-lab/-/blob/master/configs/config.example.physical_generic) and run the following command:
+Define config file `~/.dblab/server.yml` (see config examples [here](https://gitlab.com/postgres-ai/database-lab/-/blob/master/configs/)) and run the following command:
 
 ```bash
 sudo docker run \
@@ -22,7 +21,7 @@ sudo docker run \
   postgresai/dblab-server:latest
 ``` 
 
-## Reconfigure Database Lab
+## Reconfigure Database Lab Engine
 
 Update the configuration file `~/.dblab/server.yml`.
 
@@ -33,14 +32,14 @@ sudo docker restart dblab_server
 
 > ⚠ Note that once `docker restart` is executed, all existing clones will be lost.
 
-## Upgrade Database Lab 
+## Upgrade Database Lab Engine
 
 Stop and remove the container using `sudo docker stop dblab_server` and `sudo docker rm dblab_server` After that, [launch](#start-database-lab-instance) a new container.
 
 > ⚠ Note the upgrade removes all running clones
 
 
-## Observe Database Lab logs
+## Observe Database Lab Engine logs
 
 To enable debugging mode, set option `debug` to `true` (see [example](https://gitlab.com/postgres-ai/database-lab/-/blob/master/configs/config.sample.yml)). Next, [follow the reconfiguration guidelines](#reconfigure-database-lab) to apply the change.
 
@@ -49,7 +48,7 @@ To observe container's logs, run:
 sudo docker logs dblab_server -f
 ```
 
-## Check Database Lab status
+## Check Database Lab Engine status
 
 To check the status of the running container, perform the request `GET /healthz`. 
 
@@ -66,5 +65,3 @@ If the instance is configured properly, you will get the response with status co
     "version":"0.3.1-20200428-1333"
 }
 ```
-
-[↵ Back to Administration guides](/docs/guides/administration)

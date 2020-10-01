@@ -1,11 +1,10 @@
 ---
 title: How to get a list of active queries in a Joe session and stop long-running queries
+sidebar_label: Get a list of active queries and stop long-running queries
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-
-[↵ Back to **How to work with Joe chatbot** guides](/docs/guides/joe-bot)
 
 1. Run a long query, for example, it could be index creation or select from a big table. For demo purposes, we will use `explain select pg_select(20)`.
 
@@ -96,6 +95,3 @@ import TabItem from '@theme/TabItem';
 
 </TabItem>
 </Tabs>
-
-
-[↵ Back to **How to work with Joe chatbot** guides](/docs/guides/joe-bot)

@@ -1,8 +1,7 @@
 ---
 title: Secure Database Lab Engine
+sidebar_label: Secure Database Lab Engine
 ---
-
-[↵ Back to Administration guides](/docs/guides/administration)
 
 To make your work with Database Lab API secure, install and configure NGINX with a self-signed SSL certicate.
 
@@ -87,5 +86,3 @@ curl \
   --header 'Verification-Token: secret_token' \
   https://${IP_OR_HOSTNAME}/status
 ```
-
-[↵ Back to Administration guides](/docs/guides/administration)

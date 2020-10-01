@@ -1,8 +1,7 @@
 ---
 title: How to install and initialize Database Lab CLI
+sidebar_label: Install and initialize Database Lab CLI
 ---
-
-[↵ Back to CLI guides](/docs/guides/cli)
 
 ## Reference
 - Command [`dblab init`](/docs/database-lab/cli-reference#command-init)
@@ -24,7 +23,7 @@ In a separate terminal tab laucnh SSH port forwarding. Use `http://localhost:234
 ssh -NTML 2344:localhost:2345 ssh://USERNAME@HOSTNAME:22 -i ~/.ssh/id_rsa
 ```
 
-3. Initialize configuration. Use URL and verification token of your instance. Instead of using verification token you can generate and use your personal access token. See details [here](/docs/guides/personal-tokens).
+3. Initialize configuration. Use URL and verification token of your instance. Instead of using verification token you can generate and use your personal access token. See details [here](/docs/guides/platform/tokens).
 
 ```bash
 dblab init --environment-id=ENV_ID --url=URL --token=TOKEN
@@ -50,5 +49,3 @@ dblab init --environment-id=ENV_ID --url=URL --token=TOKEN
 
 # Related
 - Video: [Basic install and initialization of Database Lab CLI](https://www.youtube.com/watch?v=0En7misx2mg)
-
-[↵ Back to CLI guides](/docs/guides/cli)

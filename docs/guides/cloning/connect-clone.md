@@ -1,8 +1,7 @@
 ---
 title: How to connect to Database Lab clones
+sidebar_label: Connect to a clones
 ---
-
-[↵ Back to Cloning guides](/docs/guides/cloning)
 
 ## Direct connection (psql)
 
@@ -149,5 +148,3 @@ DBNAME=#
 - Video: [Connect to Database Lab clone through SSH port forwarding](https://www.youtube.com/watch?v=Yq2Kv0-GYXg)
 - Guide: [Resetting a clone state](/docs/guides/cloning/reset-clone)
 - Guide: [Destroy a clone](/docs/guides/cloning/destroy-clone)
-
-[↵ Back to Cloning guides](/docs/guides/cloning)

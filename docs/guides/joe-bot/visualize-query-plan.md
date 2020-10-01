@@ -1,8 +1,7 @@
 ---
 title: How to visualize a query plan
+sidebar_label: Visualize a query plan
 ---
-
-[↵ Back to **How to work with Joe chatbot** guides](/docs/guides/joe-bot)
 
 ## SQL optimization history
 >Enable History functionality with [`HISTORY_ENABLED`](/docs/joe-bot/config-reference#history_enabled) and [`PLATFORM_`](/docs/joe-bot/config-reference#platform_url) configuration options.
@@ -22,5 +21,3 @@ All visualizators are securely deployed in our infrastructure.
 ## Plan visualization page
 1. Paste **Plan with execution** in JSON format to the **Plan** field on the **Plan visualization** page.
 1. Click on the button related to the visualization method you want to use.
-
-[↵ Back to **How to work with Joe chatbot** guides](/docs/guides/joe-bot)

@@ -1,8 +1,7 @@
 ---
 title: Protect clones from manual and automatic deletion
+sidebar_label: Protect clones from manual and automatic deletion
 ---
-
-[↵ Back to Cloning guides](/docs/guides/cloning)
 
 Database Lab clones could be protected from manual and automatical deletion by enabling the **protected** status of a clone. When enabled no one can delete this clone and automated deletion is also disabled.
 
@@ -48,5 +47,3 @@ Also, clones could be made protected during clone creation. See [Create clone](/
 
 ## Related
 - Guide: [Destroy a clone](/docs/guides/cloning/destroy-clone)
-
-[↵ Back to Cloning guides](/docs/guides/cloning)

@@ -1,8 +1,7 @@
 ---
-title: How to reset Database Lab clone
+title: How to reset a Database Lab clone
+sidebar_label: Reset a clone
 ---
-
-[↵ Back to Cloning guides](/docs/guides/cloning)
 
 ## GUI
 1. With Database Lab clones you can perform any changes and not be afraid to damage the data. For example, connect to your clone and drop any table.
@@ -35,5 +34,3 @@ The clone has been successfully reset: CLONE_ID
 
 ## Related
 - Guide: [Destroy a clone](/docs/guides/cloning/destroy-clone)
-
-[↵ Back to Cloning guides](/docs/guides/cloning)

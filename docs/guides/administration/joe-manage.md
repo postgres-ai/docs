@@ -1,8 +1,7 @@
 ---
-title: How to manage Joe Bot
+title: How to manage Joe bot
+sidebar_label: Manage Joe bot
 ---
-
-[↵ Back to Administration guides](/docs/guides/administration)
 
 ## Start Joe Bot container
 
@@ -67,5 +66,3 @@ The response `HTTP/1.1 200 OK` is going to be:
     "communication_types":["slack","webui"]
 }
 ```
-
-[↵ Back to Administration guides](/docs/guides/administration)
