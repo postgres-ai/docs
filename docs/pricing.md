@@ -6,7 +6,7 @@ sidebar_label: Pricing
 ## Overview
 
 - The billing is based on the overall size of your databases (physical size on disk, observed by `df`)
-- For billing purposes, Database Lab Engine automatically tracks the size of the data directory, on an hourly basis
+- For billing purposes, Database Lab Engine automatically tracks the size of the data directory on an hourly basis
 - Two payment models are available:
     - "Cloud" model:
         - $2.6624 / per TiB per hour (with GiB precision),
@@ -20,11 +20,11 @@ sidebar_label: Pricing
             - up to 5 TiB: $8,287 monthly (discount 15%),
             - up to 10 TiB: $14,625 monthly (discount 25%),
             - more than 10 TiB: reach out to the Sales team for a special offering;
-        - the limit may be exceeded any time, no service interruption occurs, but the detailed usage is recorded and reported at the end of the billing period,  
-        - payment is made prior to the use, via the Sales team, based on an individual contract,
+        - the limit may be exceeded any time without service interruption, but the detailed usage is recorded and reported at the end of the billing period,  
         - billing period options: monthly, quarterly, or annually, 
+        - payment is to be made prior to the next billing period, based on an individual contract,
         - reach out to the Sales team to learn more: sales@postgres.ai.
-- Two weeks trial, that could be extended by participating in the Liable Beta Tester program
+- Two-week trial that could be extended by participating in the Liable Beta Tester program
 - Database Lab Engine is always hosted on your infrastructure, and the data never leaves your infrastructure
 
 
