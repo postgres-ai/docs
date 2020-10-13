@@ -8,7 +8,7 @@ sidebar_label: Pricing
 - The billing is based on the overall size of your databases (physical size on disk, observed by `df`)
 - For billing purposes, Database Lab Engine automatically tracks the size of the data directory on an hourly basis
 - Two payment models are available:
-    - "Cloud" model:
+    - "Pay-as-you-go" model:
         - $2.6624 / per TiB per hour (with GiB precision),
         - once the billing cycle (a month) is finalized, the Platform automatically generates both the detailed report and the invoice,
         - payments are made based on this invoice and credit card on file ([Stripe](https://stripe.com) is used for all automated payments),
