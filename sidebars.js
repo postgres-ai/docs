@@ -4,6 +4,7 @@ module.exports = {
       "get-started",
       "questions-and-answers",
       "pricing",
+      "roadmap",
     ],
     "Tutorials": [
       "tutorials/database-lab-tutorial-amazon-rds",
