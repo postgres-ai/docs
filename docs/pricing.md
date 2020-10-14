@@ -3,7 +3,7 @@ title: Database Lab pricing
 sidebar_label: Pricing
 ---
 
-[Try Database Lab now](https://postgres.ai/console)
+[👀 Try Database Lab now for free](https://postgres.ai/console)
 
 ## Plans
 
@@ -55,4 +55,4 @@ sidebar_label: Pricing
 - Database Lab Engine is always hosted on your infrastructure, and the data never leaves your infrastructure
 
 
-[Try Database Lab now for free](https://postgres.ai/console)
+[👀 Try Database Lab now for free](https://postgres.ai/console)
