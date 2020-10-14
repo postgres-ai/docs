@@ -118,7 +118,7 @@ sudo zpool create -f \
   -O atime=off \
   -O recordsize=8k \
   -O logbias=throughput \
-  -m /var/lib/dblab/data \
+  -m /var/lib/dblab \
   dblab_pool \
   "${DBLAB_DISK}"
 ```
@@ -127,7 +127,7 @@ And check the result using `zfs list` and `lsblk`, it has to be like this:
 ```bash
 $ sudo zfs list
 NAME         USED  AVAIL  REFER  MOUNTPOINT
-dblab_pool   106K  777G    24K  /var/lib/dblab/data
+dblab_pool   106K  777G    24K  /var/lib/dblab
 
 $ sudo lsblk
 NAME      MAJ:MIN  RM  SIZE RO TYPE MOUNTPOINT
@@ -200,7 +200,7 @@ sudo docker run \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:2.0.0-beta.2
+  postgresai/dblab-server:2.0.0-beta.3
 ```
 
 </TabItem>
@@ -270,7 +270,7 @@ sudo docker run \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:2.0.0-beta.2
+  postgresai/dblab-server:2.0.0-beta.3
 ```
 
 </TabItem>
