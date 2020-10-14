@@ -1,6 +1,6 @@
 ---
 title: How to create Database Lab clones
-sidebar_label: Create a clones
+sidebar_label: Create a clone
 ---
 
 ## GUI
