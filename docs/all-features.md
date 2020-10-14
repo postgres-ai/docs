@@ -68,3 +68,5 @@ sidebar_label: Feature matrix
 |Premium support (24/7, 1 hour), trainings|❌|✅|✅|
 
 See also: [Development roadmap](/docs/roadmap).
+
+[👀 Try Database Lab now for free](https://postgres.ai/console)
