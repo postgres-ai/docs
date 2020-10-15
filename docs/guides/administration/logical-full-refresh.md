@@ -11,7 +11,8 @@ If you are using the "physical" privisoning mode, read [how to configure the "sy
 
 ## Refresh data from source 
 
-### 1. Stop and remove the existing containers, then clean up the data directory and destroy the pool
+### 1. Cleanup
+Stop and remove the existing containers, then clean up the data directory and destroy the pool
 ```bash
 sudo docker ps -aq | xargs --no-run-if-empty sudo docker rm -f
 sudo rm -rf /var/lib/dblab/data/
