@@ -15,6 +15,7 @@ module.exports = {
     colorMode: {
       defaultMode: 'light',
     },
+
     navbar: {
       title: 'Database Lab Docs',
       logo: {
@@ -43,6 +44,11 @@ module.exports = {
           position: 'right',
         },
       ],
+    },
+
+    algolia: {
+      apiKey: 'f1629fe022fbd1e746f284eb138edd19',
+      indexName: 'postgres',
     },
 
     footer: {
