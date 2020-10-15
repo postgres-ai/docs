@@ -21,6 +21,7 @@ module.exports = {
           "guides/administration/joe-manage",
           "guides/administration/engine-secure",
           "guides/administration/machine-setup",
+          "guides/administration/logical-full-refresh",
         ],
       },
       {

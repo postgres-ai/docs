@@ -10,6 +10,7 @@ slug: /guides
 - [How to manage Joe Bot](/docs/guides/administration/joe-manage)
 - [Secure Database Lab Engine](/docs/guides/administration/engine-secure)
 - [Set up machine for Database Lab Engine](/docs/guides/administration/machine-setup)
+- [How to refresh data when working in the "logical" mode](/docs/guides/administration/logical-full-refresh)
 
 ## How to work with Database Lab clones
 - [How to create Database Lab clones](/docs/guides/cloning/create-clone)
