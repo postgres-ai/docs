@@ -112,7 +112,7 @@ Create a new ZFS storage pool (make sure `$DBLAB_DISK` has the correct value, se
 sudo zpool create -f \
   -O compression=on \
   -O atime=off \
-  -O recordsize=8k \
+  -O recordsize=128k \
   -O logbias=throughput \
   -m /var/lib/dblab \
   dblab_pool \
