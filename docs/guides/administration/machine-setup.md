@@ -1,6 +1,6 @@
 ---
-title: Setup machine for the Database Lab Engine
-sidebar_label: Setup machine for the Database Lab Engine
+title: Set up a machine for Database Lab Engine
+sidebar_label: Set up a machine for Database Lab Engine
 ---
 
 import Tabs from '@theme/Tabs';
