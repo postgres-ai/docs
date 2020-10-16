@@ -314,7 +314,8 @@ To use GUI, you need to [sign up for Database Lab Platform](https://postgres.ai/
 1. One the **Add instance** page fill the following:
     - `Project`: choose any project name, it will be created automatically;
     - `Verification token`: specify the same verification token that you've used in the Database Lab Engine configuration file;
-    - `URL`: Database Lab API server (EC2 instance public IP or hostname).
+    - `URL`: Database Lab API server (EC2 instance public IP or hostname, specify port if needed, e.g. `https://my-domain.com/dblab-engine/` or `http://30.100.100.1:2345`).
+
 ![Database Lab Engine / Add instance](/assets/guides/add-engine-instance-2.png)
 1. Click the **Verify URL** button to check the availability of the Engine. Ignore the warning about insecure connection – in this Tutorial, we have skipped some security-related steps.
 1. Click the **Add** button to add the instance to the Platform.
