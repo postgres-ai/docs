@@ -21,10 +21,10 @@ Copy the contents of configuration example [`config.example.physical_generic.yml
 - Set PostgreSQL commands in `physicalRestore:options:customTool`:
   - `command`: defines the command to restore data using a custom tool;
   - `restore_command`: defines the PostgreSQL `restore_command` configuration option to refresh data;
-- Set proper version in Postgres Docker images tags (change the images itself only if you know what are you doing):
+- Set a proper version in Postgres Docker images tags (change the images itself only if you know what are you doing):
   - `provision:options:dockerImage`;
   - `retrieval:spec:physicalRestore:options:dockerImage`;
-  - `retrieval:spec:physicalSnapshot:options:dockerImage`.
+  - `retrieval:spec:physicalSnapshot:options:promotion:dockerImage`.
 
 ## Run Database Lab Engine
 

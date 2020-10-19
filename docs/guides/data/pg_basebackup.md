@@ -22,10 +22,10 @@ Copy the contents of configuration example [`config.example.physical_generic.yml
 - Set PostgreSQL commands in `physicalRestore:options:customTool`:
   - `command`: `pg_basebackup -X stream -D /var/lib/dblab/data`;
   - `restore_command`: `TBD`;
-- Set proper version in Postgres Docker images tags (change the images itself only if you know what are you doing):
+- Set a proper version in Postgres Docker images tags (change the images itself only if you know what are you doing):
   - `provision:options:dockerImage`;
   - `retrieval:spec:physicalRestore:options:dockerImage`;
-  - `retrieval:spec:physicalSnapshot:options:dockerImage`.
+  - `retrieval:spec:physicalSnapshot:options:promotion:dockerImage`.
 
 ## Run Database Lab Engine
 
