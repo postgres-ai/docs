@@ -88,15 +88,6 @@ build_staging:
   only:
     - staging
 
-build_review:
-  <<: *build_definition
-  <<: *env_review
-  only:
-    - branches
-  except:
-    - master
-    - staging
-
 deploy_production:
   <<: *deploy_definition
   <<: *env_production
@@ -109,11 +100,20 @@ deploy_staging:
   only:
     - staging
 
-deploy_review:
-  <<: *deploy_definition
-  <<: *env_review
-  only:
-    - branches
-  except:
-    - master
-    - staging
+# build_review:
+#   <<: *build_definition
+#   <<: *env_review
+#   only:
+#     - branches
+#   except:
+#     - master
+#     - staging
+
+# deploy_review:
+#   <<: *deploy_definition
+#   <<: *env_review
+#   only:
+#     - branches
+#   except:
+#     - master
+#     - staging
