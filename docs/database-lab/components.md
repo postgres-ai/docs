@@ -100,7 +100,7 @@ The container names will contain a Database Lab RuntimeID. For example, `dblab_s
 #### How to manage
 Starts and stops automatically. 
 
-To activate data promotion, use the `promote` option for a physical snapshot job in the Database Lab configuration file.
+To activate data promotion, use the `promotion.enabled` option for a physical snapshot job in the Database Lab configuration file.
 
 ---
 

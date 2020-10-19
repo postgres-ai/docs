@@ -289,7 +289,7 @@ Next, open `~/.dblab/server.yml` and edit the following options:
 - If your Postgres major version is not 12 (default), set the proper version in Postgres Docker images tags:
     - `provision:options:dockerImage`;
     - `retrieval:spec:physicalRestore:options:dockerImage`;
-    - `retrieval:spec:physicalSnapshot:options:dockerImage`.
+    - `retrieval:spec:physicalSnapshot:options:promotion:dockerImage`.
 
 > Optionally, you might want to keep PGDATA up-to-date, being continuously updated. Good news is that this is supported if you chose "physical" method of initialization of data directory. To have PGDATA updated continuously, configure `retrieval:spec:physicalRestore:restore_command` option, specifying value normally used in `restore_command` on PostgreSQL replicas based on WAL shipping.
 

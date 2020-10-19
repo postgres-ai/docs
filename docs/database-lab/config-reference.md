@@ -20,7 +20,7 @@ sudo docker run \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   --volume /var/lib/dblab:/var/lib/dblab:rshared \
   --volume ~/.dblab/server.yml:/home/dblab/configs/config.yml \
-  "docker pull postgresai/dblab-server:2.0.0-beta.1"
+  "docker pull postgresai/dblab-server:2.0.0-beta.3"
 ```
 
 ## The list of configuration sections
@@ -134,8 +134,12 @@ Options:
 Prepares a snapshot for physical restored PostgreSQL database.
 
 Options:
-- `promote`  (boolean, optional, default: false) - promotes PGDATA after data fetching.
-- `dockerImage` (string, optional) - specifies the Docker image containing the promotion-compatible PostgreSQL instance.
+- `promotion`  (key-value, optional) - promotes PGDATA after data fetching.
+  - `enabled`  (boolean, optional, default: false) - enable PGDATA promotion.
+  - `dockerImage` (string, optional) - specifies the Docker image containing the promotion-compatible PostgreSQL instance.
+  - `healthCheck` (key-value, optional) - describes health check options for a data promotion container.
+    - `interval` (int, optional, default: 5) - health check interval for a data promotion container (in seconds).
+    - `maxRetries` (int, optional, default: 200) - maximum number of health check retries.
 - `sysctls` (key-value, optional) - allows configuring namespaced kernel parameters (sysctls) of Docker container for a promotion stage of taking a snapshot. See supported parameters: https://docs.docker.com/engine/reference/commandline/run/#configure-namespaced-kernel-parameters-sysctls-at-runtime
 - `preprocessingScript` (string, optional) - path on the host machine to a pre-precessing script.
 - `configs` (key-value, optional) - applies PostgreSQL configuration parameters to snapshot. These parameters are inherited by all clones. See also: [How to configure PostgreSQL used by Database Lab Engine](/docs/guides/administration/postgresql-configuration).
