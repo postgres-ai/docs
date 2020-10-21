@@ -1,6 +1,6 @@
 ---
 title: How to work with SQL optimization history
-sidebar_label: Work with SQL optimizatino history
+sidebar_label: Work with SQL optimization history
 ---
 
 >Enable History functionality with [`HISTORY_ENABLED`](https://postgres.ai/docs/joe-bot/config-reference#history_enabled) and [`PLATFORM_`](https://postgres.ai/docs/joe-bot/config-reference#platform_url) configuration options.
