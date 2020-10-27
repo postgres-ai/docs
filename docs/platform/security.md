@@ -44,9 +44,11 @@ In [Postgres.ai SaaS](https://postgres.ai/console), all the components that can 
 
 By default, ports 2400 and 2345 operate using HTTP, which is not secure. It is highly recommended that HTTP connections are not open to the world, and all communications happen using HTTPS only (consider using NGINX with SSL certificates as a proxy option to allow only encrypted communication between the Platform and Database Lab / Joe).
 
-What if you do not want to open ports to the world at all, even for HTTPS communication? In this case, you need to use a more complicated setup, based on secure tunneling using WebSockets. It also can be useful for setting up Database Lab and Joe instances behind firewalls when making exclusions for specific ports is impossible or prohibited. In this approach, the connection to the Platform is established by starting the tunnel client with a registration key. Note, that as of now (October 2020), the use of tunneling requires a special configuration of your organization in Postgres.ai SaaS.
+What if you do not want to open ports to the world at all, even for HTTPS communication? In this case, you need to use a more complicated setup, based on secure tunneling using WebSockets. It also can be useful for setting up Database Lab and Joe instances behind firewalls when making exclusions for specific ports is impossible or prohibited. In this approach, the connection to the Platform is established by starting the tunnel client with a registration key. Note, that as of ctober 2020, the use of tunneling requires a special configuration of your organization in Postgres.ai SaaS.
 
->Please contact Postgres.ai support to obtain your registration key and detailed installation instructions. This option is available for paid customers (Enterprise Edition) only.
+:::note
+Please contact Postgres.ai support to obtain your registration key and detailed installation instructions. This option is available for paid customers (Enterprise Edition) only.
+:::
 
 ![Postgres.ai SaaS Security Model](/assets/saas-security-tunnel-model.png)
 
@@ -63,7 +65,9 @@ If CI observability is enabled (Database migration verification, "Observed sessi
 #### Joe Bot
 The key principle of Joe Bot:
 
-> Users may work only with metadata, but not with data. 
+:::info
+Communicating with Joe bot, users work only with metadata, but not with data.
+:::
 
 For example, when users run a SELECT for a table, they do not see the data, and only metadata (EXPLAIN plans) is available.
 
