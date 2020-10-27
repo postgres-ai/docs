@@ -1,12 +1,12 @@
 ---
-title: Postgres.ai Platform overview
+title: Database Lab Platform overview
 sidebar_label: Overview
 slug: /platform
 ---
 
 ## Summary
 
-Postgres.ai Platform is a unified solution that helps developers, DBAs, SREs, and QA engineers boost their work with PostgreSQL databases. They all can get their work done much faster thanks to the thin cloning of databases and the high level of automation of various tasks that the Platform offers.
+Database Lab Platform is a unified solution that helps developers, DBAs, SREs, and QA engineers boost their work with PostgreSQL databases. They all can get their work done much faster thanks to the thin cloning of databases and the high level of automation of various tasks that the Platform offers.
 
 
 ## Open Source Components
@@ -39,7 +39,7 @@ The open-source components described above may be installed and operate without 
 
 ## Installation Options
 
-Postgres.ai Platform is available in the form of SaaS ([https://postgres.ai](https://postgres.ai)) and Self-managed setup.
+Database Lab Platform is available in the form of SaaS ([https://postgres.ai](https://postgres.ai)) and Self-managed setup.
 
 To start using SaaS, you need to enter to the system using one of the following accounts:
 
@@ -48,26 +48,8 @@ To start using SaaS, you need to enter to the system using one of the following 
 - GitLab,
 - GitHub.
 
-As of May 2020, the SaaS version is operating in a "Closed Beta" mode. The Postgres.ai Team will reach you to schedule a live demo, during which your account will be activated, and you will learn how to use available GUI, CLI, and API.
+As of October 2020, the SaaS version is operating in a "Closed Beta" mode. The Postgres.ai Team will reach you to schedule a live demo, during which your account will be activated, and you will learn how to use available GUI, CLI, and API.
 
 Self-managed setup requires Kubernetes. It is available upon request. Please reach out to Postgres.ai Support to discuss this option.
 
-Both SaaS and Self-managed options include two offerings, as of May 2020:
-
-1. CE (Community Edition):
-    - free of charge,
-    - unlimited number of organizations,
-    - unlimited number of members,
-    - 1 Database Lab instance per organization,
-    - 1 Joe Bot instance per organization,
-    - Joe Bot History shows with retention 14 days (individual pages are infinitely available via direct URLs).
-1. EE (Enterprise Edition) "Gold":
-    - this is a paid version. Contact Support to discuss the options.
-    <!--:   - $95 / user / month on Postgres.ai, each organization has independent billing, and license applies to an organization as a whole (example: if you have two organizations, one consisting of 15 members, and another of 10 members, and you decide to use all EE features in the first one, you need to pay 15 x $95 = $1425 each month, in this case, you will have the first organization working in "EE" mode, while the second one remains in "CE" mode),-->
-    - EE offering for Self-managed setup is available upon request. Please contact Postgres.ai Support.
-    - all features included to CE,
-    - unlimited number of Database Lab instances,
-    - unlimited number of Joe Bot instances, with unlimited channel mapping,
-    - unlimited Joe Bot History,
-    - "auto-join" feature is available: if configured, members with verified email addresses belonging to your company (`username@your-company-name.com`) join your organization automatically.
-1. EE "Platinum": to be defined (stay tuned!).
+Learn more about the options and available pricing models on the [Pricing](/docs/pricing) page.
