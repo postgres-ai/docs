@@ -3,9 +3,13 @@ title: How to destroy a Database Lab clone
 sidebar_label: Destroy a clone
 ---
 
-> Database Lab clone will be automatically deleted after an idle interval defined in the configuration in order to avoid it [protect a clone](/docs/guides/cloning/clone-protection).
+:::tip
+Database Lab Engine automatically deletes idle unprotected clones after the idle interval which is defined in the configuration. To disable auto-deletion for a particular clone, [protect this clone](/docs/guides/cloning/clone-protection). 
+:::
 
-> The protected clone could not be deleted automatically or manually. In order to delete the clone, you would need to [unprotect it](/docs/guides/cloning/clone-protection).
+:::info
+The protected clone could not be deleted automatically or manually. In order to delete the clone, you would need to [unprotect it](/docs/guides/cloning/clone-protection).
+:::
 
 ## GUI
 1. On the **Database Lab clone** page click the **Destroy** button.

@@ -1,8 +1,16 @@
 ---
-title: Supported databases
+title: PostgreSQL versions and extensions
 ---
 
-By default, Database Lab uses [extended Postgres.ai Docker images](https://hub.docker.com/repository/docker/postgresai/extended-postgres) built on top of the official Docker images for PostgreSQL. Use these images with Database Lab when you need non-standard Postgres extensions. 
+## PostgreSQL versions
+Currently, Databaes Lab Engine fully supports the following PostgreSQL major versions:
+- 9.6
+- 10
+- 11
+- 12
+
+## Extensions
+By default, Database Lab Engine uses [the extended Postgres.ai Docker images](https://hub.docker.com/repository/docker/postgresai/extended-postgres) built on top of the official Docker images for PostgreSQL. Use these images with Database Lab when you need non-standard Postgres extensions. 
 
 All these extended images include the following extensions:
 - all official ["core" contrib modules](https://www.postgresql.org/docs/current/contrib.html)
@@ -25,9 +33,10 @@ All these extended images include the following extensions:
 - [set_user](https://github.com/pgaudit/set_user)
 - [Timescale](https://github.com/timescale/timescaledb)
 
-
 Proposals to extend this list are welcome in the project repository: https://gitlab.com/postgres-ai/custom-images.
 
-Currently, only PostgreSQL versions 9.6, 10, 11, and 12 are supported.
+:::tip
+If needed, you can specify any custom Docker image with PostgreSQL in the Database Lab Engine configuration. There is one requirement: such an image needs to use the directory `/var/lib/postgresql/pgdata` as PostgreSQL data directory (`PGDATA`).
 
-If needed, any custom Docker image that runs Postgres with `PGDATA` located in `/var/lib/postgresql/pgdata` directory can be specified in the configuration. See this [Dockerfile](https://gitlab.com/postgres-ai/database-lab/snippets/1932037) as an example.
+Use [this Dockerfile](https://gitlab.com/postgres-ai/database-lab/snippets/1932037) as an example. You can extend or modify it for your needs.
+:::

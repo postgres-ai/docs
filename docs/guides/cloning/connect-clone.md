@@ -3,8 +3,8 @@ title: How to connect to Database Lab clones
 sidebar_label: Connect to a clones
 ---
 
+<!-- TODO proofread this (and all the HowTos (guides) -->
 ## Direct connection (psql)
-
 ### GUI
 1. From the **Database Lab clone** page under section **Connection info** copy **psql connection string** field contents by clicking the **Copy** button.
   ![Database Lab clone page / psql connection string](/assets/guides/connect-clone-1.png)
@@ -21,8 +21,7 @@ Before you run any commands, install Database Lab CLI and initialize configurati
 
 #### Connection
 
-1. Get connection information for a clone.
-
+1. Get the connection information for the clone:
 ```bash
 dblab clone status CLONE_ID
 ```
@@ -45,8 +44,7 @@ dblab clone status CLONE_ID
 }
 ```
 
-2. Connect to the clone using any Postgres client, e.g. psql. Change the database name `DBNAME` parameter, you can always use `postgres` for the initial connection. Type password you've set during clone creation.
-
+2. Connect to the clone using any Postgres client, e.g. psql. Change the database name `DBNAME` parameter, you can always use `postgres` for the initial connection. Type password you've set during clone creation:
 ```bash
 psql "host=HOSTNAME port=6000 user=USERNAME dbname=DBNAME"
 ```
@@ -98,13 +96,11 @@ Before you run any commands, install Database Lab CLI and initialize configurati
 #### Connection
 
 1. In the first tab of terminal start SSH port forwarding using the provided command. Change `USERNAME` to match the username of your SSH key. Change the path to the SSH key if needed.
-
 ```bash
 ssh -NTML 6000:localhost:6000 ssh://USERNAME@HOSTNAME:22 -i ~/.ssh/id_rsa
 ```
 
 2. Get connection information of a clone.
-
 ```bash
 dblab clone status CLONE_ID
 ```
@@ -128,7 +124,6 @@ dblab clone status CLONE_ID
 ```
 
 2. Connect to the clone using any Postgres client, e.g. psql launched from a second tab. Change the database name `DBNAME` parameter, you can always use `postgres` for the initial connection. Type password you've set during clone creation. Make sure that `host=localhost`, as we need to connect to the local port forwarding tunnel.
-
 ```bash
 psql "host=localhost port=6000 user=USERNAME dbname=DBNAME"
 ```
@@ -142,7 +137,6 @@ DBNAME=#
 ```
 
 3. Test established connection by listing tables in the database with `\d` command.
-
 
 ## Related
 - Video: [Connect to Database Lab clone through SSH port forwarding](https://www.youtube.com/watch?v=Yq2Kv0-GYXg)

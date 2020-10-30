@@ -57,7 +57,9 @@ See [the official PostgreSQL documentation](https://www.postgresql.org/docs/curr
 ### `hypo`
 Create hypothetical indexes using the [HypoPG extension](https://hypopg.readthedocs.io/en/latest/). This allows verifying index ideas without actually building large indexes.
 
-> ⚠ Note that an extended Postgres image for Database Lab is required. For a quick start, you can use [prepared images](https://hub.docker.com/repository/docker/postgresai/extended-postgres) created by Postgres.ai, or prepare your own.
+:::info
+Note that an extended Postgres image for Database Lab is required. For a quick start, you can use the [prepared images](https://hub.docker.com/repository/docker/postgresai/extended-postgres) created by Postgres.ai, or BYOI ("build your own image").
+:::
 
 The following subcommands are supported:
 - `hypo [CREATE_INDEX_QUERY]` – create a hypothetical index. For example, `hypo create index hypo_index_test on table1 using btree (id)`.

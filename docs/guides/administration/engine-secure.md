@@ -3,25 +3,21 @@ title: Secure Database Lab Engine
 sidebar_label: Secure Database Lab Engine
 ---
 
-To make your work with Database Lab API secure, install and configure NGINX with a self-signed SSL certicate.
+To make your work with Database Lab Engine API or CLI secure, install and configure NGINX with a self-signed SSL certicate.
 
-Define `${IP_OR_HOSTNAME}` of your instance, using either hostname or IP address:
-
+Define `${IP_OR_HOSTNAME}` for your instance, using either its hostname or the IP address:
 ```bash
 export IP_OR_HOSTNAME="123.45.67.89"
 ```
 
-
 Install NGINX:
-
 ```bash
 sudo apt-get install -y nginx openssl
 ```
 
 Define `${YOUR_OWN_PASS}` environment variable for certificate generation.
 
-Generate SSL certificate request:
-
+Generate an SSL certificate request:
 ```bash
 mkdir -p ~/ssl
 cd ~/ssl
@@ -39,8 +35,7 @@ rm server.pass.key
 openssl req -new -key server.key -out server.csr
 ```
 
-Finish SSL certificate generation and configure NGINX (do not forget to set `$IP_OR_HOSTNAME` as described above!). Website https://nginxconfig.io/ may be also helpful when you prepare NGINX config file. Here is a basic example:
-
+Finish the SSL certificate generation and configure NGINX (do not forget to set `$IP_OR_HOSTNAME` as described above!). Website https://nginxconfig.io/ can also be helpful when you prepare an NGINX config file. Here is a basic example:
 ```bash
 openssl x509 -req -sha256 -days 365 -in server.csr -signkey server.key \
   -out server.crt

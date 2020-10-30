@@ -1,6 +1,17 @@
 ---
 title: Database Lab data masking and obfuscation
 sidebar_label: Data masking and obfuscation
+description: Strategies for data anonymization of PostgreSQL databases – build secure non-production environments.
+keywords:
+  - "PostgreSQL masking"
+  - "Postgres data obfuscation"
+  - "Postgres data anonymization"
+  - "database lab anonymization"
+  - "database lab masking"
+  - "dynamic data masking"
+  - "PostgreSQL GDPR"
+  - "PostgreSQL CCPA"
+  - "PostgreSQL PII data compliance"
 ---
 
 ## Data masking: "pre-masking"

@@ -83,6 +83,7 @@ module.exports = {
         "Reference": [
           "database-lab/api-reference",
           "database-lab/cli-reference",
+          "database-lab/components",
           "database-lab/config-reference",
         ],
       },

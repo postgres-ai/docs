@@ -16,9 +16,13 @@ In the following steps let's assume that we need to answer the question: "How ma
 
 1. Execute `explain select * from table1 where col1 = 1` command to get the query execution plan. The session will start automatically, and a new clone will be created in a few seconds by the Database Lab Engine. 
 
->Notice that using `count(*)` is not really needed – `select * from table1` (or even `select from table1`) is absolutely enough.
+:::tip
+Notice that using `count(*)` is not really needed – `select * from table1` (or even `select from table1`) is absolutely enough.
+:::
 
->Keep in mind that the clone you are working with might be, depending on the settings and the state of Database Lab Engine, somewhat outdated. In the very beginning, Joe reports the timestamp to help you understand the version of data you are working with: `Snapshot data state at: 2020-01-02 03:04:05 UTC.`
+:::info
+Keep in mind that the clone you are working with might be, depending on the settings and the state of Database Lab Engine, somewhat outdated. In the very beginning, Joe reports the timestamp to help you understand the version of data you are working with: `Snapshot data state at: 2020-01-02 03:04:05 UTC.`
+:::
 
 <Tabs
   groupId="joe-mode"

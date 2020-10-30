@@ -1,6 +1,10 @@
 ---
-title: Database Lab Roadmap
+title: Database Lab roadmap
 sidebar_label: Roadmap
+description: Development roadmap for Database Lab Engine and related products.
+keywords:
+  - "Postgres.ai roadmap"
+  - "Database Lab development roadmap"
 ---
 
 ## Roadmap
@@ -150,4 +154,3 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
     - [x] Security aspects
     - [ ] Secure and robust test/staging environments
 - [ ] Video demonstrations
-

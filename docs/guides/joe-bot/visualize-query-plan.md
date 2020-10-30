@@ -4,17 +4,20 @@ sidebar_label: Visualize a query plan
 ---
 
 ## SQL optimization history
->Enable History functionality with [`HISTORY_ENABLED`](/docs/joe-bot/config-reference#history_enabled) and [`PLATFORM_`](/docs/joe-bot/config-reference#platform_url) configuration options.
 
-- Execute any [`explain`](/docs/joe-bot/commands-reference#explain) query and click the **Permalink** at the end of the response.
-- or open the **Command** page by clicking the command card on the **SQL optimization history**.
+:::info
+Enable the "History" feature using the configuration options [`HISTORY_ENABLED`](/docs/joe-bot/config-reference#history_enabled) and [`PLATFORM_`](/docs/joe-bot/config-reference#platform_url).
+:::
+
+- Execute any [`explain`](/docs/joe-bot/commands-reference#explain) query and click the **Permalink** at the end of the response
+- Or open the **Command** page by clicking the command card on the **SQL optimization history**
 
 Learn more about how you can discover command in SQL optimization history [here](/docs/guides/joe-bot/sql-optimization-history).
 
 Click on one of the plan visualization methods you want to use:
-- **Explain Depesz** - classic PostgreSQL plan visualization made by [depesz](https://explain.depesz.com/);
-- **Explain PEV2** - another famous visualizator, initially made by [AlexTatiyants](https://github.com/AlexTatiyants) and improved by the [Dalibo team](https://github.com/dalibo/pev2);
-- **Explain FlameGraph** - plan visualization inspired by [Brendan Gregg's flamegraphs](http://www.brendangregg.com/flamegraphs.html).
+- **Explain Depesz** - classic PostgreSQL plan visualization made by [depesz](https://explain.depesz.com/)
+- **Explain PEV2** - another famous visualizator, initially made by [AlexTatiyants](https://github.com/AlexTatiyants) and improved by the [Dalibo team](https://github.com/dalibo/pev2)
+- **Explain FlameGraph** - plan visualization inspired by [Brendan Gregg's flamegraphs](http://www.brendangregg.com/flamegraphs.html)
 
 All visualizators are securely deployed in our infrastructure.
 

@@ -5,14 +5,15 @@ sidebar_label: Full refresh for "logical" mode
 
 For the "logical" provisioning mode, the "sync" instance is not yet supported (although, it is possible to implement based on logical replication) and the only option to get fresh data on Database Lab Engine is to refresh it fully. Follow these instructions to automate this process. Note, that it is designed for ZFS; if you have a different setup, adjust the snippets accordingly. 
 
->Note, that the process described here requires some downtime for Database Lab Engine. Also, the existing clones are deleted and fully lost during the process. It means that the proper planning of the maintenance windows is needed. 
+:::caution
+Note, that the process described here requires a maintenance window (brief period of downtime) for the Database Lab Engine. Also, the existing clones are deleted and completely lost during the process. It means that the proper planning of the maintenance windows is needed. 
+:::
 
 If you are using the "physical" privisoning mode, read [how to configure the "sync" instance](/docs/guides/administration/postgresql-configuration#the-sync-instance) instead.
 
-## Refresh data from source 
-
+## Refresh data from source
 ### 1. Cleanup
-Stop and remove the existing containers, then clean up the data directory and destroy the pool
+Stop and remove the existing containers, then clean up the data directory and destroy the pool:
 ```bash
 sudo docker ps -aq | xargs --no-run-if-empty sudo docker rm -f
 sudo rm -rf /var/lib/dblab/data/
@@ -20,10 +21,11 @@ sudo umount /var/lib/dblab/db.dump
 sudo rm -rf /var/lib/dblab/db.dump
 sudo zpool destroy dblab_pool
 ```
+
 ### 2. Set $DBLAB_DISK
 Further, we will need `$DBLAB_DISK` environment variable. It must contain the device name corresponding to the disk where all the Database Lab Engine data will be stored.
 
-To understand what needs to be specified in `$DBLAB_DISK` in your case, check the output of `lsblk`:
+To understand what needs to be specified in `$DBLAB_DISK` in your particular case, check the output of `lsblk`:
 ```bash
 sudo lsblk
 ```
@@ -53,7 +55,6 @@ Some examples:
     ```
 
 ### 3. Recreate ZFS pool
-
 ```bash
 sudo zpool create -f \
   -O compression=on \
@@ -76,7 +77,7 @@ Optionally, if you do it manually, check the logs:
 sudo docker logs dblab_server -f
 ```
 
-And check the instance status using client CLI:
+And check the instance status using the client CLI:
 ```bash
 dblab instance status
 ```

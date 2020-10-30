@@ -4,16 +4,16 @@ sidebar_label: Configuration reference
 ---
 
 There are two ways to define Joe Bot options:
-- configuration file,
-- environment variables.
+- configuration file
+- environment variables
 
 Use both of them to get the best experience.
 
-> ⚠ Note that environment variables have a higher priority.
-
+:::info
+Note that the environment variables have a higher priority.
+:::
 
 ## Joe Bot configuration file
-
 ```yml
 app:
   # HTTP server IP address or host.
@@ -192,44 +192,43 @@ enterprise:
 ```
 
 ## General environment variables
-
 ### `SERVER_HOST`
 - (string, default: `127.0.0.1`), host that Joe bot API accepts HTTP connections from. Used only for Web UI and Slack Events API communication types. It can be defined either as an IP address or domain name. By default, it accepts only local connections. Use an empty string to accept all connections.
 
 ### `SERVER_PORT`
-- (integer, default: `2400`), HTTP server port used to serve requests to Joe bot API. Used only for Web UI and Slack Events API communication types.
+- (integer, default: `2400`), HTTP server port used to serve requests to Joe bot API. Used only for Web UI and Slack Events API communication types
 
 ### `MIN_NOTIFY_DURATION`
-- (string, default: `60s`), if the processing of command takes longer than the specified value, a notification will be issued to the user.
+- (string, default: `60s`), if the processing of command takes longer than the specified value, a notification will be issued to the user
 
 ### `PLATFORM_URL`
-- (string, default: `https://postgres.ai/api/general`), Postgres.ai Platform API base URL.
+- (string, default: `https://postgres.ai/api/general`), Postgres.ai Platform API base URL
 
 ### `PLATFORM_TOKEN`
-- (string), Postgres.ai Platform API Token.
+- (string), Postgres.ai Platform API Token
 
 ### `PLATFORM_PROJECT`
-- (string), Postgres.ai Platform project to assign user sessions.
+- (string), Postgres.ai Platform project to assign user sessions
 
 ### `HISTORY_ENABLED`
 - (boolean, default: `true`), enable sending command history to Postgres.ai Platform for collaboration and visualization. Requires setting proper `PLATFORM_TOKEN`. See the [Joe Bot Tutorial](/docs/tutorials/joe-setup#step-2a-set-up-joe-in-postgresai-console-web-ui) for the token.
 
 ### `JOE_DEBUG` 
-- (boolean, default: `false`), enable debug mode.
+- (boolean, default: `false`), enable debug mode
 
 --- 
 
 ## Enterprise environment variables
-Changing these options you confirm that you have active subscription to [Postgres.ai Platform](https://postgres.ai/console/) Enterprise Edition).
+Changing these options you confirm that you have active subscription to [Postgres.ai Platform](https://postgres.ai/console/) Enterprise Edition)
 
 ### `EE_QUOTA_LIMIT`
-- (integer, default: `10`), limits request rates, works in pair with `EE_QUOTA_INTERVAL`.
+- (integer, default: `10`), limits request rates, works in pair with `EE_QUOTA_INTERVAL`
 
 ### `EE_QUOTA_INTERVAL`
-- (integer, default: `60`), time interval (in seconds) to apply `EE_QUOTA_LIMIT`.
+- (integer, default: `60`), time interval (in seconds) to apply `EE_QUOTA_LIMIT`
 
 ### `EE_AUDIT_ENABLED` 
-- (boolean, default: `false`), enable command logging for audit purposes.
+- (boolean, default: `false`), enable command logging for audit purposes
 
 ### `EE_DBLAB_INSTANCE_LIMIT` 
-- (integer, default: `1`), limit the number of Database Lab instances. Joe Bot CE supports working with only 1 Database Lab instance.
+- (integer, default: `1`), limit the number of Database Lab instances. Joe Bot CE supports working with only 1 Database Lab instance

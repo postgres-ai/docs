@@ -1,7 +1,16 @@
 ---
 title: Database Lab pricing
 sidebar_label: Pricing
+description: Compare plans for Database Lab Platform by Postgres.ai.
+keywords:
+  - "Database Lab features"
+  - "postgres.ai features"
+  - "postgres.ai database lab pricing"
+  - "database lab plans"
 ---
+
+<!--
+-->
 
 [👀 Try Database Lab now for free](https://postgres.ai/console)
 
@@ -55,4 +64,8 @@ sidebar_label: Pricing
 - Database Lab Engine is always hosted on your infrastructure, and the data never leaves your infrastructure
 
 
-[👀 Try Database Lab now for free](https://postgres.ai/console)
+::: 👋&nbsp;Database Lab "Private Beta" program
+
+Database Lab Platform (SaaS) is currently in a "private beta" mode, being tested by several hundred engineers. Want to become an early adopter? Join Database Lab by Postgres.ai "Private Beta" program today: https://postgres.ai/console/.
+
+:::

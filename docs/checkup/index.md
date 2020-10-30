@@ -2,6 +2,11 @@
 title: Overview of postgres-checkup
 sidebar_label: Checkup
 slug: /checkup
+keywords:
+  - "PostgreSQL health checks"
+  - "automated health checks for Postgres"
+  - "postgres-checkup"
+  - "postgres.ai health checks"
 ---
 
 **`postgres-checkup`** – a powerful tool automating health checks of PostgreSQL databases. Its key features are unobtrusiveness, "zero install", and complex and deep analysis of a whole PostgreSQL set of nodes (primary plus its followers). With `postgres-checkup`, an experienced DBA spends only 4 hours instead of 2 weeks to analyze a heavily-loaded PostgreSQL setup when seeing it for the first time.
@@ -9,11 +14,11 @@ slug: /checkup
 ## General
 
 Postgres Checkup ([postgres-checkup](https://gitlab.com/postgres-ai-team/postgres-checkup)) is a diagnostics tool for a deep analysis of a Postgres database health. It detects current and potential issues with database performance, scalability, and security. It also produces recommendations on how to resolve or prevent them.
-postgres-checkup also reveals sneaking up, deeper problems, that may hit you in the future. It helps to solve many known database administration problems and common pitfalls. It aims to detect issues at a very early stage and to suggest the best ways to prevent them. 
+postgres-checkup also reveals sneaking up, deeper problems that may hit you in the future. It helps to solve many known database administration problems and common pitfalls. It aims to detect issues at a very early stage and to suggest the best ways to prevent them. 
 
 It makes sense to run this tool on a regular basis — weekly, monthly, and quarterly. Additionally, it is recommended using postgres-checkup during major database changes, right before and right after making the change, for the sake of regression control.
 
-Do you know how big was your database 1, 6, 12 months ago? What are the growth trends for each table and index, how fast the bloat grows in database objects after repacking? Depending on how much details your monitoring system has, and what its retention policies are, these questions might be very tricky to answer in a longer term. This is why it is recommended to store the resulting reports as long as possible, it will enable trend analysis for your database. If you are going to use postgres-checkup with Postgres.ai Platform, uploading reports to the Platform's storage will automatically help you achieve this.
+Do you know how big was your database 1, 6, 12 months ago? What are the growth trends for each table and index, how fast the bloat grows in database objects after repacking? Depending on how much detail your monitoring system has and what its retention policies are, these questions might be very tricky to answer in the longer term. This is why it is recommended to store the resulting reports as long as possible; it will enable trend analysis for your database. If you are going to use postgres-checkup with Postgres.ai Platform, uploading reports to the Platform's storage will automatically help you achieve this.
 
 ## Reports
 

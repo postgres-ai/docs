@@ -14,7 +14,6 @@ slug: /guides/joe-bot
 - [How to get row counts for arbitrary SELECTs](/docs/guides/joe-bot/count-rows)
 - [How to get sizes of PostgreSQL databases, tables, and indexes with psql commands](/docs/guides/joe-bot/get-database-table-index-size)
 
-
 ## Related
 - [Joe chat commands reference](/docs/joe-bot/commands-reference)
 

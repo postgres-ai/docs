@@ -1,5 +1,5 @@
 ---
-title: How to create Database Lab clones
+title: How to create a Database Lab clones
 sidebar_label: Create a clone
 ---
 
@@ -49,11 +49,10 @@ $ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID
 ```
 
 ### Create a clone with a non-default snapshot
-
 By default latest data snapshot (closest to production state) will be used to provision a clone. You can select any other available snapshot.
 
 1. List available snapshots.
-
+<!-- TODO proper indentation -->
 ```bash
 $ dblab snapshot list
 ```
@@ -75,7 +74,6 @@ $ dblab snapshot list
 ```
 
 2. Create a clone with the state, based on the desired snapshot.
-
 ```bash
 $ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --snapshot-id SNAPSHOT_ID
 ```
@@ -97,9 +95,7 @@ $ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --sna
 ```
 
 ### Protected status
-
 You can make clone protected during the creation or later (if needed). Please be careful: abandoned protected clones may cause out-of-disk-space events. Read the details [here](/docs/guides/cloning/clone-protection).
-
 ```bash
 $ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --protected
 ```

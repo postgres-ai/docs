@@ -1,6 +1,11 @@
 ---
 title: Database Lab feature matrix
 sidebar_label: Feature matrix
+description: Database Lab by Postgres.ai – the full list of features.
+keywords:
+  - "Database Lab features"
+  - "postgres.ai features"
+  - "database lab all features"
 ---
 
 | Features | Community<br/>Edition | Enterprise<br/>Standard | Enterprise<br/>Premium |
@@ -69,4 +74,8 @@ sidebar_label: Feature matrix
 
 See also: [Development roadmap](/docs/roadmap).
 
-[👀 Try Database Lab now for free](https://postgres.ai/console)
+::: 👋&nbsp;Database Lab "Private Beta" program
+
+Database Lab Platform (SaaS) is currently in a "private beta" mode, being tested by several hundred engineers. Want to become an early adopter? Join Database Lab by Postgres.ai "Private Beta" program today: https://postgres.ai/console/.
+
+:::

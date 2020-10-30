@@ -11,15 +11,17 @@ Create an EC2 instance with Ubuntu 18.04 and an additional EBS volume to store d
 
 ## (optional) Ports need to be open in the Security Group being used
 You will need to allow working with the following ports (outbound rules in your Security Group):
-- `22`: to connect to the instance using SSH;
-- `2345`: to work with Database Lab Engine API (can be changed in the Database Lab Engine configuration file);
-- `6000-6100`: to connect to PostgreSQL clones (this is default port range used in the Database Lab Engine configuration file, can be chanfed if needed).
+- `22`: to connect to the instance using SSH
+- `2345`: to work with Database Lab Engine API (can be changed in the Database Lab Engine configuration file)
+- `6000-6100`: to connect to PostgreSQL clones (this is default port range used in the Database Lab Engine configuration file, can be chanfed if needed)
 
-> For real-life use, it is not a good idea to open ports to the public. Instead, it is recommended to use VPN or SSH port forwarding to access both Database Lab API and PostgreSQL clones, or to enforce encryption for all connections using NGINX with SSL and configuring SSL in PostgreSQL configuration.
+:::caution
+For real-life use, it is not a good idea to open ports to the public. Instead, it is recommended to use VPN or SSH port forwarding to access both Database Lab API and PostgreSQL clones, or to enforce encryption for all connections using NGINX with SSL and configuring SSL in PostgreSQL configuration.
+:::
 
 Additionally, to be able to install software, allow accessing external resources using HTTP/HTTPS (edit inbound rule in your Security Group):
-- `80` for HTTP;
-- `443` for HTTPS.
+- `80` for HTTP
+- `443` for HTTPS
 
 Here is how the inbound and outbound rules in your Security Group may look like:
 
@@ -89,8 +91,8 @@ Some examples:
 
 ## Set up either ZFS or LVM to enable thin cloning
 ZFS is a recommended way to enable thin cloning in Database Lab. LVM is also available, but has certain limitations:
-- much less flexible disk space consumption and risks for a clone to be destroyed during massive operations in it,
-- inability to work with multiple snapshots ("time travel"), cloning always happens based on the most recent version of data.
+- much less flexible disk space consumption and risks for a clone to be destroyed during massive operations in it
+- inability to work with multiple snapshots ("time travel"), cloning always happens based on the most recent version of data
 
 <Tabs
   groupId="file-systems"
@@ -163,11 +165,13 @@ sudo lvcreate --snapshot --extents 10%FREE --yes --name dblab_bootstrap dblab_vg
 sudo lvremove --yes dblab_vg/dblab_bootstrap
 ```
 
->Logical volume size needs to be defined at volume creation time. By default, we allocate 10% of the available memory. If the volume size exceeds the allocated memory volume will be destroyed, potentially leading to data losses. To prevent volumes from being destroyed, consider enabling the LVM auto-extend feature.
+:::tip
+Logical volume size needs to be defined at volume creation time. By default, we allocate 10% of the available memory. If the volume size exceeds the allocated memory volume will be destroyed, potentially leading to data losses. To prevent volumes from being destroyed, consider enabling the LVM auto-extend feature.
+:::
 
 To enable the auto-extend feature, the following LVM configuration options need to be updated:
-- `snapshot_autoextend_threshold`: auto-extend a "snapshot" volume when its usage exceeds the specified percentage,
-- `snapshot_autoextend_percent`: auto-extend a "snapshot" volume by the specified percentage of the available space once the usage exceeds the threshold.
+- `snapshot_autoextend_threshold`: auto-extend a "snapshot" volume when its usage exceeds the specified percentage
+- `snapshot_autoextend_percent`: auto-extend a "snapshot" volume by the specified percentage of the available space once the usage exceeds the threshold
 
 Update LVM configuration (located in `/etc/lvm/lvm.conf` by default):
 ```bash

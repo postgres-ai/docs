@@ -5,8 +5,9 @@ sidebar_label: Create an index
 
 With Joe, it is possible not only to gather query performance metrics but also to change the database schema, create indexes, etc. It can be done with the [`exec`](/docs/joe-bot/commands-reference#exec) command. All changes are done against fully-independent clones and will not affect other Joe users, feel free to experiment with the database.
 
->You can use any PostgreSQL command with Joe's [`exec`](/docs/joe-bot/commands-reference#exec) command, but the response will not be shown. Still, the changes will be applied to your copy of the database.
-
+:::tip
+You can use any PostgreSQL command with Joe's [`exec`](/docs/joe-bot/commands-reference#exec) command, but the response will not be shown. Still, the changes will be applied to your copy of the database.
+:::
 
 ## Basic
 1. Execute [`exec`](/docs/joe-bot/commands-reference#exec) command with your query, e.g. `exec create index on pgbench_accounts (bid)`.
@@ -19,7 +20,6 @@ In the case of big tables when index creation may take many hours you can experi
 
 1. Use the [`exec`](/docs/joe-bot/commands-reference#exec) command with special HypoPG query, e.g. `SELECT * FROM hypopg_create_index('create index on pgbench_accounts (bid)')`.
 2. Use the [`plan`](/docs/joe-bot/commands-reference#plan) command instead of the [`explain`](/docs/joe-bot/commands-reference#explain) command to get the Plan without execution, as hypothetical indexes can be taken into account only there.
-
 
 ## Related guides
 - [How to reset the state of a Joe session](/docs/guides/joe-bot/reset-session)
