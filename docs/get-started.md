@@ -4,6 +4,18 @@ title: Getting started with Database Lab
 hide_title: false
 sidebar_label: Getting started
 slug: /
+description: Database Lab is used to boost software development via enabling ultra-fast provisioning of databases of any size. Developers, DBAs, and QA engineers work with full-sized independent clones of PostgreSQL databases. Development and testing tasks are accomplished much faster, with more iterations done, with better quality achieved and with much less money spent.
+keywords:
+  - "postgres.ai clones"
+  - "postgresql clones"
+  - "Database Lab Engine"
+  - "Dev/QA/Staging databases with superpowers"
+  - "postgres-checkup"
+  - "Joe bot for SQL optimization"
+  - "SQL optinization on clones"
+  - "thin clones for Postgres"
+  - "database testing in CI/CD"
+  - "postgres-checkup"
 ---
 
 |   |   |
@@ -29,5 +41,8 @@ Database Lab is used to boost software development via enabling ultra-fast provi
 
 ![Database Lab architecture](/assets/architecture.png)
 
-## 👋&nbsp;Database Lab "Private Beta" program
+::: 👋&nbsp;Database Lab "Private Beta" program
+
 Database Lab Platform (SaaS) is currently in a "private beta" mode, being tested by several hundred engineers. Want to become an early adopter? Join Database Lab by Postgres.ai "Private Beta" program today: https://postgres.ai/console/.
+
+:::

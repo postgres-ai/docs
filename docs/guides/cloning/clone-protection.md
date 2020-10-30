@@ -3,11 +3,15 @@ title: Protect clones from manual and automatic deletion
 sidebar_label: Protect clones from manual and automatic deletion
 ---
 
-Database Lab clones could be protected from manual and automatical deletion by enabling the **protected** status of a clone. When enabled no one can delete this clone and automated deletion is also disabled.
+Database Lab clones can be protected from manual and automatical deletion by enabling the **protected** status of a clone. When enabled no one can delete this clone and automated deletion is also disabled.
 
-> Database Lab automatically deletes idle unprotected clones after an idle interval defined in the configuration 
+:::tip
+Database Lab Engine automatically deletes idle unprotected clones after the idle interval which is defined in the configuration.
+:::
 
-> Please be careful: abandoned protected clones may cause out-of-disk-space events. Check disk space on a daily basis and delete protected clones once the work is done.
+:::caution
+Please be careful: abandoned protected clones may cause out-of-disk-space events. Check disk space on a daily basis and delete protected clones once the work is done.
+:::
 
 ## GUI
 From the **Database Lab clone** page enable or disable the **Enable deletion protection** checkbox.
@@ -43,7 +47,7 @@ dblab clone update CLONE_ID
 }
 ```
 
-Also, clones could be made protected during clone creation. See [Create clone](/docs/guides/cloning/create-clone) guide.
+Also, clones can marked as protected at creation time. See [Create a clone](/docs/guides/cloning/create-clone).
 
 ## Related
 - Guide: [Destroy a clone](/docs/guides/cloning/destroy-clone)

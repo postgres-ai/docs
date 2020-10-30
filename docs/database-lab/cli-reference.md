@@ -1,20 +1,23 @@
 ---
 title: Database Lab Client CLI reference (dblab)
-sidebar_label: Database Lab Client CLI
+sidebar_label: Client CLI
+keywords:
+  - "Database Lab Client CLI"
+  - "dblab cli"
+  - "postgres.ai cli"
+  - "use database lab in console"
+  - "clone postgres in console"
 ---
 
 ## Description
-
-The Database Lab Command Line Interface, `dblab`, is a tool that allows to work with Database Lab instances in console. This tool is also used to enable working with thin clones in CI/CD pipelines, to run automated tests on full-size databases copies.
+The Database Lab Command Line Interface (`dblab`) is a tool that allows working with Database Lab instances in the console. This tool is also used to enable working with thin clones in CI/CD pipelines, to run automated tests on full-size database copies.
 
 
 ## Getting started
-
 Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/guides/cli/cli-install-init).
 
 
 ## Synopsis
-
 ```bash
 dblab [global options] command [command options] [arguments...]
 ```
@@ -25,7 +28,6 @@ To list available commands, either run `dblab` with no parameters or with flag `
 
 
 ## Global options
-
 - `--url` (string) - URL (with protocol and port, if needed) of Database Lab instance's API. 
 
     The environment variable `DBLAB_INSTANCE_URL` can be used as well. The flag `--url` overrides config/env settings.
@@ -62,11 +64,14 @@ To list available commands, either run `dblab` with no parameters or with flag `
 ```bash
 dblab --url "127.0.0.1:2345" --token "SECRET_TOKEN" --insecure clone list
 ```
+
 ```bash
 DBLAB_INSTANCE_URL="example.com" DBLAB_VERIFICATION_TOKEN="SECRET_TOKEN" dblab clone list
 ```
 
-> ⚠ If you register a Database Lab instance on the Postgres.ai Platform through the Platform server tunnel, it means that to use Database Lab API and CLI, your users need to be able to reach your infrastructure somehow. Consider use of VPN or custom SSH [port forwarding](https://en.wikipedia.org/wiki/Port_forwarding).
+:::tip
+If you register a Database Lab instance on the Postgres.ai Platform through the Platform server tunnel, it means that to use Database Lab API and CLI, your users need to be able to reach your infrastructure somehow. Consider use of VPN or custom SSH [port forwarding](https://en.wikipedia.org/wiki/Port_forwarding).
+:::
 
 ## Command Overview
 ```
@@ -91,13 +96,13 @@ It is safe to run this command multiple times.
 dblab init [command options] [arguments...]
 ```
 **Options**
-   - `--environment-id` (string, required) - an arbitrary environment ID of Database Lab instance's API.
-   - `--url` (string, required) - URL of Database Lab instance's API.
-   - `--token` (string, required) - verification token of Database Lab instance.
-   - `--insecure` (boolean, optional, default: false) - allow insecure server connections when using SSL.
-   - `--forwarding-server-url` (string, optional) - forwarding server URL of Database Lab instance. For example: `ssh://user@remote.host:22`.
-   - `--forwarding-local-port` (string, optional) - local port for forwarding to the Database Lab instance.
-   - `--identity-file` (string, optional) - select a file from which the identity (private key) for public key authentication is read".
+   - `--environment-id` (string, required) - an arbitrary environment ID of Database Lab instance's API
+   - `--url` (string, required) - URL of Database Lab instance's API
+   - `--token` (string, required) - verification token of Database Lab instance
+   - `--insecure` (boolean, optional, default: false) - allow insecure server connections when using SSL
+   - `--forwarding-server-url` (string, optional) - forwarding server URL of Database Lab instance. For example: `ssh://user@remote.host:22`
+   - `--forwarding-local-port` (string, optional) - local port for forwarding to the Database Lab instance
+   - `--identity-file` (string, optional) - select a file from which the identity (private key) for public key authentication is read"
 
 **Example**
 ```bash
@@ -113,9 +118,9 @@ Start port forwarding to the Database Lab instance.
 dblab [global options] port-forward
 ```
 **Global options**
-- `--forwarding-server-url` (string, optional) - forwarding server URL of Database Lab instance. For example: `ssh://user@remote.host:22`.
-- `--forwarding-local-port` (string, optional) - local port for forwarding to the Database Lab instance.
-- `--identity-file` (string, optional) - a path to a file from which the identity (private key) for public key authentication is read.
+- `--forwarding-server-url` (string, optional) - forwarding server URL of Database Lab instance. For example: `ssh://user@remote.host:22`
+- `--forwarding-local-port` (string, optional) - local port for forwarding to the Database Lab instance
+- `--identity-file` (string, optional) - a path to a file from which the identity (private key) for public key authentication is read
 
 **Example**
 ```bash
@@ -132,14 +137,14 @@ dblab clone command [command options] [arguments...]
 ```
 
 **Subcommands**
-- `list` - list all existing clones.
-- `status` - display clone's information.
-- `create` - create new clone.
-- `update` - update existing clone.
-- `reset` - reset clone's state.
-- `destroy` - destroy clone.
-- `port-forward` - start port forwarding.
-- `help` , `h` -  shows a list of commands or help for one command.
+- `list` - list all existing clones
+- `status` - display clone's information
+- `create` - create new clone
+- `update` - update existing clone
+- `reset` - reset clone's state
+- `destroy` - destroy clone
+- `port-forward` - start port forwarding
+- `help` , `h` -  shows a list of commands or help for one command
 
 ---
 ### Subcommand `list`
@@ -160,7 +165,7 @@ dblab clone status CLONE_ID
 ```
 
 **Arguments**
-- `CLONE_ID` (string, required) - an ID of the Database Lab clone to display information.
+- `CLONE_ID` (string, required) - an ID of the Database Lab clone to display information
 
 ---
 ### Subcommand `create`
@@ -171,14 +176,14 @@ dblab clone create [command options]
 ```
 
 **Options**
-- `--username` (string, required) - database username.
-- `--password` (string, required) - database password.
-- `--id` (string, optional) - clone ID.
-- `--snapshot-id` (string, optional) - snapshot ID.
-- `--project` (string, default: "") - project name.
-- `--protected` , `-p` (boolean, default: false) - mark instance as protected from deletion.
-- `--async` , `-a` (boolean, default: false) - run the command asynchronously.
-- `--help` , `-h` (boolean, default: false) - show help.
+- `--username` (string, required) - database username
+- `--password` (string, required) - database password
+- `--id` (string, optional) - clone ID
+- `--snapshot-id` (string, optional) - snapshot ID
+- `--project` (string, default: "") - project name
+- `--protected` , `-p` (boolean, default: false) - mark instance as protected from deletion
+- `--async` , `-a` (boolean, default: false) - run the command asynchronously
+- `--help` , `-h` (boolean, default: false) - show help
 
 **Example**
 ```bash
@@ -194,11 +199,11 @@ Update the specified clone.
 dblab clone update [command options] CLONE_ID
 ```
 **Arguments**
-- `CLONE_ID` (string, required) - an ID of the Database Lab clone to update parameters.
+- `CLONE_ID` (string, required) - an ID of the Database Lab clone to update parameters
 
 **Options**
-- `--protected` , `-p` (boolean, optional) - mark instance as protected from deletion.
-- `--help` , `-h` (boolean, default: false) - show help.
+- `--protected` , `-p` (boolean, optional) - mark instance as protected from deletion
+- `--help` , `-h` (boolean, default: false) - show help
 
 **Example**
 ```bash
@@ -214,11 +219,11 @@ Reset the clone's state.
 dblab clone reset [command options] CLONE_ID
 ```
 **Arguments**
-- `CLONE_ID` (string, required) - an ID of the Database Lab clone to reset state.
+- `CLONE_ID` (string, required) - an ID of the Database Lab clone to reset state
 
 **Options**
-- `--async` , `-a` (boolean, default: false) - run the command asynchronously.
-- `--help` , `-h` (boolean, default: false) - show help.
+- `--async` , `-a` (boolean, default: false) - run the command asynchronously
+- `--help` , `-h` (boolean, default: false) - show help
 
 **Example**
 ```bash
@@ -257,9 +262,9 @@ dblab [global options] clone port-forward CLONE_ID
 - `CLONE_ID` (string, required) - an ID of the Database Lab clone for port forwarding.
 
 **Global options**
-- `--forwarding-server-url` (string, optional) - forwarding server URL of Database Lab instance. For example: `ssh://user@remote.host:22`.
-- `--forwarding-local-port` (string, optional) - local port for forwarding to the Database Lab instance.
-- `--identity-file` (string, optional) - a path to a file from which the identity (private key) for public key authentication is read.
+- `--forwarding-server-url` (string, optional) - forwarding server URL of Database Lab instance. For example: `ssh://user@remote.host:22`
+- `--forwarding-local-port` (string, optional) - local port for forwarding to the Database Lab instance
+- `--identity-file` (string, optional) - a path to a file from which the identity (private key) for public key authentication is read
 
 **Example**
 ```bash
@@ -288,8 +293,8 @@ dblab instance command [command options] [arguments...]
 ```
 
 **Subcommands**
-- `status` - display instance's status.
-- `help` , `h` -  shows a list of commands or help for one command.
+- `status` - display instance's status
+- `help` , `h` -  shows a list of commands or help for one command
 
 ---
 ### Subcommand `status`
@@ -350,13 +355,13 @@ dblab config command [command options] [arguments...]
 ```
 
 **Subcommands**
-- `create` - create new CLI environment.
-- `update` - update an existing CLI environment.
-- `view` - view status of CLI environment.
-- `list` - display list of all available CLI environments.
-- `switch` - switch to another CLI environment.
-- `remove` - remove CLI environment.
-- `help` , `h` -  shows a list of commands or help for one command.
+- `create` - create new CLI environment
+- `update` - update an existing CLI environment
+- `view` - view status of CLI environment
+- `list` - display list of all available CLI environments
+- `switch` - switch to another CLI environment
+- `remove` - remove CLI environment
+- `help` , `h` -  shows a list of commands or help for one command
 
 ---
 ### Subcommand `create`
@@ -370,12 +375,12 @@ dblab config create [command options] ENVIRONMENT_ID
 - `ENVIRONMENT_ID` (string, required) - an ID of the Database Lab CLI environment to create.
 
 **Options**
-- `--url` (string, required) - URL of Database Lab instance's API.
-- `--token` (string, required) - verification token of Database Lab instance.
-- `--insecure` (boolean, optional) - allow insecure server connections when using SSL.
-- `--forwarding-server-url` (string, optional) - forwarding server URL of Database Lab instance. For example, `ssh://user@remote.host:22`.
-- `--forwarding-local-port` (string, optional) - local port for forwarding to the Database Lab instance.
-- `--identity-file` (string, optional) - a path to a file from which the identity (private key) for public key authentication is read.
+- `--url` (string, required) - URL of Database Lab instance's API
+- `--token` (string, required) - verification token of Database Lab instance
+- `--insecure` (boolean, optional) - allow insecure server connections when using SSL
+- `--forwarding-server-url` (string, optional) - forwarding server URL of Database Lab instance. For example, `ssh://user@remote.host:22`
+- `--forwarding-local-port` (string, optional) - local port for forwarding to the Database Lab instance
+- `--identity-file` (string, optional) - a path to a file from which the identity (private key) for public key authentication is read
 
 **Example**
 ```bash
@@ -391,15 +396,15 @@ Update an existing CLI environment.
 dblab config update [command options] ENVIRONMENT_ID
 ```
 **Arguments**
-- `ENVIRONMENT_ID` (string, required) - an ID of the Database Lab CLI environment to update.
+- `ENVIRONMENT_ID` (string, required) - an ID of the Database Lab CLI environment to update
 
 **Options**
-- `--url` (string) - URL of Database Lab instance's API.
-- `--token` (string) - verification token of Database Lab instance.
-- `--insecure` (boolean, optional) - allow insecure server connections when using SSL.
-- `--forwarding-server-url` (string, optional) - forwarding server URL of Database Lab instance. For example, `ssh://user@remote.host:22`.
-- `--forwarding-local-port` (string, optional) - local port for forwarding to the Database Lab instance.
-- `--identity-file` (string, optional) - a path to a file from which the identity (private key) for public key authentication is read.
+- `--url` (string) - URL of Database Lab instance's API
+- `--token` (string) - verification token of Database Lab instance
+- `--insecure` (boolean, optional) - allow insecure server connections when using SSL
+- `--forwarding-server-url` (string, optional) - forwarding server URL of Database Lab instance. For example, `ssh://user@remote.host:22`
+- `--forwarding-local-port` (string, optional) - local port for forwarding to the Database Lab instance
+- `--identity-file` (string, optional) - a path to a file from which the identity (private key) for public key authentication is read
 
 **Example**
 ```bash
@@ -415,7 +420,7 @@ Display status of CLI environment.
 dblab config view [ENVIRONMENT_ID]
 ```
 **Arguments**
-- `ENVIRONMENT_ID` (string) - an ID of the Database Lab CLI environment to view. By default, the current environment will be shown.
+- `ENVIRONMENT_ID` (string) - an ID of the Database Lab CLI environment to view. By default, the current environment will be shown
 
 
 ---
@@ -436,7 +441,7 @@ Switch to another CLI environment.
 dblab config switch ENVIRONMENT_ID
 ```
 **Arguments**
-- `ENVIRONMENT_ID` (string, required) - an ID of the Database Lab CLI environment to switch.
+- `ENVIRONMENT_ID` (string, required) - an ID of the Database Lab CLI environment to switch
 
 ---
 ### Subcommand `remove`
@@ -447,7 +452,7 @@ Remove CLI environment.
 dblab config remove ENVIRONMENT_ID
 ```
 **Arguments**
-- `ENVIRONMENT_ID` (string, required) - an ID of the Database Lab CLI environment to remove.
+- `ENVIRONMENT_ID` (string, required) - an ID of the Database Lab CLI environment to remove
 
 ---
 ### Subcommand `help` , `h`
@@ -467,10 +472,10 @@ dblab help command [command options] [arguments...]
 ```
 
 **Subcommands**
-- `init` -          initialize Database Lab CLI.
-- `port-forward` -  start port forwarding to the Database Lab instance.
-- `clone` -         manage clones.
-- `instance` -      display instance info.
-- `snapshot` -      manage snapshots.
-- `config` -        configure CLI environments.
-- `help` , `h` -    show a list of commands or help for one command.
+- `init` -          initialize Database Lab CLI
+- `port-forward` -  start port forwarding to the Database Lab instance
+- `clone` -         manage clones
+- `instance` -      display instance info
+- `snapshot` -      manage snapshots
+- `config` -        configure CLI environments
+- `help` , `h` -    show a list of commands or help for one command

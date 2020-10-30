@@ -1,7 +1,8 @@
 ---
-title: Database Lab administration
+title: Database Lab Engine administration
 sidebar_label: Overview
 slug: /guides/administration
+description: How to administer Database Lab Engine
 ---
 
 ## Guides

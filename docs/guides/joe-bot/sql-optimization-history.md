@@ -3,7 +3,9 @@ title: How to work with SQL optimization history
 sidebar_label: Work with SQL optimization history
 ---
 
->Enable History functionality with [`HISTORY_ENABLED`](https://postgres.ai/docs/joe-bot/config-reference#history_enabled) and [`PLATFORM_`](https://postgres.ai/docs/joe-bot/config-reference#platform_url) configuration options.
+:::tip
+Enable History functionality with [`HISTORY_ENABLED`](https://postgres.ai/docs/joe-bot/config-reference#history_enabled) and [`PLATFORM_`](https://postgres.ai/docs/joe-bot/config-reference#platform_url) configuration options.
+:::
 
 ## Open the Command page from the Joe chat
 Execute any [`explain`] query and click the **Permalink** at the end of the response.
@@ -26,7 +28,9 @@ Execute any [`explain`] query and click the **Permalink** at the end of the resp
 You can easily select all queries from history that have the same structure, but different parameter values. All queries in Database Lab has a **fingerprint** assigned, it works like a hash for a query and doesn't take parameters values assigned. Click on the **find similar** button on a command card or use `fingerprint:` label in a **search field** if you already know the fingerprint.
 
 ## Share query
->Anyone on the internet with the special link can view query, plan, and all parameters. Check that there is no sensitive data.
+:::caution
+When you use this option, anyone who knows the special link can view your query, plan, and all the parameters. Check that there is no sensitive data.
+:::
 
 1. To share a query with a people outside of your organization on the **Command** page click the **Share** button.
 2. Choose **Anyone with a special link and members of the organization can view** option.

@@ -1,5 +1,6 @@
 ---
-title: Database Lab components
+title: Database Lab Engine components
+sidebar_label: Components
 ---
 
 ## Control instance
@@ -80,7 +81,7 @@ The container names will contain a Database Lab RuntimeID. For example, `dblab_p
 #### How to manage
 Starts and stops automatically. 
 
-Runs by a physical restore job.
+Executed by a physical restore job.
 
 ---
 
@@ -120,7 +121,7 @@ The container names will contain a Database Lab RuntimeID. For example, `dblab_l
 #### How to manage
 Starts and stops automatically. 
 
-Runs by a logical dump job.
+Executed by a logical dump job.
 
 ---
 
@@ -140,5 +141,4 @@ The container names will contain a Database Lab RuntimeID. For example, `dblab_l
 #### How to manage
 Starts and stops automatically. 
 
-Runs by a logical restore job.
-
+Executed by a logical restore job.

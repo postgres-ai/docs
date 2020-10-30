@@ -18,7 +18,6 @@ Before you run any commands, install Database Lab CLI and initialize configurati
 - Command [`dblab clone reset`](/docs/database-lab/cli-reference#subcommand-reset)
 
 ### Reset a clone
-
 1. With Database Lab clones you can perform any changes and not be afraid to damage the data. For example, connect to your clone and drop any table.
 
 2. Reset a clone.

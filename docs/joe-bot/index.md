@@ -7,13 +7,11 @@ slug: /joe-bot
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
 ## Summary
-
 <img src={useBaseUrl('assets/joe/joe.png')} width="128" align="right" vspace="20" hspace="20" />
 
 Joe is a Postgres query optimization assistant. Joe allows to boost the development process:
-
-- eliminating annoying waiting time needed to provision copies of large databases for development and testing purposes,
-- helping engineers understand details of SQL query performance.
+- eliminating annoying waiting time needed to provision copies of large databases for development and testing purposes
+- helping engineers understand details of SQL query performance
 
 Joe works on top of [Database Lab Engine](/docs/database-lab/). Every time when an engineer starts communicating with Joe, a new full-size copy of the database is provisioned.
 
@@ -24,7 +22,6 @@ This process is fully automated and takes only a few seconds, even for multi-ter
 ![Comparison of Database Lab to Other Options of Testing on Large Databases](/assets/joe/comparison-matrix.png)
 
 ## Features
-
 - "Serverless EXPLAIN": engineers do not need to worry about the provisioning of independent database clones. The process is fully automated, so all the work looks like requests to analyze some query execution plan or modify database schema – and Joe takes care of it, ensuring that delivered results are identical to production.
 - PostgreSQL versions 9.6, 10, 11, and 12 are currently supported.
 - Currently, Joe is provided in the form of Slack chatbot.
@@ -46,8 +43,7 @@ This process is fully automated and takes only a few seconds, even for multi-ter
 - SQL optimization knowledge base – a history of Joe sessions, including details of `EXPLAIN` plans, recommendations, various visualization of query plans, and additional meta-data, to support "team memory" and collaboration within particular engineering teams and between various teams/departments in an organization (e.g., between DBA and Development teams).
 
 ## Resources 
-
-- Open-source repository: https://gitlab.com/postgres-ai/joe/.
-- Bug reports, ideas, and merge requests are welcome: https://gitlab.com/postgres-ai/joe/issues/.
-- To discuss Joe Bot, join our Slack:  https://database-lab-team-slack-invite.herokuapp.com/.
-- Community Slack (English): https://database-lab-team-slack-invite.herokuapp.com/. After joining, the live demo of Joe is available in the `#joe-bot-demo` channel: https://database-lab-team.slack.com/archives/CTL5BB30R.
+- Open-source repository: https://gitlab.com/postgres-ai/joe/
+- Bug reports, ideas, and merge requests are welcome: https://gitlab.com/postgres-ai/joe/issues/
+- To discuss Joe Bot, join our Slack:  https://database-lab-team-slack-invite.herokuapp.com/
+- Community Slack (English): https://database-lab-team-slack-invite.herokuapp.com/; after joining, try a live demo of Joe in the `#joe-bot-demo` channel: https://database-lab-team.slack.com/archives/CTL5BB30R

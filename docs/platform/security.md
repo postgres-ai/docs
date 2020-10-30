@@ -1,13 +1,19 @@
 ---
-title: Database Lab Platform Security
-sidebar_label: Database Lab Platform Security
+title: Database Lab Platform security
+sidebar_label: Security
+keywords:
+  - "Database Lab Security"
+  - "Database Lab Engine Security"
+  - "Postgres.ai SaaS"
+  - "Database Lab SaaS"
+  - "protect database lab engine"
+  - "secure postgresql staging"
 ---
 
 Database Lab Platform and its components are developed with a strong focus on security. To ensure that your data is secure, please carefully read this document.
 
 ## Found a security issue or have questions?
 If you found a possible vulnerability or have an urgent security-related concern, please reach out to Postgres.ai Support as soon as possible, using one of the following options:
-
 1. Use Intercom widget available on Postgres.ai
 1. Write an email to <a href="mailto:security@postgres.ai">security@postgres.ai</a>
 
@@ -46,7 +52,7 @@ By default, ports 2400 and 2345 operate using HTTP, which is not secure. It is h
 
 What if you do not want to open ports to the world at all, even for HTTPS communication? In this case, you need to use a more complicated setup based on secure tunneling using WebSockets. It also can be useful for setting up Database Lab and Joe instances behind firewalls when making exclusions for specific ports is impossible or prohibited. In this approach, the connection to the Platform is established by starting the tunnel client with a registration key. Note that as of October 2020, the use of tunneling requires a special configuration of your organization in Postgres.ai SaaS.
 
-:::note
+:::info
 Please contact Postgres.ai support to obtain your registration key and detailed installation instructions. This option is available for paid customers (Enterprise Edition) only.
 :::
 
@@ -63,9 +69,8 @@ To be able to connect to a clone, users need to work inside your infrastructure,
 If CI observability is enabled (Database migration verification, "Observed sessions"), then partial PostgreSQL logs corresponding to activity observed on Database Lab clones is sent to Postgres.ai and stored there. Such logs may contain sensitive data. Customers can configure rules to automatically mask the sensitive data in these logs prior to sending to Postgres.ai.
 
 #### Joe Bot
-The key principle of Joe Bot:
 
-:::info
+:::important The key principle of Joe Bot
 Communicating with Joe bot, users work only with metadata, but not with data.
 :::
 

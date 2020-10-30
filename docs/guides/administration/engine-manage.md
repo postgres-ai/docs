@@ -1,10 +1,14 @@
 ---
 title: How to manage Database Lab Engine
 sidebar_label: Manage Database Lab
+description: Learn how to configure and maintain Database Lab Engine instances to build poweful non-production environments for PostgreSQL.
+keywords:
+  - "database lab engine management"
+  - "administration database lab engine"
+  - "postgres.ai cloning management"
 ---
 
-## Set up and start a Database Lab Engine instance
-
+## Configure and start a Database Lab Engine instance
 Define config file `~/.dblab/server.yml` (see config examples [here](https://gitlab.com/postgres-ai/database-lab/-/blob/master/configs/)) and run the following command:
 
 ```bash
@@ -22,7 +26,6 @@ sudo docker run \
 ``` 
 
 ## Reconfigure Database Lab Engine
-
 Update the configuration file `~/.dblab/server.yml`.
 
 Restart container:
@@ -30,14 +33,17 @@ Restart container:
 sudo docker restart dblab_server
 ```
 
-> ⚠ Note that once `docker restart` is executed, all existing clones will be lost.
+:::caution
+Note that once `docker restart` is executed, all existing clones will be lost.
+:::
 
 ## Upgrade Database Lab Engine
 
 Stop and remove the container using `sudo docker stop dblab_server` and `sudo docker rm dblab_server` After that, [launch](#start-database-lab-instance) a new container.
 
-> ⚠ Note the upgrade removes all running clones
-
+:::caution
+Note any upgrade removes all the running clones
+:::
 
 ## Observe Database Lab Engine logs
 

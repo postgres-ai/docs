@@ -1,6 +1,11 @@
 ---
 title: Database Lab tutorial for Amazon RDS
 sidebar_label: Tutorial for Amazon RDS
+keywords:
+  - "Database Lab Engine tutorial for Amazon RDS"
+  - "Start using Database Lab Engine for Amazon RDS"
+  - "Postgres.ai tutorial for Amazon RDS"
+description: In this tutorial, we are going to set up a Database Lab Engine for an existing PostgreSQL DB instance on Amazon RDS. Database Lab is used to boost software development and testing processes via enabling ultra-fast provisioning of databases of any size.
 ---
 
 import Tabs from '@theme/Tabs';
@@ -12,32 +17,37 @@ In this tutorial, we are going to set up a Database Lab Engine for an existing P
 
 Compared to RDS clones, Database Lab clones are ultra-fast (RDS cloning is "thick": it takes many minutes, and, depending on the database size, additional dozens of minutes or even hours to warm up, see ["Lazy load"](https://docs.amazonaws.cn/en_us/AWSEC2/latest/WindowsGuide/ebs-creating-volume.html#ebs-create-volume-from-snapshot)) and do not require additional storage and instance. A single Database Lan instance can be used by dozens of engineers simultaneously working with dozens of thin clones located on a single instance and single storage vole. [RDS Aurora clones](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Managing.Clone.html) are "thin" by nature, which is great for development and testing. However, they also require additional instances, meaning significant extra costs. Database Lab clones are high-speed ("thin"), budget-saving ("local"), and can be used for a source database located anywhere.
 
->Database Lab Engine is hosted and developed on GitLab.com. Why? GitLab Inc. is our (Postgres.ai) long-term client and early adopter (see [GitLab Development Docs](https://docs.gitlab.com/ee/development/understanding_explain_plans.html#database-lab)). GitLab has an open-source version. Last but not least: GitLab uses PostgreSQL.<br/><br/>
->However, nowadays, not many open-source projects are hosted at GitLab.com unfortunately.<br/> ⭐️&nbsp;Please support the project giving a star on GitLab! It's on [the main page of the Database Lab Engine repository](https://gitlab.com/postgres-ai/database-lab), at the upper right corner:
->
->![Add a GitLab star](/assets/star.gif)]
+:::note
+Database Lab Engine is hosted and developed on GitLab.com. Why? GitLab Inc. is our (Postgres.ai) long-term client and an early adopter (see [GitLab Development Docs](https://docs.gitlab.com/ee/development/understanding_explain_plans.html#database-lab)). GitLab has an open-source version. Last but not least: GitLab uses PostgreSQL.
+
+However, nowadays, not many open-source projects are hosted at GitLab.com unfortunately. ⭐️&nbsp;Please support the project by giving a star on GitLab! It's on [the main page of the Database Lab Engine repository](https://gitlab.com/postgres-ai/database-lab), in the upper right corner:
+
+![Add a GitLab star](/assets/star.gif)]
+:::
 
 Our steps:
 
-1. Prepare an EC2 instance with an additional EBS volume to store data, install Docker to run containers, and ZFS to enable copy-on-write for thin cloning;
-1. Configure and launch the Database Lab Engine;
-1. Start using Database Lab API and client CLI to clone Postgres database in seconds.
+1. Prepare an EC2 instance with an additional EBS volume to store data, install Docker to run containers, and ZFS to enable copy-on-write for thin cloning
+1. Configure and launch the Database Lab Engine
+1. Start using Database Lab API and client CLI to clone Postgres database in seconds
 
-## Step 1. Prepare an EC2 instance with additional volume, Docker and ZFS
+## Step 1. Prepare an EC2 instance with additional volume, Docker, and ZFS
 ### Prepare an instance
 Create an EC2 instance with Ubuntu 18.04 and an additional EBS volume to store data. You can find detailed instructions on how to create an AWS EC2 instance [here](https://docs.aws.amazon.com/efs/latest/ug/gs-step-one-create-ec2-resources.html).
 
 ### (optional) Ports need to be open in the Security Group being used
-You will need to allow working with the following ports (outbound rules in your Security Group):
-- `22`: to connect to the instance using SSH;
-- `2345`: to work with Database Lab Engine API (can be changed in the Database Lab Engine configuration file);
-- `6000-6100`: to connect to PostgreSQL clones (this is the default port range used in the Database Lab Engine configuration file, can be changed if needed).
+You will need to open the following ports (outbound rules in your Security Group):
+- `22`: to connect to the instance using SSH
+- `2345`: to work with Database Lab Engine API (can be changed in the Database Lab Engine configuration file)
+- `6000-6100`: to connect to PostgreSQL clones (this is the default port range used in the Database Lab Engine configuration file, and can be changed if needed)
 
-> For real-life use, it is not a good idea to open ports to the public. Instead, it is recommended to use VPN or SSH port forwarding to access both Database Lab API and PostgreSQL clones, or to enforce encryption for all connections using NGINX with SSL and configuring SSL in PostgreSQL configuration.
+:::caution
+For real-life use, it is not a good idea to open ports to the public. Instead, it is recommended to use VPN or SSH port forwarding to access both Database Lab API and PostgreSQL clones, or to enforce encryption for all connections using NGINX with SSL and configuring SSL in PostgreSQL configuration.
+:::
 
-Additionally, to be able to install software, allow accessing external resources using HTTP/HTTPS (edit the inbound rule in your Security Group):
-- `80` for HTTP;
-- `443` for HTTPS.
+Additionally, to be able to install software, allow access to external resources using HTTP/HTTPS (edit the inbound rule in your Security Group):
+- `80` for HTTP
+- `443` for HTTPS
 
 Here is how the inbound and outbound rules in your Security Group may look like:
 
@@ -74,7 +84,7 @@ sudo apt-get update && sudo apt-get install -y \
 ```
 
 ### Set $DBLAB_DISK
-Further, we will need `$DBLAB_DISK` environment variable. It must contain the device name corresponding to the disk where all the Database Lab Engine data will be stored.
+Further, we will need environment variable `$DBLAB_DISK`. It must contain the device name that corresponds to the disk where all the Database Lab Engine data will be stored.
 
 To understand what needs to be specified in `$DBLAB_DISK` in your case, check the output of `lsblk`:
 ```bash
@@ -140,7 +150,9 @@ nvme0n1     259:0  0   777G  0 disk
 ```
 
 ## Step 2. Configure and launch the Database Lab Engine
->To make your work with Database Lab API secure, do not open Database Lab API and Postgres clones ports to the public and use VPN or SSH port forwarding. It is also a good idea to encrypt all the traffic: for Postgres clones, set up SSL in the configuration files; and for Database Lab API, install, and configure NGINX with a self-signed SSL certificate. See the [How to Secure Database Lab Engine](/docs/guides/administration/engine-secure).
+:::caution
+To make your work with Database Lab API secure, do not open Database Lab API and Postgres clone ports to the public and instead use VPN or SSH port forwarding. It is also a good idea to encrypt all the traffic: for Postgres clones, set up SSL in the configuration files; and for Database Lab API, install, and configure NGINX with a self-signed SSL certificate. See the [How to Secure Database Lab Engine](/docs/guides/administration/engine-secure).
+:::
 
 We have two options to connect to the RDS database: password-based, and IAM-based. The former is always available, while the latter is more secure and recommended, but it is available only if you specified it in **Database Authentication Options** when creating your RDS instance (it is not selected by default). To see if the IAM-based option is available for already created RDS instance, open the "Configuration" tab and check if "IAM db authentication" is `Enabled`.
 
@@ -173,17 +185,17 @@ curl https://gitlab.com/postgres-ai/database-lab/-/raw/master/configs/config.exa
 ```
 
 Then open `~/.dblab/server.yml` and edit the following options:
-- Set secure `server:verificationToken`, it will be used to authorize API requests to the Database Lab Engine.
+- Set secure `server:verificationToken`, it will be used to authorize API requests to the Database Lab Engine
 - Set connection options in `retrieval:spec:logicalDump:options:source:connection`:
-    - `dbname`: database name to connect to;
-    - `host`: database server host;
-    - `port`: database server port;
-    - `username`: database user name;
-    - `password`: database master password (can be also set as `PGPASSWORD` environment variable and passed to the container using `--env` option of `docker run`).
+    - `dbname`: database name to connect to
+    - `host`: database server host
+    - `port`: database server port
+    - `username`: database user name
+    - `password`: database master password (can be also set as `PGPASSWORD` environment variable and passed to the container using `--env` option of `docker run`)
 - If your Postgres major version is not 12 (default), set the proper version in Postgres Docker images tags:
-    - `provision:options:dockerImage`;
-    - `retrieval:spec:logicalRestore:options:dockerImage`;
-    - `retrieval:spec:logicalDump:options:dockerImage`.
+    - `provision:options:dockerImage`
+    - `retrieval:spec:logicalRestore:options:dockerImage`
+    - `retrieval:spec:logicalDump:options:dockerImage`
 
 #### Run Database Lab Engine
 Run Database Lab Engine:
@@ -276,13 +288,13 @@ sudo docker run \
 </TabItem>
 </Tabs>
 
-### How to check Database Lab Engine logs
+### How to check the Database Lab Engine logs
 ```bash
 sudo docker logs dblab_server -f
 ```
 
 ### Need to start over? Here is how to clean up
-If something went south and you need to make another attempt to follow the steps in this tutorial, use the following steps to clean up:
+If something went south and you need to make another attempt at the steps in this tutorial, use the following steps to clean up:
 ```bash
 # Stop and remove all Docker containers
 sudo docker ps -aq | xargs --no-run-if-empty sudo docker rm -f
@@ -302,19 +314,20 @@ sudo zpool destroy dblab_pool
 ```
 
 ## Step 3. Start cloning!
-
 ### Option 1: GUI (Database Lab Platform)
-To use GUI, you need to [sign up for Database Lab Platform](https://postgres.ai/console).
+To use the GUI, you need to [sign up for Database Lab Platform](https://postgres.ai/console).
 
->Currently, Database Lab GUI is in "private beta" mode. The onboarding consists of two steps. Step 1: you sign up using either Google, or LinkedIn, or GitLab, or GitHub account. Step 2: the Postgres.ai team contacts you and schedules a demo, during which your account will be activated.
+:::info How to get the Database Lab GUI
+Currently, the Database Lab GUI is in "private beta" mode. The onboarding consists of two steps. Step 1: Sign up using a Google, LinkedIn, GitLab, or GitHub account. Step 2: Next, the Postgres.ai team will contact you and schedule a demo, during which your account will be activated.
+:::
 
 #### Add Database Lab Engine to the Platform
 1. On the **Database Lab instances** page of your organization click the **Add instance** button.
 ![Database Lab Engine / Database Lab instances](/assets/guides/add-engine-instance-1.png)
-1. One the **Add instance** page fill the following:
-    - `Project`: choose any project name, it will be created automatically;
-    - `Verification token`: specify the same verification token that you've used in the Database Lab Engine configuration file;
-    - `URL`: Database Lab API server (EC2 instance public IP or hostname, specify port if needed, e.g. `https://my-domain.com/dblab-engine/` or `http://30.100.100.1:2345`).
+1. On the **Add instance** page fill in the following:
+    - `Project`: choose any project name, it will be created automatically
+    - `Verification token`: specify the same verification token that you've used in the Database Lab Engine configuration file
+    - `URL`: Database Lab API server (EC2 instance public IP or hostname, specify port if needed, e.g. `https://my-domain.com/dblab-engine/` or `http://30.100.100.1:2345`)
 
 ![Database Lab Engine / Add instance](/assets/guides/add-engine-instance-2.png)
 1. Click the **Verify URL** button to check the availability of the Engine. Ignore the warning about insecure connection – in this Tutorial, we have skipped some security-related steps.
@@ -333,16 +346,16 @@ To use GUI, you need to [sign up for Database Lab Platform](https://postgres.ai/
     ![Database Lab engine clone page](/assets/guides/create-clone-3.png)
 
 #### Connect to a clone
-1. From the **Database Lab clone** page under section **Connection info** copy **psql connection string** field contents by clicking the **Copy** button.
+1. From the **Database Lab clone** page under section **Connection info**, copy the **psql connection string** field contents by clicking the **Copy** button.
     ![Database Lab clone page / psql connection string](/assets/guides/connect-clone-1.png)
-1. Here we assume that you have `psql` installed on your working machine. In the terminal, type `psql` and paste **psql connection string** field contents. Change the database name `DBNAME` parameter, you can always use `postgres` for the initial connection.
+1. Here we assume that you have `psql` installed on your working machine. In the terminal, type `psql` and paste the **psql connection string** field contents. Change the database name `DBNAME` parameter, you can always use `postgres` for the initial connection.
 1. Run the command and type the password you've set during the clone creation.
 1. Test established connection by listing tables in the database using `\d`.
     ![Terminal / psql](/assets/guides/connect-clone-2.png)
 
 ### Option 2: CLI
 #### Install Database Lab client CLI
-CLI can be used on any machine, you just need to be able to reach Database Lab Engine API (port 2345 by default). In this tutorial, we will install and use CLI locally on the EC2 instance.
+CLI can be used on any machine, you just need to be able to reach the Database Lab Engine API (port 2345 by default). In this tutorial, we will install and use CLI locally on the EC2 instance.
 
 ```bash
 curl https://gitlab.com/postgres-ai/database-lab/-/raw/master/scripts/cli_install.sh | bash
@@ -440,7 +453,7 @@ Reconnect to the clone:
 \c
 ```
 
-Now check the database objects you've dropped or partially deleted – everything should be as when we started.
+Now check the database objects you've dropped or partially deleted – everything should be the same as when we started.
 
 For more, see [the full client CLI reference](/docs/database-lab/cli-reference).
 

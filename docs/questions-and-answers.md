@@ -1,13 +1,22 @@
 ---
 title: Database Lab questions and answers
 sidebar_label: Q&A
-hide_title: false
+keywords:
+  - "zfs clones"
+  - "postgresql clones"
+  - "fast postgresql cloning"
+  - "instant postgres clones"
+  - "postgresql staging clones"
+  - "postgresql thin clones"
+  - "copy on write for postgres"
+  - "postgres test environments"
+  - "virtual postgres databases"
 ---
 
 ## What is "thin cloning"? Thin vs. thick clones
 There are two types of cloning used by Database Lab Engine:
 
-1. *Thick cloning* is a regular way to copy data. It is how data is copied to Database Lab initially. There are several options:
+1. **Thick cloning** is a regular way to copy data. It is how data is copied to Database Lab initially. There are several options:
     - logical: dump/restore (using `pg_dump`/`pg_dumpall` and `pg_restore`/`psql`),
     - physical:
         - `pg_basebackup`,
@@ -17,30 +26,34 @@ There are two types of cloning used by Database Lab Engine:
 
     In addition to initial mandatory thick cloning, Database Lab Engine supports continuous synchronization with the source database. It is achieved using either logical or physical replication, depending on which thick cloning method you initially used.
 
-2. *Thin cloning* is how we get local database clones in a few seconds. Such databases can be considered as "virtual databases" because physically, they share most of the data blocks, but logically they look fully independent. The speed of thin cloning does not depend on the database size.
+2. **Thin cloning** is how we get local database clones in a few seconds. Such databases can be considered as "virtual databases" because physically, they share most of the data blocks, but logically they look fully independent. The speed of thin cloning does not depend on the database size.
 
     Thin cloning is fast because it is based on the [CoW (Copy-on-Write)](https://en.wikipedia.org/wiki/Copy-on-write#In_computer_storage).
 
     Currently, Database Lab Engine supports two technologies to enable CoW and thin cloning: ZFS and LVM. <!-- TODO: move explanation about snapshot management to a separate paragraph --> With ZFS, Database Lab Engine periodically creates a new snapshot of the data directory, and maintains a set of snapshots, periodically deleting the old ones. When requesting a new clone, users choose which snapshot to use. For example, one can request to create two clones, one with a very fresh database state, and another corresponding to yesterday morning. In a few seconds, clones are created, and it immediately becomes possible to compare two database versions: data, SQL query plans, and so on.
 
+---
 
 ## Do I need ZFS on production servers?
 No.
 
 If you are going to use Database Lab with ZFS, you do **not** need to install ZFS on production servers. ZFS is needed only to enable thin provisioning. Therefore, ZFS is to be used only on Database Lab instances.
 
+---
 
 ## Why ZFS?
 [ZFS](https://en.wikipedia.org/wiki/ZFS) is an efficient filesystem with rich capabilities, including CoW (Copy-on-Write and) and transparent compression, simple installation, and an easy-to-use CLI. It makes ZFS perfectly suitable for use in development and testing environments.
 
 As an alternative to ZFS, Database Lab Engine supports LVM to enable thin cloning. Moreover, since [Database Lab Engine](https://gitlab.com/postgres-ai/database-lab) is an open-source component with a modular architecture, it is quite easy to extend it to support other systems, such as Ceph, or enterprise-grade storage systems with CoW. Contributions are welcome!
 
+---
 
 ## How stable is ZFS?
 Modern versions of [ZFS on Linux](https://zfsonlinux.org/) are very stable.
 
 Multi-terabyte Database Lab Engine instances run for many months, synchronizing changes from sources with dozens of thousand TPS, having many dozens of clones, and serving dozens of engineers simultaneously. With such a scale, cloning time may grow to 10-30 seconds, and the lag of applying changes from the source can grow to dozens of seconds. Such numbers still beat any traditional approach to organizing non-production infrastructure by all means.
 
+---
 
 ## What do I need to use Database Lab?
 - For each Database Lab Engine instance, a separate machine is needed, either physical or virtual. It does not matter where the machine is located, on-premise or in clouds.
@@ -53,8 +66,12 @@ Multi-terabyte Database Lab Engine instances run for many months, synchronizing 
 
 See [Database Lab Engine configuration reference](/docs/database-lab/config-reference) and [Database Lab Tutorial](/docs/tutorials/database-lab-tutorial) to learn more.
 
+---
+
 ## What is needed to use Database Lab for an Amazon RDS database?
 For more details, see [Database Lab tutorial for Amazon RDS](/docs/tutorials/database-lab-tutorial-amazon-rds).
+
+---
 
 ## Cloud vs. on-premise
 You can install Database Lab on any machine which matches our requirements listed above. It doesn't matter whether this machine is in clouds or on-premise.
@@ -70,6 +87,8 @@ We plan to extend the list with the following platforms (please reach out to our
 - [Yandex Cloud](https://cloud.yandex.com/).
 
 <!-- Q&A for Joe, for Platform GUI -->
+
+---
 
 ## Where to get help?
 We are always happy to help. Reach out to the support team using the following resources:

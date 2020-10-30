@@ -1,32 +1,43 @@
 ---
 title: Start using Joe Bot
 sidebar_label: Start using Joe Bot
+keywords:
+  - "SQL optimization PostgreSQL"
+  - "EXPLAIN ANALYZE on thin PostgreSQL clones"
+  - "Joe bot - optimize PostgreSQL queries"
+  - "Optimize SQL using thin clones"
+  - "PostgreSQL EXPLAIN"
+  - "Verify PostgreSQL index ideas"
+description: Learn how to use Joe bot to build a swift workflow of PostgreSQL query optimization running EXPLAIN commands on ultra-fast thin clones.
 ---
 
 [↵ Back to Guides](/docs/guides/)
 
->Please support the project giving a GitLab star (it's on [the main page of the project repository](https://gitlab.com/postgres-ai/joe),
->at the upper right corner):
->
->![Add a star](/assets/star.gif)
+:::note
+Joe bot is hosted and developed on GitLab.com. Why? GitLab Inc. is our (Postgres.ai) long-term client and an early adopter (see [GitLab Development Docs](https://docs.gitlab.com/ee/development/understanding_explain_plans.html#database-lab)). GitLab has an open-source version. Last but not least: GitLab uses PostgreSQL.
 
-## Step 1. Requirements:
-- Set up [Database Lab Engine](/docs/tutorials/database-lab-tutorial) (e.g., running on address https://dblab.domain.com) before configuring Joe Bot.
-  > ⚠&nbsp;Make sure the address used in `accessHost` is accessible from where you are going to run Joe Bot.
-- Prepare any Linux machine with Docker. See the official documentation on [how to install Docker on Linux](https://docs.docker.com/engine/install/).
+However, nowadays, not many open-source projects are hosted at GitLab.com unfortunately. ⭐️&nbsp;Please support the project by giving a star on GitLab! It's on [the main page of the Database Lab Engine repository](https://gitlab.com/postgres-ai/joe), in the upper right corner:
+
+![Add a GitLab star](/assets/star.gif)]
+:::
+
+## Step 1. Requirements
+- Set up [Database Lab Engine](/docs/tutorials/database-lab-tutorial) (e.g., running on address https://dblab.domain.com) before configuring Joe Bot
+    :::note
+    Make sure the address used in `accessHost` is accessible from where you are going to run Joe Bot.
+    :::
+- Prepare any Linux machine with Docker. See the official documentation on [how to install Docker on Linux](https://docs.docker.com/engine/install/)
 
 ## Step 2. Configure communication channels
-
 There are two available types of communication with Joe:
-- Web UI powered by [Postgres.ai Console](https://postgres.ai/console/),
-- Slack.
+- Web UI powered by [Postgres.ai Console](https://postgres.ai/console/)
+- Slack
 
 You can use both of them in parallel. If you can develop in Go language, feel free to implement more types of communication: see [communication channels issues](https://gitlab.com/postgres-ai/joe/-/issues?label_name%5B%5D=Communication+channel).
 
 We need to define where to store the configuration file. We will use `~/.dblab/joe.yml`.
 
 Configuration example:
-
 ```bash
 mkdir -p ~/.dblab
 
@@ -218,7 +229,6 @@ Before configuring Web UI make sure you have a Postgres.ai account.
 If you don't have a Postgres.ai account yet, see the guide on how to start working with [Postgres.ai Console](/docs/platform).
 
 To configure Web UI:
-
 1. First, get your `PLATFORM_TOKEN`. This token lets Joe Bot talk to Postgres.ai Platform to enable Web UI chat window, save the history of commands, and visualize query plans. In [Postgres.ai Console](https://postgres.ai/console/), switch to proper organization and open the `Access Tokens` page. Save it to Joe config (`platform: token`).
 1. Then, go to the `Joe instances` page in the `SQL Optimization` sidebar section.
 1. Choose a project from the dropdown menu and press the `Add instance` button.
@@ -265,9 +275,7 @@ Configure a new Slack App in order to use Joe in Slack and add the app to your t
 
 Now we have all tokens and ready to run Joe Bot.
 
-
 ## Step 3. Run Joe Bot container
-
 1. Launch Joe Bot container which immediately connects to the Database Lab instance(s) you've specified in the config file.
 
     ```bash
@@ -293,9 +301,7 @@ Now we have all tokens and ready to run Joe Bot.
 Instead of working using insecure HTTP, you can set up NGINX with SSL enabled and open port 443, similarly as described in ["Secure Database Lab Engine"](/docs/guides/administration/engine-secure).
 
 ## Step 4. Verify the configuration
-
 ### Step 4a. Finish the Web UI configuration
-
 1. Return to the page of Joe configuration in the Console, enter the URL with the specific path `/webui/`. For example, `https://joe.dev.domain.com/webui/`.
 1. Press the `Verify` button to check connection and `Add` the instance after the verification is passed.
 1. Choose the created instance and send a command.

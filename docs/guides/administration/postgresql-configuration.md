@@ -4,7 +4,7 @@ sidebar_label: Configure PostgreSQL used by Database Lab Engine
 ---
 
 ## PostgreSQL configuration
-It is important to properly configure all PostgreSQL instances managed by Database Lan Engine: the single "sync" instance, and clones.
+It is important to properly configure all PostgreSQL instances managed by Database Lab Engine: the single "sync" instance, and clones.
 
 ### The "sync" instance
 The "sync" instance, which is an asynchronous replica by nature, is currently supported only for the physical mode of data directory initialization, see option `syncInstance` in job [physicalRestore](/docs/database-lab/config-reference#job-physicalsnapshot). The only purpose of this PostgreSQL is fetching and replaying [WAL segments](https://www.postgresql.org/docs/current/wal-intro.html), maintaining the data directory in sync.
@@ -13,21 +13,18 @@ Normally, there is no need in configuring this PostgreSQL instance, as Database 
 
 ### PostgreSQL configuration in clones
 It is possible and in many cases necessary to configure various PostgreSQL options in clones. It can be done both for logical and physical modes of data directory initialization:
-
-- for the logical mode, all PostgreSQL parameters are to be specified in option `configs` of job `logicalSnapshot`,
-- for the physical mode, these parameters are configured in option `configs` of job `physicalSnapshot`.
+- for the logical mode, all PostgreSQL parameters are to be specified in option `configs` of job `logicalSnapshot`
+- for the physical mode, these parameters are configured in option `configs` of job `physicalSnapshot`
 
 Technically, the specified PostgreSQL parameters are applied to `postgresql.conf` located in the data directory when preparing a working snapshot used for thin cloning. All thin clones automatically inherit these values.
 
 When configuring Database Lab Engine, review and set up if needed the following parameters:
-
-- **`shared_buffers`**: one of the most important parameters. The use of the same value that is used on the source is not recommended because it might lead to out-of-memory errors and the inability to create more than a few clones. Instead, use some moderate value such as `1GB`; with this value, if your server has, say, 64 GiB of RAM, then theoretical maximum number of clones is ~63 (some RAM is already used by OS and other apps).
-- **`shared_preload_libraries`**: use the same value as on the source, to allow the same extensions that is used there.
-- **`work_mem`**: set the same value as used on the source database unless your Database Lab Engine server lacks memory and there are significant risks of out-of-memory errors,
-- **[Query Planning](https://www.postgresql.org/docs/current/runtime-config-query.html)** parameters (all of them). This is essential to ensure that cloned PostgreSQL most likely generates the same plans as on the source (specifically, it is crutial for query performance troubleshooting and optimization, including working with EXPLAIN plans).
+- **`shared_buffers`**: one of the most important parameters. The use of the same value that is used on the source is not recommended because it might lead to out-of-memory errors and the inability to create more than a few clones. Instead, use some moderate value such as `1GB`; with this value, if your server has, say, 64 GiB of RAM, then theoretical maximum number of clones is ~63 (some RAM is already used by OS and other apps)
+- **`shared_preload_libraries`**: use the same value as on the source, to allow the same extensions that is used there
+- **`work_mem`**: set the same value as used on the source database unless your Database Lab Engine server lacks memory and there are significant risks of out-of-memory errors
+- **[Query Planning](https://www.postgresql.org/docs/current/runtime-config-query.html)** parameters (all of them). This is essential to ensure that cloned PostgreSQL most likely generates the same plans as on the source (specifically, it is crutial for query performance troubleshooting and optimization, including working with EXPLAIN plans)
 
 For convenience, use the following SQL on the source database to get all the values:
-
 ```sql
 select format($$%s: "%s"$$, name, setting)
 from pg_settings
@@ -38,7 +35,6 @@ where
 ```
 
 An example of `configs` option:
-
 ```yaml
 ...
         configs:

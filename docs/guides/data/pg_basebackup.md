@@ -3,10 +3,11 @@ title: "Data source: pg_basebackup"
 sidebar_label: "pg_basebackup"
 ---
 
->You need to set up machine for Database Lab instance first. Check the [Setup machine for the Database Lab Engine](/docs/guides/administration/machine-setup) guide for the details.
+:::info
+As the first step, you need to set up a machine for Database Lab Engine instance. See the guide [Set up a machine for the Database Lab Engine](/docs/guides/administration/machine-setup).
+:::
 
 ## Configuration
-
 ### Jobs
 In order to set up Database Lab Engine to automatically get the data from database using [pg_basebackup](https://www.postgresql.org/docs/current/app-pgbasebackup.html) you need to use following jobs:
 - [physicalRestore](/docs/database-lab/config-reference#job-physicalrestore)
@@ -14,21 +15,20 @@ In order to set up Database Lab Engine to automatically get the data from databa
 
 ### Options
 Copy the contents of configuration example [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/master/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml` and update the following options:
-- Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine;
+- Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine
 - Set connection options in `physicalRestore:options:envs`:
-  - `PGUSER`: database user name;
-  - `PGPASSWORD`: database master password;
-  - `PGHOST`: database server host;
+    - `PGUSER`: database user name
+    - `PGPASSWORD`: database master password
+    - `PGHOST`: database server host
 - Set PostgreSQL commands in `physicalRestore:options:customTool`:
-  - `command`: `pg_basebackup -X stream -D /var/lib/dblab/data`;
-  - `restore_command`: `TBD`;
+    - `command`: `pg_basebackup -X stream -D /var/lib/dblab/data`
+    - `restore_command`: `TBD`
 - Set a proper version in Postgres Docker images tags (change the images itself only if you know what are you doing):
-  - `provision:options:dockerImage`;
-  - `retrieval:spec:physicalRestore:options:dockerImage`;
-  - `retrieval:spec:physicalSnapshot:options:promotion:dockerImage`.
+    - `provision:options:dockerImage`
+    - `retrieval:spec:physicalRestore:options:dockerImage`
+    - `retrieval:spec:physicalSnapshot:options:promotion:dockerImage`
 
 ## Run Database Lab Engine
-
 ```bash
 sudo docker run \
   --name dblab_server \
@@ -45,7 +45,6 @@ sudo docker run \
 ```
 
 ## Restart in the case of failure
-
 ```bash
 TBD
 ```

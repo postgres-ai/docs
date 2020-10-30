@@ -4,9 +4,7 @@ sidebar_label: Manage Joe bot
 ---
 
 ## Start Joe Bot container
-
 Define the config file `~/.dblab/joe.yml` according the [configuration options page](/docs/joe-bot/config-reference) and run the command:
-
 ```bash
 sudo docker run \
     --name joe_bot \
@@ -18,7 +16,6 @@ postgresai/joe:latest
 ``` 
 
 ## Reconfigure Joe Bot container
-
 Update the configuration file `~/.dblab/joe.yml`.
 
 Restart the running Joe Bot container:
@@ -26,17 +23,18 @@ Restart the running Joe Bot container:
 sudo docker restart joe_bot
 ```
 
-> ⚠ Note that once `docker restart` is executed, all active sessions will be lost.
+:::caution
+Note that once `docker restart` is executed, all active sessions will be lost.
+:::
 
 ## Upgrade Joe Bot 
-
 Stop and remove the container using `sudo docker stop joe_bot` and `sudo docker rm joe_bot` and then [launching](#start-joe-bot-container) it again.
 
-> ⚠ Note the upgrade removes all active sessions
-
+:::caution
+Note the upgrade removes all active sessions
+:::
 
 ## Observe Joe Bot logs
-
 To enable the debugging mode you can use one of the following approaches:
 
 - Set the option `app: debug` to `true` in the [configuration file](/docs/joe-bot/config-reference#joe-bot-configuration-file). [Reconfigure the container](#reconfigure-the-joe-bot-container) if the option has been changed.
@@ -48,17 +46,14 @@ sudo docker logs joe_bot -f
 ```
 
 ## Check Joe Bot status
-
 To check the status of the running container, perform the request `GET /`. 
 
 For example using `curl`:
-
 ```bash
 curl -XGET 'https://joe.dev.domain.com/'
 ```
 
 The response `HTTP/1.1 200 OK` is going to be:
-
 ```json
 {
     "version":"v0.7.0-20200424-0408",
