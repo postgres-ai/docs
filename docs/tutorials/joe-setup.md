@@ -1,5 +1,5 @@
 ---
-title: Start using Joe Bot
+title: Tutorial: Start using Joe Bot for PostgreSQL query optimization
 sidebar_label: Start using Joe Bot
 keywords:
   - "SQL optimization PostgreSQL"
@@ -8,6 +8,9 @@ keywords:
   - "Optimize SQL using thin clones"
   - "PostgreSQL EXPLAIN"
   - "Verify PostgreSQL index ideas"
+  - "Joe bot tutorial"
+  - "postgres.ai joe bot"
+  - "sql optimization chatbot"
 description: Learn how to use Joe bot to build a swift workflow of PostgreSQL query optimization running EXPLAIN commands on ultra-fast thin clones.
 ---
 
@@ -322,5 +325,8 @@ Instead of working using insecure HTTP, you can set up NGINX with SSL enabled an
 
     ![Run command](/assets/joe/tutorial-example-help.png)
 
-
 See available configuration options [here](/docs/joe-bot/config-reference).
+
+:::info Have questions?
+Reach out to our team, we'll be happy to help! Use the Intercom widget located at the right bottom corner.
+:::

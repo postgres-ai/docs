@@ -457,7 +457,9 @@ Now check the database objects you've dropped or partially deleted – everythin
 
 For more, see [the full client CLI reference](/docs/database-lab/cli-reference).
 
->Have questions? Reach out to our team, we'll be happy to help! Use the Intercom widget located at the right bottom corner.
+:::info Have questions?
+Reach out to our team, we'll be happy to help! Use the Intercom widget located at the right bottom corner.
+:::
 
 ## 👋 Database Lab "Private Beta" program
 Database Lab Platform (SaaS) is currently in a "private beta" mode, being tested by several hundred engineers. Want to become an early adopter? Join Database Lab by Postgres.ai "Private Beta" program today: https://postgres.ai/console/.
