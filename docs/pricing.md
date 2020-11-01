@@ -64,7 +64,7 @@ keywords:
 - Database Lab Engine is always hosted on your infrastructure, and the data never leaves your infrastructure
 
 
-::: 👋&nbsp;Database Lab "Private Beta" program
+:::note Database Lab "Private Beta" program&nbsp;&nbsp;👋
 
 Database Lab Platform (SaaS) is currently in a "private beta" mode, being tested by several hundred engineers. Want to become an early adopter? Join Database Lab by Postgres.ai "Private Beta" program today: https://postgres.ai/console/.
 
