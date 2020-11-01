@@ -1,5 +1,5 @@
 ---
-title: Tutorial: Start using Joe Bot for PostgreSQL query optimization
+title: "Tutorial: Start using Joe Bot for PostgreSQL query optimization"
 sidebar_label: Start using Joe Bot
 keywords:
   - "SQL optimization PostgreSQL"
