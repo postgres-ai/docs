@@ -41,7 +41,7 @@ Database Lab is used to boost software development via enabling ultra-fast provi
 
 ![Database Lab architecture](/assets/architecture.png)
 
-::: 👋&nbsp;Database Lab "Private Beta" program
+:::note Database Lab "Private Beta" program&nbsp;&nbsp;👋
 
 Database Lab Platform (SaaS) is currently in a "private beta" mode, being tested by several hundred engineers. Want to become an early adopter? Join Database Lab by Postgres.ai "Private Beta" program today: https://postgres.ai/console/.
 
