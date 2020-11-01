@@ -534,7 +534,9 @@ Currently, the Database Lab GUI is in "private beta" mode. The onboarding consis
 1. Test established connection by listing tables in the database using `\d`.
     ![Terminal / psql](/assets/guides/connect-clone-2.png)
 
-> Have questions? Reach out to our team, we'll be happy to help! Use the Intercom widget located at the right bottom corner.
+:::info Have questions?
+Reach out to our team, we'll be happy to help! Use the Intercom widget located at the right bottom corner.
+:::
 
 ## 👋 Database Lab "Private Beta" program
 Database Lab Platform (SaaS) is currently in a "private beta" mode, being tested by several hundred engineers. Want to become an early adopter? Join Database Lab by Postgres.ai "Private Beta" program today: https://postgres.ai/console/.
