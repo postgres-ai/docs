@@ -4,7 +4,7 @@ sidebar_label: Database Lab Engine configuration
 ---
 
 ## Overview
-Database Lab Engine behavior can be controlled using the main configuration file that has YAML format. This reference descibes  available configuration options.
+Database Lab Engine behavior can be controlled using the main configuration file that has YAML format. This reference describes available configuration options.
 
 Example config files can be found here: https://gitlab.com/postgres-ai/database-lab/-/tree/master/configs.
 
@@ -33,6 +33,7 @@ Here is how the configuration file is structured:
 | `provision` | How thin cloning is organized.  |
 | `retrieval` | Defines the data flow: a series of "jobs" for initial retrieval of the data, and, optionally, continuous data synchronization with the source, snapshot creation and retention policies. The initial retrieval may be either "logical" (dump/restore) or "physical" (based on replication or restoration from a archive). |
 | `cloning` | Thin cloning policies. |
+| `platform` | Postgres.ai Platform integration (provides GUI) – extends the open source offering. |
 
 ## Section `global`: global parameters
 - `engine` - defines the Database Lab Engine. Supported engines: `postgres`.
@@ -41,10 +42,23 @@ Here is how the configuration file is structured:
 - `debug` - allows seeing more in the Database Lab Engine logs.
 
 ## Section `server`: Database Lab Engine API server
-...
+- `verificationToken` (string, required) - the token that is used to work with Database Lab API. 
+- `host` (string, optional, default: "") - the host which the Database Lab server accepts HTTP connections to.
+- `port` (string, required) - HTTP server port. 
 
 ## Section `provision`: thin cloning environment settings
-...
+- `pgMgmtUsername` (string, optional, default: "postgres") - database username that will be used for Postgres management connections.
+- `options` (key-value, required) - options related to provisioning.
+    - `thinCloneManager` (string, required) - thin-clone managing module used for thin cloning.
+    - `pool` (string, required) - the name of pool (in the case of ZFS) or volume group with logic volume name (in the case of LVM).
+    - `portPool` (key-value, required) - defines a pool of ports for Postgres clones.
+      - `from` (integer, required) - the lowest port value in the pool.
+      - `to` (integer, required) - the highest port value in the pool.
+    - `clonesMountDir` (string, optional, default: "/var/lib/dblab/clones/") - the directory that will be used to mount clones.
+    - `unixSocketDir` (string, optional, default: "/var/lib/dblab/sockets/") - the UNIX socket directory that will be used to establish local connections to cloned databases.
+    - `preSnapshotSuffix` (string, required) - the suffix to denote preliminary snapshots.
+    - `dockerImage` (string, required) - the Postgres Docker image that to be used when cloning.
+    - `useSudo` (boolean, optional, default: false) - use sudo for ZFS/LVM and Docker commands if Database Lab server running outside a container.
 
 ## Section `retrieval`: data retrieval
 - `jobs` - declares the set of running jobs. Stages must be defined in the `spec` section.
@@ -149,5 +163,10 @@ Options:
       - `limit` (integer, required) -  defines how many snapshots should be held.
 
 ## Section `cloning`: thin cloning policies
-...
+- `accessHost` (string, required) - the host that will be specified in the database connection string to inform users about how to connect to database clones.
+- `maxIdleMinutes` (integer, optional, default: 0) - automatically delete clones after the specified minutes of inactivity.
 
+## Section `platform`: Postgres.ai Platform integration
+- `url` (string, optional, default: "https://postgres.ai/api/general") - Platform API URL.
+- `accessToken` (string, required) - the token for authorization in Platform API. This token can be obtained on the Postgres.ai Console. 
+- `enablePersonalTokens` (boolean, optional, default: false) - enables authorization with personal tokens of the organization's members. 
