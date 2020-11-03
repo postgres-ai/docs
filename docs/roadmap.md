@@ -1,27 +1,28 @@
 ---
-title: Database Lab roadmap
+title: Database Lab development roadmap
 sidebar_label: Roadmap
 description: Development roadmap for Database Lab Engine and related products.
 keywords:
-  - "Postgres.ai roadmap"
+  - "Postgres.ai development roadmap"
   - "Database Lab development roadmap"
 ---
 
 ## Roadmap
 We work hard to develop new features for Database Lab Engine and Platform. Below you can find the main ideas we are working on now or planning to work soon.
 
-*Edited: 2020-10-13*
+*Edited: 2020-11-02*
 
 ### Physical provisioning
 Physical provisioning: native support of provisioning from archives created by a specific backup solution or based on an existing Postgres database
 
 - [ ] Support various sources
-    - [x] Arbitrary Postgres instance (pg_basebackup, rsync)
-    - [x] WAL-E/WAL-G backups
-    - [ ] pgBackRest backups
-    - [ ] Barman backups
-    - [ ] pg_probackup backups
-    - [ ] Nutanix Era
+    - [x] Generic (anything: pg_basebackup, rsync, backup tools)
+    - Native support
+        - [x] WAL-E/WAL-G backups
+        - [ ] pgBackRest backups
+        - [ ] Barman backups
+        - [ ] pg_probackup backups
+        - [ ] Nutanix Era
 - [x] Continuously updated state (physical replication based on WAL shipping)
 - [x] Snapshot management (schedule, retention policy)
 - [ ] faster WAL replay (pg_prefaulter)
@@ -44,6 +45,7 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
     - [ ] arbitrary filtering (columns, rows)
 
 ### Advanced engine features
+- [ ] Persist clones when the engine restarts
 - [ ] Point-in-time recovery (PITR) (Can be used for ultra-fast recovery of accidentally deleted data)
 - [ ] Duplicate DLE (create a new DLE based on existing one)
 - [ ] Utilization alerts
@@ -78,7 +80,7 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
     - [ ] Ruby on Rails Active Record
     - [ ] Django migrations
 
-### Cloning
+### Cloning (CoW technology)
 - [x] ZFS
 - [x] LVM
 - [ ] PureStorage
@@ -96,6 +98,7 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
     - [ ] GCP
     - [ ] Azure
     - [ ] Ali
+- [ ] AWS Spot instances for further savings
 - [ ] Kubernetes support
     - [ ] DLE operator
     - [ ] Integration with [StackGres](https://stackgres.io) 
