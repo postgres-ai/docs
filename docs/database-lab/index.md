@@ -49,7 +49,7 @@ As an example, cloning of 10 TiB PostgreSQL database takes less than 2 seconds w
 
 Thin cloning is possible thanks to [copy-on-write](https://en.wikipedia.org/wiki/Copy-on-write) capabilities provided by either [ZFS filesystem](https://en.wikipedia.org/wiki/ZFS) or [LVM2](https://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)) (other options such as hardware-based support of thin cloning are possible to develop thanks to modular and open architecture of Database Lab Engine).
 
-Some of the problems that can be solved by using Database Lab:
+Some problems that can be solved by using Database Lab:
 
 - help build independent development and testing environments involving full-size database without extra time and money spending,
 - provide temporary full-size database clones for SQL query optimization (see also: [Joe bot](https://postgres.ai/products/joe/), which works on top of Database Lab),
