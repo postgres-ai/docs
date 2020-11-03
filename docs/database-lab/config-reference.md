@@ -20,7 +20,7 @@ sudo docker run \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   --volume /var/lib/dblab:/var/lib/dblab:rshared \
   --volume ~/.dblab/server.yml:/home/dblab/configs/config.yml \
-  "docker pull postgresai/dblab-server:2.0.0-beta.3"
+  "docker pull postgresai/dblab-server:2.0.0"
 ```
 
 ## The list of configuration sections
@@ -81,9 +81,7 @@ Options:
       - `username` (string, optional, default: postgres) - defines database username to connect to the database.
       - `password` (string, optional, default: "") - defines username password to connect to the database. The environment variable PGPASSWORD can be used instead of this option. The environment variable has a higher priority.
    - `rdsIam` (key-value, optional) - contains options specific for RDS IAM source type
-      - `iamPolicyName` (string, required) - RDS IAM policy name applied to AWS user. If policy does not exist, it is created.
       - `awsRegion` (string, required) - AWS Region where RDS is located.
-      - `username` (string, required) - AWS username who has access to RDS to create a dump.
       - `dbInstanceIdentifier` (string, required) - RDS instance Identifier.
       - `sslRootCert` (string, required) - path on the host machine to the SSL root certificate. You can download it from https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem 
 - `parallelJobs` (integer, optional, default: 1) - defines the number of concurrent jobs using the `pg_dump` option `jobs`. This option can dramatically reduce the time to dump a large database.

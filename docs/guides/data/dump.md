@@ -42,7 +42,7 @@ sudo docker run \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:2.0.0-beta.3
+  postgresai/dblab-server:2.0.0
 ```
 
 You can use PGPASSWORD env to set the password.
