@@ -27,27 +27,25 @@ All these extended images include the following extensions:
 - [pg_stat_kcache](https://github.com/powa-team/pg_stat_kcache)
 - [pg_timetable](https://github.com/cybertec-postgresql/pg_timetable)
 - [pgextwlist](https://github.com/dimitri/pgextwlist)
-- [postgresql-hll](https://github.com/citusdata/postgresql-hll)
-- [postgresql-topn](https://github.com/citusdata/postgresql-topn)
+- [hll](https://github.com/citusdata/postgresql-hll)
+- [topn](https://github.com/citusdata/postgresql-topn)
 - [postgresql_anonymizer](https://github.com/webysther/postgresql_anonymizer) 
 - [PoWA](https://github.com/powa-team/powa)
 - [set_user](https://github.com/pgaudit/set_user)
 - [Timescale](https://github.com/timescale/timescaledb)
 
-**Known limitations**
+#### Not included in the PostgreSQL 13 image (yet)
+The PostgreSQL 13 image is now missing the following extensions (they will be added in the future):
+- hll
+- topn
+- citus
+- hypopg
+- pg_auth_mon
+- pg_hint_plan
+- powa
+- timescaledb
 
-PostgreSQL 13 image doesn't have the following extensions that are present in versions 9.6-12:
-   - hll
-   - timetravel
-   - topn
-   - citus
-   - hypopg
-   - pg_auth_mon
-   - pg_hint_plan
-   - powa
-   - timescaledb
-
-
+### How to extend
 Proposals to extend this list are welcome in the project repository: https://gitlab.com/postgres-ai/custom-images.
 
 :::tip
