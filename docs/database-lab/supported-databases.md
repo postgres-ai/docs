@@ -3,11 +3,12 @@ title: PostgreSQL versions and extensions
 ---
 
 ## PostgreSQL versions
-Currently, Databaes Lab Engine fully supports the following PostgreSQL major versions:
+Currently, Database Lab Engine fully supports the following PostgreSQL major versions:
 - 9.6
 - 10
 - 11
 - 12
+- 13
 
 ## Extensions
 By default, Database Lab Engine uses [the extended Postgres.ai Docker images](https://hub.docker.com/repository/docker/postgresai/extended-postgres) built on top of the official Docker images for PostgreSQL. Use these images with Database Lab when you need non-standard Postgres extensions. 
@@ -32,6 +33,20 @@ All these extended images include the following extensions:
 - [PoWA](https://github.com/powa-team/powa)
 - [set_user](https://github.com/pgaudit/set_user)
 - [Timescale](https://github.com/timescale/timescaledb)
+
+**Known limitations**
+
+PostgreSQL 13 image doesn't have the following extensions that are present in versions 9.6-12:
+   - hll
+   - timetravel
+   - topn
+   - citus
+   - hypopg
+   - pg_auth_mon
+   - pg_hint_plan
+   - powa
+   - timescaledb
+
 
 Proposals to extend this list are welcome in the project repository: https://gitlab.com/postgres-ai/custom-images.
 
