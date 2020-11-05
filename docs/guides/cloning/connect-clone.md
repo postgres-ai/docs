@@ -71,9 +71,9 @@ DBNAME=#
   ![CloudBeaver / Tables](/assets/guides/connect-clone-6.png)
 
 ## SSH port forwarding
-> SSH keys should be on the server with the Database Lab engine to use this connection option.
-
-> If clone ports are not closed on your server you can use direct connections described above.
+:::tip
+SSH keys need to be on the server with the Database Lab engine to use this connection option.
+:::
 
 ### GUI
 1. From the **Database Lab clone** page under section **Connection info** copy **SSH port forwarding** field contents by clicking the **Copy** button.

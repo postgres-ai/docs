@@ -72,101 +72,101 @@ Available job names:
 - `physicalRestore`
 - `physicalSnapshot`
 
-> ⚠ You must choose either "logical" or "physical" set of jobs to use, mixing is not allowed.
+::tip
+You need to choose either "logical" or "physical" set of jobs. Mixing is not allowed.
+:::
 
 Note, that all jobs are optional. For example, all of the following approaches defining the initial data retrieval process are allowed:
-- you may consider using both `logicalDump` and `logicalRestore` to make a dump to a file and then restore from it,
-- you may use only `logicalRestore` and restore from an already prepared dump file,
-- you may use only `logicalDump`, without `logicalRestore` (however, this approach makes sense only if you define `immediateRestore` option in the `logicalDump` job, to perform dump & restore on-the-fly, without saving the dump it to a file),
-- finally, you may consider not using 
+- You may consider using both `logicalDump` and `logicalRestore` to make a dump to a file and then restore from it
+- You may use only `logicalRestore` and restore from an already prepared dump file
+- You may use only `logicalDump`, without `logicalRestore` (however, this approach makes sense only if you define `immediateRestore` option in the `logicalDump` job, to perform dump & restore on-the-fly, without saving the dump to a file)
 
 ### Job `logicalDump`
 Dumps a PostgreSQL database from a provided source to an archive or to the Database Lab Engine instance.
 
 Options:
-- `dumpLocation` (string, required) - the dump file (or directory, for a directory-format archive) will be automatically created on this location on the host machine.
-- `dockerImage` (string, required) - specifies the Docker image containing the dump-required tool.
-- `source` (key-value, required) - describes source of data
-   - `type` (string, required) -  defines location type of a dumped database. Available values: `local`, `remote`, `rdsIam`.
-   - `connection` (key-value, required) - defines connection parameters of source.
-      - `dbname` (string, required) - defines the database dbname to be restored.
-      - `host` (string, required) - defines hostname of the database.
-      - `port` (integer, optional, default: 5432) - defines port of the database.
-      - `username` (string, optional, default: postgres) - defines database username to connect to the database.
-      - `password` (string, optional, default: "") - defines username password to connect to the database. The environment variable PGPASSWORD can be used instead of this option. The environment variable has a higher priority.
-   - `rdsIam` (key-value, optional) - contains options specific for RDS IAM source type
-      - `awsRegion` (string, required) - AWS Region where RDS is located.
-      - `dbInstanceIdentifier` (string, required) - RDS instance Identifier.
+- `dumpLocation` (string, required) - the dump file (or directory, for a directory-format archive) will be automatically created on this location on the host machine
+- `dockerImage` (string, required) - specifies the Docker image containing the dump-required tool
+- `source` (key-value, required) - describes source of data:
+   - `type` (string, required) -  defines location type of a dumped database. Available values: `local`, `remote`, `rdsIam`
+   - `connection` (key-value, required) - defines connection parameters of source:
+      - `dbname` (string, required) - defines the database dbname to be restored
+      - `host` (string, required) - defines hostname of the database
+      - `port` (integer, optional, default: 5432) - defines port of the database
+      - `username` (string, optional, default: postgres) - defines database username to connect to the database
+      - `password` (string, optional, default: "") - defines username password to connect to the database; the environment variable PGPASSWORD can be used instead of this option; the environment variable has a higher priority
+      - `rdsIam` (key-value, optional) - contains options specific for RDS IAM source type
+      - `awsRegion` (string, required) - AWS Region where RDS is located
+      - `dbInstanceIdentifier` (string, required) - RDS instance Identifier
       - `sslRootCert` (string, required) - path on the host machine to the SSL root certificate. You can download it from https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem 
-- `parallelJobs` (integer, optional, default: 1) - defines the number of concurrent jobs using the `pg_dump` option `jobs`. This option can dramatically reduce the time to dump a large database.
+- `parallelJobs` (integer, optional, default: 1) - defines the number of concurrent jobs using the `pg_dump` option `jobs`. This option can dramatically reduce the time to dump a large database
 - `partial` (key-value, optional) - defines options for partial dumping. Available options: `tables`:
-   - `tables` (list of strings, optional) - dumps definition and/or data of only the listed tables.
+   - `tables` (list of strings, optional) - dumps definition and/or data of only the listed tables
 - `immediateRestore` (key-value, optional) - provides options for direct restore to a Database Lab Engine instance. 
-   - `forceInit` (boolean, optional, default: false) - init data even if the Postgres directory (see the configuration options `global.mountDir` and `global.dataSubDir`) is not empty. Note the existing data might be overwritten.   
+   - `forceInit` (boolean, optional, default: false) - init data even if the Postgres directory (see the configuration options `global.mountDir` and `global.dataSubDir`) is not empty; note the existing data might be overwritten
 
 ### Job `logicalRestore`
 Restores a PostgreSQL database from an archive created by pg_dump in one of the non-plain-text formats.
 
 Options:
-- `dbname` (string, required) - defines the database dbname to be restored.
-- `dumpLocation` (string, required) - specifies the location of the archive file (or directory, for a directory-format archive) on the host machine to be restored.
-- `dockerImage` (string, required) - specifies the Docker image containing the restore-required tool.
-- `forceInit` (boolean, optional, default: false) - init data even if the Postgres directory (see the configuration options `global.mountDir` and `global.dataSubDir`) is not empty. Note the existing data might be overwritten.
-- `parallelJobs` (integer, optional, default: 1) - defines the number of concurrent jobs using the `pg_restore` option `jobs`. This option can dramatically reduce the time to restore a large database to a server running on a multiprocessor machine.
+- `dbname` (string, required) - defines the database dbname to be restored
+- `dumpLocation` (string, required) - specifies the location of the archive file (or directory, for a directory-format archive) on the host machine to be restored
+- `dockerImage` (string, required) - specifies the Docker image containing the restore-required tool
+- `forceInit` (boolean, optional, default: false) - init data even if the Postgres directory (see the configuration options `global.mountDir` and `global.dataSubDir`) is not empty; note the existing data might be overwritten
+- `parallelJobs` (integer, optional, default: 1) - defines the number of concurrent jobs using the `pg_restore` option `jobs`. This option can dramatically reduce the time to restore a large database to a server running on a multiprocessor machine
 - `partial` (key-value, optional) - defines options for partial restoring. Available options: `tables`:
-   - `tables` (list of strings, optional) - restores definition and/or data of only the listed tables.
+   - `tables` (list of strings, optional) - restores definition and/or data of only the listed tables
 
 ### Job `logicalSnapshot`
 Prepares a snapshot for logical restored PostgreSQL database.
 
 Options:
-- `preprocessingScript` (string, optional) - path on the host machine to a pre-precessing script.
-- `configs` (key-value, optional) - applies PostgreSQL configuration parameters when preparing a working snapshot. These parameters are inherited by all clones. See also: [How to configure PostgreSQL used by Database Lab Engine](/docs/guides/administration/postgresql-configuration).
-
+- `preprocessingScript` (string, optional) - path on the host machine to a pre-precessing script
+- `configs` (key-value, optional) - applies PostgreSQL configuration parameters when preparing a working snapshot. These parameters are inherited by all clones. See also: [How to configure PostgreSQL used by Database Lab Engine](/docs/guides/administration/postgresql-configuration)
 
 ### Job `physicalRestore`
 Restores data from a physical backup.
 
 Supported restore tools:
-- WAL-G (`walg`) - is an archival restoration tool (https://github.com/wal-g/wal-g).
-- Custom (`custom`) - allows defining own command to restore data.
+- WAL-G (`walg`) - is an archival restoration tool (https://github.com/wal-g/wal-g)
+- Custom (`custom`) - allows defining own command to restore data
 
 Options:
-- `tool` (string, required) - defines the tool to restore data. See available restore tools list.
-- `dockerImage` (string, required) - specifies the Docker image containing the restoring tool.
-- `syncInstance` (boolean, optional, default: false) - runs a separate container to refresh Database Lab data.
-- `envs` (key-value, optional) - passes custom environment variables to the Docker container with the restoring tool.
+- `tool` (string, required) - defines the tool to restore data. See available restore tools list
+- `dockerImage` (string, required) - specifies the Docker image containing the restoring tool
+- `syncInstance` (boolean, optional, default: false) - runs a separate container to refresh Database Lab data
+- `envs` (key-value, optional) - passes custom environment variables to the Docker container with the restoring tool
 - `walg` (key-value, optional) - defines WAL-G configuration options:
-  - `backupName` (string, required) - defines the backup name to restore. 
+   - `backupName` (string, required) - defines the backup name to restore
 - `custom` (key-value, optional) - defines configuration options for custom restoring tool:
-  - `command` (string, required) - defines the command to restore data using a custom tool. 
-  - `restore_command` (string, optional) - defines the PostgreSQL [`restore_command`](https://postgresqlco.nf/en/doc/param/restore_command/) configuration option to refresh data. Database Lab Engine automatucally propagates the specified value to proper location, depending the version of PostgreSQL: in versions 11 and older, it is to be stored in `recovery.conf`, while in 12 and newer, it is part of the main file, `postgresql.conf`.
+   - `command` (string, required) - defines the command to restore data using a custom tool
+   - `restore_command` (string, optional) - defines the PostgreSQL [`restore_command`](https://postgresqlco.nf/en/doc/param/restore_command/) configuration option to refresh data; Database Lab Engine automatucally propagates the specified value to proper location, depending the version of PostgreSQL: in versions 11 and older, it is to be stored in `recovery.conf`, while in 12 and newer, it is part of the main file, `postgresql.conf`
 
 ### Job `physicalSnapshot`
 Prepares a snapshot for physical restored PostgreSQL database.
 
 Options:
-- `promotion`  (key-value, optional) - promotes PGDATA after data fetching.
-  - `enabled`  (boolean, optional, default: false) - enable PGDATA promotion.
-  - `dockerImage` (string, optional) - specifies the Docker image containing the promotion-compatible PostgreSQL instance.
-  - `healthCheck` (key-value, optional) - describes health check options for a data promotion container.
-    - `interval` (int, optional, default: 5) - health check interval for a data promotion container (in seconds).
-    - `maxRetries` (int, optional, default: 200) - maximum number of health check retries.
+- `promotion`  (key-value, optional) - promotes PGDATA after data fetching:
+   - `enabled`  (boolean, optional, default: false) - enable PGDATA promotion
+   - `dockerImage` (string, optional) - specifies the Docker image containing the promotion-compatible PostgreSQL instance
+   - `healthCheck` (key-value, optional) - describes health check options for a data promotion container:
+      - `interval` (int, optional, default: 5) - health check interval for a data promotion container (in seconds)
+      - `maxRetries` (int, optional, default: 200) - maximum number of health check retries
 - `sysctls` (key-value, optional) - allows configuring namespaced kernel parameters (sysctls) of Docker container for a promotion stage of taking a snapshot. See supported parameters: https://docs.docker.com/engine/reference/commandline/run/#configure-namespaced-kernel-parameters-sysctls-at-runtime
-- `preprocessingScript` (string, optional) - path on the host machine to a pre-precessing script.
-- `configs` (key-value, optional) - applies PostgreSQL configuration parameters to snapshot. These parameters are inherited by all clones. See also: [How to configure PostgreSQL used by Database Lab Engine](/docs/guides/administration/postgresql-configuration).
-- `scheduler` (key-value, required) - contains tasks which run on a schedule.
-   - `snapshot` (key-value, optional) - defines rules to create a new snapshot on a schedule.
+- `preprocessingScript` (string, optional) - path on the host machine to a pre-precessing script
+- `configs` (key-value, optional) - applies PostgreSQL configuration parameters to snapshot. These parameters are inherited by all clones. See also: [How to configure PostgreSQL used by Database Lab Engine](/docs/guides/administration/postgresql-configuration)
+- `scheduler` (key-value, required) - contains tasks which run on a schedule:
+   - `snapshot` (key-value, optional) - defines rules to create a new snapshot on a schedule:
       - `timetable` (string, required) - defines a timetable in crontab format: https://en.wikipedia.org/wiki/Cron#Overview
-   - `retention` (key-value, optional) - defines rules to clean up old snapshots on a schedule.
+   - `retention` (key-value, optional) - defines rules to clean up old snapshots on a schedule:
       - `timetable` (string, required) - defines a timetable in crontab format: https://en.wikipedia.org/wiki/Cron#Overview
-      - `limit` (integer, required) -  defines how many snapshots should be held.
+      - `limit` (integer, required) -  defines how many snapshots should be held
 
 ## Section `cloning`: thin cloning policies
-- `accessHost` (string, required) - the host that will be specified in the database connection string to inform users about how to connect to database clones.
-- `maxIdleMinutes` (integer, optional, default: 0) - automatically delete clones after the specified minutes of inactivity.
+- `accessHost` (string, required) - the host that will be specified in the database connection string to inform users about how to connect to database clones
+- `maxIdleMinutes` (integer, optional, default: 0) - automatically delete clones after the specified minutes of inactivity
 
 ## Section `platform`: Postgres.ai Platform integration
-- `url` (string, optional, default: "https://postgres.ai/api/general") - Platform API URL.
-- `accessToken` (string, required) - the token for authorization in Platform API. This token can be obtained on the Postgres.ai Console. 
-- `enablePersonalTokens` (boolean, optional, default: false) - enables authorization with personal tokens of the organization's members. 
+- `url` (string, optional, default: "https://postgres.ai/api/general") - Platform API URL
+- `accessToken` (string, required) - the token for authorization in Platform API. This token can be obtained on the Postgres.ai Console
+- `enablePersonalTokens` (boolean, optional, default: false) - enables authorization with personal tokens of the organization's members

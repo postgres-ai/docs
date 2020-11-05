@@ -173,7 +173,9 @@ For the sake of simplicity, we will use the password-based authentication in thi
 <TabItem value="password">
 
 ### Option 1: Password authentication
->You need to know the **master password**. If you lost the password it [can be reset](https://aws.amazon.com/premiumsupport/knowledge-center/reset-master-user-password-rds/).
+:::tip
+You need to know the **master password**. If you lost the password it [can be reset](https://aws.amazon.com/premiumsupport/knowledge-center/reset-master-user-password-rds/).
+:::
 
 #### Configure Database Lab Engine
 Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/master/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
@@ -232,7 +234,9 @@ Read how you can get the AWS access keys for the existing user [here](https://do
 
 3. Create and attach an IAM Policy for IAM Database Access to an AWS user. Read how you can to it [here](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.IAMPolicy.html).
 
-> Alternatively, you can add `AmazonRDSFullAccess`, `IAMFullAccess` policies to an AWS user (not recommended).
+:::tip
+Alternatively, you can add `AmazonRDSFullAccess`, `IAMFullAccess` policies to an AWS user (not recommended).
+:::
 
 #### Configure Database Lab Engine
 Copy the contents of configuration example [`config.example.logical_rds_iam.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/master/configs/config.example.logical_rds_iam.yml) from the Database Lab repository to `~/.dblab/server.yml`:
