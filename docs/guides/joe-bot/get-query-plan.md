@@ -10,7 +10,9 @@ Joe bot is built to boost the process of SQL query troubleshooting and optimizat
 
 Note that timing is always volatile and depends on various factors such as the state of the caches (the buffer pool and OS file cache), current load of the server. Moreover, given the fact that Database Lab Engine is normally configured with a relatively low amount of buffers allocated for the buffer pool, you have to expect that you'll get "buffer reads" more often than "buffer hits". However, this does not make the SQL optimization process problematic: we still can use row counts and buffer counts in each node of the plan, as well as analyze the structure of the execution plan. These factors are essential in SQL optimization, while good timing still being the final goal of the SQL optimization process.
 
->The main purpose of any database index is reducing the amount of data involved in the processing (fewer rows fetches, fewer buffers read, and hit). Follow the optimization rule when dealing with execution plans: "buffers and rows in the process, timing in the end".
+:::tip
+The main purpose of any database index is reducing the amount of data involved in the processing (fewer rows fetches, fewer buffers read, and hit). Follow the optimization rule when dealing with execution plans: "buffers and rows in the process, timing in the end".
+:::
 
 Let's analyze how it works step by step.
 
