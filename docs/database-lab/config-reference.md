@@ -20,7 +20,7 @@ sudo docker run \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   --volume /var/lib/dblab:/var/lib/dblab:rshared \
   --volume ~/.dblab/server.yml:/home/dblab/configs/config.yml \
-  "docker pull postgresai/dblab-server:2.0.0"
+  "docker pull postgresai/dblab-server:2.0.1"
 ```
 
 ## The list of configuration sections
@@ -40,6 +40,9 @@ Here is how the configuration file is structured:
 - `mountDir` - specifies the location of the pool mount directory.
 - `dataSubDir` - specifies the location of restored data by Database Lab Engine relative to the pool mount directory (`mountDir`).
 - `debug` - allows seeing more in the Database Lab Engine logs.
+- `database` (key-value, optional) - contains default configuration options of the restored database.
+  - `username` (string, optional, default: "postgres") - a default username for logical/physical restore jobs.
+  - `dbname` (string, optional, default: "postgres") - a default database name for logical/physical restore jobs.
 
 ## Section `server`: Database Lab Engine API server
 - `verificationToken` (string, required) - the token that is used to work with Database Lab API. 
