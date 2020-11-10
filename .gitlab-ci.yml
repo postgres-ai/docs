@@ -85,8 +85,8 @@ build_production:
 build_staging:
   <<: *build_definition
   <<: *env_staging
-  only:
-    - staging
+  except:
+    - master
 
 deploy_production:
   <<: *deploy_definition
