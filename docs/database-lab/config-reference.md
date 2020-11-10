@@ -149,6 +149,7 @@ Options:
 Prepares a snapshot for physical restored PostgreSQL database.
 
 Options:
+- `skipStartSnapshot` (boolean, optional, default: false) - skip taking a snapshot while the retrieval starts
 - `promotion`  (key-value, optional) - promotes PGDATA after data fetching:
    - `enabled`  (boolean, optional, default: false) - enable PGDATA promotion
    - `dockerImage` (string, optional) - specifies the Docker image containing the promotion-compatible PostgreSQL instance
