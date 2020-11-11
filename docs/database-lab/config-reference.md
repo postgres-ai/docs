@@ -20,7 +20,7 @@ sudo docker run \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   --volume /var/lib/dblab:/var/lib/dblab:rshared \
   --volume ~/.dblab/server.yml:/home/dblab/configs/config.yml \
-  "docker pull postgresai/dblab-server:2.0.1"
+  postgresai/dblab-server:2.0-latest
 ```
 
 ## The list of configuration sections
@@ -75,7 +75,7 @@ Available job names:
 - `physicalRestore`
 - `physicalSnapshot`
 
-::tip
+:::tip
 You need to choose either "logical" or "physical" set of jobs. Mixing is not allowed.
 :::
 
