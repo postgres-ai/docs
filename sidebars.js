@@ -7,8 +7,8 @@ module.exports = {
       "roadmap",
     ],
     "Tutorials": [
-      "tutorials/database-lab-tutorial-amazon-rds",
       "tutorials/database-lab-tutorial",
+      "tutorials/database-lab-tutorial-amazon-rds",
       "tutorials/joe-setup",
     ],
     "Guides": [
