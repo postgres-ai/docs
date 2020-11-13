@@ -75,7 +75,7 @@ Available job names:
 - `physicalRestore`
 - `physicalSnapshot`
 
-:::tip
+:::info
 You need to choose either "logical" or "physical" set of jobs. Mixing is not allowed.
 :::
 
