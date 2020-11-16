@@ -20,8 +20,7 @@ Defined by user.
 #### How to manage
 
 Runs as a Docker container. 
-
-Check out the [guide](./../guides/how_to_manage_database_lab) to learn how to manage Database Lab.
+Check out the [guide](./../guides/administration/engine-manage) to learn how to manage Database Lab.
 
 ---
 
@@ -39,9 +38,9 @@ The container clone names will correspond to ports. For example, `dblab_clone_60
 - Provides thin clones of your data
 
 **How to manage**
-- Using [HTTP API](./5_api_reference)
-- Using [CLI](./6_cli_reference)
-- Using [Postgres.ai Platform](./../platform/postgres-ai-platform-overview)
+- Using [HTTP API](./api-reference)
+- Using [CLI](./cli-reference)
+- Using [Postgres.ai Platform](./../platform)
 
 ---
 
