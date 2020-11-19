@@ -66,7 +66,7 @@ variables:
     name: staging-v2
     url: https://postgres.ai
   variables:
-    ENV: staging-v2
+    ENV: staging_v2
     NAMESPACE: staging
     DOCS_NAME: "docs-v2"
 
