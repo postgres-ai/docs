@@ -1,8 +1,8 @@
-const URL = (!!process.env.URL ? process.env.URL : 'https://postgres.ai/');
-const BASE_URL = (!!process.env.BASE_URL ? process.env.BASE_URL : '/docs/');
+const URL = (!!process.env.URL ? process.env.URL : 'https://v2.postgres.ai/');
+const BASE_URL = (!!process.env.BASE_URL ? process.env.BASE_URL : '/');
 
 module.exports = {
-  title: 'Database Lab Docs · Fast clones of PostgreSQL databases · Postgres.ai', // Title for your website.
+  title: 'Database Lab · Fast clones of PostgreSQL databases · Postgres.ai', // Title for your website.
   tagline: 'Boost your development process eliminating Postgres-related roadblocks on the way of developers, DBAs and QA specialists',
   url: URL, // Your website URL.
   baseUrl: BASE_URL, // Base URL for your project.
@@ -22,20 +22,15 @@ module.exports = {
     },
 
     navbar: {
-      title: 'Database Lab Docs',
+      title: 'Database Lab',
       logo: {
         alt: 'Database Lab logo',
         src: 'img/logo.svg',
       },
       items: [
         {
-          href: 'https://postgres.ai/console',
-          label: '👋 Private beta',
-          position: 'right',
-        },
-        {
-          href: 'https://postgres.ai/',
-          label: 'Home',
+          href: '/docs',
+          label: 'Docs',
           position: 'right',
         },
         {
@@ -46,6 +41,11 @@ module.exports = {
         {
           to: 'database-lab/cli-reference',
           label: 'CLI',
+          position: 'right',
+        },
+        {
+          href: 'https://postgres.ai/console',
+          label: 'Sign in',
           position: 'right',
         },
       ],
@@ -141,13 +141,23 @@ module.exports = {
           // Please change this to your repo.
           editUrl:
             'https://gitlab.com/postgres-ai/docs/-/edit/master/',
-          routeBasePath: '/',
+          routeBasePath: '/docs/',
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           editUrl:
             'https://github.com/facebook/docusaurus/edit/master/website/blog/',
+          path: 'blog',
+          routeBasePath: 'blog',
+          postsPerPage: 3,
+          feedOptions: {
+            type: 'all', // required. 'rss' | 'feed' | 'all'
+            title: '', // default to siteConfig.title
+            description: '', // default to  `${siteConfig.title} Blog`
+            copyright: 'Postgres.ai',
+            language: undefined, // possible values: http://www.w3.org/TR/REC-html40/struct/dirlang.html#langcodes
+          },
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
