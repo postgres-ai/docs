@@ -22,10 +22,10 @@ module.exports = {
     },
 
     announcementBar: {
-      id: 'support_us', // Any value that will identify this message.
+      id: 'support_us_star', // Any value that will identify this message.
       content:
-        'We are looking to revamp our docs, please fill <a target="_blank" rel="noopener noreferrer" href="#">this survey</a>',
-      backgroundColor: '#ffdfce',
+        '⭐ If you like Database Lab, give it a star on <a target="_blank" href="https://gitlab.com/postgres-ai/database-lab">GitLab</a> ⭐',
+      backgroundColor: '#FFE3C7',
       textColor: '#000',
       isCloseable: true,
     },
@@ -44,15 +44,15 @@ module.exports = {
           items: [
             {
               label: 'Database Lab Engine',
-              href: '/',
+              to: '/',
             },
             {
               label: 'Joe Bot for SQL Optimization',
-              href: '/products/joe',
+              to: '/products/joe',
             },
             {
               label: 'Postgres-checkup',
-              href: '/products/postgres-checkup',
+              to: '/products/postgres-checkup',
             },
           ],
         },

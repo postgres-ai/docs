@@ -3,7 +3,7 @@ title: Postgres-checkup
 description: Automated routine checkup for your PostgreSQL databases
 ---
 
-![Joe robot](/assets/checkup.svg)
+<img alt="Checkup" src="/assets/checkup.svg" style={{width: '200px'}}/>
 
 - [Sign up (private beta)](/signin?utm_source=site&utm_medium=web&utm_campaign=checkup_landing)
 - [View GitLab repo](https://gitlab.com/postgres-ai/postgres-checkup?utm_source=site&utm_medium=web&utm_campaign=checkup_landing)

@@ -3,7 +3,7 @@ title:  "DB change management made right"
 description: Nancy helps to conduct database experiments to learn every aspect of your database behaviour when applying changes
 ---
 
-![Nancy robot](/assets/nancy-robot.svg)
+<img alt="Nancy robot" src="/assets/nancy-robot.svg" style={{width: '200px'}}/>
 
 - [Sign up (private beta)](/signin?utm_source=site&utm_medium=web&utm_campaign=nancy_landing)
 - [View GitLab repo](https://gitlab.com/postgres-ai/nancy?utm_source=site&utm_medium=web&utm_campaign=nancy_landing)
