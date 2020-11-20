@@ -24,7 +24,7 @@ Now all its components run in containers, so installation and use is much easier
 
 Work on documentation continues: we reworked Tutorial, and added new texts. One of them is `What is Database Lab`. This picture should help to compare Database Lab to traditional methods of development and testing involing large databases:
 
-<img src="https://postgres.ai/docs/assets/images/comparison-matrix-49031bf1b3fbd811205f6f7e149cac0a.png" />
+![Comparison Matrix](/assets/blog/comparison-matrix.png)
 
 Links:
 

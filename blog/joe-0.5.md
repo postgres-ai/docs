@@ -35,7 +35,7 @@ More about Joe features you can find in ["What Is Joe Bot?"](https://postgres.ai
 
 ### Demo
 
-![Joe demo](https://postgres.ai/docs/assets/joe/demo.gif)
+![Joe demo](/assets/joe/demo.gif)
 
 If you have Slack app installed, try the live demonstration:
 

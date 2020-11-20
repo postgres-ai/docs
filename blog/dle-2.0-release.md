@@ -17,7 +17,7 @@ tags:
 ---
 
 <p align="center">
-    <img src="/assets/images/thumbnails/dle-2.0-blog.png" alt="Database Lab 2.0 release"/>
+    <img src="/assets/thumbnails/dle-2.0-blog.png" alt="Database Lab 2.0 release"/>
 </p>
 
 ## Database Lab Engine for PostgreSQL 2.0 released

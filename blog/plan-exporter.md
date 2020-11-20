@@ -17,11 +17,7 @@ If you love and use psql (like I do), you're equipped with a lot of power. Howev
 
 To solve this problem, my colleague Artyom Kartasov has developed a small utility called [plan-exporter](https://github.com/agneum/plan-exporter). It allows sending EXPLAIN data with minimal efforts:
 
----
-
-{{< youtube 8H-Gu-bt5AU >}}
-
----
+<iframe width="560" height="315" src="https://www.youtube.com/embed/8H-Gu-bt5AU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 To enable plan-exporter you need to use `\o` with a pipe:
 

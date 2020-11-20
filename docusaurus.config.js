@@ -21,6 +21,15 @@ module.exports = {
       defaultMode: 'light',
     },
 
+    announcementBar: {
+      id: 'support_us', // Any value that will identify this message.
+      content:
+        'We are looking to revamp our docs, please fill <a target="_blank" rel="noopener noreferrer" href="#">this survey</a>',
+      backgroundColor: '#ffdfce',
+      textColor: '#000',
+      isCloseable: true,
+    },
+
     navbar: {
       title: 'Database Lab',
       logo: {
@@ -29,18 +38,37 @@ module.exports = {
       },
       items: [
         {
-          href: '/docs',
+          to: '/products',
+          label: 'Products',
+          position: 'right',
+          items: [
+            {
+              label: 'Database Lab Engine',
+              href: '/',
+            },
+            {
+              label: 'Joe Bot for SQL Optimization',
+              href: '/products/joe',
+            },
+            {
+              label: 'Postgres-checkup',
+              href: '/products/postgres-checkup',
+            },
+          ],
+        },
+        {
+          to: '/resources',
+          label: 'Resources',
+          position: 'right',
+        },
+        {
+          to: '/docs',
           label: 'Docs',
           position: 'right',
         },
         {
-          to: 'database-lab/api-reference',
-          label: 'API',
-          position: 'right',
-        },
-        {
-          to: 'database-lab/cli-reference',
-          label: 'CLI',
+          to: '/blog',
+          label: 'Blog',
           position: 'right',
         },
         {
@@ -64,41 +92,53 @@ module.exports = {
           items: [
             {
               label: 'Platform overview',
-              to: '/platform',
+              to: '/docs/platform',
             },
             {
               label: 'Getting started',
-              to: '/',
+              to: '/docs/',
             },
             {
               label: 'Q&A',
-              to: 'questions-and-answers',
+              to: '/docs/questions-and-answers',
             },
             {
               label: 'Guides',
-              to: '/guides',
+              to: '/docs/guides',
             },
-          ],
-        },
-        {
-          title: 'Reference',
-          items: [
             {
               label: 'API reference',
-              to: 'database-lab/api-reference',
+              to: '/docs/database-lab/api-reference',
             },
             {
               label: 'CLI reference',
-              to: 'database-lab/cli-reference',
+              to: '/docs/database-lab/cli-reference',
             },
           ],
         },
         {
-          title: 'Links',
+          title: 'Products',
           items: [
             {
-              label: 'Home',
-              href: 'https://postgres.ai/',
+              label: 'Database Lab Engine',
+              to: '/',
+            },
+            {
+              label: 'Joe Bot for SQL Optimization',
+              to: '/products/joe',
+            },
+            {
+              label: 'Postgres-checkup',
+              to: '/products/postgres-checkup',
+            },
+          ],
+        },
+        {
+          title: 'Social',
+          items: [
+            {
+              label: 'Community Slack',
+              href: 'https://database-lab-team-slack-invite.herokuapp.com/',
             },
             {
               label: 'GitLab',
@@ -115,14 +155,30 @@ module.exports = {
           ],
         },
         {
-          title: 'Support',
+          title: 'Links',
           items: [
             {
-              label: 'Community Slack',
-              href: 'https://database-lab-team-slack-invite.herokuapp.com/',
+              label: 'Home',
+              to: '/',
             },
             {
-              label: 'Private beta 👋',
+              label: 'Docs',
+              to: '/docs/',
+            },
+            {
+              label: 'Products',
+              to: '/products/',
+            },
+            {
+              label: 'Resources',
+              to: '/resources/',
+            },
+            {
+              label: 'Careers',
+              to: '/careers/',
+            },
+            {
+              label: 'Sign in to private beta 👋',
               href: 'https://postgres.ai/console',
             },
           ],
