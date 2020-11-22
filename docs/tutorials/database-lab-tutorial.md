@@ -273,11 +273,11 @@ sudo docker stop dblab_pg_initdb
 sudo docker rm dblab_pg_initdb
 ```
 
-Now, we need to take care of Database Lab Engine configuration. Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/master/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
+Now, we need to take care of Database Lab Engine configuration. Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.0/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
 ```bash
 mkdir ~/.dblab
 
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/master/configs/config.example.logical_generic.yml \
+curl https://gitlab.com/postgres-ai/database-lab/-/raw/v2.0/configs/config.example.logical_generic.yml \
   --output ~/.dblab/server.yml
 ```
 
