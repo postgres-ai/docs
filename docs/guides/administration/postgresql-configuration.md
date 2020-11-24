@@ -9,7 +9,7 @@ It is important to properly configure all PostgreSQL instances managed by Databa
 ### The "sync" instance
 The "sync" instance, which is an asynchronous replica by nature, is currently supported only for the physical mode of data directory initialization, see option `syncInstance` in job [physicalRestore](/docs/database-lab/config-reference#job-physicalsnapshot). The only purpose of this PostgreSQL is fetching and replaying [WAL segments](https://www.postgresql.org/docs/current/wal-intro.html), maintaining the data directory in sync.
 
-Normally, there is no need in configuring this PostgreSQL instance, as Database Lab Engine controls it fully, using a small value for `shared_buffers`, and very reliable values for all the configuration options. The only option that can be controlled by the Databae Lan Engine administrator is `restore_command` (see [physicalRestore](/docs/database-lab/config-reference#job-physicalsnapshot)). 
+Normally, there is no need in configuring this PostgreSQL instance, as Database Lab Engine controls it fully, using a small value for `shared_buffers`, and very reliable values for all the configuration options. The only option that can be controlled by the Databae Lab Engine administrator is `restore_command` (see [physicalRestore](/docs/database-lab/config-reference#job-physicalsnapshot)). 
 
 ### PostgreSQL configuration in clones
 It is possible and in many cases necessary to configure various PostgreSQL options in clones. It can be done both for logical and physical modes of data directory initialization:
