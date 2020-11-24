@@ -296,7 +296,7 @@ Open `~/.dblab/server.yml` and edit the following options:
 
 If you want to try Database Lab for an existing database, you need to copy the data to PostgreSQL data directory on the Database Lab server, to the directory `/var/lib/dblab/data`. This step is called "thick cloning". It only needs to be completed once. There are several options to physically copy the data directory. Here we will use the standard PostgreSQL tool, `pg_basebackup`. However, we are not going to use it directly (although, it is possible) – we will specify its options in the Database Lab Engine configuration file.
 
-First, copy the contents of configuration example [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/master/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
+First, copy the contents of configuration example [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.0/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
 ```bash
 mkdir ~/.dblab
 
@@ -323,7 +323,7 @@ If you want to try Database Lab for an existing database, you need to copy the d
 
 Here we will configure Database Lab Engine to use a "logical" method of thick cloning, dump/restore.
 
-First, copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/master/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
+First, copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.0/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
 ```bash
 mkdir ~/.dblab
 
