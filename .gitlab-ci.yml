@@ -4,8 +4,7 @@ image: docker:18.09.7
 
 stages:
   - test
-  - build
-  - push
+  - prepare_image
   - deploy
 
 variables:
@@ -22,17 +21,6 @@ variables:
     - source ./deploy/configs/review.sh
     - npm install
     - npm build
-
-.job_template: &push_definition
-  stage: push
-  services:
-    - docker:dind
-  script:
-    # Login to Google Container Registry.
-    - echo $GCP_SERVICE_ACCOUNT | base64 -d > ./key.json
-    - docker login -u _json_key --password-stdin https://gcr.io < ./key.json
-    # Push the image.
-    - docker push gcr.io/postgres-ai/docs$TAG
 
 .job_template: &deploy_definition
   stage: deploy
@@ -75,22 +63,27 @@ variables:
 test:
   <<: *test_definition
 
-build:
-  stage: build
+build_only:
+  stage: prepare_image
   services:
     - docker:dind
   script:
     - docker build -t gcr.io/postgres-ai/docs$TAG .
-
-push_manual:
-  <<: *push_definition
   except:
     - master
     - staging
-  when: manual
 
-push_mandatory:
-  <<: *push_definition
+build_and_push:
+  stage: prepare_image
+  services:
+    - docker:dind
+  script:
+    - docker build -t gcr.io/postgres-ai/docs$TAG .
+    # Login to Google Container Registry.
+    - echo $GCP_SERVICE_ACCOUNT | base64 -d > ./key.json
+    - docker login -u _json_key --password-stdin https://gcr.io < ./key.json
+    # Push the image.
+    - docker push gcr.io/postgres-ai/docs$TAG
   only:
     - master
     - staging
