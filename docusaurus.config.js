@@ -38,7 +38,6 @@ module.exports = {
       },
       items: [
         {
-          to: '/products',
           label: 'Products',
           position: 'right',
           items: [
