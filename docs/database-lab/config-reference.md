@@ -138,6 +138,7 @@ Options:
 - `tool` (string, required) - defines the tool to restore data. See available restore tools list
 - `dockerImage` (string, required) - specifies the Docker image containing the restoring tool
 - `syncInstance` (boolean, optional, default: false) - runs a separate container to refresh Database Lab data
+- `configs` (key-value, optional) - applies PostgreSQL configuration parameters to the sync instance
 - `envs` (key-value, optional) - passes custom environment variables to the Docker container with the restoring tool
 - `walg` (key-value, optional) - defines WAL-G configuration options:
    - `backupName` (string, required) - defines the backup name to restore
@@ -156,6 +157,7 @@ Options:
    - `healthCheck` (key-value, optional) - describes health check options for a data promotion container:
       - `interval` (int, optional, default: 5) - health check interval for a data promotion container (in seconds)
       - `maxRetries` (int, optional, default: 200) - maximum number of health check retries
+   - `configs` (key-value, optional) - applies PostgreSQL configuration parameters to the promotion instance
 - `sysctls` (key-value, optional) - allows configuring namespaced kernel parameters (sysctls) of Docker container for a promotion stage of taking a snapshot. See supported parameters: https://docs.docker.com/engine/reference/commandline/run/#configure-namespaced-kernel-parameters-sysctls-at-runtime
 - `preprocessingScript` (string, optional) - path on the host machine to a pre-precessing script
 - `configs` (key-value, optional) - applies PostgreSQL configuration parameters to snapshot. These parameters are inherited by all clones. See also: [How to configure PostgreSQL used by Database Lab Engine](/docs/guides/administration/postgresql-configuration)
