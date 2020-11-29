@@ -36,36 +36,36 @@ Here is how the configuration file is structured:
 | `platform` | Postgres.ai Platform integration (provides GUI) – extends the open source offering. |
 
 ## Section `global`: global parameters
-- `engine` - defines the Database Lab Engine. Supported engines: `postgres`.
-- `mountDir` - specifies the location of the pool mount directory.
-- `dataSubDir` - specifies the location of restored data by Database Lab Engine relative to the pool mount directory (`mountDir`).
-- `debug` - allows seeing more in the Database Lab Engine logs.
-- `database` (key-value, optional) - contains default configuration options of the restored database.
-  - `username` (string, optional, default: "postgres") - a default username for logical/physical restore jobs.
-  - `dbname` (string, optional, default: "postgres") - a default database name for logical/physical restore jobs.
+- `engine` - defines the Database Lab Engine. Supported engines: `postgres`
+- `mountDir` - specifies the location of the pool mount directory
+- `dataSubDir` - specifies the location of restored data by Database Lab Engine relative to the pool mount directory (`mountDir`)
+- `debug` - allows seeing more in the Database Lab Engine logs
+- `database` (key-value, optional) - contains default configuration options of the restored database
+  - `username` (string, optional, default: "postgres") - a default username for logical/physical restore jobs
+  - `dbname` (string, optional, default: "postgres") - a default database name for logical/physical restore jobs
 
 ## Section `server`: Database Lab Engine API server
-- `verificationToken` (string, required) - the token that is used to work with Database Lab API. 
-- `host` (string, optional, default: "") - the host which the Database Lab server accepts HTTP connections to.
-- `port` (string, required) - HTTP server port. 
+- `verificationToken` (string, required) - the token that is used to work with Database Lab API
+- `host` (string, optional, default: "") - the host to which the Database Lab server accepts HTTP connections
+- `port` (string, required) - HTTP server port
 
 ## Section `provision`: thin cloning environment settings
-- `pgMgmtUsername` (string, optional, default: "postgres") - database username that will be used for Postgres management connections.
-- `options` (key-value, required) - options related to provisioning.
-    - `thinCloneManager` (string, required) - thin-clone managing module used for thin cloning.
-    - `pool` (string, required) - the name of pool (in the case of ZFS) or volume group with logic volume name (in the case of LVM).
-    - `portPool` (key-value, required) - defines a pool of ports for Postgres clones.
-      - `from` (integer, required) - the lowest port value in the pool.
-      - `to` (integer, required) - the highest port value in the pool.
-    - `clonesMountDir` (string, optional, default: "/var/lib/dblab/clones/") - the directory that will be used to mount clones.
-    - `unixSocketDir` (string, optional, default: "/var/lib/dblab/sockets/") - the UNIX socket directory that will be used to establish local connections to cloned databases.
-    - `preSnapshotSuffix` (string, required) - the suffix to denote preliminary snapshots.
-    - `dockerImage` (string, required) - the Postgres Docker image that to be used when cloning.
-    - `useSudo` (boolean, optional, default: false) - use sudo for ZFS/LVM and Docker commands if Database Lab server running outside a container.
+- `pgMgmtUsername` (string, optional, default: "postgres") - database username that will be used for Postgres management connections
+- `options` (key-value, required) - options related to provisioning
+    - `thinCloneManager` (string, required) - thin-clone managing module used for thin cloning
+    - `pool` (string, required) - the name of pool (in the case of ZFS) or volume group with logic volume name (in the case of LVM)
+    - `portPool` (key-value, required) - defines a pool of ports for Postgres clones
+      - `from` (integer, required) - the lowest port value in the pool
+      - `to` (integer, required) - the highest port value in the pool
+    - `clonesMountDir` (string, optional, default: "/var/lib/dblab/clones/") - the directory that will be used to mount clones
+    - `unixSocketDir` (string, optional, default: "/var/lib/dblab/sockets/") - the UNIX socket directory that will be used to establish local connections to cloned databases
+    - `preSnapshotSuffix` (string, required) - the suffix to denote preliminary snapshots
+    - `dockerImage` (string, required) - the Postgres Docker image that to be used when cloning
+    - `useSudo` (boolean, optional, default: false) - use sudo for ZFS/LVM and Docker commands if Database Lab server running outside a container
 
 ## Section `retrieval`: data retrieval
-- `jobs` - declares the set of running jobs. Stages must be defined in the `spec` section.
-- `spec` - contains a configuration spec for each job.
+- `jobs` - declares the set of running jobs. Stages must be defined in the `spec` section
+- `spec` - contains a configuration spec for each job
 
 ### Data retrieval jobs
 Available job names:
@@ -76,7 +76,7 @@ Available job names:
 - `physicalSnapshot`
 
 :::info
-You need to choose either "logical" or "physical" set of jobs. Mixing is not allowed.
+You need to choose either "logical" or "physical" set of jobs. Mixing is not allowed
 :::
 
 Note, that all jobs are optional. For example, all of the following approaches defining the initial data retrieval process are allowed:
