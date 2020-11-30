@@ -31,6 +31,18 @@ variables:
     # Deploy to k8s cluster.
     - kubectl apply --filename /tmp/deploy.yaml -n $NAMESPACE
 
+.job_template: &build_and_push_definition
+  stage: prepare_image
+  services:
+    - docker:dind
+  script:
+    - docker build -t gcr.io/postgres-ai/docs$TAG .
+    # Login to Google Container Registry.
+    - echo $GCP_SERVICE_ACCOUNT | base64 -d > ./key.json
+    - docker login -u _json_key --password-stdin https://gcr.io < ./key.json
+    # Push the image.
+    - docker push gcr.io/postgres-ai/docs$TAG
+
 # Environments.
 .environment_template: &env_production
   environment:
@@ -73,19 +85,16 @@ build_only:
     - master
     - staging
 
-build_and_push:
-  stage: prepare_image
-  services:
-    - docker:dind
-  script:
-    - docker build -t gcr.io/postgres-ai/docs$TAG .
-    # Login to Google Container Registry.
-    - echo $GCP_SERVICE_ACCOUNT | base64 -d > ./key.json
-    - docker login -u _json_key --password-stdin https://gcr.io < ./key.json
-    # Push the image.
-    - docker push gcr.io/postgres-ai/docs$TAG
+build_and_push_production:
+  <<: *build_and_push_definition
+  <<: *env_production
   only:
     - master
+
+build_and_push_staging:
+  <<: *build_and_push_definition
+  <<: *env_staging
+  only:
     - staging
 
 deploy_production:
@@ -99,21 +108,3 @@ deploy_staging:
   <<: *env_staging
   only:
     - staging
-
-# build_review:
-#   <<: *build_definition
-#   <<: *env_review
-#   only:
-#     - branches
-#   except:
-#     - master
-#     - staging
-
-# deploy_review:
-#   <<: *deploy_definition
-#   <<: *env_review
-#   only:
-#     - branches
-#   except:
-#     - master
-#     - staging
