@@ -10,6 +10,7 @@ module.exports = {
       "tutorials/database-lab-tutorial",
       "tutorials/database-lab-tutorial-amazon-rds",
       "tutorials/joe-setup",
+      "tutorials/onboarding",
     ],
     "Guides": [
       "guides/index",
