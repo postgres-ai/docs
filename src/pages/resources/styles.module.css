@@ -10,6 +10,11 @@
 }
 
 :global(.card__image) {
-  max-height: 175px;
+  max-height: 300px;
+  overflow: hidden;
+}
+
+:global(.card__body) {
+  height: 175px !important;
   overflow: hidden;
 }

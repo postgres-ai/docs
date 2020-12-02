@@ -1,37 +1,213 @@
 import React from 'react';
 import Layout from '@theme/Layout';
 
-function Hello() {
+function IndexPage() {
   return (
-    <Layout title="Hello">
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '20vh',
-          fontSize: '20px',
-        }}>
-        <p>
-          TODO: Add landing here.
-        </p>
-      </div>
-      <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '20vh',
-        fontSize: '20px',
-      }}>
-        <ul>
-          <li><a href="/docs/">Docs</a></li>
-          <li><a href="/tos/">TOS</a></li>
-          <li><a href="/blog/">Blog</a></li>
-        </ul>
-      </div>
+    <Layout>
+      <section className="banner position-relative text-center">
+        <div className="container">
+          <div className="row justify-content-center align-items-center">
+            <div className="col-md-2"></div>
+            <div className="col-md-8">
+              <h1>BOOST YOUR DEVELOPMENT PROCESS</h1>
+              <p>We eliminate database-related roadblocks<br />
+                on the way of developers, DBAs and QA engineers</p>
+              <a className="btn btn1" href='https://postgres.ai/console/'>Sign up (private beta)</a>
+              <a className="btn btn2" href='https://postgres.ai/docs/'>Learn more</a>
+            </div>
+            <div className="col-md-2"></div> 
+          </div>
+        </div>
+      </section>
+
+      <section className="companies position-relative">
+        <div className="container text-center">
+          <div className="row">
+            <div className="col-md-3 col-6"><a><img src="/assets/landing/gitlab.svg" alt="GitLab" className="img-fluid" /></a></div>
+            <div className="col-md-3 col-6"><a><img src="/assets/landing/nutanix.svg" alt="Nutanix" className="img-fluid" /></a></div>
+            <div className="col-md-3 col-6"><a><img src="/assets/landing/juntos.svg" alt="Juntos" className="img-fluid" /></a></div>
+            <div className="col-md-3 col-6"><a><img src="/assets/landing/qiwi.svg" alt="Qiwi" className="img-fluid" /></a></div> 
+          </div>
+          <div className="row">
+            <div className="col-md-3 col-6"><a><b>chewy.com</b></a></div>
+            <div className="col-md-3 col-6"><a><img src="/assets/landing/docsend.svg" alt="DocSend" className="img-fluid" /></a></div>
+            <div className="col-md-3 col-6"><a><img src="/assets/landing/ongres.svg" alt="OnGres" className="img-fluid" /></a></div>
+            <div className="col-md-3 col-6"><a><img src="/assets/landing/postila.svg" alt="Postila" className="img-fluid" /></a></div>
+          </div>
+        </div>
+      </section>
+
+      <section className="six-sec position-relative">
+        <div className="container text-center">
+          <div className="row">
+            <div className="col-sm-6">
+              <img src="/assets/landing/feature1.svg" alt="Refresh faster for actual production data" />
+              <h2>Refresh faster<br />for actual production data</h2>
+            </div>
+            <div className="col-sm-6">
+              <img src="/assets/landing/feature2.svg" alt="Provision full-sized clones in seconds" />
+              <h2>Provision full-sized<br />clones in seconds</h2>
+            </div>
+          </div>
+          <div className="row single">
+            <div className="col-sm-6">
+              <img src="/assets/landing/feature3.svg" alt="Data compliance and security" />
+              <h2>Data compliance and security</h2>
+            </div>
+            <div className="col-sm-6">
+              <img src="/assets/landing/feature4.svg" alt="Improve time to market" />
+              <h2>Improve time to market</h2>
+            </div> 
+          </div>
+          <div className="row">
+            <div className="col-sm-6">
+              <img src="/assets/landing/feature5.svg" alt="Eliminate downtime caused by database-related changes" />
+              <h2>Eliminate downtime caused by<br />database-related changes</h2>
+            </div>
+            <div className="col-sm-6">
+              <img src="/assets/landing/feature6.svg" alt="Significantly reduce infrastructure costs by using thin clones" />
+              <h2>Significantly reduce infrastructure<br />costs by using thin clones</h2>
+            </div> 
+          </div>
+          <div className="row">
+            <div className="col-sm-12"><a href="https://postgres.ai/console/" className="btn btn1">Try Database Lab Platform</a></div>
+          </div>
+        </div>
+      </section>
+
+      <section className="multi-sec position-relative">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <h3 className="text-center">What if multi-terabyte clone provision<br />could be done in seconds?</h3>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-1"></div>
+            <div className="col-md-4">
+              <img src="/assets/landing/use-case1.svg" alt="Use-Case1" className="img-fluid lhs" />
+            </div>
+            <div className="col-md-1"></div>
+            <div className="col-md-6">
+              <h4 className="h-m">Run staging and review apps<br />with production-like databases</h4>
+              <h4 className="h-d">Deploy staging and review<br />apps with full-sized data</h4>
+              <p>
+                Get most reliable results much faster.<br />
+                <br />
+                Save disk space. A lot. Local thin clones share the data blocks saving time and budgets.<br />
+                <br />
+                Tasks such as verification of major upgrades, partitioning, index maintenance can and must be verified in Database Lab first, to minimize risks of negative events in production.<br />
+                <br />
+                <a className="learn-more" href="https://postgres.ai/docs/"><u>Learn more</u></a>
+              </p>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-4 h-d"><img src="/assets/landing/use-case2.svg" alt="Use-Case2" className="img-fluid rhs" /></div>
+            <div className="col-md-6">
+              <h4 className="h-m">Automatically verify<br />100% of database migrations</h4>
+              <h4 className="h-d">Verify database changes in CI</h4>
+              <p>
+                Automatically verify database schema changes.<br />
+                <br />
+                Get valuable performance insights to make right decision.<br />
+                <br />
+                Eliminate database-related downtime risk.<br />
+                <br />
+                <a className="learn-more" href="https://postgres.ai/docs/"><u>Learn more</u></a>
+              </p>
+            </div>
+            <div className="col-md-1"></div>
+            <div className="col-md-4 h-m">
+              <img src="/assets/landing/use-case2.svg" alt="Use-Case2" className="img-fluid rhs" /><br />
+            </div>
+            <div className="col-md-1"></div> 
+          </div>
+          <div className="row">
+            <div className="col-md-1"></div>
+            <div className="col-md-4">
+              <img src="/assets/landing/use-case3.svg" alt="Use-Case3" className="img-fluid lhs" />
+            </div>
+            <div className="col-md-1"></div>
+            <div className="col-md-6 pt-4">
+              <h4 className="lst h-m">Perform various database<br />experiments without pain (SQL opts)</h4>
+              <h4 className="lst h-d">Perform various database<br />experiments without pain</h4>
+              <p>
+                (Bullets need to be changed)<br />
+                <br />
+                Development and testing using real-life data and SQL plans identical to production.<br />
+                <br />
+                No more long waiting for a new database clone provision.<br />
+                <br />
+                SQL optimization recommendations.<br />
+                <br />
+                <a className="learn-more" href="https://postgres.ai/docs/"><u>Learn more</u></a>
+              </p>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12 text-center">
+              <a className="btn btn1" href='https://postgres.ai/console/'>Try Database Lab Platform</a>
+              <a className="btn btn2" href='https://postgres.ai/docs/'>More cases</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="source-sec position-relative">
+        <div className="container">
+          <div className="row text-center">
+            <div className="col-md-3"></div>
+            <div className="col-md-6">
+              <h3>Open source and extensible</h3>
+              <p>
+                Postgres.ai ❤ open-source.<br />
+                Follow us on <a className="learn-more" href="https://gitlab.com/postgres-ai"><u>GitLab</u></a> and give us a stars.<br />
+                <br />
+                We build our products with extensible architecture. Your contributions are very welcome.
+              </p>
+              <a className="btn btn2" href='https://postgres.ai/docs/'>Read the docs</a>
+            </div>
+            <div className="col-md-3"></div> 
+          </div>
+          <div className="row ss">
+            <div className="col-md-6 lf">
+              <div className="source-boxes">
+                <a href='https://gitlab.com/postgres-ai/database-lab'>
+                  <h4>Database Lab Engine β <img src="/assets/landing/dblab.svg" alt="Database Lab logo" className="float-right" /></h4>
+                  <p>Provision independent non-production environments with multi-terabyte PostgreSQL databases in a few seconds without extra costs.</p>
+                  <span className="float-left">postgres-ai/database-lab</span><strong className="float-right"><img src="/assets/landing/star.svg" alt="star" /> 182</strong>
+                  <div className="clearfix"></div>
+                </a>
+              </div>
+            </div>
+            <div className="col-md-6 rf">
+              <div className="source-boxes">
+                <a href='https://gitlab.com/postgres-ai/joe'>
+                  <h4>Joe 🤖 DBA-bot for SQL optimization <img src="/assets/landing/joe-bot.svg" alt="Joe bot logo" className="float-right" /></h4>
+                  <p>Joe helps backend engineers and DBAs troubleshoot and optimize SQL, moving really quickly. Joe works on top of Database Lab.</p>
+                  <span className="float-left">postgres-ai/joe</span><strong className="float-right"><img src="/assets/landing/star.svg" alt="star" /> 75</strong>
+                  <div className="clearfix"></div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div className="row ss">
+            <div className="col-md-6 lf">
+              <div className="source-boxes">
+                <a href='https://gitlab.com/postgres-ai/postgres-checkup'>
+                  <h4>postgres-checkup <img src="/assets/landing/postgres-checkup.svg" alt="postgres-checkup logo" className="float-right" /></h4>
+                  <p>PostgreSQL health check and SQL performance analysis done right.</p>
+                  <span className="float-left">postgres-ai/postgres-checkup</span><strong className="float-right"><img src="/assets/landing/star.svg" alt="star"/> 185</strong>
+                  <div className="clearfix"></div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </Layout>
   );
 }
 
-export default Hello;
+export default IndexPage;

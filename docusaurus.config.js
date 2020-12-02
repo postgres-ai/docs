@@ -10,7 +10,7 @@ module.exports = {
   favicon: 'img/favicon.ico',
   organizationName: 'postgres-ai',
   projectName: 'docs',
-
+  
   // TODO (anatoly): @docusaurus/plugin-google-gtag doesn't seem to work now, refactor when fixed.
   scripts: [
     BASE_URL + 'js/gtag.js',
