@@ -31,7 +31,7 @@ module.exports = {
     },
 
     navbar: {
-      title: 'Database Lab',
+      title: 'Database Lab | Postgres.ai',
       logo: {
         alt: 'Database Lab logo',
         src: 'img/logo.svg',
