@@ -197,13 +197,13 @@ html[data-theme="dark"] .companies {
 
 html[data-theme="light"] .multi-sec {
   background: #f9f9f9;
-  padding: 73px 0 75px 0;
+  padding: 64px 0 64px 0;
   min-height: 1753px;
 }
 
 html[data-theme="dark"] .multi-sec {
   background: #131313;
-  padding: 73px 0 75px 0;
+  padding: 64px 0 64px 0;
   min-height: 1753px;
 }
 
@@ -340,13 +340,28 @@ html[data-theme="dark"] .multi-sec {
   margin-top: 13px;
 }
 
+.user-case2-ml {
+  display: none;
+}
 @media (min-width: 991px) and (max-width: 1199px) {
-  .source-boxes {
-    min-height: 265px;    
+  .source-boxes{
+    height:265px !important;
+  }
+  .joe-bot {
+    margin-top: -32px !important;
   }
 }
 
 @media (min-width: 768px) and (max-width: 990px) {
+  .user-case2-ml {
+    display: flex;
+  }
+  .user-case2-lg {
+    display: none;
+  }
+  .joe-bot {
+    margin-top: -32px !important;
+  }
   .h-d {
     display: block;
   }
@@ -378,15 +393,12 @@ html[data-theme="dark"] .multi-sec {
     font-size: 24px;
     line-height: 28px;
   }
-  .six-sec a {
-    margin-bottom: 30px;
-  }
   .multi-sec h3 {
     font-size: 26px;
     line-height: 30px;
   }
   .multi-sec {
-    padding: 44px 0 64px 0;
+    padding: 64px 0 64px 0 !important;
   }
   .multi-sec img.lhs {
     margin: 30px auto 0 auto;
@@ -412,10 +424,9 @@ html[data-theme="dark"] .multi-sec {
   }
   .multi-sec .btn {
     margin-top: 41px;
-    margin-bottom: -20px;
   }
   .source-sec {
-    padding: 39px 0;
+    padding: 56px 0;
   }
   .source-sec h3 {
     font-size: 26px;
@@ -438,7 +449,7 @@ html[data-theme="dark"] .multi-sec {
     min-height:0 !important;
   }
   .source-boxes{
-    min-height:251px;
+    height:265px !important;
   }
 }
 
@@ -475,15 +486,12 @@ html[data-theme="dark"] .multi-sec {
     font-size: 24px;
     line-height: 28px;
   }
-  .six-sec a {
-    margin-bottom: 30px;
-  }
   .multi-sec h3 {
     font-size: 26px;
     line-height: 30px;
   }
   .multi-sec {
-    padding: 44px 0 64px 0;
+    padding: 64px 0 64px 0 !important;
   }
   .multi-sec img.lhs {
     margin: 30px auto 0 auto;
@@ -509,10 +517,9 @@ html[data-theme="dark"] .multi-sec {
   }
   .multi-sec .btn {
     margin-top: 41px;
-    margin-bottom: -20px;
   }
   .source-sec {
-    padding: 39px 0;
+    padding: 56px 0;
   }
   .source-sec h3 {
     font-size: 26px;
@@ -565,15 +572,12 @@ html[data-theme="dark"] .multi-sec {
     font-size: 24px;
     line-height: 28px;
   }
-  .six-sec a {
-    margin-bottom: 30px;
-  }
   .multi-sec h3 {
     font-size: 26px;
     line-height: 30px;
   }
   .multi-sec {
-    padding: 44px 0 64px 0;
+    padding: 64px 0 64px 0 !important;
   }
   .multi-sec img.lhs {
     margin: 30px auto 0 auto;
@@ -599,10 +603,9 @@ html[data-theme="dark"] .multi-sec {
   }
   .multi-sec .btn {
     margin-top: 41px;
-    margin-bottom: -20px;
   }
   .source-sec {
-    padding: 39px 0;
+    padding: 56px 0;
   }
   .source-sec h3 {
     font-size: 26px;
@@ -621,4 +624,8 @@ html[data-theme="dark"] .multi-sec {
     font-size: 18px;
     line-height: 21px;
   }
+}
+
+#hubspotForm {
+  margin: 50px 0px 50px 300px;
 }

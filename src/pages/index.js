@@ -102,7 +102,31 @@ function IndexPage() {
               </p>
             </div>
           </div>
-          <div className="row">
+
+
+          <div className="row user-case2-ml">
+            <div className="col-md-1"></div>
+            <div className="col-md-4">
+              <img src="/assets/landing/use-case2.svg" alt="Use-Case2" className="img-fluid rhs" />            
+            </div>
+            <div className="col-md-1"></div>
+            <div className="col-md-6">
+              <h4 className="h-m">Automatically verify<br />100% of database migrations</h4>
+              <h4 className="h-d">Verify database changes in CI</h4>
+              <p>
+                Automatically verify database schema changes.<br />
+                <br />
+                Get valuable performance insights to make right decision.<br />
+                <br />
+                Eliminate database-related downtime risk.<br />
+                <br />
+                <a className="learn-more" href="https://postgres.ai/docs/"><u>Learn more</u></a>
+              </p>
+            </div>
+          </div>
+
+
+          <div className="row user-case2-lg">
             <div className="col-md-4 h-d"><img src="/assets/landing/use-case2.svg" alt="Use-Case2" className="img-fluid rhs" /></div>
             <div className="col-md-6">
               <h4 className="h-m">Automatically verify<br />100% of database migrations</h4>
@@ -176,7 +200,7 @@ function IndexPage() {
                 <a href='https://gitlab.com/postgres-ai/database-lab'>
                   <h4>Database Lab Engine β <img src="/assets/landing/dblab.svg" alt="Database Lab logo" className="float-right" /></h4>
                   <p>Provision independent non-production environments with multi-terabyte PostgreSQL databases in a few seconds without extra costs.</p>
-                  <span className="float-left">postgres-ai/database-lab</span><strong className="float-right"><img src="/assets/landing/star.svg" alt="star" /> 182</strong>
+                  <span className="float-left">postgres-ai/database-lab</span>
                   <div className="clearfix"></div>
                 </a>
               </div>
@@ -184,9 +208,9 @@ function IndexPage() {
             <div className="col-md-6 rf">
               <div className="source-boxes">
                 <a href='https://gitlab.com/postgres-ai/joe'>
-                  <h4>Joe 🤖 DBA-bot for SQL optimization <img src="/assets/landing/joe-bot.svg" alt="Joe bot logo" className="float-right" /></h4>
+                  <h4>Joe 🤖 DBA-bot for SQL optimization <img src="/assets/landing/joe-bot.svg" alt="Joe bot logo" className="float-right joe-bot" /></h4>
                   <p>Joe helps backend engineers and DBAs troubleshoot and optimize SQL, moving really quickly. Joe works on top of Database Lab.</p>
-                  <span className="float-left">postgres-ai/joe</span><strong className="float-right"><img src="/assets/landing/star.svg" alt="star" /> 75</strong>
+                  <span className="float-left">postgres-ai/joe</span>
                   <div className="clearfix"></div>
                 </a>
               </div>
@@ -198,7 +222,7 @@ function IndexPage() {
                 <a href='https://gitlab.com/postgres-ai/postgres-checkup'>
                   <h4>postgres-checkup <img src="/assets/landing/postgres-checkup.svg" alt="postgres-checkup logo" className="float-right" /></h4>
                   <p>PostgreSQL health check and SQL performance analysis done right.</p>
-                  <span className="float-left">postgres-ai/postgres-checkup</span><strong className="float-right"><img src="/assets/landing/star.svg" alt="star"/> 185</strong>
+                  <span className="float-left">postgres-ai/postgres-checkup</span>
                   <div className="clearfix"></div>
                 </a>
               </div>
