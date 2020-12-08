@@ -24,7 +24,9 @@ function Careers() {
                       <div className="avatar__intro margin-left--none">
                         <h4 className="avatar__name">{job.title}</h4>
                         <small className="avatar__subtitle">
-                          {job.description}
+                          {job.descriptions && job.descriptions.map((desc) => (
+                            <span>- {desc}<br /></span>
+                          ))}
                         </small>
                       </div>
                     </div>
