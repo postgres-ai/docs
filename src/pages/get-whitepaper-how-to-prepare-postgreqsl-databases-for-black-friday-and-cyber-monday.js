@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Layout from "@theme/Layout";
 
-function IndexPage() {
+function WPPage() {
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://js.hsforms.net/forms/shell.js";
@@ -26,4 +26,4 @@ function IndexPage() {
   );
 }
 
-export default IndexPage;
+export default WPPage;

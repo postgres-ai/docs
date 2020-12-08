@@ -24,8 +24,8 @@ function IndexPage() {
         <div className="container text-center">
           <div className="row">
             <div className="col-md-2 col-6"><a><img src="/assets/landing/gitlab.svg" alt="GitLab" className="img-fluid" /></a></div>
-            <div className="col-md-2 col-6"><a><b>chewy.com</b></a></div>
-            <div className="col-md-2 col-6"><a><b>Miro</b></a></div>
+            <div className="col-md-2 col-6"><a><img src="/assets/landing/chewy.svg" alt="Chewy.com" className="img-fluid" /></a></div>
+            <div className="col-md-2 col-6"><a><img src="/assets/landing/miro.svg" alt="Miro" className="img-fluid" /></a></div>
             <div className="col-md-2 col-6"><a><img src="/assets/landing/ongres.svg" alt="OnGres" className="img-fluid" /></a></div>
             <div className="col-md-2 col-6"><a><img src="/assets/landing/qiwi.svg" alt="Qiwi" className="img-fluid" /></a></div>
             <div className="col-md-2 col-6"><a><img src="/assets/landing/nutanix.svg" alt="Nutanix" className="img-fluid" /></a></div>
