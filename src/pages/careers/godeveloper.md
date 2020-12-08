@@ -7,14 +7,16 @@ requirements:
   - Solid skills of basic SQL (SQL-92).
 ---
 
+# Senior Software Engineer | Go
+
 As a Senior Go Developer, you will be building components of [Postgres.ai Platform](https://postgres.ai/docs/).
 
-# Job Details
+## Job Details
 
 - Employment type: full-time, remote.
 - Company: Postgres.ai, headquartered in the San Francisco Bay Area.
 
-# Requirements
+## Requirements
 
 - 3+ years experience developing server applications using Go.
 - Deep understanding of HTTP protocol, data structures, JSON.
@@ -23,7 +25,7 @@ As a Senior Go Developer, you will be building components of [Postgres.ai Platfo
 - Understanding of concepts of distributed systems engineering.
 - Cloud experience (AWS, GCP).
 
-# Nice-to-haves
+## Nice-to-haves
 
 None of the following is a requirement, yet having any of these items increases your chances to be a perfect match for the Postgres.ai team.
 
@@ -44,7 +46,7 @@ None of the following is a requirement, yet having any of these items increases 
    - System Optimization.
 - Experience working remotely.
 
-# Benefits
+## Benefits
 
 - Development of game-changing tools for software engineers.
 - Interesting and challenging tasks, basis for constant learning of new technologies.

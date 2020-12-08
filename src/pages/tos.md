@@ -1,6 +1,5 @@
 ---
 title: Terms of service
-layout: md-single
 ---
 *Last Updated: October 25, 2019*
 

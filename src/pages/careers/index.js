@@ -1,37 +1,56 @@
 import React from 'react';
+
 import Layout from '@theme/Layout';
 
-function Hello() {
+import clsx from 'clsx';
+import styles from './styles.module.css';
+import careers from '../../data/careers';
+
+const TITLE = 'Careers';
+
+function Careers() {
   return (
-    <Layout title="Hello">
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '20vh',
-          fontSize: '20px',
-        }}>
-        <p>
-          TODO: Add landing here.
-        </p>
-      </div>
-      <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '20vh',
-        fontSize: '20px',
-      }}>
-        <ul>
-          <li><a href="/docs/">Docs</a></li>
-          <li><a href="/tos/">TOS</a></li>
-          <li><a href="/blog/">Blog</a></li>
-        </ul>
-      </div>
+    <Layout title={TITLE}>
+      <main className="container margin-vert--lg">
+        <div className="text--center margin-bottom--m">
+          <h1>{TITLE}</h1>
+        </div>
+        <div className="row">
+          {careers.map((job) => (
+            <div key={job.title} className="col col--4 margin-bottom--lg">
+                <div className={clsx('card', styles.showcaseresource)}>
+                  <div className="card__body">
+                    <div className="avatar">
+                      <div className="avatar__intro margin-left--none">
+                        <h4 className="avatar__name">{job.title}</h4>
+                        <small className="avatar__subtitle">
+                          {job.description}
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                  {(job.link) && (
+                    <div className="card__footer">
+                      <div className="button-group button-group--block">
+                        {job.link && (
+                          <a
+                            className="button button--small button--secondary button--block"
+                            href={job.link}
+                            target="_blank"
+                            rel="noreferrer noopener">
+                            More details
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+            </div>
+          ))}
+        </div>
+      </main>
     </Layout>
   );
 }
 
-export default Hello;
+export default Careers;

@@ -1,6 +1,5 @@
 ---
 title: Privacy
-layout: md-single
 ---
 *Last Updated: October 25, 2019*
 

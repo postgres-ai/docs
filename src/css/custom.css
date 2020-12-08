@@ -145,13 +145,13 @@ html[data-theme="dark"] .banner {
 }
 html[data-theme="light"] .companies {
   background: #f9f9f9;
-  min-height: 160px;
   padding-top: 20px;
+  padding-bottom: 10px;
 }
 html[data-theme="dark"] .companies {
   background: #131313;
-  min-height: 160px;
   padding-top: 20px;
+  padding-bottom: 10px;
 }
 
 .companies a {

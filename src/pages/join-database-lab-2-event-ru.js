@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Layout from "@theme/Layout";
 
-function IndexPage() {
+function EventRuPage() {
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://js.hsforms.net/forms/shell.js";
@@ -11,14 +11,14 @@ function IndexPage() {
       if (window.hbspt) {
         window.hbspt.forms.create({
           portalId: "8531691",
-          formId: "203a1fdb-df6a-45b7-924a-dcae04b9563d",
+          formId: "558347ba-59d6-495a-9703-c584f1bf0d68",
           target: "#hubspotForm",
         });
       }
     });
 },[]);
   return (
-    <Layout>
+    <Layout title="Database Lab 2.0">
       <div>
         <div id="hubspotForm"></div>
       </div>
@@ -26,4 +26,4 @@ function IndexPage() {
   );
 }
 
-export default IndexPage;
+export default EventRuPage;

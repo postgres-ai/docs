@@ -6,13 +6,15 @@ requirements:
   - Advanced SQL and PL/pgSQL knowledge.
 ---
 
+# Senior Database Engineer | SQL Optimization Expert
+
 As a Senior Database Engineer, you will be working on state-of-the-art solutions, involving:
 
 - PostgreSQL SQL optimization methodologies and tools,
 - machine learning,
 - cloud technologies.
 
-# Requirements
+## Requirements
 
 - Strong optimization skills of large and heavily loaded databases (>1TiB, >10k QpS).
 - 3+ years of experience running PostgreSQL in large production environments.
@@ -23,7 +25,7 @@ As a Senior Database Engineer, you will be working on state-of-the-art solutions
 - Self-motivation and strong desire to achieve the highest levels of expertise.
 - Solid skills of reading and using EXPLAIN command to troubleshoot and optimize SQL queries.
 
-# Nice-to-haves
+## Nice-to-haves
 
 - Advanced topics (partitioning, queues in database, time series, window functions, denormalization, efficient work with arrays, JSON).
 - Experience of implementation of SQL optimization workflow, involving `pg_stat_statements`, log-based analysis, etc.
@@ -37,7 +39,7 @@ As a Senior Database Engineer, you will be working on state-of-the-art solutions
 - Cloud experience (AWS, GCP).
 - Experience working in a distributed team.
 
-# Responsibilities
+## Responsibilities
 
 - Development of new open-source to automate:
   - SQL query optimization,
@@ -49,7 +51,7 @@ As a Senior Database Engineer, you will be working on state-of-the-art solutions
 - Setting up SQL optimization workflow in various development teams.
 - Direct work with our clients to implement our methodologies and tools.
 
-# Benefits
+## Benefits
 
 - Development of game-changing tools for software engineers.
 - Interesting and challenging tasks, basis for constant learning of new technologies.

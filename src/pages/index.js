@@ -23,16 +23,12 @@ function IndexPage() {
       <section className="companies position-relative">
         <div className="container text-center">
           <div className="row">
-            <div className="col-md-3 col-6"><a><img src="/assets/landing/gitlab.svg" alt="GitLab" className="img-fluid" /></a></div>
-            <div className="col-md-3 col-6"><a><img src="/assets/landing/nutanix.svg" alt="Nutanix" className="img-fluid" /></a></div>
-            <div className="col-md-3 col-6"><a><img src="/assets/landing/juntos.svg" alt="Juntos" className="img-fluid" /></a></div>
-            <div className="col-md-3 col-6"><a><img src="/assets/landing/qiwi.svg" alt="Qiwi" className="img-fluid" /></a></div> 
-          </div>
-          <div className="row">
-            <div className="col-md-3 col-6"><a><b>chewy.com</b></a></div>
-            <div className="col-md-3 col-6"><a><img src="/assets/landing/docsend.svg" alt="DocSend" className="img-fluid" /></a></div>
-            <div className="col-md-3 col-6"><a><img src="/assets/landing/ongres.svg" alt="OnGres" className="img-fluid" /></a></div>
-            <div className="col-md-3 col-6"><a><img src="/assets/landing/postila.svg" alt="Postila" className="img-fluid" /></a></div>
+            <div className="col-md-2 col-6"><a><img src="/assets/landing/gitlab.svg" alt="GitLab" className="img-fluid" /></a></div>
+            <div className="col-md-2 col-6"><a><b>chewy.com</b></a></div>
+            <div className="col-md-2 col-6"><a><b>Miro</b></a></div>
+            <div className="col-md-2 col-6"><a><img src="/assets/landing/ongres.svg" alt="OnGres" className="img-fluid" /></a></div>
+            <div className="col-md-2 col-6"><a><img src="/assets/landing/qiwi.svg" alt="Qiwi" className="img-fluid" /></a></div>
+            <div className="col-md-2 col-6"><a><img src="/assets/landing/nutanix.svg" alt="Nutanix" className="img-fluid" /></a></div>
           </div>
         </div>
       </section>
@@ -42,7 +38,7 @@ function IndexPage() {
           <div className="row">
             <div className="col-sm-6">
               <img src="/assets/landing/feature1.svg" alt="Refresh faster for actual production data" />
-              <h2>Refresh faster<br />for actual production data</h2>
+              <h2>Deliver fresh data for development<br />and testing without hassle</h2>
             </div>
             <div className="col-sm-6">
               <img src="/assets/landing/feature2.svg" alt="Provision full-sized clones in seconds" />
@@ -52,7 +48,7 @@ function IndexPage() {
           <div className="row single">
             <div className="col-sm-6">
               <img src="/assets/landing/feature3.svg" alt="Data compliance and security" />
-              <h2>Data compliance and security</h2>
+              <h2>Protect personal and sensitive data,<br />comply with GDPR and CCPA</h2>
             </div>
             <div className="col-sm-6">
               <img src="/assets/landing/feature4.svg" alt="Improve time to market" />
@@ -79,7 +75,7 @@ function IndexPage() {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <h3 className="text-center">What if multi-terabyte clone provision<br />could be done in seconds?</h3>
+              <h3 className="text-center">What if multi-terabyte database<br />could be cloned in seconds?</h3>
             </div>
           </div>
           <div className="row">
@@ -103,11 +99,10 @@ function IndexPage() {
             </div>
           </div>
 
-
           <div className="row user-case2-ml">
             <div className="col-md-1"></div>
             <div className="col-md-4">
-              <img src="/assets/landing/use-case2.svg" alt="Use-Case2" className="img-fluid rhs" />            
+              <img src="/assets/landing/use-case2.svg" alt="Use-Case2" className="img-fluid rhs" />
             </div>
             <div className="col-md-1"></div>
             <div className="col-md-6">
@@ -116,15 +111,14 @@ function IndexPage() {
               <p>
                 Automatically verify database schema changes.<br />
                 <br />
-                Get valuable performance insights to make right decision.<br />
+                Get valuable performance insights to make right decisions.<br />
                 <br />
-                Eliminate database-related downtime risk.<br />
+                Eliminate database-related downtime risks.<br />
                 <br />
                 <a className="learn-more" href="https://postgres.ai/docs/"><u>Learn more</u></a>
               </p>
             </div>
           </div>
-
 
           <div className="row user-case2-lg">
             <div className="col-md-4 h-d"><img src="/assets/landing/use-case2.svg" alt="Use-Case2" className="img-fluid rhs" /></div>
@@ -147,6 +141,7 @@ function IndexPage() {
             </div>
             <div className="col-md-1"></div> 
           </div>
+
           <div className="row">
             <div className="col-md-1"></div>
             <div className="col-md-4">
@@ -154,16 +149,16 @@ function IndexPage() {
             </div>
             <div className="col-md-1"></div>
             <div className="col-md-6 pt-4">
-              <h4 className="lst h-m">Perform various database<br />experiments without pain (SQL opts)</h4>
-              <h4 className="lst h-d">Perform various database<br />experiments without pain</h4>
+              <h4 className="lst h-m">Optimize SQL on production-like clones</h4>
+              <h4 className="lst h-d">Optimize SQL on production-like clones</h4>
               <p>
-                (Bullets need to be changed)<br />
+                Get strong understanding on how the database optimizer behaves on production database not touching it.<br />
                 <br />
-                Development and testing using real-life data and SQL plans identical to production.<br />
+                Check any optimization ideas on a full-sized production-like clone provisioned in a few seconds.<br />
                 <br />
-                No more long waiting for a new database clone provision.<br />
+                Iterate as many times as you want to achieve the best results.<br />
                 <br />
-                SQL optimization recommendations.<br />
+                Accumulate the knowledge related to optimization, share it with your teammates, and grow confidence in how you control the database performance.<br />
                 <br />
                 <a className="learn-more" href="https://postgres.ai/docs/"><u>Learn more</u></a>
               </p>
@@ -186,9 +181,8 @@ function IndexPage() {
               <h3>Open source and extensible</h3>
               <p>
                 Postgres.ai ❤ open-source.<br />
-                Follow us on <a className="learn-more" href="https://gitlab.com/postgres-ai"><u>GitLab</u></a> and give us a stars.<br />
                 <br />
-                We build our products with extensible architecture. Your contributions are very welcome.
+                We work hard to make our products open and&nbsp;extensible.
               </p>
               <a className="btn btn2" href='https://postgres.ai/docs/'>Read the docs</a>
             </div>
@@ -231,7 +225,7 @@ function IndexPage() {
         </div>
       </section>
     </Layout>
-  );
-}
+    );
+  }
 
-export default IndexPage;
+  export default IndexPage;

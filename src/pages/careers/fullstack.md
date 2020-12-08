@@ -6,14 +6,16 @@ requirements:
   - Solid skills of basic SQL (SQL-92).
 ---
 
+# Senior Full Stack Developer | Go | React
+
 As a Senior Full Stack Developer, you will be building components of [Postgres.ai platform](https://postgres.ai/docs).
 
-# Job Details
+## Job Details
 
 - Employment type: full-time, remote.
 - Company: Postgres.ai, headquartered in the San Francisco Bay Area.
 
-# Requirements
+## Requirements
 
 - 3+ years experience developing server applications using Go.
 - Strong experience in client-side development using React.
@@ -23,7 +25,7 @@ As a Senior Full Stack Developer, you will be building components of [Postgres.a
 - Deep understanding of HTTP protocol, data structures, JSON.
 - Rest API development experience.
 
-# Nice-to-haves
+## Nice-to-haves
 
 None of the following is a requirement, yet having any of these items increases your chances to be a perfect match for the Postgres.ai team.
 
@@ -39,7 +41,7 @@ None of the following is a requirement, yet having any of these items increases 
    - System Optimization.
 - Experience working remotely.
 
-# Benefits
+## Benefits
 
 - Development of game-changing tools for software engineers.
 - Interesting and challenging tasks, basis for constant learning of new technologies.

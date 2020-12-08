@@ -21,17 +21,17 @@ module.exports = {
       defaultMode: 'light',
     },
 
-    announcementBar: {
-      id: 'support_us_star', // Any value that will identify this message.
+    /*announcementBar: {
+      id: 'support_us_star', // Any value that will identify this message to save the hidden status.
       content:
         '⭐ If you like Database Lab, give it a star on <a target="_blank" href="https://gitlab.com/postgres-ai/database-lab">GitLab</a> ⭐',
       backgroundColor: '#FFE3C7',
       textColor: '#000',
       isCloseable: true,
-    },
+    },*/
 
     navbar: {
-      title: 'Database Lab | Postgres.ai',
+      title: 'Postgres.ai',
       logo: {
         alt: 'Database Lab logo',
         src: 'img/logo.svg',
@@ -44,6 +44,7 @@ module.exports = {
             {
               label: 'Database Lab Engine',
               to: '/',
+              activeBasePath: 'not-existing-123', // Intentionally disable highlighting for this item.
             },
             {
               label: 'Joe Bot for SQL Optimization',
@@ -54,6 +55,11 @@ module.exports = {
               to: '/products/postgres-checkup',
             },
           ],
+        },
+        {
+          to: '/consulting',
+          label: 'Consulting',
+          position: 'right',
         },
         {
           to: '/resources',
@@ -165,10 +171,6 @@ module.exports = {
               to: '/docs/',
             },
             {
-              label: 'Products',
-              to: '/products/',
-            },
-            {
               label: 'Resources',
               to: '/resources/',
             },
@@ -177,7 +179,7 @@ module.exports = {
               to: '/careers/',
             },
             {
-              label: 'Sign in to private beta 👋',
+              label: 'Sign in for private beta 👋',
               href: 'https://postgres.ai/console',
             },
           ],
