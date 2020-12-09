@@ -1,5 +1,4 @@
 const resources = [
-  // Please add in alphabetical order of title.
   {
     title: 'Qiwi: Control the Data with Database Lab to Accelerate Development',
     description: 'Learn how banks can overcome test data management pitfalls to eliminate production downtime related to data operations.',
@@ -22,7 +21,7 @@ const resources = [
     preview: '/assets/thumbnails/katakoda-tutorial-dle.png',
     link: 'https://www.katacoda.com/postgres-ai/scenarios/database-lab-tutorial',
     kind: 'Tutorial',
-    date: "2020-11-01 15:00:00",
+    date: '2020-11-01 15:00:00',
   },
   {
     title: 'Learn about best practices in preparing PostgreSQL databases for peak seasons in e-commerce companies.',
@@ -30,7 +29,7 @@ const resources = [
     preview: '/assets/thumbnails/wp1.png',
     link: '/get-whitepaper-how-to-prepare-postgreqsl-databases-for-black-friday-and-cyber-monday',
     kind: 'White paper',
-    date: "2020-11-05 15:00:00",
+    date: '2020-11-05 15:00:00',
   },
 ];
 

@@ -1,13 +1,13 @@
 ---
 author: "Anatoly Stansler"
-authorimg: /assets/images/anatoly.jpg
+authorimg: /assets/author/anatoly.jpg
 date: 2020-11-11 11:20:20
 publishDate: 2020-11-10 11:20:20
 linktitle: "Database Lab Engine 2.0"
 title: "Database Lab Engine 2.0"
 description: "Database Lab Engine 2.0 released: automated physical and logical initialization, Amazon RDS PostgreSQL support, basic data transformation and masking"
 weight: 0
-image: /assets/images/thumbnails/dle-2.0-blog.png
+image: /assets/thumbnails/dle-2.0-blog.png
 tags:
   - Postgres.ai
   - Database Lab Engine

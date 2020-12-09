@@ -1,12 +1,12 @@
 ---
 author: "Nikolay Samokhvalov"
-authorimg: /assets/images/nik.jpg
+authorimg: /assets/author/nik.jpg
 date: 2020-05-23 21:19:00
 linktitle: "plan-exporter: visualize PostgreSQL EXPLAIN data right from psql"
 title: "plan-exporter: visualize PostgreSQL EXPLAIN data right from psql"
 description: No more headache with copy-pasting huge plans from psql to explain.dalibo.com and explain.depesz.com
 weight: 0
-image: /assets/images/plan-exporter2.png
+image: /assets/plan-exporter2.png
 tags:
   - psql
   - EXPLAIN

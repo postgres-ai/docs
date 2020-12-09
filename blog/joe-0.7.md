@@ -1,12 +1,12 @@
 ---
 author: "Artyom Kartasov"
-authorimg: /assets/images/artyom.jpg
+authorimg: /assets/author/artyom.jpg
 date: 2020-05-18 11:16:00
 linktitle: "Joe 0.7.0: Web UI, Channel Mapping, and new commands"
 title: "Joe 0.7.0 released! New in this release: Web UI, Channel Mapping, and new commands"
 description: Secure and performant Web UI brings more flexibility, 1:1 communication, and visualization options
 weight: 0
-image: /assets/images/joe-3-silhouettes.svg
+image: /assets/joe-3-silhouettes.svg
 tags:
   - Postgres.ai
   - Joe

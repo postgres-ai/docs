@@ -1,12 +1,12 @@
 ---
 author: "Nikolay Samokhvalov"
-authorimg: /assets/images/nik.jpg
+authorimg: /assets/author/nik.jpg
 date: 2020-01-28 14:15:00
 linktitle: The first public release of Database Lab Engine
 title: The first public release of Database Lab Engine
 description: Postgres.ai team is proud to announce the very first public release of Database Lab Engine
 weight: 0
-image: /assets/images/dblab.svg
+image: /assets/thumbnails/dle-generic-blog.png
 tags:
   - Postgres.ai
   - Database lab

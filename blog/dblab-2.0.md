@@ -1,12 +1,12 @@
 ---
 author: "Nikolay Samokhvalov"
-authorimg: /assets/images/nik.jpg
+authorimg: /assets/author/nik.jpg
 date: 2020-09-18 18:12:00
 linktitle: "Database Lab Engine 2.0 beta: one config to rule them all; support for Amazon RDS"
 title: "Database Lab Engine 2.0 beta: one config to rule them all; support for Amazon RDS"
 description: "Database Lab Engine now has a single config, supports both physical and logical initialization, and works with Amazon RDS"
 weight: 0
-image: /assets/images/dblab.svg
+image: /assets/thumbnails/dle-generic-blog.png
 tags:
   - Postgres.ai
   - Database Lab Engine

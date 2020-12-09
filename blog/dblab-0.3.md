@@ -1,12 +1,12 @@
 ---
 author: "Nikolay Samokhvalov"
-authorimg: /assets/images/nik.jpg
+authorimg: /assets/author/nik.jpg
 date: 2020-03-04 08:02:00
 linktitle: "Database Lab Engine 0.3: cloning with LVM"
 title: Database Lab Engine 0.3, supports both ZFS and LVM
 description: "Database Lab Engine 0.3: now LVM can be used instead of ZFS for thin cloning"
 weight: 0
-image: /assets/images/dblab.svg
+image: /assets/thumbnails/dle-generic-blog.png
 tags:
   - Postgres.ai
   - Database Lab

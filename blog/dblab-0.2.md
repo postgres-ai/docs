@@ -1,12 +1,12 @@
 ---
 author: "Nikolay Samokhvalov"
-authorimg: /assets/images/nik.jpg
+authorimg: /assets/author/nik.jpg
 date: 2020-02-06 10:38:00
 linktitle: "Database Lab Engine updated to 0.2: everything in containers, better API and CLI"
 title: Database Lab Engine 0.2
 description: "Database Lab Engine updated to 0.2: everything in containers, better API and CLI"
 weight: 0
-image: /assets/images/dblab.svg
+image: /assets/thumbnails/dle-generic-blog.png
 tags:
   - Postgres.ai
   - Database Lab

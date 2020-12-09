@@ -1,12 +1,12 @@
 ---
 author: "Artyom Kartasov"
-authorimg: /assets/images/artyom.jpg
+authorimg: /assets/author/artyom.jpg
 date: 2020-03-23 10:42:00
 linktitle: Joe 0.6.0 supports hypothetical indexes
 title: Joe 0.6.0 supports hypothetical indexes
 description: Have an index idea for a large table? Get a sneak peek of how SQL plan will look like using Joe's new command, "hypo", that provides support of hypothetical indexes
 weight: 0
-image: /assets/images/joe-3-silhouettes.svg
+image: /assets/joe-3-silhouettes.svg
 tags:
   - Postgres.ai
   - Joe

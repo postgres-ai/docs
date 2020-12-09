@@ -1,12 +1,12 @@
 ---
 author: "Nikolay Samokhvalov"
-authorimg: /assets/images/nik.jpg
+authorimg: /assets/author/nik.jpg
 date: 2020-02-26 21:42:00
 linktitle: Announcing Joe bot, an SQL query optimization assistant
 title: Joe bot, an SQL query optimization assistant, updated to version 0.5.0
 description: Postgres.ai team is proud to present version 0.5.0 of Joe bot, an SQL query optimization assistant
 weight: 0
-image: /assets/images/joe-3-silhouettes.svg
+image: /assets/joe-3-silhouettes.svg
 tags:
   - Postgres.ai
   - Joe

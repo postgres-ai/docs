@@ -1,5 +1,9 @@
 import React from 'react';
 import Layout from '@theme/Layout';
+import clsx from 'clsx';
+
+import styles from './styles.module.css';
+import blog from '../data/blog';
 
 function IndexPage() {
   return (
@@ -169,6 +173,57 @@ function IndexPage() {
               <a className="btn btn1" href='https://postgres.ai/console/'>Try Database Lab Platform</a>
               <a className="btn btn2" href='https://postgres.ai/docs/'>More cases</a>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="blog-sec position-relative">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <h3 className="text-center">The latest from our blog</h3>
+            </div>
+          </div>
+          <div className="row">
+            {blog.map((e) => (
+            <div key={e.title} className="col col--4 margin-bottom--lg">
+                <div className={clsx('card', styles.showcaseresource)}>
+                  <div className="card__image">
+                    <a
+                      href={e.link}
+                      target="_blank"
+                      rel="noreferrer noopener">
+                        <img src={e.image} alt={e.title} />
+                    </a>
+                  </div>
+                  <div className="card__body">
+                    <div className="avatar">
+                      <div className="avatar__intro margin-left--none">
+                        <h4 className="avatar__name">{e.title}</h4>
+                        <small className="avatar__subtitle">
+                          {e.description}
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                  {(e.link) && (
+                    <div className="card__footer">
+                      <div className="button-group button-group--block">
+                        {e.link && (
+                          <a
+                            className="button button--small button--secondary button--block"
+                            href={e.link}
+                            target="_blank"
+                            rel="noreferrer noopener">
+                            Read more
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+            </div>
+          ))}
           </div>
         </div>
       </section>
