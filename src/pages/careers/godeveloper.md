@@ -9,7 +9,7 @@ requirements:
 
 # Senior Software Engineer | Go
 
-As a Senior Go Developer, you will be building components of [Postgres.ai Platform](https://postgres.ai/docs/).
+As a Senior Go Developer, you will be building components of the [Postgres.ai Platform](https://postgres.ai/docs/).
 
 ## Job Details
 

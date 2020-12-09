@@ -37,9 +37,7 @@ function Careers() {
                         {job.link && (
                           <a
                             className="button button--small button--secondary button--block"
-                            href={job.link}
-                            target="_blank"
-                            rel="noreferrer noopener">
+                            href={job.link}>
                             More details
                           </a>
                         )}

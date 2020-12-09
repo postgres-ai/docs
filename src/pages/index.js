@@ -1,6 +1,8 @@
 import React from 'react';
 import Layout from '@theme/Layout';
 import clsx from 'clsx';
+import Link from '@docusaurus/Link';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 import styles from './styles.module.css';
 import blog from '../data/blog';
@@ -189,12 +191,9 @@ function IndexPage() {
             <div key={e.title} className="col col--4 margin-bottom--lg">
                 <div className={clsx('card', styles.showcaseresource)}>
                   <div className="card__image">
-                    <a
-                      href={e.link}
-                      target="_blank"
-                      rel="noreferrer noopener">
-                        <img src={e.image} alt={e.title} />
-                    </a>
+                    <Link to={useBaseUrl(e.link)}>
+                      <img src={e.image} alt={e.title} />
+                    </Link>
                   </div>
                   <div className="card__body">
                     <div className="avatar">
@@ -210,13 +209,11 @@ function IndexPage() {
                     <div className="card__footer">
                       <div className="button-group button-group--block">
                         {e.link && (
-                          <a
-                            className="button button--small button--secondary button--block"
-                            href={e.link}
-                            target="_blank"
-                            rel="noreferrer noopener">
+                          <Link
+                            to={useBaseUrl(e.link)}
+                            className="button button--small button--secondary button--block">
                             Read more
-                          </a>
+                          </Link>
                         )}
                       </div>
                     </div>

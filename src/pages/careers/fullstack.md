@@ -8,7 +8,7 @@ requirements:
 
 # Senior Full Stack Developer | Go | React
 
-As a Senior Full Stack Developer, you will be building components of [Postgres.ai platform](https://postgres.ai/docs).
+As a Senior Full Stack Developer, you will be building components of the [Postgres.ai Platform](https://postgres.ai/docs).
 
 ## Job Details
 

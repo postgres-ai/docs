@@ -24,7 +24,7 @@ const resources = [
     date: '2020-11-01 15:00:00',
   },
   {
-    title: 'Learn about best practices in preparing PostgreSQL databases for peak seasons in e-commerce companies.',
+    title: 'How to Prepare PostgreSQL Databases for Black Friday',
     description: 'Learn about best practices in preparing PostgreSQL databases for peak seasons in e-commerce companies.',
     preview: '/assets/thumbnails/wp1.png',
     link: '/get-whitepaper-how-to-prepare-postgreqsl-databases-for-black-friday-and-cyber-monday',

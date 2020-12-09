@@ -1,6 +1,9 @@
 ---
-title: Privacy
+title: Privacy policy
 ---
+
+# Privacy policy
+
 *Last Updated: October 25, 2019*
 
 This Personal Data Processing and Protection Policy (the “Policy” or “privacy statement”) is adopted and in effect in Nombox LLC d.b.a. Postgres.ai located at 1148 Carlos Privada, Mountain View, CA 94040, USA ("Postgres.ai" or "we").

@@ -169,11 +169,15 @@ module.exports = {
           items: [
             {
               label: 'Community Slack',
-              href: 'https://database-lab-team-slack-invite.herokuapp.com/',
+              href: 'https://database-lab-team-slack-invite.herokuapp.com',
             },
             {
               label: 'GitLab',
               href: 'https://gitlab.com/postgres-ai',
+            },
+            {
+              label: 'GitHub',
+              href: 'https://github.com/postgres-ai',
             },
             {
               label: 'Twitter',
@@ -182,6 +186,10 @@ module.exports = {
             {
               label: 'YouTube',
               href: 'https://www.youtube.com/channel/UCLSWQVJX_VQ0NVSzN0fZT3A',
+            },
+            {
+              label: 'LinkedIn',
+              href: 'https://www.linkedin.com/company/postgres-ai',
             },
           ],
         },
@@ -207,6 +215,14 @@ module.exports = {
             {
               label: 'Sign in for private beta 👋',
               href: 'https://postgres.ai/console',
+            },
+            {
+              label: 'Terms of service',
+              to: '/tos/',
+            },
+            {
+              label: 'Privacy policy',
+              to: '/privacy/',
             },
           ],
         },

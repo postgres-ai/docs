@@ -1,6 +1,9 @@
 ---
 title: Terms of service
 ---
+
+# Terms of service
+
 *Last Updated: October 25, 2019*
 
 These Terms of Service (the “Agreement”) are entered into by and between the customer (“Customer” or “you”)  and Nombox LLC d.b.a. Postgres.ai (“Postgres.ai” or “we” or “us”). The following terms govern all use of the Services located at https://postgres.ai and any Services located at sub-domains of postgres.ai domain, and any other websites and Services owned and operated by Postgres.ai which incorporate these terms and conditions, including the Service and its related documentation and any related software and technology that we provide you, including any updates, modifications or enhancements thereto (collectively, the “ Service”). If you have an Enterprise agreement between you and Postgres.ai, the terms of the Enterprise Agreement govern and prevail.

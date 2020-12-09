@@ -1,7 +1,7 @@
 // Duplicates data from the blog.
 const blog = [
   {
-    link: '/blog/dle-2.0-release',
+    link: 'blog/dle-2.0-release',
     date: '2020-11-11 11:20:20',
     publishDate: '2020-11-10 11:20:20',
     title: 'Database Lab Engine 2.0',
@@ -9,14 +9,14 @@ const blog = [
     image: '/assets/thumbnails/dle-2.0-blog.png',
   },
     {
-    link: '/blog/dblab-2.0',
+    link: 'blog/dblab-2.0',
     date: '2020-09-18 18:12:00',
     title: 'Database Lab Engine 2.0 beta: one config to rule them all; support for Amazon RDS',
     description: 'Database Lab Engine now has a single config, supports both physical and logical initialization, and works with Amazon RDS',
     image: '/assets/thumbnails/dle-generic-blog.png',
   },
     {
-    link: '/blog/plan-exporter',
+    link: 'blog/plan-exporter',
     date: '2020-05-23 21:19:00',
     title: 'plan-exporter: visualize PostgreSQL EXPLAIN data right from psql',
     description: 'No more headache with copy-pasting huge plans from psql to explain.dalibo.com and explain.depesz.com',
