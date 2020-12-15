@@ -36,7 +36,7 @@ Our steps:
 Create an EC2 instance with Ubuntu 18.04 and an additional EBS volume to store data. You can find detailed instructions on how to create an AWS EC2 instance [here](https://docs.aws.amazon.com/efs/latest/ug/gs-step-one-create-ec2-resources.html).
 
 ### (optional) Ports need to be open in the Security Group being used
-You will need to open the following ports (outbound rules in your Security Group):
+You will need to open the following ports (inbound rules in your Security Group):
 - `22`: to connect to the instance using SSH
 - `2345`: to work with Database Lab Engine API (can be changed in the Database Lab Engine configuration file)
 - `6000-6100`: to connect to PostgreSQL clones (this is the default port range used in the Database Lab Engine configuration file, and can be changed if needed)
@@ -45,7 +45,7 @@ You will need to open the following ports (outbound rules in your Security Group
 For real-life use, it is not a good idea to open ports to the public. Instead, it is recommended to use VPN or SSH port forwarding to access both Database Lab API and PostgreSQL clones, or to enforce encryption for all connections using NGINX with SSL and configuring SSL in PostgreSQL configuration.
 :::
 
-Additionally, to be able to install software, allow access to external resources using HTTP/HTTPS (edit the inbound rule in your Security Group):
+Additionally, to be able to install software, allow access to external resources using HTTP/HTTPS (edit the outbound rules in your Security Group):
 - `80` for HTTP
 - `443` for HTTPS
 
