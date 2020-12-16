@@ -17,7 +17,7 @@ function IndexPage() {
             <div className="col-md-8">
               <h1>BOOST YOUR DEVELOPMENT PROCESS</h1>
               <p>We eliminate database-related roadblocks<br />
-                on the way of developers, DBAs and QA engineers</p>
+                in the way of developers, DBAs and QA engineers</p>
               <a className="btn btn1" href='https://postgres.ai/console/'>Sign up (private beta)</a>
               <a className="btn btn2" href='https://postgres.ai/docs/'>Learn more</a>
             </div>

@@ -55,3 +55,5 @@ None of the following is a requirement, yet having any of these items increases 
 - Flexible working hours/home-office.
 - Health care payment.
 - Online IT / Business English course.
+
+Send us your CV to join@postgres.ai

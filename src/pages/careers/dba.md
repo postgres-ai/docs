@@ -60,3 +60,5 @@ As a Senior Database Engineer, you will be working on state-of-the-art solutions
 - Flexible working hours/home-office.
 - Health care payment.
 - Online IT / Business English course.
+
+Send us your CV to join@postgres.ai
