@@ -5,7 +5,7 @@ title: Consulting
 # Consulting
 
 Talk to the Postgres.ai team to solve your performance, scalability, and automation problems related to PostgreSQL.
-We have worked with Postgres professionally since 2005 and have a lot of experience of in maintaining and optimizing heavily loaded systems.
+We have worked with Postgres professionally since 2005 and have a lot of experience in maintaining and optimizing heavily loaded systems.
 
 How does Postgres.ai differ from other consulting companies?
 - Strong focus on automation: manual operations don't scale. Everything needs to be automated: provisioning, backups, backup verification, failover, health checks, dev/test database refreshes, and answering basic DBA answers
