@@ -1,6 +1,6 @@
 ---
 title: How to manage Database Lab Engine
-sidebar_label: Manage Database Lab
+sidebar_label: Manage Database Lab Engine
 description: Learn how to configure and maintain Database Lab Engine instances to build poweful non-production environments for PostgreSQL.
 keywords:
   - "database lab engine management"
