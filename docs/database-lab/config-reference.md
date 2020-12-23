@@ -20,7 +20,7 @@ sudo docker run \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   --volume /var/lib/dblab:/var/lib/dblab:rshared \
   --volume ~/.dblab/server.yml:/home/dblab/configs/config.yml \
-  postgresai/dblab-server:2.0-latest
+  postgresai/dblab-server:2.1-latest
 ```
 
 :::tip
@@ -105,7 +105,7 @@ Options:
       - `port` (integer, optional, default: 5432) - defines port of the database
       - `username` (string, optional, default: postgres) - defines database username to connect to the database
       - `password` (string, optional, default: "") - defines username password to connect to the database; the environment variable PGPASSWORD can be used instead of this option; the environment variable has a higher priority
-      - `rdsIam` (key-value, optional) - contains options specific for RDS IAM source type
+   - `rdsIam` (key-value, optional) - contains options specific for RDS IAM source type
       - `awsRegion` (string, required) - AWS Region where RDS is located
       - `dbInstanceIdentifier` (string, required) - RDS instance Identifier
       - `sslRootCert` (string, required) - path on the host machine to the SSL root certificate. You can download it from https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem 
@@ -131,6 +131,11 @@ Options:
 Prepares a snapshot for logical restored PostgreSQL database.
 
 Options:
+- `dataPatching` (key-value, optional) - defines SQL queries for data patching
+  - `dockerImage` (string, optional) - specifies the Docker image to run a data patching container
+  - `queryPreprocessing` (key-value, optional) - defines pre-processing parameters
+    - `queryPath` (string, optional, default: "") - specifies the path to SQL pre-processing queries; an empty string means that no pre-processing defined
+    - `maxParallelWorkers` (integer, optional, default: 2) - defines the worker limit for parallel queries
 - `preprocessingScript` (string, optional) - path on the host machine to a pre-precessing script
 - `configs` (key-value, optional) - applies PostgreSQL configuration parameters when preparing a working snapshot. These parameters are inherited by all clones. See also: [How to configure PostgreSQL used by Database Lab Engine](/docs/guides/administration/postgresql-configuration)
 
@@ -149,11 +154,11 @@ Options:
    - `healthCheck` (key-value, optional) - describes health check options for a sync container:
       - `interval` (int, optional, default: 5) - health check interval for a data sync container (in seconds)
       - `maxRetries` (int, optional, default: 200) - maximum number of health check retries
-- `configs` (key-value, optional) - applies PostgreSQL configuration parameters to the sync instance
+   - `configs` (key-value, optional) - applies PostgreSQL configuration parameters to the sync instance
 - `envs` (key-value, optional) - passes custom environment variables to the Docker container with the restoring tool
 - `walg` (key-value, optional) - defines WAL-G configuration options:
    - `backupName` (string, required) - defines the backup name to restore
-- `custom` (key-value, optional) - defines configuration options for custom restoring tool:
+- `customTool` (key-value, optional) - defines configuration options for custom restoring tool:
    - `command` (string, required) - defines the command to restore data using a custom tool
    - `restore_command` (string, optional) - defines the PostgreSQL [`restore_command`](https://postgresqlco.nf/en/doc/param/restore_command/) configuration option to refresh data; Database Lab Engine automatically propagates the specified value to the proper location, depending on the version of PostgreSQL: in versions 11 and older, it is to be stored in `recovery.conf`, while in 12 and newer, it is a part of the main file, `postgresql.conf`
 
@@ -168,6 +173,9 @@ Options:
    - `healthCheck` (key-value, optional) - describes health check options for a data promotion container:
       - `interval` (int, optional, default: 5) - health check interval for a data promotion container (in seconds)
       - `maxRetries` (int, optional, default: 200) - maximum number of health check retries
+   - `queryPreprocessing` (key-value, optional) - defines pre-processing SQL queries
+      - `queryPath` (string, optional, default: "") - specifies the path to SQL pre-processing queries; an empty string means that no pre-processing defined
+      - `maxParallelWorkers` (integer, optional, default: 2) - defines the worker limit for parallel queries
    - `configs` (key-value, optional) - applies PostgreSQL configuration parameters to the promotion instance
 - `sysctls` (key-value, optional) - allows configuring namespaced kernel parameters (sysctls) of Docker container for a promotion stage of taking a snapshot. See supported parameters: https://docs.docker.com/engine/reference/commandline/run/#configure-namespaced-kernel-parameters-sysctls-at-runtime
 - `preprocessingScript` (string, optional) - path on the host machine to a pre-precessing script
