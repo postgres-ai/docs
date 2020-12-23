@@ -252,7 +252,11 @@ dblab clone destroy TestCloneID
 
 ---
 ### Subcommand `start-observation`
-🚧 Experimental
+
+:::note 🚧 Experimental
+This is an experimental feature (its working title: "CI Observer"). If you have questions, suggestions, or bug reports, please open an issue in the [Database Lab Engine issue tracker](https://gitlab.com/postgres-ai/database-lab/-/issues) and/or raise a discussion in one of [the Database Lab Community channels](https://postgres.ai/docs/database-lab#more).
+:::
+
 Start clone state monitoring.
 The command runs the clone observation session and estimates results by defined criteria such as lock duration and whole session duration.
 To get results, it is necessary to stop the observation session using the `stop-observation` command.
