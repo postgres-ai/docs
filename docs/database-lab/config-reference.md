@@ -58,6 +58,7 @@ Here is how the configuration file is structured:
 
 ## Section `provision`: thin cloning environment settings
 - `pgMgmtUsername` (string, optional, default: "postgres") - database username that will be used for Postgres management connections
+- `keepUserPasswords` (bool, optional, default: "false") - By default, in addition to creating a new user with administrative privileges, Database Lab Engine resets passwords for all existing users. This is done for security reasons. If this behavior is undesirable and you want to keep the ability authenticate for the existing users with their unchanged passwords, then set the value of the variable to `true`.
 - `options` (key-value, required) - options related to provisioning
     - `thinCloneManager` (string, required) - thin-clone managing module used for thin cloning
     - `pool` (string, required) - the name of pool (in the case of ZFS) or volume group with logic volume name (in the case of LVM)
