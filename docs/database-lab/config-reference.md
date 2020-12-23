@@ -39,7 +39,8 @@ Here is how the configuration file is structured:
 | `provision` | How thin cloning is organized.  |
 | `retrieval` | Defines the data flow: a series of "jobs" for initial retrieval of the data, and, optionally, continuous data synchronization with the source, snapshot creation and retention policies. The initial retrieval may be either "logical" (dump/restore) or "physical" (based on replication or restoration from a archive). |
 | `cloning` | Thin cloning policies. |
-| `platform` | Postgres.ai Platform integration (provides GUI) – extends the open source offering. |
+| `platform` | Postgres.ai Platform integration (provides GUI, advanced features such as user management, logs). |
+| `observer` | CI Observer configuration. CI Observer helps verify database schema changes (database migrations) automatically, in CI/CD pipelines. Available on the Postgres.ai Platform. |
 
 ## Section `global`: global parameters
 - `engine` - defines the Database Lab Engine. Supported engines: `postgres`
@@ -154,7 +155,7 @@ Options:
    - `backupName` (string, required) - defines the backup name to restore
 - `custom` (key-value, optional) - defines configuration options for custom restoring tool:
    - `command` (string, required) - defines the command to restore data using a custom tool
-   - `restore_command` (string, optional) - defines the PostgreSQL [`restore_command`](https://postgresqlco.nf/en/doc/param/restore_command/) configuration option to refresh data; Database Lab Engine automatucally propagates the specified value to proper location, depending the version of PostgreSQL: in versions 11 and older, it is to be stored in `recovery.conf`, while in 12 and newer, it is part of the main file, `postgresql.conf`
+   - `restore_command` (string, optional) - defines the PostgreSQL [`restore_command`](https://postgresqlco.nf/en/doc/param/restore_command/) configuration option to refresh data; Database Lab Engine automatically propagates the specified value to the proper location, depending on the version of PostgreSQL: in versions 11 and older, it is to be stored in `recovery.conf`, while in 12 and newer, it is a part of the main file, `postgresql.conf`
 
 ### Job `physicalSnapshot`
 Prepares a snapshot for physical restored PostgreSQL database.
@@ -187,3 +188,7 @@ Options:
 - `url` (string, optional, default: "https://postgres.ai/api/general") - Platform API URL
 - `accessToken` (string, required) - the token for authorization in Platform API. This token can be obtained on the Postgres.ai Console
 - `enablePersonalTokens` (boolean, optional, default: false) - enables authorization with personal tokens of the organization's members
+
+## Section `observer`: CI Observer configuration
+- `replacementRules` (key-value, optional) - set up rules based on regular expressions (a pair of values `"regexp":"replace"`; to check syntax, use [this document](https://github.com/google/re2/wiki/Syntax )) for Postgres logs that will be sent to the Platform when running Observed Sessions; this helps ensure that sensitive data is masked properly and it doesn't leave the origin
+Replacement rules applies to the following log fields: `message`, `detail`, `hint`, `internal_query`, `query`
