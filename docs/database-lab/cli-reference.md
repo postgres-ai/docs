@@ -294,6 +294,7 @@ dblab instance command [command options] [arguments...]
 
 **Subcommands**
 - `status` - display instance's status
+- `version` - display instance's version
 - `help` , `h` -  shows a list of commands or help for one command
 
 ---
@@ -303,6 +304,15 @@ Get the status of the instance we are working with.
 **Usage**
 ```bash
 dblab instance status
+```
+
+---
+### Subcommand `version`
+Get the version of the instance we are working with.
+
+**Usage**
+```bash
+dblab instance version
 ```
 
 ---
