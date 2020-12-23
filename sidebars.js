@@ -23,6 +23,7 @@ module.exports = {
           "guides/administration/engine-secure",
           "guides/administration/machine-setup",
           "guides/administration/logical-full-refresh",
+          "guides/administration/ci-observer-postgres-log-masking",
         ],
       },
       {

@@ -12,3 +12,4 @@ description: How to administer Database Lab Engine
 - [Secure Database Lab Engine](/docs/guides/administration/engine-secure)
 - [Set up machine for Database Lab Engine](/docs/guides/administration/machine-setup)
 - [How to refresh data when working in the "logical" mode](/docs/guides/administration/logical-full-refresh)
+- [Masking sensitive data in PostgreSQL logs when using CI Observer](/docs/guides/administration/ci-observer-postgres-log-masking)
