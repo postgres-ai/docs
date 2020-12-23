@@ -23,6 +23,12 @@ sudo docker run \
   postgresai/dblab-server:2.0-latest
 ```
 
+:::tip
+The configuration of Database Lab Engine can be reloaded without downtime:
+
+`docker exec -it dblab_test kill -SIGHUP 1` 
+:::
+
 ## The list of configuration sections
 Here is how the configuration file is structured:
 
