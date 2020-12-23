@@ -143,7 +143,11 @@ Supported restore tools:
 Options:
 - `tool` (string, required) - defines the tool to restore data. See available restore tools list
 - `dockerImage` (string, required) - specifies the Docker image containing the restoring tool
-- `syncInstance` (boolean, optional, default: false) - runs a separate container to refresh Database Lab data
+- `sync`  (key-value, optional) - refresh PGDATA after data fetching:
+   - `enabled` (boolean, optional, default: false) - runs a separate container to refresh Database Lab data
+   - `healthCheck` (key-value, optional) - describes health check options for a sync container:
+      - `interval` (int, optional, default: 5) - health check interval for a data sync container (in seconds)
+      - `maxRetries` (int, optional, default: 200) - maximum number of health check retries
 - `configs` (key-value, optional) - applies PostgreSQL configuration parameters to the sync instance
 - `envs` (key-value, optional) - passes custom environment variables to the Docker container with the restoring tool
 - `walg` (key-value, optional) - defines WAL-G configuration options:
