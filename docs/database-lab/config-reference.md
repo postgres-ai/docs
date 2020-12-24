@@ -6,7 +6,7 @@ sidebar_label: Database Lab Engine configuration
 ## Overview
 Database Lab Engine behavior can be controlled using the main configuration file that has YAML format. This reference describes available configuration options.
 
-Example config files can be found here: https://gitlab.com/postgres-ai/database-lab/-/tree/v2.0/configs.
+Example config files can be found here: https://gitlab.com/postgres-ai/database-lab/-/tree/v2.1/configs.
 
 The file can be placed anywhere. When running Database Lab Engine in a Docker container, it is supposed to be passed via using `--volume` option of the `docker run` command. For example, if the config file is located at `~/.dblab/server.yml` and mount point for the data is located at `/var/lib/dblab`, then Database Lab Engine can be started using the following snippet:
 

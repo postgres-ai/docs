@@ -9,7 +9,7 @@ keywords:
 ---
 
 ## Configure and start a Database Lab Engine instance
-Define config file `~/.dblab/server.yml` (see config examples [here](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.0/configs/)) and run the following command:
+Define config file `~/.dblab/server.yml` (see config examples [here](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.1/configs/)) and run the following command:
 
 ```bash
 sudo docker run \
@@ -47,7 +47,7 @@ Note any upgrade removes all the running clones
 
 ## Observe Database Lab Engine logs
 
-To enable debugging mode, set option `debug` to `true` (see [example](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.0/configs/config.sample.yml)). Next, [follow the reconfiguration guidelines](#reconfigure-database-lab) to apply the change.
+To enable debugging mode, set option `debug` to `true` (see [example](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.1/configs/config.sample.yml)). Next, [follow the reconfiguration guidelines](#reconfigure-database-lab) to apply the change.
 
 To observe container's logs, run:
 ```bash
