@@ -15,7 +15,7 @@ In order to set up Database Lab Engine to automatically get the data from databa
 - [logicalSnapshot](/docs/database-lab/config-reference#job-logicalsnapshot)
 
 ### Options
-Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.0/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml` and update the following options:
+Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.1/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml` and update the following options:
 - Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine
 - Set connection options in `retrieval:spec:logicalDump:options:source:connection`:
     - `dbname`: database name to connect to
