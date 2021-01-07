@@ -8,20 +8,10 @@ Database Lab Engine behavior can be controlled using the main configuration file
 
 Example config files can be found here: https://gitlab.com/postgres-ai/database-lab/-/tree/v2.1/configs.
 
-The file can be placed anywhere. When running Database Lab Engine in a Docker container, it is supposed to be passed via using `--volume` option of the `docker run` command. For example, if the config file is located at `~/.dblab/server.yml` and mount point for the data is located at `/var/lib/dblab`, then Database Lab Engine can be started using the following snippet:
-
-```shell
-sudo docker run \
-  --detach \
-  --name dblab_test \
-  --label dblab_control \
-  --privileged \
-  --publish 2345:2345 \
-  --volume /var/run/docker.sock:/var/run/docker.sock \
-  --volume /var/lib/dblab:/var/lib/dblab:rshared \
-  --volume ~/.dblab/server.yml:/home/dblab/configs/config.yml \
-  postgresai/dblab-server:2.1-latest
-```
+Useful guides that help manage Database Lab Engine:
+- [How to configure and start Database Lab Engine](/docs/guides/administration/engine-manage#configure-and-start-a-database-lab-engine-instance)
+- [Reconfigure Database Lab Engine without downtime](/docs/guides/administration/engine-manage#reconfigure-database-lab-engine)
+- [Reconfigure Database Lab Engine without downtime](/docs/guides/administration/engine-manage#reconfigure-database-lab-engine)
 
 :::tip
 The configuration of Database Lab Engine can be reloaded without downtime:
