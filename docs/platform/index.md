@@ -43,4 +43,7 @@ As of October 2020, the SaaS version is operating in a "Closed Beta" mode. The P
 
 Self-managed setup requires Kubernetes. It is available upon request. Please reach out to Postgres.ai Support to discuss this option.
 
-Learn more about the features and pricing: [Pricing](/docs/pricing).
+Learn more:
+- [SaaS Terms of use](/tos/)
+- [Privacy Policy](/privacy/)
+- [Pricing](/docs/pricing)
