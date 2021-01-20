@@ -240,7 +240,31 @@ module.exports = {
         min: 640, // min resized image's size. if original is lower, use that size.
         steps: 2, // the max number of images generated between min and max (inclusive)
       },
-    ]
+    ],
+    [
+      '@docusaurus/plugin-pwa',
+      {
+        debug: true,
+        offlineModeActivationStrategies: ['queryString'],
+        pwaHead: [
+          {
+            tagName: 'link',
+            rel: 'icon',
+            href: '/img/docusaurus.png',
+          },
+          {
+            tagName: 'link',
+            rel: 'manifest',
+            href: '/manifest.json', // your PWA manifest
+          },
+          {
+            tagName: 'meta',
+            name: 'theme-color',
+            content: 'rgb(37, 194, 160)',
+          },
+        ],
+      },
+    ],
   ],
 
   presets: [
@@ -272,6 +296,14 @@ module.exports = {
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
+        },
+        pages: {
+          exclude: [
+            '**/_*.{js,jsx,ts,tsx,md,mdx}',
+            '**/*.test.{js,ts}',
+            '**/__tests__/**',
+            '**/console',
+          ],
         },
       },
     ],
