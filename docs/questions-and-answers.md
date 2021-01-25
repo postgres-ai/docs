@@ -17,7 +17,7 @@ keywords:
 There are two types of cloning used by Database Lab Engine:
 
 1. **Thick cloning** is a regular way to copy data. It is how data is copied to Database Lab initially. There are several options:
-    - logical: dump/restore (using `pg_dump`/`pg_dumpall` and `pg_restore`/`psql`),
+    - logical: dump/restore (using `pg_dump` and `pg_restore`),
     - physical:
         - `pg_basebackup`,
         - restore data from a physical archive created by a backup tool such as WAL-E/WAL-G, Barman, pgBackRest, or pg_probackup.

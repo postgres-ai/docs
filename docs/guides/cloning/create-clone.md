@@ -103,7 +103,7 @@ $ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --pro
 ```json
 {
     "id": "democlone",
-    "protected": false,
+    "protected": true,
     "status": {
         "code": "OK",
         "message": "Clone is ready to accept Postgres connections."
