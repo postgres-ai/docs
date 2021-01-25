@@ -1,6 +1,6 @@
 ---
 title: Database Lab Client CLI reference (dblab)
-sidebar_label: Client CLI
+sidebar_label: Client CLI reference
 keywords:
   - "Database Lab Client CLI"
   - "dblab cli"
