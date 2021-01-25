@@ -1,6 +1,6 @@
 ---
 title: Database Lab Engine configuration reference
-sidebar_label: Database Lab Engine configuration
+sidebar_label: Configuration reference
 ---
 
 ## Overview

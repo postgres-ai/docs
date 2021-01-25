@@ -80,6 +80,7 @@ module.exports = {
     "Database Lab Engine": [
       "database-lab/index",
       "database-lab/masking",
+      "database-lab/timing-estimator",
       "database-lab/supported-databases",
       {
         "Reference": [
