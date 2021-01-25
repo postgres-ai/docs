@@ -13,7 +13,7 @@ import TabItem from '@theme/TabItem';
 
 Database Lab is used to boost software development and testing processes via enabling ultra-fast provisioning of databases of any size.
 
-In this tutorial, we are going to set up a Database Lab Engine for an existing PostgreSQL DB instance on Amazon RDS. If you don't have an RDS instance and want to have one to follow the steps in this tutorial, read [the official RDS documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_GettingStarted.CreatingConnecting.PostgreSQL.html). Database Lab Engine will be installed on an AWS EC2 instance with Ubuntu 18.04, and an additional EBS volume to store PostgreSQL data directory. The data will be automatically retrieved from the RDS database.
+In this tutorial, we are going to set up a Database Lab Engine for an existing PostgreSQL DB instance on Amazon RDS. If you don't have an RDS instance and want to have one to follow the steps in this tutorial, read [the official RDS documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_GettingStarted.CreatingConnecting.PostgreSQL.html). Database Lab Engine will be installed on an AWS EC2 instance with Ubuntu 18.04 or 20.04, and add an EBS volume to store PostgreSQL data directory. The data will be automatically retrieved from the RDS database.
 
 Compared to RDS clones, Database Lab clones are ultra-fast (RDS cloning is "thick": it takes many minutes, and, depending on the database size, additional dozens of minutes or even hours to warm up, see ["Lazy load"](https://docs.amazonaws.cn/en_us/AWSEC2/latest/WindowsGuide/ebs-creating-volume.html#ebs-create-volume-from-snapshot)) and do not require additional storage and instance. A single Database Lab instance can be used by dozens of engineers simultaneously working with dozens of thin clones located on a single instance and single storage vole. [RDS Aurora clones](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Managing.Clone.html) are "thin" by nature, which is great for development and testing. However, they also require additional instances, meaning significant extra costs. Database Lab clones are high-speed ("thin"), budget-saving ("local"), and can be used for a source database located anywhere.
 
@@ -33,7 +33,7 @@ Our steps:
 
 ## Step 1. Prepare an EC2 instance with additional volume, Docker, and ZFS
 ### Prepare an instance
-Create an EC2 instance with Ubuntu 18.04 and an additional EBS volume to store data. You can find detailed instructions on how to create an AWS EC2 instance [here](https://docs.aws.amazon.com/efs/latest/ug/gs-step-one-create-ec2-resources.html).
+Create an EC2 instance with Ubuntu 18.04 or 20.04, and add an EBS volume to store data. You can find detailed instructions on how to create an AWS EC2 instance [here](https://docs.aws.amazon.com/efs/latest/ug/gs-step-one-create-ec2-resources.html).
 
 ### (optional) Ports need to be open in the Security Group being used
 You will need to open the following ports (inbound rules in your Security Group):
