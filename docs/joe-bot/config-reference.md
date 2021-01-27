@@ -18,9 +18,9 @@ Note that the environment variables have a higher priority.
 app:
   # HTTP server IP address or host.
   # Used only for Web UI and Slack Events API communication types.
-  # Default: "127.0.0.1" (only local connections).
-  # Use empty string to listen all network interfaces.
-  host: "127.0.0.1"
+  # By default uses an empty string to accept connections to all network interfaces.
+  # Keep it default when running inside a Docker container.
+  host: ""
 
   # HTTP server port. Used only for Web UI and Slack Events API communication types.
   # Default: 2400.
@@ -189,6 +189,20 @@ enterprise:
     # Limit the number of available Database Lab instances. Default: 1.
     instanceLimit: 1
 
+  # Tool to calculate timing difference between Database Lab and production environments.
+  estimator:
+    # The ratio evaluating the timing difference for operations involving IO Read between Database Lab and production environments.
+    readRatio: 1
+
+    # The ratio evaluating the timing difference for operations involving IO Write between Database Lab and production environments.
+    writeRatio: 1
+
+    # Time interval of samples taken by the profiler.
+    profilingInterval: 10ms
+
+    # The minimum number of samples sufficient to display the estimation results.
+    sampleThreshold: 20
+
 ```
 
 ## General environment variables
@@ -232,3 +246,15 @@ Changing these options you confirm that you have active subscription to [Postgre
 
 ### `EE_DBLAB_INSTANCE_LIMIT` 
 - (integer, default: `1`), limit the number of Database Lab instances. Joe Bot CE supports working with only 1 Database Lab instance
+
+### `EE_ESTIMATOR_READ_RATIO`
+- (float, default: `1`), the ratio evaluating the timing difference for operations involving IO Read between Database Lab and production environments
+
+### `EE_ESTIMATOR_WRITE_RATIO`
+- (float, default: `1`), the ratio evaluating the timing difference for operations involving IO Write between Database Lab and production environments
+
+### `EE_ESTIMATOR_PROFILING_INTERVAL`
+- (string, default: `10ms`), the time interval used by the profiler to take `pg_stat_activity` samples; more frequent sampling gives a more precise picture of database server waits but increases an overhead; default is 10ms (100 samples per second)
+
+### `EE_ESTIMATOR_SAMPLE_THRESHOLD`
+- (integer, default: `20`), the minimum number of samples sufficient to display the estimation results, more samples gives more precise picture of database server waits during SQL execution, default value is 20 samples; for example, 20 samples with 10ms interval is 0.2 seconds, it means SQL queries with execution time lower than 0.2 seconds cannot be analysed, decreasing this value increases cost of one sample (20 samples equals 5% as cost of one sample) and decrease quality of such analysis

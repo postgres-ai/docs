@@ -26,9 +26,9 @@ However, nowadays, not many open-source projects are hosted at GitLab.com unfort
 
 ## Step 1. Requirements
 - Set up [Database Lab Engine](/docs/tutorials/database-lab-tutorial) (e.g., running on address https://dblab.domain.com) before configuring Joe Bot
-    :::note
-    Make sure the address used in `accessHost` is accessible from where you are going to run Joe Bot.
-    :::
+:::note
+Make sure the address used in `accessHost` is accessible from where you are going to run Joe Bot.
+:::
 - Prepare any Linux machine with Docker. See the official documentation on [how to install Docker on Linux](https://docs.docker.com/engine/install/)
 
 ## Step 2. Configure communication channels
@@ -48,9 +48,9 @@ cat <<'JOE_CONFIG' > ~/.dblab/joe.yml
 app:
   # HTTP server IP address or host.
   # Used only for Web UI and Slack Events API communication types.
-  # Default: "127.0.0.1" (only local connections).
-  # Use empty string to listen all network interfaces.
-  host: "127.0.0.1"
+  # By default uses an empty string to accept connections to all network interfaces.
+  # Keep it default when running inside a Docker container.
+  host: ""
 
   # HTTP server port. Used only for Web UI and Slack Events API communication types.
   # Default: 2400.
