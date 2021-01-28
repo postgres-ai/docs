@@ -22,6 +22,10 @@ When [configured properly](https://postgres.ai/docs/guides/administration/postgr
 ## Estimator
 The estimator is a feature of [Database Lab Virtual DBA](https://gitlab.com/postgres-ai/joe) (former Joe bot) to estimate a timing of queries on the production database.
 
+:::caution Experimental feature
+The estimator is currently under active development and testing. Implementation can be changed significantly. Your help with testing and any feedback is highly appreciated.
+:::
+
 The estimator aims to forecast the timing numbers for the source (production) eliminating the difference related to the disk IO (slower disks, difference filesystem). The estimator is triggered only for queries that are running more than 0.2 second (default value, configurable) and it works under the following assumptions:
 - CPU and RAM models on prod and those that used on clones are the same or very similar
 - No resources are saturated (CPU, memory, disk IO, network) – neither on clones nor on the source (production) node
