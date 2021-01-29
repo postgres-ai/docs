@@ -186,7 +186,7 @@ html[data-theme="dark"] .blog-sec {
 }
 
 .six-sec {
-  min-height: 951px;
+  min-height: 780px;
   padding: 9px 0 73px 0;
 }
 
@@ -249,7 +249,7 @@ html[data-theme="dark"] .multi-sec {
   font-weight: normal;
   font-size: 30px;
   line-height: 35px;
-  margin-top: 101px;
+  margin-top: 80px;
 }
 
 .multi-sec h4 br {
@@ -299,7 +299,7 @@ html[data-theme="dark"] .multi-sec {
   box-sizing: border-box;
   border-radius: 4px;
   padding: 14px 23px 24px 26px;
-  margin-top: 34px;  
+  margin-top: 34px;
 }
 
 .source-boxes a {

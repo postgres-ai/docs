@@ -15,13 +15,15 @@ function IndexPage() {
           <div className="row justify-content-center align-items-center">
             <div className="col-md-2"></div>
             <div className="col-md-8">
-              <h1>BOOST YOUR DEVELOPMENT PROCESS</h1>
-              <p>We eliminate database-related roadblocks<br />
-                in the way of developers, DBAs and QA engineers</p>
+              <h1>DEPLOY WITH CONFIDENCE</h1>
+              <p>
+                Been stung by a poorly tested database migration?<br />
+                We won't let it happen again.
+              </p>
               <a className="btn btn1" href='https://postgres.ai/console/'>Sign up (private beta)</a>
               <a className="btn btn2" href='https://postgres.ai/docs/'>Learn more</a>
             </div>
-            <div className="col-md-2"></div> 
+            <div className="col-md-2"></div>
           </div>
         </div>
       </section>
@@ -43,36 +45,26 @@ function IndexPage() {
         <div className="container text-center">
           <div className="row">
             <div className="col-sm-6">
-              <img src="/assets/landing/feature1.svg" alt="Refresh faster for actual production data" />
-              <h2>Deliver fresh data for development<br />and testing without hassle</h2>
+              <img src="/assets/landing/feature5.svg" alt="Eliminate downtime caused by poorly tested database changes" />
+              <h2>Eliminate downtime caused by<br />poorly tested database changes</h2>
             </div>
             <div className="col-sm-6">
-              <img src="/assets/landing/feature2.svg" alt="Provision full-sized clones in seconds" />
-              <h2>Provision full-sized<br />clones in seconds</h2>
+              <img src="/assets/landing/feature2.svg" alt="Test on instantly provisioned full-size database clones" />
+              <h2>Test on instantly provisioned,<br />full-size database clones</h2>
             </div>
           </div>
           <div className="row single">
             <div className="col-sm-6">
-              <img src="/assets/landing/feature3.svg" alt="Data compliance and security" />
+              <img src="/assets/landing/feature1.svg" alt="Easily access fresh data for development and testing" />
+              <h2>Easily access fresh data<br />for development and testing</h2>
+            </div>
+            <div className="col-sm-6">
+              <img src="/assets/landing/feature3.svg" alt="Protect personal and sensitive data, comply with GDPR and CCPA" />
               <h2>Protect personal and sensitive data,<br />comply with GDPR and CCPA</h2>
             </div>
-            <div className="col-sm-6">
-              <img src="/assets/landing/feature4.svg" alt="Improve time to market" />
-              <h2>Improve time to market</h2>
-            </div> 
           </div>
           <div className="row">
-            <div className="col-sm-6">
-              <img src="/assets/landing/feature5.svg" alt="Eliminate downtime caused by database-related changes" />
-              <h2>Eliminate downtime caused by<br />database-related changes</h2>
-            </div>
-            <div className="col-sm-6">
-              <img src="/assets/landing/feature6.svg" alt="Significantly reduce infrastructure costs by using thin clones" />
-              <h2>Significantly reduce infrastructure<br />costs by using thin clones</h2>
-            </div> 
-          </div>
-          <div className="row">
-            <div className="col-sm-12"><a href="https://postgres.ai/console/" className="btn btn1">Try Database Lab Platform</a></div>
+            <div className="col-sm-12"><a href="https://postgres.ai/console/" className="btn btn1">Try Database Lab</a></div>
           </div>
         </div>
       </section>
@@ -81,27 +73,7 @@ function IndexPage() {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <h3 className="text-center">What if multi-terabyte database<br />could be cloned in seconds?</h3>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-1"></div>
-            <div className="col-md-4">
-              <img src="/assets/landing/use-case1.svg" alt="Use-Case1" className="img-fluid lhs" />
-            </div>
-            <div className="col-md-1"></div>
-            <div className="col-md-6">
-              <h4 className="h-m">Run staging and review apps<br />with production-like databases</h4>
-              <h4 className="h-d">Deploy staging and review<br />apps with full-sized data</h4>
-              <p>
-                Get most reliable results much faster.<br />
-                <br />
-                Save disk space. A lot. Local thin clones share the data blocks saving time and budgets.<br />
-                <br />
-                Tasks such as verification of major upgrades, partitioning, index maintenance can and must be verified in Database Lab first, to minimize risks of negative events in production.<br />
-                <br />
-                <a className="learn-more" href="https://postgres.ai/docs/"><u>Learn more</u></a>
-              </p>
+              <h3 className="text-center">What if a multi-terabyte database<br />could be cloned in seconds?</h3>
             </div>
           </div>
 
@@ -115,11 +87,11 @@ function IndexPage() {
               <h4 className="h-m">Automatically verify<br />100% of database migrations</h4>
               <h4 className="h-d">Verify database changes in CI</h4>
               <p>
-                Automatically verify database schema changes.<br />
+                Integrate database migration testing into your CI/CD pipeline and verify that any DDL or DML change will run correctly on production.<br />
                 <br />
-                Get valuable performance insights to make right decisions.<br />
+                Understand how your database migrations will perform <i>before</i> you deploy.<br />
                 <br />
-                Eliminate database-related downtime risks.<br />
+                Eliminate database-related downtime risk.<br />
                 <br />
                 <a className="learn-more" href="https://postgres.ai/docs/"><u>Learn more</u></a>
               </p>
@@ -127,52 +99,71 @@ function IndexPage() {
           </div>
 
           <div className="row user-case2-lg">
-            <div className="col-md-4 h-d"><img src="/assets/landing/use-case2.svg" alt="Use-Case2" className="img-fluid rhs" /></div>
+            <div className="col-md-1"></div>
+            <div className="col-md-4 h-m">
+              <img src="/assets/landing/use-case2.svg" alt="Use-Case2" className="img-fluid rhs" /><br />
+            </div>
+            <div className="col-md-1"></div>
             <div className="col-md-6">
               <h4 className="h-m">Automatically verify<br />100% of database migrations</h4>
               <h4 className="h-d">Verify database changes in CI</h4>
               <p>
-                Automatically verify database schema changes.<br />
+                Integrate database migration testing into your CI/CD pipeline and verify that any DDL or DML change will run correctly on production.<br />
                 <br />
-                Get valuable performance insights to make right decision.<br />
+                Understand how your database migrations will perform <i>before</i> you deploy.<br />
                 <br />
                 Eliminate database-related downtime risk.<br />
                 <br />
                 <a className="learn-more" href="https://postgres.ai/docs/"><u>Learn more</u></a>
               </p>
             </div>
-            <div className="col-md-1"></div>
-            <div className="col-md-4 h-m">
-              <img src="/assets/landing/use-case2.svg" alt="Use-Case2" className="img-fluid rhs" /><br />
-            </div>
-            <div className="col-md-1"></div> 
           </div>
 
           <div className="row">
+            <div className="col-md-6 pt-4">
+              <h4 className="lst h-m">Optimize SQL on<br />production database clones</h4>
+              <h4 className="lst h-d">Optimize SQL on<br />production database clones</h4>
+              <p>
+                Optimize SQL on an instantly provisioned, independent, production clone and stop experimenting on live data.<br />
+                <br />
+                Test SQL using a query optimizer that behaves identically to production.<br />
+                <br />
+                Iterate as many times as you want to achieve the best results.<br />
+                <br />
+                <a className="learn-more" href="https://postgres.ai/docs/"><u>Learn more</u></a>
+              </p>
+            </div>
             <div className="col-md-1"></div>
             <div className="col-md-4">
               <img src="/assets/landing/use-case3.svg" alt="Use-Case3" className="img-fluid lhs" />
             </div>
             <div className="col-md-1"></div>
-            <div className="col-md-6 pt-4">
-              <h4 className="lst h-m">Optimize SQL on production-like clones</h4>
-              <h4 className="lst h-d">Optimize SQL on production-like clones</h4>
+          </div>
+
+          <div className="row">
+            <div className="col-md-1"></div>
+            <div className="col-md-4">
+              <img src="/assets/landing/use-case1.svg" alt="Use-Case1" className="img-fluid lhs" />
+            </div>
+            <div className="col-md-1"></div>
+            <div className="col-md-6">
+              <h4 className="h-m">Run staging and test apps<br />with full data</h4>
+              <h4 className="h-d">Run staging and test apps<br />with full data</h4>
               <p>
-                Get strong understanding on how the database optimizer behaves on production database not touching it.<br />
+                Understand <i>exactly</i> how your application will behave on production.<br />
                 <br />
-                Check any optimization ideas on a full-sized production-like clone provisioned in a few seconds.<br />
+                Give each developer their own full-size database without the hassle and cost.<br />
                 <br />
-                Iterate as many times as you want to achieve the best results.<br />
-                <br />
-                Accumulate the knowledge related to optimization, share it with your teammates, and grow confidence in how you control the database performance.<br />
+                Simplify the setup and onboarding of new teammates.<br />
                 <br />
                 <a className="learn-more" href="https://postgres.ai/docs/"><u>Learn more</u></a>
               </p>
             </div>
           </div>
+
           <div className="row">
             <div className="col-md-12 text-center">
-              <a className="btn btn1" href='https://postgres.ai/console/'>Try Database Lab Platform</a>
+              <a className="btn btn1" href='https://postgres.ai/console/'>Try Database Lab</a>
               <a className="btn btn2" href='https://postgres.ai/docs/'>More cases</a>
             </div>
           </div>
@@ -238,14 +229,14 @@ function IndexPage() {
               </p>
               <a className="btn btn2" href='https://postgres.ai/docs/'>Read the docs</a>
             </div>
-            <div className="col-md-3"></div> 
+            <div className="col-md-3"></div>
           </div>
           <div className="row ss">
             <div className="col-md-6 lf">
               <div className="source-boxes">
                 <a href='https://gitlab.com/postgres-ai/database-lab'>
                   <h4>Database Lab Engine β <img src="/assets/landing/dblab.svg" alt="Database Lab logo" className="float-right" /></h4>
-                  <p>Provision independent non-production environments with multi-terabyte PostgreSQL databases in a few seconds without extra costs.</p>
+                  <p>Provision independent, multi-terabyte, PostgreSQL databases in a few seconds.</p>
                   <span className="float-left">postgres-ai/database-lab</span>
                   <div className="clearfix"></div>
                 </a>
@@ -254,8 +245,8 @@ function IndexPage() {
             <div className="col-md-6 rf">
               <div className="source-boxes">
                 <a href='https://gitlab.com/postgres-ai/joe'>
-                  <h4>Joe 🤖 DBA-bot for SQL optimization <img src="/assets/landing/joe-bot.svg" alt="Joe bot logo" className="float-right joe-bot" /></h4>
-                  <p>Joe helps backend engineers and DBAs troubleshoot and optimize SQL, moving really quickly. Joe works on top of Database Lab.</p>
+                  <h4>Joe 🤖 a Virtual DBA for SQL optimization<img src="/assets/landing/joe-bot.svg" alt="Joe bot logo" className="float-right joe-bot" /></h4>
+                  <p>Database Lab's Virtual DBA, Joe, helps engineers quickly troubleshoot and optimize SQL. Joe runs on top of Database Lab.</p>
                   <span className="float-left">postgres-ai/joe</span>
                   <div className="clearfix"></div>
                 </a>
