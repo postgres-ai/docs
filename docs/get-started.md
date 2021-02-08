@@ -18,6 +18,8 @@ keywords:
   - "postgres-checkup"
 ---
 
+[console](/console)
+
 |   |   |
 | - | - |
 | [Database Lab Engine](/docs/database-lab) (open source)<br/>Open-source technology to clone databases of any size in seconds | [Joe, SQL optimization chatbot](/docs/joe-bot) (open source)<br/>Run `EXPLAIN ANALYZE` and optimize SQL on instantly provisioned full-size database copies |
