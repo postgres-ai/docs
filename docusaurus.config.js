@@ -1,5 +1,6 @@
 const URL = (!!process.env.URL ? process.env.URL : 'https://v2.postgres.ai/');
 const BASE_URL = (!!process.env.BASE_URL ? process.env.BASE_URL : '/');
+const SIGN_IN_URL = (!!process.env.SIGN_IN_URL ? process.env.SIGN_IN_URL : '/signin');
 
 module.exports = {
   title: 'Database Lab · Fast clones of PostgreSQL databases · Postgres.ai', // Title for your website.
@@ -10,7 +11,7 @@ module.exports = {
   favicon: 'img/favicon.ico',
   organizationName: 'postgres-ai',
   projectName: 'docs',
-  
+
   // TODO (anatoly): @docusaurus/plugin-google-gtag doesn't seem to work now, refactor when fixed.
   scripts: [
     BASE_URL + 'js/gtag.js',
@@ -103,7 +104,7 @@ module.exports = {
           position: 'right',
         },
         {
-          href: 'https://postgres.ai/console',
+          href: SIGN_IN_URL,
           label: 'Sign in',
           position: 'right',
         },
@@ -214,7 +215,7 @@ module.exports = {
             },
             {
               label: 'Sign in',
-              href: 'https://postgres.ai/console',
+              href: SIGN_IN_URL,
             },
             {
               label: 'Terms of service',
