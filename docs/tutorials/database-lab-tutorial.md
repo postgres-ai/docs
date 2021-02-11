@@ -153,7 +153,7 @@ sudo zpool create -f \
   -O atime=off \
   -O recordsize=128k \
   -O logbias=throughput \
-  -m /var/lib/dblab \
+  -m /var/lib/dblab/dblab_pool \
   dblab_pool \
   "${DBLAB_DISK}"
 ```
@@ -162,7 +162,7 @@ And check the result using `zfs list` and `lsblk`, it has to be like this:
 ```bash
 $ sudo zfs list
 NAME         USED  AVAIL  REFER  MOUNTPOINT
-dblab_pool   106K  777G    24K  /var/lib/dblab
+dblab_pool   106K  777G    24K  /var/lib/dblab/dblab_pool
 
 $ sudo lsblk
 NAME      MAJ:MIN  RM  SIZE RO TYPE MOUNTPOINT
@@ -188,17 +188,16 @@ Create an LVM volume (make sure `$DBLAB_DISK` has the correct value, see the pre
 sudo pvcreate "${DBLAB_DISK}"
 sudo vgcreate dblab_vg "${DBLAB_DISK}"
 
-# Create Logical Volume for PGDATA
-sudo lvcreate -l 10%FREE -n pg_lv dblab_vg
-sudo mkfs.ext4 /dev/dblab_vg/pg_lv
-sudo mkdir -p /var/lib/dblab/{data,clones,sockets}
-sudo mount /dev/dblab_vg/pg_lv /var/lib/dblab/data
+# Create Logical Volume and filesystem
+sudo lvcreate -l 10%FREE -n pool_lv dblab_vg
+sudo mkfs.ext4 /dev/dblab_vg/pool_lv
 
-# Create PGDATA directory
-sudo mkdir -p /var/lib/dblab/data/pgdata
+# Mount Database Lab pool
+sudo mkdir -p /var/lib/dblab/dblab_vg-pool_lv
+sudo mount /dev/dblab_vg/pool_lv /var/lib/dblab/dblab_vg-pool_lv
 
 # Bootstrap LVM snapshots so they could be used inside Docker containers
-sudo lvcreate --snapshot --extents 10%FREE --yes --name dblab_bootstrap dblab_vg/pg_lv
+sudo lvcreate --snapshot --extents 10%FREE --yes --name dblab_bootstrap dblab_vg/pool_lv
 sudo lvremove --yes dblab_vg/dblab_bootstrap
 ```
 
@@ -241,7 +240,7 @@ Next, we need to get the data to the Database Lab Engine server. For our testing
 }>
 <TabItem value="generated-database">
 
-If you don't have an existing database for testing, then let's just generate some synthetic database in the data directory ("PGDATA") located at `/var/lib/dblab/data`. A simple way of doing this is to use PostgreSQL standard benchmarking tool, `pgbench`. With scale factor `-s 100`, the database size will be ~1.4 GiB; feel free to adjust the scale factor value according to your needs.
+If you don't have an existing database for testing, then let's just generate some synthetic database in the data directory ("PGDATA") located at `/var/lib/dblab/dblab_pool/data`. A simple way of doing this is to use PostgreSQL standard benchmarking tool, `pgbench`. With scale factor `-s 100`, the database size will be ~1.4 GiB; feel free to adjust the scale factor value according to your needs.
 
 To generate PGDATA with `pgbench`, we are going to run a regular Docker container with Postgres temporarily. We will use `POSTGRES_HOST_AUTH_METHOD=trust` to allow a connection without authentication (not suitable for real-life use).
 
@@ -251,9 +250,9 @@ sudo docker run \
   --label dblab_sync \
   --env PGDATA=/var/lib/postgresql/pgdata \
   --env POSTGRES_HOST_AUTH_METHOD=trust \
-  --volume /var/lib/dblab/data:/var/lib/postgresql/pgdata \
+  --volume /var/lib/dblab/dblab_pool/data:/var/lib/postgresql/pgdata \
   --detach \
-  postgres:12-alpine
+  postgres:13-alpine
 ```
 
 Create the `test` database:
@@ -273,11 +272,11 @@ sudo docker stop dblab_pg_initdb
 sudo docker rm dblab_pg_initdb
 ```
 
-Now, we need to take care of Database Lab Engine configuration. Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.1/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
+Now, we need to take care of Database Lab Engine configuration. Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.2/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
 ```bash
 mkdir ~/.dblab
 
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/v2.1/configs/config.example.logical_generic.yml \
+curl https://gitlab.com/postgres-ai/database-lab/-/raw/v2.2/configs/config.example.logical_generic.yml \
   --output ~/.dblab/server.yml
 ```
 
@@ -286,7 +285,7 @@ Open `~/.dblab/server.yml` and edit the following options:
 - Remove `logicalDump` section completely
 - Remove `logicalRestore` section completely
 - Leave `logicalSnapshot` as is
-- If your Postgres major version is not 12 (default), set the proper version in Postgres Docker images tags:
+- If your Postgres major version is not 13 (default), set the proper version in Postgres Docker images tags:
     - `provision:options:dockerImage`
     - `retrieval:spec:logicalRestore:options:dockerImage`
     - `retrieval:spec:logicalDump:options:dockerImage`
@@ -294,20 +293,20 @@ Open `~/.dblab/server.yml` and edit the following options:
 </TabItem>
 <TabItem value="physical-copy">
 
-If you want to try Database Lab for an existing database, you need to copy the data to PostgreSQL data directory on the Database Lab server, to the directory `/var/lib/dblab/data`. This step is called "thick cloning". It only needs to be completed once. There are several options to physically copy the data directory. Here we will use the standard PostgreSQL tool, `pg_basebackup`. However, we are not going to use it directly (although, it is possible) – we will specify its options in the Database Lab Engine configuration file.
+If you want to try Database Lab for an existing database, you need to copy the data to PostgreSQL data directory on the Database Lab server, to the directory `/var/lib/dblab/dblab_pool/data`. This step is called "thick cloning". It only needs to be completed once. There are several options to physically copy the data directory. Here we will use the standard PostgreSQL tool, `pg_basebackup`. However, we are not going to use it directly (although, it is possible) – we will specify its options in the Database Lab Engine configuration file.
 
-First, copy the contents of configuration example [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.1/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
+First, copy the contents of configuration example [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.2/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
 ```bash
 mkdir ~/.dblab
 
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/master/configs/config.example.physical_generic.yml \
+curl https://gitlab.com/postgres-ai/database-lab/-/raw/v2.2/configs/config.example.physical_generic.yml \
   --output ~/.dblab/server.yml
 ```
 
 Next, open `~/.dblab/server.yml` and edit the following options:
 - Set secure `server:verificationToken`, it will be used to authorize API requests to the Database Lab Engine
 - In `retrieval:spec:physicalRestore:options:envs`, specify how to reach the source Postgres database to run `pg_basebackup`: `PGUSER`, `PGPASSWORD`, `PGHOST`, and `PGPORT`
-- If your Postgres major version is not 12 (default), set the proper version in Postgres Docker images tags:
+- If your Postgres major version is not 13 (default), set the proper version in Postgres Docker images tags:
     - `provision:options:dockerImage`
     - `retrieval:spec:physicalRestore:options:dockerImage`
     - `retrieval:spec:physicalSnapshot:options:promotion:dockerImage`
@@ -319,15 +318,15 @@ Optionally, you might want to keep PGDATA up-to-date (which is being continuousl
 </TabItem>
 <TabItem value="logical-copy">
 
-If you want to try Database Lab for an existing database, you need to copy the data to the PostgreSQL data directory on the Database Lab server, to the directory `/var/lib/dblab/data`. This step is called "thick cloning". It only needs to be completed once.
+If you want to try Database Lab for an existing database, you need to copy the data to the PostgreSQL data directory on the Database Lab server, to the directory `/var/lib/dblab/dblab_pool/data`. This step is called "thick cloning". It only needs to be completed once.
 
 Here we will configure Database Lab Engine to use a "logical" method of thick cloning, dump/restore.
 
-First, copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.1/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
+First, copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.2/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
 ```bash
 mkdir ~/.dblab
 
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/master/configs/config.example.logical_generic.yml \
+curl https://gitlab.com/postgres-ai/database-lab/-/raw/v2.2/configs/config.example.logical_generic.yml \
   --output ~/.dblab/server.yml
 ```
 
@@ -339,7 +338,7 @@ Now open `~/.dblab/server.yml` and edit the following options:
     - `port`: database server port
     - `username`: database user name
     - `password`: database master password (can be also set as `PGPASSWORD` environment variable and passed to the container using `--env` option of `docker run`)
-- If your Postgres major version is not 12 (default), set the proper version in Postgres Docker images tags:
+- If your Postgres major version is not 13 (default), set the proper version in Postgres Docker images tags:
     - `provision:options:dockerImage`
     - `retrieval:spec:logicalRestore:options:dockerImage`
     - `retrieval:spec:logicalDump:options:dockerImage`
@@ -355,13 +354,13 @@ sudo docker run \
   --privileged \
   --publish 2345:2345 \
   --volume /var/run/docker.sock:/var/run/docker.sock \
-  --volume /var/lib/dblab/db.dump:/var/lib/dblab/db.dump \
+  --volume /var/lib/dblab/dblab_pool/dump:/var/lib/dblab/dblab_pool/dump \
   --volume /var/lib/dblab:/var/lib/dblab/:rshared \
   --volume ~/.dblab/server.yml:/home/dblab/configs/config.yml \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:2.1-latest
+  postgresai/dblab-server:2.2-latest
 ```
 
 ### How to check the Database Lab Engine logs
@@ -379,11 +378,11 @@ sudo docker ps -aq | xargs --no-run-if-empty sudo docker rm -f
 sudo docker images -q | xargs --no-run-if-empty sudo docker rmi
 
 # Clean up the data directory
-sudo rm -rf /var/lib/dblab/data/*
+sudo rm -rf /var/lib/dblab/dblab_pool/data/*
 
-# Remove dump file
-sudo umount /var/lib/dblab/db.dump
-sudo rm -rf /var/lib/dblab/db.dump
+# Remove dump directory
+sudo umount /var/lib/dblab/dblab_pool/dump
+sudo rm -rf /var/lib/dblab/dblab_pool/dump
 
 # To start from the very beginning: destroy ZFS storage pool
 sudo zpool destroy dblab_pool

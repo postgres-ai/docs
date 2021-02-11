@@ -6,11 +6,10 @@ sidebar_label: Configuration reference
 ## Overview
 Database Lab Engine behavior can be controlled using the main configuration file that has YAML format. This reference describes available configuration options.
 
-Example config files can be found here: https://gitlab.com/postgres-ai/database-lab/-/tree/v2.1/configs.
+Example config files can be found here: https://gitlab.com/postgres-ai/database-lab/-/tree/v2.2/configs.
 
 Useful guides that help manage Database Lab Engine:
 - [How to configure and start Database Lab Engine](/docs/guides/administration/engine-manage#configure-and-start-a-database-lab-engine-instance)
-- [Reconfigure Database Lab Engine without downtime](/docs/guides/administration/engine-manage#reconfigure-database-lab-engine)
 - [Reconfigure Database Lab Engine without downtime](/docs/guides/administration/engine-manage#reconfigure-database-lab-engine)
 
 :::tip
@@ -26,6 +25,7 @@ Here is how the configuration file is structured:
 | --- | --- |
 | `global` | Global parameters such as path to data directory or enabling debugging. |
 | `server` | Database Lab Engine API server. |
+| `poolManager` | Manages filesystem pools or volume groups. |
 | `provision` | How thin cloning is organized.  |
 | `retrieval` | Defines the data flow: a series of "jobs" for initial retrieval of the data, and, optionally, continuous data synchronization with the source, snapshot creation and retention policies. The initial retrieval may be either "logical" (dump/restore) or "physical" (based on replication or restoration from a archive). |
 | `cloning` | Thin cloning policies. |
@@ -34,8 +34,6 @@ Here is how the configuration file is structured:
 
 ## Section `global`: global parameters
 - `engine` - defines the Database Lab Engine. Supported engines: `postgres`
-- `mountDir` - specifies the location of the pool mount directory
-- `dataSubDir` - specifies the location of restored data by Database Lab Engine relative to the pool mount directory (`mountDir`)
 - `debug` - allows seeing more in the Database Lab Engine logs
 - `database` (key-value, optional) - contains default configuration options of the restored database
   - `username` (string, optional, default: "postgres") - a default username for logical/physical restore jobs
@@ -46,24 +44,27 @@ Here is how the configuration file is structured:
 - `host` (string, optional, default: "") - the host to which the Database Lab server accepts HTTP connections
 - `port` (string, required) - HTTP server port
 
+## Section `poolManager`: filesystem pools or volume groups management
+- `mountDir` (string, required) - specifies the location of the pools mount directory (can contain multiple pool directories)
+- `dataSubDir` (string, optional, default: "") - specifies the location of restored data by Database Lab Engine relative to the pool which is placed inside the mount directory (`mountDir`)
+- `clonesMountSubDir` (string, required) -  the directory that will be used to mount clones
+- `socketSubDir` (string, required) - the UNIX socket directory that will be used to establish local connections to cloned databases
+- `preSnapshotSuffix` (string, required) - the suffix to denote preliminary snapshots
+
 ## Section `provision`: thin cloning environment settings
-- `pgMgmtUsername` (string, optional, default: "postgres") - database username that will be used for Postgres management connections
+- `portPool` (key-value, required) - defines a pool of ports for Postgres clones
+  - `from` (integer, required) - the lowest port value in the pool
+  - `to` (integer, required) - the highest port value in the pool
+- `dockerImage` (string, required) - the Postgres Docker image that to be used when cloning
+- `useSudo` (boolean, optional, default: false) - use sudo for ZFS/LVM and Docker commands if Database Lab server running outside a container
 - `keepUserPasswords` (bool, optional, default: "false") - By default, in addition to creating a new user with administrative privileges, Database Lab Engine resets passwords for all existing users. This is done for security reasons. If this behavior is undesirable and you want to keep the ability authenticate for the existing users with their unchanged passwords, then set the value of the variable to `true`.
-- `options` (key-value, required) - options related to provisioning
-    - `thinCloneManager` (string, required) - thin-clone managing module used for thin cloning
-    - `pool` (string, required) - the name of pool (in the case of ZFS) or volume group with logic volume name (in the case of LVM)
-    - `portPool` (key-value, required) - defines a pool of ports for Postgres clones
-      - `from` (integer, required) - the lowest port value in the pool
-      - `to` (integer, required) - the highest port value in the pool
-    - `clonesMountDir` (string, optional, default: "/var/lib/dblab/clones/") - the directory that will be used to mount clones
-    - `unixSocketDir` (string, optional, default: "/var/lib/dblab/sockets/") - the UNIX socket directory that will be used to establish local connections to cloned databases
-    - `preSnapshotSuffix` (string, required) - the suffix to denote preliminary snapshots
-    - `dockerImage` (string, required) - the Postgres Docker image that to be used when cloning
-    - `useSudo` (boolean, optional, default: false) - use sudo for ZFS/LVM and Docker commands if Database Lab server running outside a container
+- `containerConfig` (key-value, optional) - options to pass custom parameters to clone containers
 
 ## Section `retrieval`: data retrieval
-- `jobs` - declares the set of running jobs. Stages must be defined in the `spec` section
-- `spec` - contains a configuration spec for each job
+- `refresh` (key-value, optional) - describes configuration for a full refresh.
+  - `timetable` (string, optional, default: "") - defines a timetable in crontab format: https://en.wikipedia.org/wiki/Cron#Overview
+- `jobs` (list, optional) - declares the set of running jobs. Stages must be defined in the `spec` section
+- `spec` (key-value, optional) - contains a configuration spec for each job
 
 ### Data retrieval jobs
 Available job names:

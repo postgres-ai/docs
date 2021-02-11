@@ -14,7 +14,7 @@ In order to set up Database Lab Engine to automatically get the data from databa
 - [physicalSnapshot](/docs/database-lab/config-reference#job-physicalsnapshot)
 
 ### Options
-Copy the contents of configuration example [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.1/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml` and update the following options:
+Copy the contents of configuration example [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.2/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml` and update the following options:
 - Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine
 - Set connection options in `physicalRestore:options:envs`:
     - `PGUSER`: database user name
@@ -51,7 +51,7 @@ sudo docker run \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:2.1-latest
+  postgresai/dblab-server:2.2-latest
 ```
 
 ## Restart in the case of failure
