@@ -128,7 +128,7 @@ sudo zpool create -f \
   -O atime=off \
   -O recordsize=128k \
   -O logbias=throughput \
-  -m /var/lib/dblab \
+  -m /var/lib/dblab/dblab_pool \
   dblab_pool \
   "${DBLAB_DISK}"
 ```
@@ -137,7 +137,7 @@ And check the result using `zfs list` and `lsblk`, it has to be like this:
 ```bash
 $ sudo zfs list
 NAME         USED  AVAIL  REFER  MOUNTPOINT
-dblab_pool   106K  777G    24K  /var/lib/dblab
+dblab_pool   106K  777G    24K  /var/lib/dblab/dblab_pool
 
 $ sudo lsblk
 NAME      MAJ:MIN  RM  SIZE RO TYPE MOUNTPOINT
@@ -178,11 +178,11 @@ You need to know the **master password**. If you lost the password it [can be re
 :::
 
 #### Configure Database Lab Engine
-Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.1/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
+Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.2/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
 ```bash
 mkdir ~/.dblab
 
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/v2.1/configs/config.example.logical_generic.yml \
+curl https://gitlab.com/postgres-ai/database-lab/-/raw/v2.2/configs/config.example.logical_generic.yml \
   --output ~/.dblab/server.yml
 ```
 
@@ -194,7 +194,7 @@ Then open `~/.dblab/server.yml` and edit the following options:
     - `port`: database server port
     - `username`: database user name
     - `password`: database master password (can be also set as `PGPASSWORD` environment variable and passed to the container using `--env` option of `docker run`)
-- If your Postgres major version is not 12 (default), set the proper version in Postgres Docker images tags:
+- If your Postgres major version is not 13 (default), set the proper version in Postgres Docker images tags:
     - `provision:options:dockerImage`
     - `retrieval:spec:logicalRestore:options:dockerImage`
     - `retrieval:spec:logicalDump:options:dockerImage`
@@ -208,13 +208,13 @@ sudo docker run \
   --privileged \
   --publish 2345:2345 \
   --volume /var/run/docker.sock:/var/run/docker.sock \
-  --volume /var/lib/dblab/db.dump:/var/lib/dblab/db.dump \
+  --volume /var/lib/dblab/dblab_pool/dump:/var/lib/dblab/dblab_pool/dump \
   --volume /var/lib/dblab:/var/lib/dblab/:rshared \
   --volume ~/.dblab/server.yml:/home/dblab/configs/config.yml \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:2.1-latest
+  postgresai/dblab-server:2.2-latest
 ```
 
 </TabItem>
@@ -239,11 +239,11 @@ Alternatively, you can add `AmazonRDSFullAccess`, `IAMFullAccess` policies to an
 :::
 
 #### Configure Database Lab Engine
-Copy the contents of configuration example [`config.example.logical_rds_iam.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.1/configs/config.example.logical_rds_iam.yml) from the Database Lab repository to `~/.dblab/server.yml`:
+Copy the contents of configuration example [`config.example.logical_rds_iam.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.2/configs/config.example.logical_rds_iam.yml) from the Database Lab repository to `~/.dblab/server.yml`:
 ```bash
 mkdir ~/.dblab
 
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/master/configs/config.example.logical_rds_iam.yml \
+curl https://gitlab.com/postgres-ai/database-lab/-/raw/v2.2/configs/config.example.logical_rds_iam.yml \
   --output ~/.dblab/server.yml
 ```
 
@@ -255,7 +255,7 @@ Then open `~/.dblab/server.yml` and edit the following options:
 - Set AWS params in `retrieval:spec:logicalDump:options:source:rdsIam`:
     - `awsRegion`: RDS instance region;
     - `dbInstanceIdentifier`: RDS instance identifier.
-- If your Postgres major version is not 12 (default), set the proper version in Postgres Docker images tags:
+- If your Postgres major version is not 13 (default), set the proper version in Postgres Docker images tags:
     - `provision:options:dockerImage`;
     - `retrieval:spec:logicalRestore:options:dockerImage`;
     - `retrieval:spec:logicalDump:options:dockerImage`.
@@ -277,7 +277,7 @@ sudo docker run \
   --privileged \
   --publish 2345:2345 \
   --volume ~/.dblab/server.yml:/home/dblab/configs/config.yml \
-  --volume /var/lib/dblab/rds_db.dump:/var/lib/dblab/rds_db.dump \
+  --volume /var/lib/dblab/dblab_pool/dump:/var/lib/dblab/dblab_pool/dump \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   --volume /var/lib/dblab:/var/lib/dblab/:rshared \
   --volume ~/.dblab/rds-combined-ca-bundle.pem:/cert/rds-combined-ca-bundle.pem \
@@ -286,7 +286,7 @@ sudo docker run \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:2.1-latest
+  postgresai/dblab-server:2.2-latest
 ```
 
 </TabItem>
@@ -307,11 +307,11 @@ sudo docker ps -aq | xargs --no-run-if-empty sudo docker rm -f
 sudo docker images -q | xargs --no-run-if-empty sudo docker rmi
 
 # Clean up the data directory
-sudo rm -rf /var/lib/dblab/data/*
+sudo rm -rf /var/lib/dblab/dblab_pool/data/*
 
-# Remove dump file
-sudo umount /var/lib/dblab/db.dump
-sudo rm -rf /var/lib/dblab/db.dump
+# Remove dump directory
+sudo umount /var/lib/dblab/dblab_pool/dump
+sudo rm -rf /var/lib/dblab/dblab_pool/dump
 
 # To start from the very beginning: destroy ZFS storage pool
 sudo zpool destroy dblab_pool

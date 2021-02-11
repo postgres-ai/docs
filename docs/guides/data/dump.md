@@ -15,7 +15,7 @@ In order to set up Database Lab Engine to automatically get the data from databa
 - [logicalSnapshot](/docs/database-lab/config-reference#job-logicalsnapshot)
 
 ### Options
-Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.1/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml` and update the following options:
+Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.2/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml` and update the following options:
 - Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine
 - Set connection options in `retrieval:spec:logicalDump:options:source:connection`:
     - `dbname`: database name to connect to
@@ -36,13 +36,13 @@ sudo docker run \
   --privileged \
   --publish 2345:2345 \
   --volume /var/run/docker.sock:/var/run/docker.sock \
-  --volume /var/lib/dblab/db.dump:/var/lib/dblab/db.dump \
+  --volume /var/lib/dblab/dblab_pool/dump:/var/lib/dblab/dblab_pool/dump \
   --volume /var/lib/dblab:/var/lib/dblab/:rshared \
   --volume ~/.dblab/server.yml:/home/dblab/configs/config.yml \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:2.1-latest
+  postgresai/dblab-server:2.2-latest
 ```
 
 You can use PGPASSWORD env to set the password.
@@ -53,9 +53,9 @@ You can use PGPASSWORD env to set the password.
 sudo docker rm -f dblab_server
 
 # Clean up data directory.
-sudo rm -rf /var/lib/dblab/data/*
+sudo rm -rf /var/lib/dblab/dblab_pool/data/*
 
-# Remove dump file.
-sudo umount /var/lib/dblab/db.dump
-sudo rm -rf /var/lib/dblab/db.dump
+# Remove dump directory.
+sudo umount /var/lib/dblab/dblab_pool/dump
+sudo rm -rf /var/lib/dblab/dblab_pool/dump
 ```

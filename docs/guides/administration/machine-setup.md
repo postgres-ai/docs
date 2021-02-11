@@ -116,7 +116,7 @@ sudo zpool create -f \
   -O atime=off \
   -O recordsize=128k \
   -O logbias=throughput \
-  -m /var/lib/dblab \
+  -m /var/lib/dblab/dblab_pool \
   dblab_pool \
   "${DBLAB_DISK}"
 ```
@@ -125,7 +125,7 @@ And check the result using `zfs list` and `lsblk`, it has to be like this:
 ```bash
 $ sudo zfs list
 NAME         USED  AVAIL  REFER  MOUNTPOINT
-dblab_pool   106K  777G    24K  /var/lib/dblab
+dblab_pool   106K  777G    24K  /var/lib/dblab/dblab_pool
 
 $ sudo lsblk
 NAME      MAJ:MIN  RM  SIZE RO TYPE MOUNTPOINT
@@ -145,23 +145,22 @@ Install LVM2:
 sudo apt-get install -y lvm2
 ```
 
-Create a LVM volume (make sure `$DBLAB_DISK` has the correct value, see the previous step!):
+Create an LVM volume (make sure that `$DBLAB_DISK` has a correct value, see the previous step):
 ```bash
 # Create Physical Volume and Volume Group
 sudo pvcreate "${DBLAB_DISK}"
 sudo vgcreate dblab_vg "${DBLAB_DISK}"
 
-# Create Logical Volume for PGDATA
-sudo lvcreate -l 10%FREE -n pg_lv dblab_vg
-sudo mkfs.ext4 /dev/dblab_vg/pg_lv
-sudo mkdir -p /var/lib/dblab/{data,clones,sockets}
-sudo mount /dev/dblab_vg/pg_lv /var/lib/dblab/data
+# Create Logical Volume and filesystem
+sudo lvcreate -l 10%FREE -n pool_lv dblab_vg
+sudo mkfs.ext4 /dev/dblab_vg/pool_lv
 
-# Create PGDATA directory
-sudo mkdir -p /var/lib/dblab/data/pgdata
+# Mount Database Lab pool
+sudo mkdir -p /var/lib/dblab/dblab_vg-pool_lv
+sudo mount /dev/dblab_vg/pool_lv /var/lib/dblab/dblab_vg-pool_lv
 
 # Bootstrap LVM snapshots so they could be used inside Docker containers
-sudo lvcreate --snapshot --extents 10%FREE --yes --name dblab_bootstrap dblab_vg/pg_lv
+sudo lvcreate --snapshot --extents 10%FREE --yes --name dblab_bootstrap dblab_vg/pool_lv
 sudo lvremove --yes dblab_vg/dblab_bootstrap
 ```
 
