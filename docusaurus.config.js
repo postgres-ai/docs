@@ -213,7 +213,7 @@ module.exports = {
               to: '/careers/',
             },
             {
-              label: 'Sign in for private beta 👋',
+              label: 'Sign in',
               href: 'https://postgres.ai/console',
             },
             {

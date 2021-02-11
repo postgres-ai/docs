@@ -9,10 +9,7 @@ keywords:
   - "database lab plans"
 ---
 
-<!--
--->
-
-[👀 Try Database Lab now for free](https://postgres.ai/console)
+[👀 Try Database Lab now for free](https://console.postgres.ai/)
 
 ## Plans
 
@@ -62,10 +59,3 @@ keywords:
         - reach out to the Sales team to learn more: sales@postgres.ai.
 - Two-week trial that could be extended by participating in the Liable Beta Tester program
 - Database Lab Engine is always hosted on your infrastructure, and the data never leaves your infrastructure
-
-
-:::note Database Lab "Private Beta" program&nbsp;&nbsp;👋
-
-Database Lab Platform (SaaS) is currently in a "private beta" mode, being tested by several hundred engineers. Want to become an early adopter? Join Database Lab by Postgres.ai "Private Beta" program today: https://postgres.ai/console/.
-
-:::

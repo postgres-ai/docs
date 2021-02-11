@@ -73,8 +73,3 @@ keywords:
 |Premium support (24/7, 1 hour), trainings|❌|✅|✅|
 
 See also: [Development roadmap](/docs/roadmap).
-
-:::note Database Lab "Private Beta" program&nbsp;&nbsp;👋
-
-Database Lab Platform (SaaS) is currently in a "private beta" mode, being tested by several hundred engineers. Want to become an early adopter? Join Database Lab by Postgres.ai "Private Beta" program today: https://postgres.ai/console/.
-:::
