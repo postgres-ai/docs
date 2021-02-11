@@ -1,6 +1,6 @@
 ---
 title: How to manage Database Lab Engine
-sidebar_label: Manage Database Lab
+sidebar_label: Manage Database Lab Engine
 description: Learn how to configure and maintain Database Lab Engine instances to build poweful non-production environments for PostgreSQL.
 keywords:
   - "database lab engine management"
@@ -9,65 +9,68 @@ keywords:
 ---
 
 ## Configure and start a Database Lab Engine instance
-Define config file `~/.dblab/server.yml` (see config examples [here](https://gitlab.com/postgres-ai/database-lab/-/blob/master/configs/)) and run the following command:
+Define config file `~/.dblab/server.yml` (see config examples [here](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.1/configs/)) and run the following command:
 
 ```bash
 sudo docker run \
+  --detach \
   --name dblab_server \
   --label dblab_control \
   --privileged \
   --publish 2345:2345 \
-  --restart on-failure \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   --volume /var/lib/dblab:/var/lib/dblab:rshared \
   --volume ~/.dblab/server.yml:/home/dblab/configs/config.yml \
-  --detach \
-  postgresai/dblab-server:latest
+  postgresai/dblab-server:2.1-latest
 ``` 
 
 ## Reconfigure Database Lab Engine
-Update the configuration file `~/.dblab/server.yml`.
+Database Lab Engine supports reconfiguration without a restart (therefore, without any downtime):
 
-Restart container:
-```bash
-sudo docker restart dblab_server
-```
-
-:::caution
-Note that once `docker restart` is executed, all existing clones will be lost.
-:::
+- Update the configuration file (usually, `~/.dblab/server.yml`)
+- Issue a [SIGHUP](https://en.wikipedia.org/wiki/SIGHUP) signal to the main process in the DLE container – if the container name is `dblab_server`, then run this (note that `kill` here is not killing the process, it just sends the SIGHUP signal to it):
+    ```bash
+    sudo docker exec -it dblab_server kill -SIGHUP 1
+    ```
+- Ensure that configuration was reloaded, it should be seen in the logs (message `Configuration has been reloaded`):
+    ```bash
+    sudo docker logs --since 5m dblab_server
+    ```
 
 ## Upgrade Database Lab Engine
-
 Stop and remove the container using `sudo docker stop dblab_server` and `sudo docker rm dblab_server` After that, [launch](#start-database-lab-instance) a new container.
 
 :::caution
-Note any upgrade removes all the running clones
+Note any upgrade removes all the running clones.
 :::
 
 ## Observe Database Lab Engine logs
-
-To enable debugging mode, set option `debug` to `true` (see [example](https://gitlab.com/postgres-ai/database-lab/-/blob/master/configs/config.sample.yml)). Next, [follow the reconfiguration guidelines](#reconfigure-database-lab) to apply the change.
-
-To observe container's logs, run:
+To observe the logs for Database Lab Engine running in a container (remove `--since 1m` to see the log from the very beginning):
 ```bash
-sudo docker logs dblab_server -f
+sudo docker logs --since 1m -f dblab_server
 ```
+
+If you need to save the logs in a file:
+```bash
+sudo docker logs dblab_server 2>&1 | gzip > dblab_server.log.gz
+```
+
+If you want to see more details, enable debug mode setting option `debug` to `true` (see [example](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.1/configs/config.sample.yml)). Next, follow  [the reconfiguration guidelines](#reconfigure-database-lab) to apply the change.
+
+:::caution
+When debug mode is turned on, logs may contain sensitive data such as API secret keys for the backup system.
+:::
 
 ## Check Database Lab Engine status
 
-To check the status of the running container, perform the request `GET /healthz`. 
-
-For example using `curl`:
-
+To check the status of the running container, perform an HTTP request `GET /healthz`. For example, using cURL:
 ```bash
-curl -XGET 'https://dblab.domain.com/healthz'
+curl -XGET 'http://127.0.0.1:2345/healthz'
 ```
 
-If the instance is configured properly, you will get the response with status code `HTTP/1.1 200 OK` and a body similar to the following:
-
+If the instance is up and running, you will get the response with status code `HTTP/1.1 200 OK` and a body like this:
 ```json
 {
-    "version":"0.3.1-20200428-1333"
+    "version":"2.1.0-20201119-0423"
 }
 ```

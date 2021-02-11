@@ -4,7 +4,7 @@ image: docker:18.09.7
 
 stages:
   - test
-  - build
+  - prepare_image
   - deploy
 
 variables:
@@ -22,8 +22,8 @@ variables:
     - npm install
     - npm build
 
-.job_template: &build_definition
-  stage: build
+.job_template: &build_and_push_definition
+  stage: prepare_image
   services:
     - docker:dind
   script:
@@ -85,25 +85,36 @@ variables:
     TAG: ":${NAMESPACE}-${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_IID}"
     DOCS_NAME: "docs-${CI_COMMIT_REF_SLUG}"
 
+build_only:
+  stage: prepare_image
+  services:
+    - docker:dind
+  script:
+    - docker build -t gcr.io/postgres-ai/docs$TAG .
+  except:
+    - master
+    - staging
+
 # Stages with branch policies.
 test:
   <<: *test_definition
 
-build_production:
-  <<: *build_definition
+
+build_and_push_production:
+  <<: *build_and_push_definition
   <<: *env_production
   only:
     - master
 
-build_staging:
-  <<: *build_definition
+build_and_push_staging:
+  <<: *build_and_push_definition
   <<: *env_staging
   except:
     - master
     - staging-v2
 
-build_staging_v2:
-  <<: *build_definition
+build_and_push_staging_v2:
+  <<: *build_and_push_definition
   <<: *env_staging_v2
   only:
     - staging-v2
@@ -126,20 +137,3 @@ deploy_staging_v2:
   only:
     - staging-v2
 
-# build_review:
-#   <<: *build_definition
-#   <<: *env_review
-#   only:
-#     - branches
-#   except:
-#     - master
-#     - staging
-
-# deploy_review:
-#   <<: *deploy_definition
-#   <<: *env_review
-#   only:
-#     - branches
-#   except:
-#     - master
-#     - staging

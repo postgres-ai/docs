@@ -1,6 +1,6 @@
 ---
 title: Database Lab Client CLI reference (dblab)
-sidebar_label: Client CLI
+sidebar_label: Client CLI reference
 keywords:
   - "Database Lab Client CLI"
   - "dblab cli"
@@ -180,9 +180,9 @@ dblab clone create [command options]
 - `--password` (string, required) - database password
 - `--id` (string, optional) - clone ID
 - `--snapshot-id` (string, optional) - snapshot ID
-- `--project` (string, default: "") - project name
 - `--protected` , `-p` (boolean, default: false) - mark instance as protected from deletion
 - `--async` , `-a` (boolean, default: false) - run the command asynchronously
+- `--extra-config` (string, optional)  set an extra database configuration for the clone. An example: statement_timeout='1s'
 - `--help` , `-h` (boolean, default: false) - show help
 
 **Example**
@@ -251,6 +251,62 @@ dblab clone destroy TestCloneID
 ```
 
 ---
+### Subcommand `start-observation`
+
+:::note 🚧 Experimental
+This is an experimental feature (its working title: "CI Observer"). If you have questions, suggestions, or bug reports, please open an issue in the [Database Lab Engine issue tracker](https://gitlab.com/postgres-ai/database-lab/-/issues) and/or raise a discussion in one of [the Database Lab Community channels](https://postgres.ai/docs/database-lab#more).
+:::
+
+Start clone state monitoring.
+The command runs the clone observation session and estimates results by defined criteria such as lock duration and whole session duration.
+To get results, it is necessary to stop the observation session using the `stop-observation` command.
+
+**Usage**
+```bash
+dblab clone start-observation [command options] CLONE_ID
+```
+**Arguments**
+- `CLONE_ID` (string, required) - an ID of the Database Lab clone to destroy.
+
+**Options**
+- `--observation-interval` (integer, default: 0) - interval of metric gathering and output (in seconds). The environment variable `DBLAB_OBSERVATION_INTERVAL`.
+- `--max-lock-duration` (integer, default: 0) - maximum allowed duration for locks (in seconds). The environment variable `DBLAB_MAX_LOCK_DURATION`.
+- `--max-duration` (integer, default: 0) - maximum allowed duration for observation (in seconds). The environment variable `DBLAB_MAX_DURATION`.
+- `--tags` (string, optional) - set tags for the observation session. An example: branch=patch-1.
+- `--help` , `-h` (boolean, default: false) - show help.
+
+**Example**
+```bash
+dblab clone start-observation \
+  --observation-interval 60 \
+  --max-lock-duration 600 \
+  --max-duration 10000 \
+  --tags branch=patch1 \
+  --tags revision=commit-hash \
+  TestCloneID
+```
+
+---
+### Subcommand `stop-observation`
+🚧 Experimental
+Summarize clone monitoring session and check results.
+
+**Usage**
+```bash
+dblab clone stop-observation [command options] CLONE_ID
+```
+**Arguments**
+- `CLONE_ID` (string, required) - an ID of the Database Lab clone to destroy.
+
+**Options**
+- `--help` , `-h` (boolean, default: false) - show help.
+
+**Example**
+```bash
+dblab clone stop-observation TestCloneID
+```
+
+---
 ### Subcommand `port-forward`
 Start port forwarding to clone.
 
@@ -294,6 +350,7 @@ dblab instance command [command options] [arguments...]
 
 **Subcommands**
 - `status` - display instance's status
+- `version` - display instance's version
 - `help` , `h` -  shows a list of commands or help for one command
 
 ---
@@ -303,6 +360,15 @@ Get the status of the instance we are working with.
 **Usage**
 ```bash
 dblab instance status
+```
+
+---
+### Subcommand `version`
+Get the version of the instance we are working with.
+
+**Usage**
+```bash
+dblab instance version
 ```
 
 ---

@@ -17,7 +17,7 @@ Working with Amazon RDS? See [Database Lab tutorial for Amazon RDS](/docs/tutori
 
 Database Lab is used to boost software development and testing processes via enabling ultra-fast provisioning of databases of any size.
 
-In this tutorial, we are going to create a "demo" PostgreSQL database and then set up a Database Lab Engine for it. Database Lab Engine will be installed on an AWS EC2 instance (alternatively, it can be an instance on another cloud platform such as GCP, or a bare-metal machine) with Ubuntu 18.04, and an additional EBS volume to store PostgreSQL data directory. Optionally, you'll be able to skip creating the "demo" database and use an existing database instead.
+In this tutorial, we are going to create a "demo" PostgreSQL database and then set up a Database Lab Engine for it. Database Lab Engine will be installed on an AWS EC2 instance (alternatively, it can be an instance on another cloud platform such as GCP, or a bare-metal machine) with Ubuntu 18.04 or 20.04, and add an EBS volume to store PostgreSQL data directory. Optionally, you'll be able to skip creating the "demo" database and use an existing database instead.
 
 :::note
 Database Lab Engine is hosted and developed on GitLab.com. Why? GitLab Inc. is our (Postgres.ai) long-term client and an early adopter (see [GitLab Development Docs](https://docs.gitlab.com/ee/development/understanding_explain_plans.html#database-lab)). GitLab has an open-source version. Last but not least: GitLab uses PostgreSQL.
@@ -44,10 +44,10 @@ LVM support as an alternative to ZFS first appeared in [version 0.3.0 of Databas
 
 ## Step 1. Prepare a machine with disk, Docker, and ZFS
 ### Prepare a machine
-Create an EC2 instance with Ubuntu 18.04 and an additional EBS volume to store data. You can find detailed instructions on how to create an AWS EC2 instance [here](https://docs.aws.amazon.com/efs/latest/ug/gs-step-one-create-ec2-resources.html) (if you want to use Google Cloud, see [the GCP documentation](https://cloud.google.com/compute/docs/instances/create-start-instance)).
+Create an EC2 instance with Ubuntu 18.04 or 20.04, and add an EBS volume to store data. You can find detailed instructions on how to create an AWS EC2 instance [here](https://docs.aws.amazon.com/efs/latest/ug/gs-step-one-create-ec2-resources.html) (if you want to use Google Cloud, see [the GCP documentation](https://cloud.google.com/compute/docs/instances/create-start-instance)).
 
 ### (optional) Ports need to be open in the Security Group being used
-You will need to open the following ports (outbound rules in your Security Group):
+You will need to open the following ports (inbound rules in your Security Group):
 - `22`: to connect to the instance using SSH
 - `2345`: to work with Database Lab Engine API (can be changed in the Database Lab Engine configuration file)
 - `6000-6100`: to connect to PostgreSQL clones (this is the default port range used in the Database Lab Engine configuration file, and can be changed if needed)
@@ -56,7 +56,7 @@ You will need to open the following ports (outbound rules in your Security Group
 For real-life use, it is not a good idea to open ports to the public. Instead, it is recommended to use VPN or SSH port forwarding to access both Database Lab API and PostgreSQL clones, or to enforce encryption for all connections using NGINX with SSL and configuring SSL in PostgreSQL configuration.
 :::
 
-Additionally, to be able to install software, allow access to external resources using HTTP/HTTPS (edit the inbound rule in your Security Group):
+Additionally, to be able to install software, allow access to external resources using HTTP/HTTPS (edit the outbound rules in your Security Group):
 - `80` for HTTP
 - `443` for HTTPS
 
@@ -273,11 +273,11 @@ sudo docker stop dblab_pg_initdb
 sudo docker rm dblab_pg_initdb
 ```
 
-Now, we need to take care of Database Lab Engine configuration. Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/master/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
+Now, we need to take care of Database Lab Engine configuration. Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.1/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
 ```bash
 mkdir ~/.dblab
 
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/master/configs/config.example.logical_generic.yml \
+curl https://gitlab.com/postgres-ai/database-lab/-/raw/v2.1/configs/config.example.logical_generic.yml \
   --output ~/.dblab/server.yml
 ```
 
@@ -296,7 +296,7 @@ Open `~/.dblab/server.yml` and edit the following options:
 
 If you want to try Database Lab for an existing database, you need to copy the data to PostgreSQL data directory on the Database Lab server, to the directory `/var/lib/dblab/data`. This step is called "thick cloning". It only needs to be completed once. There are several options to physically copy the data directory. Here we will use the standard PostgreSQL tool, `pg_basebackup`. However, we are not going to use it directly (although, it is possible) – we will specify its options in the Database Lab Engine configuration file.
 
-First, copy the contents of configuration example [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/master/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
+First, copy the contents of configuration example [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.1/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
 ```bash
 mkdir ~/.dblab
 
@@ -323,7 +323,7 @@ If you want to try Database Lab for an existing database, you need to copy the d
 
 Here we will configure Database Lab Engine to use a "logical" method of thick cloning, dump/restore.
 
-First, copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/master/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
+First, copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.1/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
 ```bash
 mkdir ~/.dblab
 
@@ -361,7 +361,7 @@ sudo docker run \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:2.0-latest
+  postgresai/dblab-server:2.1-latest
 ```
 
 ### How to check the Database Lab Engine logs

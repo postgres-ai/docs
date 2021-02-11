@@ -10,6 +10,7 @@ module.exports = {
       "tutorials/database-lab-tutorial",
       "tutorials/database-lab-tutorial-amazon-rds",
       "tutorials/joe-setup",
+      "tutorials/onboarding",
     ],
     "Guides": [
       "guides/index",
@@ -22,6 +23,7 @@ module.exports = {
           "guides/administration/engine-secure",
           "guides/administration/machine-setup",
           "guides/administration/logical-full-refresh",
+          "guides/administration/ci-observer-postgres-log-masking",
         ],
       },
       {
@@ -78,6 +80,7 @@ module.exports = {
     "Database Lab Engine": [
       "database-lab/index",
       "database-lab/masking",
+      "database-lab/timing-estimator",
       "database-lab/supported-databases",
       {
         "Reference": [

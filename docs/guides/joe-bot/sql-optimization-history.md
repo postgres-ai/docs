@@ -4,11 +4,11 @@ sidebar_label: Work with SQL optimization history
 ---
 
 :::tip
-Enable History functionality with [`HISTORY_ENABLED`](https://postgres.ai/docs/joe-bot/config-reference#history_enabled) and [`PLATFORM_`](https://postgres.ai/docs/joe-bot/config-reference#platform_url) configuration options.
+Enable History functionality with [HISTORY_ENABLED](https://postgres.ai/docs/joe-bot/config-reference#history_enabled) and [PLATFORM_URL](https://postgres.ai/docs/joe-bot/config-reference#platform_url) configuration options.
 :::
 
 ## Open the Command page from the Joe chat
-Execute any [`explain`] query and click the **Permalink** at the end of the response.
+Execute any [`explain`] query and click the **Details and visualization** at the end of the response.
 
 ## Open the Command page from the Platform
 1. When in an organization, click the **History** menu item under **SQL optimization**.
@@ -32,7 +32,7 @@ You can easily select all queries from history that have the same structure, but
 When you use this option, anyone who knows the special link can view your query, plan, and all the parameters. Check that there is no sensitive data.
 :::
 
-1. To share a query with a people outside of your organization on the **Command** page click the **Share** button.
+1. To share a query with people outside of your organization on the **Command** page click the **Share** button.
 2. Choose **Anyone with a special link and members of the organization can view** option.
 3. Copy the public link and click the **Save changes** button.
 4. Now the command page is shared with anyone on the internet who has a link.

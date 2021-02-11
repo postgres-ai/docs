@@ -13,9 +13,9 @@ import TabItem from '@theme/TabItem';
 
 Database Lab is used to boost software development and testing processes via enabling ultra-fast provisioning of databases of any size.
 
-In this tutorial, we are going to set up a Database Lab Engine for an existing PostgreSQL DB instance on Amazon RDS. If you don't have an RDS instance and want to have one to follow the steps in this tutorial, read [the official RDS documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_GettingStarted.CreatingConnecting.PostgreSQL.html). Database Lab Engine will be installed on an AWS EC2 instance with Ubuntu 18.04, and an additional EBS volume to store PostgreSQL data directory. The data will be automatically retrieved from the RDS database.
+In this tutorial, we are going to set up a Database Lab Engine for an existing PostgreSQL DB instance on Amazon RDS. If you don't have an RDS instance and want to have one to follow the steps in this tutorial, read [the official RDS documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_GettingStarted.CreatingConnecting.PostgreSQL.html). Database Lab Engine will be installed on an AWS EC2 instance with Ubuntu 18.04 or 20.04, and add an EBS volume to store PostgreSQL data directory. The data will be automatically retrieved from the RDS database.
 
-Compared to RDS clones, Database Lab clones are ultra-fast (RDS cloning is "thick": it takes many minutes, and, depending on the database size, additional dozens of minutes or even hours to warm up, see ["Lazy load"](https://docs.amazonaws.cn/en_us/AWSEC2/latest/WindowsGuide/ebs-creating-volume.html#ebs-create-volume-from-snapshot)) and do not require additional storage and instance. A single Database Lan instance can be used by dozens of engineers simultaneously working with dozens of thin clones located on a single instance and single storage vole. [RDS Aurora clones](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Managing.Clone.html) are "thin" by nature, which is great for development and testing. However, they also require additional instances, meaning significant extra costs. Database Lab clones are high-speed ("thin"), budget-saving ("local"), and can be used for a source database located anywhere.
+Compared to RDS clones, Database Lab clones are ultra-fast (RDS cloning is "thick": it takes many minutes, and, depending on the database size, additional dozens of minutes or even hours to warm up, see ["Lazy load"](https://docs.amazonaws.cn/en_us/AWSEC2/latest/WindowsGuide/ebs-creating-volume.html#ebs-create-volume-from-snapshot)) and do not require additional storage and instance. A single Database Lab instance can be used by dozens of engineers simultaneously working with dozens of thin clones located on a single instance and single storage vole. [RDS Aurora clones](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Managing.Clone.html) are "thin" by nature, which is great for development and testing. However, they also require additional instances, meaning significant extra costs. Database Lab clones are high-speed ("thin"), budget-saving ("local"), and can be used for a source database located anywhere.
 
 :::note
 Database Lab Engine is hosted and developed on GitLab.com. Why? GitLab Inc. is our (Postgres.ai) long-term client and an early adopter (see [GitLab Development Docs](https://docs.gitlab.com/ee/development/understanding_explain_plans.html#database-lab)). GitLab has an open-source version. Last but not least: GitLab uses PostgreSQL.
@@ -33,10 +33,10 @@ Our steps:
 
 ## Step 1. Prepare an EC2 instance with additional volume, Docker, and ZFS
 ### Prepare an instance
-Create an EC2 instance with Ubuntu 18.04 and an additional EBS volume to store data. You can find detailed instructions on how to create an AWS EC2 instance [here](https://docs.aws.amazon.com/efs/latest/ug/gs-step-one-create-ec2-resources.html).
+Create an EC2 instance with Ubuntu 18.04 or 20.04, and add an EBS volume to store data. You can find detailed instructions on how to create an AWS EC2 instance [here](https://docs.aws.amazon.com/efs/latest/ug/gs-step-one-create-ec2-resources.html).
 
 ### (optional) Ports need to be open in the Security Group being used
-You will need to open the following ports (outbound rules in your Security Group):
+You will need to open the following ports (inbound rules in your Security Group):
 - `22`: to connect to the instance using SSH
 - `2345`: to work with Database Lab Engine API (can be changed in the Database Lab Engine configuration file)
 - `6000-6100`: to connect to PostgreSQL clones (this is the default port range used in the Database Lab Engine configuration file, and can be changed if needed)
@@ -45,7 +45,7 @@ You will need to open the following ports (outbound rules in your Security Group
 For real-life use, it is not a good idea to open ports to the public. Instead, it is recommended to use VPN or SSH port forwarding to access both Database Lab API and PostgreSQL clones, or to enforce encryption for all connections using NGINX with SSL and configuring SSL in PostgreSQL configuration.
 :::
 
-Additionally, to be able to install software, allow access to external resources using HTTP/HTTPS (edit the inbound rule in your Security Group):
+Additionally, to be able to install software, allow access to external resources using HTTP/HTTPS (edit the outbound rules in your Security Group):
 - `80` for HTTP
 - `443` for HTTPS
 
@@ -178,11 +178,11 @@ You need to know the **master password**. If you lost the password it [can be re
 :::
 
 #### Configure Database Lab Engine
-Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/master/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
+Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.1/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
 ```bash
 mkdir ~/.dblab
 
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/master/configs/config.example.logical_generic.yml \
+curl https://gitlab.com/postgres-ai/database-lab/-/raw/v2.1/configs/config.example.logical_generic.yml \
   --output ~/.dblab/server.yml
 ```
 
@@ -214,7 +214,7 @@ sudo docker run \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:2.0-latest
+  postgresai/dblab-server:2.1-latest
 ```
 
 </TabItem>
@@ -239,7 +239,7 @@ Alternatively, you can add `AmazonRDSFullAccess`, `IAMFullAccess` policies to an
 :::
 
 #### Configure Database Lab Engine
-Copy the contents of configuration example [`config.example.logical_rds_iam.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/master/configs/config.example.logical_rds_iam.yml) from the Database Lab repository to `~/.dblab/server.yml`:
+Copy the contents of configuration example [`config.example.logical_rds_iam.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v2.1/configs/config.example.logical_rds_iam.yml) from the Database Lab repository to `~/.dblab/server.yml`:
 ```bash
 mkdir ~/.dblab
 
@@ -286,7 +286,7 @@ sudo docker run \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:2.0-latest
+  postgresai/dblab-server:2.1-latest
 ```
 
 </TabItem>
