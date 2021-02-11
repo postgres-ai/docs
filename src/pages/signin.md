@@ -1,5 +1,0 @@
----
-title: Signin
-layout: signin
----
-

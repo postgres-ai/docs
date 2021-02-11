@@ -20,7 +20,7 @@ function IndexPage() {
                 Been stung by a poorly tested database migration?<br />
                 We won't let it happen again.
               </p>
-              <a className="btn btn1" href='https://postgres.ai/console/'>Sign up (private beta)</a>
+              <a className="btn btn1" href='https://postgres.ai/console/'>Sign up</a>
               <a className="btn btn2" href='https://postgres.ai/docs/'>Learn more</a>
             </div>
             <div className="col-md-2"></div>
