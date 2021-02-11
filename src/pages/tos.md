@@ -2,6 +2,8 @@
 title: Terms of service
 ---
 
+Privacy Policy: https://postgres.ai/privacy/
+
 # Terms of service
 
 *Last Updated: October 25, 2019*

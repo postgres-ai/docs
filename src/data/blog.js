@@ -1,6 +1,14 @@
 // Duplicates data from the blog.
 const blog = [
   {
+    link: 'blog/dle-2.1-release',
+    date: '2020-12-31 09:22:00',
+    publishDate: '2020-12-31 09:22:00',
+    title: 'Database Lab Engine 2.1',
+    description: 'Database Lab Engine 2.1 released: automated physical and logical initialization, Amazon RDS PostgreSQL support, basic data transformation and masking',
+    image: '/assets/thumbnails/dle-2.1-blog.png',
+  },
+  {
     link: 'blog/dle-2.0-release',
     date: '2020-11-11 11:20:20',
     publishDate: '2020-11-10 11:20:20',
@@ -8,21 +16,21 @@ const blog = [
     description: 'Database Lab Engine 2.0 released: automated physical and logical initialization, Amazon RDS PostgreSQL support, basic data transformation and masking',
     image: '/assets/thumbnails/dle-2.0-blog.png',
   },
-    {
+  {
     link: 'blog/dblab-2.0',
     date: '2020-09-18 18:12:00',
     title: 'Database Lab Engine 2.0 beta: one config to rule them all; support for Amazon RDS',
     description: 'Database Lab Engine now has a single config, supports both physical and logical initialization, and works with Amazon RDS',
     image: '/assets/thumbnails/dle-generic-blog.png',
   },
-    {
+  /*{
     link: 'blog/plan-exporter',
     date: '2020-05-23 21:19:00',
     title: 'plan-exporter: visualize PostgreSQL EXPLAIN data right from psql',
     description: 'No more headache with copy-pasting huge plans from psql to explain.dalibo.com and explain.depesz.com',
     image: '/assets/plan-exporter2.png',
   },
-  /*{
+  {
     link: '/blog/joe-0.7',
     date: '2020-05-18 11:16:00',
     title: 'Joe 0.7.0 released! New in this release: Web UI, Channel Mapping, and new commands',

@@ -20,7 +20,7 @@ tags:
     <img src="/assets/thumbnails/dle-2.0-blog.png" alt="Database Lab 2.0 release"/>
 </p>
 
-## Database Lab Engine for PostgreSQL 2.0 released
+## Database Lab Engine 2.0 for PostgreSQL released
 
 The Postgres.ai team is proud to announce version 2.0 of Database Lab Engine (DLE) for PostgreSQL, a modern database tool for building powerful development and testing environments based on [thin cloning](https://postgres.ai/docs/questions-and-answers#what-is-thin-cloning-thin-vs-thick-clones). Using Database Lab API or CLI (and if you are using Database Lab SaaS, GUI), on a single machine with, say, a 1 TiB disk, you can easily create and destroy dozens of database copies of size 1 TiB each. All these copies are independently modifiable and created/destroyed in just a few seconds. This can become a game-changer in your development and testing workflow, improving time-to-market, and reducing costs of your non-production infrastructure.
 
@@ -56,7 +56,7 @@ Please send us any feedback you have – it is hard to overestimate its meaning 
 - Follow us on Twitter: [@Database_Lab](https://twitter.com/Database_Lab)
 - [Community Slack (English)](https://database-lab-team-slack-invite.herokuapp.com/), and [Telegram group (Russian)](https://t.me/databaselabru)
 - Intercom widget (located at the right bottom corner)
-- Database Lab Engine repository, with 
+- Database Lab Engine repository, with the issue tracker: https://gitlab.com/postgres-ai/database-lab
 
 *[Database Lab Engine](https://gitlab.com/postgres-ai/database-lab) allows cloning PostgreSQL databases of any size in just a few seconds. This can save a lot of money for development and testing infrastructure, and at the same time, drastically improve development quality and time-to-market. Database Lab Engine is open-source software distributed under OSI-approved [AGPLv3 license](https://opensource.org/licenses/AGPL-3.0).*
 

@@ -2,6 +2,8 @@
 title: Privacy policy
 ---
 
+Terms of Service: https://postgres.ai/tos/
+
 # Privacy policy
 
 *Last Updated: October 25, 2019*
