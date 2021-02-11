@@ -94,6 +94,7 @@ build_only:
   except:
     - master
     - staging
+    - staging-v2
 
 # Stages with branch policies.
 test:
