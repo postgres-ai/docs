@@ -12,6 +12,10 @@ module.exports = {
   organizationName: 'postgres-ai',
   projectName: 'docs',
 
+  customFields: {
+    signInUrl: SIGN_IN_URL,
+  },
+
   // TODO (anatoly): @docusaurus/plugin-google-gtag doesn't seem to work now, refactor when fixed.
   scripts: [
     BASE_URL + 'js/gtag.js',

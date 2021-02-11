@@ -3,11 +3,16 @@ import Layout from '@theme/Layout';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 import styles from './styles.module.css';
 import blog from '../data/blog';
 
 function IndexPage() {
+  const {siteConfig} = useDocusaurusContext();
+  const {customFields} = siteConfig;
+  const {signInUrl} = customFields;
+
   return (
     <Layout>
       <section className="banner position-relative text-center">
@@ -20,7 +25,7 @@ function IndexPage() {
                 Been stung by a poorly tested database migration?<br />
                 We won't let it happen again.
               </p>
-              <a className="btn btn1" href='https://postgres.ai/console/'>Sign up</a>
+              <a className="btn btn1" href={signInUrl}>Sign up</a>
               <a className="btn btn2" href='https://postgres.ai/docs/'>Learn more</a>
             </div>
             <div className="col-md-2"></div>
@@ -163,7 +168,7 @@ function IndexPage() {
 
           <div className="row">
             <div className="col-md-12 text-center">
-              <a className="btn btn1" href='https://postgres.ai/console/'>Try Database Lab</a>
+              <a className="btn btn1" href={signInUrl}>Try Database Lab</a>
               <a className="btn btn2" href='https://postgres.ai/docs/'>More cases</a>
             </div>
           </div>
