@@ -647,3 +647,10 @@ html[data-theme="dark"] .multi-sec {
 #hubspotForm {
   margin: 50px 0px 50px 300px;
 }
+
+.navbar__title {
+  font-size: 1.3rem;
+  line-height: 1.3rem;
+  font-family: dinpro-light,roboto,sans-serif;
+  font-weight: 400;
+}
