@@ -34,10 +34,10 @@ Database Lab is used to boost software development via enabling ultra-fast provi
 
 ![CI/CD transformation with Database Lab](/assets/cicd-transform.png)
 
-- Optimize non-production infrastructure costs by 10x.
-- Drastically improve development quality.
-- Get rid of downtimes and avoid performance degradation.
-- Cut half of the TTM (time to market), develop 2x faster than competitors.
+- Optimize non-production infrastructure costs by 10x
+- Drastically improve development quality
+- Get rid of downtimes and avoid performance degradation
+- Cut half of the TTM (time to market), develop 2x faster than competitors
 
 ![Database Lab architecture](/assets/architecture.png)
 
