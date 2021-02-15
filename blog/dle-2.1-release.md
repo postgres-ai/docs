@@ -1,0 +1,55 @@
+---
+author: "Nikolay Samokhvalov"
+authorimg: /assets/images/nik.jpg
+date: 2020-12-31 09:22:00
+publishDate: 2020-12-31 09:22:00
+linktitle: "Database Lab Engine 2.1"
+title: "Database Lab Engine 2.1"
+description: "Database Lab Engine 2.1 released: automated physical and logical initialization, Amazon RDS PostgreSQL support, basic data transformation and masking"
+weight: 0
+image: /assets/images/thumbnails/dle-2.1-blog.png
+tags:
+  - Database Lab Engine
+  - PostgreSQL staging
+  - database migrations CI
+  - thin PostgreSQL clones
+---
+
+<p align="center">
+    <img src="/assets/thumbnails/dle-2.1-blog.png" alt="Database Lab 2.1 release"/>
+</p>
+
+## Database Lab Engine 2.1 for PostgreSQL released
+We are happy to announce version 2.1.0 of Database Lab Engine (DLE), an open-source tool for building powerful development and testing environments based on [thin cloning](https://postgres.ai/docs/questions-and-answers#what-is-thin-cloning-thin-vs-thick-clones) of PostgreSQL databases. Using Database Lab API or CLI (and if you are using Database Lab SaaS, GUI), on a single machine with, say, a 1 TiB disk, you can easily create and destroy dozens of database copies of size 1 TiB each. All these copies are independently modifiable and created/destroyed in just a few seconds. This can become a game-changer in your development and testing workflow, improving time-to-market, and reducing costs of your non-production infrastructure.
+
+In 2.1, the main new features are:
+
+- Better data protection and security:
+    - robust configuration defining how data is patched when snapshots are automatically created (both shell and SQL scripts are now supported),
+    - an option specifying whether or not passwords for the existing DB users need to be preserved.
+- *[experimental]* DLE API and the CLI tool are extended to have a new feature: "CI Observer" helping control DB schema changes (DB migrations) — here is the reference on how to use it https://postgres.ai/docs/database-lab/cli-reference#subcommand-start-observation. This is a small step towards the big goal: have 100% coverage for testing DB migrations in CI using full-sized thin clones. Watch the demo (turn captions on):
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/EBFbWdfyy-0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## Links
+
+Check out:
+
+- [Database Lab Engine 2.1.0 release notes](https://gitlab.com/postgres-ai/database-lab/-/releases/2.1.0)
+- [Resources](https://postgres.ai/resources/) – an interactive tutorial, case studies
+- [Tutorial for RDS users](https://postgres.ai/docs/tutorials/database-lab-tutorial-amazon-rds)
+- [Tutorial for any PostgreSQL database](https://postgres.ai/docs/tutorials/database-lab-tutorial)
+- [Database Lab Engine configuration reference](https://postgres.ai/docs/database-lab/config-reference)
+
+Please send us any feedback you have – it is hard to overestimate its meaning for such a young project:
+
+- Follow us on Twitter: [@Database_Lab](https://twitter.com/Database_Lab)
+- [Community Slack (English)](https://database-lab-team-slack-invite.herokuapp.com/), and [Telegram group (Russian)](https://t.me/databaselabru)
+- Intercom widget (located at the right bottom corner)
+- [Database Lab Engine repository](https://gitlab.com/postgres-ai/database-lab), with the [issue tracker](https://gitlab.com/postgres-ai/database-lab/-/issues)
+
+---
+
+*[Database Lab Engine](https://gitlab.com/postgres-ai/database-lab) allows cloning PostgreSQL databases of any size in just a few seconds. This can save a lot of money for development and testing infrastructure, and at the same time, drastically improve development quality and time-to-market. Database Lab Engine is open-source software distributed under OSI-approved [AGPLv3 license](https://opensource.org/licenses/AGPL-3.0).*
+
+*Database Lab Engine is equipped with API and CLI. Additionally, we at Postgres.ai continue developing the Enterprise version that offers GUI, authentication flexibility, and user management for Database Lab Engine API and CLI, more. The Enterprise version is in the "private beta" mode; we encourage you to [sign up and request a demo](https://postgres.ai/console/).*

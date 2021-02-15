@@ -22,6 +22,27 @@ variables:
     - npm install
     - npm build
 
+.job_template: &build_and_push_definition
+  stage: prepare_image
+  services:
+    - docker:dind
+  script:
+    - source "./deploy/configs/${ENV}.sh"
+
+    # Login to Google Container Registry.
+    - echo $GCP_SERVICE_ACCOUNT | base64 -d > ./key.json
+    - docker login -u _json_key --password-stdin https://gcr.io < ./key.json
+
+    # Build the image.
+    - docker build -t gcr.io/postgres-ai/docs$TAG
+      --build-arg ARG_URL="${URL}"
+      --build-arg ARG_BASE_URL="${BASE_URL}"
+      --build-arg ARG_SIGN_IN_URL="${SIGN_IN_URL}"
+      .
+
+    # Push the image.
+    - docker push gcr.io/postgres-ai/docs$TAG
+
 .job_template: &deploy_definition
   stage: deploy
   image: dtzar/helm-kubectl:2.14.1
@@ -30,18 +51,6 @@ variables:
     - bash ./do.sh subs_envs ./deploy/docs.yaml /tmp/deploy.yaml
     # Deploy to k8s cluster.
     - kubectl apply --filename /tmp/deploy.yaml -n $NAMESPACE
-
-.job_template: &build_and_push_definition
-  stage: prepare_image
-  services:
-    - docker:dind
-  script:
-    - docker build -t gcr.io/postgres-ai/docs$TAG .
-    # Login to Google Container Registry.
-    - echo $GCP_SERVICE_ACCOUNT | base64 -d > ./key.json
-    - docker login -u _json_key --password-stdin https://gcr.io < ./key.json
-    # Push the image.
-    - docker push gcr.io/postgres-ai/docs$TAG
 
 # Environments.
 .environment_template: &env_production
@@ -55,7 +64,7 @@ variables:
 .environment_template: &env_staging
   environment:
     name: staging
-    url: https://postgres.ai
+    url: https://v2.postgres.ai
   variables:
     ENV: staging
     NAMESPACE: staging
@@ -71,10 +80,6 @@ variables:
     TAG: ":${NAMESPACE}-${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_IID}"
     DOCS_NAME: "docs-${CI_COMMIT_REF_SLUG}"
 
-# Stages with branch policies.
-test:
-  <<: *test_definition
-
 build_only:
   stage: prepare_image
   services:
@@ -85,6 +90,10 @@ build_only:
     - master
     - staging
 
+# Stages with branch policies.
+test:
+  <<: *test_definition
+
 build_and_push_production:
   <<: *build_and_push_definition
   <<: *env_production
@@ -94,8 +103,8 @@ build_and_push_production:
 build_and_push_staging:
   <<: *build_and_push_definition
   <<: *env_staging
-  only:
-    - staging
+  except:
+    - master
 
 deploy_production:
   <<: *deploy_definition
