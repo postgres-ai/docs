@@ -21,6 +21,14 @@ In the case of big tables when index creation may take many hours you can experi
 1. Use the [`exec`](/docs/joe-bot/commands-reference#exec) command with special HypoPG query, e.g. `SELECT * FROM hypopg_create_index('create index on pgbench_accounts (bid)')`.
 2. Use the [`plan`](/docs/joe-bot/commands-reference#plan) command instead of the [`explain`](/docs/joe-bot/commands-reference#explain) command to get the Plan without execution, as hypothetical indexes can be taken into account only there.
 
+:::info
+Joe bot uses a restricted database user that is not allowed to create extensions. Therefore, to use hypothetical indexes, you must configure Database Lab Engine to install the HypoPG extension at snapshot preparation time. To do so:
+- Create a new SQL file with the query: `create extension if not exists hypopg;`
+- In the `queryPreprocessing` section, specify the option `queryPath ` to create HypoPG extension
+
+Fore more details, see [Database Lab configuration](/docs/database-lab/config-reference).
+:::
+
 ## Related guides
 - [How to reset the state of a Joe session](/docs/guides/joe-bot/reset-session)
 - [How to get a plan of a query using Joe bot](/docs/guides/joe-bot/get-query-plan)

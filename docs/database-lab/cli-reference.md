@@ -181,6 +181,7 @@ dblab clone create [command options]
 - `--id` (string, optional) - clone ID
 - `--snapshot-id` (string, optional) - snapshot ID
 - `--protected` , `-p` (boolean, default: false) - mark instance as protected from deletion
+- `--restricted` (boolean, default: false) - use database user with restricted permissions (not a superuser, DML and DDL allowed, `CREATE EXTENSION` is not allowed)
 - `--async` , `-a` (boolean, default: false) - run the command asynchronously
 - `--extra-config` (string, optional)  set an extra database configuration for the clone. An example: statement_timeout='1s'
 - `--help` , `-h` (boolean, default: false) - show help
