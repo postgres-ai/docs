@@ -19,9 +19,9 @@ description: Joe helps backend engineers to optimize SQL queries
 ## Speed up development
 - Solve problems before they reach production
 - Safe access to production-sized DB set for developer
-- Automate DBA expertize
+- Automate DBA expertise
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/49Utl0uNZnk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="100%" height="400" src="https://www.youtube.com/embed/49Utl0uNZnk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <div style={{'margin-top': '20px'}}>
   <a className="btn btn1" style={{'margin-right': '20px'}} href='https://postgres.ai/console/'>Sign up (private beta)</a>
