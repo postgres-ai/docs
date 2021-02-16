@@ -8,11 +8,11 @@ keywords:
 ---
 
 ## Roadmap
-We work hard to develop new features for Database Lab Engine and Platform. Below you can find the main ideas we are working on now or planning to work soon.
+We work hard to develop new features for Database Lab SaaS and its open-source components, Database Lab Engine (DLE) and SQL Optimization Chatbot (Joe). Below you can find the main ideas we are working on now or planning to work soon.
 
-*Edited: 2020-11-02*
+*Updated: 2021-02-14*
 
-### Physical provisioning
+### [DLE] Physical provisioning
 Physical provisioning: native support of provisioning from archives created by a specific backup solution or based on an existing Postgres database
 
 - [ ] Support various sources
@@ -27,7 +27,7 @@ Physical provisioning: native support of provisioning from archives created by a
 - [x] Snapshot management (schedule, retention policy)
 - [ ] faster WAL replay (pg_prefaulter)
 
-### Logical provisioning
+### [DLE] Logical provisioning
 Logical provisioning: native support of provisioning for managed PostgreSQL databases
 
 - [ ] Support various sources
@@ -38,29 +38,28 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
     - [ ] Google Cloud SQL for Postgres
     - [ ] Digital Ocean Postgres
 - [ ] Continuously updated state (logical replication)
-- [ ] Snapshot management (schedule, retention policy)
-- [ ] Simplified full refresh
+- [x] Multiple pools, rotation on schedule
 - [ ] Partial data retrieval
     - [ ] specific tables
     - [ ] arbitrary filtering (columns, rows)
 
-### Advanced engine features
-- [ ] Persist clones when the engine restarts
+### [DLE] Advanced engine features
+- [ ] Persist clones when the engine restarts :fire:
 - [ ] Point-in-time recovery (PITR) (Can be used for ultra-fast recovery of accidentally deleted data)
 - [ ] Duplicate DLE (create a new DLE based on existing one)
-- [ ] Utilization alerts
 - [ ] Clone analytics
 - [ ] User quotas
 - [ ] Audit
-- [ ] "Tmp" system- and Postgres-level monitoring for clones/sessions
+- [ ] "Temporary" system- and Postgres-level monitoring for clones/sessions
 - [ ] Utilization of DLE instance and alerts
 - [ ] Usage and estimated savings reports
 - [x] SSH port forwarding for API and Postgres connections
 - [ ] Tags
-- [ ] Framework for macro database experiments (work with thick clones)
+- [ ] Framework for macro database experiments (work with thick/regular clones)
 - [ ] Auto-register DLE in Platform
+- [ ] Resource usage quotas for clones: CPU, RAM
 
-### Automated verification of database schema and complex data changes (migrations)
+### [SaaS] Automated verification of database schema and complex data changes a.k.a. DB migrations
 - [a] History and logging for clones/sessions
 - [a] Automated detection of locking issues
 - [a] Setting custom `statement_timeout`
@@ -79,14 +78,16 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
     - [ ] Liquibase
     - [ ] Ruby on Rails Active Record
     - [ ] Django migrations
+- [ ] "Production timing" estimator
+- [ ] More artifacts to support decisions: pg_stat_*, system usage, WAL, checkpoints, etc.
 
-### Cloning (CoW technology)
+### [DLE] Cloning (CoW technology)
 - [x] ZFS
 - [x] LVM
 - [ ] PureStorage
 - [ ] Remote clones – Amazon Aurora
 
-### Automation, clouds, Kubernetes
+### [SaaS] Automation, clouds, Kubernetes
 - [ ] Clouds, automation of installation in clients' accounts
     - [x] Basic Terraform templates
     - [ ] One-click setup on AWS. AWS Marketplace
@@ -102,11 +103,11 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
 - [ ] Kubernetes support
     - [ ] DLE operator
     - [ ] Integration with [StackGres](https://stackgres.io) 
-        - [x] PoC (logical, physical WAL-E)
+        - [x] PoC (logical, physical:WAL-E)
         - [ ] integration
     - [ ] Support [CSI Volume Cloning](https://kubernetes.io/docs/concepts/storage/volume-pvc-datasource/) (GA: 1.18)
 
-### SQL optimization – Joe bot
+### [Joe] SQL optimization chatbot
 - [x] Web UI version
 - [x] Slack chatbot
 - [ ] Telegram chatbot
@@ -122,8 +123,12 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
 - [ ] Hypothetical partitioning
 - [ ] Index advisor
 - [ ] Utilization control
+- [ ] Better chatbot security
+    - [x] Do not use DB superuser
+    - [x] Quotas (rate limits)
+    - [ ] Alert admins when a quota is hit
 
-### Data masking and obfuscation
+### [SaaS] Data masking and anonymization
 - [x] Basic support for masking and obfuscation
     - [x] custom scripts
     - [x] parallel execution of custom scripts
@@ -131,10 +136,11 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
     - [x] [kitchen-sync](https://github.com/willbryant/kitchen_sync)
     - [ ] [pgsync]https://github.com/ankane/pgsync)
 - [ ] Hybrid setup: raw and obfuscaned/masked clones on the same DLE instance
+- [ ] Simplified setup for anonymization - GUI
 - [ ] Automated masking
-- [ ] Automated obfuscation
+- [ ] Automated anonymization
 
-### Better documentation
+### [Docs] Better documentation
 - [ ] Tutorials
     - [x] Basic
     - [x] RDS
