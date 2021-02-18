@@ -284,6 +284,14 @@ git clone https://gitlab.com/postgres-ai/postgres-checkup.git
 cd postgres-checkup
 ```
 
+#### 3. Build pghrep
+
+```bash
+cd ./pghrep
+make install main
+cd ..
+```
+
 #### Usage
 Let's make a report for a project named `prod1`. Assume that we have two servers, `db1.vpn.local` and `db2.vpn.local`.
 
