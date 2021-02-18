@@ -651,6 +651,6 @@ html[data-theme="dark"] .multi-sec {
 .navbar__title {
   font-size: 1.3rem;
   line-height: 1.3rem;
-  font-family: dinpro-light,roboto,sans-serif;
+  font-family: 'Encode Sans',roboto,sans-serif;
   font-weight: 400;
 }

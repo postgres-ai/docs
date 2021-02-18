@@ -267,6 +267,16 @@ module.exports = {
             name: 'theme-color',
             content: 'rgb(37, 194, 160)',
           },
+          {
+            tagName: 'link',
+            rel: 'preconnect',
+            href: 'https://fonts.gstatic.com',
+          },
+          {
+            tagName: 'link',
+            rel: 'stylesheet',
+            href: 'https://fonts.googleapis.com/css2?family=Encode+Sans&display=swap',
+          },
         ],
       },
     ],
