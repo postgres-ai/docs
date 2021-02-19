@@ -12,12 +12,17 @@ spec:
   selector:
     app: $DOCS_NAME
 ---
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: $DOCS_NAME
+  labels:
+    app: $DOCS_NAME
 spec:
   replicas: $REPLICAS
+  selector:
+    matchLabels:
+      app: $DOCS_NAME
   template:
     metadata:
       labels:
