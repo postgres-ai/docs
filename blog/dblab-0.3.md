@@ -1,4 +1,5 @@
 ---
+id: dblab-0-3
 author: "Nikolay Samokhvalov"
 authorimg: /assets/author/nik.jpg
 date: 2020-03-04 08:02:00
