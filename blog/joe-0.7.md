@@ -1,4 +1,5 @@
 ---
+id: joe-0-7
 author: "Artyom Kartasov"
 authorimg: /assets/author/artyom.jpg
 date: 2020-05-18 11:16:00
