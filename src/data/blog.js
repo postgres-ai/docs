@@ -1,6 +1,13 @@
 // Duplicates data from the blog.
 const blog = [
   {
+    link: 'blog/',
+    date: '2021-02-22 06:45:00',
+    title: 'Database Lab Engine 2.2 and Joe Bot 0.9',
+    description: 'Database Lab Engine 2.2.0 and SQL Optimization Chatbot “Joe” 0.9.0 released: multiple pools for automated “logical” initialization, production timing estimation (experimental), and improved security.',
+    image: '/assets/thumbnails/dle-2.2-blog.png',
+  },
+  {
     link: 'blog/dle-2.1-release',
     date: '2020-12-31 09:22:00',
     publishDate: '2020-12-31 09:22:00',
@@ -15,13 +22,6 @@ const blog = [
     title: 'Database Lab Engine 2.0',
     description: 'Database Lab Engine 2.0 released: automated physical and logical initialization, Amazon RDS PostgreSQL support, basic data transformation and masking',
     image: '/assets/thumbnails/dle-2.0-blog.png',
-  },
-  {
-    link: 'blog/dblab-2.0',
-    date: '2020-09-18 18:12:00',
-    title: 'Database Lab Engine 2.0 beta: one config to rule them all; support for Amazon RDS',
-    description: 'Database Lab Engine now has a single config, supports both physical and logical initialization, and works with Amazon RDS',
-    image: '/assets/thumbnails/dle-generic-blog.png',
   },
   /*{
     link: 'blog/plan-exporter',
