@@ -77,6 +77,30 @@ html[data-theme="dark"] .DocSearch {
   bottom: 6rem;
 }
 
+.outline {
+  border: 1px solid #999;
+  border-radius: 5px;
+}
+
+.diagram-thumbnail {
+  width: 300px;
+  float: right;
+}
+
+.footnotes {
+  font-size: 10pt;
+  color: #777;
+  margin-top: 30px;
+  list-style-type: none;
+  padding-left: 0px;
+}
+
+.clear::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
 /* IndexPage */
 .learn-more {
   margin: 0;
