@@ -69,13 +69,15 @@ module.exports = {
       },
       items: [
         {
-          label: 'Products',
+          label: 'Product',
           position: 'right',
+          to: '/',
+          activeBaseRegex: '/$',
+          activeBaseRegex: '/$',
           items: [
             {
-              label: 'Database Lab Engine',
-              to: '/',
-              activeBasePath: 'not-existing-123', // Intentionally disable highlighting for this item.
+              label: 'How It Works',
+              to: '/products/how-it-works',
             },
             {
               label: 'Joe Bot for SQL Optimization',
@@ -84,28 +86,42 @@ module.exports = {
             {
               label: 'Postgres-checkup',
               to: '/products/postgres-checkup',
-            },
+            }
           ],
         },
         {
+          label: 'Documentation',
+          position: 'right',
+          items: [
+            {
+              label: 'Getting Started',
+              to: '/docs',
+              activeBaseRegex: '/docs$'
+            },
+            {
+              label: 'Database Lab FAQ',
+              to: '/docs/questions-and-answers'
+            }
+          ]
+        },
+        {
           to: '/consulting',
-          label: 'Consulting',
+          label: 'Services',
           position: 'right',
         },
         {
-          to: '/resources',
-          label: 'Resources',
+          label: 'Company',
           position: 'right',
-        },
-        {
-          to: '/docs',
-          label: 'Docs',
-          position: 'right',
-        },
-        {
-          to: '/blog',
-          label: 'Blog',
-          position: 'right',
+          items: [
+            {
+              to: '/blog',
+              label: 'Blog'
+            },
+            {
+              to: '/resources',
+              label: 'Case Studies'
+            },
+          ]
         },
         {
           href: SIGN_IN_URL,
@@ -135,7 +151,7 @@ module.exports = {
               to: '/docs/',
             },
             {
-              label: 'Q&A',
+              label: 'FAQ',
               to: '/docs/questions-and-answers',
             },
             {
@@ -206,11 +222,11 @@ module.exports = {
               to: '/',
             },
             {
-              label: 'Docs',
+              label: 'Documentation',
               to: '/docs/',
             },
             {
-              label: 'Resources',
+              label: 'Case Studies',
               to: '/resources/',
             },
             {
