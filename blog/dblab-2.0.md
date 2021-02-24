@@ -1,5 +1,5 @@
 ---
-id: dblab-2-0-beta
+slug: dblab-2-0-beta
 author: "Nikolay Samokhvalov"
 authorimg: /assets/author/nik.jpg
 date: 2020-09-18 18:12:00
