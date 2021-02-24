@@ -1,5 +1,5 @@
 ---
-id: joe-0-5
+slug: joe-0-5
 author: "Nikolay Samokhvalov"
 authorimg: /assets/author/nik.jpg
 date: 2020-02-26 21:42:00

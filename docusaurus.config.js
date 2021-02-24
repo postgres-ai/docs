@@ -246,40 +246,6 @@ module.exports = {
         steps: 2, // the max number of images generated between min and max (inclusive)
       },
     ],
-    [
-      '@docusaurus/plugin-pwa',
-      {
-        debug: true,
-        offlineModeActivationStrategies: ['queryString'],
-        pwaHead: [
-          {
-            tagName: 'link',
-            rel: 'icon',
-            href: '/img/docusaurus.png',
-          },
-          {
-            tagName: 'link',
-            rel: 'manifest',
-            href: '/manifest.json', // your PWA manifest
-          },
-          {
-            tagName: 'meta',
-            name: 'theme-color',
-            content: 'rgb(37, 194, 160)',
-          },
-          {
-            tagName: 'link',
-            rel: 'preconnect',
-            href: 'https://fonts.gstatic.com',
-          },
-          {
-            tagName: 'link',
-            rel: 'stylesheet',
-            href: 'https://fonts.googleapis.com/css2?family=Encode+Sans&display=swap',
-          },
-        ],
-      },
-    ],
   ],
 
   presets: [

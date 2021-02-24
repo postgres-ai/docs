@@ -1,5 +1,5 @@
 ---
-id: dle-2-0-release
+slug: dle-2-0-release
 author: "Anatoly Stansler"
 authorimg: /assets/author/anatoly.jpg
 date: 2020-11-11 11:20:20

@@ -1,5 +1,5 @@
 ---
-id: dle-2-1-release
+slug: dle-2-1-release
 author: "Nikolay Samokhvalov"
 authorimg: /assets/images/nik.jpg
 date: 2020-12-31 09:22:00
