@@ -59,7 +59,7 @@ Here's what you can expect when setting up the DLE:
 
 <div style={{'margin-top': '50px'}}>
   <a className="btn btn1" style={{'margin-right': '20px'}} href='https://postgres.ai/console/'>Sign up</a>
-  <a className="btn btn2" href='https://gitlab.com/postgres-ai/joe?utm_source=site&utm_medium=web&utm_campaign=joe_landing'>View repo</a>
+  <a className="btn btn2" href='https://postgres.ai/docs/'>Learn more</a>
 </div>
 
 <ul class='footnotes'>
