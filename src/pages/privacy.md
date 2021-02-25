@@ -6,7 +6,7 @@ Terms of Service: https://postgres.ai/tos/
 
 # Privacy policy
 
-*Last Updated: October 25, 2019*
+*Last Updated: February 25, 2021*
 
 This Personal Data Processing and Protection Policy (the “Policy” or “privacy statement”) is adopted and in effect in Nombox LLC d.b.a. Postgres.ai located at 1148 Carlos Privada, Mountain View, CA 94040, USA ("Postgres.ai" or "we").
 
@@ -45,6 +45,8 @@ We work with other companies who help us run our business (“Service Providers�
 
 Specifically, we do not permit our Service Providers to use any personal information we share with them for their own marketing purposes or for any other purpose than in connection with the services they provide to us.
 
+You can find the list of current Service Providers at https://postgres.ai/docs/platform/service-providers.
+
 In addition to sharing with Service Providers as described above, we may also share your information with others in the following circumstances:
 
 - With our partners who may help us distribute the Services to Customers
@@ -61,7 +63,7 @@ Postgres.ai’s services are not designed for users who are under the age of 16.
 ## CHANGES TO THIS PRIVACY STATEMENT
 We recognize that transparency is an ongoing responsibility so we will keep this privacy statement under regular review.
 
-This privacy statement was last updated on October 25, 2019.
+This privacy statement was last updated on February 25, 2021.
 
 ## DATA CONTROLLER AND CONTACT INFORMATION
 If you have any questions about this privacy statement or how and why we process personal data, please contact us at:
