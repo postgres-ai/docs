@@ -27,7 +27,7 @@ sudo docker run \
 ## Reconfigure Database Lab Engine
 Database Lab Engine supports reconfiguration without a restart (therefore, without any downtime):
 
-- Update the configuration file (usually, `~/.dblab/server.yml`)
+- Edit the configuration file (usually, `~/.dblab/server.yml`). 
 - Issue a [SIGHUP](https://en.wikipedia.org/wiki/SIGHUP) signal to the main process in the DLE container – if the container name is `dblab_server`, then run this (note that `kill` here is not killing the process, it just sends the SIGHUP signal to it):
     ```bash
     sudo docker exec -it dblab_server kill -SIGHUP 1
@@ -36,6 +36,9 @@ Database Lab Engine supports reconfiguration without a restart (therefore, witho
     ```bash
     sudo docker logs --since 5m dblab_server
     ```
+:::tip Tip for Vim users
+Note, that by default, editing a file in Vim leads to file inode change, so your change wouldn't propagate into the container. To mitigate this issue, put `set backupcopy=yes` into `~/.vimrc` before launching Vim. If you already launched it, type `:set backupcopy=yes`.
+:::
 
 ## Upgrade Database Lab Engine
 Stop and remove the container using `sudo docker stop dblab_server` and `sudo docker rm dblab_server` After that, [launch](#start-database-lab-instance) a new container.
