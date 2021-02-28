@@ -32,10 +32,12 @@ Database Lab Engine supports reconfiguration without a restart (therefore, witho
     ```bash
     sudo docker exec -it dblab_server kill -SIGHUP 1
     ```
+
 - Ensure that configuration was reloaded, it should be seen in the logs (message `Configuration has been reloaded`):
     ```bash
     sudo docker logs --since 5m dblab_server
     ```
+
 :::tip Tip for Vim users
 Note, that by default, editing a file in Vim leads to file inode change, so your change wouldn't propagate into the container. To mitigate this issue, put `set backupcopy=yes` into `~/.vimrc` before launching Vim. If you already launched it, type `:set backupcopy=yes`.
 :::
