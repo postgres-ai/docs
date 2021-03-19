@@ -4,7 +4,6 @@ description: Mask sensitive data to ensure security and compliance
 ---
 
 # Sensitive Data Masking
-
 Database Lab allows a robust and centralized means to both mask<sup>1</sup>
 and control access to test and staging databases. Implement masking rules
 within the Database Lab Engine to adhere to security best practices and
@@ -26,7 +25,6 @@ Database Lab gives organizations a clear and centralized means to achieve these 
 
 
 ## A Comprehensive Approach to Masking
-
 The Database Lab Engine provides a robust API that gives software teams the power to implement
 a multi-faceted and comprehensive approach to data masking.  There are three pillars
 to well-implemented masking:
@@ -40,24 +38,28 @@ Learn more about masking techniques with our recommended tool:
 
 
 ## Clear and Auditable Rules
-
 Database Lab recommends a declarative approach to data masking using
 [PostgreSQL Anonymizer](https://postgresql-anonymizer.readthedocs.io/en/stable/declare_masking_rules/).
 
 Masking rules are declared as security labels within the schema itself.
 
-```
-CREATE TABLE player( id SERIAL, name TEXT, points INT);
+```sql
+create table player(
+  id bigserial,
+  name text,
+  points int
+);
 
-INSERT INTO player VALUES
-  ( 1, 'Kareem Abdul-Jabbar', 38387),
-  ( 5, 'Michael Jordan', 32292 );
+insert into player(name, points)
+values
+  ('Kareem Abdul-Jabbar', 38387),
+  ('Michael Jordan', 32292);
 
-SECURITY LABEL FOR anon ON COLUMN player.name
-  IS 'MASKED WITH FUNCTION anon.fake_last_name()';
+security label for anon on column player.name
+  is 'MASKED WITH FUNCTION anon.fake_last_name()';
 
-SECURITY LABEL FOR anon ON COLUMN player.id
-  IS 'MASKED WITH VALUE NULL';
+security label for anon on column player.id
+  is 'MASKED WITH VALUE NULL';
 ```
 
 Colocating security rules and data gives software teams better visibility and control over
