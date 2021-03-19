@@ -321,10 +321,6 @@ sudo zpool destroy dblab_pool
 ### Option 1: GUI (Database Lab Platform)
 To use the GUI, you need to [sign up for Database Lab Platform](https://postgres.ai/console).
 
-:::info How to get the Database Lab GUI
-Currently, the Database Lab GUI is in "private beta" mode. The onboarding consists of two steps. Step 1: Sign up using a Google, LinkedIn, GitLab, or GitHub account. Step 2: Next, the Postgres.ai team will contact you and schedule a demo, during which your account will be activated.
-:::
-
 #### Add Database Lab Engine to the Platform
 1. On the **Database Lab instances** page of your organization click the **Add instance** button.
 ![Database Lab Engine / Database Lab instances](/assets/guides/add-engine-instance-1.png)
@@ -464,6 +460,3 @@ For more, see [the full client CLI reference](/docs/database-lab/cli-reference).
 :::info Have questions?
 Reach out to our team, we'll be happy to help! Use the Intercom widget located at the right bottom corner.
 :::
-
-## 👋 Database Lab "Private Beta" program
-Database Lab Platform (SaaS) is currently in a "private beta" mode, being tested by several hundred engineers. Want to become an early adopter? Join Database Lab by Postgres.ai "Private Beta" program today: https://postgres.ai/console/.

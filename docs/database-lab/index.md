@@ -75,6 +75,3 @@ Some problems that can be solved by using Database Lab:
 - [Issue tracker](https://gitlab.com/postgres-ai/database-lab/issues) (for bugs reports, feature proposals)
 - [Slack (English)](https://database-lab-team-slack-invite.herokuapp.com/)
 - [Telegram (Russian)](https://t.me/databaselabru)
-
-## 👋 Database Lab "Private Beta" program
-Database Lab Platform (SaaS) is currently in a "private beta" mode, being tested by several hundred engineers. Want to become an early adopter? Join Database Lab by Postgres.ai "Private Beta" program today: https://postgres.ai/console/.

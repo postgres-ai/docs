@@ -53,18 +53,16 @@ If you run your infrastructure on AWS, you can follow our
 Here's what you can expect when setting up the DLE:
 * Experienced engineers can setup the DLE in less than 1 hour
 * The DLE host instance should have a disk 30% larger than the production DB
-* Setting up sensitive data masking is a [separate step](/docs/database-lab/masking)
-
-[Dive into the docs to get started!](/docs/)
+* [Sensitive data masking](/products/data-masking) can be achieved with a set of declarative rules
 
 <div style={{'margin-top': '50px'}}>
-  <a className="btn btn1" style={{'margin-right': '20px'}} href='https://postgres.ai/console/'>Sign up</a>
-  <a className="btn btn2" href='https://postgres.ai/docs/'>Learn more</a>
+  <a className="btn btn1" style={{'margin-right': '20px'}} href="https://console.postgres.ai/">Start Free Trial</a>
+  <a className="btn btn2" href='/products/database-migration-testing'>Next: Database Migration Testing</a>
 </div>
 
 <ul class='footnotes'>
   <li><sup>1</sup> If desired, alternate copy-on-write filesystems may be used. See the &nbsp;
-    <a href='https://postgres.ai/docs/guides/administration/machine-setup#set-up-either-zfs-or-lvm-to-enable-thin-cloning'
+    <a href="/docs/guides/administration/machine-setup#set-up-either-zfs-or-lvm-to-enable-thin-cloning"
        target="_blank">
       documentation
     </a>

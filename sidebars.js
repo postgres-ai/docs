@@ -91,9 +91,6 @@ module.exports = {
         ],
       },
     ],
-    "Staging with superpowers": [
-      "staging/index",
-    ],
     "Joe Bot": [
       "joe-bot/index",
       "joe-bot/example",
@@ -106,7 +103,6 @@ module.exports = {
     ],
     "Other": [
       "checkup/index",
-      "database-changes-cicd/index",
       "data-recovery/index",
       "data-access/index",
     ]
