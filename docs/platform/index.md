@@ -39,8 +39,6 @@ To start using SaaS, you need to enter to the system using one of the following 
 - GitLab
 - GitHub
 
-As of October 2020, the SaaS version is operating in a "Closed Beta" mode. The Postgres.ai Team will reach you to schedule a live demo, during which your account will be activated, and you will learn how to use available GUI, CLI, and API.
-
 Self-managed setup requires Kubernetes. It is available upon request. Please reach out to Postgres.ai Support to discuss this option.
 
 Learn more:

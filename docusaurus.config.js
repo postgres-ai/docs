@@ -80,12 +80,20 @@ module.exports = {
               to: '/products/how-it-works',
             },
             {
-              label: 'Joe Bot for SQL Optimization',
+              label: 'Database Migration Testing',
+              to: '/products/database-migration-testing',
+            },
+            {
+              label: 'SQL Optimization',
               to: '/products/joe',
             },
             {
-              label: 'Postgres-checkup',
-              to: '/products/postgres-checkup',
+              label: 'Realistic Dev & Test Environments',
+              to: '/products/realistic-test-environments',
+            },
+            {
+              label: 'Sensitive Data Masking',
+              to: '/products/data-masking',
             }
           ],
         },
@@ -178,11 +186,7 @@ module.exports = {
             {
               label: 'Joe Bot for SQL Optimization',
               to: '/products/joe',
-            },
-            {
-              label: 'Postgres-checkup',
-              to: '/products/postgres-checkup',
-            },
+            }
           ],
         },
         {

@@ -86,6 +86,24 @@ html[data-theme="dark"] .DocSearch {
   width: 300px;
   float: right;
   margin: 0px 10px;
+  cursor: pointer;
+}
+
+.diagram-thumbnail img {
+  cursor: pointer;
+}
+
+.diagram-thumbnail.large {
+  width: 400px;
+}
+
+.em-quote {
+  font-size: 1.5em;
+}
+
+.joe-bot-demo {
+  border: 1px solid #666;
+  border-radius: 5px;
 }
 
 .footnotes {
@@ -206,7 +224,7 @@ html[data-theme="dark"] .blog-sec {
   font-weight: bold;
   font-size: 32px;
   line-height: 37px;
-  color: #ff6112;
+  color: #333;
   margin-bottom: 25px;
 }
 
@@ -226,12 +244,20 @@ html[data-theme="dark"] .blog-sec {
   margin-top: 43px;
 }
 
-.six-sec a {
-  margin-top: 69px;
+.six-sec .btn {
+  margin: 69px 5px 0px;
 }
 
 .six-sec .single img {
   margin-top: 69px;
+}
+
+.six-sec h3 {
+  margin-top: 50px;
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 37px;
+  color: #333;
 }
 
 .six-sec .single h2 {
