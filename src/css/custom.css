@@ -83,14 +83,15 @@ html[data-theme="dark"] .DocSearch {
 }
 
 .diagram-thumbnail {
-  width: 300px;
+  width: 350px;
   float: right;
   margin: 0px 10px;
   cursor: pointer;
 }
 
-.diagram-thumbnail img {
+.diagram-thumbnail img:hover {
   cursor: pointer;
+  box-shadow: -1px -1px 5px #333;
 }
 
 .diagram-thumbnail.large {
