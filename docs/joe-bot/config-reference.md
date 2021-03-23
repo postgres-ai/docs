@@ -206,26 +206,26 @@ enterprise:
 ```
 
 ## General environment variables
-### `SERVER_HOST`
+### `JOE_APP_HOST`
 - (string, default: `127.0.0.1`), host that Joe bot API accepts HTTP connections from. Used only for Web UI and Slack Events API communication types. It can be defined either as an IP address or domain name. By default, it accepts only local connections. Use an empty string to accept all connections.
 
-### `SERVER_PORT`
+### `JOE_APP_PORT`
 - (integer, default: `2400`), HTTP server port used to serve requests to Joe bot API. Used only for Web UI and Slack Events API communication types
 
-### `MIN_NOTIFY_DURATION`
+### `JOE_APP_MIN_NOTIFY_DURATION`
 - (string, default: `60s`), if the processing of command takes longer than the specified value, a notification will be issued to the user
 
-### `PLATFORM_URL`
+### `JOE_PLATFORM_URL`
 - (string, default: `https://postgres.ai/api/general`), Postgres.ai Platform API base URL
 
-### `PLATFORM_TOKEN`
+### `JOE_PLATFORM_TOKEN`
 - (string), Postgres.ai Platform API Token
 
-### `PLATFORM_PROJECT`
+### `JOE_PLATFORM_PROJECT`
 - (string), Postgres.ai Platform project to assign user sessions
 
-### `HISTORY_ENABLED`
-- (boolean, default: `true`), enable sending command history to Postgres.ai Platform for collaboration and visualization. Requires setting proper `PLATFORM_TOKEN`. See the [Joe Bot Tutorial](/docs/tutorials/joe-setup#step-2a-set-up-joe-in-postgresai-console-web-ui) for the token.
+### `JOE_PLATFORM_HISTORY_ENABLED`
+- (boolean, default: `true`), enable sending command history to Postgres.ai Platform for collaboration and visualization. Requires setting proper `JOE_PLATFORM_TOKEN`. See the [Joe Bot Tutorial](/docs/tutorials/joe-setup#step-2a-set-up-joe-in-postgresai-console-web-ui) for the token.
 
 ### `JOE_DEBUG` 
 - (boolean, default: `false`), enable debug mode
