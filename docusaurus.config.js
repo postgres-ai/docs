@@ -72,8 +72,7 @@ module.exports = {
           label: 'Product',
           position: 'right',
           to: '/',
-          activeBaseRegex: '/$',
-          activeBaseRegex: '/$',
+          activeBaseRegex: '^/products',
           items: [
             {
               label: 'How It Works',
@@ -99,12 +98,18 @@ module.exports = {
         },
         {
           label: 'Documentation',
+          to: '/docs',
+          activeBaseRegex: '^/docs',
           position: 'right',
           items: [
             {
-              label: 'Getting Started',
+              label: 'Documentation Home',
               to: '/docs',
-              activeBaseRegex: '/docs$'
+              activeBaseRegex: '^/docs',
+            },
+            {
+              label: 'Getting Started for Amazon RDS',
+              to: '/docs/tutorials/database-lab-tutorial-amazon-rds',
             },
             {
               label: 'Database Lab FAQ',

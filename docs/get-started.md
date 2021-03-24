@@ -1,8 +1,8 @@
 ---
 id: get-started
-title: Getting started with Database Lab
+title: Database Lab Documentation
 hide_title: false
-sidebar_label: Getting started
+sidebar_label: Documentation Home
 slug: /
 description: Database Lab is used to boost software development via enabling ultra-fast provisioning of databases of any size. Developers, DBAs, and QA engineers work with full-sized independent clones of PostgreSQL databases. Development and testing tasks are accomplished much faster, with more iterations done, with better quality achieved and with much less money spent.
 keywords:
@@ -18,25 +18,41 @@ keywords:
   - "postgres-checkup"
 ---
 
-|   |   |
-| - | - |
-| [Database Lab Engine](/docs/database-lab) (open source)<br/>Open-source technology to clone databases of any size in seconds | [Joe, SQL optimization chatbot](/docs/joe-bot) (open source)<br/>Run `EXPLAIN ANALYZE` and optimize SQL on instantly provisioned full-size database copies |
-| [postgres-checkup](/docs/checkup) (open source)<br/>Automated health-checks and query analysis for heavily-loaded PostgreSQL databases | [Detached replicas](/docs/data-access)<br/>Use BI tools, run analytical queries, perform data export without replication lags and bloat |
-| [Database Lab tutorial for Amazon RDS](/docs/tutorials/database-lab-tutorial-amazon-rds)<br/>Get started to use Database Lab for Amazon RDS PostgreSQL | [Database Lab tutorial](/docs/tutorials/database-lab-tutorial)<br/>Get started to use Database Lab for any PostgreSQL |
-
-<!--#### [Data recovery /  Instantaneously recover lost data](/docs/data-recovery)
-Recover accidentally deleted data. Using thin cloning, the point-in-time recovery (PITR) can be performed without long waiting.
--->
-
-## What is Database Lab?
-Database Lab is used to boost software development via enabling ultra-fast provisioning of databases of any size. Developers, DBAs, and QA engineers work with full-sized independent clones of PostgreSQL databases. Development and testing tasks are accomplished much faster, with more iterations done, with better quality achieved and with much less money spent.
-
-![CI/CD transformation with Database Lab](/assets/cicd-transform.png)
-
-- Optimize non-production infrastructure costs by 10x
-- Drastically improve development quality
-- Get rid of downtimes and avoid performance degradation
-- Cut half of the TTM (time to market), develop 2x faster than competitors
-
-![Database Lab architecture](/assets/architecture.png)
-
+<table class='docs-home'>
+  <tr>
+    <td>
+      <h3>Getting Started</h3>
+      <ul>
+        <li><a href='/docs/tutorials/database-lab-tutorial-amazon-rds'>Engine Setup for Amazon RDS</a></li>
+        <li><a href='/docs/tutorials/database-lab-tutorial'>Engine Setup for any PostgreSQL database</a></li>
+        <li><a href='/docs/tutorials/joe-setup'>Joe Bot Setup</a></li>
+        <li><a href='/docs/questions-and-answers'>FAQ</a></li>
+      </ul>
+    </td>
+    <td>
+      <h3>Product & Use Cases</h3>
+      <ul>
+        <li><a href='/products/how-it-works'>How it Works</a></li>
+        <li><a href='/products/database-migration-testing'>Database Migration Testing</a></li>
+        <li><a href='/products/joe'>SQL Optimization</a></li>
+        <li><a href='/products/realistic-test-environments'>Realistic Dev & Test Environments</a></li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <h3>Security</h3>
+      <ul>
+        <li><a href='/docs/platform/security'>Platform Security</a></li>
+        <li><a href='/docs/database-lab/masking'>Data Masking Setup & Configuration</a></li>
+      </ul>
+    </td>
+    <td>
+      <h3>Reference</h3>
+      <ul>
+        <li><a href='/docs/database-lab/config-reference'>Database Lab Engine (DLE) Configuration</a></li>
+        <li><a href='/docs/joe-bot/config-reference'>Joe Bot Configuration</a></li>
+      </ul>
+    </td>
+  </tr>
+</table>

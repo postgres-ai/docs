@@ -16,14 +16,6 @@ description: Learn how to use Joe bot to build a swift workflow of PostgreSQL qu
 
 [↵ Back to Guides](/docs/guides/)
 
-:::note
-Joe bot is hosted and developed on GitLab.com. Why? GitLab Inc. is our (Postgres.ai) long-term client and an early adopter (see [GitLab Development Docs](https://docs.gitlab.com/ee/development/understanding_explain_plans.html#database-lab)). GitLab has an open-source version. Last but not least: GitLab uses PostgreSQL.
-
-However, nowadays, not many open-source projects are hosted at GitLab.com unfortunately. ⭐️&nbsp;Please support the project by giving a star on GitLab! It's on [the main page of the Database Lab Engine repository](https://gitlab.com/postgres-ai/joe), in the upper right corner:
-
-![Add a GitLab star](/assets/star.gif)]
-:::
-
 ## Step 1. Requirements
 - Set up [Database Lab Engine](/docs/tutorials/database-lab-tutorial) (e.g., running on address https://dblab.domain.com) before configuring Joe Bot
 :::note
@@ -123,7 +115,7 @@ channelMapping:
               # usually exists in any PostgreSQL setup.
               dbname: postgres
               # It is NOT recommended to work without SSL. This value will be
-              # used in a clone's pg_hba.conf. 
+              # used in a clone's pg_hba.conf.
               # See https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-SSLMODE-STATEMENTS
               sslmode: prefer
 
@@ -161,7 +153,7 @@ channelMapping:
 #              # usually exists in any PostgreSQL setup.
 #              dbname: postgres
 #              # It is NOT recommended to work without SSL. This value will be
-#              # used in a clone's pg_hba.conf. 
+#              # used in a clone's pg_hba.conf.
 #              # See https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-SSLMODE-STATEMENTS
 #              sslmode: prefer
 
@@ -195,7 +187,7 @@ channelMapping:
 #              # usually exists in any PostgreSQL setup.
 #              dbname: postgres
 #              # It is NOT recommended to work without SSL. This value will be
-#              # used in a clone's pg_hba.conf. 
+#              # used in a clone's pg_hba.conf.
 #              # See https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-SSLMODE-STATEMENTS
 #              sslmode: prefer
 
@@ -289,14 +281,14 @@ Now we have all tokens and ready to run Joe Bot.
         --volume ~/.dblab/joe.yml:/home/config/config.yml \
         --detach \
     postgresai/joe:latest
-    ``` 
+    ```
 
     To observe Joe logs use:
 
     ```bash
     sudo docker logs -f joe_bot
     ```
-    
+
     Need you to reconfigure or upgrade, you can stop and remove the container any time using `sudo docker stop joe_bot` and `sudo docker rm joe_bot` and then launching it again as described above.
 
 1. Make a publicly accessible HTTP(S) server port specified in the configuration to receive requests from communication channels Request URL (e.g., http://35.200.200.200:2400, https://joe.dev.domain.com).

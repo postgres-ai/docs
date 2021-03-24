@@ -412,6 +412,19 @@ html[data-theme="dark"] .multi-sec {
 .user-case2-ml {
   display: none;
 }
+
+table.docs-home * {
+  border: none;
+}
+
+table.docs-home tr:nth-child(2n) {
+  background-color: transparent;
+}
+
+table.docs-home td {
+  vertical-align: top;
+}
+
 @media (min-width: 991px) and (max-width: 1199px) {
   .source-boxes{
     height:265px !important;
