@@ -19,23 +19,14 @@ Database Lab is used to boost software development and testing processes via ena
 
 In this tutorial, we are going to create a "demo" PostgreSQL database and then set up a Database Lab Engine for it. Database Lab Engine will be installed on an AWS EC2 instance (alternatively, it can be an instance on another cloud platform such as GCP, or a bare-metal machine) with Ubuntu 18.04 or 20.04, and add an EBS volume to store PostgreSQL data directory. Optionally, you'll be able to skip creating the "demo" database and use an existing database instead.
 
-:::note
-Database Lab Engine is hosted and developed on GitLab.com. Why? GitLab Inc. is our (Postgres.ai) long-term client and an early adopter (see [GitLab Development Docs](https://docs.gitlab.com/ee/development/understanding_explain_plans.html#database-lab)). GitLab has an open-source version. Last but not least: GitLab uses PostgreSQL.
-
-However, nowadays, not many open-source projects are hosted at GitLab.com unfortunately. ⭐️&nbsp;Please support the project by giving a star on GitLab! It's on [the main page of the Database Lab Engine repository](https://gitlab.com/postgres-ai/database-lab), in the upper right corner:
-
-![Add a GitLab star](/assets/star.gif)]
-:::
-
-
-Our steps:
+Steps:
 
 1. Prepare a virtual machine (we will use AWS EC2) with an additional disk to store data, install Docker to run containers, and ZFS to enable copy-on-write for thin cloning
 1. Configure and launch the Database Lab Engine
 1. Start using Database Lab API and client CLI to clone Postgres database in seconds
 
 :::tip
-Not using AWS? Not a problem: if you want to use any other cloud provider (like Google Cloud) or run your Database Lab on VMWare, or on bare metal; only the first step is going to be slightly different. In general, the overall procedure is pretty much the same.
+Not using AWS? Not a problem: if you want to use any other cloud provider (like Google Cloud) or run your Database Lab on VMWare, or on bare metal; only the first step is going to be slightly different. In general, the overall procedure is the same.
 :::
 
 :::info
@@ -60,7 +51,7 @@ Additionally, to be able to install software, allow access to external resources
 - `80` for HTTP
 - `443` for HTTPS
 
-Here is how the inbound and outbound rules in your Security Group may look like:
+Here is how the inbound and outbound rules in your Security Group may look:
 
 ![EC2 security group inbound](/assets/ec2-security-group-inbound.png)
 
