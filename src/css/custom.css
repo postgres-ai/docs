@@ -158,15 +158,15 @@ html[data-theme="dark"] .DocSearch {
 
 html[data-theme="light"] .banner {
   background: linear-gradient(180deg, #ffe1d2 0%, #ffffff 100%);
-  min-height: 584px;
+  min-height: 534px;
 }
 
 html[data-theme="dark"] .banner {
-  min-height: 584px;
+  min-height: 534px;
 }
 
 .banner .row {
-  min-height: 584px;
+  min-height: 534px;
 }
 
 .banner h1 {
@@ -452,7 +452,7 @@ table.docs-home td {
     display: none;
   }
   .banner {
-    min-height: 590px;
+    min-height: 540px;
   }
   .banner h1 {
     font-size: 32px;
@@ -545,7 +545,7 @@ table.docs-home td {
     display: none;
   }
   .banner {
-    min-height: 590px;
+    min-height: 540px;
   }
   .banner h1 {
     font-size: 32px;
@@ -631,7 +631,7 @@ table.docs-home td {
     display: none;
   }
   .banner {
-    min-height: 590px;
+    min-height: 540px;
   }
   .banner h1 {
     font-size: 32px;
