@@ -47,12 +47,10 @@ function IndexPage() {
       </section>
 
       <section className="six-sec position-relative">
-        <div className="row">
-          <div className="col-md-12">
-            <h3 className="text-center">
-              Instantly clone your production database and...
-            </h3>
-          </div>
+        <div className="col-sm-12">
+          <h3 className="text-center">
+            Instantly clone your production database and...
+          </h3>
         </div>
         <div className="container text-center">
           <div className="row">
