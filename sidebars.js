@@ -3,7 +3,6 @@ module.exports = {
     "Overview": [
       "get-started",
       "questions-and-answers",
-      "pricing",
       "roadmap",
     ],
     "Tutorials": [

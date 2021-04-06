@@ -44,4 +44,4 @@ Self-managed setup requires Kubernetes. It is available upon request. Please rea
 Learn more:
 - [SaaS Terms of use](https://postgres.ai/tos/)
 - [Privacy Policy](https://postgres.ai/privacy/)
-- [Pricing](https://postgres.ai/docs/pricing)
+- [Pricing](/pricing)

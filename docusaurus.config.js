@@ -97,6 +97,11 @@ module.exports = {
           ],
         },
         {
+          to: '/pricing',
+          label: 'Pricing',
+          position: 'right',
+        },
+        {
           label: 'Documentation',
           to: '/docs',
           activeBaseRegex: '^/docs',
