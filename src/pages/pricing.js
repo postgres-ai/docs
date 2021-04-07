@@ -124,7 +124,7 @@ function PricingPage() {
             <div className='col-md-9 offset-2'>
               <ul class='footnotes'>
                 <li>
-                  <sup>1</sup> Service is priced per GiB / hour at a rate of $1.916928.
+                  <sup>1</sup> Service is priced per GiB / hour at a rate of $0.002662.
                   Database Lab monitors the physical size of the database using <code>df</code>
                   on an hourly basis.
                   Standard and Enterprise packages have access to the Database Lab Web Platform.
