@@ -8,7 +8,7 @@ const blog = [
     image: '/assets/thumbnails/dle-2.2-blog.png',
   },
   {
-    link: 'blog/dle-2.1-release',
+    link: 'blog/dle-2-1-release',
     date: '2020-12-31 09:22:00',
     publishDate: '2020-12-31 09:22:00',
     title: 'Database Lab Engine 2.1',
@@ -16,7 +16,7 @@ const blog = [
     image: '/assets/thumbnails/dle-2.1-blog.png',
   },
   {
-    link: 'blog/dle-2.0-release',
+    link: 'blog/dle-2-0-release',
     date: '2020-11-11 11:20:20',
     publishDate: '2020-11-10 11:20:20',
     title: 'Database Lab Engine 2.0',
