@@ -1,7 +1,7 @@
 // Duplicates data from the blog.
 const blog = [
   {
-    link: 'blog/',
+    link: 'blog/dle-2-2-release',
     date: '2021-02-22 06:45:00',
     title: 'Database Lab Engine 2.2 and Joe Bot 0.9',
     description: 'Database Lab Engine 2.2.0 and SQL Optimization Chatbot “Joe” 0.9.0 released: multiple pools for automated “logical” initialization, production timing estimation (experimental), and improved security.',
