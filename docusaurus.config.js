@@ -52,14 +52,13 @@ module.exports = {
       { name: 'twitter:creator', content: '@Database_Lab' },
     ],
 
-    /*announcementBar: {
-      id: 'support_us_star', // Any value that will identify this message to save the hidden status.
-      content:
-        '⭐ If you like Database Lab, give it a star on <a target="_blank" href="https://gitlab.com/postgres-ai/database-lab">GitLab</a> ⭐',
-      backgroundColor: '#FFE3C7',
-      textColor: '#000',
+    announcementBar: {
+      id: 'advisory_group', // Any value that will identify this message to save the hidden status.
+      content: 'We\'re building a Mid-Market Customer Advisory Group.&nbsp;<a href=\'/customer-advisory-group\'>Learn more</a> and apply.',
+      backgroundColor: '#D7EEF2',
+      textColor: '#013A44',
       isCloseable: true,
-    },*/
+    },
 
     navbar: {
       title: 'Postgres.ai',
