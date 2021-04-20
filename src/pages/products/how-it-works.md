@@ -4,7 +4,7 @@ description: Basics of the Database Lab Platform
 ---
 
 # How it Works
-The Database Lab Engine is an open source experimentation platform for PostgreSQL
+The Database Lab Engine is an open-source experimentation platform for PostgreSQL
 databases. Instantly create full-size clones of your production database and use
 them to test your database migrations, optimize SQL, or deploy full-size staging
 apps.
@@ -33,7 +33,7 @@ identically to production: they will have the same data and generate the same qu
 Instances of the Database Lab Engine (DLE) and all thin clones reside completely within
 your own infrastructure at all times.
 
-The DLE is managed via an API which can be exposed either over HTTPS or an SSH tunnel.
+The DLE is managed via an API that can be exposed either over HTTPS or an SSH tunnel.
 The team at Postgres.ai and all platform components:
 * ___cannot___ reach your databases
 * ___cannot___ read or modify the data in your databases
@@ -69,4 +69,3 @@ Here's what you can expect when setting up the DLE:
   </li>
   <li><sup>2</sup> The DLE has been tested on Ubuntu and RHEL/CentOS.</li>
 </ul>
-
