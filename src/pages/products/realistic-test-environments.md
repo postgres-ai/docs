@@ -12,7 +12,7 @@ to setup, maintain, and pay for standalone development and staging databases.
 
 ## Your Staging Server Doesn't Give You the Full Picture
 
-Most organizations take one of the following approaches to building a staging server:
+Most organizations take one of the following approaches to build a staging server:
 
 1. Staging has its own data that has been generated internally over time.
 1. Staging periodically restores a production backup and either
@@ -35,7 +35,7 @@ vastly simpler for software teams to find and resolve bugs _before_ they hit pro
 
 Examples of what teams can do with instantly available production clones:
 
-1. Quickly reproduce an issue surfaced on production without a lengthy setup
+1. Quickly reproduce an issue that surfaced on production without a lengthy setup
 1. Easily reset a staging or development database while conducting pre-release testing
 1. Preview _precisely_ how code and data changes will impact production prior to release
 
