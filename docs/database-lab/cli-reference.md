@@ -39,7 +39,11 @@ To list available commands, either run `dblab` with no parameters or with flag `
 - `--insecure`, `-k` (boolean, default: false) - allow insecure server connections when using SSL. 
 
     The environment variable `DBLAB_INSECURE_SKIP_VERIFY` can be used as well. The flags `--insecure` and `-k` override config/env settings.
-    
+
+- `--request-timeout` (string, default: "") - allow changing requests timeout.
+
+  The environment variable `DBLAB_REQUEST_TIMEOUT` can be used as well. The flag `--request-timeout` overrides config/env settings.
+
 - `--forwarding-server-url` (string, default: "") - forwarding server URL of Database Lab instance.
 
     The environment variable `DBLAB_CLI_FORWARDING_SERVER_URL` can be used as well. The flag `--forwarding-server-url` overrides config/env settings.
@@ -100,6 +104,7 @@ dblab init [command options] [arguments...]
    - `--url` (string, required) - URL of Database Lab instance's API
    - `--token` (string, required) - verification token of Database Lab instance
    - `--insecure` (boolean, optional, default: false) - allow insecure server connections when using SSL
+   - `--request-timeout` (string, optional, default: "") - change requests timeout
    - `--forwarding-server-url` (string, optional) - forwarding server URL of Database Lab instance. For example: `ssh://user@remote.host:22`
    - `--forwarding-local-port` (string, optional) - local port for forwarding to the Database Lab instance
    - `--identity-file` (string, optional) - select a file from which the identity (private key) for public key authentication is read"
@@ -445,6 +450,7 @@ dblab config create [command options] ENVIRONMENT_ID
 - `--url` (string, required) - URL of Database Lab instance's API
 - `--token` (string, required) - verification token of Database Lab instance
 - `--insecure` (boolean, optional) - allow insecure server connections when using SSL
+- `--request-timeout` (string, optional) - change requests timeout
 - `--forwarding-server-url` (string, optional) - forwarding server URL of Database Lab instance. For example, `ssh://user@remote.host:22`
 - `--forwarding-local-port` (string, optional) - local port for forwarding to the Database Lab instance
 - `--identity-file` (string, optional) - a path to a file from which the identity (private key) for public key authentication is read
@@ -469,6 +475,7 @@ dblab config update [command options] ENVIRONMENT_ID
 - `--url` (string) - URL of Database Lab instance's API
 - `--token` (string) - verification token of Database Lab instance
 - `--insecure` (boolean, optional) - allow insecure server connections when using SSL
+- `--request-timeout` (string, optional) - change requests timeout
 - `--forwarding-server-url` (string, optional) - forwarding server URL of Database Lab instance. For example, `ssh://user@remote.host:22`
 - `--forwarding-local-port` (string, optional) - local port for forwarding to the Database Lab instance
 - `--identity-file` (string, optional) - a path to a file from which the identity (private key) for public key authentication is read

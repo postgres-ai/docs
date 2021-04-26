@@ -62,6 +62,8 @@ channelMapping:
       url: "https://dblab.domain.com"
       # Secret token used to communicate with Database Lab API
       token: "secret_token"
+      # Allow changing DLE requests timeout
+      requestTimeout: 60s
 
   # Available communication types ("webui", "slack", "slackrtm", etc.)
   communicationTypes:
