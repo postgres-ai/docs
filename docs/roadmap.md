@@ -57,7 +57,8 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
 - [ ] Tags
 - [ ] Framework for macro database experiments (work with thick/regular clones)
 - [ ] Auto-register DLE in Platform
-- [ ] Resource usage quotas for clones: CPU, RAM
+- [x] Resource usage quotas for clones: CPU, RAM (container quotas, supported by Docker)
+- [ ] Disk quotas (`zfs set quota=xx`)
 
 ### [SaaS] Automated verification of database schema and complex data changes a.k.a. DB migrations
 - [a] History and logging for clones/sessions
