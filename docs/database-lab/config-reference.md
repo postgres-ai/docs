@@ -15,7 +15,10 @@ Useful guides that help manage Database Lab Engine:
 :::tip
 The configuration of Database Lab Engine can be reloaded without downtime:
 
-`docker exec -it dblab_test kill -SIGHUP 1` 
+```shell
+docker exec -it dblab_server kill -SIGHUP 1
+docker logs --since 1m dblab_server
+``` 
 :::
 
 ## The list of configuration sections
