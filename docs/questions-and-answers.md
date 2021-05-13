@@ -13,6 +13,13 @@ keywords:
   - "virtual postgres databases"
 ---
 
+## What is Postgres.ai (the company)?
+Postgres.ai brings continuous integration to full-size databases drastically improving the quality of software development and testing. The Database Lab Engine, developed by Postgres.ai, is an open-source platform to create instant, full-size clones of your production database. Use these clones to test your database migrations, optimize SQL, or deploy full-size staging apps.
+
+The website https://Postgres.ai/ hosts the SaaS version of Database Lab.
+
+Additionally, Postgres.ai's database experts provide database performance and scalability consulting services to a very limited number of fast-growing companies.
+
 ## What is "thin cloning"? Thin vs. thick clones
 There are two types of cloning used by Database Lab Engine:
 
