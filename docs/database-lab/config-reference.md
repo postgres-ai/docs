@@ -6,7 +6,7 @@ sidebar_label: Configuration reference
 ## Overview
 Database Lab Engine behavior can be controlled using the main configuration file that has YAML format. This reference describes available configuration options.
 
-Example config files can be found here: https://gitlab.com/postgres-ai/database-lab/-/tree/v2.2/configs.
+Example config files can be found here: https://gitlab.com/postgres-ai/database-lab/-/tree/2.3.1/configs.
 
 Useful guides that help manage Database Lab Engine:
 - [How to configure and start Database Lab Engine](/docs/guides/administration/engine-manage#configure-and-start-a-database-lab-engine-instance)
