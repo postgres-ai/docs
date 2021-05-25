@@ -63,7 +63,9 @@ Multi-terabyte Database Lab Engine instances run for many months, synchronizing 
 ---
 
 ## What do I need to use Database Lab?
-- For each Database Lab Engine instance, a separate machine is needed, either physical or virtual. It does not matter where the machine is located, on-premise or in clouds.
+- For each Database Lab Engine instance, having a dedicated machine is recommended, either physical or virtual:
+    - it does not matter where the machine is located, on-premise or in clouds;
+    - it is possible to run multiple Database Lab Engine instances on a single machine, but it is a requirement that each one of them will operate with its own ZFS pool or LVM2 volume (depending on what is used for thin cloning in your case). 
 - For each PostgreSQL source database (most usually, production), a separate Database Lab Engine instance is recommended. In systems with micro-service architecture, in most cases, each service has a separate database, usually isolated (separate PostgreSQL cluster) – for each such database, it is recommended to set up a separate Database Lab Engine.
 - Machine for Database Lab Engine needs to have a separate disk partition with size enough to store Postgres directory fetched from the source.
 - With ZFS, it is highly recommended to always maintain at least 20% of free disk space. Note that ZFS transparently compresses data, so for a 10 TiB database, a 10 TiB disk space is usually enough.
