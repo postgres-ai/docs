@@ -38,14 +38,14 @@ Postgres.ai only processes personal information in a way that is compatible with
 - process for other purposes for which we obtain your consent.
 
 ## INFORMATION SECURITY AND ACCURACY
-We intend to protect your personal information and to maintain its accuracy. Postgres.ai implements reasonable physical, administrative and technical safeguards to help us protect your personal information from unauthorized access, use and disclosure. For example, we encrypt all the information that we send over the Internet. We also require that our suppliers protect information from unauthorized access, use and disclosure.
+We intend to protect your personal information and to maintain its accuracy. Postgres.ai implements reasonable physical, administrative and technical safeguards to help us protect your personal information from unauthorized access, use and disclosure. For example, we encrypt passwords when stored and encrypt all and personal information when we transmit such information over the Internet. We also require that our suppliers protect information from unauthorized access, use and disclosure.
 
 ## INFORMATION SHARING
 We work with other companies who help us run our business (“Service Providers”). Service Providers provide services to help us deliver customer support, process credit card payments, manage and contact our existing Customers as well as sales leads, provide marketing support, and otherwise operate and improve our Services. These Service Providers may only process personal information pursuant to our instructions and in compliance both with this Privacy Policy and other applicable confidentiality and security measures and regulations.
 
 Specifically, we do not permit our Service Providers to use any personal information we share with them for their own marketing purposes or for any other purpose other than in connection with the services they provide to us.
 
-You can find the list of current Service Providers at https://postgres.ai/docs/platform/service-providers.
+You can obtain a list of our Service Providers on request at privacy@postgres.ai.
 
 In addition to sharing with Service Providers as described above, we may also share your information with others in the following circumstances:
 
