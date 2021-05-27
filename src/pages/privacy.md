@@ -1,31 +1,31 @@
 ---
-title: Privacy policy
+title: Privacy Policy
 ---
 
 Terms of Service: https://postgres.ai/tos/
 
 # Privacy policy
 
-*Last Updated: February 25, 2021*
+*Last Updated: May 27, 2021*
 
-This Personal Data Processing and Protection Policy (the “Policy” or “privacy statement”) is adopted and in effect in Nombox LLC d.b.a. Postgres.ai located at 1148 Carlos Privada, Mountain View, CA 94040, USA ("Postgres.ai" or "we").
+This Privacy Policy (this “Policy”) is adopted by Nombox LLC d.b.a. Postgres.ai located at 1148 Carlos Privada, Mountain View, CA 94040, USA ("Postgres.ai" or "we").
 
-Postgres.ai has the utmost respect for your privacy, and thus, we want to give you the best possible experience while you are using our website. Hence, please take your time to review our privacy policy that applies to our website. By continuing to use our website and our services, it will be noted that you have read, understood and agreed to the data practices described below.
+Postgres.ai has the utmost respect for your privacy, and thus, we want to give you the best possible experience while you are using our website. Hence, please take your time to review this Policy. Your continued use of our website and our services will consitute your representation that you have read, understood and agreed to this Policy.
 
-Postgres.ai will not disclose or sell your personal information, without your consent, to third parties who are not affiliated with Postgres.ai. However, in the privacy statement below, there are certain exemptions for which we will give further explanations.
+Postgres.ai will not disclose or sell your personal information, without your consent, to third parties who are not affiliated with Postgres.ai except as otherwise provided below in this Policy.
 
 We believe that you have the right to know what kind and how information may be collected by this website. Moreover, you ought to know how this information may be used, disclosed, and the amount of protection we instill upon your privacy.
 
-The following Privacy Policy relates to our customers, users who have visited our website and inquired about or bought our services, as well as those who have visited and used the Postgres.ai website (https://postgres.ai/) without purchasing our services.
+This Policy applies to our customers and users who have visited our website and inquired about or bought our services, as well as those who have visited and used the Postgres.ai website (https://postgres.ai/) without purchasing our services.
 
 ## INFORMATION WE COLLECT
-- **Your personal details** – name, address, phone number, email address when you submit web forms on our website, including opportunities to sign up for and agree to receive email communications from us. We also may ask you to submit such personal information if you choose to use interactive features of our website, including participation in surveys, contests, promotions, sweepstakes, requesting customer support, you register for or attend an event sponsored by Postgres.ai or otherwise communicating with us.
+- **Your personal details** – name, address, phone number, email address when you submit web forms on our website, including opportunities to sign up for and agree to receive email communications from us. We also may ask you to submit such personal information if you choose to use interactive features of our website, including participation in surveys, contests, promotions, sweepstakes, requesting customer support, registration for attendance at an event sponsored by Postgres.ai or otherwise communicating with us.
 - **Log Files** – certain information including but is not limited to Internet Protocol (IP) addresses, system configuration information, URLs of referring pages, and locale and language preferences when you visit and interact with most websites and services delivered via the Internet, when you visit our website and interactive areas offered by it.
-- **Cookies and Other Tracking Technologies** – we may use cookies provide you with a user-friendly interface, features and general access to our website. You can control how our website use cookies by configuring your browser's privacy settings (please refer to your browser's help function to learn more about cookie controls). Note that if you disable cookies entirely, our website may not function properly. Third parties may use the data collected by the cookies. The purpose of the use of cookies on our website is site improvement, as well as the analysis of our customer-provider relationships and marketing intentions. For more information about the cookies Postgres.ai uses, please see our Cookie Policy.
+- **Cookies and Other Tracking Technologies** – we may use cookies to provide you with a user-friendly interface, features and general access to our website. You can control how our website use cookies by configuring your browser's privacy settings (please refer to your browser's help function to learn more about cookie controls). Note that if you disable cookies entirely, our website may not function properly. Third parties may use the data collected by the cookies. The purpose of the use of cookies on our website is site improvement, as well as the analysis of our customer-provider relationships and marketing intentions. For more information about the cookies Postgres.ai uses, please see our Cookie Policy.
 - **Interactive Areas** – publicly accessible blogs, chats, community forums, comments sections, discussion forums, or other interactive features (“Interactive Areas”). If you choose to participate in any of these Interactive Areas, please be aware that that any information that you post in an Interactive Area might be read, collected, and used by others who access it. If you wish to remove your personal information from any of our Interactive Areas, please contact us at: privacy@postgres.ai.
 
 ## HOW WE USE INFORMATION WE COLLECT
-Postgres.ai only processes personal information in a way that is compatible with and relevant for the purpose for which it was collected or authorized. As a general matter, for all categories of data we collect except Resolver User data, we may use the information we collect to:
+Postgres.ai only processes personal information in a way that is compatible with and relevant for the purpose for which it was collected or authorized. As a general matter, for all categories of data we collect, we may use the information we collect to:
 
 - provide, operate, maintain, improve, and promote our website and services;
 - enable you to access and use our website and services;
@@ -38,12 +38,12 @@ Postgres.ai only processes personal information in a way that is compatible with
 - process for other purposes for which we obtain your consent.
 
 ## INFORMATION SECURITY AND ACCURACY
-We intend to protect your personal information and to maintain its accuracy. Postgres.ai implements reasonable physical, administrative and technical safeguards to help us protect your personal information from unauthorized access, use and disclosure. For example, we encrypt certain personal information when we transmit such information over the Internet. We also require that our suppliers protect such information from unauthorized access, use and disclosure.
+We intend to protect your personal information and to maintain its accuracy. Postgres.ai implements reasonable physical, administrative and technical safeguards to help us protect your personal information from unauthorized access, use and disclosure. For example, we encrypt all the information that we send over the Internet. We also require that our suppliers protect information from unauthorized access, use and disclosure.
 
 ## INFORMATION SHARING
-We work with other companies who help us run our business (“Service Providers”). These companies provide services to help us deliver customer support, process credit card payments, manage and contact our existing Customers as well as sales leads, provide marketing support, and otherwise operate and improve our Services. These Service Providers may only process personal information pursuant to our instructions and in compliance both with this Privacy Policy and other applicable confidentiality and security measures and regulations.
+We work with other companies who help us run our business (“Service Providers”). Service Providers provide services to help us deliver customer support, process credit card payments, manage and contact our existing Customers as well as sales leads, provide marketing support, and otherwise operate and improve our Services. These Service Providers may only process personal information pursuant to our instructions and in compliance both with this Privacy Policy and other applicable confidentiality and security measures and regulations.
 
-Specifically, we do not permit our Service Providers to use any personal information we share with them for their own marketing purposes or for any other purpose than in connection with the services they provide to us.
+Specifically, we do not permit our Service Providers to use any personal information we share with them for their own marketing purposes or for any other purpose other than in connection with the services they provide to us.
 
 You can find the list of current Service Providers at https://postgres.ai/docs/platform/service-providers.
 
@@ -53,26 +53,26 @@ In addition to sharing with Service Providers as described above, we may also sh
 - In the event of a merger, sale, change in control, or reorganization of all or a part of our business
 - When we are required to disclose personal information to respond to subpoenas, court orders, or legal process, or to establish or exercise our legal rights or defend against legal claims
 - Where we have a good-faith belief sharing is necessary to investigate, prevent, or take action regarding illegal activities, suspected fraud, situations involving potential threats to the physical safety of any person, violations of our Service Agreement, or as otherwise required to comply with our legal obligations; or
-- as you may otherwise consent from time to time.
+- In other situations where you provide your consent from time to time.
 
 We do not sell, rent, or share personal information with third parties for their direct marketing purposes.
 
 ## PERSONAL DATA OF CHILDREN
 Postgres.ai’s services are not designed for users who are under the age of 16. Hence, we will never knowingly collect, use, or process personal data provided by someone who is under the age of 16.
 
-## CHANGES TO THIS PRIVACY STATEMENT
-We recognize that transparency is an ongoing responsibility so we will keep this privacy statement under regular review.
+## CHANGES TO THIS PRIVACY POLICY
+We recognize that transparency is an ongoing responsibility so we will keep this Policy under regular review.
 
-This privacy statement was last updated on February 25, 2021.
+This Policy was last updated on May 26, 2021.
 
 ## DATA CONTROLLER AND CONTACT INFORMATION
-If you have any questions about this privacy statement or how and why we process personal data, please contact us at:
+If you have any questions about this Policy or how and why we process personal data, please contact us at:
 
+```
 NOMBOX LLC d.b.a. Postgres.ai
-
 1148 Carlos Privada, Mountain View, CA 94040, USA
-
 Email: privacy@postgres.ai
+```
 
 ## INDIVIDUALS’ RIGHTS AND HOW TO EXERCISE THEM
 
@@ -133,7 +133,7 @@ To exercise your right to data portability, please email us at privacy@postgres.
 
 Where we process personal data based on consent, individuals have a right to withdraw consent at any time. We do not generally process personal data based on consent (as we can usually rely on another legal basis). Where we rely on your consent for our processing of your personal data, to withdraw your consent please email us at privacy@postgres.ai or, to stop receiving an email from a Postgres.ai marketing list.
 
-you may manage your receipt of commercial communications by clicking on the “unsubscribe” link located on the bottom of such emails, through your account settings if you have a Postgres.ai account, or you may send a request to unsubscribe@postgres.ai
+You may manage your receipt of commercial communications by clicking on the “unsubscribe” link located on the bottom of such emails, through your account settings if you have a Postgres.ai account, or you may send a request to unsubscribe@postgres.ai
 
 ### Complaints
 
@@ -144,5 +144,3 @@ You also have the right to lodge a complaint with the supervisory authority in y
 ---
 
 ***If you have any questions or comments about this Privacy Policy, please contact us at privacy@postgres.ai.***
-
-
