@@ -1,0 +1,65 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: defaults,not ie 11,not ie_mob 11
+*/
+
+/* After each changes, please recompile it here https://autoprefixer.github.io/. */
+
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  background: #fff;
+  box-shadow: 0 0 16px rgba(0,0,0, .15);
+  padding: 16px;
+  transition: opacity .2s ease-out, transform .2s ease-out;
+  font-size: 14px;
+}
+
+.cookie-banner_hidden {
+  transform: translateY(100%);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.cookie-banner__desc {
+  margin: 0;
+}
+
+.cookie-banner__actions {
+  margin-top: 16px;
+  margin-right: -16px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cookie-banner__learn-more-button,
+.cookie-banner__accept-button {
+  font-family: inherit;
+  font-size: inherit;
+  padding: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 16px;
+  text-decoration: none;
+}
+
+.cookie-banner__learn-more-button {
+  background: #fff;
+  border: 1px solid #ff6112;
+  color: #ff6112;
+}
+
+.cookie-banner__learn-more-button:hover {
+  text-decoration: none;
+}
+
+.cookie-banner__accept-button {
+  background: #ff6112;
+  border: none;
+  color: #fff;
+}
