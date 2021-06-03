@@ -19,12 +19,7 @@ module.exports = {
   // TODO (anatoly): @docusaurus/plugin-google-gtag doesn't seem to work now, refactor when fixed.
   scripts: [
     BASE_URL + 'js/gtag.js',
-    {
-      src: '//js.hs-scripts.com/8531691.js',
-      async: true,
-      id: 'hs-script-loader',
-      defer: true,
-    },
+    {src: BASE_URL + 'js/cookieBanner.js', async: true, defer: true},
   ],
 
   themeConfig: {
