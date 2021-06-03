@@ -45,9 +45,21 @@
     w.document.body.appendChild(root);
   };
 
-  w.document.addEventListener("DOMContentLoaded", () => {
+  const main = () => {
     const isCookieAccepted = w.localStorage.getItem("is-cookies-accepted");
     if (isCookieAccepted) return;
     renderCookieBanner();
-  });
+  }
+
+  const state = w.document.readyState
+
+  // This script loads in async and defer mods to be more friendly for the interface interactivity.
+  // Mods are specified in /docusaurus.config.js.
+  // Script can be loaded at any time, before or after document loaded.
+  // See https://developer.mozilla.org/en-US/docs/Web/API/Document/readyState.
+  if (state === "interactive" || state === "complete") {
+    main();
+  } else {
+    w.addEventListener("DOMContentLoaded", main);
+  }
 })(window);
