@@ -1,6 +1,6 @@
 ---
-title: How to connect to Database Lab clones
-sidebar_label: Connect to a clones
+title: How to connect to a Database Lab clone
+sidebar_label: Connect to a clone
 ---
 
 <!-- TODO proofread this (and all the HowTos (guides) -->
