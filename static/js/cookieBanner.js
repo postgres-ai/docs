@@ -35,7 +35,7 @@
     });
     const actions = element("div", {
       className: "cookie-banner__actions",
-      children: [learnMoreButton, acceptButton]
+      children: [acceptButton, learnMoreButton]
     });
     const root = element("div", {
       className: "cookie-banner",
