@@ -1,5 +1,13 @@
 const resources = [
   {
+    title: 'GitLab: How GitLab iterates on SQL performance optimization workflow to reduce downtime risks',
+    description: 'Learn how SaaS company can improve database management processes.',
+    preview: '/assets/thumbnails/case-study-gitlab.png',
+    link: '/download/database-lab-case-study-gitlab.pdf',
+    kind: 'Success story',
+    date: '2021-06-18 20:00:00',
+  },
+  {
     title: 'Qiwi: Control the Data with Database Lab to Accelerate Development',
     description: 'Learn how banks can overcome test data management pitfalls to eliminate production downtime related to data operations.',
     preview: '/assets/thumbnails/case-study-qiwi.png',
