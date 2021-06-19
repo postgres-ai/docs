@@ -87,7 +87,11 @@ module.exports = {
             {
               label: 'Sensitive Data Masking',
               to: '/products/data-masking',
-            }
+            },
+            {
+              to: '/resources',
+              label: 'Case Studies'
+            },
           ],
         },
         {
@@ -129,10 +133,10 @@ module.exports = {
               to: '/blog',
               label: 'Blog'
             },
-            {
-              to: '/resources',
-              label: 'Case Studies'
-            },
+            /*{
+              to: '/about',
+              label: 'About us'
+            },*/
           ]
         },
         {
