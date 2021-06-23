@@ -84,7 +84,7 @@ Database Lab Engine supports obfuscation of any type via injecting an SQL transf
 
 Options:
 - Use custom obfuscation script (define it using `preprocessingScript` option of [`logicalSnapshot`](/docs/database-lab/config-reference#job-logicalsnapshot) or [`physicalSnapshot`](/docs/database-lab/config-reference#job-physicalsnapshot) jobs);
-- Use the [In-place anonymization](https://postgresql-anonymizer.readthedocs.io/en/latest/in_place_anonymization/) of PostgreSQL Anonymizer.
+- Use the [In-place anonymization](https://postgresql-anonymizer.readthedocs.io/en/stable/in_place_anonymization/) of PostgreSQL Anonymizer.
 
 #### Pros
 - PII data anonymization not affecting production servers.
