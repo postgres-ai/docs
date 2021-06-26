@@ -9,7 +9,7 @@ keywords:
 ---
 
 ## Configure and start a Database Lab Engine instance
-Define config file `~/.dblab/server.yml` (see config examples [here](https://gitlab.com/postgres-ai/database-lab/-/blob/2.3.1/configs/)) and run the following command:
+Define config file `~/.dblab/server.yml` (see config examples [here](https://gitlab.com/postgres-ai/database-lab/-/blob/2.3.3/configs/)) and run the following command:
 
 ```bash
 sudo docker run \
@@ -21,7 +21,7 @@ sudo docker run \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   --volume /var/lib/dblab:/var/lib/dblab:rshared \
   --volume ~/.dblab/server.yml:/home/dblab/configs/config.yml \
-  postgresai/dblab-server:2.3-latest
+  postgresai/dblab-server:2.3.3
 ``` 
 
 ## Reconfigure Database Lab Engine
@@ -60,7 +60,7 @@ If you need to save the logs in a file:
 sudo docker logs dblab_server 2>&1 | gzip > dblab_server.log.gz
 ```
 
-If you want to see more details, enable debug mode setting option `debug` to `true` (see [example](https://gitlab.com/postgres-ai/database-lab/-/blob/2.3.1/configs/config.sample.yml)). Next, follow  [the reconfiguration guidelines](#reconfigure-database-lab) to apply the change.
+If you want to see more details, enable debug mode setting option `debug` to `true` (see [example](https://gitlab.com/postgres-ai/database-lab/-/blob/2.3.3/configs/config.sample.yml)). Next, follow  [the reconfiguration guidelines](#reconfigure-database-lab) to apply the change.
 
 :::caution
 When debug mode is turned on, logs may contain sensitive data such as API secret keys for the backup system.
