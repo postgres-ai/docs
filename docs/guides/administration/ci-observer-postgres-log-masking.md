@@ -14,7 +14,7 @@ keywords:
 ## Configure masking for PostgreSQL log
 When Database Lab's CI Observer is used for automated testing of database migrations, it stores PostgreSQL log in Database Lab Platform's centralized storage. You can optionally configure masking rules for sensitive data in the PostgreSQL log. Such rules will be continuously applied before sending any PostgreSQL log entries to the Platform's storage.
 
-You can define any masking rules in the form of regular expressions. To do it, open the Database Lab Engine configuration file (usually, `~/.dblab/server.yml`; see config file examples [here](https://gitlab.com/postgres-ai/database-lab/-/blob/2.3.1/configs/)) and define subsection `replacementRules` in the section `replacementRules`. A basic example: 
+You can define any masking rules in the form of regular expressions. To do it, open the Database Lab Engine configuration file (usually, `~/.dblab/server.yml`; see config file examples [here](https://gitlab.com/postgres-ai/database-lab/-/blob/2.3.3/configs/)) and define subsection `replacementRules` in the section `replacementRules`. A basic example: 
 ```yaml
 observer:
   replacementRules:
