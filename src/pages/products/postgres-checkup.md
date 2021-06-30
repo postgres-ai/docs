@@ -14,5 +14,5 @@ Human experts with decades of DBA experience will guide you through the procedur
 ## Budget and Resource Optimization
 The use of postgres.ai’s framework for conducting database experiments helps to find optimal configuration, optimize SQL queries, and do capacity planning to scale your project better at reduced costs and resources.
 
-<a className="btn btn1" style={{'margin-right': '20px'}} href="https://console.postgres.ai/">Start Free Trial</a>
+<a className="btn btn1" style={{marginRight: '20px'}} href="https://console.postgres.ai/">Start Free Trial</a>
 <a className="btn btn2" href='https://gitlab.com/postgres-ai/postgres-checkup?utm_source=site&utm_medium=web&utm_campaign=checkup_landing)'>View repo</a>
