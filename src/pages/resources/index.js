@@ -37,10 +37,17 @@ function Showcase() {
                       </div>
                     </div>
                   </div>
-                  {(resource.link) && (
+                  {resource.link && (
                     <div className="card__footer">
                       <div className="button-group button-group--block">
-                        {resource.link && (
+                        {resource.internalLink && (
+                          <a
+                            className="button button--small button--secondary button--block"
+                            href={resource.link}>
+                            Read more
+                          </a>
+                        )}
+                        {!resource.internalLink && (
                           <a
                             className="button button--small button--secondary button--block"
                             href={resource.link}

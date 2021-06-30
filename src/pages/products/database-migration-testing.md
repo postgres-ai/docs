@@ -55,8 +55,8 @@ applications' deploy-time behavior eliminating a major source of risk.
 
 Explore our [example repository](https://gitlab.com/postgres-ai/ci-example/-/jobs/662277420) to see how this works in practice.
 
-<div style={{'margin-top': '50px'}}>
-  <a className="btn btn1" style={{'margin-right': '20px'}} href='https://postgres.ai/console/'>Start Free Trial</a>
+<div style={{marginTop: '50px'}}>
+  <a className="btn btn1" style={{marginRight: '20px'}} href='https://console.postgres.ai/'>Start Free Trial</a>
   <a className="btn btn2" href='/products/joe'>Next: SQL Optimization</a>
 </div>
 

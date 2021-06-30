@@ -55,8 +55,8 @@ Here's what you can expect when setting up the DLE:
 * The DLE host instance should have a disk 30% larger than the production DB
 * [Sensitive data masking](/products/data-masking) can be achieved with a set of declarative rules
 
-<div style={{'margin-top': '50px'}}>
-  <a className="btn btn1" style={{'margin-right': '20px'}} href="https://console.postgres.ai/">Start Free Trial</a>
+<div style={{marginTop: '50px'}}>
+  <a className="btn btn1" style={{marginRight: '20px'}} href="https://console.postgres.ai/">Start Free Trial</a>
   <a className="btn btn2" href='/products/database-migration-testing'>Next: Database Migration Testing</a>
 </div>
 

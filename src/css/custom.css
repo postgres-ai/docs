@@ -798,3 +798,17 @@ table.docs-home td {
   font-family: 'Encode Sans',roboto,sans-serif;
   font-weight: 400;
 }
+
+table.minimal-style {
+  border: 0;
+}
+
+table.minimal-style > tr {
+  border: 0;
+  background-color: inherit;
+}
+
+table.minimal-style > tr > td {
+  border: 0;
+  padding: .5em 2em .5em 0;
+}
