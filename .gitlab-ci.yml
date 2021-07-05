@@ -69,27 +69,6 @@ variables:
     ENV: staging
     NAMESPACE: staging
 
-# TODO(anatoly): Kill reviewed pods.
-.environment_template: &env_review
-  environment:
-    name: review/$CI_COMMIT_REF_NAME
-    url: http://docs-${CI_COMMIT_REF_SLUG}.review.svc.cluster.local
-  variables:
-    ENV: review
-    NAMESPACE: review
-    TAG: ":${NAMESPACE}-${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_IID}"
-    DOCS_NAME: "docs-${CI_COMMIT_REF_SLUG}"
-
-build_only:
-  stage: prepare_image
-  services:
-    - docker:dind
-  script:
-    - docker build -t gcr.io/postgres-ai/docs$TAG .
-  except:
-    - master
-    - staging
-
 # Stages with branch policies.
 test:
   <<: *test_definition
@@ -115,5 +94,6 @@ deploy_production:
 deploy_staging:
   <<: *deploy_definition
   <<: *env_staging
-  only:
-    - staging
+  when: manual
+  except:
+    - master
