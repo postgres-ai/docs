@@ -1,8 +1,8 @@
 ---
-title: How GitLab iterates on SQL performance optimization workflow to reduce downtime risks
+title: "Database Lab: How GitLab iterates on SQL performance optimization workflow to reduce downtime risks"
 ---
 
-# How GitLab iterates on SQL performance optimization workflow to reduce downtime risks
+# Database Lab: How GitLab iterates on SQL performance optimization workflow to reduce downtime risks
 
 <table class="minimal-style">
   <tr>
