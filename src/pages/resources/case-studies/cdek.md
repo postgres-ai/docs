@@ -1,8 +1,8 @@
 ---
-title: "CDEK: Speed up Product Development with Database Lab"
+title: "Database Lab: How CDEK Speeds up Product Development"
 ---
 
-# Speed up Product Development with Database Lab
+# Database Lab: How CDEK Speeds up Product Development
 
 <table class="minimal-style">
   <tr>

@@ -1,8 +1,8 @@
 ---
-title: "Qiwi: Control the Data with Database Lab to Accelerate Development"
+title: "Database Lab: How Qiwi Controls the Data to Accelerate Development"
 ---
 
-# Qiwi: Control the Data with Database Lab to Accelerate Development
+# Database Lab: How Qiwi Controls the Data to Accelerate Development
 
 <table class="minimal-style">
   <tr>
