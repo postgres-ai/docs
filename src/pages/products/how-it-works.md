@@ -46,7 +46,7 @@ can also gain the benefits of experimenting with thin clones.
 [Learn more about our Security Model](/docs/platform/security)
 
 ## Setup
-You can install the Database Lab Engine (DLE) on a linux<sup>2</sup> server where you can provision a ZFS volume.
+You can install the Database Lab Engine (DLE) on a Linux<sup>2</sup> server where you can provision a ZFS volume.
 If you run your infrastructure on AWS, you can follow our
 [Getting Started Guide for RDS](/docs/tutorials/database-lab-tutorial-amazon-rds).
 
@@ -61,7 +61,7 @@ Here's what you can expect when setting up the DLE:
 </div>
 
 <ul class='footnotes'>
-  <li><sup>1</sup> If desired, alternate copy-on-write filesystems may be used. See the &nbsp;
+  <li><sup>1</sup> If desired, alternate copy-on-write systems may be used. See the &nbsp;
     <a href="/docs/guides/administration/machine-setup#set-up-either-zfs-or-lvm-to-enable-thin-cloning"
        target="_blank">
       documentation
