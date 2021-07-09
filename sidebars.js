@@ -90,6 +90,10 @@ module.exports = {
         ],
       },
     ],
+    "Database Lab Migration Checker": [
+      "db-migration-checker/index",
+      "db-migration-checker/config-reference",
+    ],
     "Joe Bot": [
       "joe-bot/index",
       "joe-bot/example",

@@ -1,0 +1,42 @@
+---
+title: Database Lab Migration Checker configuration reference
+sidebar_label: Configuration reference
+---
+
+## Overview
+Database Lab Migration Checker behavior can be controlled using the main configuration YAML file. This reference describes available configuration options.
+
+Example config files can be found here: https://gitlab.com/postgres-ai/database-lab/-/blob/master/configs/config.example.run_ci.yaml.
+
+## The list of configuration sections
+Here is how the configuration file is structured:
+
+| Section | Description |
+| --- | --- |
+| `app` | Database Lab Migration Checker API server. |
+| `dle` | Database Lab Engine API integration. |
+| `platform` | Postgres.ai Platform integration (provides GUI, advanced features such as user management, user access). |
+| `source` | Source code extraction.  |
+| `runner` | How execution of DB migrations is organized.  |
+
+## Section `app`: Database Lab Migration Checker API server
+- `host` (string, optional, default: "") - the host to which the Database Lab Migration Checker server accepts HTTP connections
+- `port` (string, required) - HTTP server port
+- `verificationToken` (string, required) - the token that is used to work with Database Lab Migration Checker API
+- `debug` - allows seeing more in the Database Lab Engine logs
+
+## Section `dle`: Database Lab Engine API integration
+- `url` (string, required) - the URL to which the Database Lab server receives HTTP requests
+- `verificationToken` (string, required) - the token that is used to work with Database Lab API
+
+## Section `platform`: Postgres.ai Platform integration
+- `url` (string, optional, default: "https://postgres.ai/api/general") - Platform API URL
+- `accessToken` (string, required) - the token for authorization in Platform API. This token can be obtained in the Postgres.ai Console
+- `enablePersonalTokens` (boolean, optional, default: false) - enables authorization with personal tokens of the organization's members
+
+## Section `source`: Source code extraction
+- `type` (string, optional, default: "github") - type of version control system
+- `token` (string, required) - access token for getting source code from the version control system
+
+## Section `runner`: How execution of DB migrations is organized
+- `image` (string, required) - Docker image containing tools for executing database migration commands. For example, `postgresai/migration-tools:sqitch`
