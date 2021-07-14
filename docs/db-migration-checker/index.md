@@ -1,6 +1,6 @@
 ---
 title: DB Migration Checker
-sidebar_label: DB Migration Checker
+sidebar_label: Overview
 hide_title: false
 slug: /db-migration-checker
 description: "Check DB migrations as a part of a standard pipeline"
@@ -10,7 +10,7 @@ keywords:
 ---
 
 ## Overview
-**Database Lab DB migration checker** is a tool to automatically test migrations in CI/CD pipelines.
+DB Migration Checker is a DLE's component that enables integration with CI/CD tools to automatically test migrations in CI/CD pipelines.
 
 ## Key features
 - **Automated:** DB migration testing in CI/CD pipelines
