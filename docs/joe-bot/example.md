@@ -9,7 +9,7 @@ sidebar_label: Demo and example
 
 If you have Slack app installed, try the live demonstration:
 
-1. Add the Database Lab community to your Slack: https://database-lab-team-slack-invite.herokuapp.com/
+1. Add the Database Lab community to your Slack: https://slack.postgres.ai/
 1. Go to the [#joe-bot-demo](https://database-lab-team.slack.com/archives/CTL5BB30R) public channel
 1. Start with the `help` command
 1. Explore the schema with `\d`, analyze queries using `explain`

@@ -21,21 +21,21 @@ keywords:
 <table class='docs-home'>
   <tr>
     <td>
-      <h3>Getting Started</h3>
+      <h3>Getting started</h3>
       <ul>
-        <li><a href='/docs/tutorials/database-lab-tutorial-amazon-rds'>Engine Setup for Amazon RDS</a></li>
-        <li><a href='/docs/tutorials/database-lab-tutorial'>Engine Setup for any PostgreSQL database</a></li>
-        <li><a href='/docs/tutorials/joe-setup'>Joe Bot Setup</a></li>
+        <li><a href='/docs/tutorials/database-lab-tutorial-amazon-rds'>Engine setup for Amazon RDS</a></li>
+        <li><a href='/docs/tutorials/database-lab-tutorial'>Engine setup for any PostgreSQL database</a></li>
+        <li><a href='/docs/tutorials/joe-setup'>Joe Bot setup</a></li>
         <li><a href='/docs/questions-and-answers'>FAQ</a></li>
       </ul>
     </td>
     <td>
-      <h3>Product & Use Cases</h3>
+      <h3>Product & use cases</h3>
       <ul>
-        <li><a href='/products/how-it-works'>How it Works</a></li>
-        <li><a href='/products/database-migration-testing'>Database Migration Testing</a></li>
-        <li><a href='/products/joe'>SQL Optimization</a></li>
-        <li><a href='/products/realistic-test-environments'>Realistic Dev & Test Environments</a></li>
+        <li><a href='/products/how-it-works'>How it works</a></li>
+        <li><a href='/products/database-migration-testing'>Database migration testing</a></li>
+        <li><a href='/products/joe'>SQL optimization</a></li>
+        <li><a href='/products/realistic-test-environments'>Realistic dev & test environments</a></li>
       </ul>
     </td>
   </tr>
@@ -43,15 +43,17 @@ keywords:
     <td>
       <h3>Security</h3>
       <ul>
-        <li><a href='/docs/platform/security'>Platform Security</a></li>
-        <li><a href='/docs/database-lab/masking'>Data Masking Setup & Configuration</a></li>
+        <li><a href='/docs/platform/security'>Platform security</a></li>
+        <li><a href='/docs/database-lab/masking'>Data masking setup & configuration</a></li>
+        <li><a href='/docs/how-to-guides/administration/engine-secure'>How to make work with Database Lab secure</a></li>
       </ul>
     </td>
     <td>
-      <h3>Reference</h3>
+      <h3>Reference guides for users</h3>
       <ul>
-        <li><a href='/docs/database-lab/config-reference'>Database Lab Engine (DLE) Configuration</a></li>
-        <li><a href='/docs/joe-bot/config-reference'>Joe Bot Configuration</a></li>
+        <li><a href='/docs/reference-guides/database-lab-engine-components'>Database Lab Engine (DLE) components</a></li>
+        <li><a href='/docs/reference-guides/dblab-client-cli-reference'>DLE client CLI</a></li>
+        <li><a href='/docs/reference-guides/joe-bot-commands-reference'>Joe Bot commands</a></li>
       </ul>
     </td>
   </tr>

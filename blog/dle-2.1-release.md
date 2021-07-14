@@ -28,7 +28,7 @@ In 2.1, the main new features are:
 - Better data protection and security:
     - robust configuration defining how data is patched when snapshots are automatically created (both shell and SQL scripts are now supported),
     - an option specifying whether or not passwords for the existing DB users need to be preserved.
-- *[experimental]* DLE API and the CLI tool are extended to have a new feature: "CI Observer" helping control DB schema changes (DB migrations) — here is the reference on how to use it https://postgres.ai/docs/database-lab/cli-reference#subcommand-start-observation. This is a small step towards the big goal: have 100% coverage for testing DB migrations in CI using full-sized thin clones. Watch the demo (turn captions on):
+- *[experimental]* DLE API and the CLI tool are extended to have a new feature: "CI Observer" helping control DB schema changes (DB migrations) — here is the reference on how to use it https://postgres.ai/docs/reference-guides/dblab-client-cli-reference#subcommand-start-observation. This is a small step towards the big goal: have 100% coverage for testing DB migrations in CI using full-sized thin clones. Watch the demo (turn captions on):
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/EBFbWdfyy-0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -40,12 +40,12 @@ Check out:
 - [Resources](https://postgres.ai/resources/) – an interactive tutorial, case studies
 - [Tutorial for RDS users](https://postgres.ai/docs/tutorials/database-lab-tutorial-amazon-rds)
 - [Tutorial for any PostgreSQL database](https://postgres.ai/docs/tutorials/database-lab-tutorial)
-- [Database Lab Engine configuration reference](https://postgres.ai/docs/database-lab/config-reference)
+- [Database Lab Engine configuration reference](https://postgres.ai/docs/reference-guides/database-lab-engine-configuration-reference)
 
 Please send us any feedback you have – it is hard to overestimate its meaning for such a young project:
 
 - Follow us on Twitter: [@Database_Lab](https://twitter.com/Database_Lab)
-- [Community Slack (English)](https://database-lab-team-slack-invite.herokuapp.com/), and [Telegram group (Russian)](https://t.me/databaselabru)
+- [Community Slack (English)](https://slack.postgres.ai/), and [Telegram group (Russian)](https://t.me/databaselabru)
 - Intercom widget (located at the right bottom corner)
 - [Database Lab Engine repository](https://gitlab.com/postgres-ai/database-lab), with the [issue tracker](https://gitlab.com/postgres-ai/database-lab/-/issues)
 

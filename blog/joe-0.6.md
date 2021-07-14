@@ -23,11 +23,11 @@ Building indexes for large tables may take a long time. The new release of Joe b
 
 A hypothetical index is an index that doesn't exist on disk. Therefore it doesn't cost IO, CPU, or any resource to create. It means that such indexes are created almost instantly.
 
-With the brand new command, [`hypo`](https://postgres.ai/docs/joe-bot/commands-reference#hypo), you can create hypothetical indexes with Joe and ensure that PostgreSQL would use them. Once it's done, you can use [`exec`](https://postgres.ai/docs/joe-bot/commands-reference#exec) to build the actual indexes (in some cases, you'll need to wait some hours for this) and see the actual plan in action.
+With the brand new command, [`hypo`](https://postgres.ai/docs/reference-guides/joe-bot-commands-reference#hypo), you can create hypothetical indexes with Joe and ensure that PostgreSQL would use them. Once it's done, you can use [`exec`](https://postgres.ai/docs/reference-guides/joe-bot-commands-reference#exec) to build the actual indexes (in some cases, you'll need to wait some hours for this) and see the actual plan in action.
 
 Note, since the command works on top of the HypoPG extension, your Database Lab image has to use a Docker image for Postgres that contains HypoPG, because this extension is not a part of the core PostgreSQL distribution. For convenience, [we have prepared images](https://hub.docker.com/r/postgresai/extended-postgres) with HypoPG (and some other extensions) included, for Postgres versions 9.6, 10, 11, and 12. Of course, you can always use your custom image.
 
-To be able to see the plan without actual execution, we have added one more new command: [`plan`](https://postgres.ai/docs/joe-bot/commands-reference#plan). It is aware of hypothetical indexes, so if one is detected in the plan, it presents two versions of the plan, with and without HypoPG involved.
+To be able to see the plan without actual execution, we have added one more new command: [`plan`](https://postgres.ai/docs/reference-guides/joe-bot-commands-reference#plan). It is aware of hypothetical indexes, so if one is detected in the plan, it presents two versions of the plan, with and without HypoPG involved.
 
 ### What's new in version 0.6.0
 
@@ -38,7 +38,7 @@ Version 0.6.0 adds new commands to work with hypothetical indexes and get a quer
 
 ![Joe demo](https://gitlab.com/postgres-ai/joe/uploads/6550b22f37b16ebde0c5e2fcc8d184d5/joe0.6.0.gif#center)
 
-First, we need a running Database Lab instance that uses a Docker image with HypoPG extension. Choose a custom Docker image in [Database Lab Engine configuration](https://postgres.ai/docs/database-lab/config-reference), specifying `dockerImage` in `config.yml` of your Database Lab instance:
+First, we need a running Database Lab instance that uses a Docker image with HypoPG extension. Choose a custom Docker image in [Database Lab Engine configuration](https://postgres.ai/docs/reference-guides/database-lab-engine-configuration-reference), specifying `dockerImage` in `config.yml` of your Database Lab instance:
 
 ```
 ...
@@ -160,7 +160,7 @@ The query has been executed. Duration: 126.975 min
 
 It's obvious that `hypo` and `plan` extremely save developers' time!
 
-See the full list of Joe's commands in the docs: https://postgres.ai/docs/joe-bot/commands-reference.
+See the full list of Joe's commands in the docs: https://postgres.ai/docs/reference-guides/joe-bot-commands-reference.
 
 
 ### Links:
@@ -169,4 +169,4 @@ See the full list of Joe's commands in the docs: https://postgres.ai/docs/joe-bo
 - Full command list: https://postgres.ai/docs/joe-bot/usage
 - Extended images with PostgreSQL: https://hub.docker.com/r/postgresai/extended-postgres Includes HypoPG, pg_hint_plan, more
 - Proposals to add more extensions are welcome in the Custom Images repo: https://gitlab.com/postgres-ai/custom-images
-- Community Slack (English): https://database-lab-team-slack-invite.herokuapp.com/. After joining, the live demo is available in the #joe-bot-demo channel: https://database-lab-team.slack.com/archives/CTL5BB30R
+- Community Slack (English): https://slack.postgres.ai/. After joining, the live demo is available in the #joe-bot-demo channel: https://database-lab-team.slack.com/archives/CTL5BB30R

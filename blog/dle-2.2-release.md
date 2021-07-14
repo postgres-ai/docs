@@ -51,7 +51,7 @@ Database Lab Engine links:
 - [Blog](https://postgres.ai/blog/)
 - [Tutorial for RDS users](https://postgres.ai/docs/tutorials/database-lab-tutorial-amazon-rds)
 - [Tutorial for any PostgreSQL database](https://postgres.ai/docs/tutorials/database-lab-tutorial)
-- [Database Lab Engine configuration reference](https://postgres.ai/docs/database-lab/config-reference)
+- [Database Lab Engine configuration reference](https://postgres.ai/docs/reference-guides/database-lab-engine-configuration-reference)
 
 ## Joe Bot 0.9.0 - A Virtual DBA for SQL Optimization
 
@@ -90,6 +90,6 @@ Both Joe Bot and Database Lab Engine are distributed based on OSI-approved licen
 
 Your feedback is highly appreciated!
 - Twitter: [@Database_Lab](https://twitter.com/Database_Lab)
-- [Community Slack with Joe Bot live demo](https://database-lab-team-slack-invite.herokuapp.com/) (English), and [Telegram group](https://t.me/databaselabru) (Russian)
+- [Community Slack with Joe Bot live demo](https://slack.postgres.ai) (English), and [Telegram group](https://t.me/databaselabru) (Russian)
 - [Database Lab Engine repository](https://gitlab.com/postgres-ai/database-lab), with the [issue tracker](https://gitlab.com/postgres-ai/database-lab/-/issues)
 - [SQL Optimization Chatbot repository](https://gitlab.com/postgres-ai/joe), with the [issue tracker](https://gitlab.com/postgres-ai/joe/-/issues)

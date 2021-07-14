@@ -1,6 +1,6 @@
 ---
-title: Database Lab DB migrations checker
-sidebar_label: Check DB migrations
+title: DB Migration Checker
+sidebar_label: DB Migration Checker
 hide_title: false
 slug: /db-migration-checker
 description: "Check DB migrations as a part of a standard pipeline"
@@ -10,15 +10,17 @@ keywords:
 ---
 
 ## Overview
-**Database Lab DB migration checker** is a tool to automatically validate migrations in the CI pipeline.
+**Database Lab DB migration checker** is a tool to automatically test migrations in CI/CD pipelines.
 
-## Database Lab DB migration checker's benefits:
-- Check migrations as a part of a standard CI/CD pipeline
-- Protect DLE from data stealing - run migrations in a protected environment
-- Protect logs and artifacts from being revealed
+## Key features
+- **Automated:** DB migration testing in CI/CD pipelines
+- **Realistic:** test results are realistic because real or close-to-real (the same size but no personal data) databases are used, thin-cloned in seconds, and destroyed after testing is done
+- **Fast and inexpensive:** a single machine with a single disk can operate dozens of independent thin clones
+- **Well-tested DB changes to avoid deployment failures:** DB Migration Checker automatically detects (and prevents!) long-lasting dangerous locks that could put your production systems down
+- **Secure**: DB Migration Checker runs all tests in a secure environment: data cannot be copied outside the secure container
+- **Lots of useful data points**: Collect useful artifacts (such as `pg_stat_***` system views) and use them to empower your DB changes review process
 
 ## How to set up a DB migration checker
-
 - Make sure that the Database Lab Engine is running
 - Copy the contents of configuration example [`config.example.run_ci.yaml`](https://gitlab.com/postgres-ai/database-lab/-/blob/master/configs/config.example.run_ci.yaml) from the Database Lab repository to `~/.dblab/run_ci.yaml`:
 

@@ -34,10 +34,10 @@ Version 2.0 speeds up and empowers the initialization of DLE itself. Instead of 
 ## Updates in DLE 2.0
 
 - Automated data retrieval: specify the source and the method of initializing the data directory and how it is to be updated
-- Both physical (pg_basebackup, WAL-G, more) and logical methods (dump/restore, Amazon RDS, Heroku Postgres, more) are supported (see the guide [Database Lab Engine data sources](https://postgres.ai/docs/guides/data))
-- Any managed cloud PostgreSQL offering is now supported, with additional features for Amazon RDS (see [DLE tutorial for Amazon RDS](https://postgres.ai/docs/tutorials/database-lab-tutorial-amazon-rds) and the guide [Data source: AWS RDS](https://postgres.ai/docs/guides/data/rds))
-- For continuously updated physically initialized data directory (which effectively makes your DLE a specialized replica), snapshot management is fully automated: snapshots are created and destroyed based on the schedule defined in the configuration file (see the reference [Job physicalSnapshot](https://postgres.ai/docs/database-lab/config-reference#job-physicalsnapshot))
-- Basic data transformation and masking supported: specify any custom script that will be applied each time a new snapshot is prepared (option `preprocessingScript` in both `logicalSnapshot` and `physicalSnapshot` jobs, see the [Configuration reference](https://postgres.ai/docs/database-lab/config-reference))
+- Both physical (pg_basebackup, WAL-G, more) and logical methods (dump/restore, Amazon RDS, Heroku Postgres, more) are supported (see the guide [Database Lab Engine data sources](https://postgres.ai/docs/how-to-guides/data))
+- Any managed cloud PostgreSQL offering is now supported, with additional features for Amazon RDS (see [DLE tutorial for Amazon RDS](https://postgres.ai/docs/tutorials/database-lab-tutorial-amazon-rds) and the guide [Data source: AWS RDS](https://postgres.ai/docs/how-to-guides/data/rds))
+- For continuously updated physically initialized data directory (which effectively makes your DLE a specialized replica), snapshot management is fully automated: snapshots are created and destroyed based on the schedule defined in the configuration file (see the reference [Job physicalSnapshot](https://postgres.ai/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalsnapshot))
+- Basic data transformation and masking supported: specify any custom script that will be applied each time a new snapshot is prepared (option `preprocessingScript` in both `logicalSnapshot` and `physicalSnapshot` jobs, see the [Configuration reference](https://postgres.ai/docs/reference-guides/database-lab-engine-configuration-reference))
 - License changed to [AGPLv3](https://www.gnu.org/licenses/agpl-3.0.en.html)
 - The documentation is significantly extended: 3 tutorials, 26 user guides, 6 references, and counting: [http://postgres.ai/docs](http://postgres.ai/docs)
 
@@ -49,13 +49,13 @@ Check out:
 - [Database Lab Engine 2.0 release notes](https://gitlab.com/postgres-ai/database-lab/-/releases/2.0.0)
 - [Tutorial for RDS users](https://postgres.ai/docs/tutorials/database-lab-tutorial-amazon-rds)
 - [Database Lab tutorial for any PostgreSQL database](https://postgres.ai/docs/tutorials/database-lab-tutorial)
-- [Database Lab Engine configuration reference](https://postgres.ai/docs/database-lab/config-reference)
+- [Database Lab Engine configuration reference](https://postgres.ai/docs/reference-guides/database-lab-engine-configuration-reference)
 
 
 Please send us any feedback you have – it is hard to overestimate its meaning for such a young project:
 
 - Follow us on Twitter: [@Database_Lab](https://twitter.com/Database_Lab)
-- [Community Slack (English)](https://database-lab-team-slack-invite.herokuapp.com/), and [Telegram group (Russian)](https://t.me/databaselabru)
+- [Community Slack (English)](https://slack.postgres.ai/), and [Telegram group (Russian)](https://t.me/databaselabru)
 - Intercom widget (located at the right bottom corner)
 - Database Lab Engine repository, with the issue tracker: https://gitlab.com/postgres-ai/database-lab
 

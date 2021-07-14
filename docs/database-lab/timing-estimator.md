@@ -9,24 +9,24 @@ keywords:
   - "Database Lab timing estimator"
 ---
 
+The Query Estimator is an experimental feature of [Database Lab Engine](https://gitlab.com/postgres-ai/database-lab) and [SQL Optimization Chatbot (Joe Bot)](https://gitlab.com/postgres-ai/joe) to estimate a timing of queries on the production database.
+
+:::caution Experimental feature
+The estimator is currently under active development and testing. Implementation can be changed significantly. Your help with testing and any feedback is highly appreciated.
+:::
+
 Database Lab clones are almost exact copies of the production database yet some limitations should be kept in mind. Under the hood, Database Lab clones use copy-on-write technology (currently supported: [ZFS](https://en.wikipedia.org/wiki/ZFS) and [LVM&nbsp;2](https://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)). This technology allows reducing cloning time and amount of the extra disk space needed for it almost to zero. On the other side, it has different IO performance in comparison to file systems most commonly used on production environments (such as [ext4](https://en.wikipedia.org/wiki/Ext4)). This difference affects the database operations *timing*, it may be noticeably bigger on the clones. Other factors may affect query *timing* too. That is why it is recommended to focus on the plan structure and data volumes (buffer numbers in the case of "physical" provisioning mode, and row numbers in the case of "logical" provisioning mode) when dealing with EXPLAIN plans. Timing numbers in such plans obtained on thing clones should not be directly compared to the corresponding numbers obtained on production.
 
 :::note
-When [configured properly](https://postgres.ai/docs/guides/administration/postgresql-configuration#postgresql-configuration-in-clones), Database Lab clones execute SQL queries very similarly to production:
+When [configured properly](https://postgres.ai/docs/how-to-guides/administration/postgresql-configuration#postgresql-configuration-in-clones), Database Lab clones execute SQL queries very similarly to production:
 - Execution plan structure is identical to production thanks to identical data statistics and PostgreSQL planner settings
 - Data volumes processed by the executor and reported in the EXPLAIN plans are the same:
     - row numbers for "logical" mode
     - buffer and row numbers for "physical" mode (hit/read ratios may be different because of different cache states)
 :::
 
-## Estimator
-The estimator is a feature of [Database Lab Engine](https://gitlab.com/postgres-ai/database-lab) and [Database Lab Virtual DBA](https://gitlab.com/postgres-ai/joe) (former Joe bot) to estimate a timing of queries on the production database.
-
-:::caution Experimental feature
-The estimator is currently under active development and testing. Implementation can be changed significantly. Your help with testing and any feedback is highly appreciated.
-:::
-
-The estimator aims to forecast the timing numbers for the source (production) eliminating the difference related to the disk IO (slower disks, difference filesystem). The estimator is triggered only for queries that are running more than 0.2 second (default value, configurable) and it works under the following assumptions:
+## Query Estimator
+The Query Estimator aims to forecast the timing numbers for the source (production) eliminating the difference related to the disk IO (slower disks, difference filesystem). The estimator is triggered only for queries that are running more than 0.01 seconds (default value, configurable) and it works under the following assumptions:
 - CPU and RAM models on prod and those that used on clones are the same or very similar
 - No resources are saturated (CPU, memory, disk IO, network) – neither on clones nor on the source (production) node
 - The state of caches is very similar (estimation works better when the majority of the data we are working with is cached or not cached at all).
@@ -112,7 +112,7 @@ write_ratio = write_speed_on_prod / write_speed_on_clone
 
 These read and write ratios are supposed to be stored in the bot configuration (later it will be moved to the DLE configuration). There might be a need to update them periodically, synchronizing with statistics observed on the production.
 
-To configure the estimator for Database Lab Engine (DLE) and Virtual DBA (Joe bot) you will need to add the `estimator` section to the [Database Lab Engine configuration](https://postgres.ai/docs/database-lab/config-reference) and change options according to your deployment.
+To configure the estimator for Database Lab Engine (DLE) and Virtual DBA (Joe bot) you will need to add the `estimator` section to the [Database Lab Engine configuration](https://postgres.ai/docs/reference-guides/database-lab-engine-configuration-reference) and change options according to your deployment.
 
 `estimator` section example:
 ```

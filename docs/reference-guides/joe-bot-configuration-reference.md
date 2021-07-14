@@ -1,0 +1,262 @@
+---
+title: Joe Bot configuration reference
+sidebar_label: Joe Bot configuration
+---
+
+There are two ways to define Joe Bot options:
+- configuration file
+- environment variables
+
+Use both of them to get the best experience.
+
+:::info
+Note that the environment variables have a higher priority.
+:::
+
+## Joe Bot configuration file
+```yml
+app:
+  # HTTP server IP address or host.
+  # Used only for Web UI and Slack Events API communication types.
+  # By default uses an empty string to accept connections to all network interfaces.
+  # Keep it default when running inside a Docker container.
+  host: ""
+
+  # HTTP server port. Used only for Web UI and Slack Events API communication types.
+  # Default: 2400.
+  port: 2400
+
+  # Minimal duration of long query processing used for notifications.
+  # When query processing is finished, a notification will be issued if duration
+  # has exceeded this value. Default: 60s.
+  minNotifyDuration: 60s
+
+  # Debug mode. Default: false.
+  debug: false
+
+# Integration with Postgres.ai Platform instance. It may be either
+# SaaS (https://postgres.ai) of self-managed instance (usually located inside
+# private infrastructure).
+platform:
+  # Postgres.ai Platform API base URL. Default: https://postgres.ai/api/general.
+  url: "https://postgres.ai/api/general"
+
+  # Postgres.ai Platform API secret token.
+  token: "platform_secret_token"
+
+  # Enable command history in Postgres.ai Platform for collaboration and
+  # visualization. Default: true.
+  historyEnabled: true
+
+# Channel Mapping is used to allow working with more than one database in
+# one Database Lab instance. This is useful when your PostgreSQL master node
+# has more than one application databases and you want to organize optimization
+# processes for all of them. Thanks to Channel Mapping you can use a single Joe
+# Bot instance.
+channelMapping:
+  # Active Database Lab instances that are used by this Joe Bot instance.
+  dblabServers:
+    # Alias for this Database Lab instance (internal, used only in this config)
+    prod1:
+      # URL of Database Lab API server
+      url: "https://dblab.domain.com"
+      # Secret token used to communicate with Database Lab API
+      token: "secret_token"
+      # Allow changing DLE requests timeout
+      requestTimeout: 60s
+
+  # Available communication types ("webui", "slack", "slackrtm", etc.)
+  communicationTypes:
+    # Communication type: Web UI (part of Postgres.ai Platform).
+    webui:
+      # Web UI name. Feel free to choose any name, it is just an alias.
+      - name: WebUI
+        credentials:
+          # Web UI signing secret. This secret verifies each request to ensure
+          # that it came from one of configured Web UI instances.
+          signingSecret: secret_signing
+
+        channels:
+          # Web UI channel ID. Feel free to choose any name, it is just an alias.
+          # This is what users see in browser.
+          - channelID: ProductionDB
+
+            # Postgres.ai Platform project to which user sessions are to be assigned.
+            project: "demo"
+
+            # Database Lab alias from the "dblabServers" section.
+            dblabServer: prod1
+
+            # PostgreSQL connection parameters used to connect to a clone.
+            # The username/password are not needed; they will be randomly
+            # generated each time a new clone is created.
+            dblabParams:
+              # It is recommended to leave "postgres" here, because this DB
+              # usually exists in any PostgreSQL setup.
+              dbname: postgres
+              # It is NOT recommended to work without SSL. This value will be
+              # used in a clone's pg_hba.conf. 
+              # See https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-SSLMODE-STATEMENTS
+              sslmode: prefer
+
+    # Communication type: Slack Events API.
+    slack:
+      # Workspace name. Feel free to choose any name, it is just an alias.
+      - name: Workspace
+
+        credentials:
+          # Bot User OAuth Access.
+          # See https://api.slack.com/authentication/token-types
+          accessToken: xoxb-XXXX
+
+          # Slack App Signing Secret.
+          # See https://api.slack.com/authentication/verifying-requests-from-slack
+          signingSecret: signing_secret
+
+        channels:
+          # Slack channel ID. In Slack app, right-click on the channel name,
+          # and choose "Additional options > Copy link". From that link, we
+          # need the last part consisting of 9 letters starting with "C".
+          - channelID: CXXXXXXXX
+
+            # Postgres.ai Platform project to which user sessions are to be assigned.
+            project: "demo"
+
+            # Database Lab alias from the "dblabServers" section.
+            dblabServer: prod1
+
+            # PostgreSQL connection parameters used to connect to a clone.
+            # The username/password are not needed; they will be randomly
+            # generated each time a new clone is created.
+            dblabParams:
+              # It is recommended to leave "postgres" here, because this DB
+              # usually exists in any PostgreSQL setup.
+              dbname: postgres
+              # It is NOT recommended to work without SSL. This value will be
+              # used in a clone's pg_hba.conf. 
+              # See https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-SSLMODE-STATEMENTS
+              sslmode: prefer
+
+    # Communication type: Slack RTM.
+    slackrtm:
+      # Workspace name. Feel free to choose any name, it is just an alias.
+      - name: Workspace
+
+        credentials:
+          # Bot User OAuth Access.
+          # See https://api.slack.com/authentication/token-types
+          accessToken: xoxb-XXXX
+
+        channels:
+          # Slack channel ID. In Slack app, right-click on the channel name,
+          # and choose "Additional options > Copy link". From that link, we
+          # need the last part consisting of 9 letters starting with "C".
+          - channelID: CXXXXXXXX
+
+            # Postgres.ai Platform project to which user sessions are to be assigned.
+            project: "demo"
+
+            # Database Lab alias from the "dblabServers" section.
+            dblabServer: prod1
+
+            # PostgreSQL connection parameters used to connect to a clone.
+            # The username/password are not needed; they will be randomly
+            # generated each time a new clone is created.
+            dblabParams:
+              # It is recommended to leave "postgres" here, because this DB
+              # usually exists in any PostgreSQL setup.
+              dbname: postgres
+              # It is NOT recommended to work without SSL. This value will be
+              # used in a clone's pg_hba.conf. 
+              # See https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-SSLMODE-STATEMENTS
+              sslmode: prefer
+
+# Enterprise Edition options – only to use with active Postgres.ai Platform EE
+# subscription. Changing these options you confirm that you have active
+# subscription to Postgres.ai Platform Enterprise Edition.
+# See more: https://postgres.ai/docs/platform/postgres-ai-platform-overview
+enterprise:
+  quota:
+    # Limit request rates. Works in pair with "interval" value. Default: 10.
+    limit: 10
+
+    # Time interval (in seconds) to apply quota limit. Default: 60.
+    interval: 60
+
+  audit:
+    # Enable command logging. Default: false.
+    enabled: false
+
+  dblab:
+    # Limit the number of available Database Lab instances. Default: 1.
+    instanceLimit: 1
+
+  # Tool to calculate timing difference between Database Lab and production environments.
+  estimator:
+    # The ratio evaluating the timing difference for operations involving IO Read between Database Lab and production environments.
+    readRatio: 1
+
+    # The ratio evaluating the timing difference for operations involving IO Write between Database Lab and production environments.
+    writeRatio: 1
+
+    # Time interval of samples taken by the profiler.
+    profilingInterval: 10ms
+
+    # The minimum number of samples sufficient to display the estimation results.
+    sampleThreshold: 20
+
+```
+
+## General environment variables
+### `JOE_APP_HOST`
+- (string, default: `127.0.0.1`), host that Joe bot API accepts HTTP connections from. Used only for Web UI and Slack Events API communication types. It can be defined either as an IP address or domain name. By default, it accepts only local connections. Use an empty string to accept all connections.
+
+### `JOE_APP_PORT`
+- (integer, default: `2400`), HTTP server port used to serve requests to Joe bot API. Used only for Web UI and Slack Events API communication types
+
+### `JOE_APP_MIN_NOTIFY_DURATION`
+- (string, default: `60s`), if the processing of command takes longer than the specified value, a notification will be issued to the user
+
+### `JOE_PLATFORM_URL`
+- (string, default: `https://postgres.ai/api/general`), Postgres.ai Platform API base URL
+
+### `JOE_PLATFORM_TOKEN`
+- (string), Postgres.ai Platform API Token
+
+### `JOE_PLATFORM_PROJECT`
+- (string), Postgres.ai Platform project to assign user sessions
+
+### `JOE_PLATFORM_HISTORY_ENABLED`
+- (boolean, default: `true`), enable sending command history to Postgres.ai Platform for collaboration and visualization. Requires setting proper `JOE_PLATFORM_TOKEN`. See the [Joe Bot Tutorial](/docs/tutorials/joe-setup#step-2a-set-up-joe-in-postgresai-console-web-ui) for the token.
+
+### `JOE_DEBUG` 
+- (boolean, default: `false`), enable debug mode; WARNING: in this mode, sensitive data (such as passwords) can be printed to logs
+
+--- 
+
+## Enterprise environment variables
+Changing these options you confirm that you have active subscription to [Postgres.ai Platform](https://postgres.ai/console/) Enterprise Edition)
+
+### `EE_QUOTA_LIMIT`
+- (integer, default: `10`), limits request rates, works in pair with `EE_QUOTA_INTERVAL`
+
+### `EE_QUOTA_INTERVAL`
+- (integer, default: `60`), time interval (in seconds) to apply `EE_QUOTA_LIMIT`
+
+### `EE_AUDIT_ENABLED` 
+- (boolean, default: `false`), enable command logging for audit purposes
+
+### `EE_DBLAB_INSTANCE_LIMIT` 
+- (integer, default: `1`), limit the number of Database Lab instances. Joe Bot CE supports working with only 1 Database Lab instance
+
+### `EE_ESTIMATOR_READ_RATIO`
+- (float, default: `1`), the ratio evaluating the timing difference for operations involving IO Read between Database Lab and production environments
+
+### `EE_ESTIMATOR_WRITE_RATIO`
+- (float, default: `1`), the ratio evaluating the timing difference for operations involving IO Write between Database Lab and production environments
+
+### `EE_ESTIMATOR_PROFILING_INTERVAL`
+- (string, default: `10ms`), the time interval used by the profiler to take `pg_stat_activity` samples; more frequent sampling gives a more precise picture of database server waits but increases an overhead; default is 10ms (100 samples per second)
+
+### `EE_ESTIMATOR_SAMPLE_THRESHOLD`
+- (integer, default: `20`), the minimum number of samples sufficient to display the estimation results, more samples gives more precise picture of database server waits during SQL execution, default value is 20 samples; for example, 20 samples with 10ms interval is 0.2 seconds, it means SQL queries with execution time lower than 0.2 seconds cannot be analysed, decreasing this value increases cost of one sample (20 samples equals 5% as cost of one sample) and decrease quality of such analysis
