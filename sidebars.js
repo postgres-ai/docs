@@ -16,7 +16,7 @@ module.exports = {
       "database-lab/timing-estimator",
       "database-lab/supported-databases",
     ],
-    "Database Lab Migration Checker": [
+    "DB Migration Checker": [
       "db-migration-checker/index",
     ],
     "Joe Bot": [
