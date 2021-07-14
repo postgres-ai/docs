@@ -41,6 +41,9 @@ sudo docker run \
   --volume /var/lib/dblab:/var/lib/dblab/:rshared \
   --volume ~/.dblab/server.yml:/home/dblab/configs/config.yml \
   --volume ~/.dblab/sa.json:/home/dblab/sa.json \
+  --volume /sys/kernel/debug:/sys/kernel/debug:rw \
+  --volume /lib/modules:/lib/modules:ro \
+  --volume /proc:/host_proc:ro \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \

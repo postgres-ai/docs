@@ -1,7 +1,7 @@
 ---
 title: Query duration difference between Database Lab and production environments
 sidebar_label: Query duration for production environments
-description: "Why there is a difference in query durationn between Database Lab and production environments? How to deal with it? What other parameters could be used for the SQL optimization process?"
+description: "Why there is a difference in query duration between Database Lab and production environments? How to deal with it? What other parameters could be used for the SQL optimization process?"
 keywords:
   - "Query timing"
   - "Query duration"
@@ -20,7 +20,7 @@ When [configured properly](https://postgres.ai/docs/guides/administration/postgr
 :::
 
 ## Estimator
-The estimator is a feature of [Database Lab Virtual DBA](https://gitlab.com/postgres-ai/joe) (former Joe bot) to estimate a timing of queries on the production database.
+The estimator is a feature of [Database Lab Engine](https://gitlab.com/postgres-ai/database-lab) and [Database Lab Virtual DBA](https://gitlab.com/postgres-ai/joe) (former Joe bot) to estimate a timing of queries on the production database.
 
 :::caution Experimental feature
 The estimator is currently under active development and testing. Implementation can be changed significantly. Your help with testing and any feedback is highly appreciated.
@@ -58,9 +58,25 @@ LOG: Profiling process 63 with 10ms sampling
 100.00    30.915119
 ```
 
-The estimation methodology implies that the non-IO parts of the overall timing are expected to be very similar on production and clones, focusing on adjusting the values of the IO parts (reads, writes). This makes sense only if the assumptions explained above are true (resources are not saturated, cache states are similar, and so on). This yields to the following formula:
+The estimation methodology implies that the non-IO parts of the overall timing are expected to be very similar on production and clones, focusing on adjusting the values of the IO parts (reads, writes). This makes sense only if the assumptions explained above are true (resources are not saturated, cache states are similar, and so on). 
 
-`Time estimated` = `CPU and other non-IO wait time` + `IO read time` / `Read ratio` + `IO write time` / `Write ratio`
+The general idea is to provide 2 numbers: minimum and maximum estimated execution time of given SQL query. 
+- Minimum execution time will be seen if all needed data already in database cache and database doesn't spend time on Read IO. 
+- Maximum execution time will be seen if we need to read all data from disk. 
+
+In real execution some data (not all) could be in cache and time will be in between minimum and maximum values.
+On clone database cache impacts execution time as well. For DML operations we can get information about buffers read from file system from buffers section of EXPLAIN(ANALYZE,BUFFERS). For DDL operations there is no such opportunity.
+
+This yields to the following formulas:
+```
+Read Buffers = Shared hit + Shared Read (from the explain buffers line)
+
+Read Speed on Clone = Blocks read on clone / Blocks read time on clone
+
+Time estimated min = CPU and other non-IO wait time + IO write time / Write ratio
+Time estimated max = CPU and other non-IO wait time + IO write time / Write ratio + 
+(Read Buffers/Read Speed on Clone) / Read ratio
+```
 
 Here `Read ratio` and `Write ratio` are the constants that need to be pre-defined during configuration as described below.
 
@@ -96,8 +112,7 @@ write_ratio = write_speed_on_prod / write_speed_on_clone
 
 These read and write ratios are supposed to be stored in the bot configuration (later it will be moved to the DLE configuration). There might be a need to update them periodically, synchronizing with statistics observed on the production.
 
-### Step 2. Configure the estimator
-To configure the estimator for Virtual DBA (Joe bot) you will need to add the `estimator` section to the [Virtual DBA configuration](https://postgres.ai/docs/joe-bot/config-reference) and change options according to your deployment.
+To configure the estimator for Database Lab Engine (DLE) and Virtual DBA (Joe bot) you will need to add the `estimator` section to the [Database Lab Engine configuration](https://postgres.ai/docs/database-lab/config-reference) and change options according to your deployment.
 
 `estimator` section example:
 ```

@@ -34,6 +34,7 @@ Here is how the configuration file is structured:
 | `cloning` | Thin cloning policies. |
 | `platform` | Postgres.ai Platform integration (provides GUI, advanced features such as user management, logs). |
 | `observer` | CI Observer configuration. CI Observer helps verify database schema changes (database migrations) automatically, in CI/CD pipelines. Available on the Postgres.ai Platform. |
+| `estimator` | Estimator configuration. Estimator estimates a timing of queries on the production database.
 
 ## Section `global`: global parameters
 - `engine` - defines the Database Lab Engine. Supported engines: `postgres`
@@ -81,7 +82,7 @@ Available job names:
 You need to choose either "logical" or "physical" set of jobs. Mixing is not allowed
 :::
 
-Note, that all jobs are optional. For example, all of the following approaches defining the initial data retrieval process are allowed:
+Note, that all jobs are optional. For example, all the following approaches defining the initial data retrieval process are allowed:
 - You may consider using both `logicalDump` and `logicalRestore` to make a dump to a file and then restore from it
 - You may use only `logicalRestore` and restore from an already prepared dump file
 - You may use only `logicalDump`, without `logicalRestore` (however, this approach makes sense only if you define `immediateRestore` option in the `logicalDump` job, to perform dump & restore on-the-fly, without saving the dump to a file)
@@ -195,3 +196,9 @@ Options:
 ## Section `observer`: CI Observer configuration
 - `replacementRules` (key-value, optional) - set up rules based on regular expressions (a pair of values `"regexp":"replace"`; to check syntax, use [this document](https://github.com/google/re2/wiki/Syntax )) for Postgres logs that will be sent to the Platform when running Observed Sessions; this helps ensure that sensitive data is masked properly and it doesn't leave the origin
 Replacement rules applies to the following log fields: `message`, `detail`, `hint`, `internal_query`, `query`
+  
+## Section `estimator`: Estimator configuration
+- `readRatio` (float, optional, default: 1) - the ratio evaluating the timing difference for operations involving IO Read between Database Lab and production environments 
+- `writeRatio` (float, optional, default: 1) - the ratio evaluating the timing difference for operations involving IO Write between Database Lab and production environments.
+- `profilingInterval` (string, optional, default: 10ms) - time interval of samples taken by the profiler
+- `sampleThreshold` - (integer, optional, default: 20) - the minimum number of samples sufficient to display the estimation results
