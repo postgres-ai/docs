@@ -144,10 +144,10 @@ Supported restore tools:
 Options:
 - `tool` (string, required) - defines the tool to restore data. See available restore tools list
 - `dockerImage` (string, required) - specifies the Docker image containing the restoring tool
-- `sync`  (key-value, optional) - refresh PGDATA after data fetching:
-   - `enabled` (boolean, optional, default: false) - runs a separate container to refresh Database Lab data
-   - `healthCheck` (key-value, optional) - describes health check options for a sync container:
-      - `interval` (int, optional, default: 5) - health check interval for a data sync container (in seconds)
+- `sync`  (key-value, optional) - keep PGDATA up to date after (replaying new WALs from the source) the initial data fetching:
+   - `enabled` (boolean, optional, default: false) - runs a separate container to keep Database Lab data up to date
+   - `healthCheck` (key-value, optional) - describes health check options for the  sync container:
+      - `interval` (int, optional, default: 5) - health check interval for the data sync container (in seconds)
       - `maxRetries` (int, optional, default: 200) - maximum number of health check retries
    - `configs` (key-value, optional) - applies PostgreSQL configuration parameters to the sync instance
 - `envs` (key-value, optional) - passes custom environment variables to the Docker container with the restoring tool
@@ -155,7 +155,7 @@ Options:
    - `backupName` (string, required) - defines the backup name to restore
 - `customTool` (key-value, optional) - defines configuration options for custom restoring tool:
    - `command` (string, required) - defines the command to restore data using a custom tool
-   - `restore_command` (string, optional) - defines the PostgreSQL [`restore_command`](https://postgresqlco.nf/en/doc/param/restore_command/) configuration option to refresh data; Database Lab Engine automatically propagates the specified value to the proper location, depending on the version of PostgreSQL: in versions 11 and older, it is to be stored in `recovery.conf`, while in 12 and newer, it is a part of the main file, `postgresql.conf`
+   - `restore_command` (string, optional) - defines the PostgreSQL [`restore_command`](https://postgresqlco.nf/en/doc/param/restore_command/) configuration option to keep the data up to date; Database Lab Engine automatically propagates the specified value to the proper location, depending on the version of PostgreSQL: in versions 11 and older, it is to be stored in `recovery.conf`, while in 12 and newer, it is a part of the main file, `postgresql.conf`
 
 ### Job `physicalSnapshot`
 Prepares a snapshot for physical restored PostgreSQL database.
