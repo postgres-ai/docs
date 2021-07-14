@@ -149,6 +149,10 @@ sudo zpool create -f \
   "${DBLAB_DISK}"
 ```
 
+:::tip
+If you're going to keep the state of DLE up-to-date with the source (`physicalRestore.sync.enabled: true` in the DLE config), then consider lower values for `recordsize`. Using `recordsize=128k` might give you a better compression ratio and performance of massive IO-bound operations like the creation of an index, but worse performance of WAL replay, so the lag can be higher. And vice versa, with `recordsize=8k`, the performance of WAL replay will be better, but the trade-off is a lower compression ratio and longer duration of index creation.
+:::
+
 And check the result using `zfs list` and `lsblk`, it has to be like this:
 ```bash
 $ sudo zfs list
