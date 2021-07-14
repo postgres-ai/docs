@@ -83,7 +83,7 @@ Take a look at the communication scheme: https://gitlab.com/postgres-ai/database
  - [Sqitch](https://sqitch.org/) (Example: https://github.com/agneum/runci)
  - [Flyway](https://flywaydb.org/) (Example: https://github.com/postgres-ai/dblab-ci-test-flyway)
  - [Liquibase](https://www.liquibase.org/) (Example: https://github.com/postgres-ai/dblab-ci-test-liquibase)
- - [Rake](https://ruby.github.io/rake/)
+ - [Ruby on Rails: Active Record Migrations (`rake db:migrate`)](https://ruby.github.io/rake/)
  - [Django migrations](https://docs.djangoproject.com/en/3.2/topics/migrations/#)
 
 There are [prepared Docker images with DB migration tools](https://hub.docker.com/repository/docker/postgresai/migration-tools)
