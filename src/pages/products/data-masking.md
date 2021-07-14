@@ -39,7 +39,7 @@ Learn more about masking techniques with our recommended tool:
 
 ## Clear and Auditable Rules
 Database Lab recommends a declarative approach to data masking using
-[PostgreSQL Anonymizer](https://postgresql-anonymizer.readthedocs.io/en/stable/declare_masking_rules/).
+[PostgreSQL Anonymizer](https://postgresql-anonymizer.readthedocs.io/en/stable/declare_masking_rules.html).
 
 Masking rules are declared as security labels within the schema itself.
 

@@ -1,5 +1,5 @@
 ---
-title: PostgreSQL versions and extensions
+title: PostgreSQL versions and extensions supported in Database Lab Engine
 ---
 
 ## PostgreSQL versions

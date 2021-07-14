@@ -9,105 +9,99 @@ module.exports = {
       "tutorials/database-lab-tutorial",
       "tutorials/database-lab-tutorial-amazon-rds",
       "tutorials/joe-setup",
-      "tutorials/onboarding",
-    ],
-    "Guides": [
-      "guides/index",
-      {
-        "Administration": [
-          "guides/administration/index",
-          "guides/administration/postgresql-configuration",
-          "guides/administration/engine-manage",
-          "guides/administration/joe-manage",
-          "guides/administration/engine-secure",
-          "guides/administration/machine-setup",
-          "guides/administration/logical-full-refresh",
-          "guides/administration/ci-observer-postgres-log-masking",
-        ],
-      },
-      {
-        "Cloning": [
-          "guides/cloning/index",
-          "guides/cloning/create-clone",
-          "guides/cloning/connect-clone",
-          "guides/cloning/reset-clone",
-          "guides/cloning/destroy-clone",
-          "guides/cloning/clone-protection",
-        ],
-      },
-      {
-        "Joe bot": [
-          "guides/joe-bot/index",
-          "guides/joe-bot/get-query-plan",
-          "guides/joe-bot/create-index",
-          "guides/joe-bot/reset-session",
-          "guides/joe-bot/query-activity-and-termination",
-          "guides/joe-bot/visualize-query-plan",
-          "guides/joe-bot/sql-optimization-history",
-          "guides/joe-bot/count-rows",
-          "guides/joe-bot/get-database-table-index-size",
-        ],
-      },
-      {
-        "CLI": [
-          "guides/cli/index",
-          "guides/cli/cli-install-init",
-        ],
-      },
-      {
-        "Data sources": [
-          "guides/data/index",
-          "guides/data/rds",
-          "guides/data/dump",
-          "guides/data/pg_basebackup",
-          "guides/data/wal-g",
-          "guides/data/custom",
-        ],
-      },
-      {
-        "Platform": [
-          "guides/platform/index",
-          "guides/platform/start-using-platform",
-          "guides/platform/tokens",
-        ],
-      },
-    ],
-    "Database Lab Platform": [
-      "platform/index",
-      "platform/security",
     ],
     "Database Lab Engine": [
       "database-lab/index",
       "database-lab/masking",
       "database-lab/timing-estimator",
       "database-lab/supported-databases",
-      {
-        "Reference": [
-          "database-lab/api-reference",
-          "database-lab/cli-reference",
-          "database-lab/components",
-          "database-lab/config-reference",
-        ],
-      },
     ],
     "Database Lab Migration Checker": [
       "db-migration-checker/index",
-      "db-migration-checker/config-reference",
     ],
     "Joe Bot": [
       "joe-bot/index",
       "joe-bot/example",
-      {
-        "Reference": [
-          "joe-bot/config-reference",
-          "joe-bot/commands-reference",
-        ],
-      },
+    ],
+    "Database Lab Platform (SaaS)": [
+      "platform/index",
+      "platform/security",
     ],
     "Other": [
       "checkup/index",
       "data-recovery/index",
       "data-access/index",
-    ]
+    ],
+    "How-to guides": [
+      "how-to-guides/index",
+      {
+        "Administration": [
+          "how-to-guides/administration/index",
+          "how-to-guides/administration/postgresql-configuration",
+          "how-to-guides/administration/engine-manage",
+          "how-to-guides/administration/joe-manage",
+          "how-to-guides/administration/engine-secure",
+          "how-to-guides/administration/machine-setup",
+          "how-to-guides/administration/logical-full-refresh",
+          "how-to-guides/administration/ci-observer-postgres-log-masking",
+          {
+            "Data sources": [
+              "how-to-guides/administration/data/index",
+              "how-to-guides/administration/data/rds",
+              "how-to-guides/administration/data/dump",
+              "how-to-guides/administration/data/pg_basebackup",
+              "how-to-guides/administration/data/wal-g",
+              "how-to-guides/administration/data/custom",
+            ],
+          },
+        ],
+      },
+      {
+        "CLI": [
+          "how-to-guides/cli/index",
+          "how-to-guides/cli/cli-install-init",
+        ],
+      },
+      {
+        "Cloning": [
+          "how-to-guides/cloning/index",
+          "how-to-guides/cloning/create-clone",
+          "how-to-guides/cloning/connect-clone",
+          "how-to-guides/cloning/reset-clone",
+          "how-to-guides/cloning/destroy-clone",
+          "how-to-guides/cloning/clone-protection",
+        ],
+      },
+      {
+        "SQL Optimization Chatbot (Joe Bot)": [
+          "how-to-guides/joe-bot/index",
+          "how-to-guides/joe-bot/get-query-plan",
+          "how-to-guides/joe-bot/create-index",
+          "how-to-guides/joe-bot/reset-session",
+          "how-to-guides/joe-bot/query-activity-and-termination",
+          "how-to-guides/joe-bot/visualize-query-plan",
+          "how-to-guides/joe-bot/sql-optimization-history",
+          "how-to-guides/joe-bot/count-rows",
+          "how-to-guides/joe-bot/get-database-table-index-size",
+        ],
+      },
+      {
+        "Platform": [
+          "how-to-guides/platform/index",
+          "how-to-guides/platform/start-using-platform",
+          "how-to-guides/platform/tokens",
+          "how-to-guides/platform/onboarding",
+        ],
+      },
+    ],
+    "Reference guides": [
+      "reference-guides/database-lab-engine-components",
+      "reference-guides/database-lab-engine-api-reference",
+      "reference-guides/dblab-client-cli-reference",
+      "reference-guides/database-lab-engine-configuration-reference",
+      "reference-guides/db-migration-checker-configuration-reference",
+      "reference-guides/joe-bot-configuration-reference",
+      "reference-guides/joe-bot-commands-reference",
+    ],
   },
 };

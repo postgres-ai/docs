@@ -40,7 +40,7 @@ More about Joe features you can find in ["What Is Joe Bot?"](https://postgres.ai
 
 If you have Slack app installed, try the live demonstration:
 
-- Add the Database Lab community to your Slack: https://database-lab-team-slack-invite.herokuapp.com/.
+- Add the Database Lab community to your Slack: https://slack.postgres.ai/.
 - Go to the `#joe-bot-demo` public channel.
 - Start with the `help` command, `explain` any queries, apply any changes to database schema using `exec`, quickly rollback changes with `reset`.
 
@@ -55,4 +55,4 @@ Version 0.5.0 adds support of Slack API signed secrets, automated notifications 
 - Open-source repository: https://gitlab.com/postgres-ai/joe/
 - Changelog: https://gitlab.com/postgres-ai/joe/-/releases
 - Bug reports, ideas, and merge requests are welcome: https://gitlab.com/postgres-ai/joe/issues/
-- Community Slack (English): https://database-lab-team-slack-invite.herokuapp.com/. After joining, the live demo of Joe is available in the #joe-bot-demo channel: https://database-lab-team.slack.com/archives/CTL5BB30R
+- Community Slack (English): https://slack.postgres.ai/. After joining, the live demo of Joe is available in the #joe-bot-demo channel: https://database-lab-team.slack.com/archives/CTL5BB30R

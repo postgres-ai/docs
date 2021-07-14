@@ -202,7 +202,7 @@ module.exports = {
           items: [
             {
               label: 'Community Slack',
-              href: 'https://database-lab-team-slack-invite.herokuapp.com',
+              href: 'https://slack.postgres.ai/',
             },
             {
               label: 'GitLab',
@@ -272,6 +272,31 @@ module.exports = {
         max: 1030, // max resized image's size.
         min: 640, // min resized image's size. if original is lower, use that size.
         steps: 2, // the max number of images generated between min and max (inclusive)
+      },
+    ],
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: [
+          {
+            to: '/docs/roadmap', // string
+            from: ['/docs/oldDocPathFrom2019', '/docs/legacyDocPathFrom2016'], // string | string[]
+          },
+          { to: '/docs/reference-guides/database-lab-engine-api-reference', from: '/docs/database-lab/api-reference' },
+          { to: '/docs/reference-guides/dblab-client-cli-reference', from: '/docs/database-lab/cli-reference' },
+          { to: '/docs/reference-guides/database-lab-engine-components', from: '/docs/database-lab/components' },
+          { to: '/docs/reference-guides/database-lab-engine-configuration-reference', from: '/docs/database-lab/config-reference' },
+          { to: '/docs/reference-guides/joe-bot-configuration-reference', from: '/docs/joe-bot/config-reference' },
+          { to: '/docs/reference-guides/joe-bot-commands-reference', from: '/docs/joe-bot/commands-reference' },
+          { to: '/docs/reference-guides/db-migration-checker-configuration-reference', from: '/docs/db-migration-checker/config-reference' },
+          { to: '/docs/how-to-guides', from: '/docs/guides' },
+          { to: '/docs/how-to-guides/administration', from: '/docs/guides/administration' },
+          { to: '/docs/how-to-guides/administration/data', from: '/docs/guides/data' },
+          { to: '/docs/how-to-guides/cli', from: '/docs/guides/cli' },
+          { to: '/docs/how-to-guides/cloning', from: '/docs/guides/cloning' },
+          { to: '/docs/how-to-guides/joe-bot', from: '/docs/guides/joe-bot' },
+          { to: '/docs/how-to-guides/platform', from: '/docs/guides/platform' },
+        ],
       },
     ],
   ],

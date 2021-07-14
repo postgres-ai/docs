@@ -40,6 +40,6 @@ Links:
 
 - [Database Lab tutorial](/docs/tutorials/database-lab-tutorial)
 - Please support the project giving a GitLab star: https://gitlab.com/postgres-ai/database-lab
-- [Join our Slack](https://database-lab-team-slack-invite.herokuapp.com/) to discuss Database Lab and share your feedback with us
+- [Join our Slack](https://slack.postgres.ai/) to discuss Database Lab and share your feedback with us
 - [Source code and issue tracker](https://gitlab.com/postgres-ai/database-lab)
 - [Release notes](https://gitlab.com/postgres-ai/database-lab/-/releases)

@@ -13,7 +13,7 @@ keywords:
 
 ## General
 
-Postgres Checkup ([postgres-checkup](https://gitlab.com/postgres-ai-team/postgres-checkup)) is a diagnostics tool for a deep analysis of a Postgres database health. It detects current and potential issues with database performance, scalability, and security. It also produces recommendations on how to resolve or prevent them.
+Postgres Checkup ([postgres-checkup](https://gitlab.com/postgres-ai/postgres-checkup)) is a diagnostics tool for a deep analysis of a Postgres database health. It detects current and potential issues with database performance, scalability, and security. It also produces recommendations on how to resolve or prevent them.
 postgres-checkup also reveals sneaking up, deeper problems that may hit you in the future. It helps to solve many known database administration problems and common pitfalls. It aims to detect issues at a very early stage and to suggest the best ways to prevent them. 
 
 It makes sense to run this tool on a regular basis — weekly, monthly, and quarterly. Additionally, it is recommended using postgres-checkup during major database changes, right before and right after making the change, for the sake of regression control.
@@ -64,7 +64,7 @@ At the moment, postgres-checkup generates 28 reports organized in 7 groups.
 
 * L. DB Schema Analysis
     - L001 (was: H003) Table sizes
-    - L003 Integer (int2, int4) out-of-range risks in PKs // calculate capacity remained; optional: predict when capacity will be fully used) https://gitlab.com/postgres-ai-team/postgres-checkup/issues/237
+    - L003 Integer (int2, int4) out-of-range risks in PKs // calculate capacity remained; optional: predict when capacity will be fully used) https://gitlab.com/postgres-ai/postgres-checkup/issues/237
 
 About 30 reports in 11 groups are planned to be implemented in the future.
 

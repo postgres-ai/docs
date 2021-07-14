@@ -10,24 +10,25 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 <img src={useBaseUrl('assets/database-lab/dblab.png')} width="256" align="right" vspace="20" hspace="20" />
 
 ## Tutorials
-- [Database Lab tutorial for Amazon RDS Postgres](/docs/tutorials/database-lab-tutorial-amazon-rds)
 - [Database Lab tutorial for any PostgreSQL database](/docs/tutorials/database-lab-tutorial)
+- [Database Lab tutorial for Amazon RDS Postgres](/docs/tutorials/database-lab-tutorial-amazon-rds)
 
 ## References
-- [CLI reference](/docs/database-lab/cli-reference)
-- [API reference](/docs/database-lab/api-reference)
-- [Configuration reference](/docs/database-lab/config-reference)
+- [Database Lab Engine components](/docs/reference-guides/database-lab-components)
+- [Database Lab Engine API reference](/docs/reference-guides/database-lab-engine-api-reference)
+- [Client CLI reference (`dblab`)](/docs/reference-guides/dblab-client-cli-reference)
+- [Database Lab Engine configuration reference](/docs/reference-guides/database-lab-configuration-reference)
 
-# User Guides
-- [How to create Database Lab clones](/docs/guides/cloning/create-clone)
-- [How to connect to Database Lab clones](/docs/guides/cloning/connect-clone)
-- [How to reset Database Lab clone](/docs/guides/cloning/reset-clone)
-- [How to destroy Database Lab clone](/docs/guides/cloning/destroy-clone)
-- [Protect clones from manual and automatic deletion](/docs/guides/cloning/clone-protection)
-- [How to install and initialize Database Lab CLI](/docs/guides/cli/cli-install-init)
+## User Guides
+- [How to create Database Lab clones](/docs/how-to-guides/cloning/create-clone)
+- [How to connect to Database Lab clones](/docs/how-to-guides/cloning/connect-clone)
+- [How to reset Database Lab clone](/docs/how-to-guides/cloning/reset-clone)
+- [How to destroy Database Lab clone](/docs/how-to-guides/cloning/destroy-clone)
+- [Protect clones from manual and automatic deletion](/docs/how-to-guides/cloning/clone-protection)
+- [How to install and initialize Database Lab CLI](/docs/how-to-guides/cli/cli-install-init)
 
 ## Overview
-**Database Lab Engine** – an open-source technology which is a core component of the Database Lab Platform. It is used to build powerful, state-of-the-art development and testing environments, based on a simple idea: with modern thin cloning technologies, it becomes possible to iterate 100x faster in development and testing. It is extremely helpful for larger or small but very agile teams that want to achieve high development velocity and the most competitive "time to market" characteristics, and save budgets on non-production infrastructure.
+**Database Lab Engine** – an open-source technology that is a core component of the Database Lab Platform. It is used to build powerful, state-of-the-art development and testing environments, based on a simple idea: with modern thin cloning technologies, it becomes possible to iterate 100x faster in development and testing. It is extremely helpful for larger or small but very agile teams that want to achieve high development velocity and the most competitive "time to market" characteristics and save budgets on non-production infrastructure.
 
 **Database Lab Platform** is a paid SaaS offering developed and maintained by [Postgres.ai](https://Postgres.ai). It provides GUI, user management, permissions control, token management, more.
 
@@ -73,5 +74,4 @@ Some problems that can be solved by using Database Lab:
 ### More
 - [Repository](https://gitlab.com/postgres-ai/database-lab)
 - [Issue tracker](https://gitlab.com/postgres-ai/database-lab/issues) (for bugs reports, feature proposals)
-- [Slack (English)](https://database-lab-team-slack-invite.herokuapp.com/)
-- [Telegram (Russian)](https://t.me/databaselabru)
+- [Slack](https://slack.postgres.ai/)

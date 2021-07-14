@@ -45,5 +45,4 @@ This process is fully automated and takes only a few seconds, even for multi-ter
 ## Resources 
 - Open-source repository: https://gitlab.com/postgres-ai/joe/
 - Bug reports, ideas, and merge requests are welcome: https://gitlab.com/postgres-ai/joe/issues/
-- To discuss Joe Bot, join our Slack:  https://database-lab-team-slack-invite.herokuapp.com/
-- Community Slack (English): https://database-lab-team-slack-invite.herokuapp.com/; after joining, try a live demo of Joe in the `#joe-bot-demo` channel: https://database-lab-team.slack.com/archives/CTL5BB30R
+- To discuss and try Joe Bot, join the Database Lab Community Slack: https://slack.postgres.ai/; after joining, try a live demo of Joe in the `#joe-bot-demo` channel: https://database-lab-team.slack.com/archives/CTL5BB30R

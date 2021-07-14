@@ -24,12 +24,12 @@ During this Summer, we were super-busy achieving two goals that defined version 
 
 Both targets happened to be quite challenging, but it is finally done, and now we are happy to see that all the pieces of Database Lab Engine work in containers, the whole workflow is described in a single YAML configuration file, and, last but not least, it works with RDS Postgres databases. Yay!
 
-Check out [Database Lab Engine release notes](https://gitlab.com/postgres-ai/database-lab/-/releases), [Tutorial for RDS users](https://postgres.ai/docs/tutorials/database-lab-tutorial-amazon-rds), and [Database Lab Engine configuration reference](https://postgres.ai/docs/database-lab/config-reference).
+Check out [Database Lab Engine release notes](https://gitlab.com/postgres-ai/database-lab/-/releases), [Tutorial for RDS users](https://postgres.ai/docs/tutorials/database-lab-tutorial-amazon-rds), and [Database Lab Engine configuration reference](https://postgres.ai/docs/reference-guides/database-lab-engine-configuration-reference).
 
 As usual, please send us any feedback you have; it is hard to overestimate its meaning for such a young project:
 
 - Follow us on Twitter: [@Database_Lab](https://twitter.com/Database_Lab) (recently created!).
-- [Community Slack (English)](https://database-lab-team-slack-invite.herokuapp.com/), and [Telegram group (Russian)](https://t.me/databaselabru).
+- [Community Slack (English)](https://slack.postgres.ai/), and [Telegram group (Russian)](https://t.me/databaselabru).
 - Intercom widget (located at right bottom corner).
 
 *[Database Lab Engine](https://gitlab.com/postgres-ai/database-lab) is open-source software distributed under OSI-approved [AGPLv3 license](https://opensource.org/licenses/AGPL-3.0). Database Lab Engine allows to clone PostgreSQL databases of any size in just a few seconds. This can save you a lot of money for development and testing infrastructure, and at the same time, drastically improve development quality and time-to-market.*
