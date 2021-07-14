@@ -143,7 +143,7 @@ nvme0n1     259:0  0   777G  0 disk
 
 ## Step 2. Configure and launch the Database Lab Engine
 :::caution
-To make your work with Database Lab API secure, do not open Database Lab API and Postgres clone ports to the public and instead use VPN or SSH port forwarding. It is also a good idea to encrypt all the traffic: for Postgres clones, set up SSL in the configuration files; and for Database Lab API, install, and configure NGINX with a self-signed SSL certificate. See the [How to Secure Database Lab Engine](/docs/guides/administration/engine-secure).
+To make your work with Database Lab API secure, do not open Database Lab API and Postgres clone ports to the public and instead use VPN or SSH port forwarding. It is also a good idea to encrypt all the traffic: for Postgres clones, set up SSL in the configuration files; and for Database Lab API, install, and configure NGINX with a self-signed SSL certificate. See the [How to Secure Database Lab Engine](/docs/how-to-guides/administration/engine-secure).
 :::
 
 We have two options to connect to the RDS database: password-based, and IAM-based. The former is always available, while the latter is more secure and recommended, but it is available only if you specified it in **Database Authentication Options** when creating your RDS instance (it is not selected by default). To see if the IAM-based option is available for already created RDS instance, open the "Configuration" tab and check if "IAM db authentication" is `Enabled`.
@@ -453,7 +453,7 @@ Reconnect to the clone:
 
 Now check the database objects you've dropped or partially deleted – everything should be the same as when we started.
 
-For more, see [the full client CLI reference](/docs/database-lab/cli-reference).
+For more, see [the full client CLI reference](/docs/reference-guides/dblab-client-cli-reference).
 
 :::info Have questions?
 Reach out to our team, we'll be happy to help! Use the Intercom widget located at the right bottom corner.

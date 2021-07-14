@@ -26,7 +26,7 @@ Companies who are accepted into the Customer Advisory Group will make the follow
 * Gain all the benefits of Database Lab, including
   [automated database migration testing](/products/database-migration-testing),
   [seamless SQL optimization](/products/joe),
-  and [realistic test environments](realistic-test-environments).
+  and [realistic test environments](/products/realistic-test-environments).
   Free for 6 months.
 * Shape our product roadmap to the needs of your organization.
 * _Added Bonus:_ We will run a free PostgreSQL Query Optimization Training course for your whole team based

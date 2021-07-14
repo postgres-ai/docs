@@ -35,13 +35,13 @@ slug: /how-to-guides
 
 ## Obtaining data for Database Lab
 ### Logical retrieval
-- [Amazon RDS](/docs/how-to-guides/data/rds)
-- [Any database (dump/restore)](/docs/how-to-guides/data/dump)
+- [Amazon RDS](/docs/how-to-guides/administration/data/rds)
+- [Any database (dump/restore)](/docs/how-to-guides/administration/data/dump)
 
 ### Physical retrieval
-- [pg_basebackup](/docs/ghow-to-guidesuides/data/pg_basebackup)
-- [WAL-G](/docs/how-to-guides/data/wal-g)
-- [Custom](/docs/how-to-guides/data/custom)
+- [pg_basebackup](/docs/how-to-guides/administration/data/pg_basebackup)
+- [WAL-G](/docs/how-to-guides/administration/data/wal-g)
+- [Custom](/docs/how-to-guides/administration/data/custom)
 
 ## Database Lab (Postgres.ai) Platform
 - [Start using Postgres.ai Platform](/docs/how-to-guides/platform/start-using-platform)

@@ -14,10 +14,10 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 - [Database Lab tutorial for Amazon RDS Postgres](/docs/tutorials/database-lab-tutorial-amazon-rds)
 
 ## References
-- [Database Lab Engine components](/docs/reference-guides/database-lab-components)
+- [Database Lab Engine components](/docs/reference-guides/database-lab-engine-components)
 - [Database Lab Engine API reference](/docs/reference-guides/database-lab-engine-api-reference)
 - [Client CLI reference (`dblab`)](/docs/reference-guides/dblab-client-cli-reference)
-- [Database Lab Engine configuration reference](/docs/reference-guides/database-lab-configuration-reference)
+- [Database Lab Engine configuration reference](/docs/reference-guides/database-lab-engine-configuration-reference)
 
 ## User Guides
 - [How to create Database Lab clones](/docs/how-to-guides/cloning/create-clone)

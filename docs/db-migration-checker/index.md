@@ -52,7 +52,7 @@ DB Migration Checker is a DLE's component that enables integration with CI/CD to
     - `DLMC_VERIFICATION_TOKEN` - verification token for the Database Lab Migration Checker API 
 
 - Configure a new workflow in the created repository (see an example of configuration: https://github.com/agneum/runci/blob/master/.github/workflows/main.yml)
-  - add a custom action: https://github.com/marketplace/actions/database-lab-migration-checker
+  - add a custom action: https://github.com/marketplace/actions/database-lab-realistic-db-testing-in-ci
   - provide input params for the action (the full list of [available input params](#available-input-params))
   - provide environment variables:
     - DLMC_CI_ENDPOINT - use a CI Checker endpoint from the repository secrets

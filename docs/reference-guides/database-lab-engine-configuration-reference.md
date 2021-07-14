@@ -9,8 +9,8 @@ Database Lab Engine behavior can be controlled using the main configuration file
 Example config files can be found here: https://gitlab.com/postgres-ai/database-lab/-/tree/2.4.1/configs.
 
 Useful guides that help manage Database Lab Engine:
-- [How to configure and start Database Lab Engine](/docs/guides/administration/engine-manage#configure-and-start-a-database-lab-engine-instance)
-- [Reconfigure Database Lab Engine without downtime](/docs/guides/administration/engine-manage#reconfigure-database-lab-engine)
+- [How to configure and start Database Lab Engine](/docs/how-to-guides/administration/engine-manage#configure-and-start-a-database-lab-engine-instance)
+- [Reconfigure Database Lab Engine without downtime](/docs/how-to-guides/administration/engine-manage#reconfigure-database-lab-engine)
 
 :::tip
 The configuration of Database Lab Engine can be reloaded without downtime:
@@ -133,7 +133,7 @@ Options:
     - `queryPath` (string, optional, default: "") - specifies the path to SQL pre-processing queries; an empty string means that no pre-processing defined
     - `maxParallelWorkers` (integer, optional, default: 2) - defines the worker limit for parallel queries
 - `preprocessingScript` (string, optional) - path on the host machine to a pre-precessing script
-- `configs` (key-value, optional) - applies PostgreSQL configuration parameters when preparing a working snapshot. These parameters are inherited by all clones. See also: [How to configure PostgreSQL used by Database Lab Engine](/docs/guides/administration/postgresql-configuration)
+- `configs` (key-value, optional) - applies PostgreSQL configuration parameters when preparing a working snapshot. These parameters are inherited by all clones. See also: [How to configure PostgreSQL used by Database Lab Engine](/docs/how-to-guides/administration/postgresql-configuration)
 
 ### Job `physicalRestore`
 Restores data from a physical backup.
@@ -175,7 +175,7 @@ Options:
    - `configs` (key-value, optional) - applies PostgreSQL configuration parameters to the promotion instance
 - `sysctls` (key-value, optional) - allows configuring namespaced kernel parameters (sysctls) of Docker container for a promotion stage of taking a snapshot. See supported parameters: https://docs.docker.com/engine/reference/commandline/run/#configure-namespaced-kernel-parameters-sysctls-at-runtime
 - `preprocessingScript` (string, optional) - path on the host machine to a pre-precessing script
-- `configs` (key-value, optional) - applies PostgreSQL configuration parameters to snapshot. These parameters are inherited by all clones. See also: [How to configure PostgreSQL used by Database Lab Engine](/docs/guides/administration/postgresql-configuration)
+- `configs` (key-value, optional) - applies PostgreSQL configuration parameters to snapshot. These parameters are inherited by all clones. See also: [How to configure PostgreSQL used by Database Lab Engine](/docs/how-to-guides/administration/postgresql-configuration)
 - `envs` (key-value, optional) - passes custom environment variables to the promotion Docker container
 - `scheduler` (key-value, required) - contains tasks which run on a schedule:
    - `snapshot` (key-value, optional) - defines rules to create a new snapshot on a schedule:

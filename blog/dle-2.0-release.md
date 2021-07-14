@@ -34,8 +34,8 @@ Version 2.0 speeds up and empowers the initialization of DLE itself. Instead of 
 ## Updates in DLE 2.0
 
 - Automated data retrieval: specify the source and the method of initializing the data directory and how it is to be updated
-- Both physical (pg_basebackup, WAL-G, more) and logical methods (dump/restore, Amazon RDS, Heroku Postgres, more) are supported (see the guide [Database Lab Engine data sources](https://postgres.ai/docs/how-to-guides/data))
-- Any managed cloud PostgreSQL offering is now supported, with additional features for Amazon RDS (see [DLE tutorial for Amazon RDS](https://postgres.ai/docs/tutorials/database-lab-tutorial-amazon-rds) and the guide [Data source: AWS RDS](https://postgres.ai/docs/how-to-guides/data/rds))
+- Both physical (pg_basebackup, WAL-G, more) and logical methods (dump/restore, Amazon RDS, Heroku Postgres, more) are supported (see the guide [Database Lab Engine data sources](https://postgres.ai/docs/how-to-guides/administration/data))
+- Any managed cloud PostgreSQL offering is now supported, with additional features for Amazon RDS (see [DLE tutorial for Amazon RDS](https://postgres.ai/docs/tutorials/database-lab-tutorial-amazon-rds) and the guide [Data source: AWS RDS](https://postgres.ai/docs/how-to-guides/administration/data/rds))
 - For continuously updated physically initialized data directory (which effectively makes your DLE a specialized replica), snapshot management is fully automated: snapshots are created and destroyed based on the schedule defined in the configuration file (see the reference [Job physicalSnapshot](https://postgres.ai/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalsnapshot))
 - Basic data transformation and masking supported: specify any custom script that will be applied each time a new snapshot is prepared (option `preprocessingScript` in both `logicalSnapshot` and `physicalSnapshot` jobs, see the [Configuration reference](https://postgres.ai/docs/reference-guides/database-lab-engine-configuration-reference))
 - License changed to [AGPLv3](https://www.gnu.org/licenses/agpl-3.0.en.html)
