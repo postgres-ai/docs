@@ -62,7 +62,7 @@ Here's what you can expect when setting up the DLE:
 
 <ul class='footnotes'>
   <li><sup>1</sup> If desired, alternate copy-on-write systems may be used. See the &nbsp;
-    <a href="/docs/guides/administration/machine-setup#set-up-either-zfs-or-lvm-to-enable-thin-cloning"
+    <a href="/docs/how-to-guides/administration/machine-setup#set-up-either-zfs-or-lvm-to-enable-thin-cloning"
        target="_blank">
       documentation
     </a>

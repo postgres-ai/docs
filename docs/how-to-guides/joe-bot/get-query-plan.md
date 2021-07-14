@@ -25,7 +25,7 @@ Let's analyze how it works step by step.
 2. If this was the first command, Joe creates a session and automatically requests a new thin clone to be provisioned. Such clone is a full-size copy of the source database, provisioning takes only a few seconds and, this clone is fully independent (you can analyze it or change it however you want, it will not disturb the work of others, neither it will affect the performance of the source database).
 3. First, the **Plan without execution** appears, it can be useful as a preview of **Plan with execution** for long-running queries.
 4. When the query is successfully executed (✅ **OK** status) you will see much more information about it, including **Plan with execution**, **Recommendations**, **Summary** (of performance metrics), raw database responses in the attachments. You can read more about plans in the [official Postgres documentation](https://www.postgresql.org/docs/current/using-explain.html).
-5. When the query execution is finished, the session is still present. You can [change the database schema or create an index](/docs/guides/joe-bot/create-index) and run the [`explain`](/docs/reference-guides/joe-bot-commands-reference#explain) again.
+5. When the query execution is finished, the session is still present. You can [change the database schema or create an index](/docs/how-to-guides/joe-bot/create-index) and run the [`explain`](/docs/reference-guides/joe-bot-commands-reference#explain) again.
 
 #### Related official PostgreSQL documentation
 - [PostgreSQL documentation: EXPLAIN](https://www.postgresql.org/docs/current/sql-explain.html)
