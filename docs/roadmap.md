@@ -133,7 +133,7 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
 - [x] Basic support for masking and obfuscation
     - [x] custom scripts
     - [x] parallel execution of custom scripts
-    - [x] [postgres_anonymizer](https://postgresql-anonymizer.readthedocs.io/en/stable/masking_functions/)
+    - [x] [postgres_anonymizer](https://postgresql-anonymizer.readthedocs.io/en/stable/masking_functions.html)
     - [x] [kitchen-sync](https://github.com/willbryant/kitchen_sync)
     - [ ] [pgsync]https://github.com/ankane/pgsync)
 - [ ] Hybrid setup: raw and obfuscaned/masked clones on the same DLE instance
