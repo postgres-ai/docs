@@ -8,7 +8,7 @@ linktitle: "Database Lab Engine 2.1"
 title: "Database Lab Engine 2.1"
 description: "Database Lab Engine 2.1 released: automated physical and logical initialization, Amazon RDS PostgreSQL support, basic data transformation and masking"
 weight: 0
-image: /assets/images/thumbnails/dle-2.1-blog.png
+image: /assets/thumbnails/dle-2.1-blog.png
 tags:
   - Database Lab Engine
   - PostgreSQL staging

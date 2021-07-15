@@ -1,0 +1,112 @@
+---
+author: "Nikolay Samokhvalov"
+authorimg: /assets/images/nik.jpg
+date: 2021-07-14 13:18:00
+publishDate: 2021-07-14 13:18:00
+linktitle: "DLE 2.4: realistic DB testing in GitHub Actions; Terraform module"
+title: "DLE 2.4: realistic DB testing in GitHub Actions; Terraform module"
+description: "DDLE 2.4 brings two major capabilities to those who are interested in working with PostgreSQL thin clones: automated tests of DB migrations in GitHub Actions, and Terraform module to deploy Database Lab in AWS"
+weight: 0
+image: /assets/thumbnails/dle-2.4-blog.png
+tags:
+  - Database Lab Engine
+  - PostgreSQL testing in CI/CD
+  - database migration testing
+  - database migrations CI
+  - database lab in github actions
+---
+
+<p align="center">
+    <img src="/assets/thumbnails/dle-2.4-blog.png" alt="DLE 2.4: DB Migration Checker and Terraform module"/>
+</p>
+
+## Database Lab Engine 2.4 is out
+
+The Database Lab Engine (DLE) is an open-source technology to enable thin cloning for PostgreSQL. Thin clones are exceptionally useful when you need to scale the development process. DLE can manage dozens of an independent clones of your database on a single machine, so each engineer or automation process works with their own database provisioned in seconds without extra costs.
+
+DLE 2.4 brings two major capabilities to those who are interested in working with PostgreSQL thin clones:
+- a new component, [DB Migration Checker](https://postgres.ai/docs/db-migration-checker), that automates DB migration testing in CI/CD pipelines
+- a [Terraform module](https://gitlab.com/postgres-ai/database-lab-infrastructure) to deploy DLE in AWS using the "logical" provisioning mode
+
+Additionally, this release has a lot of improvements and fixes.
+
+## :rocket: Add DB change testing to your CI/CD pipelines 
+
+DB migrations – database schema and data changes, usually controlled by a special tool that tracks the changes in Git. There are many such tools: [Flyway](https://github.com/flyway/flyway), [Liquibase](https://github.com/liquibase/liquibase), and [Active Record Migrations](https://guides.rubyonrails.org/active_record_migrations.html), to name a few. These tools are necessary for keeping DB schema changes sane, reliable, and predictable.
+
+However, in most cases, testing of the changes in CI/CD is very weak because it is done using either an empty or some tiny, mocked database. As a result, with growing databases and workloads, deployments of DB changes fail more often. This problem may be so annoying for some people that they might even think about switching to some NoSQL, schemaless databases, to forget about such issues – but to meet, eventually, a bunch of others: data inconsistency or update difficulties caused by lack of normalization.
+
+With DLE 2.4 and its DB Migration Checker component, it becomes easy to get realistic testing using thin clones of PostgreSQL databases of any size right in CI/CD pipelines. With this technology, you can drastically decrease the risk of deploying harmful DB schema changes and continue using PostgreSQL, with its excellent feature set and reliability, not compromising the development speed.
+
+### An example
+To have a basic demonstration of realistic testing of DB migrations in CI/CD pipelines, let's build an index on a table that has a significant number of rows. You can see the details of this testing in this GitHub PR: https://github.com/postgres-ai/green-zone/pull/4.
+
+If we use `CREATE INDEX` to build an index on a table with data, forgetting to add `CONCURRENTLY`, this will block all queries to the table while `CREATE INDEX` is running. The larger our table is, the more noticeable the negative effect on our production workload will be. In the case of large tables, such mistakes cause partial downtime resulting in direct income and/or reputation losses, depending on the type of business.
+
+To demonstrate how Database Lab Engine catches this problem during automated testing in CI/CD, I'm going to use a [GitHub repository](https://github.com/postgres-ai/green-zone) with some example DB migrations (managed by [Sqitch](https://sqitch.org)) for our Demo database that contains random data. As you can see in [commit 839be90](https://github.com/postgres-ai/green-zone/commit/839be905c11f5ec2bd87cf65a0616c0d896b843d), I commented out the word `CONCURRENTLY`. Once `git push` is done and our unique GitHub Action finished, we can see that our change was marked as failed by DLE's DB Migration Checker:
+
+---
+
+<img src="/assets/blog/gh_actions_db_migration_checker_fail.png" alt="DB Migration Checker capturing dangerous CREATE INDEX (without CONCURRENTLY)"/>
+
+---
+
+Let's open this job and see the details:
+
+---
+
+<img src="/assets/blog/gh_actions_db_migration_checker_fail_details.png" alt="DB Migration Checker capturing dangerous CREATE INDEX (without CONCURRENTLY)"/>
+
+---
+
+What happened here? Behind the schenes, a pre-installed DLE server (in AWS) quickly provisioned a thin clone of the Demo database. <!--The size of that database is ~37 GiB and cloning took just TODO: add details and sreenshot here -->Next, the DB change was applied in this clone, and DB Migration Checker collected telemetry, and it becomes clear that such change is going to hold an `AccessExclusiveLockё` blocking other queries for a significant time (according to the settings, longer than for 10 seconds). Therefore, this change marked as failed in CI/CD.  This is exactly what we need to be protected to avoid deploying such changes to production.
+
+Of course, if we get the word `CONCURRENTLY` back (as I did in [commit 6059bf4](https://github.com/postgres-ai/green-zone/commit/6059bf4b80a1930bcb531ecd5ae607d623f2a64d)), we'll have our "green light":
+
+---
+
+<img src="/assets/blog/gh_actions_db_migration_checker_success.png" alt="DB Migration Checker capturing dangerous CREATE INDEX CONCURRENTLY"/>
+
+---
+
+### Key features of DLE's DB Migration Checker
+- **Automated:** DB migration testing in CI/CD pipelines
+- **Realistic:** test results are realistic because real or close-to-real (the same size but no personal data) databases are used, thin-cloned in seconds, and destroyed after testing is done
+- **Fast and inexpensive:** a single machine with a single disk can operate dozens of independent thin clones
+- **Well-tested DB changes to avoid deployment failures:** DB Migration Checker automatically detects (and prevents!) long-lasting dangerous locks that could put your production systems down
+- **Secure**: DB Migration Checker runs all tests in a secure environment: data cannot be copied outside the secure container
+- **Lots of helpful data points**: Collect useful artifacts (such as `pg_stat_***` system views) and use them to empower your DB changes review process
+
+### Currently supported tools and platforms
+Currently, full automation is supported for the DB migrations tracked in GitHub repositories using one of the following tools:
+ - [Sqitch](https://sqitch.org/) (Example: https://github.com/agneum/runci)
+ - [Flyway](https://flywaydb.org/) (Example: https://github.com/postgres-ai/dblab-ci-test-flyway)
+ - [Liquibase](https://www.liquibase.org/) (Example: https://github.com/postgres-ai/dblab-ci-test-liquibase)
+ - [Ruby on Rails: Active Record Migrations](https://guides.rubyonrails.org/active_record_migrations.html) (using [`rake db:migrate`](https://ruby.github.io/rake/))
+ - [Django migrations](https://docs.djangoproject.com/en/3.2/topics/migrations/)
+
+It is also supposed that the automated testing is done using [GitHub Actions](https://github.com/marketplace/actions/database-lab-realistic-db-testing-in-ci). However, the list of supported Git platforms, CI/CD tools, and DB migration version control systems is quite easy to extend – you can do it (please publish an MR if you do!) or open an issue to ask about it in the [DLE & DB Migration Checker issue tracker](https://gitlab.com/postgres-ai/database-lab/-/issues).
+
+## :large_blue_diamond: Terraform module to deploy DLE and its components in AWS
+Terraform module for Database Lab helps you deploy the [Database Lab Engine](https://gitlab.com/postgres-ai/database-lab) in clouds. You can find the code and detailed README here: https://gitlab.com/postgres-ai/database-lab-infrastructure.
+
+Supported platforms and limitations of this Terraform module:
+- Your source PostgreSQL database can be located anywhere
+- DLE with its components will be deployed in AWS under your AWS account.
+- Currently, only the "logical" mode of data retrieval (dump/restore) is supported – the only available method for most so-called managed PostgreSQL cloud platforms such as RDS Postgres, RDS Aurora Postgres, Azure Postgres, Heroku. "Physical" mode is not yet supported.
+
+Feedback and contributions are very welcome.
+
+## Useful links
+- CHANGELOG – DLE and DB Migration Checker 2.4: https://gitlab.com/postgres-ai/database-lab/-/releases#2.4.0
+- Read more about DB migration testing in the Database Lab docs:
+    - [DB Migration Checker](https://postgres.ai/docs/db-migration-checker)
+    - [Reference guide: DB Migration Checker configuration](https://postgres.ai/docs/reference-guides/db-migration-checker-configuration-reference)
+- GitHub Action to integrate Database Lab with GitHub: https://github.com/marketplace/actions/database-lab-realistic-db-testing-in-ci
+- Database Lab Terraform module repository (includes detailed README): https://gitlab.com/postgres-ai/database-lab-infrastructure
+
+## Request for feedback and contributions
+Feedback and contributions would be greatly appreciated:
+- Database Lab Community Slack: https://slack.postgres.ai/
+- DLE & DB Migration Checker issue tracker: https://gitlab.com/postgres-ai/database-lab/-/issues
+- Issue tracker of the Terraform module for Database Lab: https://gitlab.com/postgres-ai/database-lab-infrastructure/-/issues
