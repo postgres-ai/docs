@@ -1,6 +1,14 @@
 // Duplicates data from the blog.
 const blog = [
   {
+    link: 'blog/20210714-dle-2-4-test-db-changes-in-ci',
+    date: '2021-07-14 13:18:00',
+    publishDate: '2021-07-14 13:18:00',
+    title: 'DLE 2.4: realistic DB testing in GitHub Actions; Terraform module',
+    description: 'DLE 2.4 brings two major capabilities to those who are interested in working with PostgreSQL thin clones: automated tests of DB migrations in GitHub Actions, and Terraform module to deploy Database Lab in AWS',
+    image: '/assets/thumbnails/dle-2.4-blog.png',
+  },
+  {
     link: 'blog/dle-2-2-release',
     date: '2021-02-22 06:45:00',
     title: 'Database Lab Engine 2.2 and Joe Bot 0.9',
@@ -14,14 +22,6 @@ const blog = [
     title: 'Database Lab Engine 2.1',
     description: 'Database Lab Engine 2.1 released: automated physical and logical initialization, Amazon RDS PostgreSQL support, basic data transformation and masking',
     image: '/assets/thumbnails/dle-2.1-blog.png',
-  },
-  {
-    link: 'blog/dle-2-0-release',
-    date: '2020-11-11 11:20:20',
-    publishDate: '2020-11-10 11:20:20',
-    title: 'Database Lab Engine 2.0',
-    description: 'Database Lab Engine 2.0 released: automated physical and logical initialization, Amazon RDS PostgreSQL support, basic data transformation and masking',
-    image: '/assets/thumbnails/dle-2.0-blog.png',
   },
   /*{
     link: 'blog/plan-exporter',

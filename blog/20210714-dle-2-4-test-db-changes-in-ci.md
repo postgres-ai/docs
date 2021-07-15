@@ -5,7 +5,7 @@ date: 2021-07-14 13:18:00
 publishDate: 2021-07-14 13:18:00
 linktitle: "DLE 2.4: realistic DB testing in GitHub Actions; Terraform module"
 title: "DLE 2.4: realistic DB testing in GitHub Actions; Terraform module"
-description: "DDLE 2.4 brings two major capabilities to those who are interested in working with PostgreSQL thin clones: automated tests of DB migrations in GitHub Actions, and Terraform module to deploy Database Lab in AWS"
+description: "DLE 2.4 brings two major capabilities to those who are interested in working with PostgreSQL thin clones: automated tests of DB migrations in GitHub Actions, and Terraform module to deploy Database Lab in AWS"
 weight: 0
 image: /assets/thumbnails/dle-2.4-blog.png
 tags:
