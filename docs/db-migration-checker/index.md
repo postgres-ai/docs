@@ -18,7 +18,7 @@ DB Migration Checker is a DLE's component that enables integration with CI/CD to
 - **Fast and inexpensive:** a single machine with a single disk can operate dozens of independent thin clones
 - **Well-tested DB changes to avoid deployment failures:** DB Migration Checker automatically detects (and prevents!) long-lasting dangerous locks that could put your production systems down
 - **Secure**: DB Migration Checker runs all tests in a secure environment: data cannot be copied outside the secure container
-- **Lots of useful data points**: Collect useful artifacts (such as `pg_stat_***` system views) and use them to empower your DB changes review process
+- **Lots of helpful data points**: Collect useful artifacts (such as `pg_stat_***` system views) and use them to empower your DB changes review process
 
 ## How to set up a DB migration checker
 - Make sure that the Database Lab Engine is running
