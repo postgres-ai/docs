@@ -1,33 +1,30 @@
-# Website
+# Principles
+This repository contains both Postgres.ai website (excluding the Console/Platform part) and Postgres.ai Documentation.
+
+## Documentation – principles
+
+We're building documentation following the principles described at https://documentation.divio.com/:
+
+> There is a secret that needs to be understood in order to write good software documentation: there isn’t one thing called documentation, there are four.
+>
+> They are: tutorials, how-to guides, technical reference and explanation. They represent four different purposes or functions, and require four different approaches to their creation. Understanding the implications of this will help improve most documentation - often immensely.
+
+Learn more: https://documentation.divio.com/
+
+## Engine
 
 This website is built using [Docusaurus 2](https://v2.docusaurus.io/), a modern static website generator.
 
-### Installation
+### Installation / Build
 
-```
-$ yarn
+```shell
+$ npm install
 ```
 
 ### Local Development
 
-```
-$ yarn start
+```shell
+$ npm run start
 ```
 
 This command starts a local development server and open up a browser window. Most changes are reflected live without having to restart the server.
-
-### Build
-
-```
-$ yarn build
-```
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-### Deployment
-
-```
-$ GIT_USER=<Your GitHub username> USE_SSH=true yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
