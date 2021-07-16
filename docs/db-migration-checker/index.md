@@ -40,7 +40,7 @@ DB Migration Checker is a DLE's component that enables integration with CI/CD to
       --volume /var/run/docker.sock:/var/run/docker.sock \
       --volume /tmp/ci_checker:/tmp/ci_checker \
       --volume ~/.dblab/run_ci.yaml:/home/dblab/configs/run_ci.yaml \
-    registry.gitlab.com/postgres-ai/database-lab/dblab-ci-checker:2.4.0
+    postgresai/dblab-ci-checker:2.4.1
     ```
 
 - [optional] Run the [localtunnel](https://github.com/localtunnel/localtunnel) (or an analog) - use it only for debug purposes to make DB migration instance accessible for a CI pipeline
@@ -51,7 +51,7 @@ DB Migration Checker is a DLE's component that enables integration with CI/CD to
     - `DLMC_CI_ENDPOINT` - an endpoint of your Database Lab Migration Checker service. For example, `https://ci-checker.example.com/`, or in case of debug the endpoint given from the localtunnel.
     - `DLMC_VERIFICATION_TOKEN` - verification token for the Database Lab Migration Checker API 
 
-- Configure a new workflow in the created repository (see an example of configuration: https://github.com/agneum/runci/blob/master/.github/workflows/main.yml)
+- Configure a new workflow in the created repository (see an [example of configuration](https://github.com/postgres-ai/green-zone/blob/master/.github/workflows/main.yml))
   - add a custom action: https://github.com/marketplace/actions/database-lab-realistic-db-testing-in-ci
   - provide input params for the action (the full list of [available input params](#available-input-params))
   - provide environment variables:
@@ -66,7 +66,8 @@ After configuring all components, the repository is ready to start a CI workflow
 The Database Lab DB migration action makes a request to the DB migration checker.
 The DB migration checker requests the DLE to create a new clone, start a new container with migration tools and, then runs commands from the GitHub action against this clone.
 
-Take a look at the communication scheme: https://gitlab.com/postgres-ai/database-lab/-/issues/240/designs/Migrations_CI_service.png
+Take a look at the communication scheme
+![Communication scheme of DB migration service](/assets/db-migration-checker/db-migration-service.png)
 
 ## Available input params
 - `commands` (list, required) - list of commands to run needed database migrations'
