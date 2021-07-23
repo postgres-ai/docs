@@ -8,7 +8,7 @@ slug: /platform
 Database Lab Platform is a unified solution that helps developers, DBAs, SREs, and QA engineers boost their work with PostgreSQL databases. They all can get their work done much faster thanks to the thin cloning of databases and the high level of automation of various tasks that the Platform offers.
 
 ## Open Source Components
-The Platform uses the following open-source components:
+The Platform uses the following open-source (AGPL v3) components:
 - [postgres-checkup](/docs/checkup/) – automated health checks of PostgreSQL databases
 - [Database Lab](/docs/database-lab/) – ultra-fast provisioning of full-size databases for development, testing, and analytics (thin provisioning, thin cloning)
 - [Joe Bot](/docs/joe-bot/) – a chatbot helping engineers verify, troubleshoot, and optimize SQL queries using full-sized database clones (works on top of Database Lab)
