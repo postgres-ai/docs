@@ -1,8 +1,8 @@
 ---
-slug: code-and-data
 author: "Dante Cassanego"
 authorimg: /assets/author/dante.jpg
-date: 2021-05-21 16:00:00
+date: 2021-07-28 16:00:00
+publishDate: 2021-07-28 16:00:00
 linktitle: "Comprehensive Testing Covers Code AND Data"
 title: Comprehensive Testing Covers Code AND Data
 description: "Comprehensive Testing Covers Code AND Data"
