@@ -1,6 +1,14 @@
 // Duplicates data from the blog.
 const blog = [
   {
+    link: 'blog/20210728-code-and-data',
+    date: '2021-07-28 16:00:00',
+    publishDate: '2021-07-28 16:00:00',
+    title: 'Comprehensive Testing Covers Code AND Data',
+    description: 'A large gap remains on the landscape of software tooling…',
+    image: '/assets/thumbnails/dle-generic-blog.png',
+  },
+  {
     link: 'blog/20210714-dle-2-4-test-db-changes-in-ci',
     date: '2021-07-14 13:18:00',
     publishDate: '2021-07-14 13:18:00',
@@ -15,6 +23,7 @@ const blog = [
     description: 'Database Lab Engine 2.2.0 and SQL Optimization Chatbot “Joe” 0.9.0 released: multiple pools for automated “logical” initialization, production timing estimation (experimental), and improved security.',
     image: '/assets/thumbnails/dle-2.2-blog.png',
   },
+  /*{
   {
     link: 'blog/dle-2-1-release',
     date: '2020-12-31 09:22:00',
@@ -23,7 +32,7 @@ const blog = [
     description: 'Database Lab Engine 2.1 released: automated physical and logical initialization, Amazon RDS PostgreSQL support, basic data transformation and masking',
     image: '/assets/thumbnails/dle-2.1-blog.png',
   },
-  /*{
+  
     link: 'blog/plan-exporter',
     date: '2020-05-23 21:19:00',
     title: 'plan-exporter: visualize PostgreSQL EXPLAIN data right from psql',
