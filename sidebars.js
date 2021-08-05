@@ -37,6 +37,7 @@ module.exports = {
       {
         "Administration": [
           "how-to-guides/administration/index",
+          "how-to-guides/administration/install-database-lab-with-terraform",
           "how-to-guides/administration/postgresql-configuration",
           "how-to-guides/administration/engine-manage",
           "how-to-guides/administration/joe-manage",

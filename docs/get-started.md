@@ -23,6 +23,7 @@ keywords:
     <td>
       <h3>Getting started</h3>
       <ul>
+        <li><a href='/docs/how-to-guides/administration/install-database-lab-with-terraform'>Install Database Lab with Terraform on AWS</a></li>
         <li><a href='/docs/tutorials/database-lab-tutorial-amazon-rds'>Engine setup for Amazon RDS</a></li>
         <li><a href='/docs/tutorials/database-lab-tutorial'>Engine setup for any PostgreSQL database</a></li>
         <li><a href='/docs/tutorials/joe-setup'>Joe Bot setup</a></li>
