@@ -28,7 +28,7 @@ To list available commands, either run `dblab` with no parameters or with flag `
 
 
 ## Global options
-- `--url` (string) - URL (with protocol and port, if needed) of Database Lab instance's API. 
+- `--url` (string) - URL (with protocol and port, if needed) of Database Lab instance's API.
 
     The environment variable `DBLAB_INSTANCE_URL` can be used as well. The flag `--url` overrides config/env settings.
 
@@ -36,7 +36,7 @@ To list available commands, either run `dblab` with no parameters or with flag `
 
     The environment variable `DBLAB_VERIFICATION_TOKEN` can be used as well. The flag `--token` overrides config/env settings.
 
-- `--insecure`, `-k` (boolean, default: false) - allow insecure server connections when using SSL. 
+- `--insecure`, `-k` (boolean, default: false) - skip validation of SSL/TLS certificates; this option is needed to communicate with DLE using either HTTP or HTTPS with self-signed certificates.
 
     The environment variable `DBLAB_INSECURE_SKIP_VERIFY` can be used as well. The flags `--insecure` and `-k` override config/env settings.
 
