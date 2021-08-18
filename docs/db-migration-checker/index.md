@@ -35,12 +35,16 @@ DB Migration Checker is a DLE's component that enables integration with CI/CD to
 
 - Launch DB migration checker
     ```bash
-    docker run --name dblab_ci_checker --rm -it \
+    sudo docker run
+      --name dblab_ci_checker \
+      --label dblab_control \
+      --detach \
+      --restart on-failure \
       --publish 2500:2500 \
       --volume /var/run/docker.sock:/var/run/docker.sock \
       --volume /tmp/ci_checker:/tmp/ci_checker \
       --volume ~/.dblab/run_ci.yaml:/home/dblab/configs/run_ci.yaml \
-    postgresai/dblab-ci-checker:2.4.1
+      postgresai/dblab-ci-checker:2.4.1
     ```
 
 - [optional] Run the [localtunnel](https://github.com/localtunnel/localtunnel) (or an analog) - use it only for debug purposes to make DB migration instance accessible for a CI pipeline
