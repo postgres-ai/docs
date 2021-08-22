@@ -138,6 +138,10 @@ export AWS_ACCESS_KEY_ID="YOUR_KEY_ID"
 export AWS_SECRET_ACCESS_KEY="YOUR_SECRET_ACCESS_KEY"
 ```
 
+5. Review and adjust file `postgresql_clones_custom.conf`. This file will be added to all Postgres instances in clones created by DLE. If you don't need any custom parameters, leave this file empty but do not delete it.
+
+6. Copy to your current directory (that is used for TF deployment) your AWS key-pair file that was configured with `aws_keypair` parameter in `terraform.tfvars` file before and rename it to `ubuntu.pem`. 
+
 ### 3. Run deployment
 1. Initialize Terraform working directory:
 ```shell
