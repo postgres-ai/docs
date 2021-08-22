@@ -100,7 +100,9 @@ source_postgres_username = "YOUR_POSTGRES_USERNAME" # e.g. "postgres".
 # to work with S3 buckets in your AWS account.
 # source_type = "s3" # source is dump stored on demo s3 bucket
 # source_pgdump_s3_bucket = "YOUR_S3_BUCKET" # e.g. tf-demo-dump", this is an example public bucket.
-# source_pgdump_path_on_s3_bucket = "YOUR_PGDUMP_FILENAME" # e.g. "heroku.dmp", this is an example dump from demo database.
+# source_pgdump_path_on_s3_bucket = "YOUR_PGDUMP_FILEPATH" # e.g. "heroku.dmp" for one-file dump(plain text or compressed plain text) 
+# or test/heroku_dmp_2 for directory type dump, these are example dumps from the demo database.
+# Important: all vCPUs of the EC2 instance will be utilized for dump restore, so restore time depends on the EC2 instance class  
 
 dle_debug_mode = "true"
 dle_retrieval_refresh_timetable = "0 0 * * 0"
