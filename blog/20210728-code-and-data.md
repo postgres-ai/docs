@@ -1,6 +1,7 @@
 ---
 author: "Dante Cassanego"
-authorimg: /assets/author/dante.jpg
+author_url: "#author"
+author_image_url: "/assets/author/dante.jpg"
 date: 2021-07-28 16:00:00
 publishDate: 2021-07-28 16:00:00
 linktitle: "Comprehensive Testing Covers Code AND Data"
@@ -15,6 +16,9 @@ tags:
   - Integraiton Testing
   - Data Testing
 ---
+
+import { AuthorBanner } from '../src/components/AuthorBanner'
+import { DbLabBanner } from '../src/components/DbLabBanner'
 
 Over its relatively short history, the discipline of Software Engineering has
 made rapid advances in the sophistication of its development processes and tools.
@@ -57,3 +61,16 @@ Here are just a few of the things we can imagine doing when application data can
 * Automatically identify SQL query performance degradation as a part of your automated CI/CD pipeline
 
 And these are just the start...
+
+<!--truncate-->
+
+<AuthorBanner
+  avatarUrl="/assets/author/dante.jpg"
+  name="Dante Cassanego"
+  twitterUrl="https://twitter.com/dantec"
+  gitlabUrl="https://gitlab.com/dante.cassanego"
+  githubUrl="https://github.com/dcassanego"
+  linkedinUrl="https://www.linkedin.com/in/dantecassanego"
+/>
+
+<DbLabBanner />

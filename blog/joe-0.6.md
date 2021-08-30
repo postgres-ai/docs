@@ -1,7 +1,8 @@
 ---
 slug: joe-0-6
 author: "Artyom Kartasov"
-authorimg: /assets/author/artyom.jpg
+author_url: "#author"
+author_image_url: "/assets/author/artyom.jpg"
 date: 2020-03-23 10:42:00
 linktitle: Joe 0.6.0 supports hypothetical indexes
 title: Joe 0.6.0 supports hypothetical indexes
@@ -16,6 +17,9 @@ tags:
   - HypoPG
   - EXPLAIN
 ---
+
+import { AuthorBanner } from '../src/components/AuthorBanner'
+import { DbLabBanner } from '../src/components/DbLabBanner'
 
 ## Joe's new command `hypo` to further boost development processes
 
@@ -170,3 +174,16 @@ See the full list of Joe's commands in the docs: https://postgres.ai/docs/refere
 - Extended images with PostgreSQL: https://hub.docker.com/r/postgresai/extended-postgres Includes HypoPG, pg_hint_plan, more
 - Proposals to add more extensions are welcome in the Custom Images repo: https://gitlab.com/postgres-ai/custom-images
 - Community Slack (English): https://slack.postgres.ai/. After joining, the live demo is available in the #joe-bot-demo channel: https://database-lab-team.slack.com/archives/CTL5BB30R
+
+<!--truncate-->
+
+<AuthorBanner
+  avatarUrl="/assets/author/artyom.jpg"
+  name="Artyom Kartasov"
+  role="Software Engineer at"
+  twitterUrl="https://twitter.com/arkartasov"
+  gitlabUrl="https://github.com/agneum"
+  githubUrl="https://gitlab.com/akartasov"
+/>
+
+<DbLabBanner />

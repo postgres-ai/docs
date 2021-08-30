@@ -1,7 +1,8 @@
 ---
 slug: dle-2-2-release
 author: "Nikolay Samokhvalov"
-authorimg: /assets/images/nik.jpg
+author_url: "#author"
+author_image_url: "/assets/author/nik.jpg"
 date: 2021-02-22 06:45:00
 publishDate: 2021-02-22 06:45:00
 linktitle: "Database Lab Engine 2.2 and Joe Bot 0.9"
@@ -19,6 +20,9 @@ tags:
   - database migrations CI
   - thin PostgreSQL clones
 ---
+
+import { AuthorBanner } from '../src/components/AuthorBanner'
+import { DbLabBanner } from '../src/components/DbLabBanner'
 
 <p align="center">
     <img src="/assets/thumbnails/dle-2.2-blog.png" alt="DLE 2.2 and Joe 0.9"/>
@@ -93,3 +97,18 @@ Your feedback is highly appreciated!
 - [Community Slack with Joe Bot live demo](https://slack.postgres.ai) (English), and [Telegram group](https://t.me/databaselabru) (Russian)
 - [Database Lab Engine repository](https://gitlab.com/postgres-ai/database-lab), with the [issue tracker](https://gitlab.com/postgres-ai/database-lab/-/issues)
 - [SQL Optimization Chatbot repository](https://gitlab.com/postgres-ai/joe), with the [issue tracker](https://gitlab.com/postgres-ai/joe/-/issues)
+
+<!--truncate-->
+
+<AuthorBanner
+  avatarUrl="/assets/author/nik.jpg"
+  name="Nikolay Samokhvalov"
+  role="CEO & Founder of"
+  twitterUrl="https://twitter.com/samokhvalov"
+  gitlabUrl="https://gitlab.com/NikolayS"
+  githubUrl="https://github.com/NikolayS"
+  linkedinUrl="https://www.linkedin.com/in/samokhvalov"
+  note="Working on tools to balance Dev with Ops in DevOps"
+/>
+
+<DbLabBanner />

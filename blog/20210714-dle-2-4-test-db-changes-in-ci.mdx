@@ -1,6 +1,7 @@
 ---
 author: "Nikolay Samokhvalov"
-authorimg: /assets/images/nik.jpg
+author_url: "#author"
+author_image_url: "/assets/author/nik.jpg"
 date: 2021-07-14 13:18:00
 publishDate: 2021-07-14 13:18:00
 linktitle: "DLE 2.4: realistic DB testing in GitHub Actions; Terraform module"
@@ -15,6 +16,9 @@ tags:
   - database migrations CI
   - database lab in github actions
 ---
+
+import { AuthorBanner } from '../src/components/AuthorBanner'
+import { DbLabBanner } from '../src/components/DbLabBanner'
 
 <p align="center">
     <img src="/assets/thumbnails/dle-2.4-blog.png" alt="DLE 2.4: DB Migration Checker and Terraform module"/>
@@ -110,3 +114,18 @@ Feedback and contributions would be greatly appreciated:
 - Database Lab Community Slack: https://slack.postgres.ai/
 - DLE & DB Migration Checker issue tracker: https://gitlab.com/postgres-ai/database-lab/-/issues
 - Issue tracker of the Terraform module for Database Lab: https://gitlab.com/postgres-ai/database-lab-infrastructure/-/issues
+
+<!--truncate-->
+
+<AuthorBanner
+  avatarUrl="/assets/author/nik.jpg"
+  name="Nikolay Samokhvalov"
+  role="CEO & Founder of"
+  twitterUrl="https://twitter.com/samokhvalov"
+  gitlabUrl="https://gitlab.com/NikolayS"
+  githubUrl="https://github.com/NikolayS"
+  linkedinUrl="https://www.linkedin.com/in/samokhvalov"
+  note="Working on tools to balance Dev with Ops in DevOps"
+/>
+
+<DbLabBanner />
