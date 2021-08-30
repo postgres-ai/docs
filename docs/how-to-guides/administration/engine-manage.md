@@ -9,7 +9,17 @@ keywords:
 ---
 
 ## Configure and start a Database Lab Engine instance
-Define config file `~/.dblab/server.yml` (see config examples [here](https://gitlab.com/postgres-ai/database-lab/-/blob/2.4.1/configs/)) and run the following command:
+Define config file `~/.dblab/server.yml`
+
+:::tip
+All YAML features can be used, including anchors and aliases, to help you conveniently manage your configuration sections.
+
+For instance, you can define a binding with `&` and then refer to it using an alias denoted by `*`.
+
+See config examples [here](https://gitlab.com/postgres-ai/database-lab/-/blob/2.4.1/configs/)
+:::
+
+After configuring Database Lab Engine, run the following command:
 
 ```bash
 sudo docker run \
