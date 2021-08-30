@@ -1,0 +1,41 @@
+.root {
+  display: flex;
+  margin-top: 60px;
+}
+
+.avatar {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.content {
+  font-size: 16px;
+  line-height: normal;
+}
+
+.name {
+  font-weight: bold;
+  font-size: 16px;
+  margin: 0;
+}
+
+.role {
+  margin: 0;
+}
+
+.links {
+  font-size: 0;
+  display: flex;
+  margin-top: 8px;
+}
+
+.link {
+  margin-right: 8px;
+  color: var(--ifm-font-color-base);
+}
+
+.note {
+  margin: 8px 0 0 0;
+}
