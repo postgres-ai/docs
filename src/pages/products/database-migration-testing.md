@@ -53,7 +53,8 @@ CI job which:
 Companies that use Database Lab to test their DB migrations will gain full visibility into their
 applications' deploy-time behavior eliminating a major source of risk.
 
-Explore our [example repository](https://gitlab.com/postgres-ai/ci-example/-/jobs/662277420) to see how this works in practice.
+Explore our examples to see how this works in practice using [GitHub Actions](https://github.com/postgres-ai/green-zone/pull/4).
+<!-- - using [GitLab CI/CD](https://gitlab.com/postgres-ai/ci-example/-/jobs/662277420) -->
 
 <div style={{marginTop: '50px'}}>
   <a className="btn btn1" style={{marginRight: '20px'}} href='https://console.postgres.ai/'>Start Free Trial</a>
