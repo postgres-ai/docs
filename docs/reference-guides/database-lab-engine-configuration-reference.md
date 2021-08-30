@@ -6,6 +6,10 @@ sidebar_label: Database Lab Engine configuration
 ## Overview
 Database Lab Engine behavior can be controlled using the main configuration file that has YAML format. This reference describes available configuration options.
 
+:::tip
+Database Lab Engine supports [YAML 1.2](https://yaml.org/spec/1.2/spec.html) including anchors, aliases, tags, map merging.
+:::
+
 Example config files can be found here: https://gitlab.com/postgres-ai/database-lab/-/tree/2.4.1/configs.
 
 Useful guides that help manage Database Lab Engine:
@@ -93,6 +97,7 @@ Dumps a PostgreSQL database from a provided source to an archive or to the Datab
 Options:
 - `dumpLocation` (string, required) - the dump file (or directory, for a directory-format archive) will be automatically created on this location on the host machine
 - `dockerImage` (string, required) - specifies the Docker image containing the dump-required tool
+- `containerConfig` (key-value, optional) - options to pass custom parameters to logicalDump container
 - `source` (key-value, required) - describes source of data:
    - `type` (string, required) -  defines location type of a dumped database. Available values: `local`, `remote`, `rdsIam`
    - `connection` (key-value, required) - defines connection parameters of source:
@@ -118,6 +123,7 @@ Options:
 - `dbname` (string, required) - defines the database dbname to be restored
 - `dumpLocation` (string, required) - specifies the location of the archive file (or directory, for a directory-format archive) on the host machine to be restored
 - `dockerImage` (string, required) - specifies the Docker image containing the restore-required tool
+- `containerConfig` (key-value, optional) - options to pass custom parameters to logicalRestore container
 - `forceInit` (boolean, optional, default: false) - init data even if the Postgres directory (see the configuration options `global.mountDir` and `global.dataSubDir`) is not empty; note the existing data might be overwritten
 - `parallelJobs` (integer, optional, default: 1) - defines the number of concurrent jobs using the `pg_restore` option `jobs`. This option can dramatically reduce the time to restore a large database to a server running on a multiprocessor machine
 - `partial` (key-value, optional) - defines options for partial restoring. Available options: `tables`:
@@ -129,6 +135,7 @@ Prepares a snapshot for logical restored PostgreSQL database.
 Options:
 - `dataPatching` (key-value, optional) - defines SQL queries for data patching
   - `dockerImage` (string, optional) - specifies the Docker image to run a data patching container
+  - `containerConfig` (key-value, optional) - options to pass custom parameters to data patching container
   - `queryPreprocessing` (key-value, optional) - defines pre-processing parameters
     - `queryPath` (string, optional, default: "") - specifies the path to SQL pre-processing queries; an empty string means that no pre-processing defined
     - `maxParallelWorkers` (integer, optional, default: 2) - defines the worker limit for parallel queries
@@ -145,6 +152,7 @@ Supported restore tools:
 Options:
 - `tool` (string, required) - defines the tool to restore data. See available restore tools list
 - `dockerImage` (string, required) - specifies the Docker image containing the restoring tool
+- `containerConfig` (key-value, optional) - options to pass custom parameters to physicalRestore container
 - `sync`  (key-value, optional) - keep PGDATA up to date after (replaying new WALs from the source) the initial data fetching:
    - `enabled` (boolean, optional, default: false) - runs a separate container to keep Database Lab data up to date
    - `healthCheck` (key-value, optional) - describes health check options for the  sync container:
@@ -166,6 +174,7 @@ Options:
 - `promotion`  (key-value, optional) - promotes PGDATA after data fetching:
    - `enabled`  (boolean, optional, default: false) - enable PGDATA promotion
    - `dockerImage` (string, optional) - specifies the Docker image containing the promotion-compatible PostgreSQL instance
+   - `containerConfig` (key-value, optional) - options to pass custom parameters to physicalSnapshot container
    - `healthCheck` (key-value, optional) - describes health check options for a data promotion container:
       - `interval` (int, optional, default: 5) - health check interval for a data promotion container (in seconds)
       - `maxRetries` (int, optional, default: 200) - maximum number of health check retries
