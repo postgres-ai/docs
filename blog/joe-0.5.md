@@ -1,8 +1,6 @@
 ---
 slug: joe-0-5
 author: "Nikolay Samokhvalov"
-author_url: "#author"
-author_image_url: "/assets/author/nik.jpg"
 date: 2020-02-26 21:42:00
 linktitle: Announcing Joe bot, an SQL query optimization assistant
 title: Joe bot, an SQL query optimization assistant, updated to version 0.5.0

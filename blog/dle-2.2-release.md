@@ -1,8 +1,6 @@
 ---
 slug: dle-2-2-release
 author: "Nikolay Samokhvalov"
-author_url: "#author"
-author_image_url: "/assets/author/nik.jpg"
 date: 2021-02-22 06:45:00
 publishDate: 2021-02-22 06:45:00
 linktitle: "Database Lab Engine 2.2 and Joe Bot 0.9"

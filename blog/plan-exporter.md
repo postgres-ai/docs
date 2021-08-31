@@ -1,7 +1,5 @@
 ---
 author: "Nikolay Samokhvalov"
-author_url: "#author"
-author_image_url: "/assets/author/nik.jpg"
 date: 2020-05-23 21:19:00
 linktitle: "plan-exporter: visualize PostgreSQL EXPLAIN data right from psql"
 title: "plan-exporter: visualize PostgreSQL EXPLAIN data right from psql"
