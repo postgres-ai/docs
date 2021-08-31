@@ -16,6 +16,9 @@ tags:
   - XID
 ---
 
+import { AuthorBanner } from '../src/components/AuthorBanner'
+import { DbLabBanner } from '../src/components/DbLabBanner'
+
 This article discusses what subtransactions are, how to create them, and how widely they are used nowadays. Next, we try to understand why they have a terrible reputation among PostgreSQL experts who operate heavily loaded systems. We overview four problems that may arise in a Postgres database in which subtransactions are used, and load grows. In the end, we discuss the short-term and long-term options for PostgreSQL users willing to solve the ongoing or prevent future problems related to subtransactions.
 
 ## What is a subtransaction?
