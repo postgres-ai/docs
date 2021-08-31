@@ -1,6 +1,13 @@
 // Duplicates data from the blog.
 const blog = [
   {
+    link: 'blog/20210831-postgresql-subtransactions-considered-harmful',
+    date: '2021-08-31 12:06:00',
+    title: 'PostgreSQL Subtransactions Considered Harmful',
+    description: 'PostgreSQL subtransactions (nested transactions) may cause multiple performance and scalability issues: higher rates of XID growth and higher risks of transaction ID wraparound, performance degradation when more than PGPROC_MAX_CACHED_SUBXIDS (64) are used in a session, drastic performance slowdowns when subtransactions are combined with SELECT .. FOR UPDATE, and finally, brief downtime on standbys when subtranasctions used on the primary in paralell with long-running transactions or just slow statements. Subtransactions can be created using SAVEPOINT in regular SQL or using EXCEPTION WHEN blocks in PL/pgSQL.',
+    image: '/assets/thumbnails/20210831-harmful-subtransactions.png',
+  },
+  {
     link: 'blog/20210728-code-and-data',
     date: '2021-07-28 16:00:00',
     publishDate: '2021-07-28 16:00:00',
@@ -15,7 +22,7 @@ const blog = [
     title: 'DLE 2.4: realistic DB testing in GitHub Actions; Terraform module',
     description: 'DLE 2.4 brings two major capabilities to those who are interested in working with PostgreSQL thin clones: automated tests of DB migrations in GitHub Actions, and Terraform module to deploy Database Lab in AWS',
     image: '/assets/thumbnails/dle-2.4-blog.png',
-  },
+  },  /*{
   {
     link: 'blog/dle-2-2-release',
     date: '2021-02-22 06:45:00',
@@ -23,7 +30,6 @@ const blog = [
     description: 'Database Lab Engine 2.2.0 and SQL Optimization Chatbot “Joe” 0.9.0 released: multiple pools for automated “logical” initialization, production timing estimation (experimental), and improved security.',
     image: '/assets/thumbnails/dle-2.2-blog.png',
   },
-  /*{
   {
     link: 'blog/dle-2-1-release',
     date: '2020-12-31 09:22:00',

@@ -7,7 +7,7 @@ linktitle: "PostgreSQL Subtransactions Considered Harmful"
 title: "PostgreSQL Subtransactions Considered Harmful"
 description: "PostgreSQL subtransactions (nested transactions) may cause multiple performance and scalability issues: higher rates of XID growth and higher risks of transaction ID wraparound, performance degradation when more than PGPROC_MAX_CACHED_SUBXIDS (64) are used in a session, drastic performance slowdowns when subtransactions are combined with SELECT .. FOR UPDATE, and finally, brief downtime on standbys when subtranasctions used on the primary in paralell with long-running transactions or just slow statements. Subtransactions can be created using SAVEPOINT in regular SQL or using EXCEPTION WHEN blocks in PL/pgSQL."
 weight: 0
-image: /assets/thumbnails/xxx.png
+image: /assets/thumbnails/20210831-harmful-subtransactions.png
 tags:
   - Subtransactions
   - SAVEPOINT
@@ -109,7 +109,7 @@ Besides SAVEPOINTs, there are other ways to create subtransactions:
 
 One may assume that many applications that use PL/pgSQL or PL/Python functions use subtransactions. Systems that run API built on [PostgREST](https://postgrest.org/en/latest/search.html?q=plpgsql), [Supabase](https://github.com/supabase/postgres/issues/26), [Hasura](https://hasura.io/docs/latest/graphql/core/databases/postgres/schema/default-values/sql-functions.html#step-2-create-a-trigger) might have PL/pgSQL functions (including trigger functions)) that involve `BEGIN / EXCEPTION WHEN .. / END` blocks; in such cases, those systems use subtransactions.
 
-## Problem 1: subtransactions contribute to the XID growth, increasing chances to hit the "XID wraparound wall"
+## Problem 1: XID growth
 One of the basic issues with subtransactions is that they increment XID – the global transaction ID. As with regular transactions, this happens only if there is some modifying work – but if there are multiple nested subtransactions, all of them get their own XID assigned, even if a single modification happened inside the inneter-most of them.
 
 Let's see, in a database where no activity is happening:
@@ -164,7 +164,7 @@ This example clearly shows two facts that may be not intuitive:
 
 Bottom line: there is a trade-off between active use of subtransactions and the XID growth. Understanding this "price" of using subtransactions is essential to avoid issues in heavily-loaded systems.
 
-## Problem 2: too many active subtransactions cause performance degradation
+## Problem 2: per-session cache overflow (PGPROC_MAX_CACHED_SUBXIDS)
 The details for this problem are easy to find when one starts diving into the performance of Postgres subtransactions, uses Google, and ends up reading Cybertec's blog post related to PostgreSQL subtransactions performance.
 
 There is a per-session threshold for the number of active subtransactions per session, exceeding which introduces an additional performance penalty: [`PGPROC_MAX_CACHED_SUBXIDS`](https://github.com/postgres/postgres/blob/78ab944cd4b9977732becd9d0bc83223b88af9a2/src/include/storage/proc.h#L25), which is 64 by default and can be changed only in Postgres source code:
@@ -196,12 +196,12 @@ In the same GitLab issue, you can find the following additional information:
 
 Verdict: when using subtransactions, avoid having more than `PGPROC_MAX_CACHED_SUBXIDS` (64 by default) active subtransactions in a session. It should be a rare situation, but it is still worth being careful. ORM users may want to implement logging or monitoring events for cases when subtransaction nesting depth is too large.
 
-## Problem 3: in some cases, subtransactions implicitly engage the "Multixact ID" mechanism, potentially affecting performance
+## Problem 3: unexpected use of Multixact IDs
 Nelson Elhage researches this problem in ["Notes on some PostgreSQL implementation details"](https://buttondown.email/nelhage/archive/notes-on-some-postgresql-implementation-details/). The article is excellent, highly recommended for reading. Worth noting, this article is quite tricky to find when you "google" Postgres subtransaction performance, and the case is quite exotic, but it's still worth including in our collection.
 
 Here we will overview the problem briefly, citing the author.
 
-Those readers who have used `SELECT .. FOR SHARE` in heavily loaded systems probably know about the performance risks it introduces. Multiple transactions can lock the same row, engaging the so-called Mulixact ID and MultiXact store. Being convenient and helpful, this mechanism, when used at a large scale, can be prone to terrible performance issues:
+Those readers who have used `SELECT .. FOR SHARE` in heavily loaded systems probably know about the performance risks it introduces. Multiple transactions can lock the same row, engaging the so-called Multixact ID and MultiXact store. Being convenient and helpful, this mechanism, when used at a large scale, can be prone to terrible performance issues:
 
 > One fun fact about the MultiXact store is that entries are immutable; if a new transaction locks a row that is already locked, a new MultiXact ID must be created, containing all the old transaction IDs as well as the new ID. This means that having N processes locking a row concurrently requires potentially quadratic work, since the list of transaction IDs must be copied in full, each time! This behavior is usually fine, since it's rare to have many transactions locking the same row at once, but already suggests that SELECT FOR SHARE has some potentially-disastrous performance cliffs.
 
@@ -230,7 +230,7 @@ Finally, the author mentions the opinion from a friend with strong Postgres expe
 
 Result: be extremely careful with `SELECT .. FOR UPDATE` in transactions that include subtransactions.
 
-## Problem 4: subtransactions and long-running transactions on primary may lead to drastic performance degradation on standbys
+## Problem 4: Subtrans SLRU overflow
 This problem needs to be described in a little bit more detailed form because, as I believe, a growing number of systems might experience it. It was recently observed in a heavily-loaded system one of our clients is running (I hope they will share their experience soon in a separate blog post).
 
 The key aspects in this case are:
@@ -443,7 +443,7 @@ And then he patched [the Aurora documentation](https://docs.aws.amazon.com/Amazo
 So, Postgres subtransactions are not harmful at all – if your systems are not heavily loaded. But they can cause really serious incidents, otherwise.
 
 ## Recommendations and possible future
-### Recommendation 1: have a strong monitoring system
+### Recommendation 1: good monitoring
 For all systems, I strongly recommend ensuring that monitoring has:
 - transaction ID wraparound charts and alerts
 - wait event analysis (can be implemented using [pgsentinel](https://github.com/pgsentinel/pgsentinel), [pg_wait_sampling](https://github.com/postgrespro/pg_wait_sampling), or, at least, if you cannot install those, using periodical sampling of `pg_stat_activity`; ad hoc tools like [pgCenter](https://pgcenter.org/) or [PASH Viewer](https://github.com/dbacvetkov/PASH-Viewer) can be helpful too, but it's important to have something that can collect historical data – incidents may happen suddenly and go away suddenly too, so having historical data is essential for a post mortem analysis)
@@ -465,7 +465,7 @@ For mission-critical systems, it is strongly recommended to build a benchmarking
 
 This can be time-consuming and may require deep expertise too, but it can help engineers predict and prevent other possible problems.
 
-### Ideas for Postgres development
+### Ideas for PostgreSQL development
 Here is a set of ideas for those who are involved in Postgres development and are able to help.
 - [Andrey Borodin](https://twitter.com/x4mmmmmm) developed [a set of patches](https://www.postgresql.org/message-id/flat/494C5E7F-E410-48FA-A93E-F7723D859561%40yandex-team.ru#18c79477bf7fc44a3ac3d1ce55e4c169) that allow controlling the sizes of SLRU caches (including Subtrans SLRU) and make the SLRU mechanism more performant. Those patches have [an open record in the ongoing commitfest for Postgres 15 development](https://commitfest.postgresql.org/34/2627/), so if they are approved, it may be very helpful. If you can, consider reviewing them and testing them. We've briefly tested them recently ([results](https://gitlab.com/postgres-ai/postgresql-consulting/tests-and-benchmarks/-/issues/21#note_655503554)), and have plans to continue.
 - Postgres observability tooling could be extended:
