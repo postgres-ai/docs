@@ -19,6 +19,9 @@ tags:
 import { AuthorBanner } from '../src/components/AuthorBanner'
 import { DbLabBanner } from '../src/components/DbLabBanner'
 
+*Want to comment on this post and discuss Postgres subtransactions? Check out [Hacker News](https://news.ycombinator.com/item?id=28374333)*
+
+
 This article discusses what subtransactions are, how to create them, and how widely they are used nowadays. Next, we try to understand why they have a terrible reputation among PostgreSQL experts who operate heavily loaded systems. We overview four problems that may arise in a Postgres database in which subtransactions are used, and load grows. In the end, we discuss the short-term and long-term options for PostgreSQL users willing to solve the ongoing or prevent future problems related to subtransactions.
 
 ## What is a subtransaction?
@@ -197,7 +200,7 @@ In the same GitLab issue, you can find the following additional information:
 Verdict: when using subtransactions, avoid having more than `PGPROC_MAX_CACHED_SUBXIDS` (64 by default) active subtransactions in a session. It should be a rare situation, but it is still worth being careful. ORM users may want to implement logging or monitoring events for cases when subtransaction nesting depth is too large.
 
 ## Problem 3: unexpected use of Multixact IDs
-Nelson Elhage researches this problem in ["Notes on some PostgreSQL implementation details"](https://buttondown.email/nelhage/archive/notes-on-some-postgresql-implementation-details/). The article is excellent, highly recommended for reading. Worth noting, this article is quite tricky to find when you "google" Postgres subtransaction performance, and the case is quite exotic, but it's still worth including in our collection.
+[Nelson Elhage](https://twitter.com/nelhage) researches this problem in ["Notes on some PostgreSQL implementation details"](https://buttondown.email/nelhage/archive/notes-on-some-postgresql-implementation-details/). The article is excellent, highly recommended for reading. Worth noting, this article is quite tricky to find when you "google" Postgres subtransaction performance, and the case is quite exotic, but it's still worth including in our collection.
 
 Here we will overview the problem briefly, citing the author.
 
