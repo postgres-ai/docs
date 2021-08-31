@@ -1,8 +1,6 @@
 ---
 slug: joe-0-7
 author: "Artyom Kartasov"
-author_url: "#author"
-author_image_url: "/assets/author/artyom.jpg"
 date: 2020-05-18 11:16:00
 linktitle: "Joe 0.7.0: Web UI, Channel Mapping, and new commands"
 title: "Joe 0.7.0 released! New in this release: Web UI, Channel Mapping, and new commands"

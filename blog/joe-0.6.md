@@ -1,8 +1,6 @@
 ---
 slug: joe-0-6
 author: "Artyom Kartasov"
-author_url: "#author"
-author_image_url: "/assets/author/artyom.jpg"
 date: 2020-03-23 10:42:00
 linktitle: Joe 0.6.0 supports hypothetical indexes
 title: Joe 0.6.0 supports hypothetical indexes

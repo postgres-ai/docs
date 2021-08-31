@@ -1,8 +1,6 @@
 ---
 slug: dle-2-0-release
 author: "Anatoly Stansler"
-author_url: "#author"
-author_image_url: "/assets/author/anatoly.jpg"
 date: 2020-11-11 11:20:20
 publishDate: 2020-11-10 11:20:20
 linktitle: "Database Lab Engine 2.0"

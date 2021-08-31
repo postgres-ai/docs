@@ -1,7 +1,5 @@
 ---
 author: "Dante Cassanego"
-author_url: "#author"
-author_image_url: "/assets/author/dante.jpg"
 date: 2021-07-28 16:00:00
 publishDate: 2021-07-28 16:00:00
 linktitle: "Comprehensive Testing Covers Code AND Data"

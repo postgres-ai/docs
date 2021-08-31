@@ -1,7 +1,5 @@
 ---
 author: "Nikolay Samokhvalov"
-author_url: "#author"
-author_image_url: "/assets/author/nik.jpg"
 date: 2021-07-14 13:18:00
 publishDate: 2021-07-14 13:18:00
 linktitle: "DLE 2.4: realistic DB testing in GitHub Actions; Terraform module"

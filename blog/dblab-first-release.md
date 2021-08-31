@@ -1,7 +1,5 @@
 ---
 author: "Nikolay Samokhvalov"
-author_url: "#author"
-author_image_url: "/assets/author/nik.jpg"
 date: 2020-01-28 14:15:00
 linktitle: The first public release of Database Lab Engine
 title: The first public release of Database Lab Engine

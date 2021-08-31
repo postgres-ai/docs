@@ -1,8 +1,6 @@
 ---
 slug: dblab-0-3
 author: "Nikolay Samokhvalov"
-author_url: "#author"
-author_image_url: "/assets/author/nik.jpg"
 date: 2020-03-04 08:02:00
 linktitle: "Database Lab Engine 0.3: cloning with LVM"
 title: Database Lab Engine 0.3, supports both ZFS and LVM

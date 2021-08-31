@@ -1,8 +1,6 @@
 ---
 slug: dle-2-1-release
 author: "Nikolay Samokhvalov"
-author_url: "#author"
-author_image_url: "/assets/author/nik.jpg"
 date: 2020-12-31 09:22:00
 publishDate: 2020-12-31 09:22:00
 linktitle: "Database Lab Engine 2.1"
