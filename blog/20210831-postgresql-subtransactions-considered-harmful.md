@@ -164,7 +164,7 @@ This example clearly shows two facts that may be not intuitive:
 
 Bottom line: there is a trade-off between active use of subtransactions and the XID growth. Understanding this "price" of using subtransactions is essential to avoid issues in heavily-loaded systems.
 
-## Problem 2: per-session cache overflow (PGPROC_MAX_CACHED_SUBXIDS)
+## Problem 2: per-session cache overflow
 The details for this problem are easy to find when one starts diving into the performance of Postgres subtransactions, uses Google, and ends up reading Cybertec's blog post related to PostgreSQL subtransactions performance.
 
 There is a per-session threshold for the number of active subtransactions per session, exceeding which introduces an additional performance penalty: [`PGPROC_MAX_CACHED_SUBXIDS`](https://github.com/postgres/postgres/blob/78ab944cd4b9977732becd9d0bc83223b88af9a2/src/include/storage/proc.h#L25), which is 64 by default and can be changed only in Postgres source code:
