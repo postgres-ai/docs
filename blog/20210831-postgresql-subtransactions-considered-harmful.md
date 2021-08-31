@@ -83,7 +83,7 @@ test=# select * from test0;
 ```
 -->
 <center>
-<a href="/static/assets/blog/20210831/1-savepoint-example.png" target="blank"><img src="/static/assets/blog/20210831/1-savepoint-example.png" alt="Example: SAVEPOINT and ROLLBACK TO SAVEPOINT" border="0" /></a>
+<a href="/assets/blog/20210831/1-savepoint-example.png" target="blank"><img src="/assets/blog/20210831/1-savepoint-example.png" alt="Example: SAVEPOINT and ROLLBACK TO SAVEPOINT" border="0" /></a>
 </center>
 
 ## Who is using subtransactions?
@@ -187,7 +187,7 @@ We reproduced those benchmarks in this GitLab issue, documenting them in detail:
 
 In the same GitLab issue, you can find the following additional information:
 - Adjusted benchmarks to have an "apples vs. apples" comparison – instead of removing the `SAVEPOINT` command, we replace them with trivial `SELECT` ones. This is done to avoid reducing the number of statements in transactions, so the number of [RTTs](https://en.wikipedia.org/wiki/Round-trip_delay) is stable. This helps us ensure that low numbers of subtransactions do not add significant overhead – even if we use, say, 50 of them. Nevertheless, the performance does drop when we exceed the `PGPROC_MAX_CACHED_SUBXIDS` threshold:
-    <a href="/static/assets/blog/20210831/2-postgresql-savepoint-performance-degradation.png" target="blank"><img src="/static/assets/blog/20210831/2-postgresql-savepoint-performance-degradation.png" alt="Series of experiments: 40..80 SAVEPOINTs per transaction" border="0"/></a>
+    <a href="/assets/blog/20210831/2-postgresql-savepoint-performance-degradation.png" target="blank"><img src="/assets/blog/20210831/2-postgresql-savepoint-performance-degradation.png" alt="Series of experiments: 40..80 SAVEPOINTs per transaction" border="0"/></a>
 
 - What happens if we run `RELEASE SAVEPOINT` statements to maintain the number of active subtransactions below `PGPROC_MAX_CACHED_SUBXIDS`? Result: no degradation happens when passing the threshold defined by `PGPROC_MAX_CACHED_SUBXIDS`, even if we created overall 100 subtransactions in each transaction.
 
@@ -341,7 +341,7 @@ The picture below visualizes the performance degradation observed on the standby
 - [Netdata snapshot for the primary](https://storage.googleapis.com/tests-and-benchmarks/issue-21/netdata-pg-primary-20210827-211800-660.snapshot)
 - [Netdata snapshot for the standby](https://storage.googleapis.com/tests-and-benchmarks/issue-21/netdata-pg-standby-01-20210827-211744-660.snapshot)
 
-<a href="/static/assets/blog/20210831/3-postgresql-subtransactions-putting-replica-down.png" target="blank"><img src="/static/assets/blog/20210831/3-postgresql-subtransactions-putting-replica-down.png" alt="Performance degrades on standbys when primary has UPDATEs involving subtransactions + long-running transaction" border="0"/></a>
+<a href="/assets/blog/20210831/3-postgresql-subtransactions-putting-replica-down.png" target="blank"><img src="/assets/blog/20210831/3-postgresql-subtransactions-putting-replica-down.png" alt="Performance degrades on standbys when primary has UPDATEs involving subtransactions + long-running transaction" border="0"/></a>
 
 What's happening here? The workload on the primary issues UPDATEs in transactions involving subtransactions. The `xmin` values in tuples have XID belonging to subtransactions, so each time we read such tuple and need to check its visibility, subtransaction mechanism is involved – there is a global cache for all subtransactions, also SLRU ("simple least-recently-used" cache, see [slru.c](https://github.com/postgres/postgres/blob/317632f3073fc06047a42075eb5e28a9577a4f96/src/backend/access/transam/slru.c)), but very small – see [subtrans.h](https://github.com/postgres/postgres/blob/4bf0bce161097869be5a56706b31388ba15e0113/src/include/access/subtrans.h#L15:9):
 ```C
