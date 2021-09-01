@@ -23,9 +23,6 @@ module.exports = {
   ],
 
   themeConfig: {
-    prism: {
-      additionalLanguages: ['shell', 'plsql', 'regex', 'cpp', 'c', 'csv', 'diff', 'git', 'go', 'promql', 'http', 'ini', 'sql'],
-    },
     colorMode: {
       defaultMode: 'light',
     },
