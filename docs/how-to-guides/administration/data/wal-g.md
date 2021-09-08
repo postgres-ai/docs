@@ -14,7 +14,7 @@ In order to set up Database Lab Engine to automatically get the data from databa
 - [physicalSnapshot](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalsnapshot)
 
 ### Options
-Copy the contents of configuration example [`config.example.physical_walg.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.4.1/configs/config.example.physical_walg.yml) from the Database Lab repository to `~/.dblab/server.yml` and update the following options:
+Copy the example configuration file [`config.example.physical_walg.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.4.1/configs/config.example.physical_walg.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml` and update the following options:
 - Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine
 - Set connection options in `physicalRestore:options:envs`:
     - Use WAL-G environment variables to configure the job, see the [WAL-G configuration reference](https://github.com/wal-g/wal-g#configuration)
@@ -28,7 +28,11 @@ Copy the contents of configuration example [`config.example.physical_walg.yml`](
 ## Run Database Lab Engine
 
 :::tip
-Use Docker volumes to make credential files available to WAL-G. For example: `--volume ~/.dblab/sa.json:/home/dblab/sa.json`.
+Use Docker volumes to make credential files available to WAL-G. 
+
+For example: `--volume ~/.dblab/credentials.json:/home/dblab/credentials.json` or store them into a config directory.
+
+Note that credentials location inside the container matches the right part of the mount expression
 :::
 
 ```bash
@@ -39,8 +43,8 @@ sudo docker run \
   --publish 2345:2345 \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   --volume /var/lib/dblab:/var/lib/dblab/:rshared \
-  --volume ~/.dblab/server.yml:/home/dblab/configs/config.yml \
-  --volume ~/.dblab/sa.json:/home/dblab/sa.json \
+  --volume ~/.dblab/engine/configs:/home/dblab/configs:ro \
+  --volume ~/.dblab/engine/meta:/home/dblab/meta \
   --volume /sys/kernel/debug:/sys/kernel/debug:rw \
   --volume /lib/modules:/lib/modules:ro \
   --volume /proc:/host_proc:ro \

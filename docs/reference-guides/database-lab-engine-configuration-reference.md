@@ -12,6 +12,15 @@ Database Lab Engine supports [YAML 1.2](https://yaml.org/spec/1.2/spec.html) inc
 
 Example config files can be found here: https://gitlab.com/postgres-ai/database-lab/-/tree/2.4.1/configs.
 
+You may store configuration files in any suitable location. The recommended location of configuration files for Database Lab Engine is `~/.dblab/engine/configs`.
+
+In addition, Database Lab Engine provides functionality for storing information about current sessions and the state of the instance.
+The recommended location of metadata files is `~/.dblab/engine/meta`. Note the metadata folder must be writable.
+
+:::info
+Make sure that the file name is `server.yml` and its directory is mounted to `/home/dblab/configs` inside the DLE container. 
+:::
+
 Useful guides that help manage Database Lab Engine:
 - [How to configure and start Database Lab Engine](/docs/how-to-guides/administration/engine-manage#configure-and-start-a-database-lab-engine-instance)
 - [Reconfigure Database Lab Engine without downtime](/docs/how-to-guides/administration/engine-manage#reconfigure-database-lab-engine)

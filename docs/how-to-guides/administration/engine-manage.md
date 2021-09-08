@@ -9,7 +9,7 @@ keywords:
 ---
 
 ## Configure and start a Database Lab Engine instance
-Define config file `~/.dblab/server.yml`
+Define config file `~/.dblab/engine/configs/server.yml`
 
 :::tip
 All YAML features can be used, including anchors and aliases, to help you conveniently manage your configuration sections.
@@ -30,7 +30,8 @@ sudo docker run \
   --publish 2345:2345 \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   --volume /var/lib/dblab:/var/lib/dblab:rshared \
-  --volume ~/.dblab/server.yml:/home/dblab/configs/config.yml \
+  --volume ~/.dblab/engine/configs:/home/dblab/configs:ro \
+  --volume ~/.dblab/engine/meta:/home/dblab/meta \
   --volume /sys/kernel/debug:/sys/kernel/debug:rw \
   --volume /lib/modules:/lib/modules:ro \
   --volume /proc:/host_proc:ro \
@@ -40,7 +41,7 @@ sudo docker run \
 ## Reconfigure Database Lab Engine
 Database Lab Engine supports reconfiguration without a restart (therefore, without any downtime):
 
-- Edit the configuration file (usually, `~/.dblab/server.yml`). 
+- Edit the configuration file (usually, `~/.dblab/engine/configs/server.yml`). 
 - Issue a [SIGHUP](https://en.wikipedia.org/wiki/SIGHUP) signal to the main process in the DLE container – if the container name is `dblab_server`, then run this (note that `kill` here is not killing the process, it just sends the SIGHUP signal to it):
     ```bash
     sudo docker exec -it dblab_server kill -SIGHUP 1

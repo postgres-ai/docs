@@ -30,13 +30,13 @@ There are two available types of communication with Joe:
 
 You can use both of them in parallel. If you can develop in Go language, feel free to implement more types of communication: see [communication channels issues](https://gitlab.com/postgres-ai/joe/-/issues?label_name%5B%5D=Communication+channel).
 
-We need to define where to store the configuration file. We will use `~/.dblab/joe.yml`.
+We need to define where to store the configuration file. We will use `~/.dblab/joe/configs/joe.yml`.
 
 Configuration example:
 ```bash
-mkdir -p ~/.dblab
+mkdir -p ~/.dblab/joe/configs
 
-cat <<'JOE_CONFIG' > ~/.dblab/joe.yml
+cat <<'JOE_CONFIG' > ~/.dblab/joe/configs/joe.yml
 app:
   # HTTP server IP address or host.
   # Used only for Web UI and Slack Events API communication types.
@@ -278,7 +278,8 @@ Now we have all tokens and ready to run Joe Bot.
         --name joe_bot \
         --publish 2400:2400 \
         --restart=on-failure \
-        --volume ~/.dblab/joe.yml:/home/config/config.yml \
+        --volume ~/.dblab/joe/configs:/home/configs:ro \
+        --volume ~/.dblab/joe/meta:/home/meta \
         --detach \
     postgresai/joe:latest
     ```
