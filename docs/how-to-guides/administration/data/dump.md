@@ -206,3 +206,85 @@ retrieval:
 
     logicalSnapshot:
 ```
+
+## Logical dump and restore of multiple databases
+By default, DLE dumps and restores all available databases. To manage list of databases you may option (`databases`). Add this option to  `logicalDump` and `logicalRestore` jobs to specify a list of databases that must be copied.
+Do not specify this option to take all databases.
+
+
+### Dump of multiple databases
+To dump multiple databases, add a `databases` section to the existing `logicalDump` job listing the databases to be copied. For instance:
+```yaml
+  spec:
+    # Dumps PostgreSQL database from provided source.
+    logicalDump:
+      options:
+        ...
+        databases:
+          database1:
+          database2:
+          databaseN:
+```
+
+You could dump database partially by providing the list of tables to be dumped:
+```yaml
+  spec:
+    logicalDump:
+      options:
+        ...
+        databases:
+          database1:
+            tables:
+              - table
+              - table2
+              - tableN
+          database2:
+          databaseN:
+```
+
+Or do not add `tables` section to dump all tables
+
+### Logical restore job
+To restore multiple databases, add a `databases` section to the existing `logicalRestore` job listing the databases to be restored. For instance:
+
+```yaml
+  spec:
+    logicalRestore:
+      options:
+      ...
+        databases:
+          database1:
+          database2:
+          databaseN:
+```
+Or do not add `databases` section to restore all databases
+
+
+You could specify a non-default format of dumps (both: files and directories).
+
+Supported [dump formats](https://www.postgresql.org/docs/current/app-pgdump.html):
+- directory
+- custom
+- plain
+
+By default, the logical restore job uses a `directory` dump format. The Database Lab Engine will extract the database name from dump files.
+
+You could restore database partially by providing the list of tables to be restored:
+```yaml
+  spec:
+    logicalRestore:
+      options:
+      ...
+        databases:
+          database1:
+            format: directory
+            tables:
+              - table
+              - table2
+              - tableN
+          database2:
+          databaseN:
+```
+
+Or do not specify the `tables` section to restore all available tables.
+

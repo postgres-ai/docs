@@ -111,23 +111,25 @@ Options:
       - `dbInstanceIdentifier` (string, required) - RDS instance Identifier
       - `sslRootCert` (string, required) - path on the host machine to the SSL root certificate. You can download it from https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem 
 - `parallelJobs` (integer, optional, default: 1) - defines the number of concurrent jobs using the `pg_dump` option `jobs`. This option can dramatically reduce the time to dump a large database
-- `partial` (key-value, optional) - defines options for partial dumping. Available options: `tables`:
-   - `tables` (list of strings, optional) - dumps definition and/or data of only the listed tables
-- `immediateRestore` (key-value, optional) - provides options for direct restore to a Database Lab Engine instance. 
+- `databases` (key-value, optional) - defines options for specifying the database list that must be copied. By default, DLE dumps and restores all available databases. Do not specify the databases section to take all databases. Available options for each database: `tables`
+   - `tables` (list of strings, optional) - dumps definition and/or data of only the listed tables. Do not specify the tables section to dump all available tables
+- `immediateRestore` (key-value, optional) - provides options for direct restore to a Database Lab Engine instance.
+   - `enabled` (boolean, optional, default: false) - enable immediate restore.
    - `forceInit` (boolean, optional, default: false) - init data even if the Postgres directory (see the configuration options `global.mountDir` and `global.dataSubDir`) is not empty; note the existing data might be overwritten
 
 ### Job `logicalRestore`
 Restores a PostgreSQL database from an archive created by pg_dump in one of the non-plain-text formats.
 
 Options:
-- `dbname` (string, required) - defines the database dbname to be restored
 - `dumpLocation` (string, required) - specifies the location of the archive files (or directories, for directory-format archives) on the host machine to be restored
 - `dockerImage` (string, required) - specifies the Docker image containing the restore-required tool
 - `containerConfig` (key-value, optional) - options to pass custom parameters to logicalRestore container
 - `forceInit` (boolean, optional, default: false) - init data even if the Postgres directory (see the configuration options `global.mountDir` and `global.dataSubDir`) is not empty; note the existing data might be overwritten
 - `parallelJobs` (integer, optional, default: 1) - defines the number of concurrent jobs using the `pg_restore` option `jobs`. This option can dramatically reduce the time to restore a large database to a server running on a multiprocessor machine
-- `partial` (key-value, optional) - defines options for partial restoring. Available options: `tables`:
-   - `tables` (list of strings, optional) - restores definition and/or data of only the listed tables
+- `databases` (key-value, optional) - defines options for specifying the database list that must be restored. By default, DLE restores all available databases. Do not specify the databases section to restore all databases. Available options for each database: `tables`, `format`
+    - `format` (string, optional, default: "") - defines a dump format. Available formats: `directory`, `custom`, `plain`. Default format: `directory`. See the description of each format in the [official PostgreSQL documentation](https://www.postgresql.org/docs/current/app-pgdump.html).
+    - `compression` (string, optional, default: "no") - defines a compression type for plain-text dumps. Available compression types: `gzip`, `bzip2`, `no`.
+    - `tables` (list of strings, optional) - restores definition and/or data of only the listed tables. Do not specify the tables section to restore all available tables
 
 ### Job `logicalSnapshot`
 Prepares a snapshot for logical restored PostgreSQL database.
