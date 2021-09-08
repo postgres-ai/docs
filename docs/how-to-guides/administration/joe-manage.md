@@ -4,19 +4,20 @@ sidebar_label: Manage Joe bot
 ---
 
 ## Start Joe Bot container
-Define the config file `~/.dblab/joe.yml` according the [configuration options page](/docs/reference-guides/joe-bot-configuration-reference) and run the command:
+Define the config file `~/.dblab/joe/configs/joe.yml` according the [configuration options page](/docs/reference-guides/joe-bot-configuration-reference) and run the command:
 ```bash
 sudo docker run \
     --name joe_bot \
     --publish 2400:2400 \
     --restart=on-failure \
-    --volume ~/.dblab/joe.yml:/home/config/config.yml \
+    --volume ~/.dblab/joe/configs:/home/configs:ro \
+    --volume ~/.dblab/joe/meta:/home/meta \
     --detach \
 postgresai/joe:latest
 ``` 
 
 ## Reconfigure Joe Bot container
-Update the configuration file `~/.dblab/joe.yml`.
+Update the configuration file `~/.dblab/joe/configs/joe.yml`.
 
 Restart the running Joe Bot container:
 ```bash

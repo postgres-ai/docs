@@ -14,7 +14,7 @@ In order to set up Database Lab Engine to automatically get the data from databa
 - [physicalSnapshot](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalsnapshot)
 
 ### Options
-Copy the contents of configuration example [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.4.1/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml` and update the following options:
+Copy the example configuration file [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.4.1/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml` and update the following options:
 - Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine
 - Set connection options in `physicalRestore:options:envs`:
     - `PGUSER`: database user name
@@ -47,7 +47,8 @@ sudo docker run \
   --publish 2345:2345 \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   --volume /var/lib/dblab:/var/lib/dblab/:rshared \
-  --volume ~/.dblab/server.yml:/home/dblab/configs/config.yml \
+  --volume ~/.dblab/engine/configs:/home/dblab/configs:ro \
+  --volume ~/.dblab/engine/meta:/home/dblab/meta \
   --volume /sys/kernel/debug:/sys/kernel/debug:rw \
   --volume /lib/modules:/lib/modules:ro \
   --volume /proc:/host_proc:ro \

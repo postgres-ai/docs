@@ -6,7 +6,13 @@ sidebar_label: DB Migration Checker configuration
 ## Overview
 DB Migration Checker is a component of Database Lab Engine (DLE). Its behavior is controlled using a separate configuration YAML file. This reference describes available configuration options.
 
-Example config files can be found here: https://gitlab.com/postgres-ai/database-lab/-/blob/master/configs/config.example.run_ci.yaml.
+Example config files can be found here: https://gitlab.com/postgres-ai/database-lab/-/blob/master/configs/config.example.ci_checker.yml.
+
+It is possible to store configuration files where it is more convenient. The recommended location of configuration files for DB Migration Checker  is `~/.dblab/ci_checker/configs`.
+
+:::info
+Make sure that the file name is `ci_checker.yml` and its directory is mounted to `/home/dblab/configs` inside the DB Migration Checker container.
+:::
 
 ## The list of configuration sections
 Here is how the configuration file is structured:

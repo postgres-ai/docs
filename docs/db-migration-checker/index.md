@@ -22,25 +22,29 @@ DB Migration Checker is a DLE's component that enables integration with CI/CD to
 
 ## How to set up a DB migration checker
 - Make sure that the Database Lab Engine is running
-- Copy the contents of configuration example [`config.example.run_ci.yaml`](https://gitlab.com/postgres-ai/database-lab/-/blob/master/configs/config.example.run_ci.yaml) from the Database Lab repository to `~/.dblab/run_ci.yaml`:
+- Copy the example configuration file [`config.example.ci_checker.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/master/configs/config.example.ci_checker.yml) from the Database Lab repository to `~/.dblab/ci_checker/configs/ci_checker.yml`:
 
   ```bash
-  mkdir -p ~/.dblab
+  mkdir -p ~/.dblab/ci_checker/configs
 
-  curl https://gitlab.com/postgres-ai/database-lab/-/raw/master/configs/config.example.run_ci.yaml \
-    --output ~/.dblab/run_ci.yaml
+  curl https://gitlab.com/postgres-ai/database-lab/-/raw/master/configs/config.example.ci_checker.yml \
+    --output ~/.dblab/ci_checker/configs/ci_checker.yml
   ```
 
-- Configure the DB migration checker file `run_ci.yaml`
+- Configure the DB migration checker file `ci_checker.yml`
 
 - Launch DB migration checker
     ```bash
-    docker run --name dblab_ci_checker --rm -it \
+    sudo docker run
+      --name dblab_ci_checker \
+      --label dblab_control \
+      --detach \
+      --restart on-failure \
       --publish 2500:2500 \
       --volume /var/run/docker.sock:/var/run/docker.sock \
       --volume /tmp/ci_checker:/tmp/ci_checker \
-      --volume ~/.dblab/run_ci.yaml:/home/dblab/configs/run_ci.yaml \
-    postgresai/dblab-ci-checker:2.4.1
+      --volume ~/.dblab/ci_checker/configs:/home/dblab/configs:ro \
+      postgresai/dblab-ci-checker:2.4.1
     ```
 
 - [optional] Run the [localtunnel](https://github.com/localtunnel/localtunnel) (or an analog) - use it only for debug purposes to make DB migration instance accessible for a CI pipeline
