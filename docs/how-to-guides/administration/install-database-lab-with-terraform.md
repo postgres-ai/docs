@@ -26,7 +26,9 @@ Manual installation guides:
         * Read/Write permissions on Route53
         * Read/Write permissions on Cloudwatch
     - The DLE runs on an EC2 instance which can be accessed using a selected set of SSH keys uploaded to EC2. Use the Terraform parameter `aws_keypair` to specify which EC2 Keypair to use
-    - AWS [Route 53](https://aws.amazon.com/route53/) Hosted Zone (For setting up TLS) for a domain or sub-domain you control
+    - AWS [Route 53](https://aws.amazon.com/route53/) Hosted Zone for a domain or sub-domain you control.
+        * For instructions on how to set up a Route53 Hosted Zone, see [Amazon's Documentation](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/CreatingHostedZone.html)
+        * Note that if you are using a domain registrar other than Amazon, follow Amazon's guide to making [Route53 the DNS provider](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/MigratingDNS.html) for your domain name.
 - [Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli)
     - Minimum version: 1.0
     - :construction: Currently, it is supposed that you run `terraform` commands on a Linux machine (macOS and Windows support planned, but not yet implemented)
@@ -38,7 +40,7 @@ The following steps were tested on Ubuntu 20.04 but should be valid for other Li
 1. SSH to any machine with internet access, it will be used as deployment machine.
 1. Install Terraform CLI (see the [official guide](https://learn.hashicorp.com/tutorials/terraform/install-cli)). Example for Ubuntu:
 ```shell
-sudo apt-get update && sudo apt-get install -y gnupg software-properties-common curl 
+sudo apt-get update && sudo apt-get install -y gnupg software-properties-common curl
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
 sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"  # Adjust if you have ARM platform.
 sudo apt-get update && sudo apt-get install terraform
@@ -100,9 +102,9 @@ source_postgres_username = "YOUR_POSTGRES_USERNAME" # e.g. "postgres".
 # to work with S3 buckets in your AWS account.
 # source_type = "s3" # source is dump stored on demo s3 bucket
 # source_pgdump_s3_bucket = "YOUR_S3_BUCKET" # e.g. tf-demo-dump", this is an example public bucket.
-# source_pgdump_path_on_s3_bucket = "YOUR_PGDUMP_FILEPATH" # e.g. "heroku.dmp" for one-file dump(plain text or compressed plain text) 
+# source_pgdump_path_on_s3_bucket = "YOUR_PGDUMP_FILEPATH" # e.g. "heroku.dmp" for one-file dump(plain text or compressed plain text)
 # or test/heroku_dmp_2 for directory type dump, these are example dumps from the demo database.
-# Important: all vCPUs of the EC2 instance will be utilized for dump restore, so restore time depends on the EC2 instance class  
+# Important: all vCPUs of the EC2 instance will be utilized for dump restore, so restore time depends on the EC2 instance class
 
 dle_debug_mode = "true"
 dle_retrieval_refresh_timetable = "0 0 * * 0"
@@ -140,7 +142,7 @@ export AWS_SECRET_ACCESS_KEY="YOUR_SECRET_ACCESS_KEY"
 
 5. Review and adjust file `postgresql_clones_custom.conf`. This file will be added to all Postgres instances in clones created by DLE. If you don't need any custom parameters, leave this file empty but do not delete it.
 
-6. Copy to your current directory (that is used for TF deployment) your AWS key-pair file that was configured with `aws_keypair` parameter in `terraform.tfvars` file before and rename it to `ubuntu.pem`. 
+6. Copy to your current directory (that is used for TF deployment) your AWS key-pair file that was configured with `aws_keypair` parameter in `terraform.tfvars` file before and rename it to `ubuntu.pem`.
 
 ### 3. Run deployment
 1. Initialize Terraform working directory:
