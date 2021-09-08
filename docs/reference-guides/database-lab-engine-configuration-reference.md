@@ -95,7 +95,7 @@ Note, that all jobs are optional. For example, all the following approaches defi
 Dumps a PostgreSQL database from a provided source to an archive or to the Database Lab Engine instance.
 
 Options:
-- `dumpLocation` (string, required) - the dump file (or directory, for a directory-format archive) will be automatically created on this location on the host machine
+- `dumpLocation` (string, required) - specifies the location to store dump files (or directories, for directory-format archives), it will be automatically created on the host machine
 - `dockerImage` (string, required) - specifies the Docker image containing the dump-required tool
 - `containerConfig` (key-value, optional) - options to pass custom parameters to logicalDump container
 - `source` (key-value, required) - describes source of data:
@@ -121,7 +121,7 @@ Restores a PostgreSQL database from an archive created by pg_dump in one of the 
 
 Options:
 - `dbname` (string, required) - defines the database dbname to be restored
-- `dumpLocation` (string, required) - specifies the location of the archive file (or directory, for a directory-format archive) on the host machine to be restored
+- `dumpLocation` (string, required) - specifies the location of the archive files (or directories, for directory-format archives) on the host machine to be restored
 - `dockerImage` (string, required) - specifies the Docker image containing the restore-required tool
 - `containerConfig` (key-value, optional) - options to pass custom parameters to logicalRestore container
 - `forceInit` (boolean, optional, default: false) - init data even if the Postgres directory (see the configuration options `global.mountDir` and `global.dataSubDir`) is not empty; note the existing data might be overwritten
