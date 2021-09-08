@@ -10,7 +10,7 @@ keywords:
 ## Roadmap
 We work hard to develop new features for Database Lab SaaS and its open-source components, Database Lab Engine (DLE) and SQL Optimization Chatbot (Joe). Below you can find the main ideas we are working on now or planning to work soon.
 
-*Updated: 2021-02-14*
+*Updated: 2021-09-07*
 
 ### [DLE] Physical provisioning
 Physical provisioning: native support of provisioning from archives created by a specific backup solution or based on an existing Postgres database
@@ -30,26 +30,29 @@ Physical provisioning: native support of provisioning from archives created by a
 ### [DLE] Logical provisioning
 Logical provisioning: native support of provisioning for managed PostgreSQL databases
 
-- [ ] Support various sources
+- [x] Support various sources
     - [x] Simple dump/restore
     - [x] Amazon RDS
-    - [ ] Heroku Postgres
-    - [ ] Azure PostgreSQL
-    - [ ] Google Cloud SQL for Postgres
-    - [ ] Digital Ocean Postgres
+    - [x] Heroku Postgres
+    - [x] Azure PostgreSQL
+    - [x] Google Cloud SQL for Postgres
+    - [x] Digital Ocean Postgres
+    - [x] Any PostgreSQL DB via dump/restore
 - [ ] Continuously updated state (logical replication)
+- [x] Restore from backups stored on AWS S3
+    - [x] uncompressed
+    - [x] compressed (gzip, bzip2)
 - [x] Multiple pools, rotation on schedule
 - [ ] Partial data retrieval
     - [ ] specific tables
     - [ ] arbitrary filtering (columns, rows)
 
-### [DLE] Advanced engine features
+### [DLE] Engine features
 - [ ] Persist clones when the engine restarts :fire:
 - [ ] Point-in-time recovery (PITR) (Can be used for ultra-fast recovery of accidentally deleted data)
 - [ ] Duplicate DLE (create a new DLE based on existing one)
 - [ ] Clone analytics
-- [ ] User quotas
-- [ ] Audit
+- [ ] Advanced audit
 - [ ] "Temporary" system- and Postgres-level monitoring for clones/sessions
 - [ ] Utilization of DLE instance and alerts
 - [ ] Usage and estimated savings reports
@@ -58,7 +61,10 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
 - [ ] Framework for macro database experiments (work with thick/regular clones)
 - [ ] Auto-register DLE in Platform
 - [x] Resource usage quotas for clones: CPU, RAM (container quotas, supported by Docker)
+- [ ] User quotas
 - [ ] Disk quotas (`zfs set quota=xx`)
+- [ ] GUI with key features
+- [ ] Fast connection to clone's DB via CLI
 
 ### [SaaS] Automated verification of database schema and complex data changes a.k.a. DB migrations
 - [a] History and logging for clones/sessions
@@ -67,26 +73,27 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
 - [a] PostgreSQL logs for the migration
 - [a] Report in CI and Platform
 - [ ] Integration with CI tools – advanced integration
-    - [ ] GitHub Actions
+    - [x] GitHub Actions
+    - [ ] Bitbucket CI/CD
     - [ ] CitcleCI
     - [ ] Jenkins
     - [ ] GitLab CI/CD
     - [ ] Bamboo
     - [ ] TravisCI
-- [ ] Database migration tools – advanced integration
-    - [ ] Sqitch
-    - [ ] Flyway
-    - [ ] Liquibase
-    - [ ] Ruby on Rails Active Record
-    - [ ] Django migrations
-- [ ] "Production timing" estimator
-- [ ] More artifacts to support decisions: pg_stat_*, system usage, WAL, checkpoints, etc.
+- [x] Support vairous database migration tools + demo
+    - [x] Sqitch
+    - [x] Flyway
+    - [x] Liquibase
+    - [x] Ruby on Rails Active Record
+    - [x] Django migrations
+- [e] "Production timing" estimator
+- [x] More artifacts to support decisions: pg_stat_*, system usage, WAL, checkpoints, etc.
 
 ### [DLE] Cloning (CoW technology)
 - [x] ZFS
 - [x] LVM
 - [ ] PureStorage
-- [ ] Remote clones – Amazon Aurora
+- [ ] Remote clones – Amazon Aurora, Zenith
 
 ### [SaaS] Automation, clouds, Kubernetes
 - [ ] Clouds, automation of installation in clients' accounts
@@ -116,7 +123,7 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
 - [ ] Visualizations
     - [x] explain.depesz
     - [x] explain.dalibo (PEV2)
-    - [ ] pgMustard (EE only)
+    - [ ] pgMustard (WebUI/SaaS only)
     - [ ] FlameGraphs
 - [ ] Better optimization recommendations
 - [ ] Macroanalysis insights (suggestions based on postgres-checkup / pgss)
@@ -124,6 +131,7 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
 - [ ] Hypothetical partitioning
 - [ ] Index advisor
 - [ ] Utilization control
+- [x] Restore user sessions after Joe container restarts
 - [ ] Better chatbot security
     - [x] Do not use DB superuser
     - [x] Quotas (rate limits)
@@ -135,22 +143,23 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
     - [x] parallel execution of custom scripts
     - [x] [postgres_anonymizer](https://postgresql-anonymizer.readthedocs.io/en/stable/masking_functions.html)
     - [x] [kitchen-sync](https://github.com/willbryant/kitchen_sync)
-    - [ ] [pgsync]https://github.com/ankane/pgsync)
+    - [ ] [pgsync](https://github.com/ankane/pgsync)
 - [ ] Hybrid setup: raw and obfuscaned/masked clones on the same DLE instance
+- [ ] Dump/restore with runtime anonimization, parallelized, via GitOps
 - [ ] Simplified setup for anonymization - GUI
-- [ ] Automated masking
-- [ ] Automated anonymization
+- [ ] Automated masking / anonymization
 
-### [Docs] Better documentation
+### [Docs] Better documentation and demo
 - [ ] Tutorials
     - [x] Basic
     - [x] RDS
-    - [ ] Specific cases
+    - [x] SQL optimization using Joe bot
+    - [ ] DB migration testing in CI/CD pipelines
+    - [x] Katacoda
 - [ ] User Guides
     - [x] DLE setup and administration
     - [x] Cloning
     - [x] SQL optimization with Joe bot
-    - [ ] Checkups
     - [ ] Building non-production environments
 - [x] References
     - [x] DLE API
@@ -163,4 +172,10 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
     - [ ] Why and how SQL optimization is possible on thin clones
     - [x] Security aspects
     - [ ] Secure and robust test/staging environments
+- [ ] Interactive demo
+    - [x] Basic DLE features
+    - [x] SaaS features
+    - [x] SQL optimization using Joe bot (WebUI)
+    - [ ] DB migration testing (GitHub Actions)
+    - [ ] Advanced examples, use cases
 - [ ] Video demonstrations
