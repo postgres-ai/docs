@@ -230,6 +230,12 @@ dblab clone reset [command options] CLONE_ID
 **Options**
 - `--async` , `-a` (boolean, default: false) - run the command asynchronously
 - `--help` , `-h` (boolean, default: false) - show help
+- `--latest`, (boolean, default: false; DLE 2.5+) - reset clone using the latest available snapshot
+- `--snapshot-id` , (string, default: ""; DLE 2.5+) - reset clone using the specified snapshot
+
+:::note
+The parameters `--latest` and `--snapshot-id` cannot be specified at the same time.
+:::
 
 **Example**
 ```bash
