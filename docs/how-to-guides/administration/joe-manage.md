@@ -16,6 +16,7 @@ sudo docker run \
 postgresai/joe:latest
 ``` 
 
+Ensure that apps folder is writable by Joe inside docker container.
 ## Reconfigure Joe Bot container
 Update the configuration file `~/.dblab/joe/configs/joe.yml`.
 
@@ -24,16 +25,12 @@ Restart the running Joe Bot container:
 sudo docker restart joe_bot
 ```
 
-:::caution
-Note that once `docker restart` is executed, all active sessions will be lost.
-:::
+After restart, all user sessions are restored and should keep working (but PostgreSQL connections are re-established so if users set some session variables, they are lost). This feature works only in Joe versions 0.10 and newer. If you need to reset user sessions, stop the container, remove the file `sessions.json` located in `~/.dblab/joe/meta`, and start the container.
 
 ## Upgrade Joe Bot 
 Stop and remove the container using `sudo docker stop joe_bot` and `sudo docker rm joe_bot` and then [launching](#start-joe-bot-container) it again.
 
-:::caution
-Note the upgrade removes all active sessions
-:::
+After upgrading, all user sessions are restored and should keep working (but PostgreSQL connections are re-established so if users set some session variables, they are lost). This feature works only in Joe versions 0.10 and newer. If you need to reset user sessions, stop the container, remove the file `sessions.json` located in `~/.dblab/joe/meta`, and start the container.
 
 ## Observe Joe Bot logs
 To enable the debugging mode you can use one of the following approaches:
