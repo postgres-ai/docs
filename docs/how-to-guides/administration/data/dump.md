@@ -15,7 +15,7 @@ In order to set up Database Lab Engine to automatically get the data from databa
 - [logicalSnapshot](/docs/reference-guides/database-lab-engine-configuration-reference#job-logicalsnapshot)
 
 ### Options
-Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.4.1/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml` and update the following options:
+Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.5.0/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml` and update the following options:
 - Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine
 - Set connection options in `retrieval:spec:logicalDump:options:source:connection`:
     - `dbname`: database name to connect to
@@ -23,10 +23,8 @@ Copy the contents of configuration example [`config.example.logical_generic.yml`
     - `port`: database server port
     - `username`: database user name
     - `password`: database master password (can be also set as `PGPASSWORD` environment variable of the Docker container)
-- Set proper version in Postgres Docker images tags (change the images itself only if you know what are you doing):
-    - `provision:options:dockerImage`
-    - `retrieval:spec:logicalRestore:options:dockerImage`
-    - `retrieval:spec:logicalDump:options:dockerImage`
+- Set proper version in Postgres Docker image tag (change the images itself only if you know what are you doing):
+    - `databaseContainer:dockerImage`
 
 ## Run Database Lab Engine
 ```bash
@@ -46,7 +44,7 @@ sudo docker run \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:2.4.1
+  postgresai/dblab-server:2.5.0
 ```
 
 You can use PGPASSWORD env to set the password.

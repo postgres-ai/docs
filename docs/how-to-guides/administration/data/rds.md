@@ -25,7 +25,7 @@ If you want to use **IAM database authentication**, read how to enable it [here]
 You need to know the **master password**. If you lost the password it can be reset. Read how to reset it [here](https://aws.amazon.com/premiumsupport/knowledge-center/reset-master-user-password-rds/).
 :::
 
-Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.4.1/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml` and update the following options:
+Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.5.0/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml` and update the following options:
 - Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine
 - Set connection options in `retrieval:spec:logicalDump:options:source:connection`:
     - `dbname`: database name to connect to
@@ -33,10 +33,8 @@ Copy the contents of configuration example [`config.example.logical_generic.yml`
     - `port`: database server port
     - `username`: database user name
     - `password`: database master password (can be also set as `PGPASSWORD` environment variable of the Docker container)
-- Set proper version in Postgres Docker images tags (change the images itself only if you know what are you doing):
-    - `provision:options:dockerImage`
-    - `retrieval:spec:logicalRestore:options:dockerImage`
-    - `retrieval:spec:logicalDump:options:dockerImage`
+- Set proper version in Postgres Docker image tag (change the images itself only if you know what are you doing):
+    - `databaseContainer:dockerImage`
 
 Launch Database Lab Engine:
 ```bash
@@ -56,7 +54,7 @@ sudo docker run \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:2.4.1
+  postgresai/dblab-server:2.5.0
 ```
 
 ## Option 2: IAM database authentication
@@ -74,7 +72,7 @@ Alternatively, you can add `AmazonRDSFullAccess`, `IAMFullAccess` policies to an
 :::
 
 ### Set up and run Database Lab Engine
-Copy the contents of configuration example [`config.example.logical_rds_iam.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.4.1/configs/config.example.logical_rds_iam.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml` and update the following options:
+Copy the contents of configuration example [`config.example.logical_rds_iam.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.5.0/configs/config.example.logical_rds_iam.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml` and update the following options:
 - Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine
 - Set connection options `retrieval:spec:logicalDump:options:source:connection`:
     - `dbname`: database name to connect to
@@ -82,10 +80,8 @@ Copy the contents of configuration example [`config.example.logical_rds_iam.yml`
 - Set AWS params in `retrieval:spec:logicalDump:options:source:rdsIam`:
     - `awsRegion`: RDS instance region
     - `dbInstanceIdentifier`: RDS instance identifier
-- Set proper version in Postgres Docker images tags (change the images itself only if you know what are you doing):
-    - `provision:options:dockerImage`
-    - `retrieval:spec:logicalRestore:options:dockerImage`
-    - `retrieval:spec:logicalDump:options:dockerImage`
+- Set proper version in Postgres Docker image tag (change the images itself only if you know what are you doing):
+    - `databaseContainer:dockerImage`
 
 ### Download AWS RDS certificate
 This type of data retrieval requires a secure connection to a database. To setup it we need to download a certificate from AWS.
@@ -116,7 +112,7 @@ sudo docker run \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:2.4.1
+  postgresai/dblab-server:2.5.0
 ```
 
 ## Restart in the case of failure

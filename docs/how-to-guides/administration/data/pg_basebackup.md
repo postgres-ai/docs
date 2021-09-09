@@ -14,7 +14,7 @@ In order to set up Database Lab Engine to automatically get the data from databa
 - [physicalSnapshot](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalsnapshot)
 
 ### Options
-Copy the contents of configuration example [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.4.1/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml` and update the following options:
+Copy the contents of configuration example [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.5.0/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml` and update the following options:
 - Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine
 - Set connection options in `physicalRestore:options:envs`:
     - `PGUSER`: database user name
@@ -23,10 +23,8 @@ Copy the contents of configuration example [`config.example.physical_generic.yml
 - Set PostgreSQL commands in `physicalRestore:options:customTool`:
     - `command`: `pg_basebackup -X stream -D /var/lib/dblab/dblab_pool/data`
     - `restore_command`: `TBD`
-- Set a proper version in Postgres Docker images tags (change the images itself only if you know what are you doing):
-    - `provision:options:dockerImage`
-    - `retrieval:spec:physicalRestore:options:dockerImage`
-    - `retrieval:spec:physicalSnapshot:options:promotion:dockerImage`
+- Set a proper version in Postgres Docker image tag (change the images itself only if you know what are you doing):
+    - `databaseContainer:dockerImage`
 
 ## Run Database Lab Engine
 ```bash
@@ -45,7 +43,7 @@ sudo docker run \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:2.4.1
+  postgresai/dblab-server:2.5.0
 ```
 
 ## Restart in the case of failure
