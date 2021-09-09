@@ -14,16 +14,14 @@ In order to set up Database Lab Engine to automatically get the data from databa
 - [physicalSnapshot](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalsnapshot)
 
 ### Options
-Copy the example configuration file [`config.example.physical_walg.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.4.1/configs/config.example.physical_walg.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml` and update the following options:
+Copy the example configuration file [`config.example.physical_walg.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.5.0/configs/config.example.physical_walg.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml` and update the following options:
 - Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine
 - Set connection options in `physicalRestore:options:envs`:
     - Use WAL-G environment variables to configure the job, see the [WAL-G configuration reference](https://github.com/wal-g/wal-g#configuration)
 - Set WAL-G settings in `physicalRestore:options:walg`:
     - `backupName` - defines the backup name to restore
-- Set a proper version in Postgres Docker images tags (change the images itself only if you know what are you doing):
-    - `provision:options:dockerImage`
-    - `retrieval:spec:physicalRestore:options:dockerImage`
-    - `retrieval:spec:physicalSnapshot:options:promotion:dockerImage`
+- Set a proper version in Postgres Docker image tag (change the images itself only if you know what are you doing):
+    - `databaseContainer:dockerImage`
 
 ## Run Database Lab Engine
 
@@ -51,7 +49,7 @@ sudo docker run \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:2.4.1
+  postgresai/dblab-server:2.5.0
 ```
 
 ## Restart in the case of failure
