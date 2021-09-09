@@ -1,6 +1,5 @@
 ---
 author: "Nikolay Samokhvalov"
-authorimg: /assets/author/nik.jpg
 date: 2020-01-28 14:15:00
 linktitle: The first public release of Database Lab Engine
 title: The first public release of Database Lab Engine
@@ -13,6 +12,9 @@ tags:
   - PostgreSQL
   - release
 ---
+
+import { AuthorBanner } from '../src/components/AuthorBanner'
+import { DbLabBanner } from '../src/components/DbLabBanner'
 
 ## Postgres.ai team is proud to announce the very first public release of Database Lab Engine
 
@@ -43,3 +45,18 @@ Links:
 - [Join our Slack](https://slack.postgres.ai/) to discuss Database Lab and share your feedback with us
 - [Source code and issue tracker](https://gitlab.com/postgres-ai/database-lab)
 - [Release notes](https://gitlab.com/postgres-ai/database-lab/-/releases)
+
+<!--truncate-->
+
+<AuthorBanner
+  avatarUrl="/assets/author/nik.jpg"
+  name="Nikolay Samokhvalov"
+  role="CEO & Founder of"
+  twitterUrl="https://twitter.com/samokhvalov"
+  gitlabUrl="https://gitlab.com/NikolayS"
+  githubUrl="https://github.com/NikolayS"
+  linkedinUrl="https://www.linkedin.com/in/samokhvalov"
+  note="Working on tools to balance Dev with Ops in DevOps"
+/>
+
+<DbLabBanner />

@@ -1,7 +1,6 @@
 ---
 slug: dblab-0-2
 author: "Nikolay Samokhvalov"
-authorimg: /assets/author/nik.jpg
 date: 2020-02-06 10:38:00
 linktitle: "Database Lab Engine updated to 0.2: everything in containers, better API and CLI"
 title: Database Lab Engine 0.2
@@ -14,6 +13,9 @@ tags:
   - PostgreSQL
   - release
 ---
+
+import { AuthorBanner } from '../src/components/AuthorBanner'
+import { DbLabBanner } from '../src/components/DbLabBanner'
 
 ## Database Lab Engine updated to 0.2: everything in containers, better API and CLI
 
@@ -35,3 +37,18 @@ Links:
 - [Join our Slack](https://slack.postgres.ai/) to discuss Database Lab and share your feedback with us
 - [Source code and issue tracker](https://gitlab.com/postgres-ai/database-lab)
 - [Changelog and release notes](https://gitlab.com/postgres-ai/database-lab/-/blob/master/CHANGELOG.md)
+
+<!--truncate-->
+
+<AuthorBanner
+  avatarUrl="/assets/author/nik.jpg"
+  name="Nikolay Samokhvalov"
+  role="CEO & Founder of"
+  twitterUrl="https://twitter.com/samokhvalov"
+  gitlabUrl="https://gitlab.com/NikolayS"
+  githubUrl="https://github.com/NikolayS"
+  linkedinUrl="https://www.linkedin.com/in/samokhvalov"
+  note="Working on tools to balance Dev with Ops in DevOps"
+/>
+
+<DbLabBanner />

@@ -1,7 +1,6 @@
 ---
 slug: joe-0-5
 author: "Nikolay Samokhvalov"
-authorimg: /assets/author/nik.jpg
 date: 2020-02-26 21:42:00
 linktitle: Announcing Joe bot, an SQL query optimization assistant
 title: Joe bot, an SQL query optimization assistant, updated to version 0.5.0
@@ -16,6 +15,9 @@ tags:
   - SQL
   - EXPLAIN
 ---
+
+import { AuthorBanner } from '../src/components/AuthorBanner'
+import { DbLabBanner } from '../src/components/DbLabBanner'
 
 ## Meet Joe
 
@@ -56,3 +58,18 @@ Version 0.5.0 adds support of Slack API signed secrets, automated notifications 
 - Changelog: https://gitlab.com/postgres-ai/joe/-/releases
 - Bug reports, ideas, and merge requests are welcome: https://gitlab.com/postgres-ai/joe/issues/
 - Community Slack (English): https://slack.postgres.ai/. After joining, the live demo of Joe is available in the #joe-bot-demo channel: https://database-lab-team.slack.com/archives/CTL5BB30R
+
+<!--truncate-->
+
+<AuthorBanner
+  avatarUrl="/assets/author/nik.jpg"
+  name="Nikolay Samokhvalov"
+  role="CEO & Founder of"
+  twitterUrl="https://twitter.com/samokhvalov"
+  gitlabUrl="https://gitlab.com/NikolayS"
+  githubUrl="https://github.com/NikolayS"
+  linkedinUrl="https://www.linkedin.com/in/samokhvalov"
+  note="Working on tools to balance Dev with Ops in DevOps"
+/>
+
+<DbLabBanner />

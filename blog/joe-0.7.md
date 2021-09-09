@@ -1,7 +1,6 @@
 ---
 slug: joe-0-7
 author: "Artyom Kartasov"
-authorimg: /assets/author/artyom.jpg
 date: 2020-05-18 11:16:00
 linktitle: "Joe 0.7.0: Web UI, Channel Mapping, and new commands"
 title: "Joe 0.7.0 released! New in this release: Web UI, Channel Mapping, and new commands"
@@ -15,6 +14,9 @@ tags:
   - release
   - WebUI
 ---
+
+import { AuthorBanner } from '../src/components/AuthorBanner'
+import { DbLabBanner } from '../src/components/DbLabBanner'
 
 In addition to Slack integration, Joe Bot can be now integrated with [Postgres.ai Platform](https://postgres.ai/docs/platform), providing convenient Web UI for all developers who want to troubleshoot and optimize SQL efficiently. Secure and performant Web UI works in any modern browser (even mobile!) and brings more flexibility, 1:1 communication, and visualization options.
 
@@ -152,3 +154,16 @@ See the full list of Joe's commands in [the docs](https://postgres.ai/docs/refer
 - Configuration options: https://postgres.ai/docs/reference-guides/joe-bot-configuration-reference
 - Joe Bot Tutorial: https://postgres.ai/docs/tutorials/joe-setup
 - Community Slack (English): https://slack.postgres.ai/. After joining, the live demo is available in the #joe-bot-demo channel: https://database-lab-team.slack.com/archives/CTL5BB30R
+
+<!--truncate-->
+
+<AuthorBanner
+  avatarUrl="/assets/author/artyom.jpg"
+  name="Artyom Kartasov"
+  role="Software Engineer at"
+  twitterUrl="https://twitter.com/arkartasov"
+  gitlabUrl="https://github.com/agneum"
+  githubUrl="https://gitlab.com/akartasov"
+/>
+
+<DbLabBanner />

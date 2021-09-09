@@ -100,7 +100,9 @@ source_postgres_username = "YOUR_POSTGRES_USERNAME" # e.g. "postgres".
 # to work with S3 buckets in your AWS account.
 # source_type = "s3" # source is dump stored on demo s3 bucket
 # source_pgdump_s3_bucket = "YOUR_S3_BUCKET" # e.g. tf-demo-dump", this is an example public bucket.
-# source_pgdump_path_on_s3_bucket = "YOUR_PGDUMP_FILENAME" # e.g. "heroku.dmp", this is an example dump from demo database.
+# source_pgdump_path_on_s3_bucket = "YOUR_PGDUMP_FILEPATH" # e.g. "heroku.dmp" for one-file dump(plain text or compressed plain text) 
+# or test/heroku_dmp_2 for directory type dump, these are example dumps from the demo database.
+# Important: all vCPUs of the EC2 instance will be utilized for dump restore, so restore time depends on the EC2 instance class  
 
 dle_debug_mode = "true"
 dle_retrieval_refresh_timetable = "0 0 * * 0"
@@ -142,6 +144,10 @@ The private file must be named `ubuntu.pem`.
 export AWS_ACCESS_KEY_ID="YOUR_KEY_ID"
 export AWS_SECRET_ACCESS_KEY="YOUR_SECRET_ACCESS_KEY"
 ```
+
+5. Review and adjust file `postgresql_clones_custom.conf`. This file will be added to all Postgres instances in clones created by DLE. If you don't need any custom parameters, leave this file empty but do not delete it.
+
+6. Copy to your current directory (that is used for TF deployment) your AWS key-pair file that was configured with `aws_keypair` parameter in `terraform.tfvars` file before and rename it to `ubuntu.pem`. 
 
 ### 3. Run deployment
 1. Initialize Terraform working directory:

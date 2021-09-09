@@ -812,3 +812,11 @@ table.minimal-style > tr > td {
   border: 0;
   padding: .5em 2em .5em 0;
 }
+
+html[data-theme="light"] .avatar__name > a {
+  color: var(--ifm-color-base);
+}
+
+html[data-theme="dark"] .avatar__name > a {
+  color: var(--ifm-color-white);
+}

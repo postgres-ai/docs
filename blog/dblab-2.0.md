@@ -1,7 +1,6 @@
 ---
 slug: dblab-2-0-beta
 author: "Nikolay Samokhvalov"
-authorimg: /assets/author/nik.jpg
 date: 2020-09-18 18:12:00
 linktitle: "Database Lab Engine 2.0 beta: one config to rule them all; support for Amazon RDS"
 title: "Database Lab Engine 2.0 beta: one config to rule them all; support for Amazon RDS"
@@ -14,6 +13,9 @@ tags:
   - PostgreSQL
   - beta
 ---
+
+import { AuthorBanner } from '../src/components/AuthorBanner'
+import { DbLabBanner } from '../src/components/DbLabBanner'
 
 ## Database Lab Engine 2.0 beta: one config to rule them all; support for Amazon RDS
 
@@ -35,3 +37,18 @@ As usual, please send us any feedback you have; it is hard to overestimate its m
 *[Database Lab Engine](https://gitlab.com/postgres-ai/database-lab) is open-source software distributed under OSI-approved [AGPLv3 license](https://opensource.org/licenses/AGPL-3.0). Database Lab Engine allows to clone PostgreSQL databases of any size in just a few seconds. This can save you a lot of money for development and testing infrastructure, and at the same time, drastically improve development quality and time-to-market.*
 
 *The open-source Database Lab Engine is equipped with convenient API and CLI. Additionally, we continue developing the Enterprise version that offers GUI, authentication flexibility, and user management for Database Lab Engine API and CLI, more. The Enterprise version is in the "private beta" mode; we encourage you to [sign up and request a demo](https://postgres.ai/console/).*
+
+<!--truncate-->
+
+<AuthorBanner
+  avatarUrl="/assets/author/nik.jpg"
+  name="Nikolay Samokhvalov"
+  role="CEO & Founder of"
+  twitterUrl="https://twitter.com/samokhvalov"
+  gitlabUrl="https://gitlab.com/NikolayS"
+  githubUrl="https://github.com/NikolayS"
+  linkedinUrl="https://www.linkedin.com/in/samokhvalov"
+  note="Working on tools to balance Dev with Ops in DevOps"
+/>
+
+<DbLabBanner />
