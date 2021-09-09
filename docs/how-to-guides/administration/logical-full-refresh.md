@@ -148,12 +148,33 @@ retrieval:
 ...
 ```
 
-### 4. Launch Database Lab Engine
+### 4. Enable `forceInit` for logicalRestore job
+```yaml
+    logicalRestore:
+        ...
+        # Restore data even if the Postgres data directory (`global.dataDir`) is not empty.
+        # Note the existing data will be overwritten.
+        forceInit: true
+```
+
+or for logicalDump job if `immediateRestore` is used.
+```yaml
+    logicalDump:
+        ...
+        immediateRestore:
+          # Enable immediate restore.
+          enabled: true
+          # Restore data even if the Postgres data directory (`global.dataDir`) is not empty.
+          # Note the existing data will be overwritten.
+          forceInit: true
+```
+
+### 5. Launch Database Lab Engine
 ```bash
 sudo docker run ... # the same as it was done initially
 ``` 
 
-### 5. Checking the result manually (optional step)
+### 6. Checking the result manually (optional step)
 Optionally, if you do it manually, check the logs:
 ```bash
 sudo docker logs dblab_server -f
