@@ -67,7 +67,7 @@ The only ways to find the average SQL execution time (some name it "average late
 1. Using the pg_stat_statements extension, which is a standard de facto for query performance analysis:
     ```sql
     select sum(total_time) / sum(calls)
-    from pg_stat_statement;
+    from pg_stat_statements;
     ```
     – will give you that. For better results, it is worth taking two snapshots of `pg_stat_statements` and then do the math. One important note here: the extension does not store more than `pg_stat_statements.max` records, so if this setting is much lower than the number of possible query groups the database processes, the result can be quite off. With two snapshots, it's quite easy to check, though: all we need is to compare `queryid` sets in both snapshots and see how many of them are gone and how many new arrived. The difference should be very low (a good idea: measure this "difference" in terms of `calls` values or `total_time`).
 1. If pgBouncer is used, then average latencies can be found it its log. pgBouncer reports the stats every minute. Here is an example:
