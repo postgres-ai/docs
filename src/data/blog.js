@@ -1,6 +1,13 @@
 // Duplicates data from the blog.
 const blog = [
   {
+    link: 'blog/20210909-what-is-a-slow-sql-query',
+    date: '2021-09-09 22:18:00',
+    title: 'What is a slow SQL query?',
+    description: 'Is 200 ms slow for an SQL query? What about 20 ms? When do we need to optimize?',
+    image: '/assets/thumbnails/what-is-slow-sql.png',
+  },
+  {
     link: 'blog/20210831-postgresql-subtransactions-considered-harmful',
     date: '2021-08-31 12:06:00',
     title: 'PostgreSQL Subtransactions Considered Harmful',
@@ -15,14 +22,14 @@ const blog = [
     description: 'A large gap remains on the landscape of software tooling…',
     image: '/assets/thumbnails/dle-generic-blog.png',
   },
-  {
+  /*{
     link: 'blog/20210714-dle-2-4-test-db-changes-in-ci',
     date: '2021-07-14 13:18:00',
     publishDate: '2021-07-14 13:18:00',
     title: 'DLE 2.4: realistic DB testing in GitHub Actions; Terraform module',
     description: 'DLE 2.4 brings two major capabilities to those who are interested in working with PostgreSQL thin clones: automated tests of DB migrations in GitHub Actions, and Terraform module to deploy Database Lab in AWS',
     image: '/assets/thumbnails/dle-2.4-blog.png',
-  },  /*{
+  },  {
   {
     link: 'blog/dle-2-2-release',
     date: '2021-02-22 06:45:00',
