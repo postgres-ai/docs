@@ -13,6 +13,15 @@ Use both of them to get the best experience.
 Note that the environment variables have a higher priority.
 :::
 
+It is possible to store configuration files where it is more convenient. The recommended location of configuration files for Joe Bot is `~/.dblab/joe/configs`.
+
+In addition, Joe Bot provides functionality for storing information about current sessions and the state of the instance.
+The recommended location of metadata files is `~/.dblab/joe/meta`. Note the metadata folder must be writable.
+
+:::info
+Make sure that the file name is `joe.yml` and its directory is mounted to `/home/configs` inside the Joe Bot container.
+:::
+
 ## Joe Bot configuration file
 ```yml
 app:

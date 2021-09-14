@@ -267,44 +267,40 @@ sudo docker stop dblab_pg_initdb
 sudo docker rm dblab_pg_initdb
 ```
 
-Now, we need to take care of Database Lab Engine configuration. Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.4.1/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
+Now, we need to take care of Database Lab Engine configuration. Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.5.0/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
 ```bash
-mkdir ~/.dblab
+mkdir -p ~/.dblab/engine/configs
 
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/2.4.1/configs/config.example.logical_generic.yml \
-  --output ~/.dblab/server.yml
+curl https://gitlab.com/postgres-ai/database-lab/-/raw/2.5.0/configs/config.example.logical_generic.yml \
+  --output ~/.dblab/engine/configs/server.yml
 ```
 
-Open `~/.dblab/server.yml` and edit the following options:
+Open `~/.dblab/engine/configs/server.yml` and edit the following options:
 - Set secure `server:verificationToken`, it will be used to authorize API requests to the Database Lab Engine
 - Remove `logicalDump` section completely
 - Remove `logicalRestore` section completely
 - Leave `logicalSnapshot` as is
-- If your Postgres major version is not 13 (default), set the proper version in Postgres Docker images tags:
-    - `provision:options:dockerImage`
-    - `retrieval:spec:logicalRestore:options:dockerImage`
-    - `retrieval:spec:logicalDump:options:dockerImage`
+- If your Postgres major version is not 13 (default), set the proper version in Postgres Docker image tag:
+    - `databaseContainer:dockerImage`
 
 </TabItem>
 <TabItem value="physical-copy">
 
 If you want to try Database Lab for an existing database, you need to copy the data to PostgreSQL data directory on the Database Lab server, to the directory `/var/lib/dblab/dblab_pool/data`. This step is called "thick cloning". It only needs to be completed once. There are several options to physically copy the data directory. Here we will use the standard PostgreSQL tool, `pg_basebackup`. However, we are not going to use it directly (although, it is possible) – we will specify its options in the Database Lab Engine configuration file.
 
-First, copy the contents of configuration example [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.4.1/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
+First, copy the example configuration file[`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.5.0/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
 ```bash
-mkdir ~/.dblab
+mkdir -p ~/.dblab/engine/configs
 
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/2.4.1/configs/config.example.physical_generic.yml \
-  --output ~/.dblab/server.yml
+curl https://gitlab.com/postgres-ai/database-lab/-/raw/2.5.0/configs/config.example.physical_generic.yml \
+  --output ~/.dblab/engine/configs/server.yml
 ```
 
-Next, open `~/.dblab/server.yml` and edit the following options:
+Next, open `~/.dblab/engine/configs/server.yml` and edit the following options:
 - Set secure `server:verificationToken`, it will be used to authorize API requests to the Database Lab Engine
 - In `retrieval:spec:physicalRestore:options:envs`, specify how to reach the source Postgres database to run `pg_basebackup`: `PGUSER`, `PGPASSWORD`, `PGHOST`, and `PGPORT`
-- If your Postgres major version is not 13 (default), set the proper version in Postgres Docker images tags:
-    - `provision:options:dockerImage`
-    - `retrieval:spec:physicalRestore:options:dockerImage`
-    - `retrieval:spec:physicalSnapshot:options:promotion:dockerImage`
+- If your Postgres major version is not 13 (default), set the proper version in Postgres Docker image tag:
+    - `databaseContainer:dockerImage`
 
 :::tip
 Optionally, you might want to keep PGDATA up-to-date (which is being continuously updated). Good news is that this is supported if you chose the "physical" method of initialization for the data directory. To have PGDATA updated continuously, configure `retrieval:spec:physicalRestore:restore_command` option by specifying the value normally used in `restore_command` on PostgreSQL replicas based on WAL shipping.
@@ -317,15 +313,15 @@ If you want to try Database Lab for an existing database, you need to copy the d
 
 Here we will configure Database Lab Engine to use a "logical" method of thick cloning, dump/restore.
 
-First, copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.4.1/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
+First, copy the configuration example configuration file[`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.5.0/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
 ```bash
-mkdir ~/.dblab
+mkdir -p ~/.dblab/engine/configs
 
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/2.4.1/configs/config.example.logical_generic.yml \
-  --output ~/.dblab/server.yml
+curl https://gitlab.com/postgres-ai/database-lab/-/raw/2.5.0/configs/config.example.logical_generic.yml \
+  --output ~/.dblab/engine/configs/server.yml
 ```
 
-Now open `~/.dblab/server.yml` and edit the following options:
+Now open `~/.dblab/engine/configs/server.yml` and edit the following options:
 - Set secure `server:verificationToken`, it will be used to authorize API requests to the Database Lab Engine
 - Set connection options in `retrieval:spec:logicalDump:options:source:connection`:
     - `dbname`: database name to connect to
@@ -333,10 +329,8 @@ Now open `~/.dblab/server.yml` and edit the following options:
     - `port`: database server port
     - `username`: database user name
     - `password`: database master password (can be also set as `PGPASSWORD` environment variable and passed to the container using `--env` option of `docker run`)
-- If your Postgres major version is not 13 (default), set the proper version in Postgres Docker images tags:
-    - `provision:options:dockerImage`
-    - `retrieval:spec:logicalRestore:options:dockerImage`
-    - `retrieval:spec:logicalDump:options:dockerImage`
+- If your Postgres major version is not 13 (default), set the proper version in Postgres Docker image tag:
+    - `databaseContainer:dockerImage`
 
 </TabItem>
 </Tabs>
@@ -349,16 +343,17 @@ sudo docker run \
   --privileged \
   --publish 2345:2345 \
   --volume /var/run/docker.sock:/var/run/docker.sock \
-  --volume /var/lib/dblab/dblab_pool/dump:/var/lib/dblab/dblab_pool/dump \
   --volume /var/lib/dblab:/var/lib/dblab/:rshared \
-  --volume ~/.dblab/server.yml:/home/dblab/configs/config.yml \
+  --volume /var/lib/dblab/dblab_pool/dump:/var/lib/dblab/dblab_pool/dump \
+  --volume ~/.dblab/engine/configs:/home/dblab/configs:ro \
+  --volume ~/.dblab/engine/meta:/home/dblab/meta \
   --volume /sys/kernel/debug:/sys/kernel/debug:rw \
   --volume /lib/modules:/lib/modules:ro \
   --volume /proc:/host_proc:ro \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:2.4.1
+  postgresai/dblab-server:2.5.0
 ```
 
 ### How to check the Database Lab Engine logs

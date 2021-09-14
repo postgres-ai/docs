@@ -16,16 +16,14 @@ To set up it you need to use following jobs:
 - [physicalSnapshot](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalsnapshot)
 
 ### Options
-Copy the contents of configuration example [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.4.1/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`. For demo purposes we've made example based on `pg_basebackup` tool, but you can use any tool suitable for the task. Check and update the following options:
+Copy the example configuration file [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.5.0/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`. For demo purposes we've used `pg_basebackup` tool, but you can use any tool suitable for the task. Check and update the following options:
 - Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine
 - Set connection options in `physicalRestore:options:envs`, based on your tool
 - Set PostgreSQL commands in `physicalRestore:options:customTool`:
     - `command`: defines the command to restore data using a custom tool
     - `restore_command`: defines the PostgreSQL `restore_command` configuration option to refresh data
-- Set a proper version in Postgres Docker images tags (change the images itself only if you know what are you doing):
-    - `provision:options:dockerImage`
-    - `retrieval:spec:physicalRestore:options:dockerImage`
-    - `retrieval:spec:physicalSnapshot:options:promotion:dockerImage`
+- Set a proper version in Postgres Docker image tag (change the images itself only if you know what are you doing):
+    - `databaseContainer:dockerImage`
 
 ## Run Database Lab Engine
 ```bash
@@ -36,14 +34,15 @@ sudo docker run \
   --publish 2345:2345 \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   --volume /var/lib/dblab:/var/lib/dblab/:rshared \
-  --volume ~/.dblab/server.yml:/home/dblab/configs/config.yml \
+  --volume ~/.dblab/engine/configs:/home/dblab/configs:ro \
+  --volume ~/.dblab/engine/meta:/home/dblab/meta \
   --volume /sys/kernel/debug:/sys/kernel/debug:rw \
   --volume /lib/modules:/lib/modules:ro \
   --volume /proc:/host_proc:ro \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:2.4.1
+  postgresai/dblab-server:2.5.0
 ```
 
 ## Restart in the case of failure

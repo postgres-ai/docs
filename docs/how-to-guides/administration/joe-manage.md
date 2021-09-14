@@ -4,35 +4,33 @@ sidebar_label: Manage Joe bot
 ---
 
 ## Start Joe Bot container
-Define the config file `~/.dblab/joe.yml` according the [configuration options page](/docs/reference-guides/joe-bot-configuration-reference) and run the command:
+Define the config file `~/.dblab/joe/configs/joe.yml` according the [configuration options page](/docs/reference-guides/joe-bot-configuration-reference) and run the command:
 ```bash
 sudo docker run \
     --name joe_bot \
     --publish 2400:2400 \
     --restart=on-failure \
-    --volume ~/.dblab/joe.yml:/home/config/config.yml \
+    --volume ~/.dblab/joe/configs:/home/configs:ro \
+    --volume ~/.dblab/joe/meta:/home/meta \
     --detach \
 postgresai/joe:latest
 ``` 
 
+Ensure that apps folder is writable by Joe inside docker container.
 ## Reconfigure Joe Bot container
-Update the configuration file `~/.dblab/joe.yml`.
+Update the configuration file `~/.dblab/joe/configs/joe.yml`.
 
 Restart the running Joe Bot container:
 ```bash
 sudo docker restart joe_bot
 ```
 
-:::caution
-Note that once `docker restart` is executed, all active sessions will be lost.
-:::
+After restart, all user sessions are restored and should keep working (but PostgreSQL connections are re-established so if users set some session variables, they are lost). This feature works only in Joe versions 0.10 and newer. If you need to reset user sessions, stop the container, remove the file `sessions.json` located in `~/.dblab/joe/meta`, and start the container.
 
 ## Upgrade Joe Bot 
 Stop and remove the container using `sudo docker stop joe_bot` and `sudo docker rm joe_bot` and then [launching](#start-joe-bot-container) it again.
 
-:::caution
-Note the upgrade removes all active sessions
-:::
+After upgrading, all user sessions are restored and should keep working (but PostgreSQL connections are re-established so if users set some session variables, they are lost). This feature works only in Joe versions 0.10 and newer. If you need to reset user sessions, stop the container, remove the file `sessions.json` located in `~/.dblab/joe/meta`, and start the container.
 
 ## Observe Joe Bot logs
 To enable the debugging mode you can use one of the following approaches:

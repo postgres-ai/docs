@@ -1,6 +1,6 @@
 ---
 title: Database Lab Engine API reference
-sidebar_label: Datbase Lab Engine API
+sidebar_label: Database Lab Engine API
 description: "API reference for Database Lab Engine – Swagger"
 keywords:
   - "database lab API"

@@ -174,15 +174,15 @@ You need to know the **master password**. If you lost the password it [can be re
 :::
 
 #### Configure Database Lab Engine
-Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.4.1/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/server.yml`:
+Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.5.0/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
 ```bash
-mkdir ~/.dblab
+mkdir -p ~/.dblab/engine/configs
 
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/2.4.1/configs/config.example.logical_generic.yml \
-  --output ~/.dblab/server.yml
+curl https://gitlab.com/postgres-ai/database-lab/-/raw/2.5.0/configs/config.example.logical_generic.yml \
+  --output ~/.dblab/engine/configs/server.yml
 ```
 
-Then open `~/.dblab/server.yml` and edit the following options:
+Then open `~/.dblab/engine/configs/server.yml` and edit the following options:
 - Set secure `server:verificationToken`, it will be used to authorize API requests to the Database Lab Engine
 - Set connection options in `retrieval:spec:logicalDump:options:source:connection`:
     - `dbname`: database name to connect to
@@ -190,10 +190,8 @@ Then open `~/.dblab/server.yml` and edit the following options:
     - `port`: database server port
     - `username`: database user name
     - `password`: database master password (can be also set as `PGPASSWORD` environment variable and passed to the container using `--env` option of `docker run`)
-- If your Postgres major version is not 13 (default), set the proper version in Postgres Docker images tags:
-    - `provision:options:dockerImage`
-    - `retrieval:spec:logicalRestore:options:dockerImage`
-    - `retrieval:spec:logicalDump:options:dockerImage`
+- If your Postgres major version is not 13 (default), set the proper version in Postgres Docker image tag:
+    - `databaseContainer:dockerImage`
 
 #### Run Database Lab Engine
 Run Database Lab Engine:
@@ -204,16 +202,17 @@ sudo docker run \
   --privileged \
   --publish 2345:2345 \
   --volume /var/run/docker.sock:/var/run/docker.sock \
-  --volume /var/lib/dblab/dblab_pool/dump:/var/lib/dblab/dblab_pool/dump \
   --volume /var/lib/dblab:/var/lib/dblab/:rshared \
-  --volume ~/.dblab/server.yml:/home/dblab/configs/config.yml \
+  --volume /var/lib/dblab/dblab_pool/dump:/var/lib/dblab/dblab_pool/dump \
+  --volume ~/.dblab/engine/configs:/home/dblab/configs:ro \
+  --volume ~/.dblab/engine/meta:/home/dblab/meta \
   --volume /sys/kernel/debug:/sys/kernel/debug:rw \
   --volume /lib/modules:/lib/modules:ro \
   --volume /proc:/host_proc:ro \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:2.4.1
+  postgresai/dblab-server:2.5.0
 ```
 
 </TabItem>
@@ -238,15 +237,15 @@ Alternatively, you can add `AmazonRDSFullAccess`, `IAMFullAccess` policies to an
 :::
 
 #### Configure Database Lab Engine
-Copy the contents of configuration example [`config.example.logical_rds_iam.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.4.1/configs/config.example.logical_rds_iam.yml) from the Database Lab repository to `~/.dblab/server.yml`:
+Copy the contents of configuration example [`config.example.logical_rds_iam.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/2.5.0/configs/config.example.logical_rds_iam.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
 ```bash
-mkdir ~/.dblab
+mkdir -p ~/.dblab/engine/configs
 
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/2.4.1/configs/config.example.logical_rds_iam.yml \
-  --output ~/.dblab/server.yml
+curl https://gitlab.com/postgres-ai/database-lab/-/raw/2.5.0/configs/config.example.logical_rds_iam.yml \
+  --output ~/.dblab/engine/configs/server.yml
 ```
 
-Then open `~/.dblab/server.yml` and edit the following options:
+Then open `~/.dblab/engine/configs/server.yml` and edit the following options:
 - Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine.
 - Set connection options `retrieval:spec:logicalDump:options:source:connection`:
     - `dbname`: database name to connect to;
@@ -254,10 +253,8 @@ Then open `~/.dblab/server.yml` and edit the following options:
 - Set AWS params in `retrieval:spec:logicalDump:options:source:rdsIam`:
     - `awsRegion`: RDS instance region;
     - `dbInstanceIdentifier`: RDS instance identifier.
-- If your Postgres major version is not 13 (default), set the proper version in Postgres Docker images tags:
-    - `provision:options:dockerImage`;
-    - `retrieval:spec:logicalRestore:options:dockerImage`;
-    - `retrieval:spec:logicalDump:options:dockerImage`.
+- If your Postgres major version is not 13 (default), set the proper version in Postgres Docker image tag:
+    - `databaseContainer:dockerImage`
 
 #### Download AWS RDS certificate
 This type of data retrieval requires a secure connection to a database. To setup it we need to download a certificate from AWS.
@@ -275,10 +272,11 @@ sudo docker run \
   --label dblab_control \
   --privileged \
   --publish 2345:2345 \
-  --volume ~/.dblab/server.yml:/home/dblab/configs/config.yml \
-  --volume /var/lib/dblab/dblab_pool/dump:/var/lib/dblab/dblab_pool/dump \
+  --volume ~/.dblab/engine/configs:/home/dblab/configs:ro \
+  --volume ~/.dblab/engine/meta:/home/dblab/meta \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   --volume /var/lib/dblab:/var/lib/dblab/:rshared \
+  --volume /var/lib/dblab/dblab_pool/dump:/var/lib/dblab/dblab_pool/dump \
   --volume /sys/kernel/debug:/sys/kernel/debug:rw \
   --volume /lib/modules:/lib/modules:ro \
   --volume /proc:/host_proc:ro \
@@ -288,7 +286,7 @@ sudo docker run \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:2.4.1
+  postgresai/dblab-server:2.5.0
 ```
 
 </TabItem>

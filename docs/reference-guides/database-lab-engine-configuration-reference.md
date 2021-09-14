@@ -6,7 +6,20 @@ sidebar_label: Database Lab Engine configuration
 ## Overview
 Database Lab Engine behavior can be controlled using the main configuration file that has YAML format. This reference describes available configuration options.
 
-Example config files can be found here: https://gitlab.com/postgres-ai/database-lab/-/tree/2.4.1/configs.
+:::tip
+Database Lab Engine supports [YAML 1.2](https://yaml.org/spec/1.2/spec.html) including anchors, aliases, tags, map merging.
+:::
+
+Example config files can be found here: https://gitlab.com/postgres-ai/database-lab/-/tree/2.5.0/configs.
+
+You may store configuration files in any suitable location. The recommended location of configuration files for Database Lab Engine is `~/.dblab/engine/configs`.
+
+In addition, Database Lab Engine provides functionality for storing information about current sessions and the state of the instance.
+The recommended location of metadata files is `~/.dblab/engine/meta`. Note the metadata folder must be writable.
+
+:::info
+Make sure that the file name is `server.yml` and its directory is mounted to `/home/dblab/configs` inside the DLE container. 
+:::
 
 Useful guides that help manage Database Lab Engine:
 - [How to configure and start Database Lab Engine](/docs/how-to-guides/administration/engine-manage#configure-and-start-a-database-lab-engine-instance)
@@ -91,8 +104,9 @@ Note, that all jobs are optional. For example, all the following approaches defi
 Dumps a PostgreSQL database from a provided source to an archive or to the Database Lab Engine instance.
 
 Options:
-- `dumpLocation` (string, required) - the dump file (or directory, for a directory-format archive) will be automatically created on this location on the host machine
+- `dumpLocation` (string, required) - specifies the location to store dump files (or directories, for directory-format archives), it will be automatically created on the host machine
 - `dockerImage` (string, required) - specifies the Docker image containing the dump-required tool
+- `containerConfig` (key-value, optional) - options to pass custom parameters to logicalDump container
 - `source` (key-value, required) - describes source of data:
    - `type` (string, required) -  defines location type of a dumped database. Available values: `local`, `remote`, `rdsIam`
    - `connection` (key-value, required) - defines connection parameters of source:
@@ -106,22 +120,25 @@ Options:
       - `dbInstanceIdentifier` (string, required) - RDS instance Identifier
       - `sslRootCert` (string, required) - path on the host machine to the SSL root certificate. You can download it from https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem 
 - `parallelJobs` (integer, optional, default: 1) - defines the number of concurrent jobs using the `pg_dump` option `jobs`. This option can dramatically reduce the time to dump a large database
-- `partial` (key-value, optional) - defines options for partial dumping. Available options: `tables`:
-   - `tables` (list of strings, optional) - dumps definition and/or data of only the listed tables
-- `immediateRestore` (key-value, optional) - provides options for direct restore to a Database Lab Engine instance. 
+- `databases` (key-value, optional) - defines options for specifying the database list that must be copied. By default, DLE dumps and restores all available databases. Do not specify the databases section to take all databases. Available options for each database: `tables`
+   - `tables` (list of strings, optional) - dumps definition and/or data of only the listed tables. Do not specify the tables section to dump all available tables
+- `immediateRestore` (key-value, optional) - provides options for direct restore to a Database Lab Engine instance.
+   - `enabled` (boolean, optional, default: false) - enable immediate restore.
    - `forceInit` (boolean, optional, default: false) - init data even if the Postgres directory (see the configuration options `global.mountDir` and `global.dataSubDir`) is not empty; note the existing data might be overwritten
 
 ### Job `logicalRestore`
 Restores a PostgreSQL database from an archive created by pg_dump in one of the non-plain-text formats.
 
 Options:
-- `dbname` (string, required) - defines the database dbname to be restored
-- `dumpLocation` (string, required) - specifies the location of the archive file (or directory, for a directory-format archive) on the host machine to be restored
+- `dumpLocation` (string, required) - specifies the location of the archive files (or directories, for directory-format archives) on the host machine to be restored
 - `dockerImage` (string, required) - specifies the Docker image containing the restore-required tool
+- `containerConfig` (key-value, optional) - options to pass custom parameters to logicalRestore container
 - `forceInit` (boolean, optional, default: false) - init data even if the Postgres directory (see the configuration options `global.mountDir` and `global.dataSubDir`) is not empty; note the existing data might be overwritten
 - `parallelJobs` (integer, optional, default: 1) - defines the number of concurrent jobs using the `pg_restore` option `jobs`. This option can dramatically reduce the time to restore a large database to a server running on a multiprocessor machine
-- `partial` (key-value, optional) - defines options for partial restoring. Available options: `tables`:
-   - `tables` (list of strings, optional) - restores definition and/or data of only the listed tables
+- `databases` (key-value, optional) - defines options for specifying the database list that must be restored. By default, DLE restores all available databases. Do not specify the databases section to restore all databases. Available options for each database: `tables`, `format`
+    - `format` (string, optional, default: "") - defines a dump format. Available formats: `directory`, `custom`, `plain`. Default format: `directory`. See the description of each format in the [official PostgreSQL documentation](https://www.postgresql.org/docs/current/app-pgdump.html).
+    - `compression` (string, optional, default: "no") - defines a compression type for plain-text dumps. Available compression types: `gzip`, `bzip2`, `no`.
+    - `tables` (list of strings, optional) - restores definition and/or data of only the listed tables. Do not specify the tables section to restore all available tables
 
 ### Job `logicalSnapshot`
 Prepares a snapshot for logical restored PostgreSQL database.
@@ -129,6 +146,7 @@ Prepares a snapshot for logical restored PostgreSQL database.
 Options:
 - `dataPatching` (key-value, optional) - defines SQL queries for data patching
   - `dockerImage` (string, optional) - specifies the Docker image to run a data patching container
+  - `containerConfig` (key-value, optional) - options to pass custom parameters to data patching container
   - `queryPreprocessing` (key-value, optional) - defines pre-processing parameters
     - `queryPath` (string, optional, default: "") - specifies the path to SQL pre-processing queries; an empty string means that no pre-processing defined
     - `maxParallelWorkers` (integer, optional, default: 2) - defines the worker limit for parallel queries
@@ -145,6 +163,7 @@ Supported restore tools:
 Options:
 - `tool` (string, required) - defines the tool to restore data. See available restore tools list
 - `dockerImage` (string, required) - specifies the Docker image containing the restoring tool
+- `containerConfig` (key-value, optional) - options to pass custom parameters to physicalRestore container
 - `sync`  (key-value, optional) - keep PGDATA up to date after (replaying new WALs from the source) the initial data fetching:
    - `enabled` (boolean, optional, default: false) - runs a separate container to keep Database Lab data up to date
    - `healthCheck` (key-value, optional) - describes health check options for the  sync container:
@@ -166,6 +185,7 @@ Options:
 - `promotion`  (key-value, optional) - promotes PGDATA after data fetching:
    - `enabled`  (boolean, optional, default: false) - enable PGDATA promotion
    - `dockerImage` (string, optional) - specifies the Docker image containing the promotion-compatible PostgreSQL instance
+   - `containerConfig` (key-value, optional) - options to pass custom parameters to physicalSnapshot container
    - `healthCheck` (key-value, optional) - describes health check options for a data promotion container:
       - `interval` (int, optional, default: 5) - health check interval for a data promotion container (in seconds)
       - `maxRetries` (int, optional, default: 200) - maximum number of health check retries

@@ -65,12 +65,12 @@ cd database-lab-infrastructure/
     - values passed on the command line
     - values defined in `terraform.tfvars`
     - default values in `variables.tf`
-- All variables starting with `postgres_` represent the source database connection information for the data (from that database) to be fetched by the DLE. That database must be accessible from the instance hosting the DLE (that one created by Terraform)
+- All variables starting with `source_` represent the database connection parameters for the source data to be retrieved by DLE. That database must be accessible from the instance hosting the DLE (that one created by Terraform)
 :::
 
 2. Edit `terraform.tfvars` file. Variables which values start with `YOUR_` are required to configure for your deployment, others are optional.
 ```config
-dle_version_full = "2.4.1"
+dle_version = "2.5.0"
 
 aws_ami_name = "DBLABserver*"
 aws_keypair = "YOUR_AWS_KEYPAIR" # e.g. "johndoe"
@@ -130,6 +130,13 @@ source_postgres_password = "YOUR_POSTGRES_PASSWORD"
 # GitHub token. To generate, open https://github.com/settings/tokens/new.
 vcs_github_secret_token = "YOUR_VCS_SECRET_TOKEN"
 ```
+
+:::info
+If you need to use your own PostgreSQL configuration parameters (copying them into `postgresql_clones_custom.conf` file), make sure there is a private key in this Terraform module directory to access the EC2 machine.
+
+The private file must be named `ubuntu.pem`.
+:::
+
 
 4. Set environment variables with AWS credentials:
 ```shell

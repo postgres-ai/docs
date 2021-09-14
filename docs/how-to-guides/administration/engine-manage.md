@@ -9,7 +9,17 @@ keywords:
 ---
 
 ## Configure and start a Database Lab Engine instance
-Define config file `~/.dblab/server.yml` (see config examples [here](https://gitlab.com/postgres-ai/database-lab/-/blob/2.4.1/configs/)) and run the following command:
+Define config file `~/.dblab/engine/configs/server.yml`
+
+:::tip
+All YAML features can be used, including anchors and aliases, to help you conveniently manage your configuration sections.
+
+For instance, you can define a binding with `&` and then refer to it using an alias denoted by `*`.
+
+See config examples [here](https://gitlab.com/postgres-ai/database-lab/-/blob/2.5.0/configs/)
+:::
+
+After configuring Database Lab Engine, run the following command:
 
 ```bash
 sudo docker run \
@@ -20,17 +30,18 @@ sudo docker run \
   --publish 2345:2345 \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   --volume /var/lib/dblab:/var/lib/dblab:rshared \
-  --volume ~/.dblab/server.yml:/home/dblab/configs/config.yml \
+  --volume ~/.dblab/engine/configs:/home/dblab/configs:ro \
+  --volume ~/.dblab/engine/meta:/home/dblab/meta \
   --volume /sys/kernel/debug:/sys/kernel/debug:rw \
   --volume /lib/modules:/lib/modules:ro \
   --volume /proc:/host_proc:ro \
-  postgresai/dblab-server:2.4.1
+  postgresai/dblab-server:2.5.0
 ``` 
 
 ## Reconfigure Database Lab Engine
 Database Lab Engine supports reconfiguration without a restart (therefore, without any downtime):
 
-- Edit the configuration file (usually, `~/.dblab/server.yml`). 
+- Edit the configuration file (usually, `~/.dblab/engine/configs/server.yml`). 
 - Issue a [SIGHUP](https://en.wikipedia.org/wiki/SIGHUP) signal to the main process in the DLE container – if the container name is `dblab_server`, then run this (note that `kill` here is not killing the process, it just sends the SIGHUP signal to it):
     ```bash
     sudo docker exec -it dblab_server kill -SIGHUP 1
@@ -63,7 +74,7 @@ If you need to save the logs in a file:
 sudo docker logs dblab_server 2>&1 | gzip > dblab_server.log.gz
 ```
 
-If you want to see more details, enable debug mode setting option `debug` to `true` (see [example](https://gitlab.com/postgres-ai/database-lab/-/blob/2.4.1/configs/config.sample.yml)). Next, follow  [the reconfiguration guidelines](#reconfigure-database-lab) to apply the change.
+If you want to see more details, enable debug mode setting option `debug` to `true` (see [example](https://gitlab.com/postgres-ai/database-lab/-/blob/2.5.0/configs/)). Next, follow  [the reconfiguration guidelines](#reconfigure-database-lab) to apply the change.
 
 :::caution
 When debug mode is turned on, logs may contain sensitive data such as API secret keys for the backup system.
