@@ -68,7 +68,7 @@ cd database-lab-infrastructure/
 
 2. Edit `terraform.tfvars` file. Variables which values start with `YOUR_` are required to configure for your deployment, others are optional.
 ```config
-dle_version_full = "2.4.1"
+dle_version = "2.5.0"
 
 aws_ami_name = "DBLABserver*"
 aws_keypair = "YOUR_AWS_KEYPAIR" # e.g. "johndoe"
