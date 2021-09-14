@@ -1,6 +1,13 @@
 // Duplicates data from the blog.
 const blog = [
   {
+    link: 'blog/20210914-dle-2-5',
+    date: '2021-09-14 00:00:00',
+    title: 'DLE 2.5: Better data extraction for logical mode and configuration improvements',
+    description: 'Now it is possible to dump/restore multiple databases at the same time and use different pg_dump formats and compression formats of plain-text dump. DLE and related products configuration structure were significantly reworked and require manual action to migrate to the new version.',
+    image: '/assets/thumbnails/dle-2.5-blog.png',
+  },
+  {
     link: 'blog/20210909-what-is-a-slow-sql-query',
     date: '2021-09-09 22:18:00',
     title: 'What is a slow SQL query?',
@@ -14,7 +21,7 @@ const blog = [
     description: 'PostgreSQL subtransactions (nested transactions) may cause multiple performance and scalability issues: higher rates of XID growth and higher risks of transaction ID wraparound, performance degradation when more than PGPROC_MAX_CACHED_SUBXIDS (64) are used in a session, drastic performance slowdowns when subtransactions are combined with SELECT .. FOR UPDATE, and finally, brief downtime on standbys when subtranasctions used on the primary in paralell with long-running transactions or just slow statements. Subtransactions can be created using SAVEPOINT in regular SQL or using EXCEPTION WHEN blocks in PL/pgSQL.',
     image: '/assets/thumbnails/20210831-harmful-subtransactions.png',
   },
-  {
+  /*{
     link: 'blog/20210728-code-and-data',
     date: '2021-07-28 16:00:00',
     publishDate: '2021-07-28 16:00:00',
@@ -22,7 +29,7 @@ const blog = [
     description: 'A large gap remains on the landscape of software tooling…',
     image: '/assets/thumbnails/dle-generic-blog.png',
   },
-  /*{
+  {
     link: 'blog/20210714-dle-2-4-test-db-changes-in-ci',
     date: '2021-07-14 13:18:00',
     publishDate: '2021-07-14 13:18:00',
