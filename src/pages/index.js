@@ -231,7 +231,7 @@ function IndexPage() {
             <div className="col-md-6">
               <h3>Open source and extensible</h3>
               <p>
-                Postgres.ai ❤ open-source.<br />
+                Postgres.ai ❤ open source.<br />
                 <br />
                 We work hard to make our products open and&nbsp;extensible.
               </p>
