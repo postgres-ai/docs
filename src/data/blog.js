@@ -1,6 +1,13 @@
 // Duplicates data from the blog.
 const blog = [
   {
+    link: 'blog/20210923-zero-downtime-postgres-schema-migrations-lock-timeout-and-retries',
+    date: '2021-09-23 09:05:00',
+    title: 'Zero-downtime Postgres schema migrations need this: lock_timeout and retries',
+    description: 'Deploying DB schema changes in heavily loaded systems is challenging. In this article, we explore one of the challenges - how to avoid situations when DDLs get blocked, wait to acquire a lock, and during that, start blocking other sessions.',
+    image: '/assets/thumbnails/graceful-db-migrations.png',
+  },
+  {
     link: 'blog/20210914-dle-2-5',
     date: '2021-09-14 00:00:00',
     title: 'DLE 2.5: Better data extraction for logical mode and configuration improvements',
@@ -14,14 +21,14 @@ const blog = [
     description: 'Is 200 ms slow for an SQL query? What about 20 ms? When do we need to optimize?',
     image: '/assets/thumbnails/what-is-slow-sql.png',
   },
-  {
+  /*{
     link: 'blog/20210831-postgresql-subtransactions-considered-harmful',
     date: '2021-08-31 12:06:00',
     title: 'PostgreSQL Subtransactions Considered Harmful',
     description: 'PostgreSQL subtransactions (nested transactions) may cause multiple performance and scalability issues: higher rates of XID growth and higher risks of transaction ID wraparound, performance degradation when more than PGPROC_MAX_CACHED_SUBXIDS (64) are used in a session, drastic performance slowdowns when subtransactions are combined with SELECT .. FOR UPDATE, and finally, brief downtime on standbys when subtranasctions used on the primary in paralell with long-running transactions or just slow statements. Subtransactions can be created using SAVEPOINT in regular SQL or using EXCEPTION WHEN blocks in PL/pgSQL.',
     image: '/assets/thumbnails/20210831-harmful-subtransactions.png',
   },
-  /*{
+  {
     link: 'blog/20210728-code-and-data',
     date: '2021-07-28 16:00:00',
     publishDate: '2021-07-28 16:00:00',
