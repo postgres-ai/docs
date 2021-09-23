@@ -418,7 +418,7 @@ The bigger this value is, the older snapshot is being held, the more it affects 
 - Be careful with running DDL in heavily-loaded systems and in systems with long-running transactions. Use low `lock_timeout` values and retries to deploy schema changes gracefully.
 - Be careful with subtransactions. They can be very useful, but:
     - may suddenly cause painful performance issues at some point if workloads grow – if you do use them and run PostgreSQL 13 or newer, add [`pg_stat_slru`](https://www.postgresql.org/docs/current/monitoring-stats.html#MONITORING-PG-STAT-SLRU-VIEW) to your monitoring system and watch for Subtrans SLRU reads;
-    - if the transaction containing subtransctions last long, it may contribute to the bloat growth of all tables in the database.
+    - if the transaction containing subtransctions lasts long, it might contribute to the bloat growth of all tables in the database.
 - Exponential backup and jitter can help achieve results faster and with fewer attempts – consider using them with or without subtransactions involved.
 
 <!--truncate-->
