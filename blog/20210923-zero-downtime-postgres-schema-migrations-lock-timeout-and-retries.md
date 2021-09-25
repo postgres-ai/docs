@@ -311,6 +311,8 @@ The first tuples (with `1` and `2` in the `i` column) are dead because right aft
 
 This means, that risks associated with the use of subtransactions are significant even if we have only one SAVEPOINT. However, worth noting that only systems with high TPS might experience issues – it all depends on the particular situation.
 
+Another drawback of subtransaction-based retries compared to whole-transaction retries is that the former, potentially, have a bigger impact on autovacuum's work on cleaning up dead tuples. We'll analyze this problem below.
+
 That being said, I cannot say that I'd suggest everyone getting rid of subtransactions completely. I still find the idea of partial rollbacks for retries when deploying DDL useful and viable. However, if you have, for example, a system 10,000 TPS and risks of long-running transaction (say, 1 minute or more) – I'd definitely be very careful with the use of subtransactions. If you have PostgreSQL 13+, the good news is that [`pg_stat_slru`](https://www.postgresql.org/docs/current/monitoring-stats.html#MONITORING-PG-STAT-SLRU-VIEW) can be very helpful – if you see reads for Subtrans SLRU on standby, it's a strong signal that SLRU is overflown and such standby server's performance degradation, if any, is caused by that.
 
 ## Exponential backoff and jitter
@@ -418,7 +420,7 @@ The bigger this value is, the older snapshot is being held, the more it affects 
 - Be careful with running DDL in heavily-loaded systems and in systems with long-running transactions. Use low `lock_timeout` values and retries to deploy schema changes gracefully.
 - Be careful with subtransactions. They can be very useful, but:
     - may suddenly cause painful performance issues at some point if workloads grow – if you do use them and run PostgreSQL 13 or newer, add [`pg_stat_slru`](https://www.postgresql.org/docs/current/monitoring-stats.html#MONITORING-PG-STAT-SLRU-VIEW) to your monitoring system and watch for Subtrans SLRU reads;
-    - if the transaction containing subtransctions lasts long, it might contribute to the bloat growth of all tables in the database.
+    - if the transaction containing subtransactions lasts long, it might contribute to the bloat growth of all tables in the database.
 - Exponential backup and jitter can help achieve results faster and with fewer attempts – consider using them with or without subtransactions involved.
 
 <!--truncate-->
