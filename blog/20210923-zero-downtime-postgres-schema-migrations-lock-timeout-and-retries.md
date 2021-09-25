@@ -54,7 +54,7 @@ Next, we need three psql terminals.
     select * from test;
     ```
 
-This may be surprising, but the first action "hangs" – we see that the SELECT command doesn't return anything. Why?
+This may be surprising, but the last action "hangs" – the SELECT command doesn't return anything. Why?
 
 To see what's happening we'll open one more, the fourth psql terminal, and use the [lock analysis snippet](https://gitlab.com/-/snippets/1890428) that returns "a forest of locking trees":
 
