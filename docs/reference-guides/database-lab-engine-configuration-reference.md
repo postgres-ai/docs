@@ -150,7 +150,7 @@ Options:
   - `queryPreprocessing` (key-value, optional) - defines pre-processing parameters
     - `queryPath` (string, optional, default: "") - specifies the path to SQL pre-processing queries; an empty string means that no pre-processing defined
     - `maxParallelWorkers` (integer, optional, default: 2) - defines the worker limit for parallel queries
-- `preprocessingScript` (string, optional) - path on the host machine to a pre-precessing script
+- `preprocessingScript` (string, optional) - path on the host machine to a pre-processing script
 - `configs` (key-value, optional) - applies PostgreSQL configuration parameters when preparing a working snapshot. These parameters are inherited by all clones. See also: [How to configure PostgreSQL used by Database Lab Engine](/docs/how-to-guides/administration/postgresql-configuration)
 
 ### Job `physicalRestore`
@@ -194,7 +194,7 @@ Options:
       - `maxParallelWorkers` (integer, optional, default: 2) - defines the worker limit for parallel queries
    - `configs` (key-value, optional) - applies PostgreSQL configuration parameters to the promotion instance
 - `sysctls` (key-value, optional) - allows configuring namespaced kernel parameters (sysctls) of Docker container for a promotion stage of taking a snapshot. See supported parameters: https://docs.docker.com/engine/reference/commandline/run/#configure-namespaced-kernel-parameters-sysctls-at-runtime
-- `preprocessingScript` (string, optional) - path on the host machine to a pre-precessing script
+- `preprocessingScript` (string, optional) - path on the host machine to a pre-processing script
 - `configs` (key-value, optional) - applies PostgreSQL configuration parameters to snapshot. These parameters are inherited by all clones. See also: [How to configure PostgreSQL used by Database Lab Engine](/docs/how-to-guides/administration/postgresql-configuration)
 - `envs` (key-value, optional) - passes custom environment variables to the promotion Docker container
 - `scheduler` (key-value, required) - contains tasks which run on a schedule:
