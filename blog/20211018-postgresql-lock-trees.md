@@ -24,8 +24,8 @@ For OLTP workloads (such as web and mobile applications), it is important to und
 - the official documentation is a must-read, as usual: ["13.3. Explicit Locking"](https://www.postgresql.org/docs/current/explicit-locking.html) (do not be confused by the title – this article discusses not only explicit locks that we can add using queries like [`LOCK TABLE ...`](https://www.postgresql.org/docs/current/sql-lock.html) or [`SELECT ... FOR UPDATE`](https://www.postgresql.org/docs/current/sql-select.html#SQL-FOR-UPDATE-SHARE) or functions like [`pg_advisory_lock(..)`](https://www.postgresql.org/docs/current/functions-admin.html#FUNCTIONS-ADVISORY-LOCKS) but also the locks introduced by regular SQL commands such as `ALTER` or `UPDATE`)
 - ["PostgreSQL rocks, except when it blocks: Understanding locks"](https://www.citusdata.com/blog/2018/02/15/when-postgresql-blocks/) (2018) by [Marco Slot](https://twitter.com/marcoslot) – a great extension to the docs, explaining some aspects and conveniently "translating" the table provided in the docs from "lock language" to "SQL command language"
 - As usual, a thorough and deep explanation of how PostgreSQL works by [Egor Rogov](https://twitter.com/e_g_Orius):
-    - ["Locks in PostgreSQL: 1. Relation-level locks"](https://postgrespro.com/blog/pgsql/5968005) (2020)
-    - ["Locks in PostgreSQL: 2. Row-level locks"](https://postgrespro.com/blog/pgsql/5967999) (2020)
+    - ["Locks in PostgreSQL: 1. Relation-level locks"](https://postgrespro.com/blog/pgsql/5967999) (2020)
+    - ["Locks in PostgreSQL: 2. Row-level locks"](https://postgrespro.com/blog/pgsql/5968005) (2020)
 
 When it comes to the lock monitoring and troubleshooting, you can start with basic queries collected at these PostgreSQL Wiki pages:
 - [Lock Monitoring](https://wiki.postgresql.org/wiki/Lock_Monitoring)
