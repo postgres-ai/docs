@@ -22,8 +22,8 @@ import { DbLabBanner } from '../src/components/DbLabBanner'
 
 For OLTP workloads (such as web and mobile applications), it is important to understand object-level and row-level locks in PostgreSQL. There are several good materials that I can recommend reading:
 - the official documentation is a must-read, as usual: ["13.3. Explicit Locking"](https://www.postgresql.org/docs/current/explicit-locking.html) (do not be confused by the title – this article discusses not only explicit locks that we can add using queries like [`LOCK TABLE ...`](https://www.postgresql.org/docs/current/sql-lock.html) or [`SELECT ... FOR UPDATE`](https://www.postgresql.org/docs/current/sql-select.html#SQL-FOR-UPDATE-SHARE) or functions like [`pg_advisory_lock(..)`](https://www.postgresql.org/docs/current/functions-admin.html#FUNCTIONS-ADVISORY-LOCKS) but also the locks introduced by regular SQL commands such as `ALTER` or `UPDATE`)
-- ["PostgreSQL rocks, except when it blocks: Understanding locks"](https://www.citusdata.com/blog/2018/02/15/when-postgresql-blocks/) (2018) by Marco Slot – a great extension to the docs, explaining some aspects and conveniently "translating" the table provided in the docs from "lock language" to "SQL command language"
-- As usual, a thorough and deep explanation of how PostgreSQL works by Egor Rogov:
+- ["PostgreSQL rocks, except when it blocks: Understanding locks"](https://www.citusdata.com/blog/2018/02/15/when-postgresql-blocks/) (2018) by [Marco Slot](https://twitter.com/marcoslot) – a great extension to the docs, explaining some aspects and conveniently "translating" the table provided in the docs from "lock language" to "SQL command language"
+- As usual, a thorough and deep explanation of how PostgreSQL works by [Egor Rogov](https://twitter.com/e_g_Orius):
     - ["Locks in PostgreSQL: 1. Relation-level locks"](https://postgrespro.com/blog/pgsql/5968005) (2020)
     - ["Locks in PostgreSQL: 2. Row-level locks"](https://postgrespro.com/blog/pgsql/5967999) (2020)
 
@@ -36,7 +36,7 @@ For more convenient (hence faster, in many cases) troubleshooting, you might wan
 - decide what to do to fix it – either understand the source of the query (application or human) or just grab the PID and use `pg_cancel_backend(..) / pg_terminate_backend(..)` to interrupt to release the locks and unblock other sessions.
 
 Here are two examples of other people's work that you might find helpful
-- "Active Session History in PostgreSQL: blocker and wait chain" by Bertrand Drouvot – this post describes the recursive CTE query [`pg_ash_wait_chain.sql`](https://github.com/pgsentinel/pg_ash_scripts/blob/master/pg_ash_wait_chain.sql) that is useful for those who use the [pgsentinel](https://github.com/pgsentinel/pgsentinel) extension. The query is inspired by Tanel Poder's script for Oracle.
+- "Active Session History in PostgreSQL: blocker and wait chain" by [Bertrand Drouvot](https://twitter.com/BertrandDrouvot) – this post describes the recursive CTE query [`pg_ash_wait_chain.sql`](https://github.com/pgsentinel/pg_ash_scripts/blob/master/pg_ash_wait_chain.sql) that is useful for those who use the [pgsentinel](https://github.com/pgsentinel/pgsentinel) extension. The query is inspired by [Tanel Poder](https://twitter.com/TanelPoder)'s script for Oracle.
 - [`locktree.sql`](https://github.com/dataegret/pg-utils/blob/master/sql/locktree.sql) – query to display a tree of blocking sessions based on the information from  `pg_locks` and `pg_stat_activity`, by Victor Yegorov.
 
 I've experimented with the latter for some time and eventually started to add some additional bits of information to it – first of all, based on `pg_locking_pids(..)` [introduced in PostgreSQL 9.6](https://paquier.xyz/postgresql-2/postgres-9-6-feature-highlight-pg-blocking-pids/). At some point, I rewrote the query from scratch, so consider it as the third option for the "advanced" lock issue troubleshooting.
