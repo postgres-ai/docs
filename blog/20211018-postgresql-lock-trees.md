@@ -1,8 +1,8 @@
 ---
 author: "Nikolay Samokhvalov"
 authorimg: /assets/images/nik.jpg
-date: 2021-10-18 10:05:00
-publishDate: 2021-10-18 10:05:00
+date: 2021-10-18 17:05:00
+publishDate: 2021-10-18 17:05:00
 linktitle: "Useful queries to analyze PostgreSQL lock trees (a.k.a. lock queues)"
 title: "Useful queries to analyze PostgreSQL lock trees (a.k.a. lock queues)"
 weight: 0
