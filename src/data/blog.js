@@ -1,6 +1,13 @@
 // Duplicates data from the blog.
 const blog = [
   {
+    link: 'blog/20211018-postgresql-lock-trees',
+    date: '2021-10-18 10:05:00',
+    title: 'Useful queries to analyze PostgreSQL lock trees (a.k.a. lock queues)',
+    description: 'PostgreSQL locking issues may be annoying. This blog post provides useful information that will help you understand how PostgreSQL MVCC implements locking and how to troubleshoot locking issues.',
+    image: '/assets/thumbnails/postgresql-query-for-lock-trees-analysis-2.png',
+  },
+  {
     link: 'blog/20210923-zero-downtime-postgres-schema-migrations-lock-timeout-and-retries',
     date: '2021-09-23 09:05:00',
     title: 'Zero-downtime Postgres schema migrations need this: lock_timeout and retries',
@@ -14,14 +21,14 @@ const blog = [
     description: 'Now it is possible to dump/restore multiple databases at the same time and use different pg_dump formats and compression formats of plain-text dump. DLE and related products configuration structure were significantly reworked and require manual action to migrate to the new version.',
     image: '/assets/thumbnails/dle-2.5-blog.png',
   },
-  {
+  /*{
     link: 'blog/20210909-what-is-a-slow-sql-query',
     date: '2021-09-09 22:18:00',
     title: 'What is a slow SQL query?',
     description: 'Is 200 ms slow for an SQL query? What about 20 ms? When do we need to optimize?',
     image: '/assets/thumbnails/what-is-slow-sql.png',
   },
-  /*{
+  {
     link: 'blog/20210831-postgresql-subtransactions-considered-harmful',
     date: '2021-08-31 12:06:00',
     title: 'PostgreSQL Subtransactions Considered Harmful',
