@@ -31,11 +31,13 @@ When it comes to the lock monitoring and troubleshooting, you can start with bas
 - [Lock Monitoring](https://wiki.postgresql.org/wiki/Lock_Monitoring)
 - [Lock dependency information](https://wiki.postgresql.org/wiki/Lock_dependency_information)
 
+<img src="/assets/blog/20211018-block-chain-meme.png" alt="Example output of the query for 'lock trees' analysis" width="40%" hspace="5" align="right" />
 For more convenient (hence faster, in many cases) troubleshooting, you might want to use some advanced query, presenting results in a form that allows you to quickly:
-- find the "offending" queries – those that are the "roots" of each blocking tree (a.k.a. "lock queues", "wait queues", or "block chains"; in a recent post, we've discussed and demonstrated how queries requiring to acquire locks may organize multiple lock queues, see ["Zero-downtime Postgres schema migrations need this: lock_timeout and retries. Problem demonstration"](https://postgres.ai/blog/20210923-zero-downtime-postgres-schema-migrations-lock-timeout-and-retries#problem-demonstration)), and
-- decide what to do to fix it – either understand the source of the query (application or human) or just grab the PID and use `pg_cancel_backend(..) / pg_terminate_backend(..)` to interrupt to release the locks and unblock other sessions.
 
-Here are two examples of other people's work that you might find helpful
+- find the "offending" queries – those that are the "roots" of each blocking tree (a.k.a. "lock queues", "wait queues", or "blocking chains"; in a previous post, we've discussed and demonstrated how queries requiring to acquire locks may organize multiple lock queues, see ["Zero-downtime Postgres schema migrations need this: lock_timeout and retries. Problem demonstration"](https://postgres.ai/blog/20210923-zero-downtime-postgres-schema-migrations-lock-timeout-and-retries#problem-demonstration)), and
+- decide what to do to fix it – either understand the source of the query (application or human) or just grab the PID and use `pg_cancel_backend(..) / pg_terminate_backend(..)` to interrupt it and unblock other sessions.
+
+Here are two examples of other people's work that you might find helpful:
 - "Active Session History in PostgreSQL: blocker and wait chain" by [Bertrand Drouvot](https://twitter.com/BertrandDrouvot) – this post describes the recursive CTE query [`pg_ash_wait_chain.sql`](https://github.com/pgsentinel/pg_ash_scripts/blob/master/pg_ash_wait_chain.sql) that is useful for those who use the [pgsentinel](https://github.com/pgsentinel/pgsentinel) extension. The query is inspired by [Tanel Poder](https://twitter.com/TanelPoder)'s script for Oracle.
 - [`locktree.sql`](https://github.com/dataegret/pg-utils/blob/master/sql/locktree.sql) – query to display a tree of blocking sessions based on the information from  `pg_locks` and `pg_stat_activity`, by Victor Yegorov.
 
