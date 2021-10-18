@@ -5,7 +5,6 @@ date: 2021-10-18 10:05:00
 publishDate: 2021-10-18 10:05:00
 linktitle: "Useful queries to analyze PostgreSQL lock trees (a.k.a. lock queues)"
 title: "Useful queries to analyze PostgreSQL lock trees (a.k.a. lock queues)"
-description: "PostgreSQL locking issues may be annoying. This blog post provides useful information that will help you understand how PostgreSQL MVCC implements locking and how to troubleshoot locking issues."
 weight: 0
 image: /assets/thumbnails/postgresql-query-for-lock-trees-analysis-2.png
 tags:
