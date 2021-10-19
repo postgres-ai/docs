@@ -3,7 +3,7 @@ const BASE_URL = (!!process.env.BASE_URL ? process.env.BASE_URL : '/');
 const SIGN_IN_URL = (!!process.env.SIGN_IN_URL ? process.env.SIGN_IN_URL : '/signin');
 
 module.exports = {
-  title: 'Database Lab · Fast clones of PostgreSQL databases · Postgres.ai', // Title for your website.
+  title: 'Database Lab · Instant clones of PostgreSQL databases · Postgres.ai', // Title for your website.
   tagline: 'Boost your development process eliminating Postgres-related roadblocks in the way of developers, DBAs and QA specialists',
   url: URL, // Your website URL.
   baseUrl: BASE_URL, // Base URL for your project.
