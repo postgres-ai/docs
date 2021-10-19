@@ -83,7 +83,7 @@ with recursive activity as (
     1 as level,
     activity.pid as top_blocker_pid,
     array[activity.pid] as path,
-    array_agg(activity.pid) over () as all_blockers_above
+    array[activity.pid]::int[] as all_blockers_above
   from activity, blockers
   where
     array[pid] <@ blockers.pids
