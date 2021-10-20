@@ -33,6 +33,8 @@ The previous versions of the Database Lab introduced the core technology: thin c
 
 Version 2.0 speeds up and empowers the initialization of DLE itself. Instead of using custom scripts for initial and continuous data retrieval, it is now possible to configure everything in a declarative manner to get the data and be up and running. 
 
+<!--truncate-->
+
 ## Updates in DLE 2.0
 
 - Automated data retrieval: specify the source and the method of initializing the data directory and how it is to be updated
@@ -64,8 +66,6 @@ Please send us any feedback you have – it is hard to overestimate its meaning 
 *[Database Lab Engine](https://gitlab.com/postgres-ai/database-lab) allows cloning PostgreSQL databases of any size in just a few seconds. This can save a lot of money for development and testing infrastructure, and at the same time, drastically improve development quality and time-to-market. Database Lab Engine is open-source software distributed under OSI-approved [AGPLv3 license](https://opensource.org/licenses/AGPL-3.0).*
 
 *Database Lab Engine is equipped with API and CLI. Additionally, we at Postgres.ai continue developing the Enterprise version that offers GUI, authentication flexibility, and user management for Database Lab Engine API and CLI, more. The Enterprise version is in the "private beta" mode; we encourage you to [sign up and request a demo](https://postgres.ai/console/).*
-
-<!--truncate-->
 
 <AuthorBanner
   avatarUrl="/assets/author/anatoly.jpg"

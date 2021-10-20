@@ -32,6 +32,8 @@ DLE 2.4 brings two major capabilities to those who are interested in working wit
 
 Additionally, this release has a lot of improvements and fixes.
 
+<!--truncate-->
+
 ## :rocket: Add DB change testing to your CI/CD pipelines 
 
 DB migrations – database schema and data changes, usually controlled by a special tool that tracks the changes in Git. There are many such tools: [Flyway](https://github.com/flyway/flyway), [Liquibase](https://github.com/liquibase/liquibase), and [Active Record Migrations](https://guides.rubyonrails.org/active_record_migrations.html), to name a few. These tools are necessary for keeping DB schema changes sane, reliable, and predictable.
@@ -112,8 +114,6 @@ Feedback and contributions would be greatly appreciated:
 - Database Lab Community Slack: https://slack.postgres.ai/
 - DLE & DB Migration Checker issue tracker: https://gitlab.com/postgres-ai/database-lab/-/issues
 - Issue tracker of the Terraform module for Database Lab: https://gitlab.com/postgres-ai/database-lab-infrastructure/-/issues
-
-<!--truncate-->
 
 <AuthorBanner
   avatarUrl="/assets/author/nik.jpg"

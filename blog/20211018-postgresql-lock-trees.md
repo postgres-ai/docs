@@ -27,6 +27,8 @@ For OLTP workloads (such as web and mobile applications), it is important to und
     - ["Locks in PostgreSQL: 1. Relation-level locks"](https://postgrespro.com/blog/pgsql/5967999) (2020)
     - ["Locks in PostgreSQL: 2. Row-level locks"](https://postgrespro.com/blog/pgsql/5968005) (2020)
 
+<!--truncate-->
+
 When it comes to the lock monitoring and troubleshooting, you can start with basic queries collected at these PostgreSQL Wiki pages:
 - [Lock Monitoring](https://wiki.postgresql.org/wiki/Lock_Monitoring)
 - [Lock dependency information](https://wiki.postgresql.org/wiki/Lock_dependency_information)
@@ -137,3 +139,16 @@ Here is an example output:
  46084 | {46081}       | 00:06:20 | 00:06:20  |     |  735 | active | test    | nik     | Lock:relation      |    0 | [46084] . select * from table2;
 (7 rows)
 ```
+
+<AuthorBanner
+  avatarUrl="/assets/author/nik.jpg"
+  name="Nikolay Samokhvalov"
+  role="CEO & Founder of"
+  twitterUrl="https://twitter.com/samokhvalov"
+  gitlabUrl="https://gitlab.com/NikolayS"
+  githubUrl="https://github.com/NikolayS"
+  linkedinUrl="https://www.linkedin.com/in/samokhvalov"
+  note="Working on tools to balance Dev with Ops in DevOps"
+/>
+
+<DbLabBanner />

@@ -29,6 +29,8 @@ it's a gap they are so accustomed to, they can no longer even see it.
 **The Elements of Application Behavior**
 ![Code AND Data](/assets/blog/code-and-data.png)
 
+<!--truncate-->
+
 A software application of even modest complexity is composed of two major elements:
 Code and Data.  Application behavior is the result of the _combination_ of these
 two elements.
@@ -59,8 +61,6 @@ Here are just a few of the things we can imagine doing when application data can
 * Automatically identify SQL query performance degradation as a part of your automated CI/CD pipeline
 
 And these are just the start...
-
-<!--truncate-->
 
 <AuthorBanner
   avatarUrl="/assets/author/dante.jpg"

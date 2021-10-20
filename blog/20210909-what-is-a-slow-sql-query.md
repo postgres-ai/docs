@@ -25,6 +25,8 @@ For web and mobile applications (here, let's talk only about them, not touching 
 
 How much low?
 
+<!--truncate-->
+
 Well, usually, we say that 1 ms is good enough for an SQL query duration, while 100 ms is worrisome. And 500-1000 ms is something that we definitely need to optimize, while 10 seconds is a total disaster.
 
 Why so?
@@ -80,8 +82,6 @@ The only ways to find the average SQL execution time (some name it "average late
 
 ## Summary
 I hope this post was helpful for the understanding of the reasons behind our target timing for the SQL query duration for web and mobile applications. The obvious advice is to learn the latencies, hunt for slow queries, and keep the SQL duration below 10ms for the most critical requests.
-
-<!--truncate-->
 
 <AuthorBanner
   avatarUrl="/assets/author/nik.jpg"

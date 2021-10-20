@@ -31,6 +31,8 @@ Note, since the command works on top of the HypoPG extension, your Database Lab 
 
 To be able to see the plan without actual execution, we have added one more new command: [`plan`](https://postgres.ai/docs/reference-guides/joe-bot-commands-reference#plan). It is aware of hypothetical indexes, so if one is detected in the plan, it presents two versions of the plan, with and without HypoPG involved.
 
+<!--truncate-->
+
 ### What's new in version 0.6.0
 
 Version 0.6.0 adds new commands to work with hypothetical indexes and get a query plan without execution, grand improvements in message processing, more. The full list of changes can be found in [Changelog](https://gitlab.com/postgres-ai/joe/-/releases). Stay tuned!
@@ -172,8 +174,6 @@ See the full list of Joe's commands in the docs: https://postgres.ai/docs/refere
 - Extended images with PostgreSQL: https://hub.docker.com/r/postgresai/extended-postgres Includes HypoPG, pg_hint_plan, more
 - Proposals to add more extensions are welcome in the Custom Images repo: https://gitlab.com/postgres-ai/custom-images
 - Community Slack (English): https://slack.postgres.ai/. After joining, the live demo is available in the #joe-bot-demo channel: https://database-lab-team.slack.com/archives/CTL5BB30R
-
-<!--truncate-->
 
 <AuthorBanner
   avatarUrl="/assets/author/artyom.jpg"

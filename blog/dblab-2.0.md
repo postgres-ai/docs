@@ -28,6 +28,8 @@ Both targets happened to be quite challenging, but it is finally done, and now w
 
 Check out [Database Lab Engine release notes](https://gitlab.com/postgres-ai/database-lab/-/releases), [Tutorial for RDS users](https://postgres.ai/docs/tutorials/database-lab-tutorial-amazon-rds), and [Database Lab Engine configuration reference](https://postgres.ai/docs/reference-guides/database-lab-engine-configuration-reference).
 
+<!--truncate-->
+
 As usual, please send us any feedback you have; it is hard to overestimate its meaning for such a young project:
 
 - Follow us on Twitter: [@Database_Lab](https://twitter.com/Database_Lab) (recently created!).
@@ -37,8 +39,6 @@ As usual, please send us any feedback you have; it is hard to overestimate its m
 *[Database Lab Engine](https://gitlab.com/postgres-ai/database-lab) is open-source software distributed under OSI-approved [AGPLv3 license](https://opensource.org/licenses/AGPL-3.0). Database Lab Engine allows to clone PostgreSQL databases of any size in just a few seconds. This can save you a lot of money for development and testing infrastructure, and at the same time, drastically improve development quality and time-to-market.*
 
 *The open-source Database Lab Engine is equipped with convenient API and CLI. Additionally, we continue developing the Enterprise version that offers GUI, authentication flexibility, and user management for Database Lab Engine API and CLI, more. The Enterprise version is in the "private beta" mode; we encourage you to [sign up and request a demo](https://postgres.ai/console/).*
-
-<!--truncate-->
 
 <AuthorBanner
   avatarUrl="/assets/author/nik.jpg"

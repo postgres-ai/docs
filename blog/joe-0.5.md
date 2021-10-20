@@ -40,6 +40,8 @@ More about Joe features you can find in ["What Is Joe Bot?"](https://postgres.ai
 
 ![Joe demo](/assets/joe/demo.gif)
 
+<!--truncate-->
+
 If you have Slack app installed, try the live demonstration:
 
 - Add the Database Lab community to your Slack: https://slack.postgres.ai/.

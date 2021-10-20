@@ -21,6 +21,8 @@ To solve this problem, my colleague Artyom Kartasov has developed a small utilit
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/8H-Gu-bt5AU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+<!--truncate-->
+
 To enable plan-exporter you need to use `\o` with a pipe:
 
 ```

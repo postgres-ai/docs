@@ -32,6 +32,8 @@ In addition to Slack integration, Joe Bot can be now integrated with [Postgres.a
 
 The full list of changes can be found in [Changelog](https://gitlab.com/postgres-ai/joe/-/releases). Can't wait to try!
 
+<!--truncate-->
+
 ### Web UI communication type
 
 Originally, only the Slack version of Joe Bot was publicly available. Today, we are excited to announce that there are two available types of communication with Joe:
@@ -44,9 +46,6 @@ The good news is that you can use both of them in parallel.
 Thanks to recent refactoring of Joe codebase, and the fact that this codebase is open-source, you can develop and add support for any messenger. Feel free to open issues to discuss the implementation and merge requests to include the code into the main Joe Bot repository. See also: [communication channels issues](https://gitlab.com/postgres-ai/joe/-/issues?label_name%5B%5D=Communication+channel), and discussions in our [Community Slack](https://slack.postgres.ai/).
 
 Check [Platform Overview](https://postgres.ai/docs/platform) to discover all advantages of using Web UI working on Postgres.ai Platform.
-
-TODO Fix image
-?[Postgres.ai Console](/assets/images/joe/webui-example-command-0.7.png#center)
 
 Joe Bot Tutorial was adjusted and now explains setting up both Slack and Web UI versions: https://postgres.ai/docs/tutorials/joe-setup.
 
@@ -154,8 +153,6 @@ See the full list of Joe's commands in [the docs](https://postgres.ai/docs/refer
 - Configuration options: https://postgres.ai/docs/reference-guides/joe-bot-configuration-reference
 - Joe Bot Tutorial: https://postgres.ai/docs/tutorials/joe-setup
 - Community Slack (English): https://slack.postgres.ai/. After joining, the live demo is available in the #joe-bot-demo channel: https://database-lab-team.slack.com/archives/CTL5BB30R
-
-<!--truncate-->
 
 <AuthorBanner
   avatarUrl="/assets/author/artyom.jpg"

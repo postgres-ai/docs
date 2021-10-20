@@ -29,6 +29,8 @@ LVM can be chosen as a "thin-clone manager" instead of ZFS for those who do not 
 
 Compared to ZFS, the LVM module has a certain restriction: it is not possible to support multiple snapshots and allow choosing the snapshot when requesting a new clone. With LVM, the new clones always are based on the latest state of the database.
 
+<!--truncate-->
+
 We invite everyone to test both modules, join our Community Slack, and provide your feedback! See the links below.
 
 Links:
@@ -39,8 +41,6 @@ Links:
 - [Join our Community Slack](https://slack.postgres.ai/) to discuss Database Lab and share your feedback with us
 - [Source code and issue tracker](https://gitlab.com/postgres-ai/database-lab)
 - [Changelog and release notes](https://gitlab.com/postgres-ai/database-lab/-/blob/master/CHANGELOG.md)
-
-<!--truncate-->
 
 <AuthorBanner
   avatarUrl="/assets/author/nik.jpg"

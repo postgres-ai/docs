@@ -307,21 +307,18 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          editUrl:
-            'https://gitlab.com/postgres-ai/docs/-/edit/master/',
+          editUrl: 'https://gitlab.com/postgres-ai/docs/-/edit/master/',
           routeBasePath: '/docs/',
         },
         blog: {
           showReadingTime: true,
-          // Please change this to your repo.
-          editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/blog/',
+          editUrl: 'https://gitlab.com/postgres-ai/docs/-/edit/master/',
           path: 'blog',
           routeBasePath: 'blog',
-          postsPerPage: 3,
+          postsPerPage: 10,
+          blogSidebarCount: 0, // 0 to disable the sidebar with a list of posts.
           feedOptions: {
-            type: 'all', // required. 'rss' | 'feed' | 'all'
+            type: 'all',
             title: '', // default to siteConfig.title
             description: '', // default to  `${siteConfig.title} Blog`
             copyright: 'Postgres.ai',

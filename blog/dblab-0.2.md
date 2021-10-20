@@ -29,16 +29,15 @@ Work on documentation continues: we reworked Tutorial, and added new texts. One 
 
 ![Comparison Matrix](/assets/blog/comparison-matrix.png)
 
-Links:
+<!--truncate-->
 
+Links:
 - [What is Database Lab](https://postgres.ai/docs/database-lab#overview)
 - [Database Lab tutorial](https://postgres.ai/docs/tutorials/database-lab-tutorial)
 - Please support the project giving a GitLab star: https://gitlab.com/postgres-ai/database-lab
 - [Join our Slack](https://slack.postgres.ai/) to discuss Database Lab and share your feedback with us
 - [Source code and issue tracker](https://gitlab.com/postgres-ai/database-lab)
 - [Changelog and release notes](https://gitlab.com/postgres-ai/database-lab/-/blob/master/CHANGELOG.md)
-
-<!--truncate-->
 
 <AuthorBanner
   avatarUrl="/assets/author/nik.jpg"
