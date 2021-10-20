@@ -126,18 +126,9 @@ module.exports = {
           position: 'right',
         },
         {
-          label: 'Company',
+          to: '/blog',
+          label: 'Blog',
           position: 'right',
-          items: [
-            {
-              to: '/blog',
-              label: 'Blog'
-            },
-            /*{
-              to: '/about',
-              label: 'About us'
-            },*/
-          ]
         },
         {
           href: SIGN_IN_URL,
