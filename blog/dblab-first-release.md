@@ -38,6 +38,8 @@ Database Lab can be installed either on a physical machine or a VM. Both on-prem
 - only Postgres versions 9.6, 10, 11, and 12 are supported,
 - in addition to ZFS, the installation of Postgres and Golang is required (it is planned to get rid of this requirement in version 0.2, fully switching to containers).
 
+<!--truncate-->
+
 Links:
 
 - [Database Lab tutorial](/docs/tutorials/database-lab-tutorial)
@@ -45,8 +47,6 @@ Links:
 - [Join our Slack](https://slack.postgres.ai/) to discuss Database Lab and share your feedback with us
 - [Source code and issue tracker](https://gitlab.com/postgres-ai/database-lab)
 - [Release notes](https://gitlab.com/postgres-ai/database-lab/-/releases)
-
-<!--truncate-->
 
 <AuthorBanner
   avatarUrl="/assets/author/nik.jpg"

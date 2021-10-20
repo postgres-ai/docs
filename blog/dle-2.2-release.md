@@ -40,6 +40,8 @@ Learn more about the Database Lab Engine and sign up for an account at [https://
 ## Database Lab Engine 2.2.0
 Database Lab Engine (DLE) 2.2.0 further improves support for both types of PostgreSQL data directory initialization and synchronization: “physical” and “logical”. Particularly, for the “logical” type (which is useful for managed cloud PostgreSQL such as Amazon RDS users), it is now possible to setup multiple disks or disk arrays and automate data retrieval on a schedule.  This gracefully cleans up the oldest versions of data, without downtime or interruptions in the lifecycle of clones.
 
+<!--truncate-->
+
 Other improvements include:
 
 - Auto completion for the client CLI (“dblab”)
@@ -95,8 +97,6 @@ Your feedback is highly appreciated!
 - [Community Slack with Joe Bot live demo](https://slack.postgres.ai) (English), and [Telegram group](https://t.me/databaselabru) (Russian)
 - [Database Lab Engine repository](https://gitlab.com/postgres-ai/database-lab), with the [issue tracker](https://gitlab.com/postgres-ai/database-lab/-/issues)
 - [SQL Optimization Chatbot repository](https://gitlab.com/postgres-ai/joe), with the [issue tracker](https://gitlab.com/postgres-ai/joe/-/issues)
-
-<!--truncate-->
 
 <AuthorBanner
   avatarUrl="/assets/author/nik.jpg"

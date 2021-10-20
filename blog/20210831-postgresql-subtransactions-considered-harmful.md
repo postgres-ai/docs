@@ -26,6 +26,8 @@ import { DbLabBanner } from '../src/components/DbLabBanner'
 
 This article discusses what subtransactions are, how to create them, and how widely they are used nowadays. Next, we try to understand why they have a terrible reputation among PostgreSQL experts who operate heavily loaded systems. We overview four problems that may arise in a Postgres database in which subtransactions are used, and load grows. In the end, we discuss the short-term and long-term options for PostgreSQL users willing to solve the ongoing or prevent future problems related to subtransactions.
 
+<!--truncate-->
+
 ## What is a subtransaction?
 Subtransaction, also known as "nested transaction", is a transaction started by instruction within the scope of an already started transaction ([definition from Wikipedia](https://en.wikipedia.org/wiki/Nested_transaction)). This feature allows users to partially rollback a transaction, which is helpful in many cases: fewer steps need to be repeated to retry the action if some error occurs.
 
@@ -489,8 +491,6 @@ We explored four particular issues that can be associated with the use of subtra
 All problems are easy to reproduce. We have provided recommendations for Postgres DBAs and a wide range of engineers that run systems using Postgres and aim to grow without bottlenecks. The main recommendation is to have strong monitoring (first of all: long-running transactions, wait event sampling, and transaction ID wraparound).
 
 The future work may include additional benchmarks and testing of patches.
-
-<!--truncate-->
 
 <AuthorBanner
   avatarUrl="/assets/author/nik.jpg"

@@ -29,7 +29,9 @@ I'm sure some of you know this very well – if so, scroll down to see some bits
 
 We won't talk about "how to change a column's data type" or "how to add a foreign key" – those questions are all interesting too, and there are efforts to document and automate each of such steps for heavily-loaded systems with strict uptime requirements (a great example here is GitLab's ["Migration Style Guide"](https://docs.gitlab.com/ee/development/migration_style_guide.html)). Instead, we will discuss something that affects any Postgres setup where schema needs to be changed from time to time, where downtime is considered as a huge problem, where DDLs are automated in one way or another (I mean DB migration tools such as Flyway, Sqitch, Liquibase, Ruby on Rails AR DB Migrations, and so on), but where DDLs are deployed without certain trick, so downtime can happen suddenly and unpredictably. Even if TPS numbers are not big. Without that trick in place, *anyone* using Postgres can (and will) hit that wall one day. Therefore, any engineer working with Postgres should know this trick and, perhaps, implement it in all systems to prevent downtime.
 
-It is time to dive into technical details.
+It is time to dive into technical details...
+
+<!--truncate-->
 
 ## Problem demonstration
 Let's jump straight to the point: when you deploy database schema changes, you are not protected from system downtime even if you have very high-level automation but don't use very low values of `lock_timeout` (or `statement_timeout`) to acquire a lock on the DB objects that are subject to change and do not implement some kind of retry logic.
@@ -422,8 +424,6 @@ The bigger this value is, the older snapshot is being held, the more it affects 
     - may suddenly cause painful performance issues at some point if workloads grow – if you do use them and run PostgreSQL 13 or newer, add [`pg_stat_slru`](https://www.postgresql.org/docs/current/monitoring-stats.html#MONITORING-PG-STAT-SLRU-VIEW) to your monitoring system and watch for Subtrans SLRU reads;
     - if the transaction containing subtransactions lasts long, it might contribute to the bloat growth of all tables in the database.
 - Exponential backup and jitter can help achieve results faster and with fewer attempts – consider using them with or without subtransactions involved.
-
-<!--truncate-->
 
 <AuthorBanner
   avatarUrl="/assets/author/nik.jpg"
