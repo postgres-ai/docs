@@ -1,11 +1,18 @@
 // Duplicates data from the blog.
 const blog = [
   {
+    link: 'blog/20211019-console-reset-options',
+    date: '2021-10-19 00:00:00',
+    title: 'Platform: Reset clones to any data snapshot',
+    description: 'The Database Lab Platform now supports resetting of DLE clones to any data snapshot. Which might be useful in the cases when long-living clones need to get the most up-to-date data or when troubleshooting a non-trivial issue.',
+    image: '/assets/thumbnails/console-reset-options.png',
+  },
+  {
     link: 'blog/20211018-postgresql-lock-trees',
     date: '2021-10-18 17:05:00',
     title: 'Useful queries to analyze PostgreSQL lock trees (a.k.a. lock queues)',
     description: 'PostgreSQL locking issues may be annoying. This blog post provides useful information that will help you understand how PostgreSQL MVCC implements locking and how to troubleshoot locking issues.',
-    image: '/assets/thumbnails/postgresql-query-for-lock-trees-analysis-2.png',
+    image: '/assets/thumbnails/postgresql-query-for-lock-trees-analysis-2-landing.png',
   },
   {
     link: 'blog/20210923-zero-downtime-postgres-schema-migrations-lock-timeout-and-retries',
@@ -14,14 +21,14 @@ const blog = [
     description: 'Deploying DB schema changes in heavily loaded systems is challenging. In this article, we explore one of the challenges - how to avoid situations when DDLs get blocked, wait to acquire a lock, and during that, start blocking other sessions.',
     image: '/assets/thumbnails/graceful-db-migrations.png',
   },
-  {
+  /*{
     link: 'blog/20210914-dle-2-5',
     date: '2021-09-14 00:00:00',
     title: 'DLE 2.5: Better data extraction for logical mode and configuration improvements',
     description: 'Now it is possible to dump/restore multiple databases at the same time and use different pg_dump formats and compression formats of plain-text dump. DLE and related products configuration structure were significantly reworked and require manual action to migrate to the new version.',
     image: '/assets/thumbnails/dle-2.5-blog.png',
   },
-  /*{
+  {
     link: 'blog/20210909-what-is-a-slow-sql-query',
     date: '2021-09-09 22:18:00',
     title: 'What is a slow SQL query?',
