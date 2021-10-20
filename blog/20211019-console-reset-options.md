@@ -14,11 +14,9 @@ tags:
 import { AuthorBanner } from '../src/components/AuthorBanner'
 import { DbLabBanner } from '../src/components/DbLabBanner'
 
-The [Database Lab Platform](https://postgres.ai/) now supports the ability to reset a clone's state using any available data snapshot on the Database Lab Engine (DLE) instance.
-It means that now you can get fresh data very quickly (a few seconds, as usual) to your clone, keeping all the credentials the same – including the port. Previously, it was a problem that to get new data, one would need to create a new clone. This implies getting database credentials, most likely including a new port value, which was not always convenient.
+The [Database Lab Platform](https://postgres.ai/) now supports the ability to reset a clone's state using any available data snapshot on the Database Lab Engine (DLE) instance. It means that now you can get fresh data very quickly (a few seconds, as usual) to your clone, keeping all the credentials the same – including the port. Previously, it was a problem that one would need to create a new clone to get new data. This implies getting database credentials, most likely including a new port value, which was not always convenient.
 
-It might be useful in the cases when long-living clones need to be refreshed to get the most up-to-date data from the source (usually, production),
-or when troubleshooting a non-trivial issue requiring use the of a specific database version from the past (specific point in time).
+It might be helpful in the cases when long-living clones need to be refreshed to get the most up-to-date data from the source (usually, production) or when troubleshooting a non-trivial issue requiring the use of a specific database version from the past (specific point in time).
 
 ![Reset options demo](/assets/blog/20211019/reset-options-demo.gif)
 
@@ -26,9 +24,22 @@ or when troubleshooting a non-trivial issue requiring use the of a specific data
 
 The feature was introduced in [DLE 2.5](/blog/20210914-dle-2-5) and is now supported in our SaaS product.
 
-Advanced reset options are also available using DLE CLI and API. The default behavior remains the same (resetting to the same snapshot that was used before resetting). To reset to the exact snapshot get its ID using `dblab snapshot list` and run `dblab clone reset --snapshot-id SNAPSHOT_ID CLONE_ID`. There is also an option for the `reset` command, `--latest`, that allows resetting to the latest available state not knowing the snapshot ID: `dblab clone reset --latest CLONE_ID`. See [DLE CLI reference](/docs/reference-guides/dblab-client-cli-reference#subcommand-reset) for more details.
+Advanced reset options are also available using DLE CLI and API. The default behavior remains the same (resetting to the same snapshot that was used before resetting). To reset to the exact snapshot, get its ID using `dblab snapshot list` and then run:
+```shell
+dblab clone reset --snapshot-id SNAPSHOT_ID CLONE_ID
+```
 
-The same reset behavior is reflected in the GUI: by default clone is being reset to the same snapshot, a specific snapshot can be chosen from the list, or the clone can be quickly reset to the latest available snapshot.
+There is also an option for the `reset` command, `--latest`, that allows resetting to the latest available state without the need to know the snapshot ID:
+```shell
+dblab clone reset --latest CLONE_ID
+```
+
+See [DLE CLI reference](https://postgres.ai/docs/reference-guides/dblab-client-cli-reference#subcommand-reset) for more details.
+
+The same reset behavior is implemented in the GUI:
+- by default, a clone is reset to the same snapshot as was used when creating the clone;
+- specific snapshot can be chosen from the list of snapshots;
+- alternatively, the clone can be quickly reset to the latest available snapshot.
 
 <AuthorBanner
   avatarUrl="/assets/author/anatoly.jpg"
