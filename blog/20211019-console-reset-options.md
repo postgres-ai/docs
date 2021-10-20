@@ -6,7 +6,7 @@ linktitle: "Platform: Reset clones to any data snapshot"
 title: "Platform: Reset clones to any data snapshot"
 description: "The Platform now supports resetting of DLE clones to any data snapshot."
 weight: 0
-image: /assets/thumbnails/dle-2.5-blog.png
+image: /assets/thumbnails/postgresql-query-for-lock-trees-analysis-2.png
 tags:
   - Platform Release
 ---
@@ -22,13 +22,13 @@ or when troubleshooting a non-trivial issue requiring use the of a specific data
 
 ![Reset options demo](/assets/blog/20211019/reset-options-demo.gif)
 
+<!--truncate-->
+
 The feature was introduced in [DLE 2.5](/blog/20210914-dle-2-5) and is now supported in our SaaS product.
 
 Advanced reset options are also available using DLE CLI and API. The default behavior remains the same (resetting to the same snapshot that was used before resetting). To reset to the exact snapshot get its ID using `dblab snapshot list` and run `dblab clone reset --snapshot-id SNAPSHOT_ID CLONE_ID`. There is also an option for the `reset` command, `--latest`, that allows resetting to the latest available state not knowing the snapshot ID: `dblab clone reset --latest CLONE_ID`. See [DLE CLI reference](/docs/reference-guides/dblab-client-cli-reference#subcommand-reset) for more details.
 
 The same reset behavior is reflected in the GUI: by default clone is being reset to the same snapshot, a specific snapshot can be chosen from the list, or the clone can be quickly reset to the latest available snapshot.
-
-<!--truncate-->
 
 <AuthorBanner
   avatarUrl="/assets/author/anatoly.jpg"
