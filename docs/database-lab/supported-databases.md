@@ -9,6 +9,7 @@ Currently, Database Lab Engine fully supports the following PostgreSQL major ver
 - 11
 - 12
 - 13
+- 14
 
 ## Extensions
 By default, Database Lab Engine uses [the extended Postgres.ai Docker images](https://hub.docker.com/repository/docker/postgresai/extended-postgres) built on top of the official Docker images for PostgreSQL. Use these images with Database Lab when you need non-standard Postgres extensions. 
@@ -35,11 +36,14 @@ All these extended images include the following extensions:
 - [Timescale](https://github.com/timescale/timescaledb)
 
 #### Not included in the PostgreSQL 13 image (yet)
-The PostgreSQL 13 image is now missing the following extensions (they will be added in the future):
-- hll
-- topn
-- citus
-- hypopg
+The PostgreSQL 13 image does not have the following extensions (they might be added in the future):
+- bg_mon
+- pg_auth_mon
+- powa
+
+#### Not included in the PostgreSQL 14 image (yet)
+The PostgreSQL 14 image does not have the following extensions (they might be added in the future):
+- bg_mon
 - pg_auth_mon
 - pg_hint_plan
 - powa
