@@ -84,7 +84,7 @@ retrieval:
     logicalDump:
       options:
         dumpLocation: "/var/lib/dblab/dblab_pool/dump"
-        dockerImage: "postgresai/extended-postgres:13"
+        dockerImage: "postgresai/extended-postgres:14"
         source:
           type: remote
           connection:
@@ -97,7 +97,7 @@ retrieval:
     logicalRestore:
       options:
         dumpLocation: "/var/lib/dblab/dblab_pool/dump"
-        dockerImage: "postgresai/extended-postgres:13"
+        dockerImage: "postgresai/extended-postgres:14"
 
     logicalSnapshot:
 ```
@@ -124,7 +124,7 @@ retrieval:
         # The location of the archive files (or directories, for directory-format archives) 
         # on host machine to be restored.
         dumpLocation: "/var/lib/dblab/dblab_pool/dump"
-        dockerImage: "postgresai/extended-postgres:13"
+        dockerImage: "postgresai/extended-postgres:14"
 
     logicalSnapshot:
 ```
@@ -190,7 +190,7 @@ retrieval:
     logicalDump:
       options:
         dumpLocation: "/var/lib/dblab/dblab_pool/dump"
-        dockerImage: "postgresai/extended-postgres:13"
+        dockerImage: "postgresai/extended-postgres:14"
         source:
           type: remote
           connection:

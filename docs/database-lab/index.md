@@ -61,7 +61,7 @@ Some problems that can be solved by using Database Lab:
 - Works well both on premise and in clouds.
 - Thin provisioning in seconds thanks to copy-on-write (CoW) provided by [ZFS](https://en.wikipedia.org/wiki/ZFS) and special methodology of preparing PostgreSQL database snapshots. There is also an option to use [LVM](https://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)) instead of ZFS.
 - Unlimited size of databases (Postgres database size [is unlimited](https://www.postgresql.org/docs/current/limits.html), ZFS volume can be up to 21^28 bytes, or [256 trillion yobibytes](https://en.wikipedia.org/wiki/ZFS)).
-- Supports PostgreSQL 9.6, 10, 11, 12, and 13.
+- Supports PostgreSQL 9.6, 10, 11, 12, 13 and 14.
 - Thin cloning takes only a few seconds, regardless of the database size.
 - REST API.
 - Client CLI.

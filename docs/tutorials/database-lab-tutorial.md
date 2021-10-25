@@ -247,7 +247,7 @@ sudo docker run \
   --env POSTGRES_HOST_AUTH_METHOD=trust \
   --volume /var/lib/dblab/dblab_pool/data:/var/lib/postgresql/pgdata \
   --detach \
-  postgres:13-alpine
+  postgres:14-alpine
 ```
 
 Create the `test` database:
@@ -280,7 +280,7 @@ Open `~/.dblab/engine/configs/server.yml` and edit the following options:
 - Remove `logicalDump` section completely
 - Remove `logicalRestore` section completely
 - Leave `logicalSnapshot` as is
-- If your Postgres major version is not 13 (default), set the proper version in Postgres Docker image tag:
+- If your Postgres major version is not 14 (default), set the proper version in Postgres Docker image tag:
     - `databaseContainer:dockerImage`
 
 </TabItem>
@@ -299,7 +299,7 @@ curl https://gitlab.com/postgres-ai/database-lab/-/raw/2.5.0/configs/config.exam
 Next, open `~/.dblab/engine/configs/server.yml` and edit the following options:
 - Set secure `server:verificationToken`, it will be used to authorize API requests to the Database Lab Engine
 - In `retrieval:spec:physicalRestore:options:envs`, specify how to reach the source Postgres database to run `pg_basebackup`: `PGUSER`, `PGPASSWORD`, `PGHOST`, and `PGPORT`
-- If your Postgres major version is not 13 (default), set the proper version in Postgres Docker image tag:
+- If your Postgres major version is not 14 (default), set the proper version in Postgres Docker image tag:
     - `databaseContainer:dockerImage`
 
 :::tip
@@ -329,7 +329,7 @@ Now open `~/.dblab/engine/configs/server.yml` and edit the following options:
     - `port`: database server port
     - `username`: database user name
     - `password`: database master password (can be also set as `PGPASSWORD` environment variable and passed to the container using `--env` option of `docker run`)
-- If your Postgres major version is not 13 (default), set the proper version in Postgres Docker image tag:
+- If your Postgres major version is not 14 (default), set the proper version in Postgres Docker image tag:
     - `databaseContainer:dockerImage`
 
 </TabItem>

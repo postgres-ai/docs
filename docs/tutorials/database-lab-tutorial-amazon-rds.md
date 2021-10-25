@@ -190,7 +190,7 @@ Then open `~/.dblab/engine/configs/server.yml` and edit the following options:
     - `port`: database server port
     - `username`: database user name
     - `password`: database master password (can be also set as `PGPASSWORD` environment variable and passed to the container using `--env` option of `docker run`)
-- If your Postgres major version is not 13 (default), set the proper version in Postgres Docker image tag:
+- If your Postgres major version is not 14 (default), set the proper version in Postgres Docker image tag:
     - `databaseContainer:dockerImage`
 
 #### Run Database Lab Engine
@@ -253,7 +253,7 @@ Then open `~/.dblab/engine/configs/server.yml` and edit the following options:
 - Set AWS params in `retrieval:spec:logicalDump:options:source:rdsIam`:
     - `awsRegion`: RDS instance region;
     - `dbInstanceIdentifier`: RDS instance identifier.
-- If your Postgres major version is not 13 (default), set the proper version in Postgres Docker image tag:
+- If your Postgres major version is not 14 (default), set the proper version in Postgres Docker image tag:
     - `databaseContainer:dockerImage`
 
 #### Download AWS RDS certificate
