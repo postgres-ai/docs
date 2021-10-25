@@ -12,7 +12,7 @@ Currently, Database Lab Engine fully supports the following PostgreSQL major ver
 - 14
 
 ## Extensions
-By default, Database Lab Engine uses [the extended Postgres.ai Docker images](https://hub.docker.com/repository/docker/postgresai/extended-postgres) built on top of the official Docker images for PostgreSQL. Use these images with Database Lab when you need non-standard Postgres extensions. 
+By default, Database Lab Engine uses [the extended Postgres.ai Docker images](https://hub.docker.com/r/postgresai/extended-postgres) built on top of the official Docker images for PostgreSQL. Use these images with Database Lab when you need non-standard Postgres extensions. 
 
 All these extended images include the following extensions:
 - all official ["core" contrib modules](https://www.postgresql.org/docs/current/contrib.html)
