@@ -110,7 +110,7 @@ dle_debug_mode = "true"
 dle_retrieval_refresh_timetable = "0 0 * * 0"
 
 # Include all libraries your installation are using.
-# Database Lab DB Migration Checker requires "logerrors" extension.
+# Database Lab DB Migration Checker requires "logerrors" extension (works with Postgres 10 and newer)
 postgres_config_shared_preload_libraries = "pg_stat_statements,logerrors"
 
 platform_project_name = "aws_test_tf"
