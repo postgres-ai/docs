@@ -1,0 +1,110 @@
+.title {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.collectionContainer {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.showcaseUser {
+  height: 100%;
+}
+
+.collectionCard {
+  color: var(--ifm-heading-color);
+  box-shadow: 0 1px 4px 0 rgb(0 0 0 / 25%);
+  background-color: #292A2B;
+  border-radius: 20px;
+  margin-bottom: 40px;
+  padding: 0;
+  overflow: hidden;
+}
+
+html[data-theme="light"] .collectionCard {
+  background: white;
+}
+
+.cardTop {
+  padding: 20px;
+}
+
+.cardTop > a > h4 {
+  margin: 0;
+}
+
+.cardPreview {
+  margin: 0;
+  padding: 0;
+}
+
+.cardPreview > a > img {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+.cardBottom {
+  padding: 20px;
+  font-size: 14px;
+}
+
+.cardLink {
+  color: inherit;
+  text-decoration: none;
+  transition: inherit;
+}
+
+.cardLink:hover {
+  color: inherit;
+  text-decoration: none;
+  transition: inherit;
+}
+
+.avatarContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-content: stretch;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.avatar {
+  height: 30px;
+  width: 30px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+.commentBubble {
+  border-radius: 20px;
+  padding: 20px;
+}
+
+html[data-theme="light"] .commentBubble {
+  background: #efefef;
+}
+
+html[data-theme="dark"] .commentBubble {
+  background: #454545;
+}
+
+.commentator {
+  font-weight: bold;
+  margin: 0;
+}
+
+.collectionGrid {
+  display: flex;
+  margin-left: -30px; /* gutter size offset */
+  width: auto;
+}
+.collectionGridCol {
+  padding-left: 30px; /* gutter size */
+  background-clip: padding-box;
+}

@@ -24,7 +24,7 @@ module.exports = {
 
   themeConfig: {
     colorMode: {
-      defaultMode: 'light',
+      defaultMode: 'dark',
     },
 
     metadatas: [

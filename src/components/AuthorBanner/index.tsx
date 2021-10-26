@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 
-import { GatewayLink } from './GatewayLink'
+import { GatewayLink } from '../GatewayLink'
 import { TwitterLogo } from './TwitterLogo'
 import { GitlabLogo } from './GitlabLogo'
 import { GithubLogo } from './GithubLogo'
