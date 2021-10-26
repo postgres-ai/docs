@@ -3,25 +3,32 @@ title: PostgreSQL versions and extensions supported in Database Lab Engine
 ---
 
 ## PostgreSQL versions
-Currently, Database Lab Engine fully supports the following PostgreSQL major versions:
-- 9.6
-- 10
-- 11
-- 12
-- 13
-- 14
+Currently, Database Lab Engine fully supports the following [PostgreSQL major versions](https://www.postgresql.org/support/versioning/):
+- 9.6 (released: 2016-09-29; EOL: 2021-11-11)
+- 10 (released: 2017-10-05; EOL: 2022-11-10)
+- 11 (released: 2018-10-18; EOL: 2023-11-09)
+- 12 (released: 2019-10-03; EOL: 2024-11-14)
+- 13 (released: 2020-09-24; EOL: 2025-11-13)
+- 14 (released: 2021-09-31; EOL: 2026-11-12)
 
-## Extensions
-By default, Database Lab Engine uses [the extended Postgres.ai Docker images](https://hub.docker.com/r/postgresai/extended-postgres) built on top of the official Docker images for PostgreSQL. Use these images with Database Lab when you need non-standard Postgres extensions. 
+By default, version 14 is used: `postgresai/extended-postgres:14`.
+
+The images are published in [Docker Hub](https://hub.docker.com/r/postgresai/extended-postgres).
+
+## Extensions included by default
+By default, the Database Lab Engine uses [the extended Postgres.ai Docker images](https://hub.docker.com/r/postgresai/extended-postgres) built on top of the official Docker images for PostgreSQL. It is easy to change the images – see the options named `dockerImage` in various sections of [the Database Lab Engine configuration](https://postgres.ai/docs/reference-guides/database-lab-engine-configuration-reference).
 
 All these extended images include the following extensions:
 - all official ["core" contrib modules](https://www.postgresql.org/docs/current/contrib.html)
-- [bg_mon](https://github.com/CyberDem0n/bg_mon)
+- [logerrors](https://github.com/munakoiso/logerrors) (only for versions 10-14)
+- [bg_mon](https://github.com/CyberDem0n/bg_mon) (only for versions 9.6-12)
+- [pg_auth_mon](https://github.com/RafiaSabih/pg_auth_mon) (only for versions 9.6-12)
+- [PoWA](https://github.com/powa-team/powa) (only for versions 9.6-12)
+- [pg_hint_plan](https://pghintplan.osdn.jp/pg_hint_plan.html) (only for versions 9.6-13)
+- [Timescale](https://github.com/timescale/timescaledb) (only for versions 9.6-13)
 - [Citus](https://github.com/citusdata/citus)
 - [HypoPG](https://github.com/HypoPG/hypopg)
-- [pg_auth_mon](https://github.com/RafiaSabih/pg_auth_mon)
 - [pg_cron](https://github.com/citusdata/pg_cron)
-- [pg_hint_plan](https://pghintplan.osdn.jp/pg_hint_plan.html)
 - [pg_qualstats](https://github.com/powa-team/pg_qualstats)
 - [pg_repack](https://github.com/reorg/pg_repack)
 - [pg_show_plans](https://github.com/cybertec-postgresql/pg_show_plans)
@@ -31,29 +38,10 @@ All these extended images include the following extensions:
 - [hll](https://github.com/citusdata/postgresql-hll)
 - [topn](https://github.com/citusdata/postgresql-topn)
 - [postgresql_anonymizer](https://github.com/webysther/postgresql_anonymizer) 
-- [PoWA](https://github.com/powa-team/powa)
 - [set_user](https://github.com/pgaudit/set_user)
-- [Timescale](https://github.com/timescale/timescaledb)
 
-#### Not included in the PostgreSQL 13 image (yet)
-The PostgreSQL 13 image does not have the following extensions (they might be added in the future):
-- bg_mon
-- pg_auth_mon
-- powa
+## How to add more extensions
+There are two options:
+1. Adjust Dockerfile and build your own Docker image: https://gitlab.com/postgres-ai/custom-images
+2. Ask the Postgres.ai team for help – building custom Docker images is included in support contracts. Contact: sales@postgres.ai
 
-#### Not included in the PostgreSQL 14 image (yet)
-The PostgreSQL 14 image does not have the following extensions (they might be added in the future):
-- bg_mon
-- pg_auth_mon
-- pg_hint_plan
-- powa
-- timescaledb
-
-### How to extend
-Proposals to extend this list are welcome in the project repository: https://gitlab.com/postgres-ai/custom-images.
-
-:::tip
-If needed, you can specify any custom Docker image with PostgreSQL in the Database Lab Engine configuration. There is one requirement: such an image needs to use the directory `/var/lib/postgresql/pgdata` as PostgreSQL data directory (`PGDATA`).
-
-Use [this Dockerfile](https://gitlab.com/postgres-ai/database-lab/snippets/1932037) as an example. You can extend or modify it for your needs.
-:::
