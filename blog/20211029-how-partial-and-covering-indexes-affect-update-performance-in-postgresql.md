@@ -25,7 +25,7 @@ import { DbLabBanner } from '../src/components/DbLabBanner'
 
 *Based on a true story.*
 
-*This article was originally published [in 2018](https://medium.com/@samokhvalov/how-partial-indexes-affect-update-performance-in-postgres-d05e0052abc). This is an updated and slightly extended version of it. The discussed findings can be applied to any actual major version of PostgreSQL.*
+*This article was originally published [in 2018](https://medium.com/@samokhvalov/how-partial-indexes-affect-update-performance-in-postgres-d05e0052abc). This is a reviewed and extended version of it. The discussed findings can be applied to any actual major version of PostgreSQL.*
 
 ## Primum non nocere
 "Primum non nocere" – this is a fundamental principle that is well-known to anyone working in healthcare: "first, do no harm". It is a reminder: when considering any action that is supposed to improve something, we always need to look at the global picture to see if there might be something else that be damaged by the same action.
@@ -276,7 +276,7 @@ Of course, for different kinds of queries and data, the picture could be differe
 - It is well-known that any new index created slightly slows down write operations (UPDATEs, DELETEs, INSERTs) – but that degradation is usually much smaller than that one we observed here (in fact, without any additional index, we had even slightly lower TPS for the UPDATE queries than for the case with 1-column index: 46k vs. 48k).
 - The covering index turned out to be significantly bigger than the 2-column one: 30 MiB vs. 21 MiB. This is because btree deduplication [added in Postgres 13](https://www.postgresql.org/docs/13/btree-implementation.html#BTREE-DEDUPLICATION) is not implemented for covering indexes (for Postgres 11, the index size will be the same).
 
-You might have additional interesting thoughts. I would love to hear them! Ping me in Twitte to discuss it: [@samokhvalov](https://twitter.com/samokhvalov). 
+You might have additional interesting thoughts. I would love to hear them! Ping me in Twitter to discuss it: [@samokhvalov](https://twitter.com/samokhvalov). 
 
 ## Holistic approach: performance regression testing in CI/CD pipelines
 How would we avoid similar problems when making database changes? We live in the era of very advanced CI/CD tools and methodologies, so a reasonable answer here would be "let's have some set of tests that will help us detect and prevent performance degradation".
