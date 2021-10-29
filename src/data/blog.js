@@ -1,6 +1,13 @@
 // Duplicates data from the blog.
 const blog = [
   {
+    link: 'blog/20211029-how-partial-and-covering-indexes-affect-update-performance-in-postgresql',
+    date: '2021-10-29 23:55:00',
+    title: 'How partial, covering, and multicolumn indexes may slow down UPDATEs in PostgreSQL',
+    description: '"Primum non nocere" – this is a fundamental principle that is well-known to anyone working in healthcare: "first, do no harm". Do we need to follow this principle when optimizing SQL queries?',
+    image: '/assets/thumbnails/20211029-how-partial-and-covering-indexes-affect-update-performance-in-postgresql.jpeg',
+  },
+  {
     link: 'blog/20211019-console-reset-options',
     date: '2021-10-19 00:00:00',
     title: 'Platform: Reset clones to any data snapshot',
@@ -14,14 +21,14 @@ const blog = [
     description: 'PostgreSQL locking issues may be annoying. This blog post provides useful information that will help you understand how PostgreSQL MVCC implements locking and how to troubleshoot locking issues.',
     image: '/assets/thumbnails/postgresql-query-for-lock-trees-analysis-2-landing.png',
   },
-  {
+  /*{
     link: 'blog/20210923-zero-downtime-postgres-schema-migrations-lock-timeout-and-retries',
     date: '2021-09-23 09:05:00',
     title: 'Zero-downtime Postgres schema migrations need this: lock_timeout and retries',
     description: 'Deploying DB schema changes in heavily loaded systems is challenging. In this article, we explore one of the challenges - how to avoid situations when DDLs get blocked, wait to acquire a lock, and during that, start blocking other sessions.',
     image: '/assets/thumbnails/graceful-db-migrations.png',
   },
-  /*{
+  {
     link: 'blog/20210914-dle-2-5',
     date: '2021-09-14 00:00:00',
     title: 'DLE 2.5: Better data extraction for logical mode and configuration improvements',
