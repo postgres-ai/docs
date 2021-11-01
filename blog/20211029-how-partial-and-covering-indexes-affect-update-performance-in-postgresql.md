@@ -7,6 +7,12 @@ linktitle: "How partial, covering, and multicolumn indexes may slow down UPDATEs
 title: "How partial, covering, and multicolumn indexes may slow down UPDATEs in PostgreSQL"
 weight: 0
 image: /assets/thumbnails/20211029-how-partial-and-covering-indexes-affect-update-performance-in-postgresql.jpeg
+description: "<a href=\"https://postgres.ai/blog/20211029-how-partial-and-covering-indexes-affect-update-performance-in-postgresql\"><img src=\"https://postgres.ai/assets/thumbnails/20211029-how-partial-and-covering-indexes-affect-update-performance-in-postgresql.jpeg\" alt=\"How partial, covering, and multicolumn indexes may slow down UPDATEs in PostgreSQL\"/></a>
+<p>Based on a true story.</p>
+<p>This article was originally published <a href=\"https://medium.com/@samokhvalov/how-partial-indexes-affect-update-performance-in-postgres-d05e0052abc\">in 2018</a>. This is a reviewed and extended version of it. The discussed findings can be applied to any actual major version of PostgreSQL.</p>
+<h2>Primum non nocere</h2>
+<p>\"Primum non nocere\" – this is a fundamental principle that is well-known to anyone working in healthcare: \"first, do no harm\". It is a reminder: when considering any action that is supposed to improve something, we always need to look at the global picture to see if there might be something else that be damaged by the same action.</p>
+<p>This is a great principle and it is used not only in healthcare, of course. I strongly believe that it has to be used in database optimization too, and we need better tools to make it happen.</p>"
 tags:
   - Performance
   - Optimization tuning
