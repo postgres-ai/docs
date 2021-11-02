@@ -31,7 +31,7 @@ type Collection = {
   items: Item[]
 }
 
-const HOME_TITLE = 'Explore PostgreSQL';
+const HOME_TITLE = 'PostgreSQL Universe';
 
 const masonryColumns = {
   default: 6,
@@ -57,15 +57,15 @@ const renderCollectionsList = (collections: Collection[]) => {
             {collections.map((collection) => (
               <div key={collection.title} className={styles.collectionCard}>
                 <div className={styles.cardPreview}>
-                  <GatewayLink href={collection.url} className={styles.cardLink}>
+                  <a href={collection.url} className={styles.cardLink}>
                     <img src={collection.previewUrl} alt={collection.title} />
-                  </GatewayLink>
+                  </a>
                 </div>
 
                 <div className={styles.cardTop}>
-                  <GatewayLink href={collection.url} className={styles.cardLink}>
+                  <a href={collection.url} className={styles.cardLink}>
                     <h4>{collection.title}</h4>
-                  </GatewayLink>
+                  </a>
                 </div>
               </div>
             ))}
@@ -79,10 +79,26 @@ const renderCollectionsList = (collections: Collection[]) => {
 const renderCollection = (collection: Collection) => {
   return (
     <Layout title={collection.title}>
+      <div className={styles.backButton}>
+        <a href="/universe">← Back to collections</a>
+      </div>
       <main className={"margin-vert--lg " + styles.collectionContainer}>
         <div className="text--center margin-bottom--m">
           <h1>{collection.title}</h1>
           <p>{collection.comment}</p>
+          {collection.curatorId && authors[collection.curatorId] && (
+          <div>
+            <p className={styles.curatedNotion}>Curated by</p>
+            <div className={styles.avatarContainer + " " + styles.curatorAvatar}>
+              <img
+                className={styles.avatar}
+                src={authors[collection.curatorId].avatarUrl}
+                alt={authors[collection.curatorId].name}
+              />
+              <span className={styles.commentator}>{authors[collection.curatorId].name}</span>
+            </div>
+          </div>
+          )}
         </div>
         <div className="row">
           <Masonry
