@@ -38,6 +38,8 @@ import { DbLabBanner } from '../src/components/DbLabBanner'
 
 This is a great principle and it is used not only in healthcare, of course. I strongly believe that it has to be used in database optimization too, and we need better tools to make it happen.
 
+<!--truncate-->
+
 One day, a few years ago, when I already started to help Silicon Valley startups with Postgres performance optimization, I broke this rule. Postgres has a lot of features and it provides plenty of ways to optimize query performance, so it may be very tempting to start using some clever optimization right away. You have a query, you see a way to optimize, you collect the data showing how faster the query will be, you've got approval from the engineering team you help – what else do you need to deploy this optimization? What could possibly get wrong? If you are a database consultant or a DBA/DBRE with a few years of experience, I'm sure you were in these shoes.
 
 "Primum non nocere" – this must be applied to query optimization too. If you found a great way to optimize a query, you should ask: "might this optimization make the performance of some other queries worse?". Well, in many cases the answer is "probably, yes", and if you know how to check it or – better! – have good tooling to answer this question holistically (we'll talk about it in the end), you're bringing your performance optimization and database change management to the next level.
