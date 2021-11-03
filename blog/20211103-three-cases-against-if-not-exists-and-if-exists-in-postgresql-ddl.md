@@ -30,7 +30,7 @@ import { DbLabBanner } from '../src/components/DbLabBanner'
 </p>
 
 ## What is this about?
-Many DDL statements in PostgreSQL support modified IF EXISTS / IF NOT EXISTS. For example:
+Many DDL statements in PostgreSQL support modifiers `IF EXISTS` / `IF NOT EXISTS`. For example:
 ```
 test=# create table if not exists mytable();
 CREATE TABLE
