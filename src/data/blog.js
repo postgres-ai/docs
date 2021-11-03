@@ -1,6 +1,13 @@
 // Duplicates data from the blog.
 const blog = [
   {
+    link: 'blog/20211103-three-cases-against-if-not-exists-and-if-exists-in-postgresql-ddl',
+    date: '2021-11-03 23:45:00',
+    title: 'Three Cases Against IF NOT EXISTS / IF EXISTS in Postgres DDL',
+    description: 'If we aim to have predictable results, it is better to avoid to avoid `IF NOT EXISTS` / `IF EXISTS` in DB schema migrations.',
+    image: '/assets/thumbnails/20211103-three-cases-against-if-not-exists-and-if-exists-in-postgresql-ddl.png',
+  },
+  {
     link: 'blog/20211029-how-partial-and-covering-indexes-affect-update-performance-in-postgresql',
     date: '2021-10-29 23:55:00',
     title: 'How partial, covering, and multicolumn indexes may slow down UPDATEs in PostgreSQL',
@@ -14,7 +21,7 @@ const blog = [
     description: 'The Database Lab Platform now supports resetting of DLE clones to any data snapshot. Which might be useful in the cases when long-living clones need to get the most up-to-date data or when troubleshooting a non-trivial issue.',
     image: '/assets/thumbnails/console-reset-options.png',
   },
-  {
+  /*{
     link: 'blog/20211018-postgresql-lock-trees',
     date: '2021-10-18 17:05:00',
     title: 'Useful queries to analyze PostgreSQL lock trees (a.k.a. lock queues)',
