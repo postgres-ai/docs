@@ -1,4 +1,23 @@
-const collections = [
+type Item = {
+  title: string
+  url: string
+  previewUrl: string
+  comment?: string
+  commentatorId?: string
+}
+
+export type Collection = {
+  id: string
+  title: string
+  curatorId: string
+  date: string
+  comment?: string
+  previewUrl?: string
+  url: string
+  items: Item[]
+}
+
+const collections: Collection[] = [
   {
     id: 'aws-postgres',
     title: 'AWS, RDS, Aurora PostgreSQL',
