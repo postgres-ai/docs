@@ -1,3 +1,5 @@
+const path = require('path')
+
 const URL = (!!process.env.URL ? process.env.URL : 'https://v2.postgres.ai/');
 const BASE_URL = (!!process.env.BASE_URL ? process.env.BASE_URL : '/');
 const SIGN_IN_URL = (!!process.env.SIGN_IN_URL ? process.env.SIGN_IN_URL : '/signin');
@@ -290,6 +292,18 @@ module.exports = {
         ],
       },
     ],
+    [
+      path.resolve(__dirname, 'plugin-dynamic-routes'),
+      { // this is the options object passed to the plugin
+          routes: [
+              { // using Route schema from react-router
+                  path: '/universe',
+                  exact: false, // this is needed for sub-routes to match!
+                  component: path.resolve(__dirname, 'src/dynamicPages/universe')
+              }
+          ]
+      }
+  ],
   ],
 
   presets: [
