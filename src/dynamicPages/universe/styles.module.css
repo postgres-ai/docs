@@ -3,26 +3,6 @@
   margin-bottom: 30px;
 }
 
-.backButton {
-  display: inline-block;
-  border-radius: 20px;
-  position: fixed;
-  top: 4.5em;
-  left: 5%;
-  margin-left: -15px;
-  background-color: #292A2B;
-  box-shadow: 0 1px 4px 0 rgb(0 0 0 / 25%);
-  padding: 0 10px 0 10px;
-}
-
-.backButton a {
-  color: var(--ifm-heading-color);
-}
-
-html[data-theme="light"] .backButton {
-  background: white;
-}
-
 .collectionContainer {
   width: 90%;
   margin-left: auto;
@@ -67,11 +47,6 @@ html[data-theme="light"] .collectionCard {
   display: block;
 }
 
-.cardBottom {
-  padding: 20px;
-  font-size: 14px;
-}
-
 .cardLink {
   color: inherit;
   text-decoration: none;
@@ -84,57 +59,22 @@ html[data-theme="light"] .collectionCard {
   transition: inherit;
 }
 
-.avatarContainer {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-content: stretch;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.curatorAvatar {
-  justify-content: center;
-  margin: 0 0 var(--ifm-paragraph-margin-bottom);
-}
-
-.curatedNotion {
-  margin: 0;
-  font-size: 14px;
-}
-
-.avatar {
-  height: 30px;
-  width: 30px;
-  margin-right: 10px;
-  border-radius: 50%;
-}
-
-.commentBubble {
-  border-radius: 20px;
-  padding: 20px;
-}
-
-html[data-theme="light"] .commentBubble {
-  background: #efefef;
-}
-
-html[data-theme="dark"] .commentBubble {
-  background: #454545;
-}
-
-.commentator {
-  font-weight: bold;
-  margin: 0;
-}
-
 .collectionGrid {
   display: flex;
   margin-left: -30px; /* gutter size offset */
   width: auto;
 }
+
 .collectionGridCol {
   padding-left: 30px; /* gutter size */
   background-clip: padding-box;
+}
+
+.inlineCollectionName {
+  padding: 10px 20px 10px 20px;
+  font-size: 12px;
+}
+
+.inlineCollectionName span {
+  text-decoration: underline;
 }

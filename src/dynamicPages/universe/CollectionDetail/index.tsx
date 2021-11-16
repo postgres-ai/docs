@@ -2,13 +2,17 @@ import { Link, useParams } from '@docusaurus/router'
 import React from 'react'
 import Layout from '@theme/Layout'
 import Masonry from 'react-masonry-css'
+import classNames from 'classnames'
 
 import collections from '../../../data/collections'
-import { GatewayLink } from '../../../components/GatewayLink'
-import authors from '../../../data/authors'
 import { ROUTES } from '../../routes'
+import mockAuthors from '../../../data/authors'
+import { getAuthorById } from '../Collections/utils'
+import { AuthorInfo } from '../components/AuthorInfo'
+import { PostItem } from '../components/PostItem'
 
-import styles from '../styles.module.css'
+import commonStyles from '../styles.module.css'
+import styles from './styles.module.css'
 
 type OwnProps = {}
 
@@ -23,12 +27,12 @@ const masonryColumns = {
   600: 1,
 }
 
-const CollectionDetailCmp: React.FC<Props> = (props) => {
+const CollectionDetailCmp: React.FC<Props> = () => {
   const { id } = useParams<{ id: string }>()
 
   const collection = collections.find((collection) => collection.id === id)
 
-  if (!collection || !collection.items)
+  if (!collection || !collection.posts)
     return (
       <Layout title="Collection not found">
         <main className="container margin-vert--lg">
@@ -39,73 +43,50 @@ const CollectionDetailCmp: React.FC<Props> = (props) => {
       </Layout>
     )
 
+  const curator = getAuthorById(mockAuthors, collection.curatorId)
+
   return (
     <Layout title={collection.title}>
       <div className={styles.backButton}>
         <Link to={ROUTES.UNIVERSE.path}>← Back to collections</Link>
       </div>
-      <main className={'margin-vert--lg ' + styles.collectionContainer}>
+      <main
+        className={classNames(
+          'margin-vert--lg',
+          commonStyles.collectionContainer,
+        )}
+      >
         <div className="text--center margin-bottom--m">
           <h1>{collection.title}</h1>
           <p>{collection.comment}</p>
-          {collection.curatorId && authors[collection.curatorId] && (
+          {curator && (
             <div>
               <p className={styles.curatedNotion}>Curated by</p>
-              <div
-                className={styles.avatarContainer + ' ' + styles.curatorAvatar}
-              >
-                <img
-                  className={styles.avatar}
-                  src={authors[collection.curatorId].avatarUrl}
-                  alt={authors[collection.curatorId].name}
+              {curator && (
+                <AuthorInfo
+                  author={curator}
+                  containerClassName={styles.curatorAvatar}
                 />
-                <span className={styles.commentator}>
-                  {authors[collection.curatorId].name}
-                </span>
-              </div>
+              )}
             </div>
           )}
         </div>
         <div className="row">
           <Masonry
             breakpointCols={masonryColumns}
-            className={styles.collectionGrid}
-            columnClassName={styles.collectionGridCol}
+            className={commonStyles.collectionGrid}
+            columnClassName={commonStyles.collectionGridCol}
           >
-            {collection.items.map((item) => (
-              <div key={item.title} className={styles.collectionCard}>
-                <div className={styles.cardTop}>
-                  <GatewayLink href={item.url} className={styles.cardLink}>
-                    <h4>{item.title}</h4>
-                  </GatewayLink>
-                </div>
-
-                <div className={styles.cardPreview}>
-                  <GatewayLink href={item.url} className={styles.cardLink}>
-                    <img src={item.previewUrl} alt={item.title} />
-                  </GatewayLink>
-                </div>
-
-                {item.comment && (
-                  <div className={styles.cardBottom}>
-                    <div className={styles.commentBubble}>{item.comment}</div>
-
-                    {item.commentatorId && authors[item.commentatorId] && (
-                      <div className={styles.avatarContainer}>
-                        <img
-                          className={styles.avatar}
-                          src={authors[item.commentatorId].avatarUrl}
-                          alt={authors[item.commentatorId].name}
-                        />
-                        <span className={styles.commentator}>
-                          {authors[item.commentatorId].name}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            ))}
+            {collection.posts.map((post, index) => {
+              return (
+                <PostItem
+                  // todo change index to id
+                  key={index}
+                  post={post}
+                  commentAuthor={getAuthorById(mockAuthors, post.commentatorId)}
+                />
+              )
+            })}
           </Masonry>
         </div>
       </main>

@@ -3,7 +3,10 @@ import Layout from '@theme/Layout'
 import Masonry from 'react-masonry-css'
 
 import mockCollections from '../../../data/collections'
+import mockAuthors from '../../../data/authors'
 import { CollectionItem } from './CollectionItem'
+import { PostItem } from '../components/PostItem'
+import { getAuthorById, getLatestFeed } from './utils'
 
 import styles from '../styles.module.css'
 
@@ -25,6 +28,7 @@ export const Collections: React.FC = () => {
         <div className={styles.title}>
           <h1>{HOME_TITLE}</h1>
         </div>
+        <h2>Collections</h2>
         <div className="row">
           <Masonry
             breakpointCols={masonryColumns}
@@ -32,7 +36,31 @@ export const Collections: React.FC = () => {
             columnClassName={styles.collectionGridCol}
           >
             {mockCollections.map((collection) => {
-              return <CollectionItem collection={collection} />
+              return (
+                <CollectionItem key={collection.id} collection={collection} />
+              )
+            })}
+          </Masonry>
+        </div>
+        <h2>Latest</h2>
+        <div className="row">
+          <Masonry
+            breakpointCols={masonryColumns}
+            className={styles.collectionGrid}
+            columnClassName={styles.collectionGridCol}
+          >
+            {getLatestFeed(mockCollections, 10).map((post, index) => {
+              return (
+                <PostItem
+                  // todo change index to id
+                  key={index}
+                  post={post}
+                  commentAuthor={getAuthorById(
+                    mockAuthors,
+                    post.commentatorId,
+                  )}
+                />
+              )
             })}
           </Masonry>
         </div>

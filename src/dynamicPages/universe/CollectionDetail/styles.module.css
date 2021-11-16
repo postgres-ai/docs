@@ -1,0 +1,29 @@
+.backButton {
+  display: inline-block;
+  border-radius: 20px;
+  position: fixed;
+  top: 4.5em;
+  left: 5%;
+  margin-left: -15px;
+  background-color: #292A2B;
+  box-shadow: 0 1px 4px 0 rgb(0 0 0 / 25%);
+  padding: 0 10px 0 10px;
+}
+
+.backButton a {
+  color: var(--ifm-heading-color);
+}
+
+html[data-theme="light"] .backButton {
+  background: white;
+}
+
+.curatedNotion {
+  margin: 0;
+  font-size: 14px;
+}
+
+.curatorAvatar {
+  justify-content: center;
+  margin: 0 0 var(--ifm-paragraph-margin-bottom);
+}

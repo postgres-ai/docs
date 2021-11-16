@@ -1,0 +1,21 @@
+.avatarContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-content: stretch;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.avatar {
+  height: 30px;
+  width: 30px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+.commentator {
+  font-weight: bold;
+  margin: 0;
+}
