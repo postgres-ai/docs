@@ -1,0 +1,17 @@
+.cardBottom {
+  padding: 20px;
+  font-size: 14px;
+}
+
+.commentBubble {
+  border-radius: 20px;
+  padding: 20px;
+}
+
+html[data-theme="light"] .commentBubble {
+  background: #efefef;
+}
+
+html[data-theme="dark"] .commentBubble {
+  background: #454545;
+}

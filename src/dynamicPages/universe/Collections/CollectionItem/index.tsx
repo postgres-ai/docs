@@ -17,7 +17,7 @@ const CollectionItemCmp: React.FC<Props> = (props) => {
   const detailUrl = `${ROUTES.UNIVERSE.path}${collection.id}`
 
   return (
-    <div key={collection.title} className={styles.collectionCard}>
+    <div className={styles.collectionCard}>
       <div className={styles.cardPreview}>
         <Link to={detailUrl} className={styles.cardLink}>
           <img src={collection.previewUrl} alt={collection.title} />

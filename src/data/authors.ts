@@ -1,4 +1,15 @@
-const authors = {
+export type Author = {
+  avatarUrl: string
+  name: string
+  gitlabUrl: string
+  githubUrl: string
+  linkedinUrl?: string
+  role?: string
+  twitterUrl?: string
+  note?: string
+}
+
+const authors: { [key: string]: Author } = {
   nik: {
     avatarUrl: '/assets/author/nik.jpg',
     name: 'Nikolay Samokhvalov',
