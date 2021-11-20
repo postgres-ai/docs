@@ -50,6 +50,8 @@ This was a big surprise. I know that this will be a surprise to many of my reade
 
 First, a few words about what partial and covering indexes are – feel free to scroll down to the "Experiments" if you know it.
 
+<DbLabBanner />
+
 ## Partial indexes
 [Partial index](https://en.wikipedia.org/wiki/Partial_index) is a good way to save some disk space and improve record lookup performance. The common rule is "use it when you can afford it" — in other words, if all your queries involve some filter, it is usually considered a good idea to include such filter to index definition, to reduce its size and improve its performance (the smaller your index is, the faster the corresponding index scan will be).
 
@@ -86,7 +88,7 @@ If our SELECT involves only those columns which values are present in the index,
 I had always an impression that covering indexes are mostly useful in the case of UNIQUE index and unique constraint enforcement – if we have a unique index and want to add a column to it, we cannot just extend the list of columns because it would change the uniqueness constraint. Instead, we add it to `INCLUDE`. However, Franck showed to me another benefit of covering indexes compared to multicolumn ones – changing values of the "extra" column in a covering index is lighter (hence, faster) than the same change in the case when the column is a part of the column list in a multicolumn index (here is [a simple demo from Franck](https://dbfiddle.uk/?rdbms=postgres_13&fiddle=4fc59c7e6a05b14f1dd03b3d2f8859e1)).
 
 ## Experiments
-To explore various index options, we will use only what is available in any PostgreSQL database. I've documented the whole experiment series in a GitLab snippet: https://gitlab.com/-/snippets/2193918, so you can repeat the steps easily. In the same snippet you can also find the result of execution that I've got on the laptop used to write this post (Macbook Air, M1 2020). The numbers discussed further are those that I had on this hardware. 
+To explore various index options, we will use only what is available in any PostgreSQL database. I've documented the whole experiment series in a GitLab snippet: https://gitlab.com/-/snippets/2193918, so you can repeat the steps easily. In the same snippet you can also find the result of execution that I've got on the laptop used to write this post (Macbook Air, M1 2020). The numbers discussed further are those that I had on this hardware.
 
 ### DB schema
 Consider a simple example:
@@ -280,11 +282,11 @@ Of course, for different kinds of queries and data, the picture could be differe
 
 ## Lessons learned
 - The key lesson: if we include a column in an index definition UPDATEs changing values in that column cannot be HOT anymore, and this may make UPDATEs significantly slower. Most (~97%) of the UPDATEs changing `price` were HOT for the case with 1-column index on `owner_id` and, of course, for the case without an additional index defined. But once `price` becomes a part of the index definition, all updates lose their "HOTness". And this is very noticeable: the TPS value drops from ~48k to ~28-30k – so we have ~40% degradation. The level of degradation depends on how big is the difference between HOT and regular UPDATEs: the more indexes we have on the table, the bigger this difference can be.
-- One might easily expect this effect to happen (though it's still easy to forget about it) when using a column in multicolumn or covering indexes. But partial indexes demonstrate this behavior too and this may be very surprising. If we put a column definition to the `WHERE` clause of `CREATE INDEX` - UPDATEs changing values in that column cannot be HOT anymore, therefore they become slower. Optimizing SELECTs using a partial index and not checking the behavior of the UPDATE queries, we would definitely break the "Primum non nocere" rule. 
+- One might easily expect this effect to happen (though it's still easy to forget about it) when using a column in multicolumn or covering indexes. But partial indexes demonstrate this behavior too and this may be very surprising. If we put a column definition to the `WHERE` clause of `CREATE INDEX` - UPDATEs changing values in that column cannot be HOT anymore, therefore they become slower. Optimizing SELECTs using a partial index and not checking the behavior of the UPDATE queries, we would definitely break the "Primum non nocere" rule.
 - It is well-known that any new index created slightly slows down write operations (UPDATEs, DELETEs, INSERTs) – but that degradation is usually much smaller than that one we observed here (in fact, without any additional index, we had even slightly lower TPS for the UPDATE queries than for the case with 1-column index: 46k vs. 48k).
 - The covering index turned out to be significantly bigger than the 2-column one: 30 MiB vs. 21 MiB. This is because btree deduplication [added in Postgres 13](https://www.postgresql.org/docs/13/btree-implementation.html#BTREE-DEDUPLICATION) is not implemented for covering indexes (for Postgres 11, the index size will be the same).
 
-You might have additional interesting thoughts. I would love to hear them! Ping me in Twitter to discuss it: [@samokhvalov](https://twitter.com/samokhvalov). 
+You might have additional interesting thoughts. I would love to hear them! Ping me in Twitter to discuss it: [@samokhvalov](https://twitter.com/samokhvalov).
 
 ## Holistic approach: performance regression testing in CI/CD pipelines
 How would we avoid similar problems when making database changes? We live in the era of very advanced CI/CD tools and methodologies, so a reasonable answer here would be "let's have some set of tests that will help us detect and prevent performance degradation".

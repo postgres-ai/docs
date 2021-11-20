@@ -28,6 +28,8 @@ This article discusses what subtransactions are, how to create them, and how wid
 
 <!--truncate-->
 
+<DbLabBanner />
+
 ## What is a subtransaction?
 Subtransaction, also known as "nested transaction", is a transaction started by instruction within the scope of an already started transaction ([definition from Wikipedia](https://en.wikipedia.org/wiki/Nested_transaction)). This feature allows users to partially rollback a transaction, which is helpful in many cases: fewer steps need to be repeated to retry the action if some error occurs.
 
@@ -35,7 +37,7 @@ Subtransaction, also known as "nested transaction", is a transaction started by 
 ```
 <savepoint statement> ::=
   SAVEPOINT <savepoint specifier>
-				
+
 <savepoint specifier> ::=
   <savepoint name>
 
@@ -54,7 +56,7 @@ It also defines `RELEASE SAVEPOINT` that allows erasing information about an "ac
 PostgreSQL supports nested transactions since version 8.0 (see commit [573a71a](https://github.com/postgres/postgres/commit/573a71a5da70d6e2503c8f53e3b4f26b3b6d738d) made on June 30, 2004). It supports a slightly different syntax compared to the SQL standard – for example, allowing to omit the word `SAVEPOINT` in the `RELEASE` and `ROLLBACK` statements:
 
 - `SAVEPOINT savepoint_name` ([doc](https://www.postgresql.org/docs/current/sql-savepoint.html))
-- `ROLLBACK [ WORK | TRANSACTION ] TO [ SAVEPOINT ] savepoint_name` ([doc](https://www.postgresql.org/docs/current/sql-rollback-to.html))  
+- `ROLLBACK [ WORK | TRANSACTION ] TO [ SAVEPOINT ] savepoint_name` ([doc](https://www.postgresql.org/docs/current/sql-rollback-to.html))
 - `RELEASE [ SAVEPOINT ] savepoint_name` ([doc](https://www.postgresql.org/docs/current/sql-release-savepoint.html))
 
 Here is a simple demonstration:
@@ -70,7 +72,7 @@ UPDATE 1
 test=*# savepoint s1;
 SAVEPOINT
 
-test=*# update test0 set i = i - 1000; 
+test=*# update test0 set i = i - 1000;
 UPDATE 1
 test=*# select * from test0;
   i
@@ -111,7 +113,7 @@ Today, the majority of the popular ORMs and frameworks support nested transactio
 - [Sequelize](https://github.com/sequelize/sequelize/blob/v5/lib/transaction.js#L41-L42) (sometimes, in [a weird form](https://github.com/sequelize/sequelize/blob/b33d78eb81b496d303e9dc4efdd3930b6feea3ce/types/lib/model.d.ts#L2027))
 
 Besides SAVEPOINTs, there are other ways to create subtransactions:
-- `BEGIN / EXCEPTION WHEN .. / END` blocks in PL/pgSQL code (the official documentation does not describe it well; explored, for example, in this article: ["PL/PgSQL Exception and XIDs"](https://fluca1978.github.io/2020/02/05/PLPGSQLExceptions.html)) 
+- `BEGIN / EXCEPTION WHEN .. / END` blocks in PL/pgSQL code (the official documentation does not describe it well; explored, for example, in this article: ["PL/PgSQL Exception and XIDs"](https://fluca1978.github.io/2020/02/05/PLPGSQLExceptions.html))
 - [`plpy.subtransaction()`](https://www.postgresql.org/docs/current/plpython-subtransaction.html) in PL/Python code
 
 One may assume that many applications that use PL/pgSQL or PL/Python functions use subtransactions. Systems that run API built on [PostgREST](https://postgrest.org/en/latest/search.html?q=plpgsql), [Supabase](https://github.com/supabase/postgres/issues/26), [Hasura](https://hasura.io/docs/latest/graphql/core/databases/postgres/schema/default-values/sql-functions.html#step-2-create-a-trigger) might have PL/pgSQL functions (including trigger functions)) that involve `BEGIN / EXCEPTION WHEN .. / END` blocks; in such cases, those systems use subtransactions.
@@ -436,7 +438,7 @@ Bottom line: if you expect that your system will need to handle thousands of TPS
 ## How harmful are Postgres subtransactions?
 Do these problems mean that all systems are doomed to experience these problems? Of course, no. Many systems will not reach any of those limits or levels of load when bad events start hitting performance. However, it hurts badly when it happens, and it requires much effort to troubleshoot and fix. One of the sound examples is Amazon's outages during the Prime Day 2018, when Postgres implementation of savepoints managed to be discussed widely (they used Amazon Aurora Postgres, which, of course, is a different DBMS, but as I understand, subtransaction processing there is inherited from Postgres), in various media:
 
-- CNBC, ["Amazon’s move off Oracle caused Prime Day outage in one of its biggest warehouses, internal report says"](https://www.cnbc.com/2018/10/23/amazon-move-off-oracle-caused-prime-day-outage-in-warehouse.html): 
+- CNBC, ["Amazon’s move off Oracle caused Prime Day outage in one of its biggest warehouses, internal report says"](https://www.cnbc.com/2018/10/23/amazon-move-off-oracle-caused-prime-day-outage-in-warehouse.html):
     > In one question, engineers were asked why Amazon’s warehouse database didn’t face the same problem "during the previous peak when it was on Oracle." They responded by saying that "Oracle and Aurora PostgreSQL are two different [database] technologies" that handle "savepoints" differently. Savepoints are an important database tool for tracking and recovering individual transactions. On Prime Day, an excessive number of savepoints was created, and Amazon's Aurora software wasn’t able to handle the pressure, slowing down the overall database performance, the report said.
 - CIO Dive, ["Migration lessons learned: Even Amazon can face mishaps with new tools"](https://www.ciodive.com/news/migration-lessons-learned-even-amazon-can-face-mishaps-with-new-tools/540742/)
     > Amazon is about 92% finished migrating off of Oracle's database software and onto its internal Aurora PostgreSQL, according to Werner Vogels, Amazon CTO ... An Amazon warehouse in Ohio experienced the creation of too many savepoints, resulting in a "temporary situation where the database was very slow," according to Vogels.

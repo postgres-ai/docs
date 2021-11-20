@@ -33,10 +33,12 @@ Why so?
 
 It's all dictated by our expectations for HTTP/HTTPS requests. When a user opens a web page or interacts with a mobile app, triggering API calls, we expect the server to respond fast. It is possible and makes sense to define some requirements for the speed of such a response. In an article ["Response Times: The 3 Important Limits"](https://www.nngroup.com/articles/response-times-3-important-limits/) published in 1993, Jakob Nielsen, a famous web usability consultant and human–computer interaction researcher, described the "0.1 / 1 / 10" rule for building well-performant interfaces:
 
+<DbLabBanner />
+
 > There are 3 main time limits (which are determined by human perceptual abilities) to keep in mind when optimizing web and application performance.
 >
 > ... The basic advice regarding response times has been about the same for thirty years:
-> 
+>
 > - **0.1 second** is about the limit for having the user feel that the system is **reacting instantaneously**, meaning that no special feedback is necessary except to display the result.
 > - **1.0 second** is about the limit for the **user's flow of thought** to stay uninterrupted, even though the user will notice the delay. Normally, no special feedback is necessary during delays of more than 0.1 but less than 1.0 second, but the user does lose the feeling of operating directly on the data.
 > - **10 seconds** is about the limit for **keeping the user's attention** focused on the dialogue. For longer delays, users will want to perform other tasks while waiting for the computer to finish ...
@@ -52,7 +54,7 @@ In other words, events that last less than 100 ms are perceived as almost instan
 ## SRT and slow SQL
 For web and mobile applications, these numbers can be mapped to [Server Response Time](https://en.wikipedia.org/wiki/Software_performance_testing#Server_response_time) (SRT). For example, Google's PageSpeed Insights project considered SRT below 200 ms as good. And it's quite obvious that 1 second or more is quite slow.
 
-Assuming that any HTTP(S) request may imply a few SQL queries that do some specific work like retrieving several parts of the content from the database and writing some others, then, very roughly of course, we can draw the following expectation to SQL performance in the context of web and mobile applications: 
+Assuming that any HTTP(S) request may imply a few SQL queries that do some specific work like retrieving several parts of the content from the database and writing some others, then, very roughly of course, we can draw the following expectation to SQL performance in the context of web and mobile applications:
 
 - 10 ms or less – good performance
 - 10-100 ms – optimization is recommended
@@ -77,7 +79,7 @@ The only ways to find the average SQL execution time (some name it "average late
     stats: 318 xacts/s, 443 queries/s, in 59883 B/s, out 122544 B/s, xact 1076 us, query 454 us, wait 548 us
     ```
     – this reads as: "318 transactions per second (TPS), 443 queries per second (QPS), ~58 KiB/s inbound traffic, ~119 KiB/s outbound, transaction average duration is 1076 microseconds ("μs", or "us"), query average duration is 454 μs, wait time – 546 μ". Another way to get statistics from pgBouncer is to connect to pgBouncer's so-called ["admin console"](https://www.pgbouncer.org/usage.html) and run `show stats;`.
-1. If slow queries are logged (via setting `log_min_duration_statement`), this may be a good way to learn something too. Although, it is usually not recommended to log all queries (`log_min_duration_statement = 0`) because this can quickly become a bottleneck. Quite often, people use values like `1s` or `500ms` for `log_min_duration_statement`, so we see only "the tip of the iceberg" (although, the "worst" one – the least performance queries), so we cannot really calculate the real averages. But still, we can see trends. For PostgreSQL log analysis, good old [pgBadger](https://github.com/darold/pgbadger) is still a thing. 
+1. If slow queries are logged (via setting `log_min_duration_statement`), this may be a good way to learn something too. Although, it is usually not recommended to log all queries (`log_min_duration_statement = 0`) because this can quickly become a bottleneck. Quite often, people use values like `1s` or `500ms` for `log_min_duration_statement`, so we see only "the tip of the iceberg" (although, the "worst" one – the least performance queries), so we cannot really calculate the real averages. But still, we can see trends. For PostgreSQL log analysis, good old [pgBadger](https://github.com/darold/pgbadger) is still a thing.
 1. Finally, some application-side monitoring systems implement SQL query analysis, normalizing and aggregating SQL queries similarly to pg_stat_statements or pgBadger and providing various statistics, usually including average SQL duration. I'm not aware of any free tool of such kind, though. And it is always worth keeping in mind that such analysis, performed on the client-side, involves network latencies – time spent in network is added to the pure SQL processing time, so we analyze the sum of them.
 
 ## Summary

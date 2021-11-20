@@ -81,6 +81,8 @@ Indexes:
 
 Why do engineers add `IF NOT EXISTS` in such cases? Because they are uncertain if their change was already deployed to lower environments: dev, QA, staging, and so on. `IF NOT EXISTS` suppresses errors and allows to "deploy" the change many times. However, this approach just hides the imperfection of the management of those environments – instead of improving the workflow, we now have increased risks of having various schema change anomalies and even production incidents. Further, we will discuss two more cases similar in nature.
 
+<DbLabBanner />
+
 ## Example 2: DROP TABLE IF EXISTS
 Most of the modern schema version control tools allow having both "do" and "undo" steps (they can be called somehow else – e.g., "deploy" and "revert"). There are opinions that the "undo" steps are useless – they may seem more or less valuable depending on circumstances, deployment workflow, and DevOps culture. However, if they are used, in some cases, we can find the following:
 ```sql
@@ -115,7 +117,7 @@ DROP TABLE
 But what if `mytable` was created by another DB schema migration long ago? If the "undo" step needs to be executed somewhere, we are going to drop that table. This is not what we expected! For such time of mistakes, we do need to have an error in CI tests - bug IF EXISTS is going to "mask" the problem. As a result, automated testing is not going to catch the problem, and this wrong change has risks to be released.
 
 ## Example 3: CREATE INDEX CONCURRENTLY IF NOT EXISTS
-For large tables under load, it is recommended to use `CREATE INDEX CONCURRENTLY` – it is going to work longer that `CREATE INEDEX` but it won't cause downtime. 
+For large tables under load, it is recommended to use `CREATE INDEX CONCURRENTLY` – it is going to work longer that `CREATE INEDEX` but it won't cause downtime.
 
 It is not uncommon to see how DBAs try various index ideas right on the production database, trying to find a band-aid for some suboptimal query, and then, once found, they suggest developers include the index to migrations – just to "register" it. In such cases, it is tempting to use  `CREATE INDEX CONCURRENTLY IF NOT EXISTS`.
 
