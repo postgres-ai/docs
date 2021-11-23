@@ -29,6 +29,8 @@ For OLTP workloads (such as web and mobile applications), it is important to und
 
 <!--truncate-->
 
+<DbLabBanner />
+
 When it comes to the lock monitoring and troubleshooting, you can start with basic queries collected at these PostgreSQL Wiki pages:
 - [Lock Monitoring](https://wiki.postgresql.org/wiki/Lock_Monitoring)
 - [Lock dependency information](https://wiki.postgresql.org/wiki/Lock_dependency_information)

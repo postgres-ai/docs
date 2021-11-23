@@ -13,10 +13,9 @@ export const DbLabBanner = () => {
         className={styles.img}
       />
       <div className={styles.content}>
-        <h6 className={styles.title}>Explore Database Lab</h6>
+        <h6 className={styles.title}>Database Lab by Postgres.ai</h6>
         <p className={styles.desc}>
-          Clone large PostgreSQL databases in seconds and get superpowers when
-          changing DB schema and optimizing SQL queries!
+          An open-source experimentation platform for PostgreSQL databases. Instantly create full-size clones of your production database and use them to test your database migrations, optimize SQL, or deploy full-size staging apps.
         </p>
         <nav className={styles.links}>
           <StyledLink href="/products/how-it-works" className={styles.link}>

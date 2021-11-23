@@ -33,6 +33,8 @@ It is time to dive into technical details...
 
 <!--truncate-->
 
+<DbLabBanner />
+
 ## Problem demonstration
 Let's jump straight to the point: when you deploy database schema changes, you are not protected from system downtime even if you have very high-level automation but don't use very low values of `lock_timeout` (or `statement_timeout`) to acquire a lock on the DB objects that are subject to change and do not implement some kind of retry logic.
 
@@ -171,7 +173,7 @@ In his article ["How to run short ALTER TABLE without long locking concurrent qu
     ```sql
     set statement_timeout = '50ms';
     ```
-1. Since now the DDL can fail fast, implement retries: 
+1. Since now the DDL can fail fast, implement retries:
     ```shell
     while true; do date; psql -qX -v ON_ERROR_STOP=1 -f alter.sql && break; sleep 1; done
     ```
@@ -182,7 +184,7 @@ begin;
     set statement_timeout = 50;
     lock table only test in ACCESS EXCLUSIVE MODE;
     set statement_timeout = 0;
- 
+
     alter table test ....;
     -- do whatever you want, timeout is removed.
 commit;
@@ -199,7 +201,7 @@ What if we need to combine multiple DDL commands in a single transaction? Postgr
 
       lock table only t1 in access exclusive mode;
       lock table only t2 in access exclusive mode;
-     
+
       alter table t1 ...;
       alter table t2 ...;
     commit;
@@ -212,21 +214,21 @@ What if we need to combine multiple DDL commands in a single transaction? Postgr
        lock_timeout CONSTANT text := '50ms';
        max_attempts CONSTANT INT := 1000;
        ddl_completed BOOLEAN := FALSE;
-    BEGIN 
-     
+    BEGIN
+
        PERFORM set_config('lock_timeout', lock_timeout, FALSE);
-     
+
        FOR i IN 1..max_attempts LOOP
           BEGIN
              EXECUTE 'ALTER TABLE test add column whatever2 INT4';
              ddl_completed := TRUE;
              EXIT;
-          EXCEPTION 
+          EXCEPTION
              WHEN lock_not_available THEN
                NULL;
           END;
        END LOOP;
-     
+
        IF ddl_completed THEN
           RAISE INFO 'DDL has been successfully completed';
        ELSE
@@ -346,7 +348,7 @@ declare
   cap_ms bigint := 60000;
   base_ms bigint := 10;
   delay_ms bigint := NULL;
-begin 
+begin
   perform set_config('lock_timeout', lock_timeout, false);
 
   for i in 1..max_attempts loop
