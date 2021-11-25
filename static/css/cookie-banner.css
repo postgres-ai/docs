@@ -10,14 +10,22 @@
 .cookie-banner {
   position: fixed;
   bottom: 0;
-  left: 0;
+  right: 0;
   width: 100%;
   height: auto;
-  background: #fff;
-  box-shadow: 0 0 16px rgba(0,0,0, .15);
+  background: #000;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.15);
   padding: 16px;
-  transition: opacity .2s ease-out, transform .2s ease-out;
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
   font-size: 14px;
+  width: 480px;
+  border-radius: 16px;
+  bottom: 10px;
+  right: 10px;
+}
+
+html[data-theme='light'] .cookie-banner {
+  background: #fff;
 }
 
 .cookie-banner_hidden {
@@ -62,4 +70,18 @@
   background: #ff6112;
   border: none;
   color: #fff;
+  width: 120px;
+}
+
+@media (max-width: 560px) {
+  .cookie-banner {
+    width: 100%;
+    bottom: 0;
+    right: 0;
+    border-radius: 0;
+  }
+
+  .cookie-banner__accept-button {
+    width: unset;
+  }
 }
