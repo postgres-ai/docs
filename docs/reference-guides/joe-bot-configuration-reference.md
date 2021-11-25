@@ -71,7 +71,7 @@ channelMapping:
       url: "https://dblab.domain.com"
       # Secret token used to communicate with Database Lab API
       token: "secret_token"
-      # Allow changing DLE requests timeout
+      # Allow changing requests timeout
       requestTimeout: 60s
 
   # Available communication types ("webui", "slack", "slackrtm", etc.)
@@ -104,8 +104,7 @@ channelMapping:
               # usually exists in any PostgreSQL setup.
               dbname: postgres
               # It is NOT recommended to work without SSL. This value will be
-              # used in a clone's pg_hba.conf. 
-              # See https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-SSLMODE-STATEMENTS
+              # used in a clone's pg_hba.conf. See https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-SSLMODE-STATEMENTS
               sslmode: prefer
 
     # Communication type: Slack Events API.
@@ -142,11 +141,10 @@ channelMapping:
               # usually exists in any PostgreSQL setup.
               dbname: postgres
               # It is NOT recommended to work without SSL. This value will be
-              # used in a clone's pg_hba.conf. 
-              # See https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-SSLMODE-STATEMENTS
+              # used in a clone's pg_hba.conf. See https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-SSLMODE-STATEMENTS
               sslmode: prefer
 
-    # Communication type: Slack RTM.
+    # Communication type: SlackRTM.
     slackrtm:
       # Workspace name. Feel free to choose any name, it is just an alias.
       - name: Workspace
@@ -176,8 +174,43 @@ channelMapping:
               # usually exists in any PostgreSQL setup.
               dbname: postgres
               # It is NOT recommended to work without SSL. This value will be
-              # used in a clone's pg_hba.conf. 
-              # See https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-SSLMODE-STATEMENTS
+              # used in a clone's pg_hba.conf. See https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-SSLMODE-STATEMENTS
+              sslmode: prefer
+
+    # Communication type: Slack Socket Mode.
+    slacksm:
+      # Workspace name. Feel free to choose any name, it is just an alias.
+      - name: Workspace
+
+        # This mode requires AppLevel token in addition to bot user oauth token
+        # See https://api.slack.com/authentication/token-types
+        credentials:
+          # Bot OAuth Access.
+          accessToken: xoxb-XXXX
+          # AppLevel token is required for connections:write scope
+          appLevelToken: xapp-XXXX
+
+        channels:
+          # Slack channel ID. In Slack app, right-click on the channel name,
+          # and choose "Additional options > Copy link". From that link, we
+          # need the last part consisting of 9 letters starting with "C".
+          - channelID: CXXXXXXXX
+
+            # Postgres.ai Platform project to which user sessions are to be assigned.
+            project: "demo"
+
+            # Database Lab alias from the "dblabServers" section.
+            dblabServer: prod1
+
+            # PostgreSQL connection parameters used to connect to a clone.
+            # The username/password are not needed; they will be randomly
+            # generated each time a new clone is created.
+            dblabParams:
+              # It is recommended to leave "postgres" here, because this DB
+              # usually exists in any PostgreSQL setup.
+              dbname: postgres
+              # It is NOT recommended to work without SSL. This value will be
+              # used in a clone's pg_hba.conf. See https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-SSLMODE-STATEMENTS
               sslmode: prefer
 
 # Enterprise Edition options – only to use with active Postgres.ai Platform EE
@@ -199,20 +232,6 @@ enterprise:
   dblab:
     # Limit the number of available Database Lab instances. Default: 1.
     instanceLimit: 1
-
-  # Tool to calculate timing difference between Database Lab and production environments.
-  estimator:
-    # The ratio evaluating the timing difference for operations involving IO Read between Database Lab and production environments.
-    readRatio: 1
-
-    # The ratio evaluating the timing difference for operations involving IO Write between Database Lab and production environments.
-    writeRatio: 1
-
-    # Time interval of samples taken by the profiler.
-    profilingInterval: 10ms
-
-    # The minimum number of samples sufficient to display the estimation results.
-    sampleThreshold: 20
 
 ```
 
