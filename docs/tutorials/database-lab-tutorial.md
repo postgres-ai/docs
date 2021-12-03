@@ -336,6 +336,18 @@ Now open `~/.dblab/engine/configs/server.yml` and edit the following options:
 </Tabs>
 
 ### Launch Database Lab server
+
+<Tabs
+  groupId="tutorial-data-sources"
+  defaultValue="generated-database"
+  values={[
+    {label: '1. Generated database', value: 'generated-database'},
+    {label: '2. Physical copy (pg_basebackup)', value: 'physical-copy'},
+    {label: '3. Logical copy (dump/restore)', value: 'logical-copy'},
+  ]
+}>
+<TabItem value="generated-database">
+
 ```bash
 sudo docker run \
   --name dblab_server \
@@ -344,7 +356,6 @@ sudo docker run \
   --publish 2345:2345 \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   --volume /var/lib/dblab:/var/lib/dblab/:rshared \
-  --volume /var/lib/dblab/dblab_pool/dump:/var/lib/dblab/dblab_pool/dump \
   --volume ~/.dblab/engine/configs:/home/dblab/configs:ro \
   --volume ~/.dblab/engine/meta:/home/dblab/meta \
   --volume /sys/kernel/debug:/sys/kernel/debug:rw \
@@ -355,6 +366,54 @@ sudo docker run \
   --restart on-failure \
   postgresai/dblab-server:2.5.0
 ```
+
+</TabItem>
+<TabItem value="physical-copy">
+
+```bash
+sudo docker run \
+  --name dblab_server \
+  --label dblab_control \
+  --privileged \
+  --publish 2345:2345 \
+  --volume /var/run/docker.sock:/var/run/docker.sock \
+  --volume /var/lib/dblab:/var/lib/dblab/:rshared \
+  --volume ~/.dblab/engine/configs:/home/dblab/configs:ro \
+  --volume ~/.dblab/engine/meta:/home/dblab/meta \
+  --volume /sys/kernel/debug:/sys/kernel/debug:rw \
+  --volume /lib/modules:/lib/modules:ro \
+  --volume /proc:/host_proc:ro \
+  --env DOCKER_API_VERSION=1.39 \
+  --detach \
+  --restart on-failure \
+  postgresai/dblab-server:2.5.0
+```
+
+</TabItem>
+<TabItem value="logical-copy">
+
+```bash
+sudo docker run \
+  --name dblab_server \
+  --label dblab_control \
+  --privileged \
+  --publish 2345:2345 \
+  --volume /var/run/docker.sock:/var/run/docker.sock \
+  --volume /var/lib/dblab:/var/lib/dblab/:rshared \
+  --volume ~/.dblab/engine/configs:/home/dblab/configs:ro \
+  --volume ~/.dblab/engine/meta:/home/dblab/meta \
+  --volume /var/lib/dblab/dblab_pool/dump:/var/lib/dblab/dblab_pool/dump \
+  --volume /sys/kernel/debug:/sys/kernel/debug:rw \
+  --volume /lib/modules:/lib/modules:ro \
+  --volume /proc:/host_proc:ro \
+  --env DOCKER_API_VERSION=1.39 \
+  --detach \
+  --restart on-failure \
+  postgresai/dblab-server:2.5.0
+```
+
+</TabItem>
+</Tabs>
 
 ### How to check the Database Lab Engine logs
 ```bash
