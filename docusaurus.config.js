@@ -289,6 +289,7 @@ module.exports = {
           { to: '/docs/how-to-guides/cloning', from: '/docs/guides/cloning' },
           { to: '/docs/how-to-guides/joe-bot', from: '/docs/guides/joe-bot' },
           { to: '/docs/how-to-guides/platform', from: '/docs/guides/platform' },
+          { to: '/docs/how-to-guides/platform/onboarding', from: '/docs/tutorials/onboarding'},
         ],
       },
     ],
