@@ -32,7 +32,7 @@ sudo docker run \
   --name dblab_server \
   --label dblab_control \
   --privileged \
-  --publish 2345:2345 \
+  --publish 127.0.0.1:2345:2345 \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   --volume /var/lib/dblab:/var/lib/dblab/:rshared \
   --volume /var/lib/dblab/dblab_pool/dump:/var/lib/dblab/dblab_pool/dump \

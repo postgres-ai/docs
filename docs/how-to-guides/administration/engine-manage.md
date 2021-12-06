@@ -27,7 +27,7 @@ sudo docker run \
   --name dblab_server \
   --label dblab_control \
   --privileged \
-  --publish 2345:2345 \
+  --publish 127.0.0.1:2345:2345 \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   --volume /var/lib/dblab:/var/lib/dblab:rshared \
   --volume ~/.dblab/engine/configs:/home/dblab/configs:ro \
@@ -52,6 +52,11 @@ Database Lab Engine supports reconfiguration without a restart (therefore, witho
     sudo docker logs --since 5m dblab_server
     ```
 
+:::caution
+Note that not all configuration options can be reloaded.
+Unable to reload server API options (host and port).
+:::
+
 :::tip Tip for Vim users
 Note, that by default, editing a file in Vim leads to file inode change, so your change wouldn't propagate into the container. To mitigate this issue, put `set backupcopy=yes` into `~/.vimrc` before launching Vim. If you already launched it, type `:set backupcopy=yes`.
 :::
@@ -60,7 +65,7 @@ Note, that by default, editing a file in Vim leads to file inode change, so your
 Stop and remove the container using `sudo docker stop dblab_server` and `sudo docker rm dblab_server` After that, [launch](#start-database-lab-instance) a new container.
 
 :::caution
-Note any upgrade removes all the running clones.
+Note, prior to version 3.0.0, any upgrade removes all the running clones.
 :::
 
 ## Observe Database Lab Engine logs
