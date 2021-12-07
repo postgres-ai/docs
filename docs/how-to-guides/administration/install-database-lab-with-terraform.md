@@ -7,7 +7,7 @@ sidebar_label: Install Database Lab with Terraform
     <img src="/assets/install-dl-with-terraform.png" alt="Database Lab + Terraform"/>
 </p>
 
-The most convenient and fastest way to install the Database Lab Engine (DLE) and other Database Lab Platform components are using our [Terraform Module](https://gitlab.com/postgres-ai/database-lab-infrastructure). Your source PostgreSQL database can be located anywhere. DLE and other components will be created under your AWS account on an EC2 instance.
+The most convenient and fastest way to install the Database Lab Engine (DLE) and other Database Lab Platform components are using our [Terraform Module](https://gitlab.com/postgres-ai/terraform-postgres-ai-database-lab). Your source PostgreSQL database can be located anywhere. DLE and other components will be created under your AWS account on an EC2 instance.
 
 :::info
 Currently, only the "logical" mode of data retrieval (dump/restore) is supported – the only available method for managed PostgreSQL cloud services such as RDS Postgres, RDS Aurora Postgres, Azure Postgres, or Heroku. "Physical" mode is not yet supported by the module, but it will be in the future. More about [various data retrieval options for DLE](/docs/how-to-guides/administration/data).
@@ -50,13 +50,13 @@ terraform -help
 
 ### 2. Get and configure Database Lab Terraform Module
 :::note
-The module will be available using Terraform Registry soon, though you can clone [module's Git repository](https://gitlab.com/postgres-ai/database-lab-infrastructure) and adjust the code for your needs.
+The module will be available using Terraform Registry soon, though you can clone [module's Git repository](https://gitlab.com/postgres-ai/terraform-postgres-ai-database-lab) and adjust the code for your needs.
 :::
 
 1. Get our Terraform Module for Database Lab using Git:
 ```shell
-git clone https://gitlab.com/postgres-ai/database-lab-infrastructure.git
-cd database-lab-infrastructure/
+git clone https://gitlab.com/postgres-ai/terraform-postgres-ai-database-lab.git
+cd terraform-postgres-ai-database-lab/
 ```
 
 :::note
@@ -259,4 +259,4 @@ You can get help deploying the DLE. Here are two great ways to do this:
 
 ## Reporting Issues & Contributing
 We want to make deploying and managing the Database Lab Engine as easy as possible! Please report bugs
-and submit feature ideas using Gitlab's [Issue feature](https://gitlab.com/postgres-ai/database-lab-infrastructure/-/issues/new).
+and submit feature ideas using Gitlab's [Issue feature](https://gitlab.com/postgres-ai/terraform-postgres-ai-database-lab/-/issues/new).
