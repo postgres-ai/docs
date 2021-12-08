@@ -23,6 +23,8 @@ import { DbLabBanner } from '../src/components/DbLabBanner'
 
 #### *💬 [Hacker News discussion](https://news.ycombinator.com/item?id=28374333)*
 
+#### *💬 ["Why we spent the last month eliminating PostgreSQL subtransactions" (GitLab)](https://about.gitlab.com/blog/2021/09/29/why-we-spent-the-last-month-eliminating-postgresql-subtransactions/)*
+
 
 This article discusses what subtransactions are, how to create them, and how widely they are used nowadays. Next, we try to understand why they have a terrible reputation among PostgreSQL experts who operate heavily loaded systems. We overview four problems that may arise in a Postgres database in which subtransactions are used, and load grows. In the end, we discuss the short-term and long-term options for PostgreSQL users willing to solve the ongoing or prevent future problems related to subtransactions.
 
@@ -240,7 +242,7 @@ Finally, the author mentions the opinion from a friend with strong Postgres expe
 Result: be extremely careful with `SELECT .. FOR UPDATE` in transactions that include subtransactions.
 
 ## Problem 4: Subtrans SLRU overflow
-This problem needs to be described in a little bit more detailed form because, as I believe, a growing number of systems might experience it. It was recently observed in a heavily-loaded system one of our clients is running (I hope they will share their experience soon in a separate blog post).
+This problem needs to be described in a little bit more detailed form because, as I believe, a growing number of systems might experience it. It was recently observed in a heavily-loaded system one of our clients is running (I hope they will share their experience soon in a separate blog post; UPDATE: here it is – ["Why we spent the last month eliminating PostgreSQL subtransactions" (GitLab)](https://about.gitlab.com/blog/2021/09/29/why-we-spent-the-last-month-eliminating-postgresql-subtransactions/)).
 
 The key aspects in this case are:
 - On the primary:
