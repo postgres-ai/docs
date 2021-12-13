@@ -113,6 +113,10 @@ module.exports = {
               activeBaseRegex: '^/docs',
             },
             {
+              label: 'Install DLE using Terraform',
+              to: '/docs/how-to-guides/administration/install-database-lab-with-terraform',
+            },
+            {
               label: 'Getting Started for Amazon RDS',
               to: '/docs/tutorials/database-lab-tutorial-amazon-rds',
             },
