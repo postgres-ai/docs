@@ -49,6 +49,14 @@ sudo docker run \
 
 You can use PGPASSWORD env to set the password.
 
+:::info
+This flag `--publish 127.0.0.1:2345:2345` accepts only local connections.
+
+Note that ports that are not bound to the host (for example, `--publish 2345:2345` instead of `--publish 127.0.0.1:2345:2345`) will be accessible from the outside.
+See more details in the official [Docker command-line reference](https://docs.docker.com/engine/reference/commandline/run/#publish-or-expose-port--p---expose).
+:::
+
+
 ## Restart Engine in the case of failure
 ```bash
 # Stop and remove the Database Lab Engine control container.

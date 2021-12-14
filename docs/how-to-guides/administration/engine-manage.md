@@ -38,6 +38,14 @@ sudo docker run \
   postgresai/dblab-server:2.5.0
 ``` 
 
+:::info
+This flag `--publish 127.0.0.1:2345:2345` accepts only local connections.
+
+Note that ports that are not bound to the host (for example, `--publish 2345:2345` instead of `--publish 127.0.0.1:2345:2345`) will be accessible from the outside.
+See more details in the official [Docker command-line reference](https://docs.docker.com/engine/reference/commandline/run/#publish-or-expose-port--p---expose).
+:::
+
+
 ## Reconfigure Database Lab Engine
 Database Lab Engine supports reconfiguration without a restart (therefore, without any downtime):
 
