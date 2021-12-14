@@ -36,11 +36,11 @@ Some examples:
     $ sudo lsblk
     NAME    MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
     ...
-    xvda    202:0    0     8G  0 disk
-    └─xvda1 202:1    0     8G  0 part /
-    nvme0n1 259:0    0   777G  0 disk
+    nvme0n1     259:0    0    8G  0 disk
+    └─nvme0n1p1 259:1    0    8G  0 part /
+    nvme1n1     259:2    0   777G  0 disk
 
-    $ export DBLAB_DISK="/dev/nvme0n1"
+    $ export DBLAB_DISK="/dev/nvme1n1"
     ```
 - **AWS EBS volumes for older (pre-Nitro) EC2 instances**:
     ```bash
@@ -96,13 +96,13 @@ Some examples:
 - **AWS local ephemeral NVMe disks; EBS volumes for instances built on [the Nitro system](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/nvme-ebs-volumes.html)**:
     ```bash
     $ sudo lsblk
-    NAME    MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
-    ...
-    xvda    202:0    0     8G  0 disk
-    └─xvda1 202:1    0     8G  0 part /
-    nvme0n1 259:0    0   777G  0 disk
+    nvme0n1     259:0    0    8G  0 disk
+    └─nvme0n1p1 259:1    0    8G  0 part /
+    nvme1n1     259:2    0   777G  0 disk
+    nvme2n1     259:2    0   777G  0 disk
 
-    $ export DBLAB_DISK="/dev/nvme0n1"
+    $ export DBLAB_DISK1="/dev/nvme1n1"
+    $ export DBLAB_DISK2="/dev/nvme2n1"
     ```
 - **AWS EBS volumes for older (pre-Nitro) EC2 instances**:
     ```bash
@@ -112,8 +112,10 @@ Some examples:
     xvda    202:0    0    8G  0 disk
     └─xvda1 202:1    0    8G  0 part /
     xvdb    202:16   0  777G  0 disk
+    xvdc    202:16   0  777G  0 disk
 
-    $ export DBLAB_DISK="/dev/xvdb"
+    $ export DBLAB_DISK1="/dev/xvdb"
+    $ export DBLAB_DISK2="/dev/xvdc"
     ```
 
 ### 2. Create two ZFS pools
@@ -123,9 +125,9 @@ sudo zpool create -f \
   -O atime=off \
   -O recordsize=128k \
   -O logbias=throughput \
-  -m /var/lib/dblab/dblab_pool \
-  dblab_pool \
-  "${DBLAB_DISK}"
+  -m /var/lib/dblab/dblab_pool_01 \
+  dblab_pool_01 \
+  "${DBLAB_DISK1}"
 ```
 
 ```bash
