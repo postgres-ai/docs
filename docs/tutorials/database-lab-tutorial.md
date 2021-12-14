@@ -99,11 +99,11 @@ Some examples:
     $ sudo lsblk
     NAME    MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
     ...
-    xvda    202:0    0     8G  0 disk
-    └─xvda1 202:1    0     8G  0 part /
-    nvme0n1 259:0    0   777G  0 disk
+    nvme0n1     259:0    0    8G  0 disk
+    └─nvme0n1p1 259:1    0    8G  0 part /
+    nvme1n1     259:2    0   777G  0 disk
 
-    $ export DBLAB_DISK="/dev/nvme0n1"
+    $ export DBLAB_DISK="/dev/nvme1n1"
     ```
 - **AWS EBS volumes for older (pre-Nitro) EC2 instances**:
     ```bash
@@ -162,11 +162,11 @@ dblab_pool   106K  777G    24K  /var/lib/dblab/dblab_pool
 $ sudo lsblk
 NAME      MAJ:MIN  RM  SIZE RO TYPE MOUNTPOINT
 ...
-xvda        202:0  0     8G  0 disk
-└─xvda1     202:1  0     8G  0 part /
-nvme0n1     259:0  0   777G  0 disk
-├─nvme0n1p1 259:3  0   777G  0 part
-└─nvme0n1p9 259:4  0     8M  0 part
+nvme0n1     259:0    0     8G  0 disk
+└─nvme0n1p1 259:1    0     8G  0 part /
+nvme1n1     259:0    0   777G  0 disk
+├─nvme1n1p1 259:3    0   777G  0 part
+└─nvme1n1p9 259:4    0     8M  0 part
 ```
 
 </TabItem>
