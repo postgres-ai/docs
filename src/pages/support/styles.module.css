@@ -1,0 +1,38 @@
+.container :global(.row) {
+  min-height: unset;
+}
+
+.footerInfoContainer {
+  max-width: 292px;
+}
+
+.footerTitle {
+  font-size: 20px;
+}
+
+.footerText {
+  margin-top: 10px;
+  line-height: 19px;
+}
+
+.divider {
+  position: absolute;
+  border: 1px solid #eeeeee;
+  height: 135px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.groupIconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 50px;
+  background: #ffffff;
+  border-radius: 8px;
+}
+
+.link {
+  text-decoration: underline;
+}

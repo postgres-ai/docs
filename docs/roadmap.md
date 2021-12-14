@@ -8,52 +8,57 @@ keywords:
 ---
 
 ## Roadmap
-We work hard to develop new features for Database Lab SaaS and its open-source components, Database Lab Engine (DLE) and SQL Optimization Chatbot (Joe). Below you can find the main ideas we are working on now or planning to work soon.
+We work hard to develop the Database Lab Platform (DLP) and its open-source core component, Database Lab Engine (DLE). Below you can find the main ideas we are working on now or planning to work soon.
 
-*Updated: 2021-09-07*
+*Updated: 2021-12-14*
 
 ### [DLE] Physical provisioning
 Physical provisioning: native support of provisioning from archives created by a specific backup solution or based on an existing Postgres database
 
 - [ ] Support various sources
-    - [x] Generic (anything: pg_basebackup, rsync, backup tools)
-    - Native support
-        - [x] WAL-E/WAL-G backups
-        - [ ] pgBackRest backups
-        - [ ] Barman backups
-        - [ ] pg_probackup backups
-        - [ ] Nutanix Era
+    - [x] Generic (anything: pg_basebackup, rsync, any backup tools)
+    - Native support for specific backup tools
+        - [x] WAL-E/WAL-G
+        - [ ] pgBackRest
+        - [ ] Barman
+        - [ ] pg_probackup
 - [x] Continuously updated state (physical replication based on WAL shipping)
 - [x] Snapshot management (schedule, retention policy)
-- [ ] faster WAL replay (pg_prefaulter)
 
 ### [DLE] Logical provisioning
 Logical provisioning: native support of provisioning for managed PostgreSQL databases
 
 - [x] Support various sources
-    - [x] Simple dump/restore
-    - [x] Amazon RDS
-    - [x] Heroku Postgres
-    - [x] Azure PostgreSQL
-    - [x] Google Cloud SQL for Postgres
-    - [x] Digital Ocean Postgres
-    - [x] Any PostgreSQL DB via dump/restore
+    - [x] Any PostgreSQL DB via dump/restore: Amazon RDS, Heroku Postgres, Azure PostgreSQL, GCP CloudSQL, Digital Ocean Postgres, etc.
+    - [x] AWS: RDS IAM
+    - [x] GCP: CloudSQL IAM
+    - [ ] Azure IAM
+    - [x] Restore from backups stored on AWS S3
+        - [x] uncompressed
+        - [x] compressed (gzip, bzip2)
 - [ ] Continuously updated state (logical replication)
-- [x] Restore from backups stored on AWS S3
-    - [x] uncompressed
-    - [x] compressed (gzip, bzip2)
-- [x] Multiple pools, rotation on schedule
+- [x] Dump/restore on the fly (without need to save dumps on disk)
+- [x] Multiple pools, rotation/refresh on schedule
+    - [ ] "Selected pool": allow to specify pool for the case when multiple DLEs are running on the same machine
+    - [ ] Advanced refresh policies: force refresh on pools being in use, warning period, number of retries before forcing
 - [ ] Partial data retrieval
+    - [x] specific databases
     - [ ] specific tables
-    - [ ] arbitrary filtering (columns, rows)
+    - [ ] arbitrary filtering (column and row filtering)
 
 ### [DLE] Engine features
-- [ ] Persist clones when the engine restarts :fire:
+- [x] Persist clones when the engine restarts (added in DLE 3.0.0)
 - [ ] Point-in-time recovery (PITR) (Can be used for ultra-fast recovery of accidentally deleted data)
+- [ ] Troubleshoot/test standby behavior
+    - [ ] Create clone running in read-only mode to allow troubleshooting hot standby issues
+    - [ ] Allow launching N replicas for a clone
+    - [ ] For the "physical" mode: create clone from "pre" snapshot (read-only, unpromoted; admins only)
 - [ ] Duplicate DLE (create a new DLE based on existing one)
-- [ ] Clone analytics
-- [ ] Advanced audit
-- [ ] "Temporary" system- and Postgres-level monitoring for clones/sessions
+- [ ] Clone observability
+    - [ ] "Temporary" system- and Postgres-level monitoring for clones/sessions
+    - [ ] Clone analytics
+    - [ ] Advanced audit
+    - [ ] perf/FlameGraphs
 - [ ] Utilization of DLE instance and alerts
 - [ ] Usage and estimated savings reports
 - [x] SSH port forwarding for API and Postgres connections
@@ -63,15 +68,62 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
 - [x] Resource usage quotas for clones: CPU, RAM (container quotas, supported by Docker)
 - [ ] User quotas
 - [ ] Disk quotas (`zfs set quota=xx`)
-- [ ] GUI with key features
+- [x] GUI with key features (added in DLE 3.0.0)
 - [ ] Fast connection to clone's DB via CLI
+- [ ] Advanced snapshot management
+    - [ ] API handle to create/destroy snapshots (for continuously updated state)
+    - [ ] User-defined snapshots for clones
+    - [ ] Snapshot export/import (S3)
+- [ ] Advanced schema management
+    - [ ] schema diff
+    - [ ] zero-downtime DDL auto-generation
+- [x] Reset clone's state to particular database version – keeping DB creds the same (including port)
+    - [ ] physical: allow choosing `dataStateAt`
+    - [ ] logical: allow "jumping" between DB versions (pools)
 
-### [SaaS] Automated verification of database schema and complex data changes a.k.a. DB migrations
-- [a] History and logging for clones/sessions
-- [a] Automated detection of locking issues
-- [a] Setting custom `statement_timeout`
-- [a] PostgreSQL logs for the migration
-- [a] Report in CI and Platform
+### [DLP] Platform features
+- [x] Support working with multiple DLEs
+- [x] Backups, PITR
+- [x] User management: basic permissions
+- [ ] User management: advanced permissions
+- [ ] SSO
+- [ ] Clone (Postgres, Postgres over SSH / port forwarding) connection options
+    - [ ] LDAP
+    - [ ] SSH key management
+- [ ] Security
+    - [ ] Security overview: software used, incidents, code analysis
+    - [x] Basic audit logging
+    - [ ] Advanced audit logging and alerting
+    - [ ] Export audit logs from GUI
+- [ ] Usage stats
+- [ ] Monitoring
+- [ ] Notifications
+    - [ ] Notification management – turn on/off all or specific ones
+    - [ ] Non-deletable clone is abandoned / not used for too long 
+    - [ ] Clone and snapshot is using too much disk space / out-of-disk-space risks
+    - [ ] CPU saturation
+    - [ ] Disk space saturation
+    - [ ] Disk IO saturation 
+    - [ ] Refresh cannot be done because all pools are busy and policy doesn't allow forced refresh 
+    - [ ] Full refresh started
+    - [ ] Full refresh finished
+    - [ ] Lag value is too high ("sync" container)
+    - [ ] Initial data retrieval started
+    - [ ] Initial data retrieval finished
+    - [ ] Snapshot created
+    - [ ] Snapshot deleted
+- [ ] Pricing, billing
+    - [x] pricing based on disk space used
+    - [x] report usage to postgres.ai
+    - [ ] flexible pricing options
+    - [ ] AWS: instance type and size based
+
+### [DLP] Automated verification of database schema and complex data changes a.k.a. DB migrations
+- [x] History and logging for clones/sessions
+- [x] Automated detection of locking issues
+- [x] Setting custom `statement_timeout`
+- [x] PostgreSQL logs for the migration
+- [x] Report in CI and Platform
 - [ ] Integration with CI tools – advanced integration
     - [x] GitHub Actions
     - [ ] Bitbucket CI/CD
@@ -86,36 +138,38 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
     - [x] Liquibase
     - [x] Ruby on Rails Active Record
     - [x] Django migrations
-- [e] "Production timing" estimator
+- [x] "Production timing" estimator (experimental feature, added in DLE 2.3.0)
 - [x] More artifacts to support decisions: pg_stat_*, system usage, WAL, checkpoints, etc.
 
 ### [DLE] Cloning (CoW technology)
 - [x] ZFS
 - [x] LVM
-- [ ] PureStorage
-- [ ] Remote clones – Amazon Aurora, Zenith
+- [ ] Storage-based CoW
 
-### [SaaS] Automation, clouds, Kubernetes
-- [ ] Clouds, automation of installation in clients' accounts
+### [DLP] Automation, clouds, Kubernetes
+- [ ] Simplify setup for major Cloud Service Providers, automation of installation in clients' accounts
     - [x] Basic Terraform templates
     - [ ] One-click setup on AWS. AWS Marketplace
     - [ ] One-click setup on GCP. GCP Marketplace
     - [ ] One-click setup on Azure. GCP Marketplace
-    - [ ] One-click setup on Alibaba
-- [ ] SaaS: cloud offering (fully managed Database Lab)
+- [ ] Cloud DLP ("DLP SaaS"): cloud offering (fully managed DLE and DLP)
     - [ ] AWS
     - [ ] GCP
     - [ ] Azure
-    - [ ] Ali
-- [ ] AWS Spot instances for further savings
+- [ ] Self-managed DLP ("DLP Enterprise"): work multiple DLEs and all DLP features in customer's account
+- [ ] Cost optimization
+    - [ ] AWS spot instances
+    - [ ] GCP preemptible instances (24h max)
+    - [ ] Azure spot instances
+    - [ ] AWS/GCP/Azure: Self-stopping instances for cost savings, keeping disk present, and refreshing when needed
 - [ ] Kubernetes support
     - [ ] DLE operator
     - [ ] Integration with [StackGres](https://stackgres.io) 
-        - [x] PoC (logical, physical:WAL-E)
+        - [x] PoC (logical, physical: WAL-E/G)
         - [ ] integration
-    - [ ] Support [CSI Volume Cloning](https://kubernetes.io/docs/concepts/storage/volume-pvc-datasource/) (GA: 1.18)
+    - [ ] Support [CSI Volume Cloning](https://kubernetes.io/docs/concepts/storage/volume-pvc-datasource/) (GA: k8s 1.18)
 
-### [Joe] SQL optimization chatbot
+### [DLP/Joe] SQL optimization chatbot
 - [x] Web UI version
 - [x] Slack chatbot
 - [ ] Telegram chatbot
@@ -135,7 +189,11 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
 - [ ] Better chatbot security
     - [x] Do not use DB superuser
     - [x] Quotas (rate limits)
-    - [ ] Alert admins when a quota is hit
+    - [ ] Alert admins when a quota is reached
+- [ ] Runtime execution plan observability: [pg_query_state](https://github.com/postgrespro/pg_query_state)
+- [ ] Reset 
+- [ ] perf/FlameGraphs
+- [ ] pg_wait_sampling for 
 
 ### [SaaS] Data masking and anonymization
 - [x] Basic support for masking and obfuscation
@@ -154,7 +212,7 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
     - [x] Basic
     - [x] RDS
     - [x] SQL optimization using Joe bot
-    - [ ] DB migration testing in CI/CD pipelines
+    - [x] DB migration testing in CI/CD pipelines
     - [x] Katacoda
 - [ ] User Guides
     - [x] DLE setup and administration

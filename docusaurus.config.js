@@ -113,6 +113,10 @@ module.exports = {
               activeBaseRegex: '^/docs',
             },
             {
+              label: 'Install DLE using Terraform',
+              to: '/docs/how-to-guides/administration/install-database-lab-with-terraform',
+            },
+            {
               label: 'Getting Started for Amazon RDS',
               to: '/docs/tutorials/database-lab-tutorial-amazon-rds',
             },
@@ -289,6 +293,7 @@ module.exports = {
           { to: '/docs/how-to-guides/cloning', from: '/docs/guides/cloning' },
           { to: '/docs/how-to-guides/joe-bot', from: '/docs/guides/joe-bot' },
           { to: '/docs/how-to-guides/platform', from: '/docs/guides/platform' },
+          { to: '/docs/how-to-guides/platform/onboarding', from: '/docs/tutorials/onboarding'},
         ],
       },
     ],
