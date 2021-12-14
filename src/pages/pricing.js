@@ -23,6 +23,13 @@ function PricingPage() {
         <h1 class='em'>Pricing that scales with you</h1>
       </section>
 
+      <div class='container text-center'>
+        <a class='supportOffer' href='mailto: sales@postgres.ai'>
+         Do you need only reliable support? We offer Support SLA without advanced Database Lab Platform plans.
+          Contact us for more details.
+        </a>
+      </div>
+
       <section className='pricing-table position-relative'>
         <div class='container text-center'>
           <div className="row price-row">
@@ -75,6 +82,12 @@ function PricingPage() {
             <div className='col-md-3'>Unlimited</div>
           </div>
           <div className="row feature-row odd">
+            <div className='col-md-2 feature-name'>Cloning UI</div>
+            <div className='col-md-3'>Included</div>
+            <div className='col-md-3'>Included</div>
+            <div className='col-md-3'>Included</div>
+          </div>
+          <div className="row feature-row even">
             <div className='col-md-2 feature-name'>SQL Optimization UI</div>
             <div className='col-md-3'><i>Not Included</i></div>
             <div className='col-md-3'>
@@ -85,7 +98,7 @@ function PricingPage() {
             </div>
             <div className='col-md-3'><i>All Standard Features</i></div>
           </div>
-          <div className="row feature-row even">
+          <div className="row feature-row odd">
             <div className='col-md-2 feature-name'>Security & User Management</div>
             <div className='col-md-3'><i>Not Included</i></div>
             <div className='col-md-3'>
@@ -103,7 +116,7 @@ function PricingPage() {
               </ul>
             </div>
           </div>
-          <div className="row feature-row odd">
+          <div className="row feature-row even">
             <div className='col-md-2 feature-name'>Support SLA</div>
             <div className='col-md-3'><i>Not Included</i></div>
             <div className='col-md-3'>
@@ -125,9 +138,9 @@ function PricingPage() {
               <ul class='footnotes'>
                 <li>
                   <sup>1</sup> Service is priced per GiB / hour at a rate of $0.0026.
-                  Database Lab monitors the physical size of the database using <code>df</code>
+                  Database Lab monitors the physical size of the database using <code>df</code>&nbsp;
                   on an hourly basis.
-                  Standard and Enterprise packages have access to the Database Lab Web Platform.
+                  Standard and Enterprise packages have access to the Database Lab Platform.
                 </li>
               </ul>
             </div>
