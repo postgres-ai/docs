@@ -231,6 +231,10 @@ module.exports = {
               to: '/',
             },
             {
+              label: 'Contact',
+              to: '/contact/',
+            },
+            {
               label: 'Documentation',
               to: '/docs/',
             },

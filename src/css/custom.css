@@ -417,7 +417,10 @@ html[data-theme="dark"] .multi-sec {
 
 .pricing-header {
   text-align: center;
-  margin: 50px 0px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  margin-left: 0px;
+  margin-right: 0px;
   color: #ff6112;
 }
 
@@ -818,5 +821,22 @@ html[data-theme="light"] .avatar__name > a {
 }
 
 html[data-theme="dark"] .avatar__name > a {
+  color: var(--ifm-color-white);
+}
+
+.supportOffer {
+  display: block;
+  margin-top: 0px;
+  margin-bottom: 30px;
+  background-color: #ff6112;
+  border-radius: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  color: var(--ifm-color-white);
+}
+
+.supportOffer:hover {
   color: var(--ifm-color-white);
 }
