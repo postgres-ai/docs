@@ -206,7 +206,7 @@ Options:
 
 ## Section `cloning`: thin cloning policies
 - `accessHost` (string, required) - the host that will be specified in the database connection string to inform users about how to connect to database clones
-- `maxIdleMinutes` (integer, optional, default: 0) - automatically delete clones after the specified minutes of inactivity
+- `maxIdleMinutes` (integer, optional, default: 0) - automatically delete clones after the specified minutes of inactivity, 0 is being used to disable this feature
 
 ## Section `platform`: Postgres.ai Platform integration
 - `url` (string, optional, default: "https://postgres.ai/api/general") - Platform API URL
