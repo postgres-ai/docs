@@ -73,7 +73,7 @@ Note, that by default, editing a file in Vim leads to file inode change, so your
 Stop and remove the container using `sudo docker stop dblab_server` and `sudo docker rm dblab_server` After that, [launch](#start-database-lab-instance) a new container.
 
 :::caution
-Prior to version 3.0.0, upgrading or restarting DLE meant losing all the running clones. Since In DLE 3.0.0, clones became persistent: after any restart – including VM restart - existing Postgres containers are restarted as well. The same should apply to future upgrades unless a specific upgrade breaks backward compatibility (consulting release notes is advised).
+Prior to version 3.0.0, upgrading or restarting DLE meant losing all the running clones. In DLE 3.0.0, clones became persistent: after any restart – including VM restart - existing Postgres containers are restarted as well. The same should apply to future upgrades unless a specific upgrade breaks backward compatibility (consulting release notes is advised).
 :::
 
 ## Observe Database Lab Engine logs
