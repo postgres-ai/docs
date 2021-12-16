@@ -416,9 +416,9 @@ sudo docker run \
 </Tabs>
 
 :::info
-This flag `--publish 127.0.0.1:2345:2345` accepts only local connections.
+Parameter `--publish 127.0.0.1:2345:2345` means that only local connections will be allowed.
 
-Note that ports that are not bound to the host (for example, `--publish 2345:2345` instead of `--publish 127.0.0.1:2345:2345`) will be accessible from the outside.
+To allow external connections, consider either using additional software such as NGINX or Envoy or changing this parameter. Removing the host/IP part (`--publish 2345:2345`) allows listening to all available network interfaces.
 See more details in the official [Docker command-line reference](https://docs.docker.com/engine/reference/commandline/run/#publish-or-expose-port--p---expose).
 :::
 
