@@ -31,7 +31,7 @@ sudo docker run \
   --name dblab_server \
   --label dblab_control \
   --privileged \
-  --publish 2345:2345 \
+  --publish 127.0.0.1:2345:2345 \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   --volume /var/lib/dblab:/var/lib/dblab/:rshared \
   --volume ~/.dblab/engine/configs:/home/dblab/configs:ro \
@@ -44,6 +44,14 @@ sudo docker run \
   --restart on-failure \
   postgresai/dblab-server:3.0.0
 ```
+
+:::info
+Parameter `--publish 127.0.0.1:2345:2345` means that only local connections will be allowed.
+
+To allow external connections, consider either using additional software such as NGINX or Envoy or changing this parameter. Removing the host/IP part (`--publish 2345:2345`) allows listening to all available network interfaces.
+See more details in the official [Docker command-line reference](https://docs.docker.com/engine/reference/commandline/run/#publish-or-expose-port--p---expose).
+:::
+
 
 ## Restart in the case of failure
 ```bash

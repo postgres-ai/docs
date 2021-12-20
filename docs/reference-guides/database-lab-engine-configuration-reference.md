@@ -58,7 +58,6 @@ Here is how the configuration file is structured:
 
 ## Section `server`: Database Lab Engine API server
 - `verificationToken` (string, required) - the token that is used to work with Database Lab API
-- `host` (string, optional, default: "") - the host to which the Database Lab server accepts HTTP connections
 - `port` (string, required) - HTTP server port
 
 ## Section `poolManager`: filesystem pools or volume groups management
