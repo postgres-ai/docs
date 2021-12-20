@@ -67,6 +67,7 @@ Here is how the configuration file is structured:
 - `clonesMountSubDir` (string, required) -  the directory that will be used to mount clones
 - `socketSubDir` (string, required) - the UNIX socket directory that will be used to establish local connections to cloned databases
 - `preSnapshotSuffix` (string, required) - the suffix to denote preliminary snapshots
+- `selectedPool` (string, optional, default: "") - enforce selection of the working pool (or dataset) inside the `mountDir` directory. If this option is specified, it disables the automatic rotation of multiple pools, which may be useful when multiple DLEs are running on the same machine, sharing the same set of pools. An empty string turns off this feature, enabling the standard pool selection and rotation mechanism (default behavior).
 
 ## Section `provision`: thin cloning environment settings
 - `portPool` (key-value, required) - defines a pool of ports for Postgres clones
