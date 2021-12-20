@@ -104,7 +104,7 @@ Note, that all jobs are optional. For example, all the following approaches defi
 Dumps a PostgreSQL database from a provided source to an archive or to the Database Lab Engine instance.
 
 Options:
-- `dumpLocation` (string, required) - specifies the location to store dump files (or directories, for directory-format archives), it will be automatically created on the host machine
+- `dumpLocation` (string, required) - specifies the location to store dump files (or directories, for directory-format archives), it will be automatically created on the host machine. DLE deletes all files and directories in this directory before creating new dumps.
 - `dockerImage` (string, required) - specifies the Docker image containing the dump-required tool
 - `containerConfig` (key-value, optional) - options to pass custom parameters to logicalDump container
 - `source` (key-value, required) - describes source of data:
