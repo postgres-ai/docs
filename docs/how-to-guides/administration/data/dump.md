@@ -72,6 +72,10 @@ A basic way of restoring database from the source contains three steps:
 
 Since dump files are stored in intermediate files, make sure there is enough disk space.
 
+:::info
+Be aware that if the `logicalDump` job uses the `dumpLocation` directory, all files and directories in that directory will be deleted before creating new dumps.
+:::
+
 A typical configuration might look like this:
 ```yaml
 retrieval:
