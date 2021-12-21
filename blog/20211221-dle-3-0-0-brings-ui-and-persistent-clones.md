@@ -20,7 +20,7 @@ description: "<div><img src=\"/assets/thumbnails/dle-3.0-blog.png\" alt=\"Databa
 <li>Support of PostgreSQL 14</li>
 </ul>
 
-<p>Further we describe the most requested changes that were implemented in DLE 3.0 – all of them were created based on real-life user experience and invaluable feedback from the growing community of users and contributors.</p>"
+<p>Further, we discuss the most requested changes that were implemented in DLE 3.0 – all of them were created based on real-life user experience and invaluable feedback from the growing community of users and contributors.</p>"
 weight: 0
 image: /assets/thumbnails/dle-3.0-blog.png
 tags:
@@ -80,7 +80,7 @@ Of course, in the case of VM restart, DB connections are lost and need to be rec
 ## Advanced reset for the "logical" mode
 In DLE 2.5, we have implemented the ability to reset to any available snapshot – a convenient way for your clones to travel in time fast. In 2.5, this was supported only for the "physical" provisioning mode (restoring data directory, PGDATA, from physical backups, or obtaining it from the source using `pg_basebackup`). In other words, it was ready to work only if you manage Postgres yourself and can copy PGDATA or establish physical replication connection to your databases. Something that is not available to the users of RDS and other managed Postgres services.
 
-For DLE running in the "logical" data provisioning mode (based on dump/restore – the only option for most managed Postgres cloud offerings such as Amazon RDS), DLE 2.4 2.5 provided the ability to operate with multiple copies of PGDATA was implemented, which allowed having a full refresh without downtime. However, if DLE users were running clones on the "old" PGDATA version, they needed to recreate them to unlock the next full refresh – and this was somewhat inconvenient because of quite unpredictable port allocation.
+For DLE running in the "logical" data provisioning mode (based on dump/restore – the only option for most managed Postgres cloud offerings such as Amazon RDS), DLE 2.5 provided the ability to operate with multiple copies of PGDATA was implemented, which allowed having a full refresh without downtime. However, if DLE users were running clones on the "old" PGDATA version, they needed to recreate them to unlock the next full refresh – and this was somewhat inconvenient because of quite unpredictable port allocation.
 
 In DLE 3.0, it is now possible to reset a clone's state to any database version (snapshot), even if that version is provided by another copy of PGDATA running on a different pool/dataset. It means that users can keep their clone running on the same port for a long time, having stable DB credentials (including the port), and when needed, once the full refresh has finished, switch to the freshest database version in seconds. This makes the experience of working with the "logical" almost on par with the "physical" one.
 
@@ -91,7 +91,7 @@ DLE 3.0 has several improvements that simplify running multiple DLEs on a single
 
 We are planning to discuss the aspects of running multiple DLEs on a single machine in a separate article.
 
-## What to read next
+## Further reading
 - [DLE 3.0 release notes](https://github.com/postgres-ai/database-lab-engine/releases/tag/v3.0.0)
 - [Database Lab Documentation](/docs)
 - [Tutorial for any database](/docs/tutorials/database-lab-tutorial)
