@@ -263,6 +263,10 @@ module.exports = {
       ],
       copyright: `Copyright © ${new Date().getFullYear()} Postgres.ai`,
     },
+
+    prism: {
+      theme: require('prism-react-renderer/themes/oceanicNext'),
+    },
   },
 
   plugins: [
