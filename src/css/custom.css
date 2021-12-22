@@ -415,15 +415,6 @@ html[data-theme="dark"] .multi-sec {
   display: none;
 }
 
-.pricing-header {
-  text-align: center;
-  margin-top: 50px;
-  margin-bottom: 20px;
-  margin-left: 0px;
-  margin-right: 0px;
-  color: #ff6112;
-}
-
 .price-row {
   margin-bottom: 25px;
 }
@@ -466,18 +457,6 @@ html[data-theme="dark"] .multi-sec {
 
 .pricing-table ul > li {
   text-align: left;
-}
-
-.feature-row {
-  padding: 10px 0px;
-}
-
-.feature-row.even {
-  background-color: #F3F3F3;
-}
-
-[data-theme=dark] .feature-row.even {
-  color: #333;
 }
 
 .pricing-details {

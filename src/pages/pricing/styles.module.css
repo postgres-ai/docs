@@ -1,0 +1,20 @@
+.title {
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  margin-left: 0px;
+  margin-right: 0px;
+  color: #ff6112;
+}
+
+.featureRow {
+  padding: 10px 0px;
+}
+
+.featureRow:nth-child(2n + 1) {
+  background-color: #F3F3F3;
+}
+
+html[data-theme=dark] .featureRow:nth-child(2n + 1) {
+  background-color: #333;
+}

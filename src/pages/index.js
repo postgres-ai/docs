@@ -1,11 +1,9 @@
 import React from 'react';
 import Layout from '@theme/Layout';
-import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
-import styles from './styles.module.css';
 import blog from '../data/blog';
 
 function IndexPage() {
@@ -188,7 +186,7 @@ function IndexPage() {
           <div className="row">
             {blog.map((e) => (
             <div key={e.title} className="col col--4 margin-bottom--lg">
-                <div className={clsx('card', styles.showcaseresource)}>
+                <div className="card">
                   <div className="card__image">
                     <Link to={useBaseUrl(e.link)}>
                       <img src={e.image} alt={e.title} />
