@@ -51,7 +51,7 @@ module.exports = {
 
     announcementBar: {
       id: 'advisory_group', // Any value that will identify this message to save the hidden status.
-      content: 'We\'re building a Mid-Market Customer Advisory Group.&nbsp;<a href=\'/customer-advisory-group\'>Learn more</a> and apply.',
+      content: '<a href=\'/blog/20211221-dle-3-0-0-brings-ui-and-persistent-clones\'>Database Lab Engine 3.0 released!</a>',
       backgroundColor: '#D7EEF2',
       textColor: '#013A44',
       isCloseable: true,
