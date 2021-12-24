@@ -4,10 +4,6 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 
 import styles from './styles.module.css'
 
-// References:
-// https://circleci.com/pricing/
-// https://databricks.com/product/aws-pricing
-
 const Pricing = () => {
   const { siteConfig } = useDocusaurusContext()
   const { customFields } = siteConfig
