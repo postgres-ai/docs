@@ -10,7 +10,7 @@ Database Lab Engine behavior can be controlled using the main configuration file
 Database Lab Engine supports [YAML 1.2](https://yaml.org/spec/1.2/spec.html) including anchors, aliases, tags, map merging.
 :::
 
-Example config files can be found here: https://gitlab.com/postgres-ai/database-lab/-/tree/3.0.0/configs.
+Example config files can be found here: https://gitlab.com/postgres-ai/database-lab/-/tree/v3.0.0/configs.
 
 You may store configuration files in any suitable location. The recommended location of configuration files for Database Lab Engine is `~/.dblab/engine/configs`.
 
