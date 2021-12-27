@@ -33,6 +33,7 @@ All these extended images include the following extensions:
 - [pg_repack](https://github.com/reorg/pg_repack)
 - [pg_show_plans](https://github.com/cybertec-postgresql/pg_show_plans)
 - [pg_stat_kcache](https://github.com/powa-team/pg_stat_kcache)
+- [pg_wait_sampling](https://github.com/postgrespro/pg_wait_sampling)
 - [pg_timetable](https://github.com/cybertec-postgresql/pg_timetable)
 - [pgextwlist](https://github.com/dimitri/pgextwlist)
 - [hll](https://github.com/citusdata/postgresql-hll)
