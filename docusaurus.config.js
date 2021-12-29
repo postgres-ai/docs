@@ -31,21 +31,11 @@ module.exports = {
 
     metadatas: [
       // This options will overwrite options from pages with the same name/property.
-      { name: 'description', content: 'Accelerate your development and testing. Clone PostgreSQL databases of any size in a few seconds. Rapidly test and iterate, optimize SQL, improve quality, and drastically boost time-to-market.' },
       { 'http-equiv': 'x-dns-prefetch-control', content: 'on' },
-      { name: 'twitter:card', content: 'summary' },
       { property: 'og:locale', content: 'en_US' },
       { property: 'og:site_name', content: 'Postgres.ai' },
       { property: 'article:publisher', content: 'https://www.linkedin.com/company/postgres-ai/' },
-      { property: 'og:image', content: 'https://postgres.ai/assets/thumbnails/dblab_800_606.png' },
-      { property: 'og:image:secure_url', content: 'https://postgres.ai/assets/thumbnails/dblab_800_606.png' },
-      { property: 'og:image:width', content: '800' },
-      { property: 'og:image:height', content: '606' },
-      { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:description', content: 'Accelerate your development and testing. Clone PostgreSQL databases of any size in a few seconds. Rapidly test and iterate, optimize SQL, improve quality, and drastically boost time-to-market.' },
-      { name: 'twitter:title', content: 'Database Lab by Postgres.ai' },
       { name: 'twitter:site', content: '@Database_Lab' },
-      { name: 'twitter:image', content: 'https://postgres.ai/assets/thumbnails/dblab_800_606.png' },
       { name: 'twitter:creator', content: '@Database_Lab' },
     ],
 
