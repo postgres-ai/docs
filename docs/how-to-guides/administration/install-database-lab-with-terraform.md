@@ -31,10 +31,10 @@ Manual installation guides:
         * Note that if you are using a domain registrar other than Amazon, follow Amazon's guide to making [Route53 the DNS provider](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/MigratingDNS.html) for your domain name.
 - [Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli)
     - Minimum version: 1.0
-    - :construction: Currently, it is supposed that you run `terraform` commands on a Linux machine (macOS and Windows support planned, but not yet implemented)
+    - :construction: Currently, it is supposed that you run `terraform` commands on a Linux or macOS machine. Windows is not yet supported.)
 
 ## Install Database Lab components using Terraform
-The following steps were tested on Ubuntu 20.04 but should be valid for other Linux distributions without significant modification.
+The following steps were tested on Intel / Ubuntu 20.04 and Apple M1 / MacOS Big Sur. They should work on all modern Linux and macOS environments without or a few minor modifications.
 
 ### 1. Install Terraform (optional)
 1. SSH to any machine with internet access, it will be used as deployment machine.
@@ -73,12 +73,12 @@ cd terraform-postgres-ai-database-lab/
 dle_version = "3.0.0"
 
 aws_ami_name = "DBLABserver*"
-aws_keypair = "YOUR_AWS_KEYPAIR" # e.g. "johndoe"
 
 aws_deploy_region = "us-east-1"
 aws_deploy_ebs_availability_zone = "us-east-1a"
 aws_deploy_ec2_instance_type = "t2.large"
 aws_deploy_ec2_instance_tag_name = "DBLABserver-ec2instance"
+aws_deploy_ec2_volumes_count = "YOUR_NUMBER_OF_EBS_VOLUMES_FOR_DLE_ZFS_POOLS" # e.g. 2
 aws_deploy_ebs_size = "YOUR_INSTANCE_DISK_SIZE" # e.g. "40".
 aws_deploy_ebs_type = "gp2"
 aws_deploy_allow_ssh_from_cidrs = ["0.0.0.0/0"]
@@ -114,6 +114,15 @@ dle_retrieval_refresh_timetable = "0 0 * * 0"
 postgres_config_shared_preload_libraries = "pg_stat_statements,logerrors"
 
 platform_project_name = "aws_test_tf"
+
+# ssh public keys can be copied to provisioned machine to allow connect to ubuntu user 
+# keys can be provided by list of local file names. All listed files should exist and be accesible  
+ssh_public_keys_files_list = ["~/.ssh/id_rsa.pub"]
+# or provide them as string (it is OK to use both options at the same time)
+ssh_public_keys_list = [
+  "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDhbblazDXCFEc21DtFzprWC8DiqidnVRROzp6J6BeJR9+XydPUtl0Rt2mcNvxL5ro5bI9u5JRW8aDd6s+Orpr66hEDdwQTbT1wp5nyduFQcT3rR+aeDSilQvAHjr4/z/GZ6IgZ5MICSIh5hJJagHoxAVqeS9dCA27tv/n2T2XrxIUeBhywH1EmfwrnEw97tHM8F+yegayFDI1nVOUWUIxFMaygMygix8uKbQ2fl4rkkxG2oEx7uyAFMXHt4bewNbZuAp8b/b5ODL6tGHuHhcwfbWGriCO+l7UOf1K9maTx00o4wkzAPyd+qs70y/1iMX2YOOLYaYYdptEnFal2DVoD example@example.com"
+  ]
+#if non keys are provided provisioned machine allows connection with ${aws_deploy_ec2_instance_tag_name}.pem only. This file is created locally by TF.   
 ```
 
 3. Create `secret.tfvars` containing `platform_access_token`, `source_postgres_password`, and `vcs_github_secret_token`. An example:
@@ -133,8 +142,6 @@ vcs_github_secret_token = "YOUR_VCS_SECRET_TOKEN"
 
 :::info
 If you need to use your own PostgreSQL configuration parameters (copying them into `postgresql_clones_custom.conf` file), make sure there is a private key in this Terraform module directory to access the EC2 machine.
-
-The private file must be named `ubuntu.pem`.
 :::
 
 
@@ -148,8 +155,6 @@ export AWS_SECRET_ACCESS_KEY="YOUR_SECRET_ACCESS_KEY"
 ```
 
 5. Review and adjust file `postgresql_clones_custom.conf`. This file will be added to all Postgres instances in clones created by DLE. If you don't need any custom parameters, leave this file empty but do not delete it.
-
-6. Copy to your current directory (that is used for TF deployment) your AWS key-pair file that was configured with `aws_keypair` parameter in `terraform.tfvars` file before and rename it to `ubuntu.pem`.
 
 ### 3. Run deployment
 1. Initialize Terraform working directory:
