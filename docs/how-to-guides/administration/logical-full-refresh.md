@@ -83,11 +83,12 @@ dblab instance status
 ```
 
 ## Automatic full refresh data from a source
+Database Lab Engine can work with two or more disks for an automatic full refresh without downtime.
 
 ### 1. Prepare two disks
-Database Lab can work with two or more disks for an automatic full refresh. In this guide, we will use two environment variables: `$DBLAB_DISK` and `$DBLAB_DISK2`. They are supposed to contain the device names corresponding to the disks where all the Database Lab Engine data will be stored.
+In this guide, we will use two environment variables: `$DBLAB_DISK1` and `$DBLAB_DISK2`. They are supposed to contain the device names corresponding to the disks where all the Database Lab Engine data will be stored. It is possible to use more disks if needed.
 
-To understand what needs to be specified in `$DBLAB_DISK` and `$DBLAB_DISK2` in your particular case, check the output of `lsblk`:
+To understand what needs to be specified in `$DBLAB_DISK1` and `$DBLAB_DISK2` in your particular case, check the output of `lsblk`:
 ```bash
 sudo lsblk
 ```
