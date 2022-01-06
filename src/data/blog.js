@@ -1,6 +1,13 @@
 // Duplicates data from the blog.
 const blog = [
   {
+    link: 'blog/20220106-explain-analyze-needs-buffers-to-improve-postgres-query-optimization process',
+    date: '2022-01-06 22:51:00',
+    title: 'EXPLAIN (ANALYZE) needs BUFFERS to improve Postgres query optimization process',
+    description: 'The EXPLAIN command has the BUFFERS option disabled by default. It has to be enabled and used by everyone who needs to do some SQL optimization work.',
+    image: '/assets/thumbnails/20220106-explain-analyze-needs-buffers-to-improve-postgres-query-optimization-process.jpeg',
+  },
+  {
     link: 'blog/20211221-dle-3-0-0-brings-ui-and-persistent-clones',
     date: '2021-12-21 15:16:17',
     title: 'DLE 3.0: UI, persistent clones, PostgreSQL 14, more',
@@ -11,10 +18,10 @@ const blog = [
     link: 'blog/20211103-three-cases-against-if-not-exists-and-if-exists-in-postgresql-ddl',
     date: '2021-11-03 23:45:00',
     title: 'Three Cases Against IF NOT EXISTS / IF EXISTS in Postgres DDL',
-    description: 'If we aim to have predictable results, it is better to avoid to avoid `IF NOT EXISTS` / `IF EXISTS` in DB schema migrations.',
+    description: 'If we aim to have predictable results, it is better to avoid to avoid IF NOT EXISTS / IF EXISTS in DB schema migrations.',
     image: '/assets/thumbnails/20211103-three-cases-against-if-not-exists-and-if-exists-in-postgresql-ddl.png',
   },
-  {
+  /*{
     link: 'blog/20211029-how-partial-and-covering-indexes-affect-update-performance-in-postgresql',
     date: '2021-10-29 23:55:00',
     title: 'How partial, covering, and multicolumn indexes may slow down UPDATEs in PostgreSQL',
