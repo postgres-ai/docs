@@ -3,14 +3,14 @@ author: "Nikolay Samokhvalov"
 authorimg: /assets/images/nik.jpg
 date: 2022-01-06 22:51:00
 publishDate: 2022-01-06 22:51:00
-linktitle: "EXPLAIN (ANALYZE) needs BUFFERS to improve Postgres query optimization process"
-title: "EXPLAIN (ANALYZE) needs BUFFERS to improve Postgres query optimization process"
+linktitle: "EXPLAIN (ANALYZE) needs BUFFERS to improve the Postgres query optimization process"
+title: "EXPLAIN (ANALYZE) needs BUFFERS to improve the Postgres query optimization process"
 weight: 0
-image: /assets/thumbnails/xx.png
-description: "<div><img src=\"/assets/thumbnails/20220106-explain-analyze-needs-buffers-to-improve-postgres-query-optimization-process.jpeg\" alt=\"Jupiter's moon Io\"/></div>
-<p>SQL query optimization seems challenging for those who have just started working with PostgreSQL. There are many objective reasons for this, such as:
+image: /assets/thumbnails/20220106-explain-analyze-needs-buffers-to-improve-postgres-query-optimization-process.jpeg
+description: "<div><img src=\"/assets/thumbnails/20220106-explain-analyze-needs-buffers-to-improve-postgres-query-optimization-process.jpeg\" alt=\"Io, a Jupiter's moon\"/> <small>(Io, a Jupiter's moon)</small></div>
+<p>SQL query optimization is challenging for those who have just started working with PostgreSQL. There are many objective reasons for this, such as:
 <ul>
-<li>difficulty of the field of system performance in general,</li>
+<li>the difficulty of the field of system performance in general,</li>
 <li>lack of good \"playground\" environments where people can experience how databases work at a larger scale,</li>
 <li>lack of certain capabilities in Postgres observability tools that are still developing (though, at a good pace),</li>
 <li>insufficiency of good educational materials.</li>
@@ -20,7 +20,8 @@ description: "<div><img src=\"/assets/thumbnails/20220106-explain-analyze-needs-
 Here it is: the EXPLAIN command has the BUFFERS option disabled by default. I am sure it has to be enabled and used by everyone who needs to do some SQL optimization work.
 </p>"
 tags:
-  - DDL
+  - SQL optimization
+  - EXPLAIN
 ---
 
 import { AuthorBanner } from '../src/components/AuthorBanner'
@@ -31,7 +32,7 @@ import { DbLabBanner } from '../src/components/DbLabBanner'
     <small>Jupiter's moon Io. Credit: ALMA (ESO/NAOJ/NRAO), I. de Pater et al.; NRAO/AUI NSF, S. Dagnello; NASA/JPL/Space Science Institute</small>
 </p>
 
-SQL query optimization seems challenging for those who have just started working with PostgreSQL. There are many objective reasons for this, such as:
+SQL query optimization is challenging for those who have just started working with PostgreSQL. There are many objective reasons for this, such as:
 - the difficulty of the field of system performance in general,
 - lack of good "playground" environments where people can experience how databases work at a larger scale,
 - lack of certain capabilities in Postgres observability tools that are still developing (though, at a good pace),
@@ -252,9 +253,9 @@ Just 11 buffer hits, or 88 KiB, to read 1000 rows! And sub-second timing again. 
   (5 rows)
   ```
 
-~4x difference in timing (`1.935 ms` vs. `0.471 ms`) is hard to explain here without using BUFFERS or without careful inspection of the database metadata (`\d+ t2` would show that the table is clustered using `i_t2_num`).
+~4x difference in timing (`1.935 ms` vs. `0.471 ms`) is hard to explain here without using `BUFFERS` or without careful inspection of the database metadata (`\d+ t2` would show that the table is clustered using `i_t2_num`).
 
-More cases where using BUFFERS would greatly help us understand what's happening inside so we could make a good decision on query optimization:
+More cases where using `BUFFERS` would greatly help us understand what's happening inside so we could make a good decision on query optimization:
 - high level of table/index bloat,
 - very wide table (significant TOAST size),
 - HOT updates vs. index amplification.
@@ -336,7 +337,7 @@ Execution plans show data volumes in the form of `planned rows` and `actual rows
 
 Execution may take 1 millisecond on production to select 1000 rows, and 1 second on an experimental environment (or vice versa), and we can spend hours trying to understand why we have the difference.
 
-With BUFFERS, however, if we deal with same- or similar-size databases in both environments, we always work with the same or similar data volumes giving us the same (similar) buffer numbers. If we are lucky enough so we can work with production *clones* (keeping the same physical layout of data, same bloat, and so on) when troubleshooting/optimizing SQL queries, we will have:
+With `BUFFERS`, however, if we deal with same- or similar-size databases in both environments, we always work with the same or similar data volumes giving us the same (similar) buffer numbers. If we are lucky enough so we can work with production *clones* (keeping the same physical layout of data, same bloat, and so on) when troubleshooting/optimizing SQL queries, we will have:
 - exactly the same `buffer hits` if there are no reads if Postgres buffer pool is warmed up,
 - if the buffer pool is cold or not big enough on an experimental environment, then we'll see `buffer reads` that will translate to `buffer hits` on production / on a system with a warmed-up buffer pool state.
 
@@ -350,7 +351,7 @@ Following this rule, we can benefit essentially:
 1. We can stop worrying about differences in resources between production and non-production environments when optimizing a query. We can work with slower disks, less RAM, weaker processors - these aspects don't matter if we perform BUFFERS-oriented optimization and avoid direct comparison of timing values with production.
 2. Moreover, the BUFFERS-centric approach makes it possible to benefit a lot from using thin clones. On one machine, we can have multiple Postgres instances running, sharing one initial data directory and using [Copy-on-Write](https://en.wikipedia.org/wiki/Copy-on-write) provided by, say, [ZFS](https://en.wikipedia.org/wiki/ZFS), to allow numerous experimentation processes to be conducted at the same time independently. Many people and automated jobs (such as triggered in CI) can work not interfering with each other.
 
-Precisely the idea of using thin clones for SQL optimization with a focus on BUFFERS led us, Postgres.ai, to start working on [Database Lab Engine (DLE)](https://github.com/postgres-ai/database-lab-engine) a couple of years ago. DLE is an open-source tool to work with thin clones of Postgres databases of any size. Using DLE, fast-growing projects scale their SQL optimization and testing workflows (read more here: [SQL Optimization](https://v2.postgres.ai/products/joe), [Case Studies](https://v2.postgres.ai/resources), [Joe Bot](https://v2.postgres.ai/docs/joe-bot)).
+Precisely the idea of using thin clones for SQL optimization with a focus on `BUFFERS` led us, Postgres.ai, to start working on [Database Lab Engine (DLE)](https://github.com/postgres-ai/database-lab-engine) a couple of years ago. DLE is an open-source tool to work with thin clones of Postgres databases of any size. Using DLE, fast-growing projects scale their SQL optimization and testing workflows (read more here: [SQL Optimization](https://v2.postgres.ai/products/joe), [Case Studies](https://v2.postgres.ai/resources), [Joe Bot](https://v2.postgres.ai/docs/joe-bot)).
 
 ### Three points summarized
 Use `EXPLAIN (ANALYZE, BUFFERS)` always, not just `EXPLAIN ANALYZE` – so you can see the actual IO work done by Postgres when executing queries.
@@ -451,7 +452,7 @@ test=# select buf2bytes(1234567, 3);
 ```
 
 ###  Recommendations to content creators
-I saw a lot of articles, talks, books that discuss SQL optimization but do not involve `BUFFERS`, do not discuss real IO. If you're one of the authors of such materials, consider using BUFFERS in your future content.
+I saw a lot of articles, talks, books that discuss SQL optimization but do not involve `BUFFERS`, do not discuss real IO. If you're one of the authors of such materials, consider using `BUFFERS` in your future content.
 
 Examples of "good" content:
 - ["How to interpret PostgreSQL EXPLAIN ANALYZE output"](https://www.cybertec-postgresql.com/en/how-to-interpret-postgresql-explain-analyze-output/) by Laurenz Albe, Cybertec. (Thank you, Laurenz, for "You always want this"!)
@@ -468,7 +469,7 @@ The examples above are just a few of many – there is no intention to make thes
 ### Recommendations to development tool creators
 Sadly, most tools to work with Postgres execution plans completely ignore the `BUFFERS` option or underestimate its importance. It is happening because this option is not default behavior of the `EXPLAIN ANALYZE` command (see the next section). Not only it makes tool creators assume that the `BUFFERS` metrics are not that important, but – for the plan visualization tools particularly – it means that in most cases, the users of the tools don't provide the plans with the `BUFFERS` numbers included.
 
-For example, probably the most popular (and definitely the oldest) plan visualization tool, [explain.depesz.com](https://explain.depesz.com/), unfortunately, offers to "Paste output of `EXPLAIN ANALYZE your query;`", ignoring BUFFERS:
+For example, probably the most popular (and definitely the oldest) plan visualization tool, [explain.depesz.com](https://explain.depesz.com/), unfortunately, offers to "Paste output of `EXPLAIN ANALYZE your query;`", ignoring `BUFFERS`:
 
 <p align="center">
     <img src="/assets/blog/20220106-explain-depesz.png" alt="explain.depesz.com"/>

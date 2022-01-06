@@ -292,6 +292,7 @@ module.exports = {
           { to: '/docs/how-to-guides/joe-bot', from: '/docs/guides/joe-bot' },
           { to: '/docs/how-to-guides/platform', from: '/docs/guides/platform' },
           { to: '/docs/how-to-guides/platform/onboarding', from: '/docs/tutorials/onboarding'},
+          { to: '/blog/20220106-explain-analyze-needs-buffers-to-improve-the-postgres-query-optimization-process', from: '/blog/20220106-explain-analyze-needs-buffers-to-improve-postgres-query-optimization process'},
         ],
       },
     ],

@@ -1,9 +1,9 @@
 // Duplicates data from the blog.
 const blog = [
   {
-    link: 'blog/20220106-explain-analyze-needs-buffers-to-improve-postgres-query-optimization process',
+    link: 'blog/20220106-explain-analyze-needs-buffers-to-improve-the-postgres-query-optimization-process',
     date: '2022-01-06 22:51:00',
-    title: 'EXPLAIN (ANALYZE) needs BUFFERS to improve Postgres query optimization process',
+    title: 'EXPLAIN (ANALYZE) needs BUFFERS to improve the Postgres query optimization process',
     description: 'The EXPLAIN command has the BUFFERS option disabled by default. It has to be enabled and used by everyone who needs to do some SQL optimization work.',
     image: '/assets/thumbnails/20220106-explain-analyze-needs-buffers-to-improve-postgres-query-optimization-process.jpeg',
   },
