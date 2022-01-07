@@ -227,7 +227,7 @@ test=# explain (analyze, buffers) select * from t2 where num > 10000 order by nu
 (7 rows)
 ```
 
-Just 11 buffer hits, or 88 KiB, to read 1000 rows! And sub-second timing again. For `Index Scan`. Would we understand the difference without `BUFFERS`? Let me show you both execution plans, before and after `CLUSTER`, so you could compare the plans yourself and see if we can understand the cause of the difference without using `BUFFERS`:
+Just 11 buffer hits, or 88 KiB, to read 1000 rows! And sub-millisecond timing again. For `Index Scan`. Would we understand the difference without `BUFFERS`? Let me show you both execution plans, before and after `CLUSTER`, so you could compare the plans yourself and see if we can understand the cause of the difference without using `BUFFERS`:
 - before `CLUSTER` applied:
   ```
   test=# explain analyze select * from t2 where num > 10000 order by num limit 1000;
