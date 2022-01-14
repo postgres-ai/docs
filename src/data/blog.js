@@ -1,6 +1,13 @@
 // Duplicates data from the blog.
 const blog = [
   {
+    link: 'blog/20220114-progress-bar-for-postgres-queries-lets-dive-deeper',
+    date: '2022-01-14 07:11:00',
+    title: 'Progress bar for Postgres queries – let\'s dive deeper',
+    description: 'Various ways to monitor the progress of PostgreSQL query execution.',
+    image: '/assets/thumbnails/20220114-progress-bar-for-postgres-queries-lets-dive-deeper.png',
+  },
+  {
     link: 'blog/20220106-explain-analyze-needs-buffers-to-improve-the-postgres-query-optimization-process',
     date: '2022-01-06 22:51:00',
     title: 'EXPLAIN (ANALYZE) needs BUFFERS to improve the Postgres query optimization process',
@@ -14,7 +21,7 @@ const blog = [
     description: 'The Postgres.ai team is happy to announce the release of version 3.0 of Database Lab Engine (DLE), the most advanced open-source software ever released that empowers development, testing, and troubleshooting environments for fast-growing projects.',
     image: '/assets/thumbnails/dle-3.0-blog.png',
   },
-  {
+  /*{
     link: 'blog/20211103-three-cases-against-if-not-exists-and-if-exists-in-postgresql-ddl',
     date: '2021-11-03 23:45:00',
     title: 'Three Cases Against IF NOT EXISTS / IF EXISTS in Postgres DDL',
