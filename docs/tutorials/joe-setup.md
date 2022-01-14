@@ -169,7 +169,7 @@ Instead of working using insecure HTTP, you can set up NGINX with SSL enabled an
 
     ![Run command](/assets/joe/tutorial-example-help.png)
 
-See available configuration options [here](/docs/joe-bot/config-reference).
+See available configuration options [here](/docs/reference-guides/joe-bot-configuration-reference).
 
 :::info Have questions?
 Reach out to our team, we'll be happy to help! Use the Intercom widget located at the right bottom corner.
