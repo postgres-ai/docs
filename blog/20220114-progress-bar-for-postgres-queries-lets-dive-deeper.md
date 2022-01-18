@@ -172,6 +172,8 @@ Here is how it looks:
     <img src="/assets/blog/20220114-pg_stat_query-demo.gif" alt="pg_stat_query demonstration"/>
 </p>
 
+UPDATE (2021-01-18) Have a look at another interesting project that is in its early stage: [pg_plan_inspector](https://github.com/s-hironobu/pg_plan_inspector), the author of ["The Internals of PostgreSQL"](https://www.interdb.jp/pg/). It also has a real progress bar!
+
 ## Progress monitoring for DDL queries
 If you aim to change schema without downtime, DDL queries should be fast and last less than 1 second. Except those that are supposed to last quite long, not introducing long-lasting exclusive locks. Perhaps the most common cases for the latter are `CREATE INDEX CONCURRENTLY` and `ALTER TABLE .. VALIDATE CONSTRAINT` (for a constraint that was previously quickly created in with the `NOT VALID` flag).
 
