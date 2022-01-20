@@ -1,0 +1,138 @@
+---
+author: 'Nikolay Samokhvalov'
+date: 2021-09-14 00:00:00
+publishDate: 2021-09-14 00:00:00
+linktitle: 'DLE 2.5: Better data extraction for logical mode and configuration improvements'
+title: 'DLE 2.5: Better data extraction for logical mode and configuration improvements'
+description: 'Now it is possible to dump/restore multiple databases at the same time and use different pg_dump formats and compression formats of plain-text dump. DLE and related products configuration structure was significantly reworked and require manual action to migrate to the new version.'
+weight: 0
+image: /assets/thumbnails/dle-2.5-blog.png
+tags:
+  - Database Lab Engine
+  - PostgreSQL testing in CI/CD
+  - data extraction
+  - logical mode
+---
+
+import { BlogFooter } from '@site/src/components/BlogFooter'
+import { nik } from '@site/src/config/authors'
+
+<p align="center">
+  <img
+    src="/assets/thumbnails/dle-2.5-blog.png"
+    alt="DLE 2.5: Better data extraction for logical mode and configuration improvements"
+  />
+</p>
+
+:::note
+Action required to migrate from a previous version. See [Migration notes](/blog/20210914-dle-2-5#migration-notes).
+:::
+
+The Database Lab Engine (DLE) is an open-source technology that enables thin cloning for PostgreSQL. Thin clones are exceptionally useful when you need to scale the development process. DLE can manage dozens of independent clones of your database on a single machine, so each engineer or automation process works with their own database provisioned in seconds without extra costs.
+
+DLE 2.5 significantly expands the capabilities of automatic preparation of snapshots directly from managed database services, as well as from logical dumps, namely:
+
+- restoring of multiple databases
+- various [pg_dump](https://www.postgresql.org/docs/current/app-pgdump.html) output formats and file compression formats
+
+Since version 2.5, it becomes possible to reset the clone's database state to a specific snapshot if multiple snapshots are available. See [DLE CLI reference](/docs/reference-guides/dblab-client-cli-reference#subcommand-reset). There is also a new option for the `reset` command, `--latest`, that allows resetting to the latest available state not knowing the snapshot name. This can be very useful in situations when a clone lives long, occupying a specific port, and some applications (e.g., analytical tools) are configured to work with it – users can periodically switch to the freshest database state without a need to reconfigure their applications.
+
+All new restore features are also already available in the [Terraform module](https://gitlab.com/postgres-ai/terraform-postgres-ai-database-lab) (currently works with AWS only).
+
+Additionally, this release has a lot of improvements and fixes. Read the [full changelog](https://gitlab.com/postgres-ai/database-lab/-/releases#2.5.0).
+
+<!--truncate-->
+
+## Migration notes
+
+The Database Lab ecosystem is growing with new products and services. Most of them have configuration files and metadata, but their structure and naming are not uniform.
+
+To simplify work with the configuration, we decided to redesign the configuration structure of all Database Lab services and standardize the naming of configuration files and directories.
+
+### Prepare configuration directories on a host machine
+
+- The main directory of Database Lab configuration is `~/.dblab`. There are directories for each service inside this main directory:
+  - `cli` - configs of Database Lab command-line interface
+  - `engine` - configs and metadata of Database Lab Engine
+  - `joe` - configs and metadata of Joe Bot assistant
+  - `ci_checker` - configs of DB Migration Checker
+- Rename the configuration file of Database Lab Engine to `server.yml` and store it to `~/.dblab/engine/configs`
+- In the running command `docker run ...` replace the mounting flag
+  ```
+  --volume ~/.dblab/server.yml:/home/dblab/configs/config.yml
+  ```
+  with
+  ```
+  --volume ~/.dblab/engine/configs:/home/dblab/configs:ro
+  --volume ~/.dblab/engine/meta:/home/dblab/meta
+  ```
+
+Check the example of configuration structure on a host machine:
+
+```
+ ~/.dblab/
+    cli/
+     - cli.yml
+
+    engine/
+      configs/
+        - server.yml
+      meta/
+        - state.json
+
+    joe/
+      configs/
+        - joe.yml
+      meta/
+        - sessions.json
+
+    ci_checker/
+      configs/
+        - ci_checker.yml
+```
+
+### _(optional)_ Compact the configuration file using common YAML-sections and anchors
+
+Database Lab Engine starts a number of Docker containers with a PostgreSQL instance inside. A powerful configuration system allows controlling various properties of running containers (PostgreSQL version, Docker image, container parameters, extensions loaded, PostgreSQL configuration parameters).
+
+However, such flexibility may be inconvenient in the case of a number of the configuration section. On the other hand, YAML anchors and aliases can be used, help you conveniently manage your configuration sections
+
+YAML allows defining a "global" binding with `&` where you can set properties for all PostgreSQL containers and then refer to it using an alias denoted by `*`.
+
+⚠ Note, the "local" configuration of each section would still be supported, overriding particular parts.
+
+There is an example using an anchor:
+
+```yaml
+# Configure database containers
+databaseContainer: &db_container
+  dockerImage: 'postgresai/extended-postgres:13'
+  containerConfig:
+    'shm-size': 1gb
+
+retrieval:
+  jobs:
+    - logicalDump
+    - logicalRestore
+    - logicalSnapshot
+
+  spec:
+    logicalDump:
+      options:
+        <<: *db_container
+        dumpLocation: '/var/lib/dblab/dblab_pool/dump'
+```
+
+See more examples of configuration files in the [Database Lab repository](https://gitlab.com/postgres-ai/database-lab/-/tree/master/configs/)
+
+If you have problems or questions, please contact our communities for help: https://postgres.ai/docs/questions-and-answers#where-to-get-help
+
+## Request for feedback and contributions
+
+Feedback and contributions would be greatly appreciated:
+
+- Database Lab Community Slack: https://slack.postgres.ai/
+- DLE & DB Migration Checker issue tracker: https://gitlab.com/postgres-ai/database-lab/-/issues
+- Issue tracker of the Terraform module for Database Lab: https://gitlab.com/postgres-ai/database-lab-infrastructure/-/issues
+
+<BlogFooter author={nik} />

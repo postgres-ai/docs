@@ -1,0 +1,18 @@
+.root {
+  margin-top: 60px;
+}
+
+.links {
+  display: flex;
+}
+
+.link {
+  display: flex;
+  margin-right: 12px;
+  color: var(--ifm-font-color-base);
+}
+
+.icon {
+  height: 32px;
+  width: 32px;
+}
