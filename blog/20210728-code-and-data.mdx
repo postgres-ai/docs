@@ -1,0 +1,65 @@
+---
+author: 'Dante Cassanego'
+date: 2021-07-28 16:00:00
+publishDate: 2021-07-28 16:00:00
+linktitle: 'Comprehensive Testing Covers Code AND Data'
+title: Comprehensive Testing Covers Code AND Data
+description: 'Comprehensive Testing Covers Code AND Data'
+weight: 0
+image: /assets/thumbnails/dle-generic-blog.png
+tags:
+  - Postgres.ai
+  - Database Lab
+  - Software Testing
+  - Integraiton Testing
+  - Data Testing
+---
+
+import { BlogFooter } from '@site/src/components/BlogFooter'
+import { dante } from '@site/src/config/authors'
+
+Over its relatively short history, the discipline of Software Engineering has
+made rapid advances in the sophistication of its development processes and tools.
+In the past 15 years alone, the popularization of CI/CD tools has drastically
+improved software quality and reliability.
+
+However, a large gap remains on the landscape of software tooling. For many engineers,
+it's a gap they are so accustomed to, they can no longer even see it.
+
+**The Elements of Application Behavior**
+![Code AND Data](/assets/blog/code-and-data.png)
+
+<!--truncate-->
+
+A software application of even modest complexity is composed of two major elements:
+Code and Data. Application behavior is the result of the _combination_ of these
+two elements.
+
+Despite this, nearly _ALL_ software testing focuses on code, not data. When an engineer
+deploys code, her visibility into application behavior looks more like this:
+
+![Testing Code Only](/assets/blog/testing-code.png)
+
+Why is this? Many reasons. Some are legitimate and some are worth re-examining:
+
+1. Code, not data, is the engineer's product
+2. Code can be tested in small, isolated, pieces
+3. Test Data is time-consuming and tedious to maintain
+4. There aren't many Data Testing tools
+
+## Taking a Fresh Look
+
+At Postgres.ai, we're taking a fresh look at the landscape of software testing. We're building
+next-generation tools to ensure engineers have a complete understanding of application behavior
+_before_ their code hits production.
+
+Here are just a few of the things we can imagine doing when application data can be easily tested:
+
+- Easily add [database migration tests](/products/database-migration-testing) to your CI/CD pipeline
+- Add Data Validation tests pre and post migrations to ensure your expectations are met
+- Eaily add _realistic_ load testing to your release pipeline
+- Automatically identify SQL query performance degradation as a part of your automated CI/CD pipeline
+
+And these are just the start...
+
+<BlogFooter author={dante} />

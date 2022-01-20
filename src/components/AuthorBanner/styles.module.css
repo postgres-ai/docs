@@ -1,6 +1,14 @@
 .root {
-  display: flex;
+  display: inline-flex;
   margin-top: 60px;
+}
+
+.root:hover .links {
+  opacity: 1;
+}
+
+.root:hover .note {
+  transform: none;
 }
 
 .avatar {
@@ -29,6 +37,8 @@
   font-size: 0;
   display: flex;
   margin-top: 8px;
+  transition: opacity .2s ease-out;
+  opacity: 0;
 }
 
 .link {
@@ -38,4 +48,6 @@
 
 .note {
   margin: 8px 0 0 0;
+  transform: translateY(-26px);
+  transition: transform .2s ease-out;
 }

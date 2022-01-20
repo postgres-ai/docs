@@ -1,0 +1,113 @@
+---
+author: "Nikolay Samokhvalov"
+date: 2021-12-21 15:16:17
+publishDate: 2021-12-21 15:16:17
+linktitle: "DLE 3.0: UI, persistent clones, PostgreSQL 14, more"
+title: "DLE 3.0: UI, persistent clones, PostgreSQL 14, more"
+description: "<div><img src=\"/assets/thumbnails/dle-3.0-blog.png\" alt=\"Database Lab Engine 3.0 by Postgres.ai: UI, persistent clones, PostgreSQL 14, more\"/></div>
+
+<p>The Postgres.ai team is happy to announce the release of version 3.0 of <a href=\"https://github.com/postgres-ai/database-lab\">Database Lab Engine (DLE)</a>, the most advanced open-source software ever released that empowers development, testing, and troubleshooting environments for fast-growing projects. The use of Database Lab Engine 3.0 provides a competitive advantage to companies via implementing the \"Shift-left testing\" approach in software development.</p>
+
+<p>Database Lab Engine is an open-source technology that enables thin cloning for PostgreSQL. Thin clones are exceptionally useful when you need to scale the development process. DLE can manage dozens of independent clones of your database on a single machine, so each engineer or automation process works with their own database provisioned in seconds without extra costs.</p>
+
+<p>Among major changes:</p>
+<ul>
+<li>UI included to the core, it allows working with a single DLE instance</li>
+<li>persistent clones: clones now survive DLE (or VM) restart</li>
+<li>for the \"logical\" data provisioning mode: the ability to switch reset clone's state using a snapshot from different pool/dataset</li>
+<li>better logging, easier configuration</li>
+<li>improvements for the cases when multiple DLEs are running on a single machine</li>
+<li>Support of PostgreSQL 14</li>
+</ul>
+
+<p>Further, we discuss the most requested changes that were implemented in DLE 3.0 – all of them were created based on real-life user experience and invaluable feedback from the growing community of users and contributors.</p>"
+weight: 0
+image: /assets/thumbnails/dle-3.0-blog.png
+tags:
+  - Database Lab Engine
+---
+
+import { BlogFooter } from '@site/src/components/BlogFooter'
+import { nik } from '@site/src/config/authors'
+
+<p align="center">
+    <img src="/assets/thumbnails/dle-3.0-blog.png" alt="Database Lab Engine 3.0 by Postgres.ai: UI, persistent clones, PostgreSQL 14, more"/>
+</p>
+
+:::note
+Action required to migrate from a previous version. If you are running DLE 2.5 or older, please read carefully and follow the [Migration notes](https://gitlab.com/postgres-ai/database-lab/-/releases/v3.0.0#migration-notes).
+:::
+
+# What's new in DLE 3.0?
+The Postgres.ai team is happy to announce the release of version 3.0 of [Database Lab Engine (DLE)](https://github.com/postgres-ai/database-lab), the most advanced open-source software ever released that empowers development, testing, and troubleshooting environments for fast-growing projects. The use of Database Lab Engine 3.0 provides a competitive advantage to companies via implementing the ["Shift-left testing"](https://en.wikipedia.org/wiki/Shift-left_testing) approach in software development.
+
+Database Lab Engine is an open-source technology that enables thin cloning for PostgreSQL. Thin clones are exceptionally useful when you need to scale the development process. DLE can manage dozens of independent clones of your database on a single machine, so each engineer or automation process works with their very own database provisioned in seconds without extra costs.
+
+Among major changes in DLE 3.0:
+- UI included to the core, it allows working with a single DLE instance,
+- persistent clones: clones now survive DLE (or VM) restart,
+- for the "logical" data provisioning mode: the ability to switch reset clone's state using a snapshot from different pool/dataset,
+- better logging and configuration simplicity,
+- improvements for the cases when multiple DLEs are running on a single machine,
+- PostgreSQL 14 support.
+
+Starting with version 3.0.0, DLE collects non-personally identifiable telemetry data. This feature is enabled by default but can be switched off. Read more in [the DLE documentation](https://postgres.ai/docs/database-lab/telemetry). Keeping telemetry enabled can be considered your contribution to the DLE development because it helps make decisions down the road of the open-source product development.
+
+Further, we discuss the most requested changes that were implemented in DLE 3.0 – all of them were created based on real-life user experience and invaluable feedback from the growing community of users and contributors.
+
+<!--truncate-->
+
+## DLE UI: clone large databases in seconds right in your browser
+Being open-source software, DLE has always been equipped with [API](/docs/reference-guides/database-lab-engine-api-reference) and [CLI](/docs/reference-guides/dblab-client-cli-reference). As for UI, it was initially available only in the form of SaaS – [Database Lab Platform running on Postgres.ai](https://postgres.ai/docs/platform).
+
+In response to numerous requests from DLE users, UI has been integrated into the core distribution of DLE 3.0. This change makes open-source DLE even more attractive to users, bringing ease in use and simplifying adoption in fast-growing companies.
+
+<div class="embed-responsive embed-responsive-4by3 mb-4">
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/buxZFH2oGFQ?autoplay=0&origin=https://postgres.ai&modestbranding=1&playsinline=0&loop=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+Some users have told us that with UI in hands, it becomes much easier to explain to colleagues various use cases where DLE can be very helpful. If you like Database Lab, please try to benefit from this change – using UI, demonstrate to others the idea of cloning large databases in a few seconds, and discuss how it can influence your software development, testing processes, as well as incident troubleshooting and SQL optimization.
+
+## Persistent clones: keep working with your cloned Postgres databases during maintenance
+Another feature added to DLE 3.0 is also something that DLE users have asked a lot about. Before 3.0, any restart of DLE meant the loss of all clones created – so DLE upgrades, VM restarts, and even simple reconfiguration of DLE always needed a maintenance window, interrupting work.
+
+A partial solution to this problem was the ability to [reconfigure DLE without restarts](/docs/how-to-guides/administration/engine-manage#reconfigure-database-lab-engine) introduced in DLE 2.0. However, this wasn't helpful in the cases of DLE upgrades or VM restarts. Now with DLE 3.0, this problem is fully solved:
+- If you are running DLE 2.5 or older, plan one more maintenance window – and this will be the last one for upgrades. All subsequent upgrades will keep clones alive.
+- If you experience a VM failure – not uncommon in cloud environments – once it's back, clones will be re-created, keeping the database state.
+
+Of course, in the case of VM restart, DB connections are lost and need to be recreated. However, if you need to restart just DLE, all clone containers will keep running, and users can now continue working with them even during DLE restart, without any work interruptions.
+
+## Advanced reset for the "logical" mode
+In DLE 2.5, we have implemented the ability to reset to any available snapshot – a convenient way for your clones to travel in time fast. In 2.5, this was supported only for the "physical" provisioning mode (restoring data directory, PGDATA, from physical backups, or obtaining it from the source using `pg_basebackup`). In other words, it was ready to work only if you manage Postgres yourself and can copy PGDATA or establish physical replication connection to your databases. Something that is not available to the users of RDS and other managed Postgres services.
+
+For DLE running in the "logical" data provisioning mode (based on dump/restore – the only option for most managed Postgres cloud offerings such as Amazon RDS), DLE 2.5 provided the ability to operate with multiple copies of PGDATA was implemented, which allowed having a full refresh without downtime. However, if DLE users were running clones on the "old" PGDATA version, they needed to recreate them to unlock the next full refresh – and this was somewhat inconvenient because of quite unpredictable port allocation.
+
+In DLE 3.0, it is now possible to reset a clone's state to any database version (snapshot), even if that version is provided by another copy of PGDATA running on a different pool/dataset. It means that users can keep their clone running on the same port for a long time, having stable DB credentials (including the port), and when needed, once the full refresh has finished, switch to the freshest database version in seconds. This makes the experience of working with the "logical" almost on par with the "physical" one.
+
+## Running multiple DLEs on a single machine
+Originally, DLE was designed to run on a dedicated machine, physical or virtual. However, many users found it inconvenient – in some cases, development and testing environments are subject to budget optimization, so it may make a lot of sense to run multiple DLEs on a single machine, especially if the organization has many smaller databases (a typical case for those who deal with microservice architectures).
+
+DLE 3.0 has several improvements that simplify running multiple DLEs on a single machine. Particularly, the new configuration option [`selectedPool`](/docs/reference-guides/database-lab-engine-configuration-reference#section-poolmanager-filesystem-pools-or-volume-groups-management) allows having a single ZFS pool and running multiple DLEs in a way where each one of them has its own dataset. This drastically simplifies free disk space management: instead of fragmented space allocation and dealing with many "free disk space" numbers, the DLE administrator now needs to control just a single number and adjust disk size much less often.
+
+We are planning to discuss the aspects of running multiple DLEs on a single machine in a separate article.
+
+## Further reading
+- [DLE 3.0 release notes](https://github.com/postgres-ai/database-lab-engine/releases/tag/v3.0.0)
+- [Database Lab Documentation](/docs)
+- [Tutorial for any database](/docs/tutorials/database-lab-tutorial)
+- [Tutorial for Amazon RDS](/docs/tutorials/database-lab-tutorial-amazon-rds)
+- [Interactive tutorial (Katacoda)](https://www.katacoda.com/postgres-ai/scenarios/database-lab-tutorial)
+
+:::tip
+To get help, reach out to the Postgres.ai team and the growing community of Database Lab users and contributors: https://postgres.ai/contact.
+:::
+
+## Request for feedback and contributions
+Feedback and contributions would be greatly appreciated:
+- [Database Lab Community Slack](https://slack.postgres.ai/)
+- [DLE & DB Migration Checker issue tracker](https://gitlab.com/postgres-ai/database-lab/-/issues)
+- [Issue tracker of the Terraform module for Database Lab](https://gitlab.com/postgres-ai/database-lab-infrastructure/-/issues)
+
+Like Database Lab? Give us a GitHub star: https://github.com/postgres-ai/database-lab.
+
+<BlogFooter author={nik} />

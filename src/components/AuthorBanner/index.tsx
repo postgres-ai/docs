@@ -1,14 +1,14 @@
 import React, { useEffect, useRef } from 'react'
 
-import { GatewayLink } from '../GatewayLink'
-import { TwitterLogo } from './TwitterLogo'
-import { GitlabLogo } from './GitlabLogo'
-import { GithubLogo } from './GithubLogo'
-import { LinkedInLogo } from './LinkedInLogo'
+import { GatewayLink } from '@site/src/components/GatewayLink'
+import { TwitterLogo } from '@site/src/icons/TwitterLogo'
+import { GitlabLogo } from '@site/src/icons/GitlabLogo'
+import { GithubLogo } from '@site/src/icons/GithubLogo'
+import { LinkedInLogo } from '@site/src/icons/LinkedInLogo'
 
 import styles from './styles.module.css'
 
-type Props = {
+export type Props = {
   avatarUrl: string
   name: string
   role: string

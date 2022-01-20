@@ -1,12 +1,15 @@
 const path = require('path')
 
-const URL = (!!process.env.URL ? process.env.URL : 'https://v2.postgres.ai/');
-const BASE_URL = (!!process.env.BASE_URL ? process.env.BASE_URL : '/');
-const SIGN_IN_URL = (!!process.env.SIGN_IN_URL ? process.env.SIGN_IN_URL : '/signin');
+const URL = !!process.env.URL ? process.env.URL : 'https://v2.postgres.ai/'
+const BASE_URL = !!process.env.BASE_URL ? process.env.BASE_URL : '/'
+const SIGN_IN_URL = !!process.env.SIGN_IN_URL
+  ? process.env.SIGN_IN_URL
+  : '/signin'
 
 module.exports = {
   title: 'Database Lab · Instant clones of PostgreSQL databases · Postgres.ai', // Title for your website.
-  tagline: 'Boost your development process eliminating Postgres-related roadblocks in the way of developers, DBAs and QA specialists',
+  tagline:
+    'Boost your development process eliminating Postgres-related roadblocks in the way of developers, DBAs and QA specialists',
   url: URL, // Your website URL.
   baseUrl: BASE_URL, // Base URL for your project.
   onBrokenLinks: 'log', //'throw',
@@ -21,7 +24,7 @@ module.exports = {
   // TODO (anatoly): @docusaurus/plugin-google-gtag doesn't seem to work now, refactor when fixed.
   scripts: [
     BASE_URL + 'js/gtag.js',
-    {src: BASE_URL + 'js/cookieBanner.js', async: true, defer: true},
+    { src: BASE_URL + 'js/cookieBanner.js', async: true, defer: true },
   ],
 
   themeConfig: {
@@ -34,14 +37,18 @@ module.exports = {
       { 'http-equiv': 'x-dns-prefetch-control', content: 'on' },
       { property: 'og:locale', content: 'en_US' },
       { property: 'og:site_name', content: 'Postgres.ai' },
-      { property: 'article:publisher', content: 'https://www.linkedin.com/company/postgres-ai/' },
+      {
+        property: 'article:publisher',
+        content: 'https://www.linkedin.com/company/postgres-ai/',
+      },
       { name: 'twitter:site', content: '@Database_Lab' },
       { name: 'twitter:creator', content: '@Database_Lab' },
     ],
 
     announcementBar: {
       id: 'advisory_group', // Any value that will identify this message to save the hidden status.
-      content: '<a href=\'/blog/20211221-dle-3-0-0-brings-ui-and-persistent-clones\'>Database Lab Engine 3.0 released!</a>',
+      content:
+        "<a href='/blog/20211221-dle-3-0-0-brings-ui-and-persistent-clones'>Database Lab Engine 3.0 released!</a>",
       backgroundColor: '#D7EEF2',
       textColor: '#013A44',
       isCloseable: true,
@@ -82,7 +89,7 @@ module.exports = {
             },
             {
               to: '/resources',
-              label: 'Case Studies'
+              label: 'Case Studies',
             },
           ],
         },
@@ -112,9 +119,9 @@ module.exports = {
             },
             {
               label: 'Database Lab FAQ',
-              to: '/docs/questions-and-answers'
-            }
-          ]
+              to: '/docs/questions-and-answers',
+            },
+          ],
         },
         {
           to: '/consulting',
@@ -181,7 +188,7 @@ module.exports = {
             {
               label: 'Joe Bot for SQL Optimization',
               to: '/products/joe',
-            }
+            },
           ],
         },
         {
@@ -277,37 +284,72 @@ module.exports = {
             to: '/docs/roadmap', // string
             from: ['/docs/oldDocPathFrom2019', '/docs/legacyDocPathFrom2016'], // string | string[]
           },
-          { to: '/docs/reference-guides/database-lab-engine-api-reference', from: '/docs/database-lab/api-reference' },
-          { to: '/docs/reference-guides/dblab-client-cli-reference', from: '/docs/database-lab/cli-reference' },
-          { to: '/docs/reference-guides/database-lab-engine-components', from: '/docs/database-lab/components' },
-          { to: '/docs/reference-guides/database-lab-engine-configuration-reference', from: '/docs/database-lab/config-reference' },
-          { to: '/docs/reference-guides/joe-bot-configuration-reference', from: '/docs/joe-bot/config-reference' },
-          { to: '/docs/reference-guides/joe-bot-commands-reference', from: '/docs/joe-bot/commands-reference' },
-          { to: '/docs/reference-guides/db-migration-checker-configuration-reference', from: '/docs/db-migration-checker/config-reference' },
+          {
+            to: '/docs/reference-guides/database-lab-engine-api-reference',
+            from: '/docs/database-lab/api-reference',
+          },
+          {
+            to: '/docs/reference-guides/dblab-client-cli-reference',
+            from: '/docs/database-lab/cli-reference',
+          },
+          {
+            to: '/docs/reference-guides/database-lab-engine-components',
+            from: '/docs/database-lab/components',
+          },
+          {
+            to: '/docs/reference-guides/database-lab-engine-configuration-reference',
+            from: '/docs/database-lab/config-reference',
+          },
+          {
+            to: '/docs/reference-guides/joe-bot-configuration-reference',
+            from: '/docs/joe-bot/config-reference',
+          },
+          {
+            to: '/docs/reference-guides/joe-bot-commands-reference',
+            from: '/docs/joe-bot/commands-reference',
+          },
+          {
+            to: '/docs/reference-guides/db-migration-checker-configuration-reference',
+            from: '/docs/db-migration-checker/config-reference',
+          },
           { to: '/docs/how-to-guides', from: '/docs/guides' },
-          { to: '/docs/how-to-guides/administration', from: '/docs/guides/administration' },
-          { to: '/docs/how-to-guides/administration/data', from: '/docs/guides/data' },
+          {
+            to: '/docs/how-to-guides/administration',
+            from: '/docs/guides/administration',
+          },
+          {
+            to: '/docs/how-to-guides/administration/data',
+            from: '/docs/guides/data',
+          },
           { to: '/docs/how-to-guides/cli', from: '/docs/guides/cli' },
           { to: '/docs/how-to-guides/cloning', from: '/docs/guides/cloning' },
           { to: '/docs/how-to-guides/joe-bot', from: '/docs/guides/joe-bot' },
           { to: '/docs/how-to-guides/platform', from: '/docs/guides/platform' },
-          { to: '/docs/how-to-guides/platform/onboarding', from: '/docs/tutorials/onboarding'},
-          { to: '/blog/20220106-explain-analyze-needs-buffers-to-improve-the-postgres-query-optimization-process', from: '/blog/20220106-explain-analyze-needs-buffers-to-improve-postgres-query-optimization process'},
+          {
+            to: '/docs/how-to-guides/platform/onboarding',
+            from: '/docs/tutorials/onboarding',
+          },
+          {
+            to: '/blog/20220106-explain-analyze-needs-buffers-to-improve-the-postgres-query-optimization-process',
+            from: '/blog/20220106-explain-analyze-needs-buffers-to-improve-postgres-query-optimization process',
+          },
         ],
       },
     ],
     [
       path.resolve(__dirname, 'plugin-dynamic-routes'),
-      { // this is the options object passed to the plugin
-          routes: [
-              { // using Route schema from react-router
-                  path: '/universe',
-                  exact: false, // this is needed for sub-routes to match!
-                  component: path.resolve(__dirname, 'src/dynamicPages/universe')
-              }
-          ]
-      }
-  ],
+      {
+        // this is the options object passed to the plugin
+        routes: [
+          {
+            // using Route schema from react-router
+            path: '/universe',
+            exact: false, // this is needed for sub-routes to match!
+            component: path.resolve(__dirname, 'src/dynamicPages/universe'),
+          },
+        ],
+      },
+    ],
   ],
 
   presets: [
@@ -348,4 +390,4 @@ module.exports = {
       },
     ],
   ],
-};
+}
