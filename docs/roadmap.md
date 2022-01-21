@@ -10,7 +10,7 @@ keywords:
 ## Roadmap
 We work hard to develop the Database Lab Platform (DLP) and its open-source core component, Database Lab Engine (DLE). Below you can find the main ideas we are working on now or planning to work soon.
 
-*Updated: 2021-12-14*
+*Updated: 2022-01-20*
 
 ### [DLE] Physical provisioning
 Physical provisioning: native support of provisioning from archives created by a specific backup solution or based on an existing Postgres database
@@ -31,7 +31,7 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
 - [x] Support various sources
     - [x] Any PostgreSQL DB via dump/restore: Amazon RDS, Heroku Postgres, Azure PostgreSQL, GCP CloudSQL, Digital Ocean Postgres, etc.
     - [x] AWS: RDS IAM
-    - [x] GCP: CloudSQL IAM
+    - [ ] GCP: CloudSQL IAM
     - [ ] Azure IAM
     - [x] Restore from backups stored on AWS S3
         - [x] uncompressed
@@ -43,7 +43,7 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
     - [ ] Advanced refresh policies: force refresh on pools being in use, warning period, number of retries before forcing
 - [ ] Partial data retrieval
     - [x] specific databases
-    - [ ] specific tables
+    - [x] specific tables
     - [ ] arbitrary filtering (column and row filtering)
 
 ### [DLE] Engine features
@@ -78,8 +78,8 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
     - [ ] schema diff
     - [ ] zero-downtime DDL auto-generation
 - [x] Reset clone's state to particular database version – keeping DB creds the same (including port)
-    - [ ] physical: allow choosing `dataStateAt`
-    - [ ] logical: allow "jumping" between DB versions (pools)
+    - [x] physical: allow choosing `dataStateAt`
+    - [x] logical: allow "jumping" between DB versions (pools)
 
 ### [DLP] Platform features
 - [x] Support working with multiple DLEs
@@ -191,9 +191,9 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
     - [x] Quotas (rate limits)
     - [ ] Alert admins when a quota is reached
 - [ ] Runtime execution plan observability: [pg_query_state](https://github.com/postgrespro/pg_query_state)
-- [ ] Reset 
+- [ ] Reset to specific `dataStateAt`
 - [ ] perf/FlameGraphs
-- [ ] pg_wait_sampling for 
+- [ ] Wait event sampling
 
 ### [SaaS] Data masking and anonymization
 - [x] Basic support for masking and obfuscation
