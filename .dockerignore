@@ -1,2 +1,8 @@
-*/node_modules
-*.log
+.docusaurus
+.git
+build
+deploy
+node_modules
+.gitignore
+.gitlab-ci.yml
+do.sh

@@ -1,4 +1,4 @@
-FROM node:12.22.3
+FROM node:16.13.2-alpine
 
 ARG ARG_REACT_APP_API_SERVER
 ENV REACT_APP_API_SERVER=$ARG_REACT_APP_API_SERVER
@@ -12,12 +12,17 @@ ENV BASE_URL=$ARG_BASE_URL
 ARG ARG_SIGN_IN_URL
 ENV SIGN_IN_URL=$ARG_SIGN_IN_URL
 
-WORKDIR /app/
+WORKDIR /docs
 
-EXPOSE 3000
-COPY ./ /app/
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm ci
 
-RUN npm install
+COPY . .
+# Make cache folder if not exists.
+RUN mkdir -p .cache
+RUN mv .cache node_modules
 RUN npm run build
 
-CMD ["npm", "run", "serveserve"]
+EXPOSE 3000
+CMD ["npm", "run", "serve"]

@@ -1,31 +1,28 @@
 # 2019 © Postgres.ai
 
-image: docker:18.09.7
+image: docker:20.10.12
 
 stages:
-  - test
   - prepare_image
   - deploy
 
 variables:
   ENV: "local" # Should be overwritten by environment template.
   NAMESPACE: "default" # Should be overwritten by environment template.
-  TAG: ":${NAMESPACE}-${CI_PIPELINE_IID}"
+  REGISTRY: "gcr.io/postgres-ai/docs"
+  TAG_VERSION: "${REGISTRY}:${NAMESPACE}-${CI_PIPELINE_IID}"
+  TAG_LATEST: "${REGISTRY}:${NAMESPACE}-latest"
   DOCS_NAME: "docs"
 
 # Stages templates.
-.job_template: &test_definition
-  stage: test
-  image: node:10.17.0-jessie
-  script:
-    - source ./deploy/configs/review.sh
-    - npm install
-    - npm build
-
 .job_template: &build_and_push_definition
   stage: prepare_image
+  cache:
+    - key: $CI_COMMIT_REF_SLUG
+      paths:
+        - .cache
   services:
-    - docker:dind
+    - docker:20.10.12-dind
   script:
     - source "./deploy/configs/${ENV}.sh"
 
@@ -33,15 +30,31 @@ variables:
     - echo $GCP_SERVICE_ACCOUNT | base64 -d > ./key.json
     - docker login -u _json_key --password-stdin https://gcr.io < ./key.json
 
+    # Pull latest image to use it as a cache source.
+    # Docker image with `$TAG_LATEST` can be unavailable during the build - it is okay for us -
+    # that means we don't have a cache for `docker build` command.
+    - docker pull $TAG_LATEST || true
+
     # Build the image.
-    - docker build -t gcr.io/postgres-ai/docs$TAG
+    # `--cache-from` arg in `docker build` doesn't have any troubles if
+    # passed image tag is unavailable - it will simply ignore it.
+    - docker build
+      --cache-from $TAG_LATEST
+      --tag $TAG_VERSION
+      --tag $TAG_LATEST
       --build-arg ARG_URL="${URL}"
       --build-arg ARG_BASE_URL="${BASE_URL}"
       --build-arg ARG_SIGN_IN_URL="${SIGN_IN_URL}"
       .
 
+    # Extract cache folders from tmp container to use as cache in GitLab runner.
+    - CONTAINER_ID=$(docker create $TAG_VERSION)
+    - docker cp $CONTAINER_ID:/docs/node_modules/.cache .
+    - docker rm -v $CONTAINER_ID
+
     # Push the image.
-    - docker push gcr.io/postgres-ai/docs$TAG
+    - docker push $TAG_VERSION
+    - docker push $TAG_LATEST
 
 .job_template: &deploy_definition
   stage: deploy
@@ -70,9 +83,6 @@ variables:
     NAMESPACE: staging
 
 # Stages with branch policies.
-test:
-  <<: *test_definition
-
 build_and_push_production:
   <<: *build_and_push_definition
   <<: *env_production
