@@ -27,7 +27,7 @@ Below you can find what data is collected and sent for each type of event.
 ### Engine started 
 ```json
 {
-  "engine_version": "2.5.0-26-g5d01005-20211021-1103",
+  "engine_version": "v3.0.0-20211220-1923",
   "db_version": "11",
   "pools": {
     "fs_type": "zfs",
