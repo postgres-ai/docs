@@ -1,0 +1,11 @@
+.repos {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+}
+
+@media (max-width: 991px) {
+  .repos {
+    display: block;
+  }
+}

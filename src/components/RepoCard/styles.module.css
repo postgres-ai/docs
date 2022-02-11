@@ -1,0 +1,95 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid #c4c4c4;
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 24px;
+  flex: 1 1 50%;
+}
+
+.root:not(:last-child) {
+  margin-right: 32px;
+}
+
+@media (max-width: 991px) {
+  .root:not(:last-child) {
+    margin-right: 0;
+    margin-bottom: 32px;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  font-weight: normal;
+  font-size: 24px;
+  margin: 0;
+}
+
+.logo {
+  margin-left: 16px;
+}
+
+.description {
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 23px;
+  margin-top: 16px;
+}
+
+@media (min-width: 768px) and (max-width: 990px) {
+  .title {
+    font-size: 20px;
+    line-height: 23px;
+  }
+  .description {
+    font-size: 18px;
+    line-height: 21px;
+  }
+}
+
+@media (max-width: 767px) {
+  .title {
+    font-size: 20px;
+    line-height: 23px;
+  }
+  .description {
+    font-size: 18px;
+    line-height: 21px;
+  }
+}
+
+@media (max-width: 579px) {
+  .title {
+    font-size: 20px;
+    line-height: 23px;
+  }
+  .description {
+    font-size: 18px;
+    line-height: 21px;
+  }
+}
+
+.link {
+  color: #000;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+[data-theme='dark'] .link {
+  color: #fff;
+}
+
+.link:hover {
+  text-decoration: none;
+  color: #ff6112;
+}
+
+.githubStarButtonWrapper {
+  margin-top: 24px;
+}
