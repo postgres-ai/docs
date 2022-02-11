@@ -174,7 +174,7 @@ You need to know the **master password**. If you lost the password it [can be re
 :::
 
 #### Configure Database Lab Engine
-Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.0.0/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
+Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.0.1/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
 ```bash
 mkdir -p ~/.dblab/engine/configs
 
@@ -212,7 +212,7 @@ sudo docker run \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:3.0.0
+  postgresai/dblab-server:3.0.1
 ```
 
 </TabItem>
@@ -237,7 +237,7 @@ Alternatively, you can add `AmazonRDSFullAccess`, `IAMFullAccess` policies to an
 :::
 
 #### Configure Database Lab Engine
-Copy the contents of configuration example [`config.example.logical_rds_iam.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.0.0/configs/config.example.logical_rds_iam.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
+Copy the contents of configuration example [`config.example.logical_rds_iam.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.0.1/configs/config.example.logical_rds_iam.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
 ```bash
 mkdir -p ~/.dblab/engine/configs
 
@@ -286,7 +286,7 @@ sudo docker run \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:3.0.0
+  postgresai/dblab-server:3.0.1
 ```
 
 </TabItem>
