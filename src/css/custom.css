@@ -347,70 +347,6 @@ html[data-theme="dark"] .multi-sec {
   margin-bottom: 13px;
 }
 
-.source-boxes {
-  border: 1px solid #c4c4c4;
-  box-sizing: border-box;
-  border-radius: 4px;
-  padding: 14px 23px 24px 26px;
-  margin-top: 34px;
-}
-
-.source-boxes a {
-  display: block;
-  color: #000;
-  text-decoration: none;
-}
-[data-theme="dark"] .source-boxes a {
-  color: #fff;
-}
-
-.source-boxes h4 {
-  font-weight: normal;
-  font-size: 24px;
-  line-height: 28px;
-  display: block;
-  margin-top: 5px;
-}
-
-.source-boxes h4 img {
-  vertical-align: -1px;
-}
-
-.source-boxes h4 img.float-right {
-  margin-top: -5px;
-}
-
-.source-boxes p {
-  font-weight: 300;
-  font-size: 20px;
-  line-height: 23px;
-  margin-top: 14px;
-  min-height: 71px;
-  padding-right: 20px;
-}
-
-.ss .lf {
-  padding-right: 18px;
-}
-
-.ss .rf {
-  padding-left: 18px;
-}
-
-.source-boxes span {
-  font-weight: 300;
-  font-size: 20px;
-  line-height: 23px;
-  margin-top: 13px;
-}
-
-.source-boxes strong {
-  font-weight: normal;
-  font-size: 20px;
-  line-height: 23px;
-  margin-top: 13px;
-}
-
 .user-case2-ml {
   display: none;
 }
@@ -476,9 +412,6 @@ table.docs-home td {
 }
 
 @media (min-width: 991px) and (max-width: 1199px) {
-  .source-boxes{
-    height:265px !important;
-  }
   .joe-bot {
     margin-top: -32px !important;
   }
@@ -568,20 +501,8 @@ table.docs-home td {
     font-size: 20px;
     line-height: 23px;
   }
-  .source-boxes h4 {
-    font-size: 20px;
-    line-height: 23px;
-  }
-  .source-boxes p,
-  .source-boxes span {
-    font-size: 18px;
-    line-height: 21px;
-  }
   .multi-sec{
     min-height:0 !important;
-  }
-  .source-boxes{
-    height:265px !important;
   }
 }
 
@@ -660,15 +581,6 @@ table.docs-home td {
   .source-sec .row.text-center p {
     font-size: 20px;
     line-height: 23px;
-  }
-  .source-boxes h4 {
-    font-size: 20px;
-    line-height: 23px;
-  }
-  .source-boxes p,
-  .source-boxes span {
-    font-size: 18px;
-    line-height: 21px;
   }
 
   .price-box .mobile-feature-list {
@@ -758,15 +670,6 @@ table.docs-home td {
   .source-sec .row.text-center p {
     font-size: 20px;
     line-height: 23px;
-  }
-  .source-boxes h4 {
-    font-size: 20px;
-    line-height: 23px;
-  }
-  .source-boxes p,
-  .source-boxes span {
-    font-size: 18px;
-    line-height: 21px;
   }
 }
 
