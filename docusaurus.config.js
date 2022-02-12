@@ -333,6 +333,10 @@ module.exports = {
             to: '/blog/20220106-explain-analyze-needs-buffers-to-improve-the-postgres-query-optimization-process',
             from: '/blog/20220106-explain-analyze-needs-buffers-to-improve-postgres-query-optimization process',
           },
+          {
+            to: '/contact/',
+            from: '/support',
+          },
         ],
       },
     ],
