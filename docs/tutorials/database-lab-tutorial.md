@@ -454,7 +454,7 @@ sudo zpool destroy dblab_pool
 CLI can be used on any machine, you just need to be able to reach the Database Lab Engine API (port 2345 by default). In this tutorial, we will install and use CLI locally on the EC2 instance.
 
 ```bash
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/master/scripts/cli_install.sh | bash
+curl https://gitlab.com/postgres-ai/database-lab/-/raw/master/engine/scripts/cli_install.sh | bash
 sudo mv ~/.dblab/dblab /usr/local/bin/dblab
 ```
 
