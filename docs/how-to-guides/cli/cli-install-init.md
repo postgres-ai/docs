@@ -14,7 +14,7 @@ sidebar_label: Install and initialize Database Lab CLI
 curl https://gitlab.com/postgres-ai/database-lab/-/raw/master/engine/scripts/cli_install.sh | bash
 ```
 
-2. (optional) Connect to Database Lab Engine suing SSH port forwarding
+2. (optional) Connect to Database Lab Engine using SSH port forwarding
 
 :::note
 A Database Lab instance might be running behind firewalls and opening proper ports might be impossible or prohibited. In this case, SSH keys should be on the server with Database Lab Engine in order to use this connection option.
