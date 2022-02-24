@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: $DOCS_NAME
-        image: gcr.io/postgres-ai/docs$TAG
+        image: $TAG_VERSION
         imagePullPolicy: Always
         resources:
           requests:
