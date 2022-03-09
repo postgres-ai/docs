@@ -1,5 +1,5 @@
 ---
-title: How to create a Database Lab clones
+title: How to create a Database Lab clone
 sidebar_label: Create a clone
 ---
 
