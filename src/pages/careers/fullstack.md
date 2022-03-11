@@ -31,7 +31,7 @@ None of the following is a requirement, yet having any of these items increases 
 - Experience in developing server applications using Go, or readiness to learn Go
 - PostgreSQL experience is a big plus
 - Advanced knowledge of CI/CD tools
-- Contributions to Open Source projects.
+- Contributions to Open Source projects
 - Deep understanding of containerization concepts and tools, Docker specifically
 - Kubernetes experience is a big plus
 - Good command of English
