@@ -1,19 +1,19 @@
 const careers = [
   {
-    title: 'Senior Database Engineer | SQL Optimization Expert',
+    title: 'Senior Database Engineer',
     descriptions: [
-      'Strong optimization skills of large and heavily loaded databases (>1TiB, >10k QpS)',
       '3+ years of experience running PostgreSQL in large production environments',
-      'Advanced SQL and PL/pgSQL knowledge',
+      'Strong skills in performance optimization of large and heavily loaded databases (>1TiB, >10k TPS)',
+      'Readiness to dive deep into PostgreSQL internals',
     ],
     link: '/careers/dba',
   },
   {
-    title: 'Senior Full Stack Developer | Go | React',
+    title: 'Senior Full Stack Developer | React | Go',
     descriptions: [
-      '3+ years experience developing server applications using Go',
-      'Strong experience in client-side development using React',
+      '3+ years experience in client-side development using React',
       'Solid skills of basic SQL (SQL-92)',
+      'Excellent HTML, CSS, JavaScript skills – you understand not only how to build the data, but how to make it look great too',
     ],
     link: '/careers/fullstack',
   },
