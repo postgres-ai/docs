@@ -213,12 +213,10 @@ html[data-theme="dark"] .companies {
 }
 
 html[data-theme="light"] .blog-sec {
-  background: #f9f9f9;
   padding: 9px 0 52px 0;
 }
 
 html[data-theme="dark"] .blog-sec {
-  background: #131313;
   padding: 9px 0 52px 0;
 }
 
@@ -228,6 +226,7 @@ html[data-theme="dark"] .blog-sec {
   line-height: 37px;
   color: #333;
   margin-bottom: 25px;
+  margin-top: 50px;
 }
 
 .six-sec {
@@ -321,6 +320,13 @@ html[data-theme="dark"] .multi-sec {
   margin: 80px 5px 0 5px;
 }
 
+html[data-theme="light"] .source-sec {
+  background: #f9f9f9;
+}
+
+html[data-theme="dark"] .source-sec {
+  background: #131313;
+}
 .source-sec {
   padding: 61px 0 82px 0;
 }
@@ -721,4 +727,10 @@ html[data-theme="dark"] .avatar__name > a {
 
 .supportOffer:hover {
   color: var(--ifm-color-white);
+}
+
+.community-buttons > a {
+  padding: 20px;
+  white-space: nowrap;
+  font-size: 20px;
 }

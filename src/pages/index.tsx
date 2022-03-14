@@ -410,20 +410,42 @@ function IndexPage() {
             <div className="col-md-6">
               <h3>Open source and extensible</h3>
               <p>
-                Postgres.ai ❤ open source.
+                We work hard to make our products open, accessible, and extensible.
+                Join the Database Lab Engine Community and help us build even better products.
                 <br />
                 <br />
-                We work hard to make our products open and&nbsp;extensible.
+                Found a bug? Have a feature idea? Want to contribute? Talk to us.
               </p>
-              <a className="btn btn2" href="https://postgres.ai/docs/">
-                Read the docs
-              </a>
             </div>
             <div className="col-md-3"></div>
           </div>
+
+          <div className="row text-center">
+            <div className="col-lg-12 community-buttons">
+              <a href="https://slack.postgres.ai/">
+                Our&nbsp;Community&nbsp;Slack
+              </a>
+              <a href="https://github.com/postgres-ai/database-lab-engine/blob/master/CONTRIBUTING.md">
+                Contribute
+              </a>
+              <a href="/docs">
+                Documentation
+              </a>
+            </div>
+          </div>
+
+          <div className="row text-center">
+            <div className="col-md-3"></div>
+            <div className="col-md-6">
+              <p>
+                Postgres.ai ❤ open source.<br />
+              </p>
+            </div>
+          </div>
+
           <div className={styles.repos}>
             <RepoCard
-              title="Database Lab Engine β"
+              title="Database Lab Engine"
               logoUrl="/assets/landing/dblab.svg"
               description="Provision independent, multi-terabyte, PostgreSQL databases in a few seconds."
               repoName="postgres-ai/database-lab-engine"
