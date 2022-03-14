@@ -21,21 +21,21 @@ const blog = [
     description: 'The Postgres.ai team is happy to announce the release of version 3.0 of Database Lab Engine (DLE), the most advanced open-source software ever released that empowers development, testing, and troubleshooting environments for fast-growing projects.',
     image: '/assets/thumbnails/dle-3.0-blog.png',
   },
-  /*{
+  {
     link: 'blog/20211103-three-cases-against-if-not-exists-and-if-exists-in-postgresql-ddl',
     date: '2021-11-03 23:45:00',
     title: 'Three Cases Against IF NOT EXISTS / IF EXISTS in Postgres DDL',
     description: 'If we aim to have predictable results, it is better to avoid to avoid IF NOT EXISTS / IF EXISTS in DB schema migrations.',
     image: '/assets/thumbnails/20211103-three-cases-against-if-not-exists-and-if-exists-in-postgresql-ddl.png',
   },
-  /*{
+  {
     link: 'blog/20211029-how-partial-and-covering-indexes-affect-update-performance-in-postgresql',
     date: '2021-10-29 23:55:00',
     title: 'How partial, covering, and multicolumn indexes may slow down UPDATEs in PostgreSQL',
     description: '"Primum non nocere" – this is a fundamental principle that is well-known to anyone working in healthcare: "first, do no harm". Do we need to follow this principle when optimizing SQL queries?',
     image: '/assets/thumbnails/20211029-how-partial-and-covering-indexes-affect-update-performance-in-postgresql.jpeg',
   },
-  /*{
+  {
     link: 'blog/20211019-console-reset-options',
     date: '2021-10-19 00:00:00',
     title: 'Platform: Reset clones to any data snapshot',
