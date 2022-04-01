@@ -21,7 +21,7 @@ Notice that using `count(*)` is not really needed – `select * from table1` (or
 :::
 
 :::info
-Keep in mind that the clone you are working with might be, depending on the settings and the state of Database Lab Engine, somewhat outdated. In the very beginning, Joe reports the timestamp to help you understand the version of data you are working with: `Snapshot data state at: 2020-01-02 03:04:05 UTC.`
+Keep in mind that the clone you are working with might be, depending on the settings and the state of Database Lab Engine, somewhat outdated. In the very beginning, Joe reports the timestamp to help you understand the version of data you are working with: `Snapshot data state at: 2020-01-02 03:04:05 +00:00.`
 :::
 
 <Tabs

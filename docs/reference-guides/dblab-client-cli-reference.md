@@ -439,6 +439,8 @@ dblab config command [command options] [arguments...]
 - `list` - display list of all available CLI environments
 - `switch` - switch to another CLI environment
 - `remove` - remove CLI environment
+- `show-global` - show global CLI settings (DLE 3.1+)
+- `set-global` - update global CLI settings (DLE 3.1+)
 - `help` , `h` -  shows a list of commands or help for one command
 
 ---
@@ -533,6 +535,33 @@ dblab config remove ENVIRONMENT_ID
 ```
 **Arguments**
 - `ENVIRONMENT_ID` (string, required) - an ID of the Database Lab CLI environment to remove
+
+---
+### Subcommand `show-global`
+Show global CLI settings. DLE 3.1+ only.
+
+**Usage**
+```bash
+dblab config show-global
+```
+
+---
+### Subcommand `set-global`
+Update global CLI settings. DLE 3.1+ only.
+
+**Usage**
+```bash
+dblab config set-global [command options]
+```
+**Options**
+- `--tz` (string, optional) - timezone to display time in DLE responses. 
+See [the complete list of timezones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). An empty string means `UTC`.
+The environment variable `TZ` can be used as well. Note that the environment variables have a higher priority.
+
+**Example**
+```bash
+dblab config set-global --tz "America/Los_Angeles"
+```
 
 ---
 ### Subcommand `help` , `h`
