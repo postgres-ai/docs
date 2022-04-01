@@ -157,7 +157,8 @@ Options:
 Restores data from a physical backup.
 
 Supported restore tools:
-- WAL-G (`walg`) - is an archival restoration tool (https://github.com/wal-g/wal-g)
+- WAL-G (`walg`) - an archival restoration tool for PostgreSQL, it uses LZ4, LZMA, or Brotli compression, multiple processors, and non-exclusive base backups for Postgres (https://github.com/wal-g/wal-g)
+- pgBackRest (`pgbackrest`) - a reliable, easy-to-use backup and restore solution that can seamlessly scale up to the largest databases and workloads by utilizing algorithms that are optimized for database-specific requirements (https://github.com/pgbackrest/pgbackrest); supported since DLE 3.1
 - Custom (`custom`) - allows defining own command to restore data
 
 Options:
@@ -173,6 +174,9 @@ Options:
 - `envs` (key-value, optional) - passes custom environment variables to the Docker container with the restoring tool
 - `walg` (key-value, optional) - defines WAL-G configuration options:
    - `backupName` (string, required) - defines the backup name to restore
+- `pgbackrest` (key-value, optional) - defines pgBackRest configuration options:
+   - `stanza` (string, required) - defines the stanza name to restore ([pgBackrest docs](https://pgbackrest.org/user-guide.html#quickstart/configure-stanza))
+   - `delta` (boolean, optional, default: false) - defines usage `--delta` option for restore using checksums ([pgBackRest docs](https://pgbackrest.org/user-guide.html#restore/option-delta))
 - `customTool` (key-value, optional) - defines configuration options for custom restoring tool:
    - `command` (string, required) - defines the command to restore data using a custom tool
    - `restore_command` (string, optional) - defines the PostgreSQL [`restore_command`](https://postgresqlco.nf/en/doc/param/restore_command/) configuration option to keep the data up to date; Database Lab Engine automatically propagates the specified value to the proper location, depending on the version of PostgreSQL: in versions 11 and older, it is to be stored in `recovery.conf`, while in 12 and newer, it is a part of the main file, `postgresql.conf`
