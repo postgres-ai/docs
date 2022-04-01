@@ -399,12 +399,12 @@ After a second or two, if everything is configured correctly, you will see that 
     "id": "botcmi54uvgmo17htcl0",
     "snapshot": {
         "id": "dblab_pool@initdb",
-        "createdAt": "2020-02-04 23:20:04 UTC",
-        "dataStateAt": "2020-02-04 23:20:04 UTC"
+        "createdAt": "2020-02-04 23:20:04 +00:00",
+        "dataStateAt": "2020-02-04 23:20:04 +00:00"
     },
     "protected": false,
     "deleteAt": "",
-    "createdAt": "2020-02-05 14:03:52 UTC",
+    "createdAt": "2020-02-05 14:03:52 +00:00",
     "status": {
         "code": "OK",
         "message": "Clone is ready to accept Postgres connections."
