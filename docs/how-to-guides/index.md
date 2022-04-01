@@ -38,10 +38,12 @@ slug: /how-to-guides
 ### Logical retrieval
 - [Amazon RDS](/docs/how-to-guides/administration/data/rds)
 - [Any database (dump/restore)](/docs/how-to-guides/administration/data/dump)
+- [Full refresh](/docs/how-to-guides/administration/logical-full-refresh)
 
 ### Physical retrieval
 - [pg_basebackup](/docs/how-to-guides/administration/data/pg_basebackup)
 - [WAL-G](/docs/how-to-guides/administration/data/wal-g)
+- [pgBackRest](/docs/how-to-guides/administration/data/pgBackRest)
 - [Custom](/docs/how-to-guides/administration/data/custom)
 
 ## Database Lab (Postgres.ai) Platform
