@@ -174,11 +174,11 @@ You need to know the **master password**. If you lost the password it [can be re
 :::
 
 #### Configure Database Lab Engine
-Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.1.0/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
+Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.1.0/engine/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
 ```bash
 mkdir -p ~/.dblab/engine/configs
 
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/v3.1.0/configs/config.example.logical_generic.yml \
+curl https://gitlab.com/postgres-ai/database-lab/-/raw/v3.1.0/engine/configs/config.example.logical_generic.yml \
   --output ~/.dblab/engine/configs/server.yml
 ```
 
@@ -237,11 +237,11 @@ Alternatively, you can add `AmazonRDSFullAccess`, `IAMFullAccess` policies to an
 :::
 
 #### Configure Database Lab Engine
-Copy the contents of configuration example [`config.example.logical_rds_iam.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.1.0/configs/config.example.logical_rds_iam.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
+Copy the contents of configuration example [`config.example.logical_rds_iam.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.1.0/engine/configs/config.example.logical_rds_iam.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
 ```bash
 mkdir -p ~/.dblab/engine/configs
 
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/v3.1.0/configs/config.example.logical_rds_iam.yml \
+curl https://gitlab.com/postgres-ai/database-lab/-/raw/v3.1.0/engine/configs/config.example.logical_rds_iam.yml \
   --output ~/.dblab/engine/configs/server.yml
 ```
 
@@ -399,12 +399,12 @@ After a second or two, if everything is configured correctly, you will see that 
     "id": "botcmi54uvgmo17htcl0",
     "snapshot": {
         "id": "dblab_pool@initdb",
-        "createdAt": "2020-02-04 23:20:04 +00:00",
-        "dataStateAt": "2020-02-04 23:20:04 +00:00"
+        "createdAt": "2020-02-04T23:20:04Z",
+        "dataStateAt": "2020-02-04T23:20:04Z"
     },
     "protected": false,
     "deleteAt": "",
-    "createdAt": "2020-02-05 14:03:52 +00:00",
+    "createdAt": "2020-02-05T14:03:52Z",
     "status": {
         "code": "OK",
         "message": "Clone is ready to accept Postgres connections."

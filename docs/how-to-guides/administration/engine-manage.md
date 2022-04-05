@@ -16,7 +16,7 @@ All YAML features can be used, including anchors and aliases, to help you conven
 
 For instance, you can define a binding with `&` and then refer to it using an alias denoted by `*`.
 
-See config examples [here](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.1.0/configs/)
+See config examples [here](https://gitlab.com/postgres-ai/database-lab/-/tree/v3.1.0/engine/configs)
 :::
 
 After configuring Database Lab Engine, run the following command:
@@ -87,7 +87,7 @@ If you need to save the logs in a file:
 sudo docker logs dblab_server 2>&1 | gzip > dblab_server.log.gz
 ```
 
-If you want to see more details, enable debug mode setting option `debug` to `true` (see [example](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.1.0/configs/)). Next, follow  [the reconfiguration guidelines](#reconfigure-database-lab) to apply the change.
+If you want to see more details, enable debug mode setting option `debug` to `true` (see [example](https://gitlab.com/postgres-ai/database-lab/-/tree/v3.1.0/engine/configs)). Next, follow  [the reconfiguration guidelines](#reconfigure-database-lab) to apply the change.
 
 :::caution
 When debug mode is turned on, logs may contain sensitive data such as API secret keys for the backup system.

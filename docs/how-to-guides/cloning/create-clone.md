@@ -61,13 +61,13 @@ $ dblab snapshot list
 [
     {
         "id": "SNAPSHOT_ID_2",
-        "createdAt": "2020-08-12 12:00:11 +00:00",
-        "dataStateAt": "2020-08-12 11:59:24 +00:00"
+        "createdAt": "2020-08-12T12:00:11Z",
+        "dataStateAt": "2020-08-12T11:59:24Z"
     },
     {
         "id": "SNAPSHOT_ID_1",
-        "createdAt": "2020-08-12 11:00:11 +00:00",
-        "dataStateAt": "2020-08-12 10:59:04 +00:00"
+        "createdAt": "2020-08-12T11:00:11Z",
+        "dataStateAt": "2020-08-12T10:59:04Z"
     },
     ...
 ]
@@ -87,8 +87,8 @@ $ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --sna
     },
     "snapshot": {
         "id": "SNAPSHOT_ID",
-        "createdAt": "2020-08-12 12:00:11 +00:00",
-        "dataStateAt": "2020-08-12 11:59:24 +00:00"
+        "createdAt": "2020-08-12T12:00:11Z",
+        "dataStateAt": "2020-08-12T11:59:24Z"
     },
     ...
 }

@@ -267,11 +267,11 @@ sudo docker stop dblab_pg_initdb
 sudo docker rm dblab_pg_initdb
 ```
 
-Now, we need to take care of Database Lab Engine configuration. Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.1.0/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
+Now, we need to take care of Database Lab Engine configuration. Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.1.0/engine/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
 ```bash
 mkdir -p ~/.dblab/engine/configs
 
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/v3.1.0/configs/config.example.logical_generic.yml \
+curl https://gitlab.com/postgres-ai/database-lab/-/raw/v3.1.0/engine/configs/config.example.logical_generic.yml \
   --output ~/.dblab/engine/configs/server.yml
 ```
 
@@ -288,11 +288,11 @@ Open `~/.dblab/engine/configs/server.yml` and edit the following options:
 
 If you want to try Database Lab for an existing database, you need to copy the data to PostgreSQL data directory on the Database Lab server, to the directory `/var/lib/dblab/dblab_pool/data`. This step is called "thick cloning". It only needs to be completed once. There are several options to physically copy the data directory. Here we will use the standard PostgreSQL tool, `pg_basebackup`. However, we are not going to use it directly (although, it is possible) – we will specify its options in the Database Lab Engine configuration file.
 
-First, copy the example configuration file[`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.1.0/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
+First, copy the example configuration file[`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.1.0/engine/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
 ```bash
 mkdir -p ~/.dblab/engine/configs
 
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/v3.1.0/configs/config.example.physical_generic.yml \
+curl https://gitlab.com/postgres-ai/database-lab/-/raw/v3.1.0/engine/configs/config.example.physical_generic.yml \
   --output ~/.dblab/engine/configs/server.yml
 ```
 
@@ -313,11 +313,11 @@ If you want to try Database Lab for an existing database, you need to copy the d
 
 Here we will configure Database Lab Engine to use a "logical" method of thick cloning, dump/restore.
 
-First, copy the configuration example configuration file[`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.1.0/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
+First, copy the configuration example configuration file[`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.1.0/engine/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
 ```bash
 mkdir -p ~/.dblab/engine/configs
 
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/v3.1.0/configs/config.example.logical_generic.yml \
+curl https://gitlab.com/postgres-ai/database-lab/-/raw/v3.1.0/engine/configs/config.example.logical_generic.yml \
   --output ~/.dblab/engine/configs/server.yml
 ```
 
@@ -487,12 +487,12 @@ After a second or two, if everything is configured correctly, you will see that 
     "id": "botcmi54uvgmo17htcl0",
     "snapshot": {
         "id": "dblab_pool@initdb",
-        "createdAt": "2020-02-04 23:20:04 +00:00",
-        "dataStateAt": "2020-02-04 23:20:04 +00:00"
+        "createdAt": "2020-02-04T23:20:04Z",
+        "dataStateAt": "2020-02-04T23:20:04Z"
     },
     "protected": false,
     "deleteAt": "",
-    "createdAt": "2020-02-05 14:03:52 +00:00",
+    "createdAt": "2020-02-05T14:03:52Z",
     "status": {
         "code": "OK",
         "message": "Clone is ready to accept Postgres connections."
