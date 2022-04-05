@@ -1,6 +1,13 @@
 // Duplicates data from the blog.
 const blog = [
   {
+    link: 'blog/20220405-database-lab-engine-3-1-released',
+    date: '2022-04-05 23:16:17',
+    title: 'DLE 3.1: pgBackRest, timezones for CLI, DLE community',
+    description: 'The Postgres.ai team is happy to announce the release of version 3.1 of Database Lab Engine (DLE), the most advanced open-source software ever released that empowers development, testing, and troubleshooting environments for fast-growing projects.',
+    image: '/assets/thumbnails/dle-3.1-blog.png',
+  },
+  {
     link: 'blog/20220114-progress-bar-for-postgres-queries-lets-dive-deeper',
     date: '2022-01-14 07:11:00',
     title: 'Progress bar for Postgres queries – let\'s dive deeper',
@@ -35,14 +42,14 @@ const blog = [
     description: '"Primum non nocere" – this is a fundamental principle that is well-known to anyone working in healthcare: "first, do no harm". Do we need to follow this principle when optimizing SQL queries?',
     image: '/assets/thumbnails/20211029-how-partial-and-covering-indexes-affect-update-performance-in-postgresql.jpeg',
   },
-  {
+  /*{
     link: 'blog/20211019-console-reset-options',
     date: '2021-10-19 00:00:00',
     title: 'Platform: Reset clones to any data snapshot',
     description: 'The Database Lab Platform now supports resetting of DLE clones to any data snapshot. Which might be useful in the cases when long-living clones need to get the most up-to-date data or when troubleshooting a non-trivial issue.',
     image: '/assets/thumbnails/console-reset-options.png',
   },
-  /*{
+  {
     link: 'blog/20211018-postgresql-lock-trees',
     date: '2021-10-18 17:05:00',
     title: 'Useful queries to analyze PostgreSQL lock trees (a.k.a. lock queues)',
