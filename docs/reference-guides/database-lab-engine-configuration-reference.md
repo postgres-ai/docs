@@ -157,8 +157,8 @@ Options:
 Restores data from a physical backup.
 
 Supported restore tools:
-- WAL-G (`walg`) - an archival restoration tool for PostgreSQL, it uses LZ4, LZMA, or Brotli compression, multiple processors, and non-exclusive base backups for Postgres (https://github.com/wal-g/wal-g)
-- pgBackRest (`pgbackrest`) - a reliable, easy-to-use backup and restore solution that can seamlessly scale up to the largest databases and workloads by utilizing algorithms that are optimized for database-specific requirements (https://github.com/pgbackrest/pgbackrest); supported since DLE 3.1
+- WAL-G (`walg`) - an archival restoration tool for PostgreSQL, it uses LZ4, LZMA, or Brotli compression, multiple processors, and non-exclusive base backups for Postgres ([GitHub](https://github.com/wal-g/wal-g))
+- pgBackRest (`pgbackrest`) - a reliable, easy-to-use backup and restore solution that can seamlessly scale up to the largest databases and workloads by utilizing algorithms that are optimized for database-specific requirements ([GitHub](https://github.com/pgbackrest/pgbackrest)); supported since DLE 3.1
 - Custom (`custom`) - allows defining own command to restore data
 
 Options:
