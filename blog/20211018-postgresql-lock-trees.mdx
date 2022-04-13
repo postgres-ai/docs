@@ -59,9 +59,9 @@ Here are two examples of other people's work that you might find helpful:
 - "Active Session History in PostgreSQL: blocker and wait chain" by [Bertrand Drouvot](https://twitter.com/BertrandDrouvot) – this post describes the recursive CTE query [`pg_ash_wait_chain.sql`](https://github.com/pgsentinel/pg_ash_scripts/blob/master/pg_ash_wait_chain.sql) that is useful for those who use the [pgsentinel](https://github.com/pgsentinel/pgsentinel) extension. The query is inspired by [Tanel Poder](https://twitter.com/TanelPoder)'s script for Oracle.
 - [`locktree.sql`](https://github.com/dataegret/pg-utils/blob/master/sql/locktree.sql) – query to display a tree of blocking sessions based on the information from `pg_locks` and `pg_stat_activity`, by Victor Yegorov.
 
-I've experimented with the latter for some time and eventually started to add some additional bits of information to it – first of all, based on `pg_locking_pids(..)` [introduced in PostgreSQL 9.6](https://paquier.xyz/postgresql-2/postgres-9-6-feature-highlight-pg-blocking-pids/). At some point, I rewrote the query from scratch, so consider it as the third option for the "advanced" lock issue troubleshooting.
+I've experimented with the latter for some time and eventually started to add some additional bits of information to it – first of all, based on `pg_blocking_pids(..)` [introduced in PostgreSQL 9.6](https://paquier.xyz/postgresql-2/postgres-9-6-feature-highlight-pg-blocking-pids/). At some point, I rewrote the query from scratch, so consider it as the third option for the "advanced" lock issue troubleshooting.
 
-The function `pg_locking_pids(..)`, [per documentation](https://www.postgresql.org/docs/current/functions-info.html), should not be used often:
+The function `pg_blocking_pids(..)`, [per documentation](https://www.postgresql.org/docs/current/functions-info.html), should not be used often:
 
 > Frequent calls to this function could have some impact on database performance, because it needs exclusive access to the lock manager's shared state for a short time.
 
