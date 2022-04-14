@@ -26,6 +26,15 @@ const careers = [
     ],
     link: '/careers/godeveloper',
   },
+  {
+    title: 'Senior Frontend Engineer | React',
+    descriptions: [
+      '3+ years experience in client-side development using React',
+      'Excellent HTML, CSS, JavaScript skills – you understand not only how to build the data, but how to make it look great too',
+      'Strong experience in all aspects of client-side performance optimization',
+    ],
+    link: '/careers/frontend',
+  },
 ];
 
 export default careers;
