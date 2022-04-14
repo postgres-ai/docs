@@ -1,14 +1,14 @@
 ---
-title: Senior React Developer
+title: Senior Frontend Developer
 requirements:
   - 3+ years experience in client-side development using React
   - Excellent HTML, CSS, JavaScript skills – you understand not only how to build the data, but how to make it look great too
   - Strong experience in all aspects of client-side performance optimization
 ---
 
-# Senior React Developer
+# Senior Frontend Developer
 
-As a Senior React Developer, you will be building components of the [Postgres.ai Platform](https://postgres.ai/docs).
+As a Senior Frontend Developer, you will be building components of the [Postgres.ai Platform](https://postgres.ai/docs).
 
 ## Job Details
 
