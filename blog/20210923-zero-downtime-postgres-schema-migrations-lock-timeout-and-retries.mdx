@@ -38,8 +38,6 @@ It is time to dive into technical details...
 
 <!--truncate-->
 
-<DbLabBanner />
-
 ## Problem demonstration
 
 Let's jump straight to the point: when you deploy database schema changes, you are not protected from system downtime even if you have very high-level automation but don't use very low values of `lock_timeout` (or `statement_timeout`) to acquire a lock on the DB objects that are subject to change and do not implement some kind of retry logic.
