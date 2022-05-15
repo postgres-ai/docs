@@ -70,6 +70,8 @@ Still, it is very useful, so I recommend using it as an ad hoc tool, with additi
 - do not run it frequently and avoid using it in monitoring,
 - use low values for `statement_timeout` to minimize the possible impact on other sessions.
 
+Another improvement is `pg_locks.waitstart` added in PostgreSQL 14, which shows how much time the processes are waiting for the lock.
+
 It is now time to discuss the query itself. As the first step, let's enabling timing reporting and set a low value for `statement_timeout`:
 
 ```
@@ -85,8 +87,8 @@ with recursive activity as (
     pg_blocking_pids(pid) blocked_by,
     *,
     age(clock_timestamp(), xact_start)::interval(0) as tx_age,
-    age(clock_timestamp(), state_change)::interval(0) as state_age
-  from pg_stat_activity
+    age(clock_timestamp(), (select max(l.waitstart) from pg_locks l where a.pid = l.pid))::interval(0) as wait_age
+  from pg_stat_activity a
   where state is distinct from 'idle'
 ), blockers as (
   select
@@ -122,23 +124,24 @@ with recursive activity as (
 select
   pid,
   blocked_by,
+  case when wait_event_type <> 'Lock' then replace(state, 'idle in transaction', 'idletx') else 'waiting' end as state,
+  wait_event_type || ':' || wait_event as wait,
+  wait_age,
   tx_age,
-  state_age,
-  backend_xid as xid,
-  backend_xmin as xmin,
-  replace(state, 'idle in transaction', 'idletx') as state,
+  to_char(age(backend_xid), 'FM999,999,999,990') as xid_age,
+  to_char(2147483647 - age(backend_xmin), 'FM999,999,999,990') as xmin_ttf,
   datname,
   usename,
-  wait_event_type || ':' || wait_event as wait,
   (select count(distinct t1.pid) from tree t1 where array[tree.pid] <@ t1.path and t1.pid <> tree.pid) as blkd,
   format(
     '%s %s%s',
-    lpad('[' || pid::text || ']', 7, ' '),
+    lpad('[' || pid::text || ']', 9, ' '),
     repeat('.', level - 1) || case when level > 1 then ' ' end,
     left(query, 1000)
   ) as query
 from tree
 order by top_blocker_pid, level, pid
+
 \watch 10
 ```
 
@@ -150,16 +153,20 @@ Note that I've used:
 Here is an example output:
 
 ```
-  pid  |  blocked_by   |  tx_age  | state_age | xid | xmin | state  | datname | usename |        wait        | blkd |                        query
--------+---------------+----------+-----------+-----+------+--------+---------+---------+--------------------+------+------------------------------------------------------
- 46015 | {}            | 00:08:06 | 00:07:58  | 735 |      | idletx | test    | nik     | Client:ClientRead  |    4 | [46015] update table1 set id = id;
- 46017 | {46015}       | 00:07:55 | 00:07:50  | 736 |  735 | active | test    | nik     | Lock:transactionid |    3 | [46017] . delete from table1 ;
- 46023 | {46017,46015} | 00:07:47 | 00:07:35  | 737 |  735 | active | test    | nik     | Lock:relation      |    2 | [46023] .. alter table table1 add column data jsonb;
- 46019 | {46023}       | 00:07:23 | 00:07:23  |     |  735 | active | test    | nik     | Lock:relation      |    0 | [46019] ... select * from table1 where id = 1;
- 46021 | {46023}       | 00:07:31 | 00:07:31  |     |  735 | active | test    | nik     | Lock:relation      |    0 | [46021] ... select * from table1;
- 46081 | {}            | 00:06:32 | 00:06:25  | 739 |      | idletx | test    | nik     | Client:ClientRead  |    1 | [46081] drop table table2;
- 46084 | {46081}       | 00:06:20 | 00:06:20  |     |  735 | active | test    | nik     | Lock:relation      |    0 | [46084] . select * from table2;
+   pid   |   blocked_by    |  state  |        wait        | wait_age |  tx_age  | xid_age |   xmin_ttf    | datname  | usename  | blkd |                          query
+---------+-----------------+---------+--------------------+----------+----------+---------+---------------+----------+----------+------+---------------------------------------------------------
+  641449 | {}              | idletx  | Client:ClientRead  |          | 00:01:23 | 4       |               |     test |      nik |    4 |   [641449] update table1 set id = id;
+  641586 | {641449}        | waiting | Lock:transactionid | 00:01:12 | 00:01:12 | 3       | 2,147,483,637 |     test |      nik |    3 |   [641586] . delete from table1 ;
+  641594 | {641586,641449} | waiting | Lock:relation      | 00:00:53 | 00:00:53 | 2       | 2,147,483,637 |     test |      nik |    2 |   [641594] .. alter table table1 add column data jsonb;
+  641588 | {641594}        | waiting | Lock:relation      | 00:00:49 | 00:00:49 |         | 2,147,483,637 |     test |      nik |    0 |   [641588] ... select * from table1 where id = 1;
+  641590 | {641594}        | waiting | Lock:relation      | 00:00:45 | 00:00:45 |         | 2,147,483,637 |     test |      nik |    0 |   [641590] ... select * from table1;
+  641667 | {}              | idletx  | Client:ClientRead  |          | 00:00:39 | 1       |               |     test |      nik |    1 |   [641667] drop table table2;
+  641669 | {641667}        | waiting | Lock:relation      | 00:00:23 | 00:00:23 |         | 2,147,483,637 |     test |      nik |    0 |   [641669] . select * from table2;
 (7 rows)
 ```
 
+*Update 2022-05-15: Many thanks to [Aleksey Lesovsky](https://github.com/lesovsky) for reviewing this article, script fixes, and corrections.*
+
+
 <BlogFooter author={nik} />
+
