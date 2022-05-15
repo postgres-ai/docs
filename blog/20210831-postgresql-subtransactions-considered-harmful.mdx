@@ -30,8 +30,6 @@ This article discusses what subtransactions are, how to create them, and how wid
 
 <!--truncate-->
 
-<DbLabBanner />
-
 ## What is a subtransaction?
 
 Subtransaction, also known as "nested transaction", is a transaction started by instruction within the scope of an already started transaction ([definition from Wikipedia](https://en.wikipedia.org/wiki/Nested_transaction)). This feature allows users to partially rollback a transaction, which is helpful in many cases: fewer steps need to be repeated to retry the action if some error occurs.
