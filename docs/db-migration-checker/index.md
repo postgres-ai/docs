@@ -22,7 +22,7 @@ DB Migration Checker is a DLE's component that enables integration with CI/CD to
 
 ## How to set up a DB migration checker
 - Make sure that the Database Lab Engine is running
-- Copy the example configuration file [`config.example.ci_checker.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/master/configs/config.example.ci_checker.yml) from the Database Lab repository to `~/.dblab/ci_checker/configs/ci_checker.yml`:
+- Copy the example configuration file [`config.example.ci_checker.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/master/engine/configs/config.example.ci_checker.yml) from the Database Lab Engine repository to `~/.dblab/ci_checker/configs/ci_checker.yml`:
 
   ```bash
   mkdir -p ~/.dblab/ci_checker/configs
@@ -31,11 +31,11 @@ DB Migration Checker is a DLE's component that enables integration with CI/CD to
     --output ~/.dblab/ci_checker/configs/ci_checker.yml
   ```
 
-- Configure the DB migration checker file `ci_checker.yml`
+- Configure the DB migration checker file `ci_checker.yml`. See the [DB Migration Checker configuration reference](https://postgres.ai/docs/reference-guides/db-migration-checker-configuration-reference).
 
 - Launch DB migration checker
     ```bash
-    sudo docker run
+    sudo docker run \
       --name dblab_ci_checker \
       --label dblab_control \
       --detach \
@@ -44,7 +44,8 @@ DB Migration Checker is a DLE's component that enables integration with CI/CD to
       --volume /var/run/docker.sock:/var/run/docker.sock \
       --volume /tmp/ci_checker:/tmp/ci_checker \
       --volume ~/.dblab/ci_checker/configs:/home/dblab/configs:ro \
-      postgresai/dblab-ci-checker:3.0.0
+      --env DOCKER_API_VERSION=1.41 \
+      postgresai/dblab-ci-checker:3.1.0
     ```
 
 - [optional] Run the [localtunnel](https://github.com/localtunnel/localtunnel) (or an analog) - use it only for debug purposes to make DB migration instance accessible for a CI pipeline
@@ -91,7 +92,7 @@ Take a look at the communication scheme
  - [Ruby on Rails: Active Record Migrations (`rake db:migrate`)](https://ruby.github.io/rake/)
  - [Django migrations](https://docs.djangoproject.com/en/3.2/topics/migrations/#)
 
-There are [prepared Docker images with DB migration tools](https://hub.docker.com/repository/docker/postgresai/migration-tools)
+There are [prepared Docker images with DB migration tools](https://hub.docker.com/r/postgresai/migration-tools)
 
 ### How to extend
 Proposals to extend this list are welcome in the project repository: https://gitlab.com/postgres-ai/custom-images.
