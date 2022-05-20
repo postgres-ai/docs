@@ -76,6 +76,14 @@ Stop and remove the container using `sudo docker stop dblab_server` and `sudo do
 Prior to version 3.0.0, upgrading or restarting DLE meant losing all the running clones. In DLE 3.0.0, clones became persistent: after any restart – including VM restart - existing Postgres containers are restarted as well. The same should apply to future upgrades unless a specific upgrade breaks backward compatibility (consulting release notes is advised).
 :::
 
+:::caution
+Before version 3.1.0, DLE images (`postgresai/dblab-server`) were based on ZFS 0.8.x. Since 3.1.0, we switched to ZFS 2.1.x. If you need to upgrade an existing DLE setup that is running on ZFS 0.8.x, consider the following options:
+
+Option 1: upgrade your system to use ZFS 2.1, optionally upgrade your pool (`zpool upgrade dblab_pool`), and then upgrade DLE to use the default image, `postgresai/dblab-server:3.1.0`
+
+Option 2: postpone the ZFS upgrade, stay on ZFS 0.8, and upgrade DLE to version 3.1 using a special image, `postgresai/dblab-server:3.1.0-zfs08`
+:::
+
 ## Observe Database Lab Engine logs
 To observe the logs for Database Lab Engine running in a container (remove `--since 1m` to see the log from the very beginning):
 ```bash
