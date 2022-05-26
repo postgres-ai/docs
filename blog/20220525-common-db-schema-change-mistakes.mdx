@@ -60,7 +60,7 @@ I also encourage everyone to watch [PGCon-2022](https://www.pgcon.org/2022/) –
 - [Case 4. Unlimited massive change](#case-4-unlimited-massive-change)
 - [Case 5. Acquire an exclusive lock + wait in transaction](#case-5-acquire-an-exclusive-lock--wait-in-transaction)
 - [Case 6. A transaction with DDL + massive DML](#case-6-a-transaction-with-ddl--massive-dml)
-- [Case 7. Waiting to acquire an exclusive lock for long ⇒ blocking others (most ALTER commands deployed in a careless fashion)](#case-7-waiting-to-acquire-an-exclusive-lock-for-long--blocking-others-most-alter-commands-deployed-in-a-careless-fashion)
+- [Case 7. Waiting to acquire an exclusive lock for long ⇒ blocking others)](#case-7-waiting-to-acquire-an-exclusive-lock-for-long--blocking-others)
 - [Case 8. Careless creation of an FK](#case-8-careless-creation-of-an-fk)
 - [Case 9. Careless removal of an FK](#case-9-careless-removal-of-an-fk)
 - [Case 10. Careless addition of a `CHECK` constraint](#case-10-careless-addition-of-a-check-constraint)
@@ -319,8 +319,11 @@ This is a perfect example of how a long-time painful type of change can be fully
 ## Case 17. Leftovers of `CREATE INDEX CONCURRENTLY`
 As we already discussed in [Case 13](#case-13-careless-create-index), a failed `CREATE INDEX CONCURRENTLY` leaves an invalid index behind. If migration scripts don't expect that, fully automated retries are going to be blocked, so manual intervention would be required. To make retries fully automated, before running `CREATE INDEX CONCURRENTLY`, we should check if `pg_indexes`:
 ```
-test=# select indexrelid, indexrelid::regclass, indisvalid from pg_index where not indisvalid and indexrelid::regclass::text = 'mytable_title_idx';
- indexrelid |    indexrelid     | indisvalid
+test=# select indexrelid, indexrelid::regclass as indexname, indisvalid
+from pg_index
+where not indisvalid and indexrelid::regclass::text = 'mytable_title_idx';
+
+ indexrelid |     indexname     | indisvalid
 ------------+-------------------+------------
       26401 | mytable_title_idx | f
 (1 row)
