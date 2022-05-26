@@ -1,0 +1,352 @@
+---
+author: "Nikolay Samokhvalov"
+linktitle: "Common DB schema change mistakes"
+title: "Common DB schema change mistakes"
+date: 2022-05-25 22:14:00
+publishDate: 2022-05-25 22:14:00
+description: "<div><img src=\"/assets/thumbnails/20220525-common-db-schema-change-mistakes_thumbnail.jpg\" alt=\"Common DB schema change mistakes\"/><div><small>'rake db:migrate' – a command known to any Ruby developer. But how many times did we step on the same rake?</small></div></div>
+
+<p>In his article <a href=\"https://hakibenita.com/postgresql-unknown-features\">\"Lesser Known PostgreSQL Features\"</a>, <a href=\"https://twitter.com/be_haki\">@be_haki</a> describes 18 Postgres features many people don't know. I enjoyed that article, and it inspired me to write about \"anti-features\" – things that everyone should avoid when working in probably the riskiest field of application development – so-called \"schema migrations\".</p>
+
+<p>This is one of my favorite topics in the field of relational databases. We all remember how MongoDB entered the stage with two clear messages: \"web-scale\" (let's have sharding out-of-the-box) and \"schemaless\" (let's avoid designing schemas and allow full flexibility). In my opinion, both buzzwords are an oversimplification, but if you have experience in reviewing and deploying schema changes in relational databases, you probably understand the level of difficulty, risks, and pain of scaling the process of making schema changes. My personal score: 1000+ migrations designed/reviewed/deployed during 17+ years of using Postgres in my own companies and when consulting others such as GitLab, Chewy, Miro. Here I'm going to share what I've learned, describing some mistakes I've made or observed – so probably next time you'll avoid them.</p>
+
+<p>Moreover, a strong desire to help people avoid such mistakes led me to invent of the <a href=\"https://github.com/postgres-ai/database-lab-engine\">Database Lab Engine</a> – a technology for thin cloning of databases, essential for development and testing. With it, you can clone a 10 TiB database in 10 seconds, test schema changes, and understand the risks before deployment. Most cases discussed in this article can be easily detected by such testing, and it can be done automatically in CI/CD pipelines.</p>
+
+<p>As usual, I'll be focusing on OLTP use cases (mobile and web apps), for which query execution that exceeds 1 second is normally considered too slow. Some cases discussed here are hard to notice in small databases with low activity. But I'm pretty confident that you'll encounter most of them when your database grows to ~10 TiB in size and its load reaches ~10<sup>5</sup>–10<sup>6</sup> transactions per second (of course, some cases will be seen – unless deliberately prevented. – much, much earlier).</p>
+
+<p>I advise you to read GitLab's great documentation – their <a href=\"https://docs.gitlab.com/ee/development/migration_style_guide.html\">Migration Style Guide</a> is full of wisdom written by those who have experience in deploying numerous Postgres schema changes in a fully automated fashion to a huge number of instances, including GitLab.com itself.</p>
+
+<p>I also encourage everyone to watch <a href=\"https://www.pgcon.org/2022/\">PGCon-2022</a> – one of the key Postgres conferences; this time, it's happening online again. On Thursday, May 26, I'll give two talks, and one of them is called <a href=\"https://www.pgcon.org/events/pgcon_2022/schedule/session/268-common-db-schema-change-mistakes/\">\"Common DB schema change mistakes\"</a>, you find the slide deck <a href=\"https://docs.google.com/presentation/d/1j8I-vimymMXj4iK7klhiveH7BYCGLNeu8GLhWr-OAyY/edit?usp=sharing\">here</a>. If you missed it, no worries – [@DLangille](https://twitter.com/DLangille), who has organized the conference since 2006 (thank you, Dan!), promises to publish talk videos in a few weeks.</p>
+
+<h3>Terminology</h>
+<p>The term \"DB migration\" may be confusing, it's often used to describe the task of switching from one database system to another, moving database and minimizing possible negative effects (such as long downtime).</p>
+
+<p>In this article, I'm going to talk about the second meaning of the term – DB schema changes having the following properties:
+<br/><a href=\"https://postgres.ai/blog/20220525-common-db-schema-change-mistakes\">continue reading →</a></p>"
+weight: 0
+image: /assets/thumbnails/20220525-common-db-schema-change-mistakes_thumbnail.jpg
+tags:
+  - Schema migrations
+---
+
+import { BlogFooter } from '@site/src/components/BlogFooter'
+import { nik } from '@site/src/config/authors'
+
+<p align="center">
+    <img src="/assets/thumbnails/20220525-common-db-schema-change-mistakes2.jpg" alt="Stepping on a 'rake db:migrate'" />
+    <div><small>'rake db:migrate' – a command known to any Ruby developer. But how many times did we step on the same rake?</small></div>
+</p>
+
+In his article ["Lesser Known PostgreSQL Features"](https://hakibenita.com/postgresql-unknown-features), [@be_haki](https://twitter.com/be_haki) describes 18 Postgres features many people don't know. I enjoyed that article, and it inspired me to write about "anti-features" – things that everyone should avoid when working in probably the riskiest field of application development – so-called "schema migrations".
+
+This is one of my favorite topics in the field of relational databases. We all remember how MongoDB entered the stage with two clear messages: "web-scale" (let's have sharding out-of-the-box) and "schemaless" (let's avoid designing schemas and allow full flexibility). In my opinion, both buzzwords are an oversimplification, but if you have experience in reviewing and deploying schema changes in relational databases, you probably understand the level of difficulty, risks, and pain of scaling the process of making schema changes. My personal score: 1000+ migrations designed/reviewed/deployed during 17+ years of using Postgres in my own companies and when consulting others such as GitLab, Chewy, Miro. Here I'm going to share what I've learned, describing some mistakes I've made or observed – so probably next time you'll avoid them.
+
+Moreover, a strong desire to help people avoid such mistakes led me to invent the [Database Lab Engine](https://github.com/postgres-ai/database-lab-engine) – a technology for thin cloning of databases, essential for development and testing. With it, you can clone a 10 TiB database in 10 seconds, test schema changes, and understand the risks before deployment. Most cases discussed in this article can be easily detected by such testing, and it can be done automatically in CI/CD pipelines.
+
+As usual, I'll be focusing on OLTP use cases (mobile and web apps), for which query execution that exceeds 1 second is normally considered too slow. Some cases discussed here are hard to notice in small databases with low activity. But I'm pretty confident that you'll encounter most of them when your database grows to ~10 TiB in size and its load reaches ~10<sup>5</sup>–10<sup>6</sup> transactions per second (of course, some cases will be seen – unless deliberately prevented. – much, much earlier).
+
+I advise you to read GitLab's great documentation – their [Migration Style Guide](https://docs.gitlab.com/ee/development/migration_style_guide.html) is full of wisdom written by those who have experience in deploying numerous Postgres schema changes in a fully automated fashion to a huge number of instances, including GitLab.com itself.
+
+I also encourage everyone to watch [PGCon-2022](https://www.pgcon.org/2022/) – one of the key Postgres conferences; this time, it's happening online again. On Thursday, May 26, I'll give two talks, and one of them is called ["Common DB schema change mistakes"](https://www.pgcon.org/events/pgcon_2022/schedule/session/268-common-db-schema-change-mistakes/), you find the slide deck [here](https://docs.google.com/presentation/d/1j8I-vimymMXj4iK7klhiveH7BYCGLNeu8GLhWr-OAyY/edit?usp=sharing). If you missed it, no worries – [@DLangille](https://twitter.com/DLangille), who has organized the conference since 2006 (thank you, Dan!), promises to publish talk videos in a few weeks.
+
+<!--truncate-->
+
+## Table of Contents
+- [Terminology](#terminology)
+- [Three categories of DB migration mistakes](#three-categories-of-db-migration-mistakes)
+- [Case 1. Schema mismatch](#case-1-schema-mismatch)
+- <a href="#case-2-misuse-of-if-not-exists">Case 2. Misuse of IF [NOT] EXISTS</a>
+- [Case 3. Hitting `statement_timeout`](#case-3-hitting-statement_timeout)
+- [Case 4. Unlimited massive change](#case-4-unlimited-massive-change)
+- [Case 5. Acquire an exclusive lock + wait in transaction](#case-5-acquire-an-exclusive-lock--wait-in-transaction)
+- [Case 6. A transaction with DDL + massive DML](#case-6-a-transaction-with-ddl--massive-dml)
+- [Case 7. Waiting to acquire an exclusive lock for long ⇒ blocking others (most ALTER commands deployed in a careless fashion)](#case-7-waiting-to-acquire-an-exclusive-lock-for-long--blocking-others-most-alter-commands-deployed-in-a-careless-fashion)
+- [Case 8. Careless creation of an FK](#case-8-careless-creation-of-an-fk)
+- [Case 9. Careless removal of an FK](#case-9-careless-removal-of-an-fk)
+- [Case 10. Careless addition of a `CHECK` constraint](#case-10-careless-addition-of-a-check-constraint)
+- [Case 11. Careless addition of `NOT NULL`](#case-11-careless-addition-of-not-null)
+- [Case 12. Careless change of column's data type](#case-12-careless-change-of-columns-data-type)
+- [Case 13. Careless `CREATE INDEX`](#case-13-careless-create-index)
+- [Case 14. Careless `DROP INDEX`](#case-14-careless-drop-index)
+- [Case 15. Renaming objects](#case-15-renaming-objects)
+- [Case 16. Add a column with `DEFAULT`](#case-16-add-a-column-with-default)
+- [Case 17. Leftovers of `CREATE INDEX CONCURRENTLY`](#case-17-leftovers-of-create-index-concurrently)
+- [Case 18. 4-byte integer primary keys for large tables](#case-18-4-byte-integer-primary-keys-for-large-tables)
+- [Recommendations](#recommendations)
+
+## Terminology
+The term "DB migration" may be confusing; it's often used to describe the task of switching from one database system to another, moving the database, and minimizing possible negative effects (such as long downtime).
+
+In this article, I'm going to talk about the second meaning of the term – DB schema changes having the following properties:
+- "incremental": changes are performed in steps;
+- "reversible": it is possible to "undo" any change, returning to the original state of the schema (and data; which, in some cases, may be difficult or impossible);
+- "versionable": some version control system is used (such as Git).
+
+I prefer using the adjusted term, "DB schema migration". However, we need to remember that many schema changes imply data changes – for example, changing a column data type from integer to text requires a full table rewrite, which is a non-trivial task in heavily-loaded large databases.
+
+Application DBA – a database engineer responsible for tasks such as DB schema design, development and deployment of changes, query performance optimization, and so on, while "Infrastructure DBA" is responsible for database provisioning, replication, backups, global configuration. The term "Application DBA" was introduced by [@be_haki](https://twitter.com/be_haki) in ["Some SQL Tricks of an Application DBA"](https://hakibenita.medium.com/some-sql-tricks-of-an-application-dba-3145001d999f).
+
+Finally, the usual suspects in our small terminology list:
+- DML – database manipulation language (`SELECT` / `INSERT` / `UPDATE` / `DELETE`, etc.)
+- DDL – data definition language (`CREATE …`, `ALTER …`, `DROP …`)
+
+## Three categories of DB migration mistakes
+I distinguish three big categories of DB schema migration mistakes:
+1. Concurrency-related mistakes. This is the largest category, usually determining a significant part of an application DBA's experience. Some examples (skipping details; we'll talk about them soon):
+    - Failure to acquire a lock
+    - Updating too many rows at once
+    - Acquired an exclusive lock and left transaction open for long
+2. Mistakes related to the correctness of steps – logical issues. Examples:
+    - Unexpected schema deviations
+    - Schema/app code mismatch
+    - Unexpected data
+3. Miscellaneous – mistakes related to the implementation of some specific database feature or the configuration of a particular database, e.g.:
+    - Reaching statement_timeout
+    - Use of 4-byte integer primary keys in tables that can grow
+    - Ignoring VACUUM behavior and bloat risks
+
+## Case 1. Schema mismatch
+Let's start with an elementary example. Assume we need to deploy the following DDL:
+```sql
+create table t1 ();
+```
+
+It worked well when we developed and tested it. But later, it failed during testing in some test/QA or staging environment, or – in the worst case – during deployment attempt on production:
+```
+ERROR:  relation "t1" already exists
+```
+
+Reasons for this problem may vary. For example, the table could be created by breaking the workflow (for example, manually). To fix it, we should investigate how the table was created and why the process wasn't followed, and then we need to find a way to establish a good workflow to avoid such cases.
+
+Unfortunately, people often choose another way to "fix" it – leading us to the second case.
+
+## Case 2. Misuse of `IF [NOT] EXISTS`
+Observing schema mismatch errors such as those above may lead to the "give up" kind of fix: instead of finding the error's root cause, engineers often choose to patch their code blindly. For the example above it can be the following:
+```sql
+create table if not exists t1();
+```
+
+If this code is used not for benchmarking or testing scripts but to define some application schema, this approach is usually a bad idea. It masks the problem with logic, adding some risks of anomalies. An obvious example of such an anomaly: an existing table that has a different structure than table we were going to create. In my example, I used an "empty" set of columns (in reality, there are always some columns – Postgres creates hidden, system columns such as `xmin`, `xmax` and `ctid`, you can read about them in Postgres docs, ["5.5. System Columns"](https://www.postgresql.org/docs/current/ddl-system-columns.html), so each row always have a few columns; try: `insert into t1 select; select ctid, xmin, xmax from t1;`).
+
+I observe this approach quite often, probably in every other engineering team I work with. A detailed analysis of this problem is given in ["Three Cases Against IF NOT EXISTS / IF EXISTS in Postgres DDL"](https://postgres.ai/blog/20211103-three-cases-against-if-not-exists-and-if-exists-in-postgresql-ddl).
+
+If you're using a DB schema migration tool such as Sqitch, Liquibase, Flyway, or one embedded in your framework (Ruby on Rails, Django, Yii, and others have it), you probably test the migration stems in CI/CD pipelines. If you start testing the chain DO-UNDO-DO (apply the change, revert it, and re-apply again), it can help with detecting some undesired use of `IF [NOT] EXISTS`. Of course, keeping schemas in all environments up-to-date and respecting all observed errors, not ignoring them, and not choosing "workaround" paths such as `IF [NOT] EXISTS`, can be considered good engineering practices.
+
+## Case 3. Hitting `statement_timeout`
+This one is pretty common if testing environments don't have large tables and testing procedures are not mature:
+```
+ERROR: canceling statement due to statement timeout
+```
+Even if both production and non-production environments use identical `statement_timeout` settings, the smaller tables are, the faster queries are executed. This can easily lead to a situation when a timeout is reached only on production.
+
+I strongly recommend testing _all_ changes on large volumes of data so such problems will be observed much earlier in dev-test-deploy pipelines. The most powerful approach here is using thin clones of full-size databases as early in the pipelines as possible – preferably right during development. Check out our [Database Lab Engine](https://github.com/postgres-ai/database-lab-engine) and let us know if you have questions (for example, on Twitter: [@Database_Lab](https://twitter.com/Database_Lab)).
+
+## Case 4. Unlimited massive change
+An `UPDATE` or `DELETE` targeting too many rows is a bad idea, as everyone knows. But why?
+
+Some example:
+```
+test=# explain (buffers, analyze) update t1
+       set val = replace(val, '0159', 'OiSg');
+
+
+                                               QUERY PLAN
+--------------------------------------------------------------------------------------------------------
+ Update on t1  (cost=0.00..189165.00 rows=10000000 width=42) (actual time=76024.507..76024.508 rows=0 loops=1)
+   Buffers: shared hit=60154265 read=91606 dirtied=183191 written=198198
+   ->  Seq Scan on t1  (cost=0.00..189165.00 rows=10000000 width=42) (actual time=0.367..2227.103 rows=10000000 loops=1)
+         Buffers: shared read=64165 written=37703
+ Planning:
+   Buffers: shared hit=17 read=1 dirtied=1
+ Planning Time: 0.497 ms
+ Execution Time: 76024.546 ms
+(8 rows)
+
+Time: 76030.399 ms (01:16.030)
+```
+
+Potential problems that may disturb production:
+- Modifying too many rows in a transaction (here, we have a single-query transaction) means that those rows will be locked for modifications until our transaction finishes. This can affect other transactions, potentially worsening the user experience. For example, if some user tries to modify one of the locked rows, their modification attempt may take very long.
+- If the checkpointer is not well-tuned (for example, the `max_wal_size` value is left default, `1GB`), checkpoints may occur very often during such a massive operation. With `full_page_writes` being `on` (default), this leads to excessive generation of WAL data.
+- Moreover, if the disk system is not powerful enough, the IO generated by the checkpointer may saturate the write capabilities of the disks, leading to general performance degradation.
+- If our massive operation is based on some index and data modifications happen in pages in random order, re-visiting a single page multiple times, with untuned checkpointer and frequent checkpoints, one buffer may pass multiple dirty-clean cycles, meaning that we have redundant write operations.
+- Finally, we may have two types of VACUUM/bloat issues here. First, if we're changing a lot of tuples in a single transaction with UPDATE or DELETE, a lot of dead tuples are produced. Even if autovacuum cleans them up soon, there are high chances that such a mass of dead tuples will be directly converted to bloat, leading to extra disk consumption and potential performance degradation. Second, during the long transaction, the autovacuum cannot clean up dead tuples in *any* table that became dead during our transaction – until this transaction stops.
+
+What to do?
+- Consider splitting the work into batches, each one being a separate transaction. If you're working in the OLTP context (mobile or web apps), the batch size should be determined so the expected processing of _any_ batch won't exceed 1 second. To understand why I recommend 1 second as a soft threshold for batch processing, read the article ["What is a slow SQL query?"](https://postgres.ai/blog/20210909-what-is-a-slow-sql-query)
+- Take care of VACUUMing – tune autovacuum and/or consider using explicit `VACUUM` calls after some number of batches processed.
+- Finally, as an extra protection measure, tune the checkpointer so that even if a massive change happens, our database's negative effect is not so acute. I recommend reading ["Basics of Tuning Checkpoints"](https://www.2ndquadrant.com/en/blog/basics-of-tuning-checkpoints/) by Tomáš Vondra.
+
+## Case 5. Acquire an exclusive lock + wait in transaction
+<p align="center">
+    <img src="/assets/blog/20220523-holding-lock-for-long-2.png" alt="Concurrency issues – holding an acquired lock for long"/>
+</p>
+
+In the previous case, we touched on the problem of holding exclusive locks for long. These can be locked rows (implicitly via `UPDATE` or `DELETE` or explicitly via `SELECT .. FOR UPDATE`) or database objects (example: successful `ALTER TABLE` inside a transaction block locks the table and holds the lock until the end of the transaction). If you need to learn more about locks in Postgres, read the article ["PostgreSQL rocks, except when it blocks: Understanding locks"](https://www.citusdata.com/blog/2018/02/15/when-postgresql-blocks/) by Marco Slot.
+
+An abstract example of the general issue with locking:
+```sql
+begin;
+alter table t1 add column c123 int8;
+-- do something inside or outside of the database (or do nothing)
+commit;
+```
+
+The reason for sitting inside a transaction after lock acquisition may vary. However, sometimes it is nothing – a simple waiting with an open transaction and acquired lock. This is the most annoying reason that can quickly lead to various performance or even partial downtime: an exclusive lock to a table blocks even SELECTs to this table.
+
+:::caution
+Remember: any lock acquired in a transaction is held until the very end of this transaction. It is released only when the transaction finishes, with either COMMIT or ROLLBACK.
+:::
+
+Every time we acquire an exclusive lock, we should think about finishing the transaction as soon as possible.
+
+## Case 6. A transaction with DDL + massive DML
+This one is a subcase of the previous case. I describe it separately because it can be considered a common anti-pattern that is quite easy to encounter when developing DB migrations. Here is it in pseudocode:
+
+```sql
+begin;
+alter table t1 add column c123 int8;
+copy ... -- load a lot of data, taking some time
+commit;
+```
+
+If the DML step takes significant time, as we already discussed, the locks acquired on the previous step (DDL) will be held long too. This can lead to performance degradation or partial downtime.
+
+Basic rules to follow:
+- DML never should go after DDL unless they both deal with some freshly created table
+- It is usually wise to split DDL and DML activities into separate transactions / migration steps
+- Finally, remember that massive changes should go in batches? Each batch is a separate transaction – so if you follow this rule and have used large data volumes when testing changes in CI/CD pipelines, you should never encounter this case
+
+## Case 7. Waiting to acquire an exclusive lock for long ⇒ blocking others
+This problem might happen with most ALTER commands deployed in a careless fashion – but for small, not heavily loaded databases, the chances are quite small, so the problem may remain unnoticed for a long time, until someday it hits in an ugly way, triggering the questions like "How dare could we live with this?" (I passed thru this process with a few teams, it was always quite embarrassing.)
+
+We've discussed what happens when an exclusive lock is acquired and then it's being held for too long. But what if we cannot acquire it?
+
+This event may happen, and in heavily-loaded large databases, it's pretty common. For example, this may happen because the autovacuum is processing the table we're trying to modify, and it doesn't yield – normally, it does, but not when running in the transaction ID wraparound prevention mode. This mode is considered by Postgres as a severe state that must be handled ASAP, so regular logic of autovacuum interrupting its work to allow DDL to succeed won't work here. In this case, usually, it's better to just wait.
+
+But that's not the worst part of this case. What's really bad is the fact that while we're waiting to acquire a lock, if our timeout settings (`statement_timeout` and `lock_timeout`) are set to 0 (default) or quite large (>> 1s), we're going to block _all_ queries to this table, even SELECTs. I talk about this particular problem in the article ["Zero-downtime Postgres schema migrations need this: lock_timeout and retries"](https://postgres.ai/blog/20210923-zero-downtime-postgres-schema-migrations-lock-timeout-and-retries).
+
+What to do here? For all (!) DB migrations, except those that create brand new DB objects or use `CREATE/DROP INDEX CONCURRENTLY` (discussed below), you should have retry logic with low `lock_timeout`, [as I describe in my article](https://postgres.ai/blog/20210923-zero-downtime-postgres-schema-migrations-lock-timeout-and-retries#graceful-schema-changes-lock_timeout-and-retries). This is a fundamental mechanism that everyone needs to have – I think at some point, either Postgres or popular DB schema migration tools will implement it so the world of application DBA will become better.
+
+## Case 8. Careless creation of an FK
+In [Case 5](#case-5-acquire-an-exclusive-lock--wait-in-transaction), we've discussed a transaction consisting of a successful DDL acquiring an exclusive lock and some actions (or lack of them) in the same transaction. But sometimes, a single-statement transaction – a DDL – can combine a lock acquisition and some work that increases the duration of the operation, leading to similar effects. That work can be either reading or data modification; the longer it lasts, the longer the operation will be, and the more risks of blocking other sessions we have.
+
+We'll discuss several cases with such a nature – a DDL operation whose duration is prolonged because of the need to read or modify some data. These cases are quite similar, but I want to recognize them individually because there are nuances for each one of them.
+
+The first case in this series is the creation of a foreign key on two existing tables which are large and busy:
+```sql
+alter table orders add constraint fk_orders_customers foreign key (customer_id) references customers (id);
+```
+
+Here we can have two issues we've already discussed:
+1. The metadata for two tables needs to be adjusted, so we need two locks – and if one is acquired but the second one is not, and we're waiting for it, we're going to experience blocking issues (for both tables!)
+2. When an FK is introduced, Postgres needs to check the presence of this value in the referenced table for each value used in the referencing table. It may take a while – and during this time, locks are going to be held.
+
+To avoid these issues:
+- Use a two-step approach: first, define the FK with the `not valid` option, then, in a separate transaction, run `alter table … validate constraint …;`
+- When the first ALTER, don't forget about the retry logic that we discussed above. Note that two table-level exclusive locks are needed.
+
+## Case 9. Careless removal of an FK
+When an FK needs to be dropped, similar considerations have to be applied as in the previous case, except that no data checks are needed. So, when dropping an FK, we need to acquire two table-level exclusive locks, and the retry logic with low `lock_timeout` can save us from the risks of blocking issues.
+
+## Case 10. Careless addition of a `CHECK` constraint
+CHECK constraints are a powerful and really useful mechanism. I like them a lot because they can help us define a strict data model where major checks are done on the database side, so we have a reliable guarantee of high data quality.
+
+The problem with adding `CHECK` constraints is very similar to adding foreign key constraints – but it's simpler because we need to deal with only one table (you cannot reference another table in a `CHECK` constraint, unfortunately). When we add such a constraint on a large table, a full table scan needs to be performed to ensure that there is no violation of the constraint. This takes time, during which we have a partial downtime – no queries to the table are possible. (Remember the DDL + massive data change case? Here we have a subcase of that.)
+
+Fortunately, CHECKs support the same approach as we saw for FKs: first, we define this constraint by adding the `not valid` option. Next, in a separate transaction, we perform validation: `alter table … validate constraint …;`.
+
+Dropping such constraints doesn't imply any risks (although, we still shouldn't forget about retry logic with low `lock_timeout` when running the `ALTER` command).
+
+## Case 11. Careless addition of `NOT NULL`
+This is one of my favorite cases. It is very interesting and often overlooked because, on small and mid-size tables, its negative effect can be left unnoticed. But on a table with, say, one billion rows, this case can lead to partial downtime.
+
+When we need to forbid NULLs in a column `col1`, there are two popular ways:
+1. Use a `CHECK` constraint with the expression: `alter table ... add constraint ... (col1 is not null)`
+2. Use a "regular" `NOT NULL` constraint: `alter table ... alter column c1 set not null`
+
+The problem with the latter is that, unlike for `CHECK` constraints, the definition of regular NOT NULL cannot be performed in an "online fashion", in two steps, as we saw for FKs and CHECKs.
+
+Let's always use CHECKs then, one could say. Agreed – the approaches are semantically identical. However, there is one important case, when only regular `NOT NULL` can be applicable – it's when we define (or redefine) a primary key on an existing table with lots of data. There we must have a `NOT NULL` on all columns that are used in the primary key definition – or we'll get a sudden full-table scan to install the `NOT NULL` constraint implicitly.
+
+What to do about this? It depends on the Postgres version:
+- Before Postgres 11, there were no "official" ways to avoid partial downtime. The only way was to ensure that no values violate the constraint and edit system catalogs explicitly, which, of course, is not recommended.
+- Since Postgres 11, if `NOT NULL` has to be installed on a new column (quite often a case when we talk about a PK definition), we can use a nice trick:
+    - first, add a column with `not null default -1` (considering that column is of `int8` type; here we benefit from a great optimization introduced in Postgres 11 – fast creation of column with a default value; our `NOT NULL` is automagically introduced and enforced because all existing rows get `-1` in the new column, so there are no NULL values present)
+    - then backfill all existing rows with values
+    - and in the end, drop the `DEFAULT` – the `NOT NULL` constraint will remain in its place
+- Finally, in Postgres 12, another great optimization made it possible to introduce a regular, traditional `NOT NULL` on any column in a fully "online" fashion. What has to be done: first, create a `CHECK` constraint with `(... is not null)` expression. Next, define a regular `NOT NULL` constraint – due to new optimization, the mandatory scan will be skipped because now Postgres understand that there are no NULLs present, thanks to the `CHECK` constraint. In the end, the CHECK constraint can be dropped because it becomes redundant to our regular NOT NULL one.
+
+## Case 12. Careless change of column's data type
+One cannot simply change the data type of a column not thinking about blocking issues. In most cases, you risk getting a full table rewrite when you issue a simple `alter table t1 alter column c2 type int8;`.
+
+What to do with it? Create a new column, define a trigger to mirror values from the old one, backfill (in batches, controlling dead tuples and bloat), and then switch your app to use the new column, dropping the old one when fully switched.
+
+## Case 13. Careless `CREATE INDEX`
+This is a widely known fact – you shouldn't use `CREATE INDEX` in OLTP context unless it's an index on a brand new table that nobody is using yet.
+
+Everyone should use `CREATE INDEX CONCURRENTLY`. Although, there are caveats to remember:
+- it's roughly two times slower than regular `CREATE INDEX`
+- it cannot be used in transaction blocks
+- if it fails (chances are not 0 if you're building a unique index), an invalid index is left defined for the table, so:
+    - deployment system has to be prepared to retry index creation
+    - after failures, cleanup is needed
+
+## Case 14. Careless `DROP INDEX`
+Unlike `CREATE INDEX`, the only issue with `DROP INDEX` is that it can lead to lock acquisition issues (see [Case 7](#case-7-waiting-to-acquire-an-exclusive-lock-for-long--blocking-others)). While for ALTER, there is nothing that can be used to the issues associated with a long-waiting or failing lock acquisition, for `DROP INDEX` Postgres has `DROP INDEX CONCURRENTLY`. This looks imbalanced but probably can be explained by the fact that index recreation is what may be needed much more often than `ALTER` (plus, `REINDEX CONCURRENTLY` was added in Postgres 12).
+
+## Case 15. Renaming objects
+Renaming a table or a column may become a non-trivial task in a large database receiving lots of SQL traffic.
+
+The renaming doesn't look like a hard task – until we look at how the application code works with the database and how changes are deployed on both ends. PostgreSQL DDL supports transactions. (Well, except `CREATE INDEX CONCURRENTLY`. And the fact that we need batches. And avoid long-lasting exclusive locks. And all the other bells and whistles we already discussed...) Ideally, the deployment of application code – on all nodes that we have, and it might be hundreds or thousands – should happen inside the same transaction, so when renaming is committed, all application nodes have a new version of code already.
+
+Of course, it's impossible. So when renaming something, we need to find a way to avoid inconsistencies between application code and DB schema – otherwise, users will be getting errors for a significant period of time.
+
+One approach can be: to deploy application changes first, adjusting the code to understand both old and new (not yet deployed) schema versions. Then deploy DB changes. Finally, deploy another application code change (cleanup).
+
+Another approach is more data change intensive, but it may be easier to use for developers once properly automated. It is similar to what was already described in [Case 12](#case-12-careless-change-of-columns-data-type) (changing column's data type):
+- Create a new column (with a new name)
+- Define a trigger to mirror values from the old one
+- Backfill (in batches, controlling dead tuples and bloat)
+- Switch your app to use the new column
+- Drop the old one when fully switched
+
+## Case 16. Add a column with `DEFAULT`
+As was already mentioned, before Postgres 11, adding a column with default was a non-trivial and data change intensive task (by default implying a full table rewrite). If you missed that feature somehow, read about it, for example, in ["A Missing Link in Postgres 11: Fast Column Creation with Defaults"](https://brandur.org/postgres-default) by [@brandur](https://twitter.com/brandur).
+
+This is a perfect example of how a long-time painful type of change can be fully automated, so the development and deployment of a DB schema change become simple and risk-free.
+
+## Case 17. Leftovers of `CREATE INDEX CONCURRENTLY`
+As we already discussed in [Case 13](#case-13-careless-create-index), a failed `CREATE INDEX CONCURRENTLY` leaves an invalid index behind. If migration scripts don't expect that, fully automated retries are going to be blocked, so manual intervention would be required. To make retries fully automated, before running `CREATE INDEX CONCURRENTLY`, we should check if `pg_indexes`:
+```
+test=# select indexrelid, indexrelid::regclass, indisvalid from pg_index where not indisvalid and indexrelid::regclass::text = 'mytable_title_idx';
+ indexrelid |    indexrelid     | indisvalid
+------------+-------------------+------------
+      26401 | mytable_title_idx | f
+(1 row)
+```
+
+A complication here could be if the framework you're using encourages the creation of indexes with unpredictable names – it is usually better to take control over names, making cleanup implementation straightforward.
+
+## Case 18. 4-byte integer primary keys for large tables
+This is a big topic that is worth a separate article. In most cases, it doesn't make sense to use `int4` PKs when defining a new table – and the good news here is that most popular frameworks such as Rails, Django have already switched to using `int8`. I personally recommend using `int8` always, even if you don't expect your table to grow right now – things may change if the project is successful.
+
+To those who still tend to use `int4` in surrogate PKs, I have a question. Consider a table with 1 billion rows, with two columns – an integer and a timestamp. Will you see the difference in size between the two versions of the table, `(id int4, ts timestamptz)` and `(id int8, ts timestamptz)`. The answer may be surprising to you (in this case, read about ["Column Tetris"](https://stackoverflow.com/questions/2966524/calculating-and-saving-space-in-postgresql/7431468#7431468)).
+
+<!--
+## Case 19. Restricting length of a varchar column too much
+## Case 20. Careless `REFRESH MATERIALIZED VIEW`
+## Case 21. Ignoring vacuum and bloat issues
+## Case 22. Failure to add a unique constraint (build a unique index)
+-->
+
+## Recommendations
+In addition to the recommendations provided for each specific case, here are general ones, without specific order:
+- Test, test, test. Use realistic data volumes during testing. As already mentioned, [Database Lab Engine (DLE)](https://github.com/postgres-ai/database-lab-engine) can be very useful for it.
+- When testing, pay attention to how long exclusive locks are held. Check out DLE's component called ["DB Migration Checker"](https://postgres.ai/docs/db-migration-checker), it can help you automate this kind of testing in CI/CD pipelines.
+- For extended lock analysis, use the snipped from my [blog post about lock tree analysis](https://postgres.ai/blog/20211018-postgresql-lock-trees).
+- Build better automation for deployment. There are many good examples of great automation, libraries of helpers that allow avoiding downtime and performance issues during (and after) DB migration deployment. GitLab's [`migration_helpers.rb`](https://gitlab.com/gitlab-org/gitlab-foss/blob/master/lib/gitlab/database/migration_helpers.rb) is a great example of such a set of helpers.
+- Learn from others and share your knowledge! If you have another idea of what can be mentioned in the list above, send me an email (`nik@postgres.ai`) or reach me on Twitter: [@samokhvalov](https://twitter.com/samokhvalov); I'll be happy to discuss it.
+
+
+<BlogFooter author={nik} />

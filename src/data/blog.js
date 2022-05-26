@@ -1,6 +1,13 @@
 // Duplicates data from the blog.
 const blog = [
   {
+    link: 'blog/20220525-common-db-schema-change-mistakes',
+    date: '2022-05-25 22:14:00',
+    title: 'Common DB schema change mistakes',
+    description: 'One of the easiest ways to "create a heavy load from nothing" is to write a couple of DDL commands and deploy them to production without thorough analysis and testing. In this post, we will discuss 18 widespread mistakes you would want to avoid when changing DB schema under load.',
+    image: '/assets/thumbnails/20220525-common-db-schema-change-mistakes_thumbnail.jpg',
+  },
+  {
     link: 'blog/20220405-database-lab-engine-3-1-released',
     date: '2022-04-05 23:16:17',
     title: 'DLE 3.1: pgBackRest, timezones for CLI, DLE community',
@@ -35,14 +42,14 @@ const blog = [
     description: 'If we aim to have predictable results, it is better to avoid to avoid IF NOT EXISTS / IF EXISTS in DB schema migrations.',
     image: '/assets/thumbnails/20211103-three-cases-against-if-not-exists-and-if-exists-in-postgresql-ddl.png',
   },
-  {
+  /*{
     link: 'blog/20211029-how-partial-and-covering-indexes-affect-update-performance-in-postgresql',
     date: '2021-10-29 23:55:00',
     title: 'How partial, covering, and multicolumn indexes may slow down UPDATEs in PostgreSQL',
     description: '"Primum non nocere" – this is a fundamental principle that is well-known to anyone working in healthcare: "first, do no harm". Do we need to follow this principle when optimizing SQL queries?',
     image: '/assets/thumbnails/20211029-how-partial-and-covering-indexes-affect-update-performance-in-postgresql.jpeg',
   },
-  /*{
+  {
     link: 'blog/20211019-console-reset-options',
     date: '2021-10-19 00:00:00',
     title: 'Platform: Reset clones to any data snapshot',
