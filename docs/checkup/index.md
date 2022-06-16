@@ -288,7 +288,7 @@ cd postgres-checkup
 
 ```bash
 cd ./pghrep
-make install main
+make main
 cd ..
 ```
 
