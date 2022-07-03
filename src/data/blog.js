@@ -1,6 +1,13 @@
 // Duplicates data from the blog.
 const blog = [
   {
+    link: 'blog/20220703-dle-in-aws-marketplace',
+    date: '2022-07-03 23:59:00',
+    title: 'Database Lab Engine for AWS Marketplace',
+    description: 'Good news for the AWS users: fast, fixed-cost branching for your Postgres is just a step away. Now, for a fixed price (paying just for one EC2 instance and an EBS volume), you can have dozens of DB clones being provisioned in seconds and delivering independent databases for your Git branches, CI/CD pipelines, as well as manual optimization and testing activities.',
+    image: '/assets/thumbnails/20220703-dle-in-aws-marketplace-2.png',
+  },
+  {
     link: 'blog/20220525-common-db-schema-change-mistakes',
     date: '2022-05-25 22:14:00',
     title: 'Common DB schema change mistakes',
@@ -35,14 +42,14 @@ const blog = [
     description: 'The Postgres.ai team is happy to announce the release of version 3.0 of Database Lab Engine (DLE), the most advanced open-source software ever released that empowers development, testing, and troubleshooting environments for fast-growing projects.',
     image: '/assets/thumbnails/dle-3.0-blog.png',
   },
-  {
+  /*{
     link: 'blog/20211103-three-cases-against-if-not-exists-and-if-exists-in-postgresql-ddl',
     date: '2021-11-03 23:45:00',
     title: 'Three Cases Against IF NOT EXISTS / IF EXISTS in Postgres DDL',
     description: 'If we aim to have predictable results, it is better to avoid to avoid IF NOT EXISTS / IF EXISTS in DB schema migrations.',
     image: '/assets/thumbnails/20211103-three-cases-against-if-not-exists-and-if-exists-in-postgresql-ddl.png',
   },
-  /*{
+  {
     link: 'blog/20211029-how-partial-and-covering-indexes-affect-update-performance-in-postgresql',
     date: '2021-10-29 23:55:00',
     title: 'How partial, covering, and multicolumn indexes may slow down UPDATEs in PostgreSQL',
