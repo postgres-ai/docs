@@ -1,6 +1,6 @@
 ---
 title: How to install Database Lab with Terraform on AWS
-sidebar_label: Install Database Lab with Terraform
+sidebar_label: Install Database Lab with Terraform on AWS
 ---
 
 <p align="center">

@@ -5,6 +5,7 @@ slug: /how-to-guides
 ---
 
 ## Administration
+- [How to install DLE from the AWS Marketplace](/docs/how-to-guides/administration/install-dle-from-aws-marketplace)
 - [How to install Database Lab with Terraform on AWS](/docs/how-to-guides/administration/install-database-lab-with-terraform)
 - [How to configure PostgreSQL used by Database Lab Engine](/docs/how-to-guides/administration/postgresql-configuration)
 - [How to manage Database Lab Engine](/docs/how-to-guides/administration/engine-manage)
