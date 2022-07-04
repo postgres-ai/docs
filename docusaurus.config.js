@@ -48,7 +48,7 @@ module.exports = {
     announcementBar: {
       id: 'advisory_group', // Any value that will identify this message to save the hidden status.
       content:
-        "<a href='/blog/20220405-database-lab-engine-3-1-released'>Database Lab Engine 3.1 released!</a>",
+        "<a href='/blog/20220703-dle-in-aws-marketplace'>Database Lab Engine is now available on AWS Marketplace</a>",
       backgroundColor: '#D7EEF2',
       textColor: '#013A44',
       isCloseable: true,
