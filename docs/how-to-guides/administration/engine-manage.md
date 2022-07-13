@@ -77,7 +77,12 @@ Prior to version 3.0.0, upgrading or restarting DLE meant losing all the running
 :::
 
 :::caution
-Before version 3.1.0, DLE images (`postgresai/dblab-server`) were based on ZFS 0.8.x. Since 3.1.0, we switched to ZFS 2.1.x. If you need to upgrade an existing DLE setup that is running on ZFS 0.8.x, consider the following options:
+Before version 3.1.0, DLE images (`postgresai/dblab-server`) were based on ZFS 0.8.x. Since 3.1.0, we switched to ZFS 2.1.x.
+An example of error:
+```
+"RunnerError(cmd=\"zfs clone -o mountpoint=/var/lib/dblab/dblab_pool/clones/dblab_clone_6000 dblab_pool@snapshot_20220712153456 dblab_pool/dblab_clone_6000 \u0026\u0026 chown -R root /var/lib/dblab/dblab_pool/clones/dblab_clone_6000\", inerr=\"exit status 1\", stderr=\"chown: /var/lib/dblab/dblab_pool/clones/dblab_clone_6000: No such file or directory\n\" exit=\"1\")"
+```
+If you need to upgrade an existing DLE setup that is running on ZFS 0.8.x, consider the following options:
 
 Option 1: upgrade your system to use ZFS 2.1, optionally upgrade your pool (`zpool upgrade dblab_pool`), and then upgrade DLE to use the default image, `postgresai/dblab-server:3.1.2`
 
