@@ -24,77 +24,34 @@ When configuring Database Lab Engine, review and set up if needed the following 
 - **`work_mem`**: set the same value as used on the source database unless your Database Lab Engine server lacks memory and there are significant risks of out-of-memory errors
 - **[Query Planning](https://www.postgresql.org/docs/current/runtime-config-query.html)** parameters (all of them). This is essential to ensure that cloned PostgreSQL most likely generates the same plans as on the source (specifically, it is crutial for query performance troubleshooting and optimization, including working with EXPLAIN plans)
 
-For convenience, use the following SQL on the source database to get all the values:
+Use the following SQL on the source database to get all non-default values of the parameters affecting the planner's behavior:
 ```sql
-select format($$%s: "%s"$$, name, setting)
-from pg_settings
+select
+  format('   %s: "%s"', name, setting) as configs
+from
+  pg_settings
 where
-  name ~ '(work_mem$|^enable_|_cost$|scan_size$|effective_cache_size|^jit)'
-  or name ~ '(^geqo|default_statistics_target|constraint_exclusion|cursor_tuple_fraction)'
-  or name ~ '(collapse_limit$|parallel|plan_cache_mode|shared_preload_libraries)';
+  source <> 'default'
+  and (
+    name ~ '(work_mem$|^enable_|_cost$|scan_size$|effective_cache_size|^jit)'
+    or name ~ '(^geqo|default_statistics_target|constraint_exclusion|cursor_tuple_fraction)'
+    or name ~ '(collapse_limit$|parallel|plan_cache_mode|shared_preload_libraries)'
+  );
 ```
 
-An example of `configs` option:
+Here is an example of who the `databaseConfigs` configuration section is supposed to look:
 ```yaml
 ...
-        configs:
-          autovacuum_work_mem: "-1"
-          constraint_exclusion: "partition"
-          cpu_index_tuple_cost: "0.005"
-          cpu_operator_cost: "0.0025"
-          cpu_tuple_cost: "0.01"
-          cursor_tuple_fraction: "0.1"
-          default_statistics_target: "100"
-          effective_cache_size: "524288"
-          enable_bitmapscan: "on"
-          enable_gathermerge: "on"
-          enable_hashagg: "on"
-          enable_hashjoin: "on"
-          enable_indexonlyscan: "on"
-          enable_indexscan: "on"
-          enable_material: "on"
-          enable_mergejoin: "on"
-          enable_nestloop: "on"
-          enable_parallel_append: "on"
-          enable_parallel_hash: "on"
-          enable_partition_pruning: "on"
-          enable_partitionwise_aggregate: "off"
-          enable_partitionwise_join: "off"
-          enable_seqscan: "on"
-          enable_sort: "on"
-          enable_tidscan: "on"
-          force_parallel_mode: "off"
-          from_collapse_limit: "8"
-          geqo: "on"
-          geqo_effort: "5"
-          geqo_generations: "0"
-          geqo_pool_size: "0"
-          geqo_seed: "0"
-          geqo_selection_bias: "2"
-          geqo_threshold: "12"
-          jit: "off"
-          jit_above_cost: "100000"
-          jit_debugging_support: "off"
-          jit_dump_bitcode: "off"
-          jit_expressions: "on"
-          jit_inline_above_cost: "500000"
-          jit_optimize_above_cost: "500000"
-          jit_profiling_support: "off"
-          jit_provider: "llvmjit"
-          jit_tuple_deforming: "on"
-          join_collapse_limit: "8"
-          maintenance_work_mem: "65536"
-          max_parallel_maintenance_workers: "2"
-          max_parallel_workers: "8"
-          max_parallel_workers_per_gather: "2"
-          min_parallel_index_scan_size: "64"
-          min_parallel_table_scan_size: "1024"
-          parallel_leader_participation: "on"
-          parallel_setup_cost: "1000"
-          parallel_tuple_cost: "0.1"
-          random_page_cost: "4"
-          seq_page_cost: "1"
-          shared_preload_libraries: ""
-          work_mem: "102400"
+databaseConfigs: &db_configs
+  configs:
+    shared_buffers: 1GB
+    default_statistics_target: "1000"
+    effective_cache_size: "43352064"
+    jit: "off"
+    maintenance_work_mem: "2097152"
+    random_page_cost: "1.1"
+    seq_page_cost: "1.0"
+    shared_preload_libraries: "pg_stat_statements,auto_explain,pg_wait_sampling,pg_stat_kcache"
+    work_mem: "102400"
 ...
 ```
