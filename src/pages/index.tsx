@@ -363,7 +363,7 @@ function IndexPage() {
               <h3 className="text-center">The latest from our blog</h3>
             </div>
           </div>
-          <div className="row">
+          <div className="card__row">
             {blog.map((e) => (
               <div key={e.title} className="col col--4 margin-bottom--lg">
                 <div className="card">

@@ -1,9 +1,7 @@
 import React from 'react';
-
+import clsx from 'clsx';
 import Layout from '@theme/Layout';
 
-import clsx from 'clsx';
-import styles from './styles.module.css';
 import careers from '../../data/careers';
 
 const TITLE = 'Careers';
@@ -15,10 +13,10 @@ function Careers() {
         <div className="text--center margin-bottom--m">
           <h1>{TITLE}</h1>
         </div>
-        <div className="row">
+        <div className="card__row">
           {careers.map((job) => (
             <div key={job.title} className="col col--4 margin-bottom--lg">
-                <div className={clsx('card', styles.showcaseresource)}>
+                <div className={clsx('card', 'showcaseUser', 'careers')}>
                   <div className="card__body">
                     <div className="avatar">
                       <div className="avatar__intro margin-left--none">
