@@ -1,9 +1,7 @@
 import React from 'react';
-
+import clsx from 'clsx';
 import Layout from '@theme/Layout';
 
-import clsx from 'clsx';
-import styles from './styles.module.css';
 import resources from '../../data/resources';
 
 const TITLE = 'Resources';
@@ -15,10 +13,10 @@ function Showcase() {
         <div className="text--center margin-bottom--m">
           <h1>{TITLE}</h1>
         </div>
-        <div className="row">
+        <div className="card__row">
           {resources.map((resource) => (
             <div key={resource.title} className="col col--4 margin-bottom--lg">
-                <div className={clsx('card', styles.showcaseresource)}>
+                <div className={clsx('card', 'showcaseUser', 'resources')}>
                   <div className="card__image">
                     <a
                       href={resource.link}
