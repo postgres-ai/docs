@@ -1,4 +1,4 @@
-import { Link, useParams } from '@docusaurus/router'
+import { Link, useParams } from 'react-router-dom'
 import React from 'react'
 import Layout from '@theme/Layout'
 import Masonry from 'react-masonry-css'

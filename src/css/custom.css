@@ -404,6 +404,22 @@ html[data-theme="dark"] .source-sec {
   margin: 10px 0px 25px;
 }
 
+.navbar__item {
+  display: flex;
+}
+
+.github-lg {
+  display: block;
+}
+
+.github-lg .github-star-placeholder {
+  width: 56px;
+}
+
+.github-lg .github-btn {
+  width: 94px;
+}
+
 table.docs-home * {
   border: none;
 }
@@ -419,6 +435,16 @@ table.docs-home td {
 @media (min-width: 991px) and (max-width: 1199px) {
   .joe-bot {
     margin-top: -32px !important;
+  }
+}
+
+@media (max-width: 1020px) {
+  .navbar__item  {
+    display: none;
+  }
+
+  .navbar__toggle {
+    display: block;
   }
 }
 
@@ -683,7 +709,7 @@ table.docs-home td {
 }
 
 .navbar__title {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   line-height: 2rem;
   font-family: 'Encode Sans',roboto,sans-serif;
   font-weight: 400;
@@ -734,6 +760,131 @@ html[data-theme="dark"] .avatar__name > a {
   font-size: 20px;
 }
 
+.sign-in-button {
+  font-weight: var(--ifm-font-weight-semibold);
+  padding: 0.275rem 1.25rem;
+  vertical-align: middle;
+  border-radius: 0.25rem;
+}
+
+.navbar-sidebar__item div[class="menu__list-item"]:not(:first-of-type), .github-sm {
+  margin-top: 1rem;
+  padding: var(--ifm-menu-link-padding-vertical)
+      var(--ifm-menu-link-padding-horizontal);
+}
+
+.navbar a:hover{
+  text-decoration: none;
+}
+
+.navbar .navbar__brand:hover {
+  color: inherit;
+}
+
+html[data-theme="light"] .sign-in-button {
+  color: var(--ifm-color-black);
+  border: 1px solid #ff6112;
+}
+
+html[data-theme="dark"] .sign-in-button {
+  color: var(--ifm-color-base);
+  background-color: #ff6112;
+  border: 1px solid transparent;
+}
+
+.github-container {
+  display: flex;
+  overflow: hidden;
+  font-size: 0;
+  line-height: 0;
+  white-space: nowrap;
+}
+
+.github-container .github-btn,
+.github-container .github-star-placeholder {
+  border-color: #ccd1d5;
+  border-radius: 0.25em;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid;
+  padding: 5px 11px;
+  font-size: 14px;
+  line-height: 1rem;
+  color: #24292f;
+  border-color: rgba(27, 31, 36, 0.15);
+  border-top-color: rgba(27, 31, 36, 0.15);
+  border-right-color: rgba(27, 31, 36, 0.15);
+  border-bottom-color: rgba(27, 31, 36, 0.15);
+  border-left-color: rgba(27, 31, 36, 0.15);
+  flex: 1;
+  justify-content: center;
+}
+
+.github-btn svg {
+  width: 18px;
+  height: 18px;
+  margin-right: 0.25rem;
+}
+
+.github-container .github-btn {
+  background-color: #ebf0f4;
+  background-image: linear-gradient(180deg, #f6f8fa, #ebf0f4 90%);
+  border-right-color: rgba(27, 31, 36, 0.15);
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.github-container .github-star-placeholder {
+  background-color: #fff;
+  border-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.github-container .github-star-placeholder:hover {
+  color: #0969da;
+}
+
+.github-container .github-btn:hover {
+  color: #24292f;
+  background-color: #e9ebef;
+  background-image: linear-gradient(180deg, #f3f4f6, #e9ebef 90%);
+}
+
+.navbar__inner .github-sm {
+  display: none;
+}
+
+@media (max-width: 1020px) {
+  .github-lg {
+    display: none;
+  }
+
+  .github-sm .github-btn, 
+  .github-sm .github-star-placeholder {    
+    font-size: 1rem;
+  }
+
+  .github-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .github-sm {
+    display: flex;
+    padding-top: 1.75rem;
+  }
+
+  .sign-in-button {
+    display: flex;
+    width: 162px;
+    justify-content: center;
+  }
+}
 /* Start - Card styling for resources and careers page */
 
 .showcaseUser {

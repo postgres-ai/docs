@@ -1,4 +1,4 @@
-import { Link } from '@docusaurus/router'
+import { Link } from 'react-router-dom'
 import React from 'react'
 
 import { GatewayLink } from '../../../../components/GatewayLink'

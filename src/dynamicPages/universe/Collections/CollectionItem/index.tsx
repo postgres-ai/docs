@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from '@docusaurus/router'
+import { Link } from 'react-router-dom'
 import { Collection } from '../../../../data/collections'
 import { ROUTES } from '../../../routes'
 
