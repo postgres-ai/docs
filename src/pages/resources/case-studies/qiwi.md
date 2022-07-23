@@ -60,7 +60,7 @@ RocketBank team chose Database Lab to eliminate manual work required to refresh 
 - Instant data delivery for development and testing: seconds instead of days
 - No additional staff needed to support growth
 
-<div style={{marginTop: '50px'}}>
-  <a className="btn btn1" style={{marginRight: '20px'}} href='https://console.postgres.ai/'>Start Free Trial</a>
+<div className="products-btn-container">
+  <a className="btn btn1" href='https://console.postgres.ai/'>Start Free Trial</a>
   <a className="btn btn2" href='/download/database-lab-case-study-qiwi-rocketbank.pdf' target='_blank'>Download PDF</a>
 </div>

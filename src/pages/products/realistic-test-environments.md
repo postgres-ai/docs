@@ -52,7 +52,7 @@ With Database Lab, software teams gain access to higher quality data for testing
 and can reduce the cost of their test environments.
 
 
-<div style={{marginTop: '50px'}}>
-  <a className="btn btn1" style={{marginRight: '20px'}} href="https://console.postgres.ai/">Start Free Trial</a>
+<div className="products-btn-container">
+  <a className="btn btn1" href="https://console.postgres.ai/">Start Free Trial</a>
   <a className="btn btn2" href="/products/data-masking">Next: Sensitive Data Masking</a>
 </div>

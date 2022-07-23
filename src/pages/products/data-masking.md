@@ -72,8 +72,8 @@ access to data.
 Database Lab gives organizations a flexible and powerful way to protect sensitive data
 within their organization and to comply with security standards.
 
-<div style={{marginTop: '50px'}}>
-  <a className="btn btn1" style={{marginRight: '20px'}} href='https://console.postgres.ai/'>Start Free Trial</a>
+<div className="products-btn-container">
+  <a className="btn btn1" href='https://console.postgres.ai/'>Start Free Trial</a>
   <a className="btn btn2" href='/resources'>Case Studies</a>
 </div>
 

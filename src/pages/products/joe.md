@@ -53,7 +53,7 @@ Organizations using Joe Bot can safely empower every engineer to improve query p
 </div>
 
 
-<div style={{marginTop: '50px'}}>
-  <a className="btn btn1" style={{marginRight: '20px'}} href="https://console.postgres.ai/">Start Free Trial</a>
+<div className="products-btn-container">
+  <a className="btn btn1" href="https://console.postgres.ai/">Start Free Trial</a>
   <a className="btn btn2" href="/products/realistic-test-environments">Next: Realistic Test Environments</a>
 </div>

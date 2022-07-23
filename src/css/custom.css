@@ -133,24 +133,30 @@ html[data-theme="dark"] .DocSearch {
 }
 
 .btn {
-  font-weight: 400 !important;
-  padding-bottom: 4px;
+  font-size: 18px;
+  text-align: center;
+  color: #fff;
+  padding: 6px 24px;
+  transition: background 1s ease;
+  margin: 0 16px;
 }
 
 .btn1 {
-  background: #ff6112 !important;
-  color: #fff !important;
-  font-size: 24px !important;
-  line-height: 31px !important;
-  text-align: center !important;
+  background: #ff6112;
+}
+
+.btn1:hover {
+  background: #cd4400;
+  color: #fff;
 }
 
 .btn2 {
-  background: #808080 !important;
-  font-size: 24px !important;
-  line-height: 31px !important;
-  text-align: center !important;
-  color: #fff !important;
+  background: #808080;
+}
+
+.btn2:hover {
+  background: #5e5e5e;
+  color: #fff;
 }
 
 .h-d {
@@ -172,22 +178,19 @@ html[data-theme="dark"] .banner {
 
 .banner h1 {
   font-weight: bold;
-  font-size: 36px;
+  font-size: 42px;
   line-height: 42px;
   color: #ff6112;
+  margin: 0;
 }
 
 .banner p {
   font-weight: 300;
-  font-size: 32px;
+  font-size: 28px;
   line-height: 37px;
-  margin-top: 15px;
-  margin-bottom: 25px;
+  margin: 30px 0;
 }
 
-.banner .btn {
-  margin: 0 6px;
-}
 html[data-theme="light"] .companies {
   background: #f9f9f9;
   padding-top: 20px;
@@ -229,36 +232,48 @@ html[data-theme="dark"] .blog-sec {
   margin-top: 50px;
 }
 
+/* Reduce font size for docusaurus blog */
+header h2, header h1 {
+  font-size: 2rem !important;
+}
+
+.products-btn-container {
+  margin: 25px 0;
+}
+
+.products-btn-container a {
+  font-size: 16px;
+}
+
+.products-btn-container a:first-child {
+  margin-left: 0;
+} 
+
 .six-sec {
   min-height: 780px;
   padding: 9px 0 73px 0;
 }
 
-.six-sec img {
-  margin-top: 76px;
+.six-sec .row {
+  margin: 69px 0;
 }
 
+.six-sec .row:last-of-type {
+  margin-bottom: 0;
+}
+ 
 .six-sec h2 {
   font-weight: 300;
-  font-size: 30px;
+  font-size: 20px;
   line-height: 35px;
   margin-top: 43px;
 }
 
-.six-sec .btn {
-  margin: 69px 5px 0px;
-}
-
-.six-sec .single img {
-  margin-top: 69px;
-}
-
 .six-sec h3 {
-  margin-top: 50px;
   font-weight: bold;
-  font-size: 32px;
+  font-size: 28px;
   line-height: 37px;
-  color: #333;
+  margin: 50px 0 35px 0;
 }
 
 .six-sec .single h2 {
@@ -299,7 +314,7 @@ html[data-theme="dark"] .multi-sec {
 
 .multi-sec h4 {
   font-weight: normal;
-  font-size: 30px;
+  font-size: 28px;
   line-height: 35px;
   margin-top: 80px;
 }
@@ -311,13 +326,13 @@ html[data-theme="dark"] .multi-sec {
 .multi-sec p {
   font-style: normal;
   font-weight: 300;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 28px;
   margin-top: 25px;
 }
 
 .multi-sec .btn {
-  margin: 80px 5px 0 5px;
+  margin-top: 80px;
 }
 
 html[data-theme="light"] .source-sec {
@@ -333,13 +348,13 @@ html[data-theme="dark"] .source-sec {
 
 .source-sec h3 {
   font-weight: normal;
-  font-size: 32px;
+  font-size: 28px;
   line-height: 37px;
 }
 
 .source-sec .row.text-center p {
   font-weight: 300;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 28px;
   margin-top: 25px;
 }
@@ -456,12 +471,7 @@ table.docs-home td {
   .companies {
     padding-bottom: 10px;
   }
-  .six-sec img {
-    margin-top: 58px;
-  }
   .six-sec h2 {
-    font-weight: 300;
-    font-size: 24px;
     line-height: 28px;
   }
   .multi-sec h3 {
@@ -473,7 +483,6 @@ table.docs-home td {
   }
   .multi-sec img.lhs {
     margin: 30px auto 0 auto;
-    width: 149px;
     display: block;
   }
   .multi-sec h4 {
@@ -482,7 +491,7 @@ table.docs-home td {
     line-height: 28px;
   }
   .multi-sec p {
-    font-size: 20px;
+    font-size: 18px;
     line-height: 23px;
   }
   .multi-sec img.rhs {
@@ -493,18 +502,15 @@ table.docs-home td {
   .multi-sec h4.lst {
     margin-top: 10px;
   }
-  .multi-sec .btn {
-    margin-top: 41px;
-  }
   .source-sec {
     padding: 56px 0;
   }
   .source-sec h3 {
-    font-size: 26px;
+    font-size: 24px;
     line-height: 30px;
   }
   .source-sec .row.text-center p {
-    font-size: 20px;
+    font-size: 18px;
     line-height: 23px;
   }
   .multi-sec{
@@ -517,6 +523,11 @@ table.docs-home td {
   .h-d {
     display: block;
   }
+
+  .multi-sec .row { 
+    flex-direction: column-reverse;
+  }
+
   .h-m {
     display: none;
   }
@@ -537,16 +548,11 @@ table.docs-home td {
   .companies {
     padding-bottom: 10px;
   }
-  .six-sec img {
-    margin-top: 58px;
+  .six-sec .row {
+    margin: 40px 0;
   }
-  .six-sec h2 {
-    font-weight: 300;
+  .multi-sec h3, .six-sec h3  {
     font-size: 24px;
-    line-height: 28px;
-  }
-  .multi-sec h3 {
-    font-size: 26px;
     line-height: 30px;
   }
   .multi-sec {
@@ -554,7 +560,6 @@ table.docs-home td {
   }
   .multi-sec img.lhs {
     margin: 30px auto 0 auto;
-    width: 149px;
     display: block;
   }
   .multi-sec h4 {
@@ -563,7 +568,7 @@ table.docs-home td {
     line-height: 28px;
   }
   .multi-sec p {
-    font-size: 20px;
+    font-size: 18px;
     line-height: 23px;
   }
   .multi-sec img.rhs {
@@ -574,18 +579,15 @@ table.docs-home td {
   .multi-sec h4.lst {
     margin-top: 10px;
   }
-  .multi-sec .btn {
-    margin-top: 41px;
-  }
   .source-sec {
     padding: 56px 0;
   }
   .source-sec h3 {
-    font-size: 26px;
+    font-size: 24px;
     line-height: 30px;
   }
   .source-sec .row.text-center p {
-    font-size: 20px;
+    font-size: 18px;
     line-height: 23px;
   }
 
@@ -603,79 +605,21 @@ table.docs-home td {
 }
 
 @media (max-width: 579px) {
-  .h-d {
-    display: block;
-  }
-  .h-m {
-    display: none;
-  }
-  .banner {
-    min-height: 540px;
-  }
-  .banner h1 {
-    font-size: 32px;
-    line-height: 37px;
-  }
-  .banner p {
-    font-size: 26px;
-    line-height: 30px;
-  }
-  .banner .btn {
-    margin-bottom: 18px;
-  }
-  .companies {
-    padding-bottom: 10px;
-  }
-  .six-sec img {
-    margin-top: 58px;
-  }
-  .six-sec h2 {
-    font-weight: 300;
-    font-size: 24px;
-    line-height: 28px;
-  }
-  .multi-sec h3 {
-    font-size: 26px;
-    line-height: 30px;
-  }
   .multi-sec {
-    padding: 64px 0 64px 0 !important;
+    text-align: center;
   }
-  .multi-sec img.lhs {
-    margin: 30px auto 0 auto;
-    width: 149px;
-    display: block;
+
+  .six-sec h2, .banner p, .multi-sec p, .btn  {
+    font-size: 16px;
+    line-height: initial;
   }
-  .multi-sec h4 {
-    margin-top: 30px;
-    font-size: 24px;
-    line-height: 28px;
-  }
-  .multi-sec p {
+
+  .multi-sec h3, .six-sec h3 {
     font-size: 20px;
-    line-height: 23px;
   }
-  .multi-sec img.rhs {
-    margin: 50px auto 0 auto;
-    width: 161px;
-    display: block;
-  }
-  .multi-sec h4.lst {
-    margin-top: 10px;
-  }
-  .multi-sec .btn {
-    margin-top: 41px;
-  }
-  .source-sec {
-    padding: 56px 0;
-  }
-  .source-sec h3 {
-    font-size: 26px;
-    line-height: 30px;
-  }
-  .source-sec .row.text-center p {
-    font-size: 20px;
-    line-height: 23px;
+
+  .multi-sec h4 br {
+    display: none;
   }
 }
 
