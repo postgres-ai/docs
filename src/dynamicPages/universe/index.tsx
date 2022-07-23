@@ -1,9 +1,8 @@
 import React from 'react'
-import { Switch, Route } from '@docusaurus/router'
+import { Switch, Route } from 'react-router-dom'
 import { Collections } from './Collections'
 import { CollectionDetail } from './CollectionDetail'
 import { ROUTES } from '../routes'
-
 
 const Universe: React.FC = () => {
   return (
