@@ -78,8 +78,8 @@ GitLab is currently working on [automating the migration testing](https://docs.g
 - Reduce time to provision database clones from days to seconds for database experts with access to the production
 - Developers can securely run queries of any type without the necessity of production DB access, not asking DB experts for help
 
-<div style={{marginTop: '50px'}}>
-  <a className="btn btn1" style={{marginRight: '20px'}} href='https://console.postgres.ai/'>Start Free Trial</a>
+<div className="products-btn-container">
+  <a className="btn btn1" href='https://console.postgres.ai/'>Start Free Trial</a>
   <a className="btn btn2" href='/download/database-lab-case-study-gitlab.pdf' target='_blank'>Download PDF</a>
 </div>
 

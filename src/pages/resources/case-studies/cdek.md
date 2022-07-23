@@ -60,7 +60,7 @@ Database Lab has enabled CDEK to speed up development and testing significantly,
 - Instant data delivery for development and testing: seconds instead of 14 hours
 - No additional staff needed to support growth 
 
-<div style={{marginTop: '50px'}}>
-  <a className="btn btn1" style={{marginRight: '20px'}} href='https://console.postgres.ai/'>Start Free Trial</a>
+<div className="products-btn-container">
+  <a className="btn btn1" href='https://console.postgres.ai/'>Start Free Trial</a>
   <a className="btn btn2" href='/download/database-lab-case-study-cdek.pdf' target='_blank'>Download PDF</a>
 </div>
