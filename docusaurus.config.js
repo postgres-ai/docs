@@ -22,9 +22,7 @@ module.exports = {
     signInUrl: SIGN_IN_URL,
   },
 
-  // TODO (anatoly): @docusaurus/plugin-google-gtag doesn't seem to work now, refactor when fixed.
   scripts: [
-    BASE_URL + 'js/gtag.js',
     BASE_URL + 'js/githubButton.js',
     { src: BASE_URL + 'js/cookieBanner.js', async: true, defer: true },
   ],
@@ -417,6 +415,10 @@ module.exports = {
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
+        },
+        gtag: {
+          trackingID: 'GTM-5M85JPS',
+          anonymizeIP: true,
         },
         pages: {
           exclude: [
