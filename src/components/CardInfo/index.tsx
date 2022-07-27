@@ -17,7 +17,7 @@ const CardInfoCmp: React.FC<Props> = (props) => {
   const { title, text, buttonText, icon, onButtonClick } = props
 
   return (
-    <div className={classNames('card', styles.container)}>
+    <div className={classNames('card', 'careers', styles.container)}>
       <div className={styles.header}>
         <div className={styles.iconContainer}>
           {typeof icon === 'string' ? <img src={icon} alt={title} /> : icon}

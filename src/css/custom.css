@@ -159,6 +159,17 @@ html[data-theme="dark"] .DocSearch {
   color: #fff;
 }
 
+.btn3 {
+  border: 1px solid #ff6112;
+  color: var(--ifm-heading-color);
+}
+
+.btn3:hover {
+  border: 1px solid #ff6112;
+  background: #ff6112;
+  color: #fff;
+}
+
 .h-d {
   display: none;
 }
@@ -371,58 +382,6 @@ html[data-theme="dark"] .source-sec {
   display: none;
 }
 
-.price-row {
-  margin-bottom: 25px;
-}
-
-.price-box {
-  border: 1px solid #333;
-  padding: 10px 0px;
-  box-shadow: -1px -1px #999;
-  margin: 0px 5px;
-}
-
-.price-box .em {
-  font-size: 1.5em;
-}
-
-.price-box .cta.btn1 {
-  margin-top: 10px;
-}
-
-.price-box .cta.btn2 {
-  margin-top: 38px;
-}
-
-.price-box .mobile-feature-list {
-  /* This is enabled as visible only for mobile views */
-  display: none;
-
-  list-style-type: none;
-  margin-top: 15px;
-  padding-left: 0px;
-}
-
-.price-box .mobile-feature-list li {
-  text-align: center;
-}
-
-.feature-name {
-  font-weight: bold;
-}
-
-.pricing-table ul > li {
-  text-align: left;
-}
-
-.pricing-details {
-  margin: 10px 0px 25px;
-}
-
-.navbar__item {
-  display: flex;
-}
-
 .github-lg {
   display: block;
 }
@@ -573,6 +532,9 @@ table.docs-home td {
   .companies {
     padding-bottom: 10px;
   }
+  .six-sec .btn1 {
+    margin-bottom: 2rem;
+  }
   .six-sec .row {
     margin: 40px 0;
   }
@@ -614,18 +576,6 @@ table.docs-home td {
   .source-sec .row.text-center p {
     font-size: 18px;
     line-height: 23px;
-  }
-
-  .price-box .mobile-feature-list {
-    display: inherit;
-  }
-
-  .pricing-feature-table {
-    display: none;
-  }
-
-  section.pricing-details .offset-2 {
-    margin-left: 0px;
   }
 }
 

@@ -1,0 +1,88 @@
+.tableContainer {
+  max-width: 750px;
+  margin: 6.7rem auto 2.75rem auto;
+}
+
+.table {
+  display: table;
+  width: 100%;
+  margin: 30px auto 0 auto;
+  scroll-margin-top: 60px;
+}
+
+.tableButton {
+  font-size: 16px;
+  margin-top: 20px;
+  align-items: flex-start;
+  display: flex;
+  width: max-content;
+  margin-left: 0;
+}
+
+.table p {
+  margin-bottom: 0;
+}
+
+.table td {
+  padding: 2px;
+  font-size: 14px;
+}
+
+.table th {
+  padding: 0.5rem 0;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.tableInstance {
+  width: max-content;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.recommended {
+  color: #ff6112;
+  font-style: italic;
+}
+
+.notes {
+  display: flex;
+  flex-direction: column;
+  justify-self: start;
+  text-align: start;
+  margin: 20px 0;
+}
+
+.notes h2 {
+  font-size: 18px;
+}
+
+.notes ul {
+  text-align: start;
+  font-size: 14px;
+}
+
+.hardwareInfo {
+  font-size: 12px;
+}
+
+.tableHeader {
+  background-color: #ff6112;
+  color: #fff;
+}
+
+@media (max-width: 575px) {
+  .table {
+    display: block;
+  }
+
+  .table th {
+    padding: 0.5rem 1rem;
+  }
+
+  .tableContainer {
+    margin-top: 4.75rem;
+  }
+}
