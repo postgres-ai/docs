@@ -1,20 +1,207 @@
-.title {
-  text-align: center;
-  margin-top: 50px;
+.titleSection {
+  margin-bottom: 2rem;
+  font-size: 28px;
+}
+
+.mainContainer {
+  padding: 2rem 0;
+}
+
+.subscription a,
+.support a {
+  max-width: max-content;
+  margin: 0 auto;
+  font-size: 16px;
+}
+
+.purchase {
+  margin-bottom: 1em;
+}
+
+.subscription {
+  padding: 0 0 20px 0;
+  border-radius: 8px;
+  box-shadow: 0px 2px 10px rgb(0 0 0 / 25%);
+  background-color: var(--ifm-card-background-color);
+  z-index: 1;
+}
+
+.contentWrapper {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.standardPlan h2 {
+  background: #ff6112;
+  color: #fff;
+  border-bottom: 0;
+}
+
+.justifyCenter h2 {
+  border-bottom: 1px solid rgb(255, 97, 18);
+  padding: 15px 0;
+  font-size: 22px;
+  margin: 0;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+}
+
+.flex2 {
+  flex: 2 1 auto;
+}
+
+.pricing {
   margin-bottom: 20px;
-  margin-left: 0px;
-  margin-right: 0px;
-  color: #ff6112;
 }
 
-.featureRow {
-  padding: 10px 0px;
+.pricing b {
+  display: block;
+  font-weight: bold;
+  font-size: 22px;
+  color: var(--ifm-heading-color);
 }
 
-.featureRow:nth-child(2n + 1) {
-  background-color: #F3F3F3;
+.pricing p {
+  font-size: 1rem;
 }
 
-html[data-theme=dark] .featureRow:nth-child(2n + 1) {
-  background-color: #333;
+.pricing a:hover {
+  cursor: pointer;
+  text-decoration: var(--ifm-link-hover-decoration);
+}
+
+.support {
+  margin: 5rem 0;
+  box-shadow: 0px 2px 10px rgb(0 0 0 / 25%);
+  border-left: none;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background-color: var(--ifm-card-background-color);
+  height: max-content;
+  padding: 0 0 20px 0;
+}
+
+.empty {
+  height: 35px;
+}
+
+.support h2 {
+  border-top-left-radius: 0;
+}
+
+.justifyCenter {
+  display: flex;
+  flex-direction: column;
+}
+
+.rowWrapper {
+  height: 100%;
+}
+
+.flexGap {
+  gap: 120px;
+}
+
+.package h3,
+.package h2,
+.package p {
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.marketplace {
+  display: block;
+  width: 185px;
+  margin: 0 auto;
+}
+
+.list {
+  text-align: start;
+  margin: 20px auto;
+  list-style-image: url(../../../static/assets/list-checkmark.svg);
+  max-width: 260px;
+  font-size: 14px;
+}
+
+.list li {
+  padding-left: 20px;
+}
+
+html[data-theme='light'] .marketplace img {
+  margin: 5px 0 3px 0;
+  content: url(https://d1.awsstatic.com/Marketplace/MP%20Logo/AWSMP_NewLogo_RGB.19b9351a98a7c9f65717edbfe8ac6f9f785ed6b0.png);
+}
+
+html[data-theme='dark'] .marketplace img {
+  margin: 5px 0 3px 0;
+  content: url(https://d1.awsstatic.com/Marketplace/Campaigns%20Only/BigData%20Main%20LP/AWSMP_logo_RGB_REV.369d58099de9bd4b56a099cf2c2e663891ccc88b.png);
+}
+
+@media (max-width: 1200px) {
+  .rowWrapper {
+    flex-direction: row;
+  }
+
+  .pricingWrapper {
+    flex-direction: column;
+  }
+
+  .flexGap {
+    gap: 80px;
+  }
+}
+
+@media (max-width: 991px) {
+  .package {
+    max-width: initial;
+    margin: 0 auto;
+  }
+
+  .enterprise {
+    max-width: 375px;
+  }
+
+  .empty {
+    display: none;
+  }
+}
+
+@media (max-width: 575px) {
+  .flex-sm-fill {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .rowWrapper {
+    padding: 0 1rem;
+  }
+
+  .enterprise {
+    max-width: initial;
+  }
+
+  .package {
+    width: 100%;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 575px) {
+  .support {
+    margin-top: unset;
+    margin-bottom: unset;
+    margin-left: 1em;
+    margin-right: 1em;
+    border-top: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+
+  .support h2 {
+    border-top-right-radius: 0;
+  }
 }

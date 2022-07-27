@@ -1,163 +1,133 @@
 import React from 'react'
 import Layout from '@theme/Layout'
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
+import Table from '@site/src/pages/pricing/table'
 
 import styles from './styles.module.css'
 
 const Pricing = () => {
-  const { siteConfig } = useDocusaurusContext()
-  const { customFields } = siteConfig
-  const { signInUrl } = customFields
-
   return (
     <Layout>
-      <section className={styles.title}>
-        <h1 className="em">Pricing that scales with you</h1>
-      </section>
+      <main className={`${styles.mainContainer} text-center`}>
+        <section className={styles.titleSection}>
+          <h1>Flexible pricing to meet your needs</h1>
+        </section>
 
-      <div className="container text-center">
-        <a className="supportOffer" href="mailto: sales@postgres.ai">
-          Do you need only reliable support? We offer Support SLA without
-          advanced Database Lab Platform plans. Contact us for more details.
-        </a>
-      </div>
+        <section className="container position-relative">
+          <div className={`${styles.flexGap} row justify-content-between`}>
+            <div className={`${styles.package} ${styles.flex2}`}>
+              <div className={`${styles.rowWrapper} row`}>
+                <div
+                  className={`${styles.justifyCenter} ${styles.subscription} ${styles.standardPlan} col-sm`}
+                >
+                  <h2>Standard</h2>
+                  <div className={styles.contentWrapper}>
+                    <div>
+                      <p className={styles.purchase}>Purchase on</p>
+                      <a
+                        className={styles.marketplace}
+                        href="https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec"
+                        target="_blank"
+                      >
+                        <img src="https://d1.awsstatic.com/Marketplace/Campaigns%20Only/BigData%20Main%20LP/AWSMP_logo_RGB_REV.369d58099de9bd4b56a099cf2c2e663891ccc88b.png" />
+                      </a>
+                      <p>
+                        Not an AWS user?{' '}
+                        <a href="mailto: sales@postgres.ai">Contact us</a>
+                      </p>
+                    </div>
+                    <ul className={styles.list}>
+                      <li>Unlimited thin cloning</li>
+                      <li>Simple setup (takes a few minutes)</li>
+                      <li>Automated data refresh on schedule</li>
+                      <li>Single user / API key</li>
+                      <li>
+                        Help with Postgres customization (extensions, locales,
+                        etc.)
+                      </li>
+                      <li>
+                        Vendor support; max. response time: 3 business days
+                      </li>
+                    </ul>
+                    <div className={styles.pricing}>
+                      <p>
+                        Starting at <b>$131 per month</b>
+                      </p>
+                      <a href="#aws-pricing-details">Explore pricing</a>
+                    </div>
+                    <a
+                      className="btn btn1"
+                      target="blank"
+                      href="https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec"
+                    >
+                      Set up in 3 minutes
+                    </a>
+                  </div>
+                </div>
 
-      <section className="pricing-table position-relative">
-        <div className="container text-center">
-          <div className="row price-row">
-            <div className="col-md-2">&nbsp;</div>
-            <div className="col-md-3 price-box">
-              <h3>Community Edition</h3>
-              <div className="em">Open Source</div>
-              <a
-                className="btn btn2 cta"
-                href="https://gitlab.com/postgres-ai/database-lab"
-                target="_blank"
-              >
-                View repo
-              </a>
-              <ul className="mobile-feature-list">
-                <li>Unlimited Thin Cloning</li>
-              </ul>
-            </div>
-            <div className="col-md-3 price-box">
-              <h3>Standard</h3>
-              <div className="em">$190 per month</div>
-              <div>
-                for each 100 GiB of data<sup>1</sup>
+                {/* Support */}
+                <div
+                  className={`${styles.justifyCenter} ${styles.support} col-sm`}
+                >
+                  <h2>"Booster" add-on</h2>
+                  <ul className={`${styles.list}`}>
+                    <li>
+                      One-time package delivering Enterprise-level support
+                    </li>
+                    <li>Unlimited Slack communications</li>
+                    <li>1 hour live training (Zoom)</li>
+                    <li>Custom-built docker images upon request</li>
+                    <li>Max. response time: 1 business day</li>
+                  </ul>
+                  <div className={styles.pricing}>
+                    <p>
+                      <b>$4,500 for 3 months</b>
+                    </p>
+                  </div>{' '}
+                  <a className="btn btn3" href="mailto: sales@postgres.ai">
+                    Contact us
+                  </a>
+                </div>
               </div>
-              <a className="btn btn1 cta" href="https://postgres.ai/console/">
-                Start free trial
-              </a>
-              <ul className="mobile-feature-list">
-                <li>Unlimited Thin Cloning</li>
-                <li>SQL Optimization UI</li>
-                <li>Security & User Management Features</li>
-                <li>Business hour support with 24 hour response time</li>
-              </ul>
             </div>
-            <div className="col-md-3 price-box">
-              <h3>Enterprise</h3>
-              <div className="em">Custom Pricing</div>
-              <div>annual contracts</div>
-              <a className="btn btn1 cta" href="mailto: sales@postgres.ai">
-                Contact us
-              </a>
-              <ul className="mobile-feature-list">
-                <li>Unlimited Thin Cloning</li>
-                <li>SQL Optimization UI</li>
-                <li>Advanced User Management & SSO</li>
-                <li>24 / 7 / 365 support with 1 hour response time</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div className="container text-center pricing-feature-table">
-          <div className={`row ${styles.featureRow}`}>
-            <div className="col-md-2 feature-name">Thin Cloning</div>
-            <div className="col-md-3">Unlimited</div>
-            <div className="col-md-3">Unlimited</div>
-            <div className="col-md-3">Unlimited</div>
-          </div>
-          <div className={`row ${styles.featureRow}`}>
-            <div className="col-md-2 feature-name">Cloning UI</div>
-            <div className="col-md-3">Included</div>
-            <div className="col-md-3">Included</div>
-            <div className="col-md-3">Included</div>
-          </div>
-          <div className={`row ${styles.featureRow}`}>
-            <div className="col-md-2 feature-name">SQL Optimization UI</div>
-            <div className="col-md-3">
-              <i>Not Included</i>
-            </div>
-            <div className="col-md-3">
-              <ul>
-                <li>Joe Bot secure web interface</li>
-                <li>
-                  <code>EXPLAIN ANALYZE</code> visualization
-                </li>
-              </ul>
-            </div>
-            <div className="col-md-3">
-              <i>All Standard Features</i>
-            </div>
-          </div>
-          <div className={`row ${styles.featureRow}`}>
-            <div className="col-md-2 feature-name">
-              Security & User Management
-            </div>
-            <div className="col-md-3">
-              <i>Not Included</i>
-            </div>
-            <div className="col-md-3">
-              <ul>
-                <li>Secure User Access Tokens</li>
-                <li>Basic Access Control</li>
-                <li>Audit Log</li>
-              </ul>
-            </div>
-            <div className="col-md-3">
-              <i>All Standard Features</i>+<br />
-              <ul>
-                <li>Advanced Access Control</li>
-                <li>Enterprise SSO</li>
-              </ul>
-            </div>
-          </div>
-          <div className={`row ${styles.featureRow}`}>
-            <div className="col-md-2 feature-name">Support SLA</div>
-            <div className="col-md-3">
-              <i>Not Included</i>
-            </div>
-            <div className="col-md-3">
-              <div>Monday - Friday</div>
-              <div>24 hour response time</div>
-            </div>
-            <div className="col-md-3">
-              <div>24 / 7 / 365</div>
-              <div>1 hour response time</div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <section className="pricing-details position-relative">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-9 offset-2">
-              <ul className="footnotes">
-                <li>
-                  <sup>1</sup> Service is priced per GiB / hour at a rate of
-                  $0.0026. Database Lab monitors the physical size of the
-                  database using <code>df</code>&nbsp; on an hourly basis.
-                  Standard and Enterprise packages have access to the Database
-                  Lab Platform.
-                </li>
-              </ul>
+            <div
+              className={`${styles.package} ${styles.enterprise} flex-sm-fill`}
+            >
+              <div className={`${styles.rowWrapper} row`}>
+                {/* Subscription */}
+                <div
+                  className={`${styles.justifyCenter} ${styles.subscription} col-sm`}
+                >
+                  <h2>Enterprise</h2>
+                  <div className={styles.empty} />
+                  <ul className={styles.list}>
+                    <li>Multi-user SSO</li>
+                    <li>Advanced access control</li>
+                    <li>Automated database testing in CI/CD pipelines</li>
+                    <li>SQL optimization tooling and workflow</li>
+                    <li>Unlimited Slack or Zoom support</li>
+                    <li>Quarterly training & best practice review</li>
+                    <li>Live debugging & troubleshooting</li>
+                    <li>Max. response time: 1 business day</li>
+                  </ul>
+                  <div className={styles.empty} />
+                  <div className={styles.pricing}>
+                    <p>
+                      <b>Custom Pricing</b> Available as an annual contract
+                    </p>
+                  </div>
+                  <a className="btn btn3" href="mailto: sales@postgres.ai">
+                    Contact Us
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+        <section className="container position-relative">
+          <Table />
+        </section>
+      </main>
     </Layout>
   )
 }
