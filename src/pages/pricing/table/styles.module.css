@@ -29,14 +29,15 @@
 }
 
 .table th {
-  padding: 0.5rem 0;
+  padding: 0.5rem 5px;
   font-size: 15px;
   white-space: nowrap;
 }
 
 .tableInstance {
-  width: max-content;
+  width: 140px;
   margin: 0 auto;
+  padding: 0 5px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -71,6 +72,16 @@
 .tableHeader {
   background-color: #ff6112;
   color: #fff;
+}
+
+.tableHeader th:first-child {
+  width: 140px;
+  margin: 8px auto;
+  padding: 0 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 0;
 }
 
 @media (max-width: 575px) {

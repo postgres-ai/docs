@@ -386,6 +386,12 @@ module.exports = {
         ],
       },
     ],
+    [
+      path.resolve(__dirname, 'plugins/docusaurus-plugin-google-gtm'),
+      {
+        trackingID: 'GTM-5M85JPS',
+      },
+    ],
     require.resolve('./plugins/route-change'),
   ],
 
@@ -415,10 +421,6 @@ module.exports = {
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
-        },
-        gtag: {
-          trackingID: 'GTM-5M85JPS',
-          anonymizeIP: true,
         },
         pages: {
           exclude: [
