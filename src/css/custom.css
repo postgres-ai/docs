@@ -512,6 +512,10 @@ table.docs-home td {
     flex-direction: column-reverse;
   }
 
+  .diagram-thumbnail, .diagram-thumbnail.large {
+    width: auto;
+    margin: 0;
+  }
   .h-m {
     display: none;
   }
@@ -595,6 +599,17 @@ table.docs-home td {
 
   .multi-sec h4 br {
     display: none;
+  }
+
+  .products-btn-container {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    max-width: fit-content;
+  }
+  
+  .products-btn-container .btn2 {
+    margin-left: 0;
   }
 }
 
@@ -871,4 +886,7 @@ html[data-theme="dark"] .sign-in-button {
   }
 }
 
-/* End - Card styling for resources and careers page */
+/* Blog page TOC (table of contents) fix after upodate */
+.row .col[class*=col--] {
+  max-width: var(--ifm-col-width);
+}
