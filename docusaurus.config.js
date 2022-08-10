@@ -169,7 +169,7 @@ module.exports = {
     },
 
     algolia: {
-      apiKey: '3559c85bfa5f78a02bca63ebf389864f',
+      apiKey: '9920d444038c7d82c7c5274434774eda',
       appId: 'X8XMQ9JWX7',
       indexName: 'postgres',
     },
