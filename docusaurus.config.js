@@ -169,9 +169,9 @@ module.exports = {
     },
 
     algolia: {
-      apiKey: '9920d444038c7d82c7c5274434774eda',
+      apiKey: 'b7b181027b0780f2526b7cdf86bb6d24',
       appId: 'X8XMQ9JWX7',
-      indexName: 'postgres',
+      indexName: 'postgres_algolia',
     },
 
     footer: {
