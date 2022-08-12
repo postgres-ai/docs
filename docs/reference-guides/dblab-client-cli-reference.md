@@ -213,7 +213,7 @@ dblab clone update [command options] CLONE_ID
 
 **Example**
 ```bash
-dblab clone update --name newName --protected TestCloneID
+dblab clone update --protected TestCloneID
 ```
 
 ---
