@@ -136,7 +136,7 @@ and we are ready to run Joe Bot.
         --name joe_bot \
         --publish 2400:2400 \
         --restart=on-failure \
-        --volume ~/.dblab/joe/configs:/home/configs:ro \
+        --volume ~/.dblab/joe/configs:/home/configs \
         --volume ~/.dblab/joe/meta:/home/meta \
         --detach \
     postgresai/joe:latest

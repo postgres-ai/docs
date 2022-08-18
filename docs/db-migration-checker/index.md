@@ -43,7 +43,7 @@ DB Migration Checker is a DLE's component that enables integration with CI/CD to
       --publish 2500:2500 \
       --volume /var/run/docker.sock:/var/run/docker.sock \
       --volume /tmp/ci_checker:/tmp/ci_checker \
-      --volume ~/.dblab/ci_checker/configs:/home/dblab/configs:ro \
+      --volume ~/.dblab/ci_checker/configs:/home/dblab/configs \
       --env DOCKER_API_VERSION=1.41 \
       postgresai/dblab-ci-checker:3.1.2
     ```
