@@ -61,6 +61,6 @@ Database Lab has enabled CDEK to speed up development and testing significantly,
 - No additional staff needed to support growth 
 
 <div className="products-btn-container">
-  <a className="btn btn1" href='https://console.postgres.ai/'>Start Free Trial</a>
+  <a className="btn btn1" href='https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec'>Get started in 3 minutes</a>
   <a className="btn btn2" href='/download/database-lab-case-study-cdek.pdf' target='_blank'>Download PDF</a>
 </div>

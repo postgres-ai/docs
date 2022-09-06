@@ -1,21 +1,17 @@
 import React from 'react'
-import GitHubButton from 'react-github-btn'
 import Layout from '@theme/Layout'
 import Link from '@docusaurus/Link'
 import useBaseUrl from '@docusaurus/useBaseUrl'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 
-import { GatewayLink } from '@site/src/components/GatewayLink'
 import { RepoCard } from '@site/src/components/RepoCard'
 
 import blog from '../data/blog'
 
 import styles from './index.module.css'
 
-const DATABASE_LAB_REPO_URL =
-  'https://github.com/postgres-ai/database-lab-engine'
-
-const JOE_BOT_REPO_URL = 'https://gitlab.com/postgres-ai/joe'
+const AWS_DLE_URL =
+  'https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec'
 
 function IndexPage() {
   const { siteConfig } = useDocusaurusContext()
@@ -37,8 +33,8 @@ function IndexPage() {
                 <br />
                 We won't let it happen again.
               </p>
-              <a className="btn btn1" href={signInUrl}>
-                Start free trial
+              <a className="btn btn1" href={AWS_DLE_URL}>
+                Get started in 3 minutes
               </a>
               <a className="btn btn2" href="/products/how-it-works">
                 How it works
@@ -166,10 +162,10 @@ function IndexPage() {
           </div>
           <div className="row">
             <div className="col-sm-12">
-              <a href={signInUrl} className="btn btn1">
-                Start free trial
+              <a href={AWS_DLE_URL} className="btn btn1">
+                Get started in 3 minutes
               </a>
-              <a className="btn btn2" href="/products/how-it-works">
+              <a className="btn btn2 btn2-margin" href="/products/how-it-works">
                 How it works
               </a>
             </div>
@@ -345,8 +341,8 @@ function IndexPage() {
 
           <div className="row">
             <div className="col-md-12 text-center">
-              <a className="btn btn1" href={signInUrl}>
-                Start free trial
+              <a className="btn btn1" href={AWS_DLE_URL}>
+                Get started in 3 minutes
               </a>
               <a className="btn btn2" href="/products/how-it-works">
                 How it works
@@ -410,11 +406,13 @@ function IndexPage() {
             <div className="col-md-6">
               <h3>Open source and extensible</h3>
               <p>
-                We work hard to make our products open, accessible, and extensible.
-                Join the Database Lab Engine Community and help us build even better products.
+                We work hard to make our products open, accessible, and
+                extensible. Join the Database Lab Engine Community and help us
+                build even better products.
                 <br />
                 <br />
-                Found a bug? Have a feature idea? Want to contribute? Talk to us.
+                Found a bug? Have a feature idea? Want to contribute? Talk to
+                us.
               </p>
             </div>
             <div className="col-md-3"></div>
@@ -428,9 +426,7 @@ function IndexPage() {
               <a href="https://github.com/postgres-ai/database-lab-engine/blob/master/CONTRIBUTING.md">
                 Contribute
               </a>
-              <a href="/docs">
-                Documentation
-              </a>
+              <a href="/docs">Documentation</a>
             </div>
           </div>
 
@@ -438,7 +434,8 @@ function IndexPage() {
             <div className="col-md-3"></div>
             <div className="col-md-6">
               <p>
-                Postgres.ai ❤ open source.<br />
+                Postgres.ai ❤ open source.
+                <br />
               </p>
             </div>
           </div>
