@@ -536,7 +536,7 @@ table.docs-home td {
   .companies {
     padding-bottom: 10px;
   }
-  .six-sec .btn1 {
+  .six-sec .btn1, .btn2-margin {
     margin-bottom: 2rem;
   }
   .six-sec .row {
@@ -610,6 +610,16 @@ table.docs-home td {
   
   .products-btn-container .btn2 {
     margin-left: 0;
+  }
+}
+
+@media (max-width: 454px) {
+  .multi-sec .btn1 {
+    margin-top: 60px;
+  }
+
+  .multi-sec .btn2 {
+    margin-top: 30px;
   }
 }
 

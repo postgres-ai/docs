@@ -57,7 +57,7 @@ Explore our examples to see how this works in practice using [GitHub Actions](ht
 <!-- - using [GitLab CI/CD](https://gitlab.com/postgres-ai/ci-example/-/jobs/662277420) -->
 
 <div className="products-btn-container">
-  <a className="btn btn1" href='https://console.postgres.ai/'>Start Free Trial</a>
+  <a className="btn btn1" href='https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec'>Get started in 3 minutes</a>
   <a className="btn btn2" href='/products/joe'>Next: SQL Optimization</a>
 </div>
 

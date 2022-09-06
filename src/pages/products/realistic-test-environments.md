@@ -53,6 +53,6 @@ and can reduce the cost of their test environments.
 
 
 <div className="products-btn-container">
-  <a className="btn btn1" href="https://console.postgres.ai/">Start Free Trial</a>
+  <a className="btn btn1" href="https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec">Get started in 3 minutes</a>
   <a className="btn btn2" href="/products/data-masking">Next: Sensitive Data Masking</a>
 </div>
