@@ -48,6 +48,6 @@ None of the following is a requirement, yet having any of these items increases 
 - Team of professionals and a supportive atmosphere
 - Extremely competitive pay depending on experience and skills
 - Flexible working hours/home-office
-- Help with relocation
+
 
 Send us your CV to join@postgres.ai
