@@ -369,6 +369,10 @@ module.exports = {
             to: '/contact/',
             from: '/support',
           },
+          {
+            to: '/careers/dbe',
+            from: '/careers/dba',
+          },
         ],
       },
     ],
