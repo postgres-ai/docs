@@ -29,7 +29,7 @@ Manual installation guides:
 - SSH client (available by default on Linux and MacOS; Windows users: consider using [PuTTY](https://www.putty.org/))
 - A key pair already generated for the AWS region that we are going to use during the installation. Both RSA or ed25519 will work. If you're not familiar of the process of creation a key pair in AWS, read their documentation: ["Create key pairs"](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html).
 
-## Stepps to install Database Lab Engine from AWS Marketplace
+## Steps to install Database Lab Engine from AWS Marketplace
 The first steps are trivial:
 - Log in into AWS: https://console.aws.amazon.com/
 - Open the DLE on AWS Marketplace page: [aws.databaselab.io](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec)
@@ -100,4 +100,4 @@ To troubleshot:
 - If needed, check Postgres logs for the main branch. They are located in `/var/lib/dblab/dblab_pool/dataset_1/data/log` for the first snapshot of the database, in ``/var/lib/dblab/dblab_pool/dataset_2/data/log` for the second one (if it's already fetched); if you've configured DLE to have more than 2 snapshots, check out the other directories too (`/var/lib/dblab/dblab_pool/dataset_$N/data/log`, where `$N` is the snapshot number, starting with `1`)
 
 ## Getting support
-With DLE installed from AWS Marketplace, guaranted vendor support is included – please use [one of the available ways to contact](https://postgres.ai/contact).
+With DLE installed from AWS Marketplace, guaranteed vendor support is included – please use [one of the available ways to contact](https://postgres.ai/contact).
