@@ -206,6 +206,7 @@ sudo docker run \
   --volume /var/lib/dblab/dblab_pool/dump:/var/lib/dblab/dblab_pool/dump \
   --volume ~/.dblab/engine/configs:/home/dblab/configs:ro \
   --volume ~/.dblab/engine/meta:/home/dblab/meta \
+  --volume ~/.dblab/engine/logs:/home/dblab/logs \
   --volume /sys/kernel/debug:/sys/kernel/debug:rw \
   --volume /lib/modules:/lib/modules:ro \
   --volume /proc:/host_proc:ro \
@@ -274,6 +275,7 @@ sudo docker run \
   --publish 127.0.0.1:2345:2345 \
   --volume ~/.dblab/engine/configs:/home/dblab/configs:ro \
   --volume ~/.dblab/engine/meta:/home/dblab/meta \
+  --volume ~/.dblab/engine/logs:/home/dblab/logs \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   --volume /var/lib/dblab:/var/lib/dblab/:rshared \
   --volume /var/lib/dblab/dblab_pool/dump:/var/lib/dblab/dblab_pool/dump \
