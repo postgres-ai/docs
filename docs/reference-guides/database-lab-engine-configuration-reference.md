@@ -37,17 +37,18 @@ docker logs --since 1m dblab_server
 ## The list of configuration sections
 Here is how the configuration file is structured:
 
-| Section | Description |
-| --- | --- |
-| `global` | Global parameters such as path to data directory or enabling debugging. |
-| `server` | Database Lab Engine API server. |
-| `poolManager` | Manages filesystem pools or volume groups. |
-| `provision` | How thin cloning is organized.  |
+| Section | Description                                                                                                                                                                                                                                                                                                               |
+| --- |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `global` | Global parameters such as path to data directory or enabling debugging.                                                                                                                                                                                                                                                   |
+| `server` | Database Lab Engine API server.                                                                                                                                                                                                                                                                                           |
+| `poolManager` | Manages filesystem pools or volume groups.                                                                                                                                                                                                                                                                                |
+| `provision` | How thin cloning is organized.                                                                                                                                                                                                                                                                                            |
 | `retrieval` | Defines the data flow: a series of "jobs" for initial retrieval of the data, and, optionally, continuous data synchronization with the source, snapshot creation and retention policies. The initial retrieval may be either "logical" (dump/restore) or "physical" (based on replication or restoration from a archive). |
-| `cloning` | Thin cloning policies. |
-| `platform` | Postgres.ai Platform integration (provides GUI, advanced features such as user management, logs). |
-| `observer` | CI Observer configuration. CI Observer helps verify database schema changes (database migrations) automatically, in CI/CD pipelines. Available on the Postgres.ai Platform. |
-| `estimator` | Estimator configuration. Estimator estimates a timing of queries on the production database.
+| `cloning` | Thin cloning policies.                                                                                                                                                                                                                                                                                                    |
+| `platform` | Postgres.ai Platform integration (provides GUI, advanced features such as user management, logs).                                                                                                                                                                                                                         |
+| `observer` | CI Observer configuration. CI Observer helps verify database schema changes (database migrations) automatically, in CI/CD pipelines. Available on the Postgres.ai Platform.                                                                                                                                               |
+| `estimator` | Estimator configuration. Estimator estimates a timing of queries on the production database.                                                                                                                                                                                                                              |
+| `diagnostic`  | Configuration to collect diagnostics logs - containers output, Postgres logs.                                                                                                                                                                                                                                             | 
 
 ## Section `global`: global parameters
 - `engine` - defines the Database Lab Engine. Supported engines: `postgres`
@@ -226,3 +227,6 @@ Replacement rules applies to the following log fields: `message`, `detail`, `hin
 - `writeRatio` (float, optional, default: 1) - the ratio evaluating the timing difference for operations involving IO Write between Database Lab and production environments.
 - `profilingInterval` (string, optional, default: 10ms) - time interval of samples taken by the profiler
 - `sampleThreshold` - (integer, optional, default: 20) - the minimum number of samples sufficient to display the estimation results
+
+## Section `diagnostic`: Diagnostic collection configuration
+- `logsRetentionDays` (integer, optional, default: 7) - the number of days after which collected containers logs will be discarded.
