@@ -56,7 +56,9 @@ Here's what you can expect when setting up the DLE:
 * [Sensitive data masking](/products/data-masking) can be achieved with a set of declarative rules
 
 <div className="products-btn-container">
-  <a className="btn btn1" href="https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec">Get started in 3 minutes</a>
+  <a className="btn btn1" href="https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec" target="_blank">
+    Get started in 3 minutes
+  </a>
   <a className="btn btn2" href='/products/database-migration-testing'>Next: Database Migration Testing</a>
 </div>
 
