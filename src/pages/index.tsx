@@ -33,7 +33,7 @@ function IndexPage() {
                 <br />
                 We won't let it happen again.
               </p>
-              <a className="btn btn1" href={AWS_DLE_URL}>
+              <a className="btn btn1" href={AWS_DLE_URL} target="_blank">
                 Get started in 3 minutes
               </a>
               <a className="btn btn2" href="/products/how-it-works">
@@ -162,7 +162,7 @@ function IndexPage() {
           </div>
           <div className="row">
             <div className="col-sm-12">
-              <a href={AWS_DLE_URL} className="btn btn1">
+              <a href={AWS_DLE_URL} className="btn btn1" target="_blank">
                 Get started in 3 minutes
               </a>
               <a className="btn btn2 btn2-margin" href="/products/how-it-works">
@@ -341,7 +341,7 @@ function IndexPage() {
 
           <div className="row">
             <div className="col-md-12 text-center">
-              <a className="btn btn1" href={AWS_DLE_URL}>
+              <a className="btn btn1" href={AWS_DLE_URL} target="_blank">
                 Get started in 3 minutes
               </a>
               <a className="btn btn2" href="/products/how-it-works">
