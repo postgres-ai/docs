@@ -537,7 +537,7 @@ table.docs-home td {
     padding-bottom: 10px;
   }
   .six-sec .btn1, .btn2-margin {
-    margin-bottom: 2rem;
+    margin-bottom: 18px;
   }
   .six-sec .row {
     margin: 40px 0;
@@ -619,7 +619,7 @@ table.docs-home td {
   }
 
   .multi-sec .btn2 {
-    margin-top: 30px;
+    margin-top: 18px;
   }
 }
 
