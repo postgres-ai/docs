@@ -69,6 +69,5 @@ As a Senior Database Engineer, you will be working on state-of-the-art solutions
 - Team of professionals and a supportive atmosphere
 - Extremely competitive pay depending on experience and skills
 - Flexible working hours/home-office
-- Help with relocation
 
 Send us your CV to join@postgres.ai
