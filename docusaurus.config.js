@@ -194,15 +194,7 @@ module.exports = {
             },
             {
               label: 'Guides',
-              to: '/docs/guides',
-            },
-            {
-              label: 'API reference',
-              to: '/docs/database-lab/api-reference',
-            },
-            {
-              label: 'CLI reference',
-              to: '/docs/database-lab/cli-reference',
+              to: '/docs/how-to-guides',
             },
           ],
         },
