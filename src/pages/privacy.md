@@ -8,7 +8,7 @@ Terms of Service: https://postgres.ai/tos/
 
 *Last Updated: May 27, 2021*
 
-This Privacy Policy (this “Policy”) is adopted by Nombox LLC d.b.a. Postgres.ai located at 1148 Carlos Privada, Mountain View, CA 94040, USA ("Postgres.ai" or "we").
+This Privacy Policy (this “Policy”) is adopted by Nombox LLC d.b.a. Postgres.ai located at 15076 Eastvale Rd, Poway, CA 92064, USA ("Postgres.ai" or "we").
 
 Postgres.ai has the utmost respect for your privacy, and thus, we want to give you the best possible experience while you are using our website. Hence, please take your time to review this Policy. Your continued use of our website and our services will consitute your representation that you have read, understood and agreed to this Policy.
 
@@ -70,7 +70,7 @@ If you have any questions about this Policy or how and why we process personal d
 
 ```
 NOMBOX LLC d.b.a. Postgres.ai
-1148 Carlos Privada, Mountain View, CA 94040, USA
+15076 Eastvale Rd, Poway, CA 92064, USA
 Email: privacy@postgres.ai
 ```
 
