@@ -123,6 +123,7 @@ Options:
 - `parallelJobs` (integer, optional, default: 1) - defines the number of concurrent jobs using the `pg_dump` option `jobs`. This option can dramatically reduce the time to dump a large database
 - `databases` (key-value, optional) - defines options for specifying the database list that must be copied. By default, DLE dumps and restores all available databases. Do not specify the databases section to take all databases. Available options for each database: `tables`
    - `tables` (list of strings, optional) - dumps definition and/or data of only the listed tables. Do not specify the tables section to dump all available tables
+   - `excludeTables` (list of strings, optional) - excludes all tables matching any of the patterns from the dump. Accept specific schemas and tables or will allow for wildcards (*) for more flexibility.
 - `immediateRestore` (key-value, optional) - provides options for direct restore to a Database Lab Engine instance.
    - `enabled` (boolean, optional, default: false) - enable immediate restore.
    - `forceInit` (boolean, optional, default: false) - init data even if the Postgres directory (see the configuration options `global.mountDir` and `global.dataSubDir`) is not empty; note the existing data might be overwritten
