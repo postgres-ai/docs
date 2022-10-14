@@ -27,7 +27,7 @@ Manual installation guides:
 ## Prerequisites
 - [AWS cloud account](https://aws.amazon.com)
 - SSH client (available by default on Linux and MacOS; Windows users: consider using [PuTTY](https://www.putty.org/))
-- A key pair already generated for the AWS region that we are going to use during the installation. Both RSA or ed25519 will work. If you're not familiar of the process of creation a key pair in AWS, read their documentation: ["Create key pairs"](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html).
+- A key pair already generated for the AWS region that we are going to use during the installation. Both RSA or ed25519 will work. If you're not familiar with the process of creation a key pair in AWS, read their documentation: ["Create key pairs"](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html).
 
 ## Steps to install Database Lab Engine from AWS Marketplace
 The first steps are trivial:
