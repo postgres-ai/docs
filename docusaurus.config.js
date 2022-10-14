@@ -14,7 +14,7 @@ module.exports = {
   url: URL, // Your website URL.
   baseUrl: BASE_URL, // Base URL for your project.
   onBrokenLinks: 'log', //'throw',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon.svg',
   organizationName: 'postgres-ai',
   projectName: 'docs',
 
