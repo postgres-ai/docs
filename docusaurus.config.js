@@ -196,6 +196,18 @@ module.exports = {
               label: 'Guides',
               to: '/docs/how-to-guides',
             },
+            {
+              label: 'DLE API reference',
+              to: '/docs/reference-guides/database-lab-engine-api-reference',
+            },
+            {
+              label: 'DLE CLI reference',
+              to: '/docs/reference-guides/dblab-client-cli-reference',
+            },
+            {
+              label: 'DLE configuration reference',
+              to: '/docs/reference-guides/database-lab-engine-configuration-reference',
+            },
           ],
         },
         {
