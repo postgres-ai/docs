@@ -67,7 +67,10 @@ Unable to reload server API options (host and port).
 :::
 
 :::tip Tip for Vim users
-Note, that by default, editing a file in Vim leads to file inode change, so your change wouldn't propagate into the container. To mitigate this issue, use `:set backupcopy=yes`. For future launches of Vim, put it into `~/.vimrc`: `echo 'set backupcopy=yes' >> ~/.vimrc`.
+Note, that by default, editing a file in Vim leads to file inode change, so your change wouldn't propagate into the container. To mitigate this issue, use `:set backupcopy=yes`. For future launches of Vim, put it into `~/.vimrc`:
+```bash
+echo 'set backupcopy=yes' >> ~/.vimrc
+```
 :::
 
 ## Upgrade Database Lab Engine
