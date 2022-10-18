@@ -114,7 +114,7 @@ const Pricing = () => {
                   <div className={styles.empty} />
                   <div className={styles.pricing}>
                     <p>
-                      <b>Custom Pricing</b> Available as an annual contract
+                      <b>Custom Pricing</b> Available as an annual contract <br /> (starts from $0.2662 / 100 GiB / h)
                     </p>
                   </div>
                   <a className="btn btn3" href="mailto: sales@postgres.ai">
