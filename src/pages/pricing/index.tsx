@@ -36,6 +36,7 @@ const Pricing = () => {
                       </p>
                     </div>
                     <ul className={styles.list}>
+                      <li>Netdata monitoring</li>
                       <li>Unlimited thin cloning</li>
                       <li>Simple setup (takes a few minutes)</li>
                       <li>Automated data refresh on schedule</li>
