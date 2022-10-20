@@ -1,0 +1,123 @@
+---
+author: "Nikolay Samokhvalov"
+date: 2022-10-20 22:11:12
+publishDate: 2022-10-20 22:11:12
+linktitle: "DLE 3.2: config and logs in UI, Postgres 15, AWS Marketplace version is GA"
+title: "DLE 3.2: config and logs in UI, Postgres 15, AWS Marketplace version is GA"
+description: "<div><img src=\"/assets/thumbnails/dle-3.2-blog.png\" alt=\"Database Lab Engine 3.2 by Postgres.ai: config and logs in UI, Postgres 15, AWS Marketplace version is GA\"/></div>
+
+<p>The Postgres.ai team is happy to announce the release of version 3.2 of <a href=\"https://github.com/postgres-ai/database-lab\">Database Lab Engine (DLE)</a>, an open-source tool that provides blazing-fast database cloning and branching for any PostgreSQL database to build powerful development, test, QA, and staging environments.</p>
+
+<p>Database Lab Engine is an open-source technology that enables thin cloning for PostgreSQL. Thin clones are exceptionally useful when you need to scale the development process. DLE can manage dozens of independent clones of your database on a single machine, so each engineer or automation process works with their own database provisioned in seconds without extra costs.</p>
+
+<p>wip: pg15</p>
+
+<p>wip: aws</p>
+
+<p>In DLE 3.2:</p>
+<ul>
+<li>...</li>
+</ul>
+
+<p>Community news:</p>
+<ul>
+<li>🌠 DLE repository on GitHub reached 1,4k stars; many thanks to everyone who supports the project in any way</li>
+<li>📈 The Twitter account has reached 800 followers – please follow <a href=\"https://twitter.com/Database_Lab\">@Database_Lab</a></li>
+<li>🎉 DLE now has 19 contributors. More contributions are welcome! See <a href=\"https://gitlab.com/postgres-ai/database-lab/-/issues?sort=created_date&state=opened&label_name%5B%5D=good+first+issue\">\"good first issues\"</a></li>
+<li>🥇 Please consider various ways to contribute – read <a href=\"https://github.com/postgres-ai/database-lab-engine/blob/master/CONTRIBUTING.md\">CONTRIBUTING.md</a></li>
+</ul>
+"
+weight: 0
+image: /assets/thumbnails/dle-3.2-blog.png
+tags:
+  - Database Lab Engine
+---
+
+import { BlogFooter } from '@site/src/components/BlogFooter'
+import { nik } from '@site/src/config/authors'
+
+<p align="center">
+    <img src="/assets/thumbnails/dle-3.2-blog.png" alt="Database Lab Engine 3.2 by Postgres.ai: config and logs in UI, Postgres 15, AWS Marketplace version is GA"/>
+</p>
+
+The Postgres.ai team is happy to announce the release of version 3.2 of [Database Lab Engine (DLE)](https://github.com/postgres-ai/database-lab), an open-source tool that provides blazing-fast database cloning and branching for any PostgreSQL database to build powerful development, test, QA, and staging environments. DLE can run dozens of independent clones of your database on a single machine, so each engineer or automation process works with their own database provisioned in seconds without extra costs. Data size and the number of snapshots/branches are virtually unlimited.
+
+This release focuses on improving the admin experience during DLE configuration and troubleshooting. The full list of changes you can find in [Release Notes](https://github.com/postgres-ai/database-lab-engine/releases/tag/v3.2.0).
+
+### Improved configuration and troubleshooting
+DLE UI now has two new tabs: "Logs" and "Configuration". They help DLE admins troubleshoot issues with database refresh, adjust configuration, and make another attempt to get data without the need to use SSH.
+
+<p align="center">
+    <img src="/assets/blog/20221020-new-tabs.png" alt="DLE UI new tabs: Logs and Configuration"/>
+</p>
+
+For logical mode (dump/restore), it is now possible to observe the current activity on both source and target sides:
+
+<p align="center">
+    <img src="/assets/blog/20221020-activity.png" alt="DLE logical data provisioning activity"/>
+</p>
+
+Postgres clone errors are now stored in a special "diagnostic" directory (see new configuration section – [`diagnostic`](https://postgres.ai/docs/reference-guides/database-lab-engine-configuration-reference#section-diagnostic-diagnostic-collection-configuration)) that allows analyzing them even if the corresponding Postgres clone was already deleted or lost.
+
+### More flexibility for schema and data patching
+The configuration subsection `queryPreprocessing` is now present in the section `logicalRestore`, in addition to sections `logicalSnapshot` and `physicalSnapshot`. This can be helpful, for example, to mitigate errors related to `CREATE POLICY` and missing users – the queries provided in `logicalRestore` / `queryPreprocessing` are executed right before schema and data restoration attempt, so one can create "helper" database objects before the main body of the schema is created. For convenience, it is now also possible to provide inline SQL in `queryPreprocessing` in any section, instead of a path to SQL queries, for example:
+```yaml
+retrieval:
+    jobs:
+        - logicalRestore
+        - logicalSnapshot
+    spec:
+        logicalRestore:
+            options:
+                queryPreprocessing:
+                    queryPath: ""
+                    maxParallelWorkers: 2
+                    inline: |
+                      CREATE ROLE tony;
+                      CREATE ROLE mary;
+        logicalSnapshot:
+            options:
+                dataPatching:
+                    queryPreprocessing:
+                        inline: |
+                            TRUNCATE audit_log;
+```
+
+Recently released PostgreSQL 15 is now fully supported as well as all previous versions starting with 9.6. The full list of supported PostgreSQL versions and extensions available in the default Docker images can be found in [the docs](https://postgres.ai/docs/database-lab/supported-databases)).
+
+### Demo DLE
+You can see new UI working with Demo DLE: https://demo.aws.postgres.ai:446/instance (token: `demo_token`). 
+
+### DLE in AWS Marketplace is GA
+The AWS Marketplace version of Database Lab is now GA, and it's already updated to version 3.2. This offering is equipped with Standard license that includes guaranteed support from Postgres.ai, simplified setup, embedded monitoring system (Netdata), optional SSL. Paying less than for an RDS clone, you can have dozens of full-size clones running on a single machine with DLE. This short video demonstrates the steps of installation and configuration of DLE for a 100 GiB RDS database:
+
+<div class="embed-responsive embed-responsive-4by3 mb-4">
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/z5XSR8xbe-Q?autoplay=0&origin=https://postgres.ai&modestbranding=1&playsinline=0&loop=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+You can try out installing DLE from AWS Marketplace for your database here: https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec.
+
+Community news:
+- 🌠 DLE repository on GitHub reached 1.4k stars; many thanks to everyone who supports the project in any way
+- 📈 The Twitter account has reached 800 followers – please follow [@Database_Lab](https://twitter.com/Database_Lab)
+- 🎉 DLE now has 19 contributors. More contributions are welcome! See ["good first issues"](https://gitlab.com/postgres-ai/database-lab/-/issues?sort=created_date&state=opened&label_name%5B%5D=good+first+issue)
+- 🥇 Please consider various ways to contribute – read [CONTRIBUTING.md](https://github.com/postgres-ai/database-lab-engine/blob/master/CONTRIBUTING.md)
+
+## Further reading
+- [DLE 3.2 release notes](https://github.com/postgres-ai/database-lab-engine/releases/tag/v3.2.0)
+- [Database Lab documentation](/docs)
+- [Tutorial for any database](/docs/tutorials/database-lab-tutorial)
+
+:::tip
+To get help, reach out to the Postgres.ai team and the growing community of Database Lab users and contributors: https://postgres.ai/contact.
+:::
+
+## Request for feedback and contributions
+Feedback and contributions would be greatly appreciated:
+- [Database Lab Community Slack](https://slack.postgres.ai/)
+- [DLE & DB Migration Checker issue tracker](https://gitlab.com/postgres-ai/database-lab/-/issues)
+- [Issue tracker of the Terraform module for Database Lab](https://gitlab.com/postgres-ai/database-lab-infrastructure/-/issues)
+
+Like Database Lab? Give us a GitHub star: https://github.com/postgres-ai/database-lab.
+
+<BlogFooter author={nik} />

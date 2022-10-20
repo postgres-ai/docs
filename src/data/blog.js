@@ -1,6 +1,12 @@
 // Duplicates data from the blog.
 const blog = [
   {
+    link: 'blog/20221020-database-lab-engine-3-2-released',
+    date: '2022-10-20 22:11:12',
+    title: 'DLE 3.2: config and logs in UI, Postgres 15, AWS Marketplace version is GA',
+    description: 'The Postgres.ai team is happy to announce the release of version 3.2 of Database Lab Engine (DLE), an open-source tool that provides blazing-fast database cloning and branching for any PostgreSQL database to build powerful development, test, QA, and staging environments.',
+    image: '/assets/thumbnails/dle-3.2-blog.png',
+  },{
     link: 'blog/20220703-dle-in-aws-marketplace',
     date: '2022-07-03 23:59:00',
     title: 'Database Lab Engine for AWS Marketplace',
@@ -35,14 +41,8 @@ const blog = [
     description: 'The EXPLAIN command has the BUFFERS option disabled by default. It has to be enabled and used by everyone who needs to do some SQL optimization work.',
     image: '/assets/thumbnails/20220106-explain-analyze-needs-buffers-to-improve-postgres-query-optimization-process.jpeg',
   },
+  /*
   {
-    link: 'blog/20211221-dle-3-0-0-brings-ui-and-persistent-clones',
-    date: '2021-12-21 15:16:17',
-    title: 'DLE 3.0: UI, persistent clones, PostgreSQL 14, more',
-    description: 'The Postgres.ai team is happy to announce the release of version 3.0 of Database Lab Engine (DLE), the most advanced open-source software ever released that empowers development, testing, and troubleshooting environments for fast-growing projects.',
-    image: '/assets/thumbnails/dle-3.0-blog.png',
-  },
-  /*{
     link: 'blog/20211103-three-cases-against-if-not-exists-and-if-exists-in-postgresql-ddl',
     date: '2021-11-03 23:45:00',
     title: 'Three Cases Against IF NOT EXISTS / IF EXISTS in Postgres DDL',
