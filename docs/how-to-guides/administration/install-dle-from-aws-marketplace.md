@@ -57,17 +57,29 @@ Now it's time to choose the type and size of the EC2 instance (it will define th
 - VPC and subnet – you can choose any of them if you're testing DLE for some database which is publicly available; for production database, you need to choose those options that will allow DLE to connect to the source for the successful data retrieval process;
 - choose your AWS key pair (has to be created already).
 <p align="center">
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step6.png" alt="Database Lab Engine in AWS Marketplace: step 6" />
+    <img src="/assets/dle-aws/AWS_DLE_3.2_step6new.png" alt="Database Lab Engine in AWS Marketplace: step 6" />
 </p>
 
 Next, on the same page:
 - define the size of EBS volume that will be created;
 - define secret token (at least 9 numbers!), it will be used to communicate with DLE API, CLI, and UI.
 
-Once you've pressed "Next", the process begins!
+Then press "Next".
 
 <p align="center">
     <img src="/assets/dle-aws/AWS_DLE_3.2_step7.png" alt="Database Lab Engine in AWS Marketplace: step 7" />
+</p>
+
+This page should be left unmodified, just press the "Next" button:
+
+<p align="center">
+    <img src="/assets/dle-aws/AWS_DLE_3.2_step8.png" alt="Database Lab Engine in AWS Marketplace: step 8" />
+</p>
+
+At the bottom of the next page acknowledge that AWS CloudFormation might create IAM resources. Once you've pressed "Create stack", the process begins.
+
+<p align="center">
+    <img src="/assets/dle-aws/AWS_DLE_3.2_step9.png" alt="Database Lab Engine in AWS Marketplace: step 9" />
 </p>
 
 You need to wait a few minutes, while all resources are provisioned and DLE setup is complete. Check out the "Outputs" section – once DLE API and UI are ready, you'll see the ordered list of instructions on how to connect to UI and API.
