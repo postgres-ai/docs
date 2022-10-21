@@ -141,6 +141,10 @@ Options:
     - `format` (string, optional, default: "") - defines a dump format. Available formats: `directory`, `custom`, `plain`. Default format: `directory`. See the description of each format in the [official PostgreSQL documentation](https://www.postgresql.org/docs/current/app-pgdump.html).
     - `compression` (string, optional, default: "no") - defines a compression type for plain-text dumps. Available compression types: `gzip`, `bzip2`, `no`.
     - `tables` (list of strings, optional) - restores definition and/or data of only the listed tables. Do not specify the tables section to restore all available tables
+- `queryPreprocessing` (key-value, optional) - defines pre-processing parameters; supported since DLE 3.2
+    - `queryPath` (string, optional, default: "") - specifies the path to SQL pre-processing queries; an empty string means that no pre-processing defined
+    - `maxParallelWorkers` (integer, optional, default: 2) - defines the worker limit for parallel queries
+    - `inline` (string, optional, default: "") - inline SQL queries to execute; if specified, queries from `queryPath` are executed before `inline`
 
 ### Job `logicalSnapshot`
 Prepares a snapshot for logical restored PostgreSQL database.
@@ -152,6 +156,7 @@ Options:
   - `queryPreprocessing` (key-value, optional) - defines pre-processing parameters
     - `queryPath` (string, optional, default: "") - specifies the path to SQL pre-processing queries; an empty string means that no pre-processing defined
     - `maxParallelWorkers` (integer, optional, default: 2) - defines the worker limit for parallel queries
+    - `inline` (string, optional, default: "") - inline SQL queries to execute; if specified, queries from `queryPath` are executed before `inline`
 - `preprocessingScript` (string, optional) - path on the host machine to a pre-processing script
 - `configs` (key-value, optional) - applies PostgreSQL configuration parameters when preparing a working snapshot. These parameters are inherited by all clones. See also: [How to configure PostgreSQL used by Database Lab Engine](/docs/how-to-guides/administration/postgresql-configuration)
 
@@ -198,6 +203,7 @@ Options:
    - `queryPreprocessing` (key-value, optional) - defines pre-processing SQL queries
       - `queryPath` (string, optional, default: "") - specifies the path to SQL pre-processing queries; an empty string means that no pre-processing defined
       - `maxParallelWorkers` (integer, optional, default: 2) - defines the worker limit for parallel queries
+    - `inline` (string, optional, default: "") - inline SQL queries to execute; if specified, queries from `queryPath` are executed before `inline`
    - `configs` (key-value, optional) - applies PostgreSQL configuration parameters to the promotion instance
 - `sysctls` (key-value, optional) - allows configuring namespaced kernel parameters (sysctls) of Docker container for a promotion stage of taking a snapshot. See supported parameters: https://docs.docker.com/engine/reference/commandline/run/#configure-namespaced-kernel-parameters-sysctls-at-runtime
 - `preprocessingScript` (string, optional) - path on the host machine to a pre-processing script
@@ -230,4 +236,4 @@ Replacement rules applies to the following log fields: `message`, `detail`, `hin
 - `sampleThreshold` - (integer, optional, default: 20) - the minimum number of samples sufficient to display the estimation results
 
 ## Section `diagnostic`: Diagnostic collection configuration
-- `logsRetentionDays` (integer, optional, default: 7) - the number of days after which collected containers logs will be discarded.
+- `logsRetentionDays` (integer, optional, default: 7) - the number of days after which collected containers logs will be discarded
