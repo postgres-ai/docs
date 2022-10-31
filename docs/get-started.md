@@ -12,7 +12,7 @@ keywords:
   - "Dev/QA/Staging databases with superpowers"
   - "postgres-checkup"
   - "Joe bot for SQL optimization"
-  - "SQL optinization on clones"
+  - "SQL optimization on clones"
   - "thin clones for Postgres"
   - "database testing in CI/CD"
   - "postgres-checkup"
