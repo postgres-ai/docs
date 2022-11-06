@@ -11,368 +11,182 @@ description: In this tutorial, we are going to set up a Database Lab Engine for 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Database Lab is used to boost software development and testing processes via enabling ultra-fast provisioning of databases of any size.
-
-:::tip Terraform Module released 🎉
-Try out [Database Lab installation using Terraform Module](/docs/how-to-guides/administration/install-database-lab-with-terraform), it's simpler and automates a bunch of manual steps. Continue with the current tutorial for more customizability and granual control.
-:::
-
-In this tutorial, we are going to set up a Database Lab Engine for an existing PostgreSQL DB instance on Amazon RDS. If you don't have an RDS instance and want to have one to follow the steps in this tutorial, read [the official RDS documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_GettingStarted.CreatingConnecting.PostgreSQL.html). Database Lab Engine will be installed on an AWS EC2 instance with Ubuntu 18.04 or 20.04, and add an EBS volume to store PostgreSQL data directory. The data will be automatically retrieved from the RDS database.
-
-Compared to RDS clones, Database Lab clones are ultra-fast (RDS cloning is "thick": it takes many minutes, and, depending on the database size, additional dozens of minutes or even hours to warm up, see ["Lazy load"](https://docs.amazonaws.cn/en_us/AWSEC2/latest/WindowsGuide/ebs-creating-volume.html#ebs-create-volume-from-snapshot)) and do not require additional storage and instance. A single Database Lab instance can be used by dozens of engineers simultaneously working with dozens of thin clones located on a single instance and single storage vole. [RDS Aurora clones](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Managing.Clone.html) are "thin" by nature, which is great for development and testing. However, they also require additional instances, meaning significant extra costs. Database Lab clones are high-speed ("thin"), budget-saving ("local"), and can be used for a source database located anywhere.
-
-Steps:
-
-1. Prepare an EC2 instance with an additional EBS volume to store data, install Docker to run containers, and ZFS to enable copy-on-write for thin cloning
-1. Configure and launch the Database Lab Engine
-1. Start using Database Lab API and client CLI to clone Postgres database in seconds
-
-## Step 1. Prepare an EC2 instance with additional volume, Docker, and ZFS
-### Prepare an instance
-Create an EC2 instance with Ubuntu 18.04 or 20.04, and add an EBS volume to store data. You can find detailed instructions on how to create an AWS EC2 instance [here](https://docs.aws.amazon.com/efs/latest/ug/gs-step-one-create-ec2-resources.html).
-
-### (optional) Ports need to be open in the Security Group being used
-You will need to open the following ports (inbound rules in your Security Group):
-- `22`: to connect to the instance using SSH
-- `2345`: to work with Database Lab Engine API (can be changed in the Database Lab Engine configuration file)
-- `6000-6100`: to connect to PostgreSQL clones (this is the default port range used in the Database Lab Engine configuration file, and can be changed if needed)
-
-:::caution
-For real-life use, it is not a good idea to open ports to the public. Instead, it is recommended to use VPN or SSH port forwarding to access both Database Lab API and PostgreSQL clones, or to enforce encryption for all connections using NGINX with SSL and configuring SSL in PostgreSQL configuration.
-:::
-
-Additionally, to be able to install software, allow access to external resources using HTTP/HTTPS (edit the outbound rules in your Security Group):
-- `80` for HTTP
-- `443` for HTTPS
-
-Here is how the inbound and outbound rules in your Security Group may look like:
-
-![EC2 security group inbound](/assets/ec2-security-group-inbound.png)
-
-![EC2 security group outbound](/assets/ec2-security-group-outbound.png)
-
-### Install Docker
-If needed, you can find the detailed installation guides for Docker [here](https://docs.docker.com/install/linux/docker-ce/ubuntu/).
-
-Install dependencies:
-```bash
-sudo apt-get update && sudo apt-get install -y \
-  apt-transport-https \
-  ca-certificates \
-  curl \
-  gnupg-agent \
-  software-properties-common
-```
-
-Install Docker:
-```bash
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-
-sudo add-apt-repository -y \
-  "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) \
-  stable"
-
-sudo apt-get update && sudo apt-get install -y \
-  docker-ce \
-  docker-ce-cli \
-  containerd.io
-```
-
-### Set $DBLAB_DISK
-Further, we will need environment variable `$DBLAB_DISK`. It must contain the device name that corresponds to the disk where all the Database Lab Engine data will be stored.
-
-To understand what needs to be specified in `$DBLAB_DISK` in your case, check the output of `lsblk`:
-```bash
-sudo lsblk
-```
-
-Some examples:
-- **AWS local ephemeral NVMe disks; EBS volumes for instances built on [the Nitro system](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/nvme-ebs-volumes.html)**:
-    ```bash
-    $ sudo lsblk
-    NAME    MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
-    ...
-    nvme0n1     259:0    0    8G  0 disk
-    └─nvme0n1p1 259:1    0    8G  0 part /
-    nvme1n1     259:2    0   777G  0 disk
-
-    $ export DBLAB_DISK="/dev/nvme1n1"
-    ```
-- **AWS EBS volumes for older (pre-Nitro) EC2 instances**:
-    ```bash
-    $ sudo lsblk
-    NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
-    ...
-    xvda    202:0    0    8G  0 disk
-    └─xvda1 202:1    0    8G  0 part /
-    xvdb    202:16   0  777G  0 disk
-
-    $ export DBLAB_DISK="/dev/xvdb"
-    ```
-
-### Install and prepare ZFS
-Install ZFS:
-```bash
-sudo apt-get install -y zfsutils-linux
-```
-
-Create a new ZFS storage pool (make sure `$DBLAB_DISK` has the correct value, see the previous step!):
-```bash
-sudo zpool create -f \
-  -O compression=on \
-  -O atime=off \
-  -O recordsize=128k \
-  -O logbias=throughput \
-  -m /var/lib/dblab/dblab_pool \
-  dblab_pool \
-  "${DBLAB_DISK}"
-```
-
-And check the result using `zfs list` and `lsblk`, it has to be like this:
-```bash
-$ sudo zfs list
-NAME         USED  AVAIL  REFER  MOUNTPOINT
-dblab_pool   106K  777G    24K  /var/lib/dblab/dblab_pool
-
-$ sudo lsblk
-NAME      MAJ:MIN  RM  SIZE RO TYPE MOUNTPOINT
-...
-nvme0n1     259:0    0     8G  0 disk
-└─nvme0n1p1 259:1    0     8G  0 part /
-nvme1n1     259:0    0   777G  0 disk
-├─nvme1n1p1 259:3    0   777G  0 part
-└─nvme1n1p9 259:4    0     8M  0 part
-```
-
-## Step 2. Configure and launch the Database Lab Engine
-:::caution
-To make your work with Database Lab API secure, do not open Database Lab API and Postgres clone ports to the public and instead use VPN or SSH port forwarding. It is also a good idea to encrypt all the traffic: for Postgres clones, set up SSL in the configuration files; and for Database Lab API, install, and configure NGINX with a self-signed SSL certificate. See the [How to Secure Database Lab Engine](/docs/how-to-guides/administration/engine-secure).
-:::
-
-We have two options to connect to the RDS database: password-based, and IAM-based. The former is always available, while the latter is more secure and recommended, but it is available only if you specified it in **Database Authentication Options** when creating your RDS instance (it is not selected by default). To see if the IAM-based option is available for already created RDS instance, open the "Configuration" tab and check if "IAM db authentication" is `Enabled`.
-
-Options:
-- **IAM database authentication**. This option can be used only if **Password and IAM database authentication** was specified during the creation of the RDS instance, it requires AWS user credentials and does not require the master password, use this option for granular control of the access to your database.
-- **Password authentication (master password)**. This option can always be used. It requires specifying of database master password in the Database Lab Engine configuration file or in `PGPASSWORD` environment variable.
-
-For the sake of simplicity, we will use the password-based authentication in this tutorial. If you want to use IAM database authentication, read how to enable it [here](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.Enabling.html).
-
-<Tabs
-  groupId="rds-authentication"
-  defaultValue="password"
-  values={[
-    {label: 'password', value: 'password'},
-    {label: 'iam-based', value: 'iam-based'},
-  ]
-}>
-<TabItem value="password">
-
-### Option 1: Password authentication
-:::tip
-You need to know the **master password**. If you lost the password it [can be reset](https://aws.amazon.com/premiumsupport/knowledge-center/reset-master-user-password-rds/).
-:::
-
-#### Configure Database Lab Engine
-Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.2.0/engine/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
-```bash
-mkdir -p ~/.dblab/engine/configs
-
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/v3.2.0/engine/configs/config.example.logical_generic.yml \
-  --output ~/.dblab/engine/configs/server.yml
-```
-
-Then open `~/.dblab/engine/configs/server.yml` and edit the following options:
-- Set secure `server:verificationToken`, it will be used to authorize API requests to the Database Lab Engine
-- Set connection options in `retrieval:spec:logicalDump:options:source:connection`:
-    - `dbname`: database name to connect to
-    - `host`: database server host
-    - `port`: database server port
-    - `username`: database user name
-    - `password`: database master password (can be also set as `PGPASSWORD` environment variable and passed to the container using `--env` option of `docker run`)
-- If your Postgres major version is not 14 (default), set the proper version in Postgres Docker image tag:
-    - `databaseContainer:dockerImage`
-
-#### Run Database Lab Engine
-Run Database Lab Engine:
-```bash
-sudo docker run \
-  --name dblab_server \
-  --label dblab_control \
-  --privileged \
-  --publish 127.0.0.1:2345:2345 \
-  --volume /var/run/docker.sock:/var/run/docker.sock \
-  --volume /var/lib/dblab:/var/lib/dblab/:rshared \
-  --volume /var/lib/dblab/dblab_pool/dump:/var/lib/dblab/dblab_pool/dump \
-  --volume ~/.dblab/engine/configs:/home/dblab/configs \
-  --volume ~/.dblab/engine/meta:/home/dblab/meta \
-  --volume ~/.dblab/engine/logs:/home/dblab/logs \
-  --volume /sys/kernel/debug:/sys/kernel/debug:rw \
-  --volume /lib/modules:/lib/modules:ro \
-  --volume /proc:/host_proc:ro \
-  --env DOCKER_API_VERSION=1.39 \
-  --detach \
-  --restart on-failure \
-  postgresai/dblab-server:3.2.0 
-```
-
-</TabItem>
-<TabItem value="iam-based">
-
-### Option 2: IAM database authentication
-#### Prepare AWS user and IAM database access policy
-1. Create an AWS user (or use an existing one).
-
-2. Save and assign AWS access environment variables:
-```bash
-export AWS_ACCESS_KEY="access_key"
-export AWS_SECRET_ACCESS_KEY="secret_access_key"
-```
-
-Read how you can get the AWS access keys for the existing user [here](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html).
-
-3. Create and attach an IAM Policy for IAM Database Access to an AWS user. Read how you can to it [here](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.IAMPolicy.html).
-
-:::tip
-Alternatively, you can add `AmazonRDSFullAccess`, `IAMFullAccess` policies to an AWS user (not recommended).
-:::
-
-#### Configure Database Lab Engine
-Copy the contents of configuration example [`config.example.logical_rds_iam.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.2.0/engine/configs/config.example.logical_rds_iam.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
-```bash
-mkdir -p ~/.dblab/engine/configs
-
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/v3.2.0/engine/configs/config.example.logical_rds_iam.yml \
-  --output ~/.dblab/engine/configs/server.yml
-```
-
-Then open `~/.dblab/engine/configs/server.yml` and edit the following options:
-- Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine.
-- Set connection options `retrieval:spec:logicalDump:options:source:connection`:
-    - `dbname`: database name to connect to;
-    - `username`: database user name.
-- Set AWS params in `retrieval:spec:logicalDump:options:source:rdsIam`:
-    - `awsRegion`: RDS instance region;
-    - `dbInstanceIdentifier`: RDS instance identifier.
-- If your Postgres major version is not 14 (default), set the proper version in Postgres Docker image tag:
-    - `databaseContainer:dockerImage`
-
-#### Download AWS RDS certificate
-This type of data retrieval requires a secure connection to a database. To setup it we need to download a certificate from AWS.
-
-```bash
-curl https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem \
-  --output ~/.dblab/rds-combined-ca-bundle.pem
-```
-
-#### Run Database Lab Engine
-Run Database Lab Engine (set proper **AWS access keys** and update **Verification token**):
-```bash
-sudo docker run \
-  --name dblab_server \
-  --label dblab_control \
-  --privileged \
-  --publish 127.0.0.1:2345:2345 \
-  --volume ~/.dblab/engine/configs:/home/dblab/configs \
-  --volume ~/.dblab/engine/meta:/home/dblab/meta \
-  --volume ~/.dblab/engine/logs:/home/dblab/logs \
-  --volume /var/run/docker.sock:/var/run/docker.sock \
-  --volume /var/lib/dblab:/var/lib/dblab/:rshared \
-  --volume /var/lib/dblab/dblab_pool/dump:/var/lib/dblab/dblab_pool/dump \
-  --volume /sys/kernel/debug:/sys/kernel/debug:rw \
-  --volume /lib/modules:/lib/modules:ro \
-  --volume /proc:/host_proc:ro \
-  --volume ~/.dblab/rds-combined-ca-bundle.pem:/cert/rds-combined-ca-bundle.pem \
-  --env AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY}" \
-  --env AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
-  --env DOCKER_API_VERSION=1.39 \
-  --detach \
-  --restart on-failure \
-  postgresai/dblab-server:3.2.0 
-```
-
-</TabItem>
-</Tabs>
+Database Lab Engine (DLE) is used to boost software development and testing processes by enabling ultra-fast provisioning of databases of any size. In this tutorial, we will install Database Lab Engine from [the AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec). If you are an AWS user, this is the fastest way to have powerful database branching for any database, including RDS and RDS Aurora. But not only RDS: any Postgres and Postgres-compatible database can be a source for DLE.
 
 :::info
-Parameter `--publish 127.0.0.1:2345:2345` means that only local connections will be allowed.
-
-To allow external connections, consider either using additional software such as NGINX or Envoy or changing this parameter. Removing the host/IP part (`--publish 2345:2345`) allows listening to all available network interfaces.
-See more details in the official [Docker command-line reference](https://docs.docker.com/engine/reference/commandline/run/#publish-or-expose-port--p---expose).
+Currently, the AWS Marketplace version of DLE focuses on the "logical" data provisioning mode (dump/restore) – the only possible method for managed PostgreSQL cloud services such as RDS Postgres, RDS Aurora Postgres, Azure Postgres, or Heroku. "Physical" mode (obtaining databases at the file level) is also supported in DLE but requires additional efforts – namely, editing [the DLE configuration file](/docs/reference-guides/database-lab-engine-configuration-reference) manually. More information about various data retrieval options can be found [here](/docs/how-to-guides/administration/data).
 :::
 
+Compared to traditional RDS clones, Database Lab clones are instant. RDS cloning takes several minutes, and, depending on the database size, additional dozens of minutes or even hours may be needed to "warm up" the database (see ["Lazy load"](https://docs.amazonaws.cn/en_us/AWSEC2/latest/WindowsGuide/ebs-creating-volume.html#ebs-create-volume-from-snapshot)). Obtaining a new DLE clone takes as low as a few seconds, and it does not increase storage and instance bill at all.
 
-### How to check the Database Lab Engine logs
-```bash
-sudo docker logs dblab_server -f
-```
+A single DLE instance can be used by dozens of engineers or CI/CD pipelines – all of them can work with dozens of thin clones located on a single instance and single storage volume. [RDS Aurora clones](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Managing.Clone.html) are also "thin" by nature, which could be great for development and testing. However, each Aurora clone requires a provisioned instance, increasing the "compute" part of the bill; IO-related charges can be significant as well. This makes Aurora clones less attractive for the use in non-production environments. The use of DLE clones doesn't affect the bill anyhow – both "compute" and "storage" costs remain constant regardles of the number clones provisioned at any time.
 
-### Need to start over? Here is how to clean up
-If something went south and you need to make another attempt at the steps in this tutorial, use the following steps to clean up:
-```bash
-# Stop and remove all Docker containers
-sudo docker ps -aq | xargs --no-run-if-empty sudo docker rm -f
+## Typical "pilot" setup
+Timeline:
+- Create and configure DLE instance - ~10 minutes
+- Wait for the initial data provisioning (full refresh) - ~30 minutes (for a 100 GiB database; DLE is running on a very small EC2 instance, r5.xlarge)
+- Try out cloning - ~20 minutes 
+- Show the DLE off to your colleagues - one more hour
 
-# Remove all Docker images
-sudo docker images -q | xargs --no-run-if-empty sudo docker rmi
+Outcome:
+- Total time spent: 2 hours
+- Total money spent (r5.xlarge, 200 GiB disk space for EBS volume + DLE Standard subscription): less than $2
+- The maximum number of clones running in parallel with default configuration (`shared_buffers = 1GB` for each clone): ~30 clones
+- Monthly budget to keep this DLE instance: $360 per month – same as for a *single* traditional RDS clone
 
-# Clean up the data directory
-sudo rm -rf /var/lib/dblab/dblab_pool/data/*
+## Prerequisites
+- [AWS cloud account](https://aws.amazon.com)
+- SSH client (available by default on Linux and MacOS; Windows users: consider using [PuTTY](https://www.putty.org/))
+- A key pair already generated for the AWS region that we are going to use during the installation; if you need to generate a new key pair, read the AWS docs: ["Create key pairs"](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html).
 
-# Remove dump directory
-sudo umount /var/lib/dblab/dblab_pool/dump
-sudo rm -rf /var/lib/dblab/dblab_pool/dump
+## Steps
+1. Install DLE from the AWS Marketplace
+1. Configure and launch the Database Lab Engine
+1. Start using DLE UI, API and client CLI to clone Postgres database in seconds
 
-# To start from the very beginning: destroy ZFS storage pool
-sudo zpool destroy dblab_pool
-```
+## Step 1. Install DLE from the AWS Marketplace
+First steps to install DLE from the AWS Marketplace are trivial:
+- Log in into AWS: https://console.aws.amazon.com/
+- Open the DLE on [AWS Marketplace page](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec)
+
+And then press the "Continue..." buttons a couple of times:
+<p align="center">
+    <img src="/assets/dle-aws/AWS_DLE_3.2_step1.png" alt="Database Lab Engine in AWS Marketplace: step 1" /><br />
+    <img src="/assets/dle-aws/AWS_DLE_3.2_step2.png" alt="Database Lab Engine in AWS Marketplace: step 2" />
+</p>
+
+Now check that the DLE version (the latest should be the best) and the AWS region are both chosen correctly, and press "Continue to Launch":
+<p align="center">
+    <img src="/assets/dle-aws/AWS_DLE_3.2_step3.png" alt="Database Lab Engine in AWS Marketplace: step 3" />
+</p>
+
+On this page, you need to choose "Launch CloudFormation" and press "Launch":
+<p align="center">
+    <img src="/assets/dle-aws/AWS_DLE_3.2_step4.png" alt="Database Lab Engine in AWS Marketplace: step 4" />
+</p>
+
+This page should be left unmodified, just press the "Next" button:
+<p align="center">
+    <img src="/assets/dle-aws/AWS_DLE_3.2_step5.png" alt="Database Lab Engine in AWS Marketplace: step 5" />
+</p>
+
+Now it is time to fill the form that defines the AWS resources that we need:
+- EC2 instance type and size – it defines the hourly price for "compute" (see [the full price list](https://postgres.ai/pricing#aws-pricing-details));
+- subnet mask to restrict connections (for testing, you can use `0.0.0.0/0`; for production use, restrict connections wisely);
+- VPC and subnet – you can choose any of them if you're testing DLE for some database which is publicly available (the only thing to remember: subnet belongs to a VPC, so make sure you they match); for production database, you need to choose those options that will allow DLE to connect to the source for the successful data retrieval process;
+- choose your AWS key pair (has to be created already).
+<p align="center">
+    <img src="/assets/dle-aws/AWS_DLE_3.2_step6new.png" alt="Database Lab Engine in AWS Marketplace: step 6" />
+</p>
+
+Next, on the same page:
+- define the size of EBS volume that will be created (you can find pricing calculator here: ["Amazon EBS pricing"](https://aws.amazon.com/ebs/pricing/)):
+    - put as many GiB as roughtly your database has (it is always possible to add more space without downtime),
+    - define how many snapshots you'll be needed (minumym 2);
+- define secret token (at least 9 characters are required!) – it will be used to communicate with DLE API, CLI, and UI.
+
+Then press "Next":
+<p align="center">
+    <img src="/assets/dle-aws/AWS_DLE_3.2_step7.png" alt="Database Lab Engine in AWS Marketplace: step 7" />
+</p>
+
+This page should be left unmodified, just press the "Next" button:
+<p align="center">
+    <img src="/assets/dle-aws/AWS_DLE_3.2_step8.png" alt="Database Lab Engine in AWS Marketplace: step 8" />
+</p>
+
+At the bottom of the next page, acknowledge that AWS CloudFormation might create IAM resources. Once you've pressed "Create stack", the process begins:
+<p align="center">
+    <img src="/assets/dle-aws/AWS_DLE_3.2_step9.png" alt="Database Lab Engine in AWS Marketplace: step 9" />
+</p>
+
+You need to wait a few minutes while all resources are being provisioned. Check out the "Outputs" section periodically. Once DLE API and UI are ready, you should see the ordered list of instructions on how to connect to UI and API.
+
+## Step 2. Configure and launch the Database Lab Engine
+Enter the verification token, you have created earlier. You can also find it in the "Outputs" section.
+
+<p align="center">
+    <img src="/assets/dle-aws/DLE_config_step1.png" alt="Database Lab Engine configuration: step 1" />
+</p>
+
+Now it's time to define DB credentials of the source to initiate database privisioning – this is how DLE will be initialized, performing the very first data retrieval, and then the same parameters will be used for scheduled full refreshes according to the schedule defined. Fill the forms, and use the information in the tooltips if needed.
+
+<p align="center">
+    <img src="/assets/dle-aws/DLE_config_step2.png" alt="Database Lab Engine configuration: step 2" />
+</p>
+
+Then press "Test connection". If your database is ready for dump and restore, save the form and press "Switch to Overview" to track the process of data retrieval.
+
+<p align="center">
+    <img src="/assets/dle-aws/DLE_config_step4_copy.png" alt="Database Lab Engine configuration: step 3" />
+</p>
+
+In the Overview tab, you can see the status of the data retrieval. Note that the initial data retrieval takes some time – it depends on the source database size. However, DLE API, CLI, and UI are already available for use. To observe the current activity on both source and target sides use "Show details".
+
+<p align="center">
+    <img src="/assets/dle-aws/DLE_config_step5_copy.png" alt="Database Lab Engine configuration: step 4" />
+</p>
+
+<p align="center">
+    <img src="/assets/dle-aws/DLE_config_step7.png" alt="Database Lab Engine configuration: step 5" />
+</p>
+
+Once the retrieval is done, you can create your first clone. Happy cloning!
+
+## Video demonstration of steps 1 and 2
+<div class="embed-responsive embed-responsive-4by3 mb-4">
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/z5XSR8xbe-Q?autoplay=0&origin=https://postgres.ai&modestbranding=1&playsinline=0&loop=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+## Need to start over? Here is how
+If data provisioning fails, you can always:
+- check out the "Logs" tab to see what's wrong,
+- adjust the configuration in the "Configuration" tab, and
+- perform a new attempt to initialize DLE.
+
+If something went south in general and you need a fresh start, go back to AWS CloudFormation and delete your stack; then start from the very beginning of this tutorial
+
+## Getting support
+With DLE installed from AWS Marketplace, the guaranteed vendor support is included – please use [one of the available ways to contact](https://postgres.ai/contact).
+
+## Troubleshooting
+To troubleshot:
+- Use SSH to connect to the EC2 instance
+- Check the containers that are running: `sudo docker ps` (to see all containers including the stopped ones: `sudo docker ps -a`)
+- See and observe the DLE logs: `sudo docker logs -f dblab_server` (the same logs you can observe in UI – the "Logs" tab)
+- If needed, check Postgres logs for the main branch. They are located in `/var/lib/dblab/dblab_pool/dataset_1/data/log` for the first snapshot of the database, in `/var/lib/dblab/dblab_pool/dataset_2/data/log` for the second one (if it's already fetched); if you have configured DLE to have more than 2 snapshots, check out the other directories too (`/var/lib/dblab/dblab_pool/dataset_$N/data/log`, where `$N` is the snapshot number, starting with `1`)
 
 ## Step 3. Start cloning!
-### Option 1: GUI (Database Lab Platform)
-To use the GUI, you need to [sign up for Database Lab Platform](https://postgres.ai/console).
-
-#### Add Database Lab Engine to the Platform
-1. On the **Database Lab instances** page of your organization click the **Add instance** button.
-![Database Lab Engine / Database Lab instances](/assets/guides/add-engine-instance-1.png)
-1. On the **Add instance** page fill in the following:
-    - `Project`: choose any project name, it will be created automatically
-    - `Verification token`: specify the same verification token that you've used in the Database Lab Engine configuration file
-    - `URL`: Database Lab API server (EC2 instance public IP or hostname, specify port if needed, e.g. `https://my-domain.com/dblab-engine/` or `http://30.100.100.1:2345`)
-
-![Database Lab Engine / Add instance](/assets/guides/add-engine-instance-2.png)
-1. Click the **Verify URL** button to check the availability of the Engine. Ignore the warning about insecure connection – in this Tutorial, we have skipped some security-related steps.
-1. Click the **Add** button to add the instance to the Platform.
-
+### UI
 #### Create a clone
-1. Go to the **Database Lab instance** page.
 1. Click the **Create clone** button.
-  ![Database Lab engine page / Create clone](/assets/guides/create-clone-1.png)
+ ![Database Lab engine clone creation page](/assets/dle-aws/AWS_DLE_connect_clone1.png)
 1. Fill the **ID** field with a meaningful name.
 1. (optional) By default, the latest data snapshot (closest to production state) will be used to provision a clone. You can choose another snapshot if any.
 1. Fill **database credentials**. Remember the password (it will not be available later, Database Lab Platform does not store it!) – you will need to use it to connect to the clone.
 1. Click the **Create clone** button and wait for a clone to be provisioned. The process should take only a few seconds.
-![Database Lab engine clone creation page](/assets/guides/create-clone-2.png)
+![Database Lab engine clone creation page](/assets/dle-aws/AWS_DLE_create_clone2.png)
 1. You will be redirected to the **Database Lab clone** page.
-    ![Database Lab engine clone page](/assets/guides/create-clone-3.png)
+    ![Database Lab engine clone page](/assets/dle-aws/AWS_DLe_create_clone3.png)
 
 #### Connect to a clone
 1. From the **Database Lab clone** page under section **Connection info**, copy the **psql connection string** field contents by clicking the **Copy** button.
-    ![Database Lab clone page / psql connection string](/assets/guides/connect-clone-1.png)
+    ![Database Lab clone page / psql connection string](/assets/dle-aws/AWS_DLE_connect_clone1.png)
 1. Here we assume that you have `psql` installed on your working machine. In the terminal, type `psql` and paste the **psql connection string** field contents. Change the database name `DBNAME` parameter, you can always use `postgres` for the initial connection.
 1. Run the command and type the password you've set during the clone creation.
 1. Test established connection by listing tables in the database using `\d`.
     ![Terminal / psql](/assets/guides/connect-clone-2.png)
 
-### Option 2: CLI
-#### Install Database Lab client CLI
-CLI can be used on any machine, you just need to be able to reach the Database Lab Engine API (port 2345 by default). In this tutorial, we will install and use CLI locally on the EC2 instance.
+### CLI
+#### Install DLE client CLI (`dblab`)
+CLI can be used on any machine, you just need to be able to reach the DLE API (port 2345 by default). In this tutorial, we will install and use CLI locally on the EC2 instance.
 
 ```bash
 curl https://gitlab.com/postgres-ai/database-lab/-/raw/master/engine/scripts/cli_install.sh | bash
 sudo mv ~/.dblab/dblab /usr/local/bin/dblab
 ```
 
-Initialize CLI configuration:
+Initialize CLI configuration (assuming that `localhost:2345` forwards to DLE machine's port 2345):
 ```bash
 dblab init \
   --environment-id=tutorial \
@@ -382,7 +196,6 @@ dblab init \
 ```
 
 Check the configuration by fetching the status of the instance:
-
 ```bash
 dblab instance status
 ```
@@ -428,25 +241,28 @@ After a second or two, if everything is configured correctly, you will see that 
 ```
 
 #### Connect to a clone
-Install psql:
-```bash
-sudo apt-get install postgresql-client
-```
+You can work with the clone you created earlier using any PostgreSQL client, for example, `psql`. To install `psql`:
+- macOS (with [Homebrew](https://brew.sh/)):
+    ```bash
+    brew install libpq
+    ```
+- Ubuntu:
+    ```bash
+    sudo apt-get install postgresql-client
+    ```
 
-Now you can work with this clone using any PostgreSQL client, for example, `psql`. Use connection info (`db` section of the response of the `dblab clone create` command):
+Use connection info (the `db` section of the response of the `dblab clone create` command):
 ```bash
 PGPASSWORD=secret_password psql \
   "host=localhost port=6000 user=dblab_user_1 dbname=test"
 ```
 
-Check the available table:
+Check the available tables:
 ```
 \d+
 ```
 
-Now let's see how quickly we can reset the state of the clone. Delete some data or drop some table.
-
-To reset, use the `clone reset` command (replace `my_first_clone` with the ID of your clone if you changed it). You can do it not leaving psql -- for that, use the `\!` command:
+Now let's see how quickly we can reset the state of the clone. Delete some data or drop a table. Do any damage you want! And then use the `clone reset` command (replace `my_first_clone` with the ID of your clone if you changed it). You can do it not leaving `psql` – for that, use the `\!` command:
 ```bash
 \! dblab clone reset my_first_clone
 ```
@@ -463,10 +279,10 @@ Reconnect to the clone:
 \c
 ```
 
-Now check the database objects you've dropped or partially deleted – everything should be the same as when we started.
+Now check the database objects you've dropped or partially deleted – the "damage" has gone.
 
 For more, see [the full client CLI reference](/docs/reference-guides/dblab-client-cli-reference).
 
 :::info Have questions?
-Reach out to our team, we'll be happy to help! Use the Intercom widget located at the right bottom corner.
+[Reach out to the Postgres.ai team](https://postgres.ai/contact), we'll be happy to help!
 :::
