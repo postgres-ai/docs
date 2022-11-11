@@ -406,6 +406,14 @@ table.docs-home td {
   vertical-align: top;
 }
 
+.community-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
 @media (min-width: 991px) and (max-width: 1199px) {
   .joe-bot {
     margin-top: -32px !important;
@@ -601,6 +609,11 @@ table.docs-home td {
     display: none;
   }
 
+  .community-buttons {
+    flex-direction: column;
+    padding: 10px;
+  }
+
   .products-btn-container {
     display: flex;
     gap: 1rem;
@@ -674,8 +687,6 @@ html[data-theme="dark"] .avatar__name > a {
 }
 
 .community-buttons > a {
-  padding: 20px;
-  white-space: nowrap;
   font-size: 20px;
 }
 
@@ -875,9 +886,19 @@ html[data-theme="dark"] .sign-in-button {
   margin-right: -15px;
 }
 
+@media (max-width: 1439px) {
+  .card:not(.careers), .card {
+    grid-template-rows: 240px 180px 1fr;
+  }
+}
+
 @media (max-width: 1200px) {
   .card__row {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card:not(.careers), .card {
+    grid-template-rows: 305px 180px 1fr;
   }
 }
 
