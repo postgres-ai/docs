@@ -10,13 +10,19 @@ const ContactPage: React.FC = () => {
   const contactsItems = useMemo(() => {
     const openLink = (link: string) => window.open(link)
 
+    const showIntercom = () => {
+      if (window.Intercom) {
+        window.Intercom('show')
+      }
+    }
+
     return [
       {
         name: 'Intercom',
         description: 'We’re here to help with any question or installation',
         icon: '/assets/contact/intercom.svg',
         buttonText: 'Chat with us now',
-        onButtonClick: () => window.Intercom && window.Intercom('show'),
+        onButtonClick: showIntercom,
       },
       {
         name: 'Community on Slack',
@@ -118,7 +124,7 @@ const ContactPage: React.FC = () => {
                   containing tutorials and how-tos for most popular use cases.
                 </div>
                 <div className={styles.footerText}>
-                 It's a good idea to start with the{' '}
+                  It's a good idea to start with the{' '}
                   <a
                     className={styles.link}
                     href="/docs/questions-and-answers"

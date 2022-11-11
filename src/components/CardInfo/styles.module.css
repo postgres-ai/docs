@@ -39,16 +39,17 @@
 .button {
   height: 36px;
   font-size: 16px;
-  background-color: #EEEEEE;
-  color: #FF5500;
+  color: #fff;
   border-radius: 20px;
   margin-top: 28px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  background-color: #808080;
+  transition: background 1s ease;
 }
 
 .button:hover {
-  background-color: #e2e2e2;
+  background-color: #5e5e5e;
 }
