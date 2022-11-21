@@ -7,17 +7,15 @@ sidebar_label: Install DLE from the AWS Marketplace
     <img src="/assets/dle-for-aws-marketplace.png" alt="Database Lab Engine and AWS Marketplace"/>
 </p>
 
-If you're using AWS, [installing DLE from the AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec) is the fastest way to have powerful database branching for any database, including RDS and RDS Aurora. But not only RDS: any Postgres and Postgres-compatible source is supported as a source for DLE.
+If you're using AWS, [installing DLE from the AWS Marketplace](https://bit.ly/dleawsmarketplace) is the fastest way to have powerful database branching for any database, including RDS and RDS Aurora. But not only RDS: any Postgres and Postgres-compatible source is supported as a source for DLE.
 
 :::info
 Currently, only the "logical" mode of data retrieval (dump/restore) is supported – the only available method for managed PostgreSQL cloud services such as RDS Postgres, RDS Aurora Postgres, Azure Postgres, or Heroku. "Physical" mode is not yet supported by the module, but it will be in the future. More about [various data retrieval options for DLE](/docs/how-to-guides/administration/data).
 :::
 
 :::note
-Manual installation guides:
-- [Database Lab tutorial for any PostgreSQL database](/docs/tutorials/database-lab-tutorial)
-- [Database Lab tutorial for Amazon RDS](/docs/tutorials/database-lab-tutorial-amazon-rds)
-- [How to install Database Lab with Terraform on AWS](docs/how-to-guides/administration/install-database-lab-with-terraform)
+Check out the DLE installation tutorial:
+[Database Lab tutorial for Amazon RDS](/docs/tutorials/database-lab-tutorial-amazon-rds)
 :::
 
 ## Prerequisites
@@ -28,7 +26,7 @@ Manual installation guides:
 ## Steps to install Database Lab Engine from AWS Marketplace
 The first steps are trivial:
 - Log in into AWS: https://console.aws.amazon.com/
-- Open the DLE on AWS Marketplace page: [aws.databaselab.io](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec)
+- Open [the DLE on AWS Marketplace page](https://bit.ly/dleawsmarketplace)
 
 And then press the "Continue..." buttons a couple of times:
 <p align="center">
@@ -51,18 +49,20 @@ This page should be left unmodified, just press the "Next" button:
     <img src="/assets/dle-aws/AWS_DLE_3.2_step5.png" alt="Database Lab Engine in AWS Marketplace: step 5" />
 </p>
 
-Now it's time to choose the type and size of the EC2 instance (it will define the hourly price you'll pay), and then start filling the form to configure your Database Lab Engine:
-- the size of the disk;
+Now it is time to fill the form that defines the AWS resources that we need:
+- EC2 instance type and size – it defines the hourly price for "compute" (see [the full price list](https://postgres.ai/pricing#aws-pricing-details));
 - subnet mask to restrict connections (for testing, you can use `0.0.0.0/0`; for production use, restrict connections wisely);
-- VPC and subnet – you can choose any of them if you're testing DLE for some database which is publicly available; for production database, you need to choose those options that will allow DLE to connect to the source for the successful data retrieval process;
+- VPC and subnet – you can choose any of them if you're testing DLE for some database which is publicly available (the only thing to remember: subnet belongs to a VPC, so make sure they match); for production database, you need to choose those options that will allow DLE to connect to the source for the successful data retrieval process;
 - choose your AWS key pair (has to be created already).
 <p align="center">
     <img src="/assets/dle-aws/AWS_DLE_3.2_step6new.png" alt="Database Lab Engine in AWS Marketplace: step 6" />
 </p>
 
 Next, on the same page:
-- define the size of EBS volume that will be created;
-- define secret token (at least 9 numbers!), it will be used to communicate with DLE API, CLI, and UI.
+- define the size of EBS volume that will be created (you can find pricing calculator here: ["Amazon EBS pricing"](https://aws.amazon.com/ebs/pricing/)):
+    - put as many GiB as roughtly your database has (it is always possible to add more space without downtime),
+    - define how many snapshots you'll be needed (minumym 2);
+- define secret token (at least 9 characters are required!) – it will be used to communicate with DLE API, CLI, and UI.
 
 Then press "Next".
 
