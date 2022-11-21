@@ -11,7 +11,7 @@ description: In this tutorial, we are going to set up a Database Lab Engine for 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Database Lab Engine (DLE) is used to boost software development and testing processes by enabling ultra-fast provisioning of databases of any size. In this tutorial, we will install Database Lab Engine from [the AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec). If you are an AWS user, this is the fastest way to have powerful database branching for any database, including RDS and RDS Aurora. But not only RDS: any Postgres and Postgres-compatible database can be a source for DLE.
+Database Lab Engine (DLE) is used to boost software development and testing processes by enabling ultra-fast provisioning of databases of any size. In this tutorial, we will install Database Lab Engine from [the AWS Marketplace](https://bit.ly/dleawsmarketplace). If you are an AWS user, this is the fastest way to have powerful database branching for any database, including RDS and RDS Aurora. But not only RDS: any Postgres and Postgres-compatible database can be a source for DLE.
 
 :::info
 Currently, the AWS Marketplace version of DLE focuses on the "logical" data provisioning mode (dump/restore) – the only possible method for managed PostgreSQL cloud services such as RDS Postgres, RDS Aurora Postgres, Azure Postgres, or Heroku. "Physical" mode (obtaining databases at the file level) is also supported in DLE but requires additional efforts – namely, editing [the DLE configuration file](/docs/reference-guides/database-lab-engine-configuration-reference) manually. More information about various data retrieval options can be found [here](/docs/how-to-guides/administration/data).
@@ -47,7 +47,7 @@ Outcome:
 ## Step 1. Install DLE from the AWS Marketplace
 First steps to install DLE from the AWS Marketplace are trivial:
 - Log in into AWS: https://console.aws.amazon.com/
-- Open the DLE on [AWS Marketplace page](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec)
+- Open the DLE on [AWS Marketplace page](https://bit.ly/dleawsmarketplace)
 
 And then press the "Continue..." buttons a couple of times:
 <p align="center">
@@ -73,7 +73,7 @@ This page should be left unmodified, just press the "Next" button:
 Now it is time to fill the form that defines the AWS resources that we need:
 - EC2 instance type and size – it defines the hourly price for "compute" (see [the full price list](https://postgres.ai/pricing#aws-pricing-details));
 - subnet mask to restrict connections (for testing, you can use `0.0.0.0/0`; for production use, restrict connections wisely);
-- VPC and subnet – you can choose any of them if you're testing DLE for some database which is publicly available (the only thing to remember: subnet belongs to a VPC, so make sure you they match); for production database, you need to choose those options that will allow DLE to connect to the source for the successful data retrieval process;
+- VPC and subnet – you can choose any of them if you're testing DLE for some database which is publicly available (the only thing to remember: subnet belongs to a VPC, so make sure they match); for production database, you need to choose those options that will allow DLE to connect to the source for the successful data retrieval process;
 - choose your AWS key pair (has to be created already).
 <p align="center">
     <img src="/assets/dle-aws/AWS_DLE_3.2_step6new.png" alt="Database Lab Engine in AWS Marketplace: step 6" />
@@ -160,7 +160,7 @@ To troubleshot:
 ### UI
 #### Create a clone
 1. Click the **Create clone** button.
- ![Database Lab engine clone creation page](/assets/dle-aws/AWS_DLE_connect_clone1.png)
+ ![Database Lab engine clone creation page](/assets/dle-aws/AWS_DLE_create_clone1.png)
 1. Fill the **ID** field with a meaningful name.
 1. (optional) By default, the latest data snapshot (closest to production state) will be used to provision a clone. You can choose another snapshot if any.
 1. Fill **database credentials**. Remember the password (it will not be available later, Database Lab Platform does not store it!) – you will need to use it to connect to the clone.
