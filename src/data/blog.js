@@ -1,6 +1,13 @@
 // Duplicates data from the blog.
 const blog = [
   {
+    link: 'blog/20221125-cheaper-faster',
+    date: '2022-11-25 22:00:00',
+    title: 'Test environments that are 10x cheaper and 10x faster',
+    description: 'Compare various ways to clone Postgres databases in AWS – including RDS clones, Aurora thin clones, and DLE clones',
+    image: '/assets/thumbnails/elephants-in-sky-painting2.jpg',
+  },
+  {
     link: 'blog/20221020-database-lab-engine-3-2-released',
     date: '2022-10-20 22:11:12',
     title: 'DLE 3.2: config and logs in UI, Postgres 15, AWS Marketplace version is GA',
@@ -34,6 +41,7 @@ const blog = [
     description: 'Various ways to monitor the progress of PostgreSQL query execution.',
     image: '/assets/thumbnails/20220114-progress-bar-for-postgres-queries-lets-dive-deeper.png',
   },
+  /*
   {
     link: 'blog/20220106-explain-analyze-needs-buffers-to-improve-the-postgres-query-optimization-process',
     date: '2022-01-06 22:51:00',
@@ -41,7 +49,6 @@ const blog = [
     description: 'The EXPLAIN command has the BUFFERS option disabled by default. It has to be enabled and used by everyone who needs to do some SQL optimization work.',
     image: '/assets/thumbnails/20220106-explain-analyze-needs-buffers-to-improve-postgres-query-optimization-process.jpeg',
   },
-  /*
   {
     link: 'blog/20211103-three-cases-against-if-not-exists-and-if-exists-in-postgresql-ddl',
     date: '2021-11-03 23:45:00',
