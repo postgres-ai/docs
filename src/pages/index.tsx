@@ -29,9 +29,9 @@ function IndexPage() {
             <div className="col-md-8">
               <h1>DEPLOY WITH CONFIDENCE</h1>
               <p>
-                Been stung by a poorly tested database migration?
+                Been stung by a poorly tested database change?
                 <br />
-                We won't let it happen again.
+                Let's stop it.
               </p>
               <a className="btn btn1" href={AWS_DLE_URL} target="_blank">
                 Get started in 3 minutes
