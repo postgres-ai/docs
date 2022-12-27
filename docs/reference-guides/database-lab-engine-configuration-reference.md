@@ -124,9 +124,11 @@ Options:
 - `databases` (key-value, optional) - defines options for specifying the database list that must be copied. By default, DLE dumps and restores all available databases. Do not specify the databases section to take all databases. Available options for each database: `tables`
    - `tables` (list of strings, optional) - dumps definition and/or data of only the listed tables. Do not specify the tables section to dump all available tables
    - `excludeTables` (list of strings, optional) - excludes all tables matching any of the patterns from the dump. Accept specific schemas and tables or will allow for wildcards (*) for more flexibility.
+- `customOptions` (list of strings, optional) - defines one or multiple `pg_dump` options. See available options in [the official PostgreSQL documentation](https://www.postgresql.org/docs/current/app-pgdump.html).
 - `immediateRestore` (key-value, optional) - provides options for direct restore to a Database Lab Engine instance.
    - `enabled` (boolean, optional, default: false) - enable immediate restore.
    - `forceInit` (boolean, optional, default: false) - init data even if the Postgres directory (see the configuration options `global.mountDir` and `global.dataSubDir`) is not empty; note the existing data might be overwritten
+   - `customOptions` (list of strings, optional) - defines one or multiple `pg_restore` options. See available options in [the official PostgreSQL documentation](https://www.postgresql.org/docs/current/app-pgrestore.html)
 
 ### Job `logicalRestore`
 Restores a PostgreSQL database from an archive created by pg_dump in one of the non-plain-text formats.
@@ -141,6 +143,7 @@ Options:
     - `format` (string, optional, default: "") - defines a dump format. Available formats: `directory`, `custom`, `plain`. Default format: `directory`. See the description of each format in the [official PostgreSQL documentation](https://www.postgresql.org/docs/current/app-pgdump.html).
     - `compression` (string, optional, default: "no") - defines a compression type for plain-text dumps. Available compression types: `gzip`, `bzip2`, `no`.
     - `tables` (list of strings, optional) - restores definition and/or data of only the listed tables. Do not specify the tables section to restore all available tables
+- `customOptions` (list of strings, optional)- defines one or multiple `pg_restore` options. See available options in [the official PostgreSQL documentation](https://www.postgresql.org/docs/current/app-pgrestore.html)
 - `queryPreprocessing` (key-value, optional) - defines pre-processing parameters; supported since DLE 3.2
     - `queryPath` (string, optional, default: "") - specifies the path to SQL pre-processing queries; an empty string means that no pre-processing defined
     - `maxParallelWorkers` (integer, optional, default: 2) - defines the worker limit for parallel queries
