@@ -12,7 +12,7 @@ Currently, Database Lab Engine fully supports the following [PostgreSQL major ve
 - 14 (released: 2021-09-31; EOL: 2026-11-12)
 - 15 (released: 2022-10-13; EOL: 2027-11-11)
 
-By default, version 14 is used: `postgresai/extended-postgres:14`.
+By default, version 15 is used: `postgresai/extended-postgres:15`.
 
 The images are published in [Docker Hub](https://hub.docker.com/r/postgresai/extended-postgres).
 
