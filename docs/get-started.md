@@ -23,9 +23,9 @@ keywords:
     <td>
       <h3>Getting started</h3>
       <ul>
-        <li><a href='/docs/how-to-guides/administration/install-database-lab-with-terraform'>Install Database Lab with Terraform on AWS</a></li>
-        <li><a href='/docs/tutorials/database-lab-tutorial-amazon-rds'>Engine setup for Amazon RDS</a></li>
-        <li><a href='/docs/tutorials/database-lab-tutorial'>Engine setup for any PostgreSQL database</a></li>
+        <li><a href='/docs/how-to-guides/administration/install-dle-from-aws-marketplace'>How to install DLE from the AWS Marketplace</a></li>
+        <li><a href='/docs/tutorials/database-lab-tutorial-amazon-rds'>Database Lab tutorial for Amazon RDS</a></li>
+        <li><a href='/docs/tutorials/database-lab-tutorial'>Database Lab tutorial for any PostgreSQL database</a></li>
         <li><a href='/docs/tutorials/joe-setup'>Joe Bot setup</a></li>
         <li><a href='/docs/questions-and-answers'>FAQ</a></li>
       </ul>
@@ -34,9 +34,9 @@ keywords:
       <h3>Product & use cases</h3>
       <ul>
         <li><a href='/products/how-it-works'>How it works</a></li>
+        <li><a href='/products/realistic-test-environments'>Realistic dev & test environments</a></li>
         <li><a href='/products/database-migration-testing'>Database migration testing</a></li>
         <li><a href='/products/joe'>SQL optimization</a></li>
-        <li><a href='/products/realistic-test-environments'>Realistic dev & test environments</a></li>
       </ul>
     </td>
   </tr>
