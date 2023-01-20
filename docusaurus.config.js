@@ -8,9 +8,9 @@ const SIGN_IN_URL = !!process.env.SIGN_IN_URL
   : '/signin'
 
 module.exports = {
-  title: 'Database Lab · Instant clones of PostgreSQL databases · Postgres.ai', // Title for your website.
+  title: 'Database branching for any Postgres DB · Postgres.ai · Database Lab Engine (DLE)', // Title for your website.
   tagline:
-    'Boost your development process eliminating Postgres-related roadblocks in the way of developers, DBAs and QA specialists',
+    'Branching 🖖 and thin cloning ⚡️ for any Postgres database. Empower database testing in CI/CD. Optimize DB-related costs while improving time-to-market and software quality.',
   url: URL, // Your website URL.
   baseUrl: BASE_URL, // Base URL for your project.
   onBrokenLinks: 'log', //'throw',

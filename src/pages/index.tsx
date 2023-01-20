@@ -27,11 +27,12 @@ function IndexPage() {
           <div className="row justify-content-center align-items-center">
             <div className="col-md-2"></div>
             <div className="col-md-8">
-              <h1>DEPLOY WITH CONFIDENCE</h1>
+              <h1>Branching 🖖 and thin cloning ⚡️<br />
+                for <em>any</em> Postgres database</h1>
               <p>
-                Been stung by a poorly tested database change?
-                <br />
-                Let's stop it.
+                Empower database testing in CI/CD.<br />
+                Optimize DB-related costs while improving<br />
+                time-to-market and software quality
               </p>
               <a className="btn btn1" href={AWS_DLE_URL} target="_blank">
                 Get started in 3 minutes
