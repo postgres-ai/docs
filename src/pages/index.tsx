@@ -27,7 +27,7 @@ function IndexPage() {
           <div className="row justify-content-center align-items-center">
             <div className="col-md-2"></div>
             <div className="col-md-8">
-              <h1>Branching 🖖 and thin cloning ⚡️<br />
+              <h1>🖖 Database branching<br />
                 for <em>any</em> Postgres database</h1>
               <p>
                 Empower database testing in CI/CD.<br />
