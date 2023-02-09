@@ -142,6 +142,11 @@ module.exports = {
           ],
         },
         {
+          to: '/consulting',
+          label: 'Services',
+          position: 'right',
+        },
+        {
           to: '/blog',
           label: 'Blog',
           position: 'right',
