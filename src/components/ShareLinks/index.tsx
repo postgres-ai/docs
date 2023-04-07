@@ -16,13 +16,25 @@ export const ShareLinks = () => {
     <div className={styles.root}>
       <h4>Share this blog post:</h4>
       <nav className={styles.links}>
-        <GatewayLink href={shareUrls.facebook} className={styles.link}>
+        <GatewayLink
+          href={shareUrls.facebook}
+          className={styles.link}
+          label="Facebook"
+        >
           <FacebookLogo className={styles.icon} />
         </GatewayLink>
-        <GatewayLink href={shareUrls.twitter} className={styles.link}>
+        <GatewayLink
+          href={shareUrls.twitter}
+          className={styles.link}
+          label="Twitter"
+        >
           <TwitterLogo className={styles.icon} />
         </GatewayLink>
-        <GatewayLink href={shareUrls.linkedIn} className={styles.link}>
+        <GatewayLink
+          href={shareUrls.linkedIn}
+          className={styles.link}
+          label="LinkedIn"
+        >
           <LinkedInLogo className={styles.icon} />
         </GatewayLink>
       </nav>

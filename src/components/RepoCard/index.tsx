@@ -26,7 +26,11 @@ export const RepoCard = (props: Props) => {
       </div>
 
       <div>
-        <GatewayLink className={styles.link} href={props.repoUrl}>
+        <GatewayLink
+          className={styles.link}
+          href={props.repoUrl}
+          label={props.repoName}
+        >
           {props.repoName}
         </GatewayLink>
         {props.githubButtonText && (
