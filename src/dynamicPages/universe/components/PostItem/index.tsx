@@ -21,13 +21,21 @@ const PostItemCmp: React.FC<Props> = (props) => {
   return (
     <div key={post.title} className={styles.collectionCard}>
       <div className={styles.cardTop}>
-        <GatewayLink href={post.url} className={styles.cardLink}>
+        <GatewayLink
+          href={post.url}
+          className={styles.cardLink}
+          label={post.title}
+        >
           <h4>{post.title}</h4>
         </GatewayLink>
       </div>
 
       <div className={styles.cardPreview}>
-        <GatewayLink href={post.url} className={styles.cardLink}>
+        <GatewayLink
+          href={post.url}
+          className={styles.cardLink}
+          label={post.title}
+        >
           <img src={post.previewUrl} alt={post.title} />
         </GatewayLink>
       </div>

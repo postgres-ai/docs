@@ -38,7 +38,9 @@ export const AuthorBanner = (props: Props) => {
 
   const LINK_SELECTOR = `a[href=\\#${anchorId}]`
 
-  const hasAnyLink = Boolean(twitterUrl || gitlabUrl || githubUrl || linkedinUrl)
+  const hasAnyLink = Boolean(
+    twitterUrl || gitlabUrl || githubUrl || linkedinUrl,
+  )
 
   const rootRef = useRef<HTMLDivElement | null>(null)
 
@@ -80,22 +82,38 @@ export const AuthorBanner = (props: Props) => {
         {hasAnyLink && (
           <nav className={styles.links}>
             {twitterUrl && (
-              <GatewayLink href={twitterUrl} className={styles.link}>
+              <GatewayLink
+                href={twitterUrl}
+                className={styles.link}
+                label="Twitter"
+              >
                 <TwitterLogo />
               </GatewayLink>
             )}
             {gitlabUrl && (
-              <GatewayLink href={gitlabUrl} className={styles.link}>
+              <GatewayLink
+                href={gitlabUrl}
+                className={styles.link}
+                label="Gitlab"
+              >
                 <GitlabLogo />
               </GatewayLink>
             )}
             {githubUrl && (
-              <GatewayLink href={githubUrl} className={styles.link}>
+              <GatewayLink
+                href={githubUrl}
+                className={styles.link}
+                label="Github"
+              >
                 <GithubLogo />
               </GatewayLink>
             )}
             {linkedinUrl && (
-              <GatewayLink href={linkedinUrl} className={styles.link}>
+              <GatewayLink
+                href={linkedinUrl}
+                className={styles.link}
+                label="Linkedin"
+              >
                 <LinkedInLogo />
               </GatewayLink>
             )}
