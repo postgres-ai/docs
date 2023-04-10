@@ -41,6 +41,7 @@ const Pricing = () => {
                       <li>Simple setup (takes a few minutes)</li>
                       <li>Automated data refresh on schedule</li>
                       <li>Single user / API key</li>
+                      <li>Maximum database size 2000 GiB</li>
                       <li>
                         Help with Postgres customization (extensions, locales,
                         etc.)
@@ -103,6 +104,7 @@ const Pricing = () => {
                   <div className={styles.empty} />
                   <ul className={styles.list}>
                     <li>Multi-user SSO</li>
+                    <li>Unlimited database size</li>
                     <li>Advanced access control</li>
                     <li>Automated database testing in CI/CD pipelines</li>
                     <li>SQL optimization tooling and workflow</li>
