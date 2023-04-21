@@ -15,6 +15,7 @@ module.exports = {
       "database-lab/masking",
       "database-lab/timing-estimator",
       "database-lab/supported-databases",
+      "database-lab/user-interface",
       "database-lab/telemetry",
     ],
     "DB Migration Checker": [

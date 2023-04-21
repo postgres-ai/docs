@@ -37,12 +37,13 @@ docker logs --since 1m dblab_server
 ## The list of configuration sections
 Here is how the configuration file is structured:
 
-| Section | Description                                                                                                                                                                                                                                                                                                               |
-| --- |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `global` | Global parameters such as path to data directory or enabling debugging.                                                                                                                                                                                                                                                   |
-| `server` | Database Lab Engine API server.                                                                                                                                                                                                                                                                                           |
-| `poolManager` | Manages filesystem pools or volume groups.                                                                                                                                                                                                                                                                                |
-| `provision` | How thin cloning is organized.                                                                                                                                                                                                                                                                                            |
+| Section | Description |
+| --- | --- |
+| `global` | Contains global parameters, such as data directory path or enabling debugging. |
+| `server` | Pertains to the DLE API server. |
+| `embeddedUI` | Refers to the DLE UI.  |
+| `poolManager` | Manages filesystem pools or volume groups. |
+| `provision` | Describes how thin cloning and database branching are organized. |
 | `retrieval` | Defines the data flow: a series of "jobs" for initial retrieval of the data, and, optionally, continuous data synchronization with the source, snapshot creation and retention policies. The initial retrieval may be either "logical" (dump/restore) or "physical" (based on replication or restoration from a archive). |
 | `cloning` | Thin cloning policies.                                                                                                                                                                                                                                                                                                    |
 | `platform` | Postgres.ai Platform integration (provides GUI, advanced features such as user management, logs).                                                                                                                                                                                                                         |
@@ -59,7 +60,13 @@ Here is how the configuration file is structured:
 
 ## Section `server`: Database Lab Engine API server
 - `verificationToken` (string, required) - the token that is used to work with Database Lab API
-- `port` (string, required) - HTTP server port
+- `port` (string, required, default: 2345) - HTTP server port
+
+## Section `embeddedUI`: Database Lab Engine user interface
+- `enabled` (boolean, optional, default: true) - manages the state of the UI container
+- `dockerImage` (string, required) - a Docker image of the UI application
+- `host` (string, required, default: "127.0.0.1") - the host which the embedded UI container accepts HTTP connections from
+- `port` (integer, required, default: 2346) - an HTTP port of the UI application
 
 ## Section `poolManager`: filesystem pools or volume groups management
 - `mountDir` (string, required) - specifies the location of the pools mount directory (can contain multiple pool directories)
