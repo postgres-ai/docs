@@ -27,7 +27,7 @@ DB Migration Checker is a DLE's component that enables integration with CI/CD to
   ```bash
   mkdir -p ~/.dblab/ci_checker/configs
 
-  curl https://gitlab.com/postgres-ai/database-lab/-/raw/master/engine/configs/config.example.ci_checker.yml \
+  curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/master/engine/configs/config.example.ci_checker.yml \
     --output ~/.dblab/ci_checker/configs/ci_checker.yml
   ```
 

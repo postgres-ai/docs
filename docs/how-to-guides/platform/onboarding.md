@@ -64,7 +64,7 @@ If you have access to the production:
 - [ ] Create a personal token (you will need it for connection to Database Lab instance): go to `Settings / Access tokens` and add your personal token.
 - [ ] Install Database Lab CLI:
 ```bash
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/master/engine/scripts/cli_install.sh | bash
+curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/master/engine/scripts/cli_install.sh | bash
 dblab init --environment-id ENV_ID --url URL --token YOUR_PERSONAL_TOKEN
 ```
 - [ ] Create a clone using CLI (define any secure USERNAME and PASSWORD):
