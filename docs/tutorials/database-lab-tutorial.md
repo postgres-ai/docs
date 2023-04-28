@@ -271,7 +271,7 @@ Now, we need to take care of Database Lab Engine configuration. Copy the content
 ```bash
 mkdir -p ~/.dblab/engine/configs
 
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/v3.3.0/engine/configs/config.example.logical_generic.yml \
+curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/v3.3.0/engine/configs/config.example.logical_generic.yml \
   --output ~/.dblab/engine/configs/server.yml
 ```
 
@@ -292,7 +292,7 @@ First, copy the example configuration file[`config.example.physical_generic.yml`
 ```bash
 mkdir -p ~/.dblab/engine/configs
 
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/v3.3.0/engine/configs/config.example.physical_generic.yml \
+curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/v3.3.0/engine/configs/config.example.physical_generic.yml \
   --output ~/.dblab/engine/configs/server.yml
 ```
 
@@ -317,7 +317,7 @@ First, copy the configuration example configuration file[`config.example.logical
 ```bash
 mkdir -p ~/.dblab/engine/configs
 
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/v3.3.0/engine/configs/config.example.logical_generic.yml \
+curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/v3.3.0/engine/configs/config.example.logical_generic.yml \
   --output ~/.dblab/engine/configs/server.yml
 ```
 
@@ -457,7 +457,7 @@ sudo zpool destroy dblab_pool
 CLI can be used on any machine, you just need to be able to reach the Database Lab Engine API (port 2345 by default). In this tutorial, we will install and use CLI locally on the EC2 instance.
 
 ```bash
-curl https://gitlab.com/postgres-ai/database-lab/-/raw/master/engine/scripts/cli_install.sh | bash
+curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/master/engine/scripts/cli_install.sh | bash
 sudo mv ~/.dblab/dblab /usr/local/bin/dblab
 ```
 

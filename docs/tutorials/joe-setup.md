@@ -36,7 +36,7 @@ Configuration example:
 ```bash
 mkdir -p ~/.dblab/joe/configs
 
-curl https://gitlab.com/postgres-ai/joe/-/raw/0.10.0/configs/config.example.yml \
+curl -fsSL https://gitlab.com/postgres-ai/joe/-/raw/0.10.0/configs/config.example.yml \
   --output ~/.dblab/joe/configs/joe.yml
 ```
 
