@@ -247,7 +247,7 @@ sudo docker run \
   --env POSTGRES_HOST_AUTH_METHOD=trust \
   --volume /var/lib/dblab/dblab_pool/data:/var/lib/postgresql/pgdata \
   --detach \
-  postgres:14-alpine
+  postgres:15-alpine
 ```
 
 Create the `test` database:
