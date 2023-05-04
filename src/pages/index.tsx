@@ -49,7 +49,7 @@ function IndexPage() {
       <section className="companies position-relative">
         <div className="container text-center">
           <div className="row">
-            <div className="col-md-2 col-6">
+            <div className="col-md-2 col-5">
               <a>
                 <img
                   src="/assets/landing/gitlab.svg"
@@ -58,7 +58,7 @@ function IndexPage() {
                 />
               </a>
             </div>
-            <div className="col-md-2 col-6">
+            <div className="col-md-2 col-5">
               <a>
                 <img
                   src="/assets/landing/chewy.svg"
@@ -67,7 +67,7 @@ function IndexPage() {
                 />
               </a>
             </div>
-            <div className="col-md-2 col-6">
+            <div className="col-md-2 col-5">
               <a>
                 <img
                   src="/assets/landing/miro.svg"
@@ -76,7 +76,7 @@ function IndexPage() {
                 />
               </a>
             </div>
-            <div className="col-md-2 col-6">
+            <div className="col-md-2 col-5">
               <a>
                 <img
                   src="/assets/landing/ongres.svg"
@@ -85,16 +85,7 @@ function IndexPage() {
                 />
               </a>
             </div>
-            <div className="col-md-2 col-6">
-              <a>
-                <img
-                  src="/assets/landing/qiwi.svg"
-                  alt="Qiwi"
-                  className="img-fluid"
-                />
-              </a>
-            </div>
-            <div className="col-md-2 col-6">
+            <div className="col-md-2 col-5">
               <a>
                 <img
                   src="/assets/landing/nutanix.svg"
