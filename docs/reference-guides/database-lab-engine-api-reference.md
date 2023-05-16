@@ -8,4 +8,6 @@ keywords:
   - "postgres cloning API"
 ---
 
-Please use [Database Lab Swagger](https://postgres.ai/swagger-ui/dblab/) as Database Lab Engine API reference.
+DLE API reference documentation is available at the following locations:
+- [DLE 3.x API](https://postgres.ai/swagger-ui/dblab/) (Swagger 2)
+- [DBLab 4.0-alpha.x API Reference](https://dblab.readme.io/) (OpenAPI 3.0)
