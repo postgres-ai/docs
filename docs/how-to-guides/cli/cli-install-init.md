@@ -11,7 +11,7 @@ sidebar_label: Install and initialize Database Lab CLI
 ## Install CLI and connect
 1. Install Database Lab CLI:
 ```bash
-curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/master/engine/scripts/cli_install.sh | bash
+curl -sSL dblab.sh | bash
 ```
 
 2. (optional) Connect to Database Lab Engine using SSH port forwarding
