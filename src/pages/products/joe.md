@@ -54,7 +54,7 @@ Organizations using Joe Bot can safely empower every engineer to improve query p
 
 
 <div className="products-btn-container">
-  <a className="btn btn1" href="https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec" target="_blank">
+  <a className="btn btn1" href="https://console.postgres.ai/" target="_blank">
     Get started in 3 minutes
   </a>
   <a className="btn btn2" href="/products/realistic-test-environments">Next: Realistic Test Environments</a>
