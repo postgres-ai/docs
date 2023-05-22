@@ -13,10 +13,6 @@ import TabItem from '@theme/TabItem';
 
 Database Lab is used to boost software development and testing processes via enabling ultra-fast provisioning of databases of any size.
 
-:::tip Terraform Module released 🎉
-Try out [Database Lab installation using Terraform Module](/docs/how-to-guides/administration/install-database-lab-with-terraform), it's simpler and automates a bunch of manual steps. Continue with the current tutorial for more customizability and granual control, or see [Database Lab tutorial for Amazon RDS](/docs/tutorials/database-lab-tutorial-amazon-rds).
-:::
-
 In this tutorial, we are going to create a "demo" PostgreSQL database and then set up a Database Lab Engine for it. Database Lab Engine will be installed on an AWS EC2 instance (alternatively, it can be an instance on another cloud platform such as GCP, or a bare-metal machine) with Ubuntu 18.04 or 20.04, and add an EBS volume to store PostgreSQL data directory. Optionally, you'll be able to skip creating the "demo" database and use an existing database instead.
 
 Steps:
