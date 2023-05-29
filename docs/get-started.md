@@ -23,6 +23,7 @@ keywords:
     <td>
       <h3>Getting started</h3>
       <ul>
+        <li><a href='/docs/how-to-guides/administration/install-dle-from-postgres-ai'>How to install DLE from Postgres.ai Console</a></li>
         <li><a href='/docs/how-to-guides/administration/install-dle-from-aws-marketplace'>How to install DLE from the AWS Marketplace</a></li>
         <li><a href='/docs/tutorials/database-lab-tutorial-amazon-rds'>Database Lab tutorial for Amazon RDS</a></li>
         <li><a href='/docs/tutorials/database-lab-tutorial'>Database Lab tutorial for any PostgreSQL database</a></li>
