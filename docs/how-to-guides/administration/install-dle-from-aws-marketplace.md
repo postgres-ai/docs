@@ -1,6 +1,6 @@
 ---
-title: How to install DLE from the AWS Marketplace
-sidebar_label: Install DLE from the AWS Marketplace
+title: How to install DLE using the AWS Marketplace
+sidebar_label: Install DLE from AWS Marketplace
 ---
 
 <p align="center">
