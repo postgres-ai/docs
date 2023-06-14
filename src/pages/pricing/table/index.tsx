@@ -179,7 +179,7 @@ const Table = () => {
         <h2>Additional notes:</h2>
         <ul>
           <li>
-            The prices are probided for the AWS region us-east-1. You can check
+            The prices are provided for the AWS region us-east-1. You can check
             the exact price when making an order in AWS Marketplace.{' '}
           </li>
           <li>
