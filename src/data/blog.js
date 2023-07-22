@@ -1,6 +1,13 @@
 // Duplicates data from the blog.
 const blog = [
   {
+    link: 'blog/20230722-10-postgres-tips-for-beginners',
+    date: '2023-07-22 08:07:00',
+    title: '10 Postgres tips for beginners',
+    description: 'If you are still new to PostgreSQL, check out these useful tips',
+    image: '/assets/thumbnails/20230722-10-postgres-tips-for-beginners-3.jpg',
+  },
+  {
     link: 'blog/20221125-cheaper-faster',
     date: '2022-11-25 22:00:00',
     title: 'Test environments that are 10x cheaper and 10x faster',
@@ -34,6 +41,7 @@ const blog = [
     description: 'The Postgres.ai team is happy to announce the release of version 3.1 of Database Lab Engine (DLE), the most advanced open-source software ever released that empowers development, testing, and troubleshooting environments for fast-growing projects.',
     image: '/assets/thumbnails/dle-3.1-blog.png',
   },
+  /*
   {
     link: 'blog/20220114-progress-bar-for-postgres-queries-lets-dive-deeper',
     date: '2022-01-14 07:11:00',
@@ -41,7 +49,6 @@ const blog = [
     description: 'Various ways to monitor the progress of PostgreSQL query execution.',
     image: '/assets/thumbnails/20220114-progress-bar-for-postgres-queries-lets-dive-deeper.png',
   },
-  /*
   {
     link: 'blog/20220106-explain-analyze-needs-buffers-to-improve-the-postgres-query-optimization-process',
     date: '2022-01-06 22:51:00',

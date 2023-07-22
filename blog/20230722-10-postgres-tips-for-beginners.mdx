@@ -1,0 +1,227 @@
+---
+author: "Nikolay Samokhvalov"
+linktitle: "10 Postgres tips for beginners"
+title: "10 Postgres tips for beginners"
+date: 2023-07-22 08:07:00
+publishDate: 2023-07-22 08:07:00
+description: "<div><img src=\"/assets/thumbnails/20230722-10-postgres-tips-for-beginners-3.jpg\" alt=\"10 Postgres tips for beginners\"/><div>
+<p>Getting started with PostgreSQL can be both exciting and challenging. It's more than just another database—it's a system packed with features that can change how you handle data. Every Friday, <a href=\"https://michristofides.com/\">Michael</a> (<a href=\"https://www.pgmustard.com/\">pgMustard</a>) and I discuss these features on our podcast, <a href=\"https://postgres.fm/\">Postgres.FM</a> (there is also a video version on <a href=\"https://www.youtube.com/PostgresTV\">YouTube</a>). We've been at it for 55 weeks straight since July 2022, and we're not stopping anytime soon. Our latest episode was all about helping newcomers to PostgreSQL. After seeing the huge response to <a href=\"https://twitter.com/samokhvalov/status/1679953049899642880\">my tweet</a>, which got over 200k views, 1200+ likes, and 200+ retweets, I wanted to dig deeper and share more about these essential tips.</p>
+<p>Here are those 10 tips (+bonus) Michael and I have discussed... <a href=\"https://postgres.ai/blog/20230722-10-postgres-tips-for-beginners\">continue reading »</a></p>"
+weight: 0
+image: /assets/thumbnails/20230722-10-postgres-tips-for-beginners-3.jpg
+tags:
+  - beginners
+  - Postgres tips
+---
+
+import { BlogFooter } from '@site/src/components/BlogFooter'
+import { nik } from '@site/src/config/authors'
+
+<p align="center">
+  <img
+    src="/assets/thumbnails/20230722-10-postgres-tips-for-beginners-3.jpg"
+    alt="10 Postgres tips for beginners"
+    width="825px"
+    loading="eager"
+  />
+</p>
+
+Getting started with PostgreSQL can be both exciting and challenging. It's more than just another database—it's a system packed with features that can change how you handle data. Every Friday, [Michael](https://michristofides.com/) ([pgMustard](https://www.pgmustard.com/)) and I discuss these features on our podcast, [Postgres.FM](https://postgres.fm/) (there is also a video version on [YouTube](https://www.youtube.com/PostgresTV)). We've been at it for 55 weeks straight since July 2022, and we're not stopping anytime soon. Our latest episode was all about helping newcomers to PostgreSQL. After seeing the huge response to [my tweet](https://twitter.com/samokhvalov/status/1679953049899642880), which got over 200k views, 1200+ likes, and 200+ retweets, I wanted to dig deeper and share more about these essential tips.
+
+Here are those 10 tips (+bonus) Michael and I have discussed.
+
+<!--truncate-->
+
+## 1. Understand early: tuples are physical versions of rows
+One of the foundational aspects of PostgreSQL that surprises many newcomers is the concept of tuples. In simple terms, a tuple in Postgres is the physical version of a row of data. What this means is that when data in a row changes, rather than altering the existing data, Postgres adds a new version of that row. This versioning system has implications, especially when it comes to operations like `DELETE` and `UPDATE`.
+
+Here's what happens:
+1. When you execute a `DELETE` command, it doesn't immediately reclaim disk space. Instead, the old tuple gets marked as dead but stays around. These "dead" tuples can accumulate and cause table bloat.
+2. Similarly, when you `UPDATE` a row, Postgres doesn't modify the existing tuple. Instead, it creates a new version of that row and marks the old one as dead.
+3. Even a canceled `INSERT` creates a dead tuple, which can be surprising for many. It means that if you attempt to insert a record and then rollback that action, the tuple that was to be inserted is marked dead.
+
+To help grasp these concepts, every table in Postgres has hidden columns that you can select: `ctid`, `xmin`, and `xmax`. The `ctid` represents the tuple's location (page number + offset inside it), while `xmin` and `xmax` can be considered as "birth date" and "death date" for tuples.
+
+By understanding this behavior early on, you'll be better equipped to handle challenges related to disk space, bloat, and autovacuum processes that aim to clean up these dead tuples.
+
+And here is my favorite basic example, a trivial but very important one:
+```
+nik=# create table t1 as select 1 as id;
+SELECT 1
+nik=# select ctid, xmin, xmax, * from t1;
+ ctid  | xmin  | xmax | id
+-------+-------+------+----
+ (0,1) | 47496 |    0 |  1
+(1 row)
+
+nik=# update t1 set id = id where id = 1;
+UPDATE 1
+nik=# select ctid, xmin, xmax, * from t1;
+ ctid  | xmin  | xmax | id
+-------+-------+------+----
+ (0,2) | 47497 |    0 |  1
+(1 row)
+```
+
+See? We have created a table with a single row, we've checked the location of that row's live tuple (`ctid`), and then issued an `UPDATE` that logically doesn't do anything, it doesn't change the value. But the location has changed, from `(0,1)` (page 0, offset 1), to `(0,2)`. Because physically, Postgres created a new tuple – a new row version. Understanding this Postgres behavior will help you design systems working more efficiently.
+
+Michael and I dived deeper in these topics in the following podcast episodes:
+- [e008: How to become a DBA](https://postgres.fm/episodes/how-to-become-a-dba)
+- [e020: HOT UPDATEs](https://postgres.fm/episodes/hot-updates)
+
+## 2. EXPLAIN ANALYZE – always with BUFFERS!
+Understanding how a query operates is crucial to optimizing its performance. In PostgreSQL, the [`EXPLAIN`](https://www.postgresql.org/docs/current/sql-explain.html) command is your main tool to achieve this. However, for a more granular perspective, you should use `EXPLAIN (ANALYZE, BUFFERS)`.
+
+Why? Let's break it down:
+- `EXPLAIN` by itself provides the query plan, giving you insight into the operations Postgres intends to use to fetch or modify your data. This includes sequential scans, index scans, joins, sorts, and more. This command should be used alone for checking the query plan without execution.
+- Adding `ANALYZE` to the mix not only shows you the planned operations but also executes the query and provides actual runtime statistics. This allows you to compare the estimated costs against the actual costs, helping pinpoint where Postgres might be making inaccurate assumptions.
+- The `BUFFERS` option takes it a step further. It provides information about buffer usage – specifically, how many blocks were read from disk (and from which type of buffer). This gives valuable insights into the IO costs of your query.
+
+In our podcast episodes, Michael [highlighted](https://youtu.be/vXPUu01iTlU?t=466) the importance of `BUFFERS`. He mentioned a situation where a query's plan seemed efficient on paper, but the actual IO cost was immense due to overlooked buffer statistics. By consistently using `EXPLAIN (ANALYZE, BUFFERS)`, you can avoid such pitfalls and ensure your queries are not only theoretically efficient but also practically so.
+
+Worth mentioning, I have a separate [article about the importance of the BUFFERS option](https://postgres.ai/blog/20220106-explain-analyze-needs-buffers-to-improve-the-postgres-query-optimization-process#explain-analyze-or-explain-analyze-buffers), and we also had a podcast episode about it: [e004: BUFFERS by default](https://postgres.fm/episodes/buffers-by-default).
+
+## 3. Optimal UI tool choices: beyond pgAdmin
+When diving into the world of Postgres, one of the first choices you'll confront is which client or interface to use. While many beginners start with pgAdmin due to its popularity and accessibility, as you mature in your Postgres journey, you might find that there are more powerful and versatile tools available.
+
+One of the most powerful clients for PostgreSQL is its built-in command-line tool, [`psql`](https://www.postgresql.org/docs/current/app-psql.html). While a command-line interface might seem intimidating or old-school to some, psql is packed with features that allow for efficient database interactions. Moreover, it's ubiquitous; you'll find it on almost any system where PostgreSQL is installed. Pair it with `tmux`, and you have a powerful combo that lets you manage multiple sessions and scripts effortlessly.
+
+If you're more inclined towards graphical interfaces, there are several out there that offer a balance between user-friendliness and advanced capabilities. Tools like [DBeaver](https://dbeaver.io/), [DataGrip](https://www.jetbrains.com/datagrip/) by JetBrains, and [Postico](https://eggerapps.at/postico2/) provide sophisticated interfaces with support for query execution, data visualization, and more.
+
+However, regardless of the graphical tool you choose, investing some time in learning the ins and outs of `psql` can be incredibly beneficial. Spend some time learning it and it will pay off.
+
+For more info, check out our podcast episode, [e038: psql vs GUIs](https://postgres.fm/episodes/psql-vs-guis).
+
+## 4. Logging: adjust the settings ASAP
+As with many systems, in Postgres, the logs are a treasure trove of information, giving you detailed insights into the system's operations and potential issues. By enabling comprehensive logging, you can stay ahead of problems, optimize performance, and ensure the overall health of your database.
+
+- **Choosing what to log**: The key to effective logging is knowing what to log without overwhelming your system. By setting parameters like `log_checkpoints = 0`, `log_autovacuum_min_duration = 0`, `log_temp_files = 0`, and `log_lock_waits = on`, you gain visibility into checkpoints, autovacuum operations, temporary file creations, and lock waits. These are some of the most common areas where issues can arise, making them crucial for monitoring.
+- **Balance between insight and overhead**: It's important to note that while extensive logging can provide valuable insights, it can also introduce overhead. This is especially true if you set the `log_min_duration_statement` to a very low value. For instance, setting it to `200ms` would log every statement taking longer than that, which can be both informative and potentially performance-degrading. Always be cautious and aware of the ["observer effect"](https://en.wikipedia.org/wiki/Observer_effect_(information_technology)) – the impact of the monitoring process on the system being observed.
+But without the granular insights from the logs, diagnosing the problem would have been much more challenging.
+
+In essence, while logging is an immensely powerful tool in your Postgres arsenal, it requires careful configuration and periodic review to ensure it remains a help, not a hindrance.
+
+And of course, we discussed this in one of the podcast episodes: [e031: Default configuration](https://postgres.fm/episodes/default-configuration).
+
+## 5. Power up observability with extensions: pg_stat_statements and more
+When you're aiming to maintain the performance and health of your Postgres database, extensions can be your secret weapon. Among these, [`pg_stat_statements`](https://www.postgresql.org/docs/current/pgstatstatements.html) stands out as a non-negotiable must-have.
+
+### Why `pg_stat_statements`?
+This module provides a means to track execution statistics of all SQL statements executed by a server. In layman's terms, it helps you monitor which queries are being run frequently, which are consuming more time, and which might need optimization. With this extension, you get a window into your database's operations, allowing you to spot and rectify inefficiencies.
+
+### Additional extensions to consider
+While `pg_stat_statements` is central for top-down query analysis, there are other notable extensions that can offer deeper insights:
+- `pg_stat_kcache`: helps in understanding the actual disk I/O and CPU usage, this is exactly how you can identify the query that are responsible for high CPU utilization or disk IO
+- [`pg_wait_sampling`](https://github.com/postgrespro/pg_wait_sampling) or [`pgsentinel`](https://github.com/pgsentinel/pgsentinel): these two offer a clearer picture of where your queries are spending time waiting – providing so-called wait event analysis a.k.a. active session history analysis (similar to RDS Performance Insights)
+- [`auto_explain`](https://www.postgresql.org/docs/current/auto-explain.html): this extension logs execution plans of slow statements automatically, making it simpler to understand and optimize them
+
+Remember, these extensions require some initial setup and tuning to get the best results and low overhead. And unfortunately, most managed Postgres providers don't provide `pg_stat_kcache` or `pg_wait_sampling` / `pgsentilel`.
+
+During our podcast, Michael and I exchanged anecdotes about the myriad times these tools saved the day. We had several episodes in this area:
+- [e011: Query macro analysis intro](https://postgres.fm/episodes/macro-query-analysis-intro)
+- [e044: pg_stat_statements](https://postgres.fm/episodes/pg_stat_statements)
+- [e043: auto_explain](https://postgres.fm/episodes/auto_explain)
+
+## 6. Embrace DB branching for development (use DBLab)
+The process of developing and testing in databases often requires duplicating data, which can be resource-intensive, slow, and cumbersome. However, with thin cloning and branching, there's a smarter way.
+
+### What is thin cloning?
+Thin cloning creates lightweight, writable clones of your database. These clones share the same underlying data blocks as the source but appear as independent databases to the user. When changes are made to a clone, only those changes consume additional storage – this is achieved using [copy-on-write (CoW)](https://en.wikipedia.org/wiki/Copy-on-write), similar to what containers or Git have, but at block level instead of file level. This makes it incredibly fast and efficient to create multiple copies for development, testing, or analysis.
+
+### Benefits of DB branching
+Database branching is thin cloning extended with the ability to save the progress and to allow further clone creation based on the new state. Just like in code version control, branching in the context of databases allows developers to create branches off the main data set. This means you can test a new feature or change in an isolated environment without affecting the primary data. Once tested and validated, changes can be merged back.
+
+### Database Lab and ChatGPT
+Tools like [Database Lab (DBLab)](https://dblab.dev/) provide powerful thin cloning and branching capabilities. Moreover, when coupled with AI solutions like ChatGPT, developers can even get instant result from their experiments with SQL queries, not affecting production or colleague works. ChatGPT often has issues with hallucinations and it is always important to verify AI-generated advice using a clone. Branching gives the most cost- and time-efficient way to do it.
+
+In essence, leveraging thin cloning and DB branching means faster development cycles, reduced storage costs, and the ability to experiment without risks. It's a transformative approach to how we handle data in development environments. Listen a podcast episode where we discussed this in detail: [e019: Database branching](https://postgres.fm/episodes/database-branching).
+
+And the easiest way to start working with thin clones and DB branching is to install DBLab SE in a few clicks using the [Postgres.ai Console](https://console.postgres.ai/) (supported: AWS, GCP, DigitalOcean, and Hetzner Cloud, as well as any other locations, including on-premises – with the "BYOM, "Bring Your Own Machine" option).
+
+## 7. Ensure data checksums are enabled
+Data integrity is the cornerstone of any database. Without trust in your data's accuracy and consistency, even the most advanced database structures or algorithms become useless. That's where data checksums in Postgres play a crucial role.
+
+## What are Data Checksums?
+In the context of databases, a checksum is a value derived from the sum of all the bytes in a data block. If [data checksums](https://www.postgresql.org/docs/current/checksums.html) are enabled, Postgres uses this to verify the integrity of data stored on disk. When data is written to disk, Postgres calculates and stores a checksum value. Later, when that data is read back into memory, Postgres recalculates the checksum and compares it to the stored value to ensure the data hasn't been corrupted.
+
+### Why are they vital?
+Disk-level corruption can be caused by various factors, from hardware failures to software bugs. With data checksums enabled, Postgres can identify corrupted data before it impacts your application or leads to larger issues.
+
+### Activation and overheads
+It's essential to note that data checksums need to be activated at the time of database cluster creation (`initdb`). They can't be turned on for an existing database cluster without a dump and restore of data, or without using the special tool, [`pg_checksums`](https://www.postgresql.org/docs/current/app-pgchecksums.html) (this one would require experience). The overhead associated with data checksums is relatively minimal, especially when compared to the benefits of ensuring data integrity.
+
+In our podcast, Michael recounted a harrowing experience where a company faced significant data loss due to unnoticed disk corruption. It took them a long time to identify the root cause, and they lost valuable data in the process. The aftermath would have been far less severe if they had enabled data checksums from the start, as Postgres would've promptly flagged the corrupted data.
+
+In the realm of databases, it's always better to be proactive than reactive. Enabling data checksums might seem like a minor detail, but it's one that could save you from a major headache down the line.
+
+Our podcast episode on this topic: [e046: Corruption](https://postgres.fm/episodes/corruption).
+
+## 8. Tune autovacuum for frequent runs and faster execution
+The autovacuum process in Postgres is like your database's janitorial crew. It works behind the scenes, cleaning up old data and making space for new data to ensure your database remains efficient.
+
+### Understanding autovacuum
+Every `INSERT`, `UPDATE`, or `DELETE` operation in Postgres creates a version of a row (a tuple). Over time, these old versions accumulate and need to be cleaned up. Autovacuum does this cleanup by reclaiming storage space, updating statistics used by the query planner, and, most importantly, removing dead rows.
+
+### Why it's crucial
+Without regular autovacuuming, your database can suffer from "bloat." Bloat is unused space that the database holds onto, which can slow down queries and waste disk space.
+
+### How to tune
+Tuning autovacuum means adjusting its configuration so it runs more frequently and completes its tasks quicker. At high level, the tuning has to be done in two directions:
+- give autovacuum more power (more workers, bigger quota – because by default, it has only 3 workers allowed, and quite conservatively throttled)
+- make it trigger more often (because again, by default, it's triggers only when significant—10-20%—of tuples are changed; in OLTP, you would like to decrease it to 1% or even lower)
+
+We discussed this in detail in a separate episode: [e006: Vacuum](https://postgres.fm/episodes/vacuum).
+
+## 9. Query optimization over config tuning
+When it comes to performance in Postgres, in most cases, it is a good to optimize Postgres config "well enough", revisiting the decisions not often (only when big changes such as Postgres major upgrade happen), and then fully focus on query tuning. Especially if you change your application often.
+
+### Why is query tuning more important?
+Initially, adjusting Postgres configurations can yield performance improvements. But as your application grows and evolves, the main battle for performance often shifts from configuration to query optimization. Properly structured queries can be the difference between an app that scales smoothly and one that grinds to a halt under load.
+
+### Tuning vs. optimization
+There's a common misconception among beginners: "If I just tune my configuration well enough, I won't have issues." Configuration tuning is vital, but it's just the start. Eventually, your focus will have to pivot to continuously optimizing your queries.
+
+### Tools for the job
+The already discussed `pg_stat_statements` is an invaluable tool for identifying problematic queries. It provides a ranked list of SQL statements, ordered by various metrics. When paired with `EXPLAIN (ANALYZE, BUFFERS)`, which we have already discussed, you can understand a query's execution plan and pinpoint inefficiencies.
+
+As Postgres users, we must internalize this truth: configurations lay the groundwork, but continuous query optimization keeps our systems running at peak performance.
+
+Related podcast episodes:
+- [e009: Intro to query optimization](https://postgres.fm/episodes/intro-to-query-optimization)
+- [e014: 102 Query optimization](https://postgres.fm/episodes/102-query-optimization)
+
+## 10. Index maintenance: a necessary practice
+Indexes are pivotal for performance in any relational database, and Postgres is no exception.
+
+### Why it's important
+Over time, as data changes, indexes become fragmented and less efficient. Even with modern Postgres versions (especially with btree optimization Postgres 13 and 14 received) and a well-tuned autovacuum, index health still declines over time, while numerious writes are happening.
+
+### Declining health of indexes
+When data is inserted, updated, or deleted, the indexes reflecting this data undergo changes. These changes can cause the index structure to become unbalanced or have dead entries, slowing down search performance.
+
+### Rebuilding indexes
+Unlike some misconceptions, indexes don't maintain their optimal structure indefinitely. Periodically, they need to be rebuilt. This process involves creating a fresh version of the index, which often results in a more compact and efficient structure. Preparing for these rebuilds, preferably in an automated manner, ensures that your database performance remains consistent.
+
+### Cleanup
+Besides rebuilding, it's equally crucial to remove unused or redundant indexes. They not only waste storage space but can also slow down write operations. Regularly reviewing and cleaning up unnecessary indexes should be part of your maintenance routine.
+
+To reiterate a crucial point: Indexes are vital, but, like all tools, they require maintenance. Keeping them in good health is essential for maintaining the swift performance of your Postgres database.
+
+Podcast episode about this: [e012: Index maintenance](https://postgres.fm/episodes/index-maintenance).
+
+## Bonus tip: Postgres documentation and source comments are your trustworthy companions
+Michael always emphasized the unmatched value of official documentation. Whether you're just starting with Postgres or have been working with it for a while, always have the official Postgres documentation bookmarked. Here's why:
+- **Comprehensive and up-to-Date**: Official documentation is the most authoritative source of information, detailing every feature, behavior, and nuance of Postgres.
+- **Release notes*: These are a goldmine. Every time a new version of Postgres is released, the release notes provide a concise summary of all changes, new features, and improvements. It's a great way to keep up with what's new and what might impact your existing setups.
+- *Source code comments/READMEs**: For those who like to dive deep, the source code of Postgres is not only a learning resource but also a reference. Comments and readme files embedded within the code can offer insights and explanations that might not be evident elsewhere.
+
+## In conclusion
+Embarking on the Postgres journey can seem daunting, but with the right guidance and resources, it's a rewarding experience. These tips, derived from our collective experiences and countless hours of discussion on our podcast, aim to offer a smoother initiation into the world of Postgres.
+
+Over the past 55 weeks, since July 2022, Michael and I have consistently brought insights, stories, and expert discussions to our listeners. Celebrating our recent one-year milestone, we're more enthused than ever to keep sharing, learning, and engaging with the vibrant Postgres community.
+
+If you've found these tips helpful, or if you're hungry for deeper dives into each topic, be sure to check out the episode "Beginner tips" and the plethora of past episodes on [Postgres.FM](https://postgres.fm/). You can find them on YouTube – and for [this very episode](https://www.youtube.com/watch?v=vXPUu01iTlU), we polished the subtitles (ChatGPT + manually), so anyone could understand the material better, and even use the auto-tranlate feature YouTube provides, to see them in any language. Please check it out and share with your colleagues who work with Postgres.
+
+To more discoveries, challenges, and growth with Postgres! 🍻
+
+<BlogFooter author={nik} />
