@@ -5,16 +5,17 @@ description: "API reference for Database Lab Engine – Swagger, OpenAPI"
 keywords:
   - "database lab API"
   - "database lab engine API"
+  - "DBLab API"
   - "postgres cloning API"
+  - "database branching API"
 ---
 
-<<<<<<< docs/reference-guides/database-lab-engine-api-reference.md
-DLE API is a REST API. It can be used in multiple ways:
-- direclty using some tools (e.g., [curl](https:/curl.se/), [HTTPie](https://httpie.io/)) or code (Rython, Go, Ruby, PHP, NodeJS, and virtually any language or framework that supports work with REST APIs)
-- indirectly in command-line environment: [DLE CLI](https://postgres.ai/docs/reference-guides/dblab-client-cli-reference) operates on top of the DLE API
-- indirectly in browser: [DLE UI](https://postgres.ai/docs/database-lab/user-interface), being a React application, speaks to the DLE API as well
+DBLab API (DLE API) is a REST API. It can be used in multiple ways:
+- directly, using a common tool (e.g., [curl](https:/curl.se/), [HTTPie](https://httpie.io/)) or code (Rython, Go, Ruby, PHP, NodeJS, and virtually any language or framework that supports work with REST APIs)
+- indirectly, in command-line environment: [DLE CLI](https://postgres.ai/docs/reference-guides/dblab-client-cli-reference) operates on top of the DLE API
+- indirectly, in browser: [DLE UI](https://postgres.ai/docs/database-lab/user-interface), being a React application, speaks to the DLE API as well
 
-DBLab API (DLE API) reference documentation is available at the following locations:
+DBLab API reference documentation is available at the following locations:
 - [DLE 3.4.x API Reference](https://dblab.readme.io/v3.4.0/)
 - [DBLab 4.0-alpha.x API Reference](https://dblab.readme.io/v4.0.0-alpha/)
 
