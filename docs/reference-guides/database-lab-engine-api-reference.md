@@ -8,6 +8,14 @@ keywords:
   - "postgres cloning API"
 ---
 
-DBLab API reference documentation is available at the following locations:
-- [DBLab 3.x API](https://dblab.readme.io/v3.4.0/)
+<<<<<<< docs/reference-guides/database-lab-engine-api-reference.md
+DLE API is a REST API. It can be used in multiple ways:
+- direclty using some tools (e.g., [curl](https:/curl.se/), [HTTPie](https://httpie.io/)) or code (Rython, Go, Ruby, PHP, NodeJS, and virtually any language or framework that supports work with REST APIs)
+- indirectly in command-line environment: [DLE CLI](https://postgres.ai/docs/reference-guides/dblab-client-cli-reference) operates on top of the DLE API
+- indirectly in browser: [DLE UI](https://postgres.ai/docs/database-lab/user-interface), being a React application, speaks to the DLE API as well
+
+DBLab API (DLE API) reference documentation is available at the following locations:
+- [DLE 3.4.x API Reference](https://dblab.readme.io/v3.4.0/)
 - [DBLab 4.0-alpha.x API Reference](https://dblab.readme.io/v4.0.0-alpha/)
+
+The references are published using the comprehensive ReadMe service. equipped with a developer dashboard and provides code snippets in numerous languages.
