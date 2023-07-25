@@ -14,10 +14,6 @@
   font-size: 16px;
 }
 
-.purchase {
-  margin-bottom: 1em;
-}
-
 .subscription {
   padding: 0 0 20px 0;
   border-radius: 8px;
@@ -112,12 +108,6 @@
   margin-bottom: 0;
 }
 
-.marketplace {
-  display: block;
-  width: 185px;
-  margin: 0 auto;
-}
-
 .list {
   text-align: start;
   margin: 20px auto;
@@ -128,16 +118,6 @@
 
 .list li {
   padding-left: 20px;
-}
-
-html[data-theme='light'] .marketplace img {
-  margin: 5px 0 3px 0;
-  content: url(https://d1.awsstatic.com/Marketplace/MP%20Logo/AWSMP_NewLogo_RGB.19b9351a98a7c9f65717edbfe8ac6f9f785ed6b0.png);
-}
-
-html[data-theme='dark'] .marketplace img {
-  margin: 5px 0 3px 0;
-  content: url(https://d1.awsstatic.com/Marketplace/Campaigns%20Only/BigData%20Main%20LP/AWSMP_logo_RGB_REV.369d58099de9bd4b56a099cf2c2e663891ccc88b.png);
 }
 
 @media (max-width: 1200px) {
