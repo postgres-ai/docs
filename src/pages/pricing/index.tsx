@@ -19,47 +19,39 @@ const Pricing = () => {
                 <div
                   className={`${styles.justifyCenter} ${styles.subscription} ${styles.standardPlan} col-sm`}
                 >
-                  <h2>Standard</h2>
+                  <h2>Standard (DBLab SE)</h2>
                   <div className={styles.contentWrapper}>
-                    <div>
-                      <p className={styles.purchase}>Purchase on</p>
-                      <a
-                        className={styles.marketplace}
-                        href="https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec"
-                        target="_blank"
-                      >
-                        <img src="https://d1.awsstatic.com/Marketplace/Campaigns%20Only/BigData%20Main%20LP/AWSMP_logo_RGB_REV.369d58099de9bd4b56a099cf2c2e663891ccc88b.png" />
-                      </a>
-                      <p>
-                        Not an AWS user?{' '}
-                        <a href="mailto: sales@postgres.ai">Contact us</a>
-                      </p>
-                    </div>
                     <ul className={styles.list}>
-                      <li>Netdata monitoring</li>
-                      <li>Unlimited thin cloning</li>
-                      <li>Simple setup (takes a few minutes)</li>
+                      <li>Unlimited DB branching and cloning</li>
                       <li>Automated data refresh on schedule</li>
+                      <li>Fast and easy setup, it takes just a few minutes</li>
+                      <li>Well-tested and maintained package with vendor support</li>
+                      <li>
+                        Various sources supported, including databases with PostGIS
+                        and managed services such as AWS RDS and Aurora, GCP CloudSQL,
+                        Supabase, Timescale, and Heroku
+                      </li>
+                      <li>Monitoring included</li>
                       <li>Single user / API key</li>
                       <li>Maximum database size 2000 GiB</li>
                       <li>
-                        Help with Postgres customization (extensions, locales,
-                        etc.)
+                        Upon request, help with Postgres customization
+                        (extensions, locales, etc.)
                       </li>
                       <li>
-                        Vendor support; max. response time: 3 business days
+                        Full vendor support; max. response time: 3 business days
                       </li>
                     </ul>
                     <div className={styles.pricing}>
                       <p>
-                        Starting at <b>$131 per month</b>
+                        Starting at <b>$62 per month</b>
                       </p>
                       <a href="#aws-pricing-details">Explore pricing</a>
                     </div>
                     <a
                       className="btn btn1"
                       target="blank"
-                      href="https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec"
+                      href="https://console.postgres.ai/"
                     >
                       Set up in 3 minutes
                     </a>
@@ -96,11 +88,10 @@ const Pricing = () => {
               className={`${styles.package} ${styles.enterprise} flex-sm-fill`}
             >
               <div className={`${styles.rowWrapper} row`}>
-                {/* Subscription */}
                 <div
                   className={`${styles.justifyCenter} ${styles.subscription} col-sm`}
                 >
-                  <h2>Enterprise</h2>
+                  <h2>Enterprise (DBLab EE)</h2>
                   <div className={styles.empty} />
                   <ul className={styles.list}>
                     <li>Multi-user SSO</li>
@@ -116,7 +107,8 @@ const Pricing = () => {
                   <div className={styles.empty} />
                   <div className={styles.pricing}>
                     <p>
-                      <b>Custom Pricing</b> Available as an annual contract <br /> (starts from $0.2662 / 100 GiB / h)
+                      <b>Custom Pricing</b> Available as an annual contract{' '}
+                      <br /> (starts from $0.2662 / 100 GiB / h)
                     </p>
                   </div>
                   <a className="btn btn3" href="mailto: sales@postgres.ai">

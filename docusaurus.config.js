@@ -1,6 +1,7 @@
 const path = require('path')
 
 const URL = !!process.env.URL ? process.env.URL : 'https://v2.postgres.ai/'
+const API_URL_PREFIX = !!process.env.API_URL_PREFIX ? process.env.API_URL_PREFIX : 'https://v2.postgres.ai/api/general/'
 const BASE_URL = !!process.env.BASE_URL ? process.env.BASE_URL : '/'
 const REPOSITORY_URL = 'https://github.com/postgres-ai/database-lab-engine'
 const SIGN_IN_URL = !!process.env.SIGN_IN_URL
@@ -8,7 +9,8 @@ const SIGN_IN_URL = !!process.env.SIGN_IN_URL
   : '/signin'
 
 module.exports = {
-  title: 'Database branching for any Postgres DB · Postgres.ai · Database Lab Engine (DLE)', // Title for your website.
+  title:
+    'Database branching for any Postgres DB · Postgres.ai · DBLab', // Title for your website.
   tagline:
     'Branching 🖖 and thin cloning ⚡️ for any Postgres database. Empower database testing in CI/CD. Optimize DB-related costs while improving time-to-market and software quality.',
   url: URL, // Your website URL.
@@ -20,6 +22,7 @@ module.exports = {
 
   customFields: {
     signInUrl: SIGN_IN_URL,
+    apiUrlPrefix: API_URL_PREFIX,
   },
 
   scripts: [

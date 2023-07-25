@@ -10,6 +10,11 @@
   scroll-margin-top: 60px;
 }
 
+.tableNote {
+  font-size: 14px;
+  text-align: start;
+}
+
 .tableButton {
   font-size: 16px;
   margin-top: 20px;
@@ -26,6 +31,12 @@
 .table td {
   padding: 2px;
   font-size: 14px;
+}
+
+.table td:first-child {
+  text-align: start;
+  padding: 0 24px;
+  max-width: 150px;
 }
 
 .table th {
@@ -64,8 +75,8 @@
   font-size: 14px;
 }
 
-.hardwareInfo {
-  font-size: 12px;
+.notes li:not(:last-child) {
+  margin-bottom: 14px;
 }
 
 .tableHeader {
@@ -78,7 +89,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0 8px;
+  padding: 0 24px;
   margin-top: 8px;
   margin-bottom: 8px;
   border: 0;
