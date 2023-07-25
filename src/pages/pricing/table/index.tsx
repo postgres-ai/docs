@@ -58,8 +58,17 @@ const Table = () => {
         Set up in minutes
       </a>
       <div className={styles.notes}>
-        <h2>Additional notes:</h2>
+        <h2>How it works:</h2>
         <ul>
+          <li>
+            DBLab SE is built using open-source components. You install it to
+            <i>your</i> infrastructure. You pay Postgres.ai for support, guaranteed
+            packaging quality, keeping the product up-to-date (think Postgres versions,
+            extensions, tools) and feature-rich. You can switch from DBLab SE to
+            a free offering (DBLab CE, Community Edition) any time, but in this case,
+            you would lose the ability to use the DBLab SE bundle and the
+            guaranteed vendor support.
+          </li>
           <li>
             Postgres.ai teamed up with{' '}
             <a href="https://stripe.com/" target="blank">Stripe</a> to ensure your billing is
