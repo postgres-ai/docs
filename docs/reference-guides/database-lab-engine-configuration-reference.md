@@ -137,6 +137,7 @@ Options:
    - `enabled` (boolean, optional, default: false) - enable immediate restore.
    - `forceInit` (boolean, optional, default: false) - init data even if the Postgres directory (see the configuration options `global.mountDir` and `global.dataSubDir`) is not empty; note the existing data might be overwritten
    - `customOptions` (list of strings, optional) - defines one or multiple `pg_restore` options. See available options in [the official PostgreSQL documentation](https://www.postgresql.org/docs/current/app-pgrestore.html)
+- `ignoreErrors` (boolean, optional, default: false) - ignore errors that occurred during logical data dump; supported since DLE 3.4
 
 ### Job `logicalRestore`
 Restores a PostgreSQL database from an archive created by pg_dump in one of the non-plain-text formats.
@@ -156,6 +157,7 @@ Options:
     - `queryPath` (string, optional, default: "") - specifies the path to SQL pre-processing queries; an empty string means that no pre-processing defined
     - `maxParallelWorkers` (integer, optional, default: 2) - defines the worker limit for parallel queries
     - `inline` (string, optional, default: "") - inline SQL queries to execute; if specified, queries from `queryPath` are executed before `inline`
+- `ignoreErrors` (boolean, optional, default: false) - ignore errors that occurred during logical data restore; supported since DLE 3.4
 
 ### Job `logicalSnapshot`
 Prepares a snapshot for logical restored PostgreSQL database.
