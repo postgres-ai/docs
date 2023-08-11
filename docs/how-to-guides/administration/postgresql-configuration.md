@@ -12,6 +12,10 @@ The "sync" instance, which is an asynchronous replica by nature, is currently su
 Normally, there is no need in configuring this PostgreSQL instance, as Database Lab Engine controls it fully, using a small value for `shared_buffers`, and very reliable values for all the configuration options. The only option that can be controlled by the Databae Lab Engine administrator is `restore_command` (see [physicalRestore](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalsnapshot)). 
 
 ### PostgreSQL configuration in clones
+:::info
+For [DBLab SE](https://postgres.ai/docs/how-to-guides/administration/install-dle-from-postgres-ai), this step is automated – no additional actions are required.
+:::
+
 It is possible and in many cases necessary to configure various PostgreSQL options in clones. It can be done both for logical and physical modes of data directory initialization:
 - for the logical mode, all PostgreSQL parameters are to be specified in option `configs` of job `logicalSnapshot`
 - for the physical mode, these parameters are configured in option `configs` of job `physicalSnapshot`
@@ -35,9 +39,15 @@ where
   and (
     name ~ '(work_mem$|^enable_|_cost$|scan_size$|effective_cache_size|^jit)'
     or name ~ '(^geqo|default_statistics_target|constraint_exclusion|cursor_tuple_fraction)'
-    or name ~ '(collapse_limit$|parallel|plan_cache_mode|shared_preload_libraries)'
+    or name ~ '(collapse_limit$|parallel|plan_cache_mode)'
   );
 ```
+
+Additionally, ensure that `shared_preload_libraries` has all extensions that you use (or might start using in the future), plus the following:
+- `pg_stat_kcache` and `logerrors` – required for some observability tasks DBLab may need to performance
+- `anon` – required for PII removal, in some cases
+
+The mentioned extensions above may not be available in the source – still, it makes sense to have them loaded in DBLab clones.
 
 Here is an example of who the `databaseConfigs` configuration section is supposed to look:
 ```yaml
@@ -49,9 +59,9 @@ databaseConfigs: &db_configs
     effective_cache_size: "43352064"
     jit: "off"
     maintenance_work_mem: "2097152"
-    random_page_cost: "1.1"
+    random_page_cost: "1.0"
     seq_page_cost: "1.0"
-    shared_preload_libraries: "pg_stat_statements,auto_explain,pg_wait_sampling,pg_stat_kcache"
+    shared_preload_libraries: "pg_stat_statements,auto_explain,pg_stat_kcache,logerrors,anon"
     work_mem: "102400"
 ...
 ```
