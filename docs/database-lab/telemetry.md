@@ -10,10 +10,11 @@ keywords:
 By default, the Database Lab Engine (DLE) collects non-personally identifiable telemetry data (applicable to the DLE versions 3.0.0 and later). This information helps the development team understand how the product is used and what to focus on next.
 
 Fundamental principles of our telemetry implementation:
-- The data collected is minimal and non-personally identifiable. Particularly, the DLE instance ID is randomly generated and contains no identifying information. 
+- For DLE Community Edition (DLE CE, open-source version), the data collected is minimal and non-personally identifiable. Particularly, the DLE instance ID is randomly generated and contains no identifying information. For DLE Standard Edition and DLE Enterprise Edition (DLE SE and DLE EE, respectively – paid versions installed from cloud Marketplaces or from the Postgres.ai Console), the DLE instance ID is stored in the Postgres.ai SaaS database in the context of the customer's organization and, upon request, may be used for support purposes.
 - See the sections below to find out [what exactly is collected](#collected-data-points). Users are also encouraged to check [the DLE source code](https://gitlab.com/postgres-ai/database-lab/-/tree/master/internal/telemetry) to inspect how exactly the collection is implemented.
 - The raw telemetry data is never sent or processed by third parties outside Postgres.ai's infrastructure (Google Cloud, USA regions). In an aggregated form, the usage statistics can be published periodically to help our growing community of users and contributors understand how DLE is used and what to develop next.
-- Telemetry is optional and can be [disabled](#disabling-telemetry). However, as a growing community, we greatly appreciate the usage data users send to us, as it is very valuable in helping us make the Database Lab Engine a better product for everyone!
+- For DLE CE, telemetry is optional and can be [disabled](#disabling-telemetry). However, as a growing community, we greatly appreciate the usage data users send to us, as it is very valuable in helping us make the Database Lab Engine a better product for everyone!
+- For DLE SE, telemetry cannot be disabled because it is used for linking to the customer's organization in Postgres.ai Console, for billing and support purposes.
 
 ## Collected data points
 Whenever a significant event happens, Database Lab Engine collects some information and sends it to the Postgres.ai infrastructure making an HTTPS request. Each request contains four parts:
@@ -28,6 +29,7 @@ Below you can find what data is collected and sent for each type of event.
 ```json
 {
   "engine_version": "v3.0.0-20211220-1923",
+  "db_engine": "postgres",
   "db_version": "11",
   "pools": {
     "fs_type": "zfs",
@@ -43,6 +45,10 @@ Below you can find what data is collected and sent for each type of event.
       "logicalRestore",
       "logicalSnapshot"
     ]
+  },
+  "system": {
+    "cpu": 16,
+    "totalMemory": 14503538688
   }
 }
 ```
