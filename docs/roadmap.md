@@ -132,13 +132,13 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
     - [ ] GitLab CI/CD
     - [ ] Bamboo
     - [ ] TravisCI
-- [x] Support vairous database migration tools + demo
+- [x] Support various database migration tools + demo
     - [x] Sqitch
     - [x] Flyway
     - [x] Liquibase
     - [x] Ruby on Rails Active Record
     - [x] Django migrations
-- [x] "Production timing" estimator (experimental feature, added in DLE 2.3.0)
+- [x] "Production timing" estimator (experimental feature, added in DLE 2.3.0, removed in DLE 3.4.0)
 - [x] More artifacts to support decisions: pg_stat_*, system usage, WAL, checkpoints, etc.
 
 ### [DLE] Cloning (CoW technology)
@@ -202,8 +202,8 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
     - [x] [postgres_anonymizer](https://postgresql-anonymizer.readthedocs.io/en/stable/masking_functions.html)
     - [x] [kitchen-sync](https://github.com/willbryant/kitchen_sync)
     - [ ] [pgsync](https://github.com/ankane/pgsync)
-- [ ] Hybrid setup: raw and obfuscaned/masked clones on the same DLE instance
-- [ ] Dump/restore with runtime anonimization, parallelized, via GitOps
+- [ ] Hybrid setup: raw and obfuscated/masked clones on the same DLE instance
+- [ ] Dump/restore with runtime anonymization, parallelized, via GitOps
 - [ ] Simplified setup for anonymization - GUI
 - [ ] Automated masking / anonymization
 

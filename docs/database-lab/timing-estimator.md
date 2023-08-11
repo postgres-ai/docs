@@ -12,7 +12,7 @@ keywords:
 The Query Estimator is an experimental feature of [Database Lab Engine](https://gitlab.com/postgres-ai/database-lab) and [SQL Optimization Chatbot (Joe Bot)](https://gitlab.com/postgres-ai/joe) to estimate a timing of queries on the production database.
 
 :::caution Experimental feature
-The estimator is currently under active development and testing. Implementation can be changed significantly. Your help with testing and any feedback is highly appreciated.
+This feature has been removed in DLE 3.4.0. Future versions might include a different implementation of this feature.
 :::
 
 Database Lab clones are almost exact copies of the production database yet some limitations should be kept in mind. Under the hood, Database Lab clones use copy-on-write technology (currently supported: [ZFS](https://en.wikipedia.org/wiki/ZFS) and [LVM&nbsp;2](https://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)). This technology allows reducing cloning time and amount of the extra disk space needed for it almost to zero. On the other side, it has different IO performance in comparison to file systems most commonly used on production environments (such as [ext4](https://en.wikipedia.org/wiki/Ext4)). This difference affects the database operations *timing*, it may be noticeably bigger on the clones. Other factors may affect query *timing* too. That is why it is recommended to focus on the plan structure and data volumes (buffer numbers in the case of "physical" provisioning mode, and row numbers in the case of "logical" provisioning mode) when dealing with EXPLAIN plans. Timing numbers in such plans obtained on thing clones should not be directly compared to the corresponding numbers obtained on production.
