@@ -16,7 +16,7 @@ To set up it you need to use following jobs:
 - [physicalSnapshot](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalsnapshot)
 
 ### Options
-Copy the example configuration file [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.3.0/engine/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`. For demo purposes we've used `pg_basebackup` tool, but you can use any tool suitable for the task. Check and update the following options:
+Copy the example configuration file [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.4.0/engine/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`. For demo purposes we've used `pg_basebackup` tool, but you can use any tool suitable for the task. Check and update the following options:
 - Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine
 - Set connection options in `physicalRestore:options:envs`, based on your tool
 - Set PostgreSQL commands in `physicalRestore:options:customTool`:
@@ -43,7 +43,7 @@ sudo docker run \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:3.3.0 
+  postgresai/dblab-server:3.4.0 
 ```
 
 :::info
