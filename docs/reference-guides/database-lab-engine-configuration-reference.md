@@ -48,8 +48,8 @@ Here is how the configuration file is structured:
 | `cloning` | Thin cloning policies.                                                                                                                                                                                                                                                                                                    |
 | `platform` | Postgres.ai Platform integration (provides GUI, advanced features such as user management, logs).                                                                                                                                                                                                                         |
 | `observer` | CI Observer configuration. CI Observer helps verify database schema changes (database migrations) automatically, in CI/CD pipelines. Available on the Postgres.ai Platform.                                                                                                                                               |
-| `estimator` | Estimator configuration. Estimator estimates a timing of queries on the production database.                                                                                                                                                                                                                              |
 | `diagnostic`  | Configuration to collect diagnostics logs - containers output, Postgres logs.                                                                                                                                                                                                                                             | 
+| `estimator` | (removed in DLE 3.4.0) Estimator configuration. Estimator estimates a timing of queries on the production database.                                                                                                                                                                                                       |
 
 ## Section `global`: global parameters
 - `engine` - defines the Database Lab Engine. Supported engines: `postgres`
@@ -244,6 +244,9 @@ Options:
 Replacement rules applies to the following log fields: `message`, `detail`, `hint`, `internal_query`, `query`
   
 ## Section `estimator`: Estimator configuration
+:::caution
+The section has been removed in DLE 3.4.0
+:::
 - `readRatio` (float, optional, default: 1) - the ratio evaluating the timing difference for operations involving IO Read between Database Lab and production environments 
 - `writeRatio` (float, optional, default: 1) - the ratio evaluating the timing difference for operations involving IO Write between Database Lab and production environments.
 - `profilingInterval` (string, optional, default: 10ms) - time interval of samples taken by the profiler
