@@ -89,6 +89,7 @@ Here is how the configuration file is structured:
 ## Section `retrieval`: data retrieval
 - `refresh` (key-value, optional) - describes configuration for a full refresh.
   - `timetable` (string, optional, default: "") - defines a timetable in crontab format: https://en.wikipedia.org/wiki/Cron#Overview
+  - `skipStartRefresh` (boolean, optional, default: false) - skips running retrieval jobs while the DLE instance starts; supported since DLE 3.4
 - `jobs` (list, optional) - declares the set of running jobs. Stages must be defined in the `spec` section
 - `spec` (key-value, optional) - contains a configuration spec for each job
 
@@ -135,7 +136,7 @@ Options:
 - `customOptions` (list of strings, optional) - defines one or multiple `pg_dump` options. See available options in [the official PostgreSQL documentation](https://www.postgresql.org/docs/current/app-pgdump.html).
 - `immediateRestore` (key-value, optional) - provides options for direct restore to a Database Lab Engine instance.
    - `enabled` (boolean, optional, default: false) - enable immediate restore.
-   - `forceInit` (boolean, optional, default: false) - init data even if the Postgres directory (see the configuration options `global.mountDir` and `global.dataSubDir`) is not empty; note the existing data might be overwritten
+   - `forceInit` (deprecated, boolean, optional, default: false) - init data even if the Postgres directory (see the configuration options `global.mountDir` and `global.dataSubDir`) is not empty; note the existing data might be overwritten; deprecated since DLE 3.4.0
    - `customOptions` (list of strings, optional) - defines one or multiple `pg_restore` options. See available options in [the official PostgreSQL documentation](https://www.postgresql.org/docs/current/app-pgrestore.html)
 - `ignoreErrors` (boolean, optional, default: false) - ignore errors that occurred during logical data dump; supported since DLE 3.4
 
@@ -146,7 +147,7 @@ Options:
 - `dumpLocation` (string, required) - specifies the location of the archive files (or directories, for directory-format archives) on the host machine to be restored
 - `dockerImage` (string, required) - specifies the Docker image containing the restore-required tool
 - `containerConfig` (key-value, optional) - options to pass custom parameters to logicalRestore container
-- `forceInit` (boolean, optional, default: false) - init data even if the Postgres directory (see the configuration options `global.mountDir` and `global.dataSubDir`) is not empty; note the existing data might be overwritten
+- `forceInit` (deprecated, boolean, optional, default: false) - init data even if the Postgres directory (see the configuration options `global.mountDir` and `global.dataSubDir`) is not empty; note the existing data might be overwritten; deprecated since DLE 3.4.0
 - `parallelJobs` (integer, optional, default: 1) - defines the number of concurrent jobs using the `pg_restore` option `jobs`. This option can dramatically reduce the time to restore a large database to a server running on a multiprocessor machine
 - `databases` (key-value, optional) - defines options for specifying the database list that must be restored. By default, DLE restores all available databases. Do not specify the databases section to restore all databases. Available options for each database: `tables`, `format`
     - `format` (string, optional, default: "") - defines a dump format. Available formats: `directory`, `custom`, `plain`. Default format: `directory`. See the description of each format in the [official PostgreSQL documentation](https://www.postgresql.org/docs/current/app-pgdump.html).
