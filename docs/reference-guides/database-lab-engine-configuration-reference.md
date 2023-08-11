@@ -84,6 +84,7 @@ Here is how the configuration file is structured:
 - `useSudo` (boolean, optional, default: false) - use sudo for ZFS/LVM and Docker commands if Database Lab server running outside a container
 - `keepUserPasswords` (bool, optional, default: "false") - By default, in addition to creating a new user with administrative privileges, Database Lab Engine resets passwords for all existing users. This is done for security reasons. If this behavior is undesirable and you want to keep the ability authenticate for the existing users with their unchanged passwords, then set the value of the variable to `true`.
 - `containerConfig` (key-value, optional) - options to pass custom parameters to clone containers
+- `cloneAccessAddresses` (string, optional, default: "127.0.0.1") - IP addresses that can be used to access clones. By default, use a loop-back to accept only local connections. The empty string means "all available addresses". The option supports multiple IPs (using comma-separated format) and IPv6 addresses (for example, `[::1]`)
 
 ## Section `retrieval`: data retrieval
 - `refresh` (key-value, optional) - describes configuration for a full refresh.
