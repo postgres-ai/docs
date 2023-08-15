@@ -159,6 +159,7 @@ Options:
     - `maxParallelWorkers` (integer, optional, default: 2) - defines the worker limit for parallel queries
     - `inline` (string, optional, default: "") - inline SQL queries to execute; if specified, queries from `queryPath` are executed before `inline`
 - `ignoreErrors` (boolean, optional, default: false) - ignore errors that occurred during logical data restore; supported since DLE 3.4
+- `skipPolicies` (boolean, optional, default: true) - do not restore row-level security policies (`CREATE POLICY`); supported since DLE 3.4
 
 ### Job `logicalSnapshot`
 Prepares a snapshot for logical restored PostgreSQL database.
