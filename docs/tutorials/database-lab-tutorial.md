@@ -1,472 +1,305 @@
 ---
-title: Database Lab tutorial for any PostgreSQL database
-sidebar_label: Tutorial for any PostgreSQL database
+title: DBLab tutorial for any PostgreSQL database
+sidebar_label: Tutorial for any Postgres
 keywords:
-  - "Database Lab Engine tutorial"
-  - "Start using Database Lab Engine"
+  - "DBLab tutorial"
+  - "Start using DBLab Engine"
   - "Postgres.ai tutorial"
-description: In this tutorial, we are going to create a "demo" PostgreSQL database and then set up a Database Lab Engine for it. Database Lab is used to boost software development and testing processes via enabling ultra-fast provisioning of databases of any size.
+description: In this tutorial, we are going set up a Database Lab Engine (DBLab Engine) in the Cloud. DBLab is used to boost software development and testing processes via enabling ultra-fast provisioning of databases of any size.
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+DBLab Engine is used to boost software development and testing processes by enabling ultra-fast provisioning of databases of any size.
 
-Database Lab is used to boost software development and testing processes via enabling ultra-fast provisioning of databases of any size.
+Use [the Postgres.ai Console](https://console.postgres.ai/) for an easy and quick installation of DBLab. Following the steps below, in a few minutes, you will get:
+- A single DBLab Standard Edition (DBLab SE) installed in your infrastructure (Postgres.ai does not have access to it)
+- Additional components such as monitoring
+- Ready-to-use, well-tested, vendor-supported Postgres images for DBLab that are compatible with your source databases located in popular managed Postgres services like RDS, CloudSQL, Supabase, and Heroku
+- A DBLab SE subscription with guaranteed vendor support
 
-In this tutorial, we are going to create a "demo" PostgreSQL database and then set up a Database Lab Engine for it. Database Lab Engine will be installed on an AWS EC2 instance (alternatively, it can be an instance on another cloud platform such as GCP, or a bare-metal machine) with Ubuntu 18.04 or 20.04, and add an EBS volume to store PostgreSQL data directory. Optionally, you'll be able to skip creating the "demo" database and use an existing database instead.
+Using this tutorial, you can set up DBLab on your AWS account:
+- Make sure you have an AWS account. If you don’t, [sign up](https://aws.amazon.com/resources/create-account/) for one.
+- We'll be using a small instance for this tutorial: 2 vCPUs and 8 GiB RAM. It'll cost you about $0.20 every hour (total, sum for both AWS resources and DBLab SE subscription; see [Pricing](https://postgres.ai/pricing)).
+- If you're using a different cloud service or you already have hardware, that's okay. You can still use this guide. Just tweak the steps a bit to fit your setup.
 
-Steps:
+### Any database is compatible
+DBLab supports instant cloning and database branching for source Postgres databases located anywhere:
+- Managed Postgres services such as AWS RDS, Google CloudSQL, Heroku Postgres, DigitalOcean Postgres, Supabase, Timescale Cloud, and others
+- Any self-managed Postgres, either cloud-based or on-premises
+- Postgres-compatible database services such as Amazon Aurora PostgreSQL
 
-1. Prepare a virtual machine (we will use AWS EC2) with an additional disk to store data, install Docker to run containers, and ZFS to enable copy-on-write for thin cloning
-1. Configure and launch the Database Lab Engine
-1. Start using Database Lab API and client CLI to clone Postgres database in seconds
+### Choose any location for installation
+The location of your DBLab can be chosen according to your preference. The installation can be either cloud-based or on-premises. Two primary installation options are available:
+- **Create DBLab in your cloud**: this option, applicable for AWS, GCP, DigitalOcean, and Hetzner Cloud, includes resource provisioning such as VM and disk.
+- **BYOM** (Bring Your Own Machine): for other clouds or on-premises installations, ensure that a VM with Ubuntu 22.04 is installed and a suitable disk is attached. The installation tool will take care of the rest.
 
-:::tip
-Not using AWS? Not a problem: if you want to use any other cloud provider (like Google Cloud) or run your Database Lab on VMWare, or on bare metal; only the first step is going to be slightly different. In general, the overall procedure is the same.
+:::note Option 1: Create DBLab in your cloud
+This option applies to AWS, GCP, Digital Ocean, and Hetzner Cloud. It covers the provisioning of all necessary resources (VM and disk) and the installation of all software components, including DBLab.
 :::
 
-:::info
-LVM support as an alternative to ZFS first appeared in [version 0.3.0 of Database Lab](https://gitlab.com/postgres-ai/database-lab/-/releases). Note that LVM, unlike a ZFS, does not support multiple snapshots and related features.
+:::note Option 2: BYOM – Bring Your Own Machine
+If your cloud vendor is not supported by Option 1 or if you are using an on-premises solution, this option is suitable. You will need a VM or physical machine with a sufficiently large disk and Ubuntu 22.04 installed. The setup tool will then install all necessary components, including DBLab.
 :::
 
-## Step 1. Prepare a machine with disk, Docker, and ZFS
-### Prepare a machine
-Create an EC2 instance with Ubuntu 18.04 or 20.04, and add an EBS volume to store data. You can find detailed instructions on how to create an AWS EC2 instance [here](https://docs.aws.amazon.com/efs/latest/ug/gs-step-one-create-ec2-resources.html) (if you want to use Google Cloud, see [the GCP documentation](https://cloud.google.com/compute/docs/instances/create-start-instance)).
+In both scenarios, your data remains securely within your infrastructure.
 
-### (optional) Ports need to be open in the Security Group being used
-You will need to open the following ports (inbound rules in your Security Group):
-- `22`: to connect to the instance using SSH
-- `2345`: to work with Database Lab Engine API (can be changed in the Database Lab Engine configuration file)
-- `6000-6100`: to connect to PostgreSQL clones (this is the default port range used in the Database Lab Engine configuration file, and can be changed if needed)
 
-:::caution
-For real-life use, it is not a good idea to open ports to the public. Instead, it is recommended to use VPN or SSH port forwarding to access both Database Lab API and PostgreSQL clones, or to enforce encryption for all connections using NGINX with SSL and configuring SSL in PostgreSQL configuration.
+## Step 1. Deploying DBLab in Cloud
+### Prerequisites
+- Sign up for an account at https://console.postgres.ai/, using one of four supported methods: Google, LinkedIn, GitHub, GitLab
+- [Create](https://console.postgres.ai/addorg) a new organization
+- Inside your organization, go to the "Billing" section and add a new payment method:
+   - press the "Edit payment methods" button,
+   - you will see the Stripe portal – note it has the address `https://billing.stripe.com/...` (Postgres.ai partners with Stripe for simplified billing),
+   - add your payment methods there and close the page.
+
+### DBLab installation
+The first steps are trivial:
+- Go to "Database Lab / Instances"
+
+And then press the "Create" button to deploy DBLab in your cloud:
+<p align="center">
+    <img src="/assets/dle-platform/Platform_DLE_step1.png" alt="Database Lab Engine in Database Lab Platform: step 1" />
+</p>
+
+Select your cloud provider and region:
+<p align="center">
+    <img src="/assets/dle-platform/Platform_DLE_step2.png" alt="Database Lab Engine in Database Lab Platform: step 2" />
+</p>
+
+Choose the instance type:
+<p align="center">
+    <img src="/assets/dle-platform/Platform_DLE_step3.png" alt="Database Lab Engine in Database Lab Platform: step 3" />
+</p>
+
+Choose the volume type and size:
+<p align="center">
+    <img src="/assets/dle-platform/Platform_DLE_step4.png" alt="Database Lab Engine in Database Lab Platform: step 4" />
+</p>
+
+:::note
+In this example the database size is 100 GiB, we want to create 3 datasets to be able to create 3 snapshots, so the volume with size 300 GiB will be created.
 :::
 
-Additionally, to be able to install software, allow access to external resources using HTTP/HTTPS (edit the outbound rules in your Security Group):
-- `80` for HTTP
-- `443` for HTTPS
+Provide a name for your DBLab instance:
+<p align="center">
+    <img src="/assets/dle-platform/Platform_DLE_step5.png" alt="Database Lab Engine in Database Lab Platform: step 5" />
+</p>
 
-Here is how the inbound and outbound rules in your Security Group may look:
+Define DBLab verification token (a non-trivial, password-like value is recommended):
+<p align="center">
+    <img src="/assets/dle-platform/Platform_DLE_step6.png" alt="Database Lab Engine in Database Lab Platform: step 6" />
+</p>
 
-![EC2 security group inbound](/assets/ec2-security-group-inbound.png)
-
-![EC2 security group outbound](/assets/ec2-security-group-outbound.png)
-
-### Install Docker
-If needed, you can find the detailed installation guides for Docker [here](https://docs.docker.com/install/linux/docker-ce/ubuntu/).
-
-Install dependencies:
-```bash
-sudo apt-get update && sudo apt-get install -y \
-  apt-transport-https \
-  ca-certificates \
-  curl \
-  gnupg-agent \
-  software-properties-common
-```
-
-Install Docker:
-```bash
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-
-sudo add-apt-repository -y \
-  "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) \
-  stable"
-
-sudo apt-get update && sudo apt-get install -y \
-  docker-ce \
-  docker-ce-cli \
-  containerd.io
-```
-
-### Set $DBLAB_DISK
-Further, we will need environment variable `$DBLAB_DISK`. It must contain the device name that corresponds to the disk where all the Database Lab Engine data will be stored.
-
-To understand what needs to be specified in `$DBLAB_DISK` in your case, check the output of `lsblk`:
-```bash
-sudo lsblk
-```
-
-Some examples:
-- **AWS local ephemeral NVMe disks; EBS volumes for instances built on [the Nitro system](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/nvme-ebs-volumes.html)**:
-    ```bash
-    $ sudo lsblk
-    NAME    MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
-    ...
-    nvme0n1     259:0    0    8G  0 disk
-    └─nvme0n1p1 259:1    0    8G  0 part /
-    nvme1n1     259:2    0   777G  0 disk
-
-    $ export DBLAB_DISK="/dev/nvme1n1"
-    ```
-- **AWS EBS volumes for older (pre-Nitro) EC2 instances**:
-    ```bash
-    $ sudo lsblk
-    NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
-    ...
-    xvda    202:0    0    8G  0 disk
-    └─xvda1 202:1    0    8G  0 part /
-    xvdb    202:16   0  777G  0 disk
-
-    $ export DBLAB_DISK="/dev/xvdb"
-    ```
-
-### Set up either ZFS or LVM to enable thin cloning
-ZFS is a recommended way to enable thin cloning in Database Lab. LVM is also available, but has certain limitations:
-- much less flexible disk space consumption and risks for a clone to be destroyed during massive operations in it
-- inability to work with multiple snapshots ("time travel"), cloning always happens based on the most recent version of data
-
-<Tabs
-  groupId="file-systems"
-  defaultValue="zfs"
-  values={[
-    {label: 'ZFS', value: 'zfs'},
-    {label: 'LVM', value: 'lvm'},
-  ]
-}>
-<TabItem value="zfs">
-
-Install ZFS:
-```bash
-sudo apt-get install -y zfsutils-linux
-```
-
-Create a new ZFS storage pool (make sure `$DBLAB_DISK` has the correct value, see the previous step!):
-```bash
-sudo zpool create -f \
-  -O compression=on \
-  -O atime=off \
-  -O recordsize=128k \
-  -O logbias=throughput \
-  -m /var/lib/dblab/dblab_pool \
-  dblab_pool \
-  "${DBLAB_DISK}"
-```
-
-:::tip
-If you're going to keep the state of DLE up-to-date with the source (`physicalRestore.sync.enabled: true` in the DLE config), then consider lower values for `recordsize`. Using `recordsize=128k` might give you a better compression ratio and performance of massive IO-bound operations like the creation of an index, but worse performance of WAL replay, so the lag can be higher. And vice versa, with `recordsize=8k`, the performance of WAL replay will be better, but the trade-off is a lower compression ratio and longer duration of index creation.
+:::note
+You can use the "Generate random" button to generate a new unique token.
 :::
 
-And check the result using `zfs list` and `lsblk`, it has to be like this:
-```bash
-$ sudo zfs list
-NAME         USED  AVAIL  REFER  MOUNTPOINT
-dblab_pool   106K  777G    24K  /var/lib/dblab/dblab_pool
+Choose DBLab version:
+<p align="center">
+    <img src="/assets/dle-platform/Platform_DLE_step7.v2.png" alt="Database Lab Engine in Database Lab Platform: step 7" />
+</p>
 
-$ sudo lsblk
-NAME      MAJ:MIN  RM  SIZE RO TYPE MOUNTPOINT
-...
-nvme0n1     259:0    0     8G  0 disk
-└─nvme0n1p1 259:1    0     8G  0 part /
-nvme1n1     259:0    0   777G  0 disk
-├─nvme1n1p1 259:3    0   777G  0 part
-└─nvme1n1p9 259:4    0     8M  0 part
-```
+Provide SSH public keys:
+<p align="center">
+    <img src="/assets/dle-platform/Platform_DLE_step8.png" alt="Database Lab Engine in Database Lab Platform: step 8" />
+</p>
 
-</TabItem>
-<TabItem value="lvm">
-
-Install LVM2:
-```bash
-sudo apt-get install -y lvm2
-```
-
-Create an LVM volume (make sure `$DBLAB_DISK` has the correct value, see the previous step!):
-```bash
-# Create Physical Volume and Volume Group
-sudo pvcreate "${DBLAB_DISK}"
-sudo vgcreate dblab_vg "${DBLAB_DISK}"
-
-# Create Logical Volume and filesystem
-sudo lvcreate -l 10%FREE -n pool_lv dblab_vg
-sudo mkfs.ext4 /dev/dblab_vg/pool_lv
-
-# Mount Database Lab pool
-sudo mkdir -p /var/lib/dblab/dblab_vg-pool_lv
-sudo mount /dev/dblab_vg/pool_lv /var/lib/dblab/dblab_vg-pool_lv
-
-# Bootstrap LVM snapshots so they could be used inside Docker containers
-sudo lvcreate --snapshot --extents 10%FREE --yes --name dblab_bootstrap dblab_vg/pool_lv
-sudo lvremove --yes dblab_vg/dblab_bootstrap
-```
-
-:::info
-Logical volume size needs to be defined at volume creation time. By default, we allocate 10% of the available memory. If the volume size exceeds the allocated memory, the volume will be destroyed and potentially lead to data loss. To prevent volumes from being destroyed, consider enabling the LVM auto-extend feature.
+:::note
+These SSH public keys will be added to the DBLab server's  ~/.ssh/authorized_keys  file. Providing at least one public key is recommended to ensure access to the server after deployment.
 :::
 
-To enable the auto-extend feature, the following LVM configuration options need to be updated:
-- `snapshot_autoextend_threshold`: auto-extend a "snapshot" volume when its usage exceeds the specified percentage
-- `snapshot_autoextend_percent`: auto-extend a "snapshot" volume by the specified percentage of the available space once the usage exceeds the threshold
+Review the specifications of the virtual machine, and click "Create DBLab":
+<p align="left">
+    <img src="/assets/dle-platform/Platform_DLE_step9.v2.png" alt="Database Lab Engine in Database Lab Platform: step 9" width="50%"/>
+</p>
 
-Update LVM configuration (located in `/etc/lvm/lvm.conf` by default):
-```bash
-sudo sed -i 's/snapshot_autoextend_threshold.*/snapshot_autoextend_threshold = 70/g' /etc/lvm/lvm.conf
-sudo sed -i 's/snapshot_autoextend_percent.*/snapshot_autoextend_percent = 20/g' /etc/lvm/lvm.conf
-```
+Select the installation method and follow the instructions to create server and install DBLab SE:
+<p align="center">
+    <img src="/assets/dle-platform/Platform_DLE_step10.v3.png" alt="Database Lab Engine in Database Lab Platform: step 10" />
+</p>
 
-</TabItem>
-</Tabs>
-
-## Step 2. Configure and launch the Database Lab Engine
-:::caution
-To make your work with Database Lab API secure, do not open Database Lab API and Postgres clone ports to the public and instead use VPN or SSH port forwarding. It is also a good idea to encrypt all the traffic: for Postgres clones, set up SSL in the configuration files; and for Database Lab API, install, and configure NGINX with a self-signed SSL certificate. See the [How to Secure Database Lab Engine](/docs/how-to-guides/administration/engine-secure).
+:::note
+To perform the initial deployment, a new temporary SSH key will be generated and added to the Cloud. After the deployment is completed, this key will be deleted and the SSH key that was specified in the "ssh_public_keys" variable will be added to the server.
 :::
 
-### Prepare database data directory
-Next, we need to get the data to the Database Lab Engine server. For our testing needs, we have 3 options:
-1. "Generated database": generate a synthetic database for testing purposes
-1. "Physical copy" (`pg_basebackup`): copy an existing database (perform "think cloning" once) using a "physical" method such as `pg_basebackup`
-1. "Logical copy" (dump/restore): copy an existing database using the "logical" method (dump/restore)
+After running the deployment command, You need to wait a few minutes, while all resources are provisioned and DBLab setup is complete. Check out the "usage instructions" – once DBLab API and UI are ready, you'll see the ordered list of instructions on how to connect to UI and API.
 
-<Tabs
-  groupId="tutorial-data-sources"
-  defaultValue="generated-database"
-  values={[
-    {label: '1. Generated database', value: 'generated-database'},
-    {label: '2. Physical copy (pg_basebackup)', value: 'physical-copy'},
-    {label: '3. Logical copy (dump/restore)', value: 'logical-copy'},
-  ]
-}>
-<TabItem value="generated-database">
-
-If you don't have an existing database for testing, then let's just generate some synthetic database in the data directory ("PGDATA") located at `/var/lib/dblab/dblab_pool/data`. A simple way of doing this is to use PostgreSQL standard benchmarking tool, `pgbench`. With scale factor `-s 100`, the database size will be ~1.4 GiB; feel free to adjust the scale factor value according to your needs.
-
-To generate PGDATA with `pgbench`, we are going to run a regular Docker container with Postgres temporarily. We will use `POSTGRES_HOST_AUTH_METHOD=trust` to allow a connection without authentication (not suitable for real-life use).
+Example:
 
 ```bash
-sudo docker run \
-  --name dblab_pg_initdb \
-  --label dblab_sync \
-  --env PGDATA=/var/lib/postgresql/pgdata \
-  --env POSTGRES_HOST_AUTH_METHOD=trust \
-  --volume /var/lib/dblab/dblab_pool/data:/var/lib/postgresql/pgdata \
-  --detach \
-  postgres:15-alpine
+TASK [deploy-finish : Print usage instructions] ****************************************************************************************************************************************************************
+ok: [ubuntu@35.183.123.243] => {
+    "msg": [
+        "1) Verification token (ensure to securely store it):                            ",
+        "       tEsuMyA3M108AZYEXWNXDqNJfFp8vefx                                             ",
+        "                                                                                ",
+        "2) Use SSH port forwarding for UI / API / CLI:                                      ",
+        "       ssh -N -L 2346:127.0.0.1:2346 ubuntu@35.183.123.243 -i YOUR_PRIVATE_KEY     ",
+        "                                                                                ",
+        "3) DBLab UI:          http://127.0.0.1:2346                                     ",
+        "                                                                                ",
+        "4) DBLab API:                                                                   ",
+        "  - API URL:          http://127.0.0.1:2346/api                                 ",
+        "  - API docs:         https://api.dblab.dev/                                    ",
+        "                                                                                ",
+        "5) DBLab CLI:                                                                   ",
+        "  - CLI ('dblab') setup:                                                        ",
+        "        export DBLAB_CLI_VERSION=3.4.0                                          ",
+        "        curl -sSL dblab.sh | bash                                               ",
+        "        dblab init --environment-id=dle-demo --token=tEsuMyA3M108AZYEXWNXDqNJfFp8vefx --url=http://127.0.0.1:2346/api",
+        "  - CLI docs:         https://cli-docs.dblab.dev/                               ",
+        "                                                                                ",
+        "6) Monitoring:                                                                  ",
+        "  - SSH port forwarding:                                                        ",
+        "       ssh -N -L 19999:127.0.0.1:19999 ubuntu@35.183.123.243 -i YOUR_PRIVATE_KEY    ",
+        "  - Monitoring URL:   http://127.0.0.1:19999                                     ",
+        "                                                                                ",
+        "7) To connect to clones, also use SSH port forwarding. E.g., for clone 6000:     ",
+        "       ssh -N -L 6000:127.0.0.1:6000 ubuntu@35.183.123.243 -i YOUR_PRIVATE_KEY      ",
+        "  - and then use: 'host=127.0.0.1 port=6000 user=YOUR_USER dbname=postgres'     "
+    ]
+}
 ```
-
-Create the `test` database:
-```bash
-sudo docker exec -it dblab_pg_initdb psql -U postgres -c 'create database test'
-```
-
-Generate data in the `test` database using `pgbench`:
-```bash
-# 10,000,000 accounts, ~1.4 GiB of data.
-sudo docker exec -it dblab_pg_initdb pgbench -U postgres -i -s 100 test
-```
-
-PostgreSQL data directory is ready. Now let's stop and remove the container:
-```bash
-sudo docker stop dblab_pg_initdb
-sudo docker rm dblab_pg_initdb
-```
-
-Now, we need to take care of Database Lab Engine configuration. Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.4.0/engine/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
-```bash
-mkdir -p ~/.dblab/engine/configs
-
-curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/v3.4.0/engine/configs/config.example.logical_generic.yml \
-  --output ~/.dblab/engine/configs/server.yml
-```
-
-Open `~/.dblab/engine/configs/server.yml` and edit the following options:
-- Set secure `server:verificationToken`, it will be used to authorize API requests to the Database Lab Engine
-- Remove `logicalDump` section completely
-- Remove `logicalRestore` section completely
-- Leave `logicalSnapshot` as is
-- If your Postgres major version is not 14 (default), set the proper version in Postgres Docker image tag:
-    - `databaseContainer:dockerImage`
-
-</TabItem>
-<TabItem value="physical-copy">
-
-If you want to try Database Lab for an existing database, you need to copy the data to PostgreSQL data directory on the Database Lab server, to the directory `/var/lib/dblab/dblab_pool/data`. This step is called "thick cloning". It only needs to be completed once. There are several options to physically copy the data directory. Here we will use the standard PostgreSQL tool, `pg_basebackup`. However, we are not going to use it directly (although, it is possible) – we will specify its options in the Database Lab Engine configuration file.
-
-First, copy the example configuration file[`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.4.0/engine/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
-```bash
-mkdir -p ~/.dblab/engine/configs
-
-curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/v3.4.0/engine/configs/config.example.physical_generic.yml \
-  --output ~/.dblab/engine/configs/server.yml
-```
-
-Next, open `~/.dblab/engine/configs/server.yml` and edit the following options:
-- Set secure `server:verificationToken`, it will be used to authorize API requests to the Database Lab Engine
-- In `retrieval:spec:physicalRestore:options:envs`, specify how to reach the source Postgres database to run `pg_basebackup`: `PGUSER`, `PGPASSWORD`, `PGHOST`, and `PGPORT`
-- If your Postgres major version is not 14 (default), set the proper version in Postgres Docker image tag:
-    - `databaseContainer:dockerImage`
-
-:::tip
-Optionally, you might want to keep PGDATA up-to-date (which is being continuously updated). Good news is that this is supported if you chose the "physical" method of initialization for the data directory. To have PGDATA updated continuously, configure `retrieval:spec:physicalRestore:restore_command` option by specifying the value normally used in `restore_command` on PostgreSQL replicas based on WAL shipping.
-:::
-
-</TabItem>
-<TabItem value="logical-copy">
-
-If you want to try Database Lab for an existing database, you need to copy the data to the PostgreSQL data directory on the Database Lab server, to the directory `/var/lib/dblab/dblab_pool/data`. This step is called "thick cloning". It only needs to be completed once.
-
-Here we will configure Database Lab Engine to use a "logical" method of thick cloning, dump/restore.
-
-First, copy the configuration example configuration file[`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.4.0/engine/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
-```bash
-mkdir -p ~/.dblab/engine/configs
-
-curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/v3.4.0/engine/configs/config.example.logical_generic.yml \
-  --output ~/.dblab/engine/configs/server.yml
-```
-
-Now open `~/.dblab/engine/configs/server.yml` and edit the following options:
-- Set secure `server:verificationToken`, it will be used to authorize API requests to the Database Lab Engine
-- Set connection options in `retrieval:spec:logicalDump:options:source:connection`:
-    - `dbname`: database name to connect to
-    - `host`: database server host
-    - `port`: database server port
-    - `username`: database user name
-    - `password`: database master password (can be also set as `PGPASSWORD` environment variable and passed to the container using `--env` option of `docker run`)
-- If your Postgres major version is not 14 (default), set the proper version in Postgres Docker image tag:
-    - `databaseContainer:dockerImage`
-
-</TabItem>
-</Tabs>
-
-### Launch Database Lab server
-
-<Tabs
-  groupId="tutorial-data-sources"
-  defaultValue="generated-database"
-  values={[
-    {label: '1. Generated database', value: 'generated-database'},
-    {label: '2. Physical copy (pg_basebackup)', value: 'physical-copy'},
-    {label: '3. Logical copy (dump/restore)', value: 'logical-copy'},
-  ]
-}>
-<TabItem value="generated-database">
-
-```bash
-sudo docker run \
-  --name dblab_server \
-  --label dblab_control \
-  --privileged \
-  --publish 127.0.0.1:2345:2345 \
-  --volume /var/run/docker.sock:/var/run/docker.sock \
-  --volume /var/lib/dblab:/var/lib/dblab/:rshared \
-  --volume ~/.dblab/engine/configs:/home/dblab/configs \
-  --volume ~/.dblab/engine/meta:/home/dblab/meta \
-  --volume ~/.dblab/engine/logs:/home/dblab/logs \
-  --volume /sys/kernel/debug:/sys/kernel/debug:rw \
-  --volume /lib/modules:/lib/modules:ro \
-  --volume /proc:/host_proc:ro \
-  --env DOCKER_API_VERSION=1.39 \
-  --detach \
-  --restart on-failure \
-  postgresai/dblab-server:3.4.0 
-```
-
-</TabItem>
-<TabItem value="physical-copy">
-
-```bash
-sudo docker run \
-  --name dblab_server \
-  --label dblab_control \
-  --privileged \
-  --publish 127.0.0.1:2345:2345 \
-  --volume /var/run/docker.sock:/var/run/docker.sock \
-  --volume /var/lib/dblab:/var/lib/dblab/:rshared \
-  --volume ~/.dblab/engine/configs:/home/dblab/configs \
-  --volume ~/.dblab/engine/meta:/home/dblab/meta \
-  --volume ~/.dblab/engine/logs:/home/dblab/logs \
-  --volume /sys/kernel/debug:/sys/kernel/debug:rw \
-  --volume /lib/modules:/lib/modules:ro \
-  --volume /proc:/host_proc:ro \
-  --env DOCKER_API_VERSION=1.39 \
-  --detach \
-  --restart on-failure \
-  postgresai/dblab-server:3.4.0 
-```
-
-</TabItem>
-<TabItem value="logical-copy">
-
-```bash
-sudo docker run \
-  --name dblab_server \
-  --label dblab_control \
-  --privileged \
-  --publish 127.0.0.1:2345:2345 \
-  --volume /var/run/docker.sock:/var/run/docker.sock \
-  --volume /var/lib/dblab:/var/lib/dblab/:rshared \
-  --volume ~/.dblab/engine/configs:/home/dblab/configs \
-  --volume ~/.dblab/engine/meta:/home/dblab/meta \
-  --volume ~/.dblab/engine/logs:/home/dblab/logs \
-  --volume /sys/kernel/debug:/sys/kernel/debug:rw \
-  --volume /lib/modules:/lib/modules:ro \
-  --volume /proc:/host_proc:ro \
-  --env DOCKER_API_VERSION=1.39 \
-  --detach \
-  --restart on-failure \
-  postgresai/dblab-server:3.4.0 
-```
-
-</TabItem>
-</Tabs>
-
-:::info
-Parameter `--publish 127.0.0.1:2345:2345` means that only local connections will be allowed.
-
-To allow external connections, consider either using additional software such as NGINX or Envoy or changing this parameter. Removing the host/IP part (`--publish 2345:2345`) allows listening to all available network interfaces.
-See more details in the official [Docker command-line reference](https://docs.docker.com/engine/reference/commandline/run/#publish-or-expose-port--p---expose).
+:::note
+Save the data from the "Print usage instructions" task, because the Postgres.ai Platform does not save this data on its side.
 :::
 
 
-### How to check the Database Lab Engine logs
+### Open UI
+First, set up SSH port forwarding for UI port 2346:
 ```bash
-sudo docker logs dblab_server -f
+# Replace with your server IP
+ssh -N -L 2346:127.0.0.1:2346 ubuntu@35.183.123.243
 ```
 
-### Need to start over? Here is how to clean up
-If something went south and you need to make another attempt at the steps in this tutorial, use the following steps to clean up:
-```bash
-# Stop and remove all Docker containers
-sudo docker ps -aq | xargs --no-run-if-empty sudo docker rm -f
+Now UI should be available at http://127.0.0.1:2346
+<p align="center">
+    <img src="/assets/dle-platform/Platform_DLE_step11.v2.png" alt="Database Lab Engine in Database Lab Platform: step 11" />
+</p>
 
-# Remove all Docker images
-sudo docker images -q | xargs --no-run-if-empty sudo docker rmi
 
-# Clean up the data directory
-sudo rm -rf /var/lib/dblab/dblab_pool/data/*
+## Step 2. Configure DBLab and run the data retrieval
 
-# Remove dump directory
-sudo umount /var/lib/dblab/dblab_pool/dump
-sudo rm -rf /var/lib/dblab/dblab_pool/dump
+:::note
+Currently, configuring DBLab in UI allows config changes only for the "logical" mode of data retrieval (dump/restore) – the only available method for managed PostgreSQL cloud services such as RDS Postgres, RDS Aurora Postgres, Azure Postgres, or Heroku. "Physical" mode is not yet supported in UI but is still possible (thru SSH connection and [editing DBLab config file directly](/docs/how-to-guides/administration/engine-manage)). More about [various data retrieval options for DBLab](/docs/how-to-guides/administration/data).
+:::
 
-# To start from the very beginning: destroy ZFS storage pool
-sudo zpool destroy dblab_pool
-```
+Enter the verification token, you have created earlier.
+
+<p align="center">
+    <img src="/assets/dle-platform/DLE_config_step1.png" alt="Database Lab Engine configuration: step 1" />
+</p>
+
+Now it's time to define DB credentials of the source to initiate database privisioning – this is how DBLab will be initialized, performing the very first data retrieval, and then the same parameters will be used for scheduled full refreshes according to the schedule defined. Fill the forms, and use the information in the tooltips if needed.
+
+<p align="center">
+    <img src="/assets/dle-platform/DLE_config_step2.png" alt="Database Lab Engine configuration: step 2" />
+</p>
+
+Then press "Test connection" to check access to the source database from which the dump will be created.
+
+:::note
+You can use the "Get version from source" and "Get from source database" buttons to get the PostgreSQL version and the necessary Query tuning parameters from the source database server.
+:::
+
+<p align="center">
+    <img src="/assets/dle-platform/DLE_config_step3.png" alt="Database Lab Engine configuration: step 3" />
+</p>
+
+Apply changes and press "Switch to Overview" to track the process of data retrieval.
+
+<p align="center">
+    <img src="/assets/dle-platform/DLE_config_step4.png" alt="Database Lab Engine configuration: step 4" />
+</p>
+
+In the Overview tab, you can see the status of the data retrieval. Note that the initial data retrieval takes some time – it depends on the source database size. However, DBLab API, CLI, and UI are already available for use. To observe the current activity on both source and target sides use "Show details".
+
+<p align="center">
+    <img src="/assets/dle-platform/DLE_config_step5.png" alt="Database Lab Engine configuration: step 5" />
+</p>
+
+<p align="center">
+    <img src="/assets/dle-platform/DLE_config_step6.png" alt="Database Lab Engine configuration: step 6" />
+</p>
+
+<p align="center">
+    <img src="/assets/dle-platform/DLE_config_step7.png" alt="Database Lab Engine configuration: step 7" />
+</p>
+
+Once the retrieval is done, you can create your first clone. Happy cloning!
 
 ## Step 3. Start cloning!
-### CLI
-#### Install Database Lab client CLI
-CLI can be used on any machine, you just need to be able to reach the Database Lab Engine API (port 2345 by default). In this tutorial, we will install and use CLI locally on the EC2 instance.
+### UI
+#### Create a clone
+1. Click the **Create clone** button.
+ ![Database Lab engine clone creation page](/assets/dle-platform/DLE_create_clone1.png)
+1. Fill the **ID** field with a meaningful name.
+1. (optional) By default, the latest data snapshot (closest to production state) will be used to provision a clone. You can choose another snapshot if any.
+1. Fill **database credentials**. Remember the password (it will not be available later, Database Lab Platform does not store it!) – you will need to use it to connect to the clone.
+1. Click the **Create clone** button and wait for a clone to be provisioned. The process should take only a few seconds.
+![Database Lab engine clone creation page](/assets/dle-platform/DLE_create_clone2.png)
+1. You will be redirected to the **Database Lab clone** page.
+    ![Database Lab engine clone page](/assets/dle-platform/DLE_create_clone3.png)
+:::note
+You also can click the "Enable deletion protection" box. When enabled no one can delete this clone and automated deletion is also disabled.
+:::
 
+#### Connect to a clone
+1. From the **Database Lab clone** page under section **Connection info**, copy the **psql connection string** field contents by clicking the **Copy** button.
+    ![Database Lab clone page / psql connection string](/assets/dle-platform/DLE_connect_clone1.png)
+2. To connect to clones, also use SSH port forwarding:
 ```bash
-curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/master/engine/scripts/cli_install.sh | bash
-sudo mv ~/.dblab/dblab /usr/local/bin/dblab
+# Replace with your server IP and clone port
+ssh -N -L 6000:127.0.0.1:6000 ubuntu@35.183.123.243
+```
+3. Here we assume that you have `psql` installed on your working machine. In the terminal, type `psql` and paste the **psql connection string** field contents. Change the database name `DBNAME` parameter, you can always use `postgres` for the initial connection.
+4. Run the command and type the password you've set during the clone creation.
+5. Test established connection by listing tables in the database using `\dt`.
+```bash
+vitabaks@MacBook-Pro-Vitaliy ~ % psql "host=localhost port=6000 user=demo_user dbname=test"  
+Password for user demo_user: 
+psql (14.6 (Homebrew), server 15.3 (Debian 15.3-1.pgdg110+1))
+WARNING: psql major version 14, server major version 15.
+         Some psql features might not work.
+Type "help" for help.
+
+test=# \dt
+              List of relations
+ Schema |       Name       | Type  |  Owner   
+--------+------------------+-------+----------
+ public | pgbench_accounts | table | postgres
+ public | pgbench_branches | table | postgres
+ public | pgbench_history  | table | postgres
+ public | pgbench_tellers  | table | postgres
+(4 rows)
+
+test=# \q
 ```
 
-Initialize CLI configuration:
+### CLI
+#### Install DBLab client CLI (`dblab`)
+CLI can be used on any machine, you just need to be able to reach the DBLab UI/API (port 2346).
+
+```bash
+curl -sSL dblab.sh | bash
+```
+
+Set up SSH port forwarding for UI/API port 2346:
+```bash
+# Replace with your server IP
+ssh -N -L 2346:127.0.0.1:2346 ubuntu@35.183.123.243
+```
+
+Initialize CLI configuration (assuming that `localhost:2346` forwards to DBLab machine's port 2346):
 ```bash
 dblab init \
-  --environment-id=tutorial \
-  --url=http://localhost:2345 \
-  --token=secret_token \
+  --environment-id=dle-demo \
+  --token=tEsuMyA3M108AZYEXWNXDqNJfFp8vefx \
+  --url=http://127.0.0.1:2346/api \
   --insecure
 ```
 
 Check the configuration by fetching the status of the instance:
-
 ```bash
 dblab instance status
 ```
@@ -479,58 +312,72 @@ dblab clone create \
   --id my_first_clone
 ```
 
+To connect to clones, also use SSH port forwarding:
+```bash
+# Replace with your server IP and clone port
+ssh -N -L 6000:127.0.0.1:6000 ubuntu@35.183.123.243
+```
+
 After a second or two, if everything is configured correctly, you will see that the clone is ready to be used. It should look like this:
 ```json
 {
-    "id": "botcmi54uvgmo17htcl0",
-    "snapshot": {
-        "id": "dblab_pool@initdb",
-        "createdAt": "2020-02-04T23:20:04Z",
-        "dataStateAt": "2020-02-04T23:20:04Z"
-    },
+    "id": "my_first_clone",
     "protected": false,
-    "deleteAt": "",
-    "createdAt": "2020-02-05T14:03:52Z",
+    "deleteAt": null,
+    "createdAt": "2023-08-15T21:24:42Z",
     "status": {
         "code": "OK",
         "message": "Clone is ready to accept Postgres connections."
     },
     "db": {
-        "connStr": "host=111.222.000.123 port=6000 user=dblab_user_1",
-        "host": "111.222.000.123",
+        "connStr": "host=localhost port=6001 user=dblab_user_1 dbname=postgres",
+        "host": "localhost",
         "port": "6000",
         "username": "dblab_user_1",
-        "password": ""
+        "password": "",
+        "dbName": ""
+    },
+    "snapshot": {
+        "id": "dblab_pool/dataset_2@snapshot_20230815202914",
+        "createdAt": "2023-08-15T20:30:47Z",
+        "dataStateAt": "2023-08-15T20:29:14Z",
+        "pool": "dblab_pool/dataset_2",
+        "numClones": 2,
+        "physicalSize": "0 B",
+        "logicalSize": "587 MiB"
     },
     "metadata": {
-        "cloneDiffSize": 479232,
-        "cloningTime": 2.892935211,
-        "maxIdleMinutes": 0
-    },
-    "project": ""
+        "cloningTime": 1.077492737,
+        "maxIdleMinutes": 120,
+        "cloneDiffSize": "182 KiB",
+        "logicalSize": "587 MiB"
+    }
 }
 ```
 
 #### Connect to a clone
-Install psql:
-```bash
-sudo apt-get install postgresql-client
-```
+You can work with the clone you created earlier using any PostgreSQL client, for example, `psql`. To install `psql`:
+- macOS (with [Homebrew](https://brew.sh/)):
+    ```bash
+    brew install libpq
+    ```
+- Ubuntu:
+    ```bash
+    sudo apt-get install postgresql-client
+    ```
 
-Now you can work with this clone using any PostgreSQL client, for example, `psql`. Use the following connection info (`db` section of the response of the `dblab clone create` command):
+Use connection info (the `db` section of the response of the `dblab clone create` command):
 ```bash
 PGPASSWORD=secret_password psql \
   "host=localhost port=6000 user=dblab_user_1 dbname=test"
 ```
 
-Check the available table:
+Check the available tables:
 ```
-\d+
+\dt+
 ```
 
-Now let's see how quickly we can reset the state of the clone. Delete some data or drop some table.
-
-To reset, use the `clone reset` command (replace `my_first_clone` with the ID of your clone if you changed it). You can do it not leaving psql -- for that, use the `\!` command:
+Now let's see how quickly we can reset the state of the clone. Delete some data or drop a table. Do any damage you want! And then use the `clone reset` command (replace `my_first_clone` with the ID of your clone if you changed it). You can do it not leaving `psql` – for that, use the `\!` command:
 ```bash
 \! dblab clone reset my_first_clone
 ```
@@ -547,47 +394,16 @@ Reconnect to the clone:
 \c
 ```
 
-Now check the database objects you've dropped or partially deleted – everything should be the same as when we started.
+Now check the database objects you've dropped or partially deleted – the "damage" has gone.
 
-For more, see [the full client CLI reference](/docs/database-lab/cli-reference).
+For more, see [the full client CLI reference](/docs/reference-guides/dblab-client-cli-reference).
 
+## Troubleshooting
+To troubleshot:
+- Use SSH to connect to the DBLab server
+- Check the containers that are running: `sudo docker ps`
+- Check the DBLab container's logs: `sudo docker logs dblab_server`
+- If needed, check Postgres logs for the main branch. They are located in `/var/lib/dblab/dblab_pool/dataset_1/data/log` for the first snapshot of the database, in ``/var/lib/dblab/dblab_pool/dataset_2/data/log` for the second one (if it's already fetched); if you've configured DBLab to have more than 2 snapshots, check out the other directories too (`/var/lib/dblab/dblab_pool/dataset_$N/data/log`, where `$N` is the snapshot number, starting with `1`)
 
-### GUI (Database Lab Platform)
-To use the GUI, you need to [sign up for Database Lab Platform](https://postgres.ai/console).
-
-
-#### Add Database Lab Engine to the Platform
-1. On the **Database Lab instances** page of your organization click the **Add instance** button.
-![Database Lab Engine / Database Lab instances](/assets/guides/add-engine-instance-1.png)
-1. On the **Add instance** page fill in the following:
-    - `Project`: choose any project name, it will be created automatically
-    - `Verification token`: specify the same verification token that you've used in the Database Lab Engine configuration file
-    - `URL`: Database Lab API server (EC2 instance public IP or hostname, specify port if needed, e.g. `https://my-domain.com/dblab-engine/` or `http://30.100.100.1:2345`)
-
-![Database Lab Engine / Add instance](/assets/guides/add-engine-instance-2.png)
-1. Click the **Verify URL** button to check the availability of the Engine. Ignore the warning about insecure connection – in this Tutorial, we have skipped some security-related steps.
-1. Click the **Add** button to add the instance to the Platform.
-
-#### Create a clone
-1. Go to the **Database Lab instance** page.
-1. Click the **Create clone** button.
-  ![Database Lab engine page / Create clone](/assets/guides/create-clone-1.png)
-1. Fill the **ID** field with a meaningful name.
-1. (optional) By default, the latest data snapshot (closest to production state) will be used to provision a clone. You can choose another snapshot if any.
-1. Fill **database credentials**. Remember the password (it will not be available later, Database Lab Platform does not store it!) – you will need to use it to connect to the clone.
-1. Click the **Create clone** button and wait for a clone to be provisioned. The process should take only a few seconds.
-![Database Lab engine clone creation page](/assets/guides/create-clone-2.png)
-1. You will be redirected to the **Database Lab clone** page.
-    ![Database Lab engine clone page](/assets/guides/create-clone-3.png)
-
-#### Connect to a clone
-1. From the **Database Lab clone** page under section **Connection info**, copy the **psql connection string** field contents by clicking the **Copy** button.
-    ![Database Lab clone page / psql connection string](/assets/guides/connect-clone-1.png)
-1. Here we assume that you have `psql` installed on your working machine. In the terminal, type `psql` and paste the **psql connection string** field contents. Change the database name `DBNAME` parameter, you can always use `postgres` for the initial connection.
-1. Run the command and type the password you've set during the clone creation.
-1. Test established connection by listing tables in the database using `\d`.
-    ![Terminal / psql](/assets/guides/connect-clone-2.png)
-
-:::info Have questions?
-Reach out to our team, we'll be happy to help! Use the Intercom widget located at the right bottom corner.
-:::
+## Getting support
+With DBLab installed from Database Lab Platform, guaranteed vendor support is included – please use [one of the available ways to contact](https://postgres.ai/contact).

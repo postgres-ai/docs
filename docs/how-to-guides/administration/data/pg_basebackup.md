@@ -4,7 +4,7 @@ sidebar_label: "pg_basebackup"
 ---
 
 :::info
-As the first step, you need to set up a machine for Database Lab Engine instance. See the guide [Set up a machine for the Database Lab Engine](/docs/how-to-guides/administration/machine-setup).
+As the first step, you need to set up a machine for Database Lab Engine instance. See the [guide](/docs/how-to-guides/administration/install-dle-manually).
 :::
 
 ## Configuration

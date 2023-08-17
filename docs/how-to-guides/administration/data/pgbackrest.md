@@ -6,7 +6,7 @@ sidebar_label: "pgBackRest"
 Native support of pgBackRest has been implemented in DLE 3.1.
 
 :::info
-As the first step, you need to set up a machine. See the guide [Set up a machine for the Database Lab Engine](/docs/how-to-guides/administration/machine-setup).
+As the first step, you need to set up a machine. See the [guide](/docs/how-to-guides/administration/install-dle-manually).
 :::
 
 ## Configuration

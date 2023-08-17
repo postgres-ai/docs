@@ -41,11 +41,11 @@ module.exports = {
           "how-to-guides/administration/index",
           "how-to-guides/administration/install-dle-from-postgres-ai",
           "how-to-guides/administration/install-dle-from-aws-marketplace",
+          "how-to-guides/administration/install-dle-manually",
           "how-to-guides/administration/postgresql-configuration",
           "how-to-guides/administration/engine-manage",
           "how-to-guides/administration/joe-manage",
           "how-to-guides/administration/engine-secure",
-          "how-to-guides/administration/machine-setup",
           "how-to-guides/administration/logical-full-refresh",
           "how-to-guides/administration/ci-observer-postgres-log-masking",
           {

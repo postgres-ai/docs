@@ -329,65 +329,54 @@ module.exports = {
       {
         redirects: [
           {
-            to: '/docs/roadmap', // string
             from: ['/docs/oldDocPathFrom2019', '/docs/legacyDocPathFrom2016'], // string | string[]
+            to: '/docs/roadmap' // string
           },
           {
             to: '/docs/reference-guides/database-lab-engine-api-reference',
             from: '/docs/database-lab/api-reference',
           },
           {
-            to: '/docs/reference-guides/dblab-client-cli-reference',
             from: '/docs/database-lab/cli-reference',
+            to: '/docs/reference-guides/dblab-client-cli-reference'
           },
           {
-            to: '/docs/reference-guides/database-lab-engine-components',
             from: '/docs/database-lab/components',
+            to: '/docs/reference-guides/database-lab-engine-components'
           },
           {
-            to: '/docs/reference-guides/database-lab-engine-configuration-reference',
             from: '/docs/database-lab/config-reference',
+            to: '/docs/reference-guides/database-lab-engine-configuration-reference'
           },
           {
-            to: '/docs/reference-guides/joe-bot-configuration-reference',
             from: '/docs/joe-bot/config-reference',
+            to: '/docs/reference-guides/joe-bot-configuration-reference'
           },
           {
-            to: '/docs/reference-guides/joe-bot-commands-reference',
             from: '/docs/joe-bot/commands-reference',
+            to: '/docs/reference-guides/joe-bot-commands-reference'
           },
           {
-            to: '/docs/reference-guides/db-migration-checker-configuration-reference',
             from: '/docs/db-migration-checker/config-reference',
-          },
-          { to: '/docs/how-to-guides', from: '/docs/guides' },
-          {
-            to: '/docs/how-to-guides/administration',
-            from: '/docs/guides/administration',
-          },
-          {
-            to: '/docs/how-to-guides/administration/data',
-            from: '/docs/guides/data',
-          },
-          { to: '/docs/how-to-guides/cli', from: '/docs/guides/cli' },
-          { to: '/docs/how-to-guides/cloning', from: '/docs/guides/cloning' },
-          { to: '/docs/how-to-guides/joe-bot', from: '/docs/guides/joe-bot' },
-          { to: '/docs/how-to-guides/platform', from: '/docs/guides/platform' },
-          {
-            to: '/docs/how-to-guides/platform/onboarding',
-            from: '/docs/tutorials/onboarding',
+            to: '/docs/reference-guides/db-migration-checker-configuration-reference'
           },
           {
             to: '/blog/20220106-explain-analyze-needs-buffers-to-improve-the-postgres-query-optimization-process',
             from: '/blog/20220106-explain-analyze-needs-buffers-to-improve-postgres-query-optimization process',
           },
+          { to: '/docs/how-to-guides', from: '/docs/guides' },
+          { from: '/docs/guides/administration', to: '/docs/how-to-guides/administration' },
+          { from: '/docs/guides/data', to: '/docs/how-to-guides/administration/data' },
+          { from: '/docs/guides/cli', to: '/docs/how-to-guides/cli' },
+          { from: '/docs/guides/cloning', to: '/docs/how-to-guides/cloning' },
+          { from: '/docs/guides/joe-bot', to: '/docs/how-to-guides/joe-bot' },
+          { from: '/docs/guides/platform', to: '/docs/how-to-guides/platform' },
+          { from: '/docs/tutorials/onboarding', to: '/docs/how-to-guides/platform/onboarding' },
+          { from: '/support', to: '/contact/' },
+          { from: '/careers/dba', to: '/careers/dbe' },
           {
-            to: '/contact/',
-            from: '/support',
-          },
-          {
-            to: '/careers/dbe',
-            from: '/careers/dba',
+            from: '/docs/how-to-guides/administration/machine-setup',
+            to: '/docs/how-to-guides/administration/install-dle-manually' 
           },
         ],
       },
