@@ -5,7 +5,7 @@ const blog = [
     date: '2023-08-19 03:51:12',
     title: 'DBLab 3.4: new name, SE installer, and lots of improvements',
     description: 'DBLab Engine 3.4 released!',
-    image: '/assets/thumbnails/dblab-3.4-blog.png',
+    image: '/assets/thumbnails/dblab-3.4-blog-upd.png',
   },
   {
     link: 'blog/20230722-10-postgres-tips-for-beginners',
