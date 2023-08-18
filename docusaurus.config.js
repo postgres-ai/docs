@@ -53,7 +53,7 @@ module.exports = {
     announcementBar: {
       id: 'advisory_group', // Any value that will identify this message to save the hidden status.
       content:
-        "<a href='/blog/20220703-dle-in-aws-marketplace'>Database Lab Engine is now available on AWS Marketplace</a>",
+        "<a href='/blog/20230819-dblab-engine-3-4'>Available now: DBLab 3.4 – install from Postgres.ai Console</a>",
       backgroundColor: '#D7EEF2',
       textColor: '#013A44',
       isCloseable: true,

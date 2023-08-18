@@ -1,6 +1,13 @@
 // Duplicates data from the blog.
 const blog = [
   {
+    link: 'blog/20230819-dblab-engine-3-4-released',
+    date: '2023-08-19 03:51:12',
+    title: 'DBLab 3.4: new name, SE installer, and lots of improvements',
+    description: 'DBLab Engine 3.4 released!',
+    image: '/assets/thumbnails/dblab-3.4-blog.png',
+  },
+  {
     link: 'blog/20230722-10-postgres-tips-for-beginners',
     date: '2023-07-22 08:07:00',
     title: '10 Postgres tips for beginners',
@@ -34,6 +41,7 @@ const blog = [
     description: 'One of the easiest ways to "create a heavy load from nothing" is to write a couple of DDL commands and deploy them to production without thorough analysis and testing. In this post, we will discuss 18 widespread mistakes you would want to avoid when changing DB schema under load.',
     image: '/assets/thumbnails/20220525-common-db-schema-change-mistakes_thumbnail.jpg',
   },
+  /*
   {
     link: 'blog/20220405-database-lab-engine-3-1-released',
     date: '2022-04-05 23:16:17',
@@ -41,7 +49,6 @@ const blog = [
     description: 'The Postgres.ai team is happy to announce the release of version 3.1 of Database Lab Engine (DLE), the most advanced open-source software ever released that empowers development, testing, and troubleshooting environments for fast-growing projects.',
     image: '/assets/thumbnails/dle-3.1-blog.png',
   },
-  /*
   {
     link: 'blog/20220114-progress-bar-for-postgres-queries-lets-dive-deeper',
     date: '2022-01-14 07:11:00',
