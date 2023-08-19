@@ -67,7 +67,7 @@ To improve control over how clones are created, it is now possible to configure 
 ### ignoreErrors and skipPolicies for logical data provisioning
 Some DBLab Engine users experienced issues with logical data provisioning (automated full refreshes that use `pg_dump`/`pg_restore`), so the following two convenient flags were added to help mitigate those issues:
 - `ignoreErrors` in subsections `logicalDump` and `logicalRestore` to allow not to interrupt the process of dump/restore in case of errors,
-- `skipPolicie`s` in subsection `logicalRestore` to allow to skip policies (`CREATE POLICY`) during restore process.
+- `skipPolicies` in subsection `logicalRestore` to allow to skip policies (`CREATE POLICY`) during restore process.
 
 ## Postgres restarts in clone containers
 Postgres clone containers under DBLab Engine's management were always supposed to support Postgres restarts - although, due to a bug, it didn't really work in versions 3.0—3.2. With a proper fix, it works again – just make sure you're using tags with the `-0.3.0` suffix or later, such as `postgresai/extended-postgres:15-0.3.0`.
