@@ -5,7 +5,7 @@ keywords:
   - "DBLab tutorial"
   - "Start using DBLab Engine"
   - "Postgres.ai tutorial"
-description: In this tutorial, we are going set up a Database Lab Engine (DBLab Engine) in the Cloud. DBLab is used to boost software development and testing processes via enabling ultra-fast provisioning of databases of any size.
+description: In this tutorial, we are going set up a DBLab Engine (Database Lab Engine) in the Cloud. DBLab is used to boost software development and testing processes via enabling ultra-fast provisioning of databases of any size.
 ---
 
 DBLab Engine is used to boost software development and testing processes by enabling ultra-fast provisioning of databases of any size.
@@ -58,22 +58,22 @@ The first steps are trivial:
 
 And then press the "Create" button to deploy DBLab in your cloud:
 <p align="center">
-    <img src="/assets/dle-platform/Platform_DLE_step1.png" alt="Database Lab Engine in Database Lab Platform: step 1" />
+    <img src="/assets/dle-platform/Platform_DLE_step1.png" alt="DBLab Engine in DBLab Platform: step 1" />
 </p>
 
 Select your cloud provider and region:
 <p align="center">
-    <img src="/assets/dle-platform/Platform_DLE_step2.png" alt="Database Lab Engine in Database Lab Platform: step 2" />
+    <img src="/assets/dle-platform/Platform_DLE_step2.png" alt="DBLab Engine in DBLab Platform: step 2" />
 </p>
 
 Choose the instance type:
 <p align="center">
-    <img src="/assets/dle-platform/Platform_DLE_step3.png" alt="Database Lab Engine in Database Lab Platform: step 3" />
+    <img src="/assets/dle-platform/Platform_DLE_step3.png" alt="DBLab Engine in DBLab Platform: step 3" />
 </p>
 
 Choose the volume type and size:
 <p align="center">
-    <img src="/assets/dle-platform/Platform_DLE_step4.png" alt="Database Lab Engine in Database Lab Platform: step 4" />
+    <img src="/assets/dle-platform/Platform_DLE_step4.png" alt="DBLab Engine in DBLab Platform: step 4" />
 </p>
 
 :::note
@@ -82,12 +82,12 @@ In this example the database size is 100 GiB, we want to create 3 datasets to be
 
 Provide a name for your DBLab instance:
 <p align="center">
-    <img src="/assets/dle-platform/Platform_DLE_step5.png" alt="Database Lab Engine in Database Lab Platform: step 5" />
+    <img src="/assets/dle-platform/Platform_DLE_step5.png" alt="DDBLab Engine in DBLab Platform: step 5" />
 </p>
 
 Define DBLab verification token (a non-trivial, password-like value is recommended):
 <p align="center">
-    <img src="/assets/dle-platform/Platform_DLE_step6.png" alt="Database Lab Engine in Database Lab Platform: step 6" />
+    <img src="/assets/dle-platform/Platform_DLE_step6.png" alt="DBLab Engine in DBLab Platform: step 6" />
 </p>
 
 :::note
@@ -96,12 +96,12 @@ You can use the "Generate random" button to generate a new unique token.
 
 Choose DBLab version:
 <p align="center">
-    <img src="/assets/dle-platform/Platform_DLE_step7.v2.png" alt="Database Lab Engine in Database Lab Platform: step 7" />
+    <img src="/assets/dle-platform/Platform_DLE_step7.v2.png" alt="DBLab Engine in DBLab Platform: step 7" />
 </p>
 
 Provide SSH public keys:
 <p align="center">
-    <img src="/assets/dle-platform/Platform_DLE_step8.png" alt="Database Lab Engine in Database Lab Platform: step 8" />
+    <img src="/assets/dle-platform/Platform_DLE_step8.png" alt="DBLab Engine in DBLab Platform: step 8" />
 </p>
 
 :::note
@@ -110,12 +110,12 @@ These SSH public keys will be added to the DBLab server's  ~/.ssh/authorized_key
 
 Review the specifications of the virtual machine, and click "Create DBLab":
 <p align="left">
-    <img src="/assets/dle-platform/Platform_DLE_step9.v2.png" alt="Database Lab Engine in Database Lab Platform: step 9" width="50%"/>
+    <img src="/assets/dle-platform/Platform_DLE_step9.v2.png" alt="DBLab Engine in DBLab Platform: step 9" width="50%"/>
 </p>
 
 Select the installation method and follow the instructions to create server and install DBLab SE:
 <p align="center">
-    <img src="/assets/dle-platform/Platform_DLE_step10.v3.png" alt="Database Lab Engine in Database Lab Platform: step 10" />
+    <img src="/assets/dle-platform/Platform_DLE_step10.v3.png" alt="DBLab Engine in DBLab Platform: step 10" />
 </p>
 
 :::note
@@ -174,7 +174,7 @@ ssh -N -L 2346:127.0.0.1:2346 ubuntu@35.183.123.243
 
 Now UI should be available at http://127.0.0.1:2346
 <p align="center">
-    <img src="/assets/dle-platform/Platform_DLE_step11.v2.png" alt="Database Lab Engine in Database Lab Platform: step 11" />
+    <img src="/assets/dle-platform/Platform_DLE_step11.v2.png" alt="DBLab Engine in DBLab Platform: step 11" />
 </p>
 
 
@@ -187,13 +187,13 @@ Currently, configuring DBLab in UI allows config changes only for the "logical" 
 Enter the verification token, you have created earlier.
 
 <p align="center">
-    <img src="/assets/dle-platform/DLE_config_step1.png" alt="Database Lab Engine configuration: step 1" />
+    <img src="/assets/dle-platform/DLE_config_step1.png" alt="DBLab Engine configuration: step 1" />
 </p>
 
 Now it's time to define DB credentials of the source to initiate database privisioning – this is how DBLab will be initialized, performing the very first data retrieval, and then the same parameters will be used for scheduled full refreshes according to the schedule defined. Fill the forms, and use the information in the tooltips if needed.
 
 <p align="center">
-    <img src="/assets/dle-platform/DLE_config_step2.png" alt="Database Lab Engine configuration: step 2" />
+    <img src="/assets/dle-platform/DLE_config_step2.png" alt="DBLab Engine configuration: step 2" />
 </p>
 
 Then press "Test connection" to check access to the source database from which the dump will be created.
@@ -203,27 +203,27 @@ You can use the "Get version from source" and "Get from source database" buttons
 :::
 
 <p align="center">
-    <img src="/assets/dle-platform/DLE_config_step3.png" alt="Database Lab Engine configuration: step 3" />
+    <img src="/assets/dle-platform/DLE_config_step3.png" alt="DBLab Engine configuration: step 3" />
 </p>
 
 Apply changes and press "Switch to Overview" to track the process of data retrieval.
 
 <p align="center">
-    <img src="/assets/dle-platform/DLE_config_step4.png" alt="Database Lab Engine configuration: step 4" />
+    <img src="/assets/dle-platform/DLE_config_step4.png" alt="DBLab Engine configuration: step 4" />
 </p>
 
 In the Overview tab, you can see the status of the data retrieval. Note that the initial data retrieval takes some time – it depends on the source database size. However, DBLab API, CLI, and UI are already available for use. To observe the current activity on both source and target sides use "Show details".
 
 <p align="center">
-    <img src="/assets/dle-platform/DLE_config_step5.png" alt="Database Lab Engine configuration: step 5" />
+    <img src="/assets/dle-platform/DLE_config_step5.png" alt="DBLab Engine configuration: step 5" />
 </p>
 
 <p align="center">
-    <img src="/assets/dle-platform/DLE_config_step6.png" alt="Database Lab Engine configuration: step 6" />
+    <img src="/assets/dle-platform/DLE_config_step6.png" alt="DBLab Engine configuration: step 6" />
 </p>
 
 <p align="center">
-    <img src="/assets/dle-platform/DLE_config_step7.png" alt="Database Lab Engine configuration: step 7" />
+    <img src="/assets/dle-platform/DLE_config_step7.png" alt="DBLab Engine configuration: step 7" />
 </p>
 
 Once the retrieval is done, you can create your first clone. Happy cloning!
@@ -232,21 +232,21 @@ Once the retrieval is done, you can create your first clone. Happy cloning!
 ### UI
 #### Create a clone
 1. Click the **Create clone** button.
- ![Database Lab engine clone creation page](/assets/dle-platform/DLE_create_clone1.png)
+ ![DBLab engine clone creation page](/assets/dle-platform/DLE_create_clone1.png)
 1. Fill the **ID** field with a meaningful name.
 1. (optional) By default, the latest data snapshot (closest to production state) will be used to provision a clone. You can choose another snapshot if any.
-1. Fill **database credentials**. Remember the password (it will not be available later, Database Lab Platform does not store it!) – you will need to use it to connect to the clone.
+1. Fill **database credentials**. Remember the password (it will not be available later, DBLab Platform does not store it!) – you will need to use it to connect to the clone.
 1. Click the **Create clone** button and wait for a clone to be provisioned. The process should take only a few seconds.
-![Database Lab engine clone creation page](/assets/dle-platform/DLE_create_clone2.png)
-1. You will be redirected to the **Database Lab clone** page.
-    ![Database Lab engine clone page](/assets/dle-platform/DLE_create_clone3.png)
+![DBLab engine clone creation page](/assets/dle-platform/DLE_create_clone2.png)
+1. You will be redirected to the **DBLab clone** page.
+    ![DBLab engine clone page](/assets/dle-platform/DLE_create_clone3.png)
 :::note
 You also can click the "Enable deletion protection" box. When enabled no one can delete this clone and automated deletion is also disabled.
 :::
 
 #### Connect to a clone
-1. From the **Database Lab clone** page under section **Connection info**, copy the **psql connection string** field contents by clicking the **Copy** button.
-    ![Database Lab clone page / psql connection string](/assets/dle-platform/DLE_connect_clone1.png)
+1. From the **DBLab clone** page under section **Connection info**, copy the **psql connection string** field contents by clicking the **Copy** button.
+    ![DBLab clone page / psql connection string](/assets/dle-platform/DLE_connect_clone1.png)
 2. To connect to clones, also use SSH port forwarding:
 ```bash
 # Replace with your server IP and clone port
@@ -406,4 +406,4 @@ To troubleshot:
 - If needed, check Postgres logs for the main branch. They are located in `/var/lib/dblab/dblab_pool/dataset_1/data/log` for the first snapshot of the database, in ``/var/lib/dblab/dblab_pool/dataset_2/data/log` for the second one (if it's already fetched); if you've configured DBLab to have more than 2 snapshots, check out the other directories too (`/var/lib/dblab/dblab_pool/dataset_$N/data/log`, where `$N` is the snapshot number, starting with `1`)
 
 ## Getting support
-With DBLab installed from Database Lab Platform, guaranteed vendor support is included – please use [one of the available ways to contact](https://postgres.ai/contact).
+With DBLab installed from DBLab Platform, guaranteed vendor support is included – please use [one of the available ways to contact](https://postgres.ai/contact).
