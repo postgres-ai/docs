@@ -3,84 +3,49 @@ title: Secure Database Lab Engine
 sidebar_label: Secure Database Lab Engine
 ---
 
-To make your work with Database Lab Engine API or CLI secure, install and configure NGINX with a self-signed SSL certicate.
+To make your work with DBLab Engine UI / API / CLI and clones secure, install and configure [Envoy proxy](https://www.envoyproxy.io) with a SSL certicate.
 
-Set `${IP_OR_HOSTNAME}` for your instance, using either its hostname or the IP address:
-```shell
-export IP_OR_HOSTNAME="$(curl https://ipinfo.io/ip)"
+:::note
+Before you begin, you will need your Organization key and Project name provided by the Postgres.ai platform. Obtain these by registering on the [platform](http://console.postgres.ai). Detailed instructions are available [here](https://postgres.ai/docs/how-to-guides/administration/install-dle-from-postgres-ai).
+:::
+
+## Configuring a secure DBLab engine
+
+### 1. DNS configuration
+Update the DNS `A` record for your public domain to resolve to the public IP address of the DBLab Engine server. Note that DNS changes may take some time to propagate.
+
+### 2. Proxy installation
+Run the following command to install the Envoy proxy and obtain a Let's Encrypt SSL certificate. Replace the placeholders with your actual server details:
+
+ ```bash
+docker run --rm -it \
+  -v $HOME/.ssh:/root/.ssh:ro \
+  -e ANSIBLE_SSH_ARGS="-F none" \
+  postgresai/dle-se-ansible:v1.0-rc.10 \
+    ansible-playbook software.yml --tags proxy --extra-vars \
+      "dblab_host='user@server-ip-address' \
+       proxy_install='true' \
+       certbot_domain='dblab.yourdomain.com' \
+       certbot_admin_email='your-email@yourdomain.com' \
+       platform_org_key='YOUR_ORG_KEY' \
+       platform_project_name='YOUR_PROJECT_NAME'"
+ ```
+
+:::note
+Replace `user@server-ip-address` with the actual username and IP address for your server, `dblab.yourdomain.com` with your domain.
+:::
+
+## Accessing the DBLab Engine and clones
+
+### DBLab Engine UI/API/CLI
+Connect securely over HTTPS on port 443, such as `https://dblab.yourdomain.com`.
+
+### DBLab database clones
+Access database clones by appending `+3000` to the original connection port. For example, for a clone originally on port `6000`, you would use port `9000`. This mapping ensures that connections to clones are routed correctly through the proxy:
+
+```bash
+PGPASSWORD=secret_password psql \
+  "host=dblab.yourdomain.com port=9000 user=dblab_user dbname=test sslmode=require"
 ```
 
-Install NGINX:
-```shell
-sudo apt-get install -y nginx openssl
-```
-
-Set `${YOUR_OWN_PASS}` environment variable for certificate generation:
-```shell
-read -sp 'Enter custom password: ' YOUR_OWN_PASS
-```
-
-Generate an SSL certificate request:
-```shell
-mkdir -p ~/ssl
-cd ~/ssl
-
-# TODO: Use https://github.com/suyashkumar/ssl-proxy instead.
-# To generate certificates, use, for instance, Let's Encrypt
-# (e.g. https://zerossl.com/free-ssl/#crt).
-# Here we are generating a self-signed certificate.
-
-openssl genrsa -des3 -passout pass:${YOUR_OWN_PASS} -out server.pass.key 2048
-openssl rsa -passin pass:${YOUR_OWN_PASS} -in server.pass.key -out server.key
-rm server.pass.key
-
-# Will ask a bunch of questions which should be filled with answers.
-openssl req -new -key server.key -out server.csr
-```
-
-Finish the SSL certificate generation and configure NGINX (do not forget to set `$IP_OR_HOSTNAME` as described above!). Website https://nginxconfig.io/ can also be helpful when you prepare an NGINX config file. Here is a basic example:
-```shell
-openssl x509 -req -sha256 -days 365 -in server.csr -signkey server.key \
-  -out server.crt
-
-sudo mkdir -p /etc/nginx/ssl
-sudo cp server.crt /etc/nginx/ssl
-sudo cp server.key /etc/nginx/ssl
-
-cat <<CONFIG > default
-server {
-  listen 443 ssl;
-
-  ssl on;
-  ssl_certificate /etc/nginx/ssl/server.crt; 
-  ssl_certificate_key /etc/nginx/ssl/server.key;
-
-  server_name ${IP_OR_HOSTNAME};
-  access_log /var/log/nginx/database_lab.access.log;
-  error_log /var/log/nginx/database_lab.error.log;
-  location / {
-    proxy_set_header   X-Forwarded-For \$remote_addr;
-    proxy_set_header   Host \$http_host;
-    proxy_pass         "http://127.0.0.1:2345";
-  }
-}
-CONFIG
-
-sudo cp default /etc/nginx/sites-available/default
-
-sudo systemctl restart nginx
-
-# See also (though here it was not used, it might be helpful):
-# https://nginxconfig.io/
-```
-
-Now we can check the status using HTTPS connection (here we use `--insecure` flag
-to allow working with the self-signed certificate we have generated above):
-```shell
-curl \
-  --insecure \
-  --include \
-  --request GET \
-  --header 'Verification-Token: secret_token' \
-  https://${IP_OR_HOSTNAME}/status
-```
+Adjust the port numbers accordingly for other clones, following the pattern `original_port+3000` (e.g., `6001->9001`, `6002->9002`, etc.).
