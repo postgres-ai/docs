@@ -1,6 +1,7 @@
 const path = require('path')
 
 const URL = !!process.env.URL ? process.env.URL : 'https://v2.postgres.ai/'
+const COLOR_MODE = typeof window !== 'undefined' && window.localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'
 const API_URL_PREFIX = !!process.env.API_URL_PREFIX ? process.env.API_URL_PREFIX : 'https://postgres.ai/api/general/' // was: 'https://v2.postgres.ai/api/general/'
 const BASE_URL = !!process.env.BASE_URL ? process.env.BASE_URL : '/'
 const REPOSITORY_URL = 'https://github.com/postgres-ai/database-lab-engine'
@@ -185,10 +186,32 @@ module.exports = {
       appId: 'X8XMQ9JWX7',
       indexName: 'postgres_algolia',
     },
-
     footer: {
       style: 'light',
+      logo: {
+        alt: 'Database Lab logo',
+        src: 'img/logo.svg',
+        width: '64px',
+        height: '64px',
+      },
       links: [
+        {
+          items: [
+            {
+              html: `
+                <iframe 
+                src=https://postgres-ai.instatus.com/embed-status/2c18fe48/${COLOR_MODE}-sm 
+                width="230" 
+                height="61" 
+                frameBorder="0" 
+                scrolling="no" 
+                style="border: none;"
+              >
+              </iframe>            
+                `,
+            },
+          ],
+        },
         {
           title: 'Docs',
           items: [
