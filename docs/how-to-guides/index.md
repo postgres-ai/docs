@@ -14,6 +14,7 @@ slug: /how-to-guides
 - [Secure Database Lab Engine](/docs/how-to-guides/administration/engine-secure)
 - [How to refresh data when working in the "logical" mode](/docs/how-to-guides/administration/logical-full-refresh)
 - [Masking sensitive data in PostgreSQL logs when using CI Observer](/docs/how-to-guides/administration/ci-observer-postgres-log-masking)
+- [Add disk space to ZFS pool without downtime](/docs/how-to-guides/administration/add-disk-space-to-zfs-pool)
 
 ## How to work with Database Lab clones
 - [How to create Database Lab clones](/docs/how-to-guides/cloning/create-clone)
