@@ -122,6 +122,10 @@ html[data-theme="dark"] .DocSearch {
   padding-left: 0px;
 }
 
+.footer__links div:first-child {
+  flex: auto;
+}
+
 .clear::after {
   content: "";
   clear: both;
@@ -609,6 +613,11 @@ table.docs-home td {
   .six-sec h2, .banner p, .multi-sec p, .btn  {
     font-size: 16px;
     line-height: initial;
+  }
+
+  .footer__links  {
+    display: grid;
+    grid-template-columns: 1fr;
   }
 
   .multi-sec h3, .six-sec h3 {
