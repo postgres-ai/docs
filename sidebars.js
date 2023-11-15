@@ -48,6 +48,7 @@ module.exports = {
           "how-to-guides/administration/engine-secure",
           "how-to-guides/administration/logical-full-refresh",
           "how-to-guides/administration/ci-observer-postgres-log-masking",
+          "how-to-guides/administration/add-disk-space-to-zfs-pool",
           {
             "Data sources": [
               "how-to-guides/administration/data/index",
