@@ -11,6 +11,7 @@ Currently, Database Lab Engine fully supports the following [PostgreSQL major ve
 - 13 (released: 2020-09-24; EOL: 2025-11-13)
 - 14 (released: 2021-09-31; EOL: 2026-11-12)
 - 15 (released: 2022-10-13; EOL: 2027-11-11)
+- 16 (released: 2023-09-14; EOL: 2028-11-09)
 
 By default, version 15 is used: `postgresai/extended-postgres:15`.
 
@@ -27,7 +28,7 @@ All these extended images include the following extensions:
 - [pg_auth_mon](https://github.com/RafiaSabih/pg_auth_mon) (only for Postgres 9.6-15)
 - [PoWA](https://github.com/powa-team/powa)
 - [pg_hint_plan](https://pghintplan.osdn.jp/pg_hint_plan.html)
-- [Timescale](https://github.com/timescale/timescaledb) (only for Postgres 12+)
+- [Timescale](https://github.com/timescale/timescaledb) (only for Postgres 12-15)
 - [Citus](https://github.com/citusdata/citus) (only for Postgres 11+)
 - [HypoPG](https://github.com/HypoPG/hypopg)
 - [pg_cron](https://github.com/citusdata/pg_cron)
@@ -42,7 +43,7 @@ All these extended images include the following extensions:
 - [topn](https://github.com/citusdata/postgresql-topn) (only for Postgres 10+)
 - [postgresql_anonymizer](https://github.com/webysther/postgresql_anonymizer)
 - [pgaudit](https://github.com/pgaudit/pgaudit)
-- [set_user](https://github.com/pgaudit/set_user)
+- [set_user](https://github.com/pgaudit/set_user) (only for Postgres 9.6-15)
 
 ## How to add more extensions
 There are two options:
