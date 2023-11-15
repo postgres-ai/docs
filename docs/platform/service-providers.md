@@ -17,7 +17,7 @@ Postgres.ai uses the following data suprocessors:
 | [Google Cloud Platform (GCP)](https://cloud.google.com/) | USA | Primary data hosting. User data (including backups) is stored here |
 | [Google Workspace](https://workspace.google.com/) | USA | Email and cloud office apps used by the Postgres.ai Team for business |
 | [Intercom](https://www.intercom.com/) | USA | Customer support system |
-| [Mailgun](https://www.mailgun.com/) | USA | Transactional mail services provider |
+| [SendGrid](https://www.sendgrid.com/) | USA | Transactional mail services provider |
 | [Slack](https://slack.com) | USA | Business communication platform |
 | [Stripe](https://stripe.com) | USA | Payment provider |
 | [Zoom](https://zoom.us/) | USA | Video Communications |
