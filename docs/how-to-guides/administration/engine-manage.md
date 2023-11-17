@@ -16,7 +16,7 @@ All YAML features can be used, including anchors and aliases, to help you conven
 
 For instance, you can define a binding with `&` and then refer to it using an alias denoted by `*`.
 
-See config examples [here](https://gitlab.com/postgres-ai/database-lab/-/tree/v3.4.0/engine/configs)
+See config examples [here](https://gitlab.com/postgres-ai/database-lab/-/tree/v3.5.0/engine/configs)
 :::
 
 After configuring Database Lab Engine, run the following command:
@@ -37,7 +37,7 @@ sudo docker run \
   --volume /lib/modules:/lib/modules:ro \
   --volume /proc:/host_proc:ro \
   --env DOCKER_API_VERSION=1.41 \
-  postgresai/dblab-server:3.4.0 
+  postgresai/dblab-server:3.5.0
 ``` 
 
 :::info
@@ -89,9 +89,9 @@ An example of error:
 ```
 If you need to upgrade an existing DLE setup that is running on ZFS 0.8.x, consider the following options:
 
-Option 1: upgrade your system to use ZFS 2.1, optionally upgrade your pool (`zpool upgrade dblab_pool`), and then upgrade DLE to use the default image, `postgresai/dblab-server:3.4.0 `
+Option 1: upgrade your system to use ZFS 2.1, optionally upgrade your pool (`zpool upgrade dblab_pool`), and then upgrade DLE to use the default image, `postgresai/dblab-server:3.5.0`
 
-Option 2: postpone the ZFS upgrade, stay on ZFS 0.8, and upgrade DLE to version 3.1 using a special image, `postgresai/dblab-server:3.4.0 -zfs08`
+Option 2: postpone the ZFS upgrade, stay on ZFS 0.8, and upgrade DLE to version 3.1 using a special image, `postgresai/dblab-server:3.5.0-zfs08`
 :::
 
 ## Observe Database Lab Engine logs
@@ -105,7 +105,7 @@ If you need to save the logs in a file:
 sudo docker logs dblab_server 2>&1 | gzip > dblab_server.log.gz
 ```
 
-If you want to see more details, enable debug mode setting option `debug` to `true` (see [example](https://gitlab.com/postgres-ai/database-lab/-/tree/v3.4.0/engine/configs)). Next, follow  [the reconfiguration guidelines](#reconfigure-database-lab) to apply the change.
+If you want to see more details, enable debug mode setting option `debug` to `true` (see [example](https://gitlab.com/postgres-ai/database-lab/-/tree/v3.5.0/engine/configs)). Next, follow  [the reconfiguration guidelines](#reconfigure-database-lab) to apply the change.
 
 :::caution
 When debug mode is turned on, logs may contain sensitive data such as API secret keys for the backup system.

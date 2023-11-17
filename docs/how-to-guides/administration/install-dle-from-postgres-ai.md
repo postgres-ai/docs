@@ -116,36 +116,40 @@ After running the deployment command, You need to wait a few minutes, while all 
 Example:
 
 ```bash
-TASK [deploy-finish : Print usage instructions] *********************************************************************************************************
-ok: [ubuntu@15.223.0.188] => {
+TASK [deploy-finish : Print usage instructions] *****************************************************************************************************************************************************************
+ok: [root@5.161.212.233] => {
     "msg": [
-        "1) Verification token (ensure to securely store it):                            ",
-        "       tEsuMyA3M1O8AZYExWNXDqNJfFp8vefx                                         ",
-        "                                                                                ",
-        "2) Use SSH port forwarding for UI / API / CLI:                                  ",
-        "       ssh -N -L 2346:127.0.0.1:2346 ubuntu@15.223.0.188 -i YOUR_PRIVATE_KEY    ",
-        "                                                                                ",
-        "3) DBLab UI:          http://127.0.0.1:2346                                     ",
-        "                                                                                ",
-        "4) DBLab API:                                                                   ",
-        "  - API URL:          http://127.0.0.1:2346/api                                 ",
-        "  - API docs:         https://api.dblab.dev/                                    ",
-        "                                                                                ",
-        "5) DBLab CLI:                                                                   ",
-        "  - CLI ('dblab') setup:                                                        ",
-        "        export DBLAB_CLI_VERSION=3.4.0-rc.5                                     ",
-        "        curl -sSL dblab.sh | bash                                               ",
-        "        dblab init --environment-id=dle-demo --token=tEsuMyA3M1O8AZYExWNXDqNJfFp8vefx --url=http://127.0.0.1:2346/api",
-        "  - CLI docs:         https://cli-docs.dblab.dev/                               ",
-        "                                                                                ",
-        "6) Monitoring:                                                                  ",
-        "  - SSH port forwarding:                                                        ",
-        "       ssh -N -L 19999:127.0.0.1:19999 ubuntu@15.223.0.188 -i YOUR_PRIVATE_KEY  ",
-        "  - Monitoring URL:   http://127.0.0.1:19999                                    ",
-        "                                                                                ",
-        "7) To connect to clones, also use SSH port forwarding. E.g., for clone 6000:    ",
-        "       ssh -N -L 6000:127.0.0.1:6000 ubuntu@15.223.0.188 -i YOUR_PRIVATE_KEY    ",
-        "  - and then use: 'host=127.0.0.1 port=6000 user=YOUR_USER dbname=postgres'     "
+        "1) Use SSH port forwarding for UI / API / CLI:",
+        "    ssh -o StrictHostKeyChecking=no -N -L 2346:127.0.0.1:2346 root@5.161.212.233",
+        "",
+        "2) DBLab UI: http://127.0.0.1:2346",
+        "",
+        "3) Verification token (ensure to securely store it):",
+        "    edlhYHOgBPkr4ix1qP3YvQMytfK2JSxH",
+        "",
+        "4) DBLab API:",
+        "  - API URL: http://127.0.0.1:2346/api",
+        "  - API docs: https://api.dblab.dev/",
+        "",
+        "5) DBLab CLI:",
+        "  - CLI ('dblab') setup:",
+        "      export DBLAB_CLI_VERSION=3.5.0",
+        "      curl -sSL dblab.sh | bash",
+        "      dblab init --environment-id=dblab-demo --token=edlhYHOgBPkr4ix1qP3YvQMytfK2JSxH --url=http://127.0.0.1:2346/api",
+        "  - CLI docs: https://cli-docs.dblab.dev/",
+        "",
+        "6) Monitoring:",
+        "  - SSH port forwarding:",
+        "      ssh -o StrictHostKeyChecking=no -N -L 19999:127.0.0.1:19999 root@5.161.212.233",
+        "  - Monitoring URL: http://127.0.0.1:19999",
+        "",
+        "7) To connect to clones, also use SSH port forwarding. E.g., for clone 6000:",
+        "    ssh -o StrictHostKeyChecking=no -N -L 6000:127.0.0.1:6000 root@5.161.212.233",
+        "  - and then use: 'host=127.0.0.1 port=6000 user=YOUR_USER dbname=postgres'",
+        "",
+        "(Optional) To destroy the DBLab server (for CLOUD, except BYOM):",
+        "  - add the 'state=absent' variable to the snippet you used for deploy the DBLab server.",
+        "  - run the command again to delete the server."
     ]
 }
 ```
