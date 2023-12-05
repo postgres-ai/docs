@@ -1,0 +1,123 @@
+.outerContainer {
+  background-color: #fff;
+  min-height: 100vh;
+  height: 100%;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: calc(100vh - 6.5rem);
+  padding: 1.5rem;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  background-color: rgb(246, 246, 239);
+  color: #000;
+}
+
+.centerContent {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  height: 100%;
+  min-height: calc(100vh - 6.5rem);
+}
+
+.navigation {
+  display: flex;
+  width: 100%;
+}
+
+.navigation a {
+  text-decoration: none;
+  color: #000;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  color: #000;
+  font-size: 20px;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadingSpinner {
+  border: 4px solid rgba(0, 0, 0, 0.3);
+  border-top: 4px solid #ff6112;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.tryAgain {
+  color: #ff6112;
+  cursor: pointer;
+}
+
+.messagesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+  margin-top: 30px;
+  font-size: 12px;
+}
+
+.messagesContainer p {
+  margin: 5px 0;
+}
+
+.messageContainer {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+}
+
+.messageContainer:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.messageHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.subtext {
+  color: #828282;
+  font-size: 11px;
+}
+
+.errorContainer h2 {
+  font-size: 18px;
+}
+
+.errorContainer p {
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+.pointer {
+  cursor: pointer;
+}

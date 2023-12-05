@@ -1,0 +1,149 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 12px 0;
+  width: 100%;
+}
+
+.error {
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #ff0000;
+  font-size: 12px;
+  width: 100%;
+}
+
+.inputError {
+  border: 1px solid #ff0000;
+  border-color: #ff0000 !important;
+}
+
+.input {
+  padding: 10px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  border-color: transparent;
+  max-width: 300px;
+  width: 100%;
+  background: #fff;
+  color-scheme: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.button {
+  padding: 12px 20px;
+  font-size: 16px;
+  max-height: 42.5px;
+  background-color: #fe7600;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 0.25rem;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background-color: #ff9e4a;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  background-color: #fe7600;
+  opacity: 0.5;
+}
+
+.input:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.container {
+  padding: 1rem;
+  position: relative;
+}
+
+.container h3 {
+  font-size: 18px;
+}
+
+.typeAnimation {
+  font-size: 18px;
+  display: block;
+  font-weight: 700;
+  line-height: 1.2;
+  min-height: 140px;
+  text-align: left;
+  padding: 0;
+}
+
+@media (min-width: 48em) {
+  .container {
+    padding: 4rem 4rem 0 4rem;
+  }
+
+  .flex {
+    margin: 24px 0;
+  }
+
+  .container h3,
+  .typeAnimation {
+    font-size: 20px;
+    padding: 0 2rem;
+  }
+}
+
+@media (min-width: 64em) {
+  .container h3,
+  .typeAnimation {
+    font-size: 28px;
+  }
+
+  .container h3 {
+    max-width: 600px;
+    width: 100%;
+  }
+}
+
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
