@@ -1,5 +1,8 @@
 export const ROUTES = {
   UNIVERSE: {
-    path: '/universe/'
+    path: '/universe/',
+  },
+  CHATS: {
+    path: '/chats/',
   },
 }

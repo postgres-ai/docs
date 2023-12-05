@@ -2,7 +2,7 @@ const path = require('path')
 
 const URL = !!process.env.URL ? process.env.URL : 'https://v2.postgres.ai/'
 const COLOR_MODE = typeof window !== 'undefined' && window.localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'
-const API_URL_PREFIX = !!process.env.API_URL_PREFIX ? process.env.API_URL_PREFIX : 'https://postgres.ai/api/general/' // was: 'https://v2.postgres.ai/api/general/'
+const API_URL_PREFIX = !!process.env.API_URL_PREFIX ? process.env.API_URL_PREFIX : 'https://postgres.ai/api/general' // was: 'https://v2.postgres.ai/api/general/'
 const BASE_URL = !!process.env.BASE_URL ? process.env.BASE_URL : '/'
 const REPOSITORY_URL = 'https://github.com/postgres-ai/database-lab-engine'
 const SIGN_IN_URL = !!process.env.SIGN_IN_URL
@@ -415,6 +415,11 @@ module.exports = {
             exact: false, // this is needed for sub-routes to match!
             component: path.resolve(__dirname, 'src/dynamicPages/universe'),
           },
+          {
+            path: '/chats/:chatId',
+            exact: false,
+            component: path.resolve(__dirname, 'src/dynamicPages/chats'),
+          }
         ],
       },
     ],
