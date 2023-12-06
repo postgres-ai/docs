@@ -45,32 +45,33 @@ export default function SignupForm() {
         email: state.email,
       }),
     })
-      .then(async (res) => {
-        const json = await res.json()
-        if (res.ok) {
-          console.log('okay')
+      .then((response) => {
+        if (response.ok) {
           setState({
-            ...state,
+            email: '',
             isSubmitted: true,
             isLoading: false,
             error: '',
           })
         } else {
-          setState({
-            ...state,
-            isLoading: false,
-            error: json?.message,
+          response.json().then((res) => {
+            setState({
+              ...state,
+              isLoading: false,
+              isSubmitted: false,
+              error: res?.message || 'Something went wrong',
+            })
           })
         }
       })
-      .catch((error) => {
+      .catch((err) =>
         setState({
           ...state,
           isLoading: false,
           isSubmitted: false,
-          error: error?.message || error || 'Something went wrong',
-        })
-      })
+          error: err?.message || err || 'Something went wrong',
+        }),
+      )
   }
 
   return (
