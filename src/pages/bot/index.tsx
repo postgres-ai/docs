@@ -8,12 +8,14 @@ import styles from './styles.module.css'
 import botStyles from './signupForm/styles.module.css'
 
 const textSequence = [
-  'Free GPT-4 Turbo for Postgres-related topics: Free access to the latest GPT-4 Turbo technology, specially adapted for PostgreSQL-related discussions.',
+  'Free GPT-4 Turbo: the best LLM, available for free (Postgres-related topics only).',
+  2000,
+  'Rich knowledge base: over 110,000 items including the Postgres docs for all current versions and Postgres-related software such as PgBouncer, Patroni, pgvector.',
+  4000,
+  "Source code interaction: \"talk to the source code\" to understand how exactly things are implemented, when the docs are not enough.",
   3000,
-  'Rich Knowledge Base: Over 50,000+ documents including official documentation for all current Postgres versions and hand-picked expert articles.',
-  1000,
-  "Source Code Interaction: Directly query PostgreSQL source code for in-depth insights, a unique feature for when documentation isn't enough.",
-  1000,
+  "Real database experiments conducted by bot: study Postgres behavior in action, run benchmarks, optimize query performance.",
+  3000,
 ]
 
 const Bot = () => (
