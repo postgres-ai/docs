@@ -1,6 +1,7 @@
 import Layout from '@theme/Layout'
 import Link from '@docusaurus/Link'
 import classNames from 'classnames'
+import emoji from 'emoji-dictionary'
 import ReactMarkdown from 'react-markdown'
 import { useParams } from 'react-router-dom'
 import React, { useCallback, useEffect } from 'react'
@@ -25,6 +26,23 @@ interface ChatProps {
   first_name: string
   last_name: any
   children_ids: string[]
+}
+
+const convertSlackContentToMarkdown = (item: {
+  content: string
+  via_app?: string
+}) => {
+  let replacedContent = item.content
+  if (item.via_app === 'slack') {
+    replacedContent = item.content
+      .replace(/:\w+:/gi, (name) => emoji.getUnicode(name))
+      .replace(/\*(.*?)\*/gi, (name) => `**${name}**`)
+      .replace(/\n•/gi, () => `\n-`)
+      .replace(/\n/gi, () => `\n\n`)
+      .replace(/<(.*?)\|(.*?)>/gi, (name, url, text) => `[${text}](${url})`)
+  }
+
+  return replacedContent
 }
 
 export const Chatscontent = () => {
@@ -114,8 +132,11 @@ export const Chatscontent = () => {
                       </span>
                     )}
                   </div>
-                  <ReactMarkdown className={styles.messageContent}>
-                    {item.content}
+                  <ReactMarkdown
+                    className={styles.messageContent}
+                    linkTarget="_blank"
+                  >
+                    {convertSlackContentToMarkdown(item)}
                   </ReactMarkdown>
                 </div>
               ))}
