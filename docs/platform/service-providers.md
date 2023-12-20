@@ -2,7 +2,7 @@
 title: 3rd-party Data Subprocessors and Service Providers
 sidebar_label: Postgres.ai data subprocessors
 ---
-Effective date: 2022-10-03
+Effective date: 2023-12-20
 
 Postgres.ai aims to be fully transparent regarding how your data is used, how it is collected, and with whom it can be shared.
 
@@ -10,13 +10,15 @@ Postgres.ai uses the following data suprocessors:
 
 | Name of Subprocessor (with URL) | Location of Processing | Description |
 | ------ | ------ | ------ |
-| [Amazon Web Services (AWS)](https://aws.amazon.com/) | USA | Secondary data hosting (currently not used for user data) |
+| [Amazon Web Services (AWS)](https://aws.amazon.com/) | USA | Secondary data hosting (currently not used for Customer Data) |
 | [GitLab](https://gitlab.com/) | USA | Development and project management tools (Git, CI/CD, issue tracker, etc.) |
 | [GitHub](https://github.com/) | USA | Development and project management tools (Git, CI/CD, issue tracker, etc.) |
 | [Google Analytics (GA)](https://analytics.google.com/analytics/web/) | USA | User behavior analytics |
-| [Google Cloud Platform (GCP)](https://cloud.google.com/) | USA | Primary data hosting. User data (including backups) is stored here |
+| [Google Cloud Platform (GCP)](https://cloud.google.com/) | USA | Primary data hosting. Customer Data (including backups) are stored here |
 | [Google Workspace](https://workspace.google.com/) | USA | Email and cloud office apps used by the Postgres.ai Team for business |
+| [Hetzner](https://hetzner.com/) | USA, Germany | Cloud and dedicated hosting provider (currently not used for Customer Data) |
 | [Intercom](https://www.intercom.com/) | USA | Customer support system |
+| [OpenAI](https://openai.com/) | USA | AI models provided via API (such as Whisper, GPT). **Customer Data is not used in OpenAI API calls, unless explicitly approved by Customer**
 | [SendGrid](https://www.sendgrid.com/) | USA | Transactional mail services provider |
 | [Slack](https://slack.com) | USA | Business communication platform |
 | [Stripe](https://stripe.com) | USA | Payment provider |
