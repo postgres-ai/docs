@@ -120,7 +120,7 @@ Options:
 - `source` (key-value, required) - describes source of data:
    - `type` (string, required) -  defines location type of a dumped database. Available values: `local`, `remote`, `rdsIam`
    - `connection` (key-value, required) - defines connection parameters of source:
-      - `dbname` (string, required) - defines the database dbname to be restored
+      - `dbname` (string, required) - database name used for connection purposes; also see `logicalDump.databases`
       - `host` (string, required) - defines hostname of the database
       - `port` (integer, optional, default: 5432) - defines port of the database
       - `username` (string, optional, default: postgres) - defines database username to connect to the database
