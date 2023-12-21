@@ -249,11 +249,15 @@ module.exports = {
           title: 'Products',
           items: [
             {
-              label: 'Database Lab Engine',
+              label: 'PostgresAI bot',
+              to: '/bot',
+            },
+            {
+              label: 'DBLab Engine',
               to: '/',
             },
             {
-              label: 'Joe Bot for SQL Optimization',
+              label: 'Joe bot for SQL Optimization',
               to: '/products/joe',
             },
           ],
@@ -266,6 +270,14 @@ module.exports = {
               href: 'https://slack.postgres.ai/',
             },
             {
+              label: 'YouTube',
+              href: 'https://www.youtube.com/PostgresTV',
+            },
+            {
+              label: 'Podcast',
+              href: 'https://postgres.fm',
+            },
+            {
               label: 'GitLab',
               href: 'https://gitlab.com/postgres-ai',
             },
@@ -274,12 +286,12 @@ module.exports = {
               href: 'https://github.com/postgres-ai',
             },
             {
-              label: 'Twitter',
+              label: 'Twitter @Database_Lab',
               href: 'https://twitter.com/Database_Lab',
             },
             {
-              label: 'YouTube',
-              href: 'https://www.youtube.com/channel/UCLSWQVJX_VQ0NVSzN0fZT3A',
+              label: 'Twitter @postgres_ai',
+              href: 'https://twitter.com/postgres_ai',
             },
             {
               label: 'LinkedIn',
@@ -293,6 +305,10 @@ module.exports = {
             {
               label: 'Home',
               to: '/',
+            },
+            {
+              label: 'Sign in',
+              href: SIGN_IN_URL,
             },
             {
               label: 'Contact',
@@ -309,14 +325,6 @@ module.exports = {
             {
               label: 'Case Studies',
               to: '/resources/',
-            },
-            {
-              label: 'Careers',
-              to: '/careers/',
-            },
-            {
-              label: 'Sign in',
-              href: SIGN_IN_URL,
             },
             {
               label: 'Terms of service',
