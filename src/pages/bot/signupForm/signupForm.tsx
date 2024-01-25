@@ -82,10 +82,12 @@ export default function SignupForm() {
             return (
               <div className={styles.container}>
                 <h3>
-                  Thank you for joining our waitlist. As we expand our testing
-                  phases, we'll send out invites in batches. You'll receive
-                  yours as soon as you're next in line. Stay tuned!
-                </h3>
+		  Thanks! Here's what's next:
+		</h3>
+		<ol style={{ textAlign: 'left', fontSize: '18px' }}>
+		  <li style={{ marginBottom: '10px' }}>Once approved, you will receive an email invitation to join the private alpha-testing Slack channel (usually 1-2 days)</li>
+		  <li>Meanwhile, join our Slack workspace: <a href="https://slack.postgres.ai" target="_blank">Slack.Postgres.ai</a></li>
+                </ol>
               </div>
             )
           } else {
