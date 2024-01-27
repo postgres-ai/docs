@@ -11,7 +11,7 @@ const SIGN_IN_URL = !!process.env.SIGN_IN_URL
 
 module.exports = {
   title:
-    'Database branching for any Postgres DB · Postgres.ai · DBLab', // Title for your website.
+    'Postgres.AI', // Title for your website.
   tagline:
     'Branching 🖖 and thin cloning ⚡️ for any Postgres database. Empower database testing in CI/CD. Optimize DB-related costs while improving time-to-market and software quality.',
   url: URL, // Your website URL.
@@ -35,7 +35,7 @@ module.exports = {
 
   themeConfig: {
     colorMode: {
-      defaultMode: 'dark',
+      defaultMode: 'light',
     },
 
     metadata: [

@@ -1,6 +1,13 @@
 // Duplicates data from the blog.
 const blog = [
   {
+    link: 'blog/20240127-postges-ai-bot',
+    date: '2024-01-27 23:21:12',
+    title: 'Postgres.AI Bot. Towards LLM OS for Postgres',
+    description: 'What is inside Postgres.AI Bot alpha?',
+    image: '/assets/thumbnails/postgres-ai-bot-announcement-2.jpg',
+  },
+  {
     link: 'blog/20230819-dblab-engine-3-4-released',
     date: '2023-08-19 03:51:12',
     title: 'DBLab 3.4: new name, SE installer, and lots of improvements',
@@ -34,6 +41,7 @@ const blog = [
     description: 'Good news for the AWS users: fast, fixed-cost branching for your Postgres is just a step away. Now, for a fixed price (paying just for one EC2 instance and an EBS volume), you can have dozens of DB clones being provisioned in seconds and delivering independent databases for your Git branches, CI/CD pipelines, as well as manual optimization and testing activities.',
     image: '/assets/thumbnails/20220703-dle-in-aws-marketplace-2.png',
   },
+  /*
   {
     link: 'blog/20220525-common-db-schema-change-mistakes',
     date: '2022-05-25 22:14:00',
@@ -41,7 +49,6 @@ const blog = [
     description: 'One of the easiest ways to "create a heavy load from nothing" is to write a couple of DDL commands and deploy them to production without thorough analysis and testing. In this post, we will discuss 18 widespread mistakes you would want to avoid when changing DB schema under load.',
     image: '/assets/thumbnails/20220525-common-db-schema-change-mistakes_thumbnail.jpg',
   },
-  /*
   {
     link: 'blog/20220405-database-lab-engine-3-1-released',
     date: '2022-04-05 23:16:17',
