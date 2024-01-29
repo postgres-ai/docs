@@ -42,7 +42,7 @@ module.exports = {
       // This options will overwrite options from pages with the same name/property.
       { 'http-equiv': 'x-dns-prefetch-control', content: 'on' },
       { property: 'og:locale', content: 'en_US' },
-      { property: 'og:site_name', content: 'Postgres.ai' },
+      { property: 'og:site_name', content: 'Postgres.AI' },
       {
         property: 'article:publisher',
         content: 'https://www.linkedin.com/company/postgres-ai/',
@@ -54,16 +54,16 @@ module.exports = {
     announcementBar: {
       id: 'advisory_group', // Any value that will identify this message to save the hidden status.
       content:
-        "<a href='/bot'>🚀 New Postgres.ai bot: free GPT4 Turbo for Postgres topics</a>",
+        "<a href='/bot'>🚀 New Postgres.AI bot: free GPT4 Turbo for Postgres topics</a>",
       backgroundColor: '#D7EEF2',
       textColor: '#013A44',
       isCloseable: true,
     },
 
     navbar: {
-      title: 'Postgres.ai',
+      title: 'Postgres.AI',
       logo: {
-        alt: 'Database Lab logo',
+        alt: 'Postgres.AI logo',
         src: 'img/logo.svg',
         width: '32px',
         height: '32px',
@@ -337,7 +337,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Postgres.ai`,
+      copyright: `Copyright © ${new Date().getFullYear()} Postgres.AI`,
     },
 
     prism: {
@@ -460,7 +460,7 @@ module.exports = {
             type: 'all',
             title: '', // default to siteConfig.title
             description: '', // default to  `${siteConfig.title} Blog`
-            copyright: 'Postgres.ai',
+            copyright: 'Postgres.AI',
             language: undefined, // possible values: http://www.w3.org/TR/REC-html40/struct/dirlang.html#langcodes
           },
         },
