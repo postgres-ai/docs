@@ -410,6 +410,10 @@ module.exports = {
             from: '/docs/how-to-guides/administration/machine-setup',
             to: '/docs/how-to-guides/administration/install-dle-manually' 
           },
+          {
+            from: '/blog/20240127-postges-ai-bot',
+            to: '/blog/20240127-postgres-ai-bot' 
+          },
         ],
       },
     ],
