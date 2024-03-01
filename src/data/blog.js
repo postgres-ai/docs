@@ -1,7 +1,7 @@
 // Duplicates data from the blog.
 const blog = [
   {
-    link: 'blog/20240127-postges-ai-bot',
+    link: 'blog/20240127-postgres-ai-bot',
     date: '2024-01-27 23:21:12',
     title: 'Postgres.AI Bot. Towards LLM OS for Postgres',
     description: 'What is inside Postgres.AI Bot alpha?',
