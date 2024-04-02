@@ -28,7 +28,6 @@ module.exports = {
 
   scripts: [
     BASE_URL + 'js/githubButton.js',
-    BASE_URL + 'js/twitter.js',
     { src: BASE_URL + 'js/intercomSettings.js', async: true, defer: true },
     { src: BASE_URL + 'js/intercomWidget.js', async: true, defer: true },
     { src: BASE_URL + 'js/cookieBanner.js', async: true, defer: true },
