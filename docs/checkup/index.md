@@ -141,7 +141,7 @@ General options:
 Example:
 ```
 PGPASSWORD=mypasswd ./checkup collect -h [ssh_user]@host_to_connect_via_ssh \
-    --username dmius --dbname postgres \
+    --username pgai_observer --dbname postgres \
     --project dummy -e %EPOCH_NUMBER%
 ```
 
@@ -155,16 +155,24 @@ The docker container will run, execute all checks and stop itself. The check res
 In case of usage postgres-checkup with docker run, the only requirement is docker-engine installed.
 You can install docker-engine as described in official Docker documentation: https://docs.docker.com/install/
 
-#### Usage
+#### Read-only DB user with proper permissions
+Create a new DB user and grant `pg_monitor` role to it:
+```sql
+create user pgai_observer password '****';
+grant pg_monitor to pgai_observer;
+```
 
+#### Usage
 Use the postgres-checkup in this case as follow:
 
 ```
+export DB_PWD="****"
+
 # Create config file
 cat <<EOF > proj_config.yml
 - project: %project_name%
   dbname: %database_name%
-  username: %db_username%
+  username: pgai_observer
   epoch: 1
   pg-port 5432
 EOF
@@ -208,9 +216,7 @@ If you try to check the local instance of Postgres on your host from a container
 
 
 ### Usage postgres-checkup from sources
-
 #### Requirements
-
 The second way to use postgres-checkup run it from sources. In this case, requirements follow.
 
 The following OS are supported:
@@ -225,7 +231,7 @@ The following programs must be installed on the operator machine:
 * bash
 * psql
 * coreutils
-* jq >= 1.5
+* jq >= 1.7
 * golang >= 1.8 (no binaries are shipped at the moment)
 * awk
 * sed
@@ -298,11 +304,11 @@ Let's make a report for a project named `prod1`. Assume that we have two servers
 Postgres-checkup automatically detects which one is a master:
 
 ```shell
-./checkup -h db1.vpn.local -p 5432 --username postgres --dbname postgres --project prod1 -e 1
+./checkup -h db1.vpn.local -p 5432 --username pgai_observer --dbname postgres --project prod1 -e 1
 ```
 
 ```shell
-./checkup -h db2.vpn.local -p 5432 --username postgres --dbname postgres --project prod1 -e 1
+./checkup -h db2.vpn.local -p 5432 --username pgai_observer --dbname postgres --project prod1 -e 1
 ```
 
 Which literally means: connect to the server with given credentials, save data into `prod1` project directory, as epoch of check `1`. Epoch is a numerical (**integer**) sign of current iteration. For example: in half a year we can switch to "epoch number `2`".
@@ -329,7 +335,7 @@ for host in db2.vpn.local db3.vpn.local db4.vpn.local; do
   ./checkup \
     -h "$host" \
     -p 5432 \
-    --username postgres \
+    --username pgai_observer \
     --dbname postgres \
     --project prod1 \
     -e 1 \
@@ -342,7 +348,7 @@ for host in db2.vpn.local db3.vpn.local db4.vpn.local; do
   ./checkup \
     -h "$host" \
     -p 5432 \
-    --username postgres \
+    --username pgai_observer \
     --dbname postgres \
     --project prod1 \
     -e 1
