@@ -10,7 +10,7 @@ import botStyles from './signupForm/styles.module.css'
 const textSequence = [
   'Free GPT-4 Turbo: the best LLM, available for free (Postgres-related topics only).',
   2000,
-  'Rich knowledge base: over 110,000 items including the Postgres docs for all current versions and Postgres-related software such as PgBouncer, Patroni, pgvector.',
+  'Rich knowledge base: over 1,000,000 items including the Postgres docs for all current versions and Postgres-related software such as PgBouncer, Patroni, pgvector.',
   4000,
   "Source code interaction: \"talk to the source code\" to understand how exactly things are implemented, when the docs are not enough.",
   3000,
