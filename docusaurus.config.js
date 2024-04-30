@@ -438,7 +438,7 @@ module.exports = {
     [
       path.resolve(__dirname, 'plugins/docusaurus-plugin-google-gtm'),
       {
-        trackingID: 'GTM-5M85JPS',
+        trackingID: 'G-SM4CXEQJYY',
       },
     ],
     require.resolve('./plugins/route-change'),
