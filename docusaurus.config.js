@@ -200,7 +200,7 @@ module.exports = {
             {
               html: `
                 <iframe 
-                src=https://postgres-ai.instatus.com/embed-status/2c18fe48/${COLOR_MODE}-sm 
+                src=https://postgresai.instatus.com/embed-status/2c18fe48/${COLOR_MODE}-sm 
                 width="230" 
                 height="61" 
                 frameBorder="0" 
