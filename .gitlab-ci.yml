@@ -62,6 +62,9 @@ variables:
   script:
     # Substitute env variables in deploy config.
     - bash ./do.sh subs_envs ./deploy/docs.yaml /tmp/deploy.yaml
+    # Context (gitlab agent)
+    - kubectl config get-contexts
+    - kubectl config use-context postgres-ai/docs:k8s-cluster-docs
     # Deploy to k8s cluster.
     - kubectl apply --filename /tmp/deploy.yaml -n $NAMESPACE
 
