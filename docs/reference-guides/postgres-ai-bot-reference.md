@@ -27,7 +27,7 @@ Categories of data in the RAG KB:
     - [Cybertec blog](https://www.cybertec-postgresql.com/en/blog/)
     - [Postgres.AI blog](https://postgres.ai/blog)
     - [OnGres blog](https://www.ongres.com/blog/)
-    - [Postgrs HowTos (Postgres.AI)](https://gitlab.com/postgres-ai/postgresql-consulting/postgres-howtos)
+    - [Postgres HowTos (Postgres.AI)](https://gitlab.com/postgres-ai/postgresql-consulting/postgres-howtos)
     - [Franck Pachot's blog](https://dev.to/franckpachot)
     - [Haki Benita's blog](https://hakibenita.com/)
     - [Jeremy Schneider's blog](https://ardentperf.com/)
