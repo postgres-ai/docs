@@ -190,7 +190,12 @@ export const useBotMessages = (): UseBotMessages => {
   useEffect(() => {
     const savedMessages = getCookie('pgai_bot_messages');
     if (savedMessages) {
-      setMessages(JSON.parse(savedMessages))
+      try {
+        const parsedMessages = JSON.parse(savedMessages)
+        setMessages(parsedMessages)
+      } catch (e) {
+        console.error('Error parsing cookie value:', e);
+      }
     }
   }, [])
 
