@@ -139,7 +139,7 @@ module.exports = {
             },
             {
               label: 'DBLab HowTo Guides',
-              to: '/docs/tutorials/database-lab-tutorial-amazon-rds',
+              to: '/docs/how-to-guides',
             },
             {
               label: 'DBLab FAQ',
@@ -226,10 +226,6 @@ module.exports = {
             {
               label: 'FAQ',
               to: '/docs/questions-and-answers',
-            },
-            {
-              label: 'DBLab Guides',
-              to: '/docs/how-to-guides',
             },
             {
               label: 'DBLab Guides',
