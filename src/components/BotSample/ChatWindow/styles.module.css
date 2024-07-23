@@ -1,0 +1,19 @@
+.container, .content {
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    max-height: 0;
+    overflow: hidden;
+    transition: .2s ease, max-height .6s ease-in-out;
+}
+
+.container.chatVisible {
+    max-height: fit-content;
+    border-bottom: none;
+}
+
+.content {
+    padding: 0.5rem;
+}

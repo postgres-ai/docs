@@ -184,17 +184,21 @@ html[data-theme="dark"] .DocSearch {
   display: none;
 }
 
+.banner {
+  padding: 20px 0;
+}
+
 html[data-theme="light"] .banner {
   background: linear-gradient(180deg, #ffe1d2 0%, #ffffff 100%);
-  min-height: 534px;
+  min-height: 80vh;
 }
 
 html[data-theme="dark"] .banner {
-  min-height: 534px;
+  min-height: 80vh;
 }
 
 .banner .row {
-  min-height: 534px;
+  min-height: 80vh;
 }
 
 .banner h1 {

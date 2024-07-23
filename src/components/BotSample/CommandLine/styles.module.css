@@ -1,0 +1,115 @@
+:root {
+    --bot-form-height: 4rem;
+}
+
+.form {
+    display: flex;
+    border: 1px solid #808080;
+    border-radius: var(--bot-form-height);
+    min-width: var(--bot-form-height);
+    overflow: hidden;
+    transition: .2s ease;
+    box-sizing: border-box;
+    background: var(--ifm-background-surface-color);
+}
+
+.form:has(.formInput:focus) {
+    border-color: #464141;
+}
+
+.form.chatVisible {
+    display: none;
+}
+
+.formInput {
+    background: transparent;
+    border: none;
+    resize: none;
+    flex: 1;
+    padding: 1rem calc(var(--bot-form-height) / 2);
+    box-sizing: border-box;
+    font: 1.75rem / 100% var(--ifm-font-family-base);
+}
+
+.formInput::placeholder {
+    font-style: italic;
+}
+
+.formInput::-webkit-scrollbar {
+    display: none;
+}
+
+.formInput:focus {
+    outline: none   ;
+}
+
+.sendButton {
+    margin: 0!important;
+    padding: 0;
+    border-radius: 0;
+    height: var(--bot-form-height);
+    width: var(--bot-form-height);
+    align-self: flex-end;
+    background: none;
+    border: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+}
+
+.sendButton svg {
+    width: 2rem;
+}
+
+.sendButton:disabled {
+    cursor: auto;
+}
+
+.sendButton:disabled svg {
+    opacity: .7;
+}
+
+.sendButton svg path {
+    fill: var(--ifm-color-content-secondary);
+    transition: .2s ease-in;
+}
+
+.sendButton:not(:disabled):hover svg path {
+    fill: var(--ifm-font-color-base)
+}
+
+@media (max-width: 1000px) {
+    :root {
+        --bot-form-height: 3.5rem;
+    }
+    .formInput {
+        padding: .9rem 1rem;
+        font-size: 1.5rem;
+    }
+    .sendButton svg {
+        width: 1.75rem;
+    }
+}
+
+@media (max-width: 420px) {
+    :root {
+        --bot-form-height: 3rem;
+    }
+    .formInput {
+        padding: .9rem .75rem;
+        font-size: 1.25rem;
+    }
+    .sendButton svg {
+        width: 1.5rem;
+    }
+}
+
+@media (max-width: 350px) {
+    .formInput {
+        font-size: 1rem;
+        padding: 1rem .75rem;
+    }
+}

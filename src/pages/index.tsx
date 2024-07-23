@@ -9,6 +9,8 @@ import { RepoCard } from '@site/src/components/RepoCard'
 import blog from '../data/blog'
 
 import styles from './index.module.css'
+import { BotSample } from '@site/src/components/BotSample'
+
 
 const DBLAB_START_URL =
   'https://console.postgres.ai/'
@@ -27,19 +29,9 @@ function IndexPage() {
           <div className="row justify-content-center align-items-center">
             <div className="col-md-2"></div>
             <div className="col-md-8">
-              <h1>🖖 Database branching<br />
-                for <em>any</em> Postgres database</h1>
-              <p>
-                Empower database testing in CI/CD.<br />
-                Optimize DB-related costs while improving<br />
-                time-to-market and software quality
-              </p>
-              <a className="btn btn1" href={DBLAB_START_URL} target="_blank">
-                Get started in 3 minutes
-              </a>
-              <a className="btn btn2" href="/products/how-it-works">
-                How it works
-              </a>
+              <div className="mb-4">
+                <BotSample />
+              </div>
             </div>
             <div className="col-md-2"></div>
           </div>
