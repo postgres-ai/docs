@@ -8,6 +8,7 @@ const REPOSITORY_URL = 'https://github.com/postgres-ai/database-lab-engine'
 const SIGN_IN_URL = !!process.env.SIGN_IN_URL
   ? process.env.SIGN_IN_URL
   : '/signin'
+const BOT_WS_URL = !!process.env.BOT_WS_URL ? process.env.BOT_WS_URL : '/ai-bot-ws/'
 
 module.exports = {
   title:
@@ -24,6 +25,7 @@ module.exports = {
   customFields: {
     signInUrl: SIGN_IN_URL,
     apiUrlPrefix: API_URL_PREFIX,
+    botWSUrl: BOT_WS_URL
   },
 
   scripts: [
@@ -35,7 +37,7 @@ module.exports = {
 
   themeConfig: {
     colorMode: {
-      defaultMode: 'light',
+      defaultMode: 'dark',
     },
 
     metadata: [

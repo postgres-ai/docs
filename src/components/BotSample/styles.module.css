@@ -1,0 +1,6 @@
+.errorMessage {
+    color: var(--ifm-color-danger);
+    font: .75rem / var(--ifm-line-height-base) var(--ifm-font-family-base);
+    margin-top: .25rem;
+    display: inline-block;
+}
