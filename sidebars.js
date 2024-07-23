@@ -12,14 +12,11 @@ module.exports = {
     ],
     "Database Lab Engine": [
       "database-lab/index",
-      "database-lab/masking",
-      "database-lab/timing-estimator",
       "database-lab/supported-databases",
       "database-lab/user-interface",
+      "database-lab/masking",
+      "database-lab/db-migration-checker",
       "database-lab/telemetry",
-    ],
-    "DB Migration Checker": [
-      "db-migration-checker/index",
     ],
     "Joe Bot": [
       "joe-bot/index",
@@ -101,6 +98,7 @@ module.exports = {
       },
     ],
     "Reference guides": [
+      "reference-guides/postgres-ai-bot-reference",
       "reference-guides/database-lab-engine-components",
       "reference-guides/database-lab-engine-api-reference",
       "reference-guides/dblab-client-cli-reference",
