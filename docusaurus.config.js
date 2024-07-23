@@ -92,7 +92,11 @@ module.exports = {
           activeBaseRegex: '^/products',
           items: [
             {
-              label: 'How It Works',
+              label: 'Postgres.AI Bot',
+              to: '/blog/20240127-postgres-ai-bot',
+            },
+            {
+              label: 'DBLab Engine',
               to: '/products/how-it-works',
             },
             {
@@ -108,10 +112,6 @@ module.exports = {
               to: '/products/realistic-test-environments',
             },
             {
-              label: 'Sensitive Data Masking',
-              to: '/products/data-masking',
-            },
-            {
               to: '/resources',
               label: 'Case Studies',
             },
@@ -119,7 +119,7 @@ module.exports = {
         },
         {
           to: '/pricing',
-          label: 'Pricing',
+          label: 'DBLab Pricing',
           position: 'right',
         },
         {
@@ -134,15 +134,15 @@ module.exports = {
               activeBaseRegex: '^/docs',
             },
             {
-              label: 'Install DLE using Terraform',
-              to: '/docs/how-to-guides/administration/install-database-lab-with-terraform',
-            },
-            {
-              label: 'Getting Started for Amazon RDS',
+              label: 'DBLab for Amazon RDS',
               to: '/docs/tutorials/database-lab-tutorial-amazon-rds',
             },
             {
-              label: 'Database Lab FAQ',
+              label: 'DBLab HowTo Guides',
+              to: '/docs/tutorials/database-lab-tutorial-amazon-rds',
+            },
+            {
+              label: 'DBLab FAQ',
               to: '/docs/questions-and-answers',
             },
           ],
@@ -228,19 +228,23 @@ module.exports = {
               to: '/docs/questions-and-answers',
             },
             {
-              label: 'Guides',
+              label: 'DBLab Guides',
               to: '/docs/how-to-guides',
             },
             {
-              label: 'DLE API reference',
+              label: 'DBLab Guides',
+              to: '/docs/how-to-guides',
+            },
+            {
+              label: 'DBLab API reference',
               to: '/docs/reference-guides/database-lab-engine-api-reference',
             },
             {
-              label: 'DLE CLI reference',
+              label: 'DBLab CLI reference',
               to: '/docs/reference-guides/dblab-client-cli-reference',
             },
             {
-              label: 'DLE configuration reference',
+              label: 'DBLab configuration reference',
               to: '/docs/reference-guides/database-lab-engine-configuration-reference',
             },
           ],
@@ -413,6 +417,10 @@ module.exports = {
             from: '/blog/20240127-postges-ai-bot',
             to: '/blog/20240127-postgres-ai-bot' 
           },
+          {
+            from: '/docs/db-migration-checker',
+            to: '/docs/database-lab/db-migration-checker'
+          }
         ],
       },
     ],

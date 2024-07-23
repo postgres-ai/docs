@@ -9,9 +9,14 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 <img src={useBaseUrl('assets/database-lab/dblab.png')} width="256" align="right" vspace="20" hspace="20" />
 
-## Tutorials
+## Tutorials and explanations
 - [Database Lab tutorial for any PostgreSQL database](/docs/tutorials/database-lab-tutorial)
 - [Database Lab tutorial for Amazon RDS Postgres](/docs/tutorials/database-lab-tutorial-amazon-rds)
+- [Supported databases](/docs/database-lab/supported-databases)
+- [DBLab UI](/docs/database-lab/masking)
+- [Data masking](/docs/database-lab/user-interface)
+- [DB Migration Checker](/docs/database-lab/db-migration-checker)
+- [Telemetry](/docs/database-lab/telemetry)
 
 ## References
 - [Database Lab Engine components](/docs/reference-guides/database-lab-engine-components)
@@ -57,7 +62,6 @@ Some problems that can be solved by using Database Lab:
 - help verify database migrations (DB schema changes) and massive data operations.
 
 ### Features
-
 - Works well both on premise and in clouds.
 - Thin provisioning in seconds thanks to copy-on-write (CoW) provided by [ZFS](https://en.wikipedia.org/wiki/ZFS) and special methodology of preparing PostgreSQL database snapshots. There is also an option to use [LVM](https://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)) instead of ZFS.
 - Unlimited size of databases (Postgres database size [is unlimited](https://www.postgresql.org/docs/current/limits.html), ZFS volume can be up to 21^28 bytes, or [256 trillion yobibytes](https://en.wikipedia.org/wiki/ZFS)).

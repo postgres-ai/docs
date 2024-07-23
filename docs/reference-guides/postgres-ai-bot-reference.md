@@ -1,10 +1,10 @@
 ---
-title: Postgres.AI Bot tools
+title: Postgres.AI Bot (beta) tools
 sidebar_label: Postgres.AI Bot tools
 ---
 
 ## Overview
-This reference describes tools (functions) that are available to the Postgres.AI bot, including RAG KB semantic search, running benchmarks, executing SQL, and more. It aims to provide a comprehensive overview of the bot's capabilities and how to interact with it effectively.
+This reference describes tools (functions) that are available to the Postgres.AI Bot Beta, including RAG KB semantic search, running benchmarks, executing SQL, and more. It aims to provide a comprehensive overview of the bot's capabilities and how to interact with it effectively.
 
 Under normal circumstances, users are not expected to mention concrete tools when communicating with the bot. However, in certain situations, it might be useful to understand what is possible. In such cases, use this reference and discuss concrete functions and parameters with the bot, as this can help you achieve more predictable results.
 
@@ -16,9 +16,9 @@ Categories of data in the RAG KB:
     - Postgres versions 9.6–16 (including all contib modules)
     - Patroni
     - PoWA
-    - Postgrs.AI DBLab Engine
+    - Postgres.AI DBLab Engine
     - PgBouncer
-    - Stackgres
+    - StackGres
     - pgBackRest
     - WAL-G
     - PostgREST
@@ -64,7 +64,7 @@ Visualize some data such as benchmark results. This function uses QuickChart; se
 | **Parameter** | **Type**  | **Description**   | **Default** | **Example** |
 |---|---|----|---|---|
 | **type** (required) | `string` | The type of chart to create. (e.g., "bar" or "line"). | N/A         | `"bar"`             |
-| **data**            | `object` | The data to be plotted.                               | N/A         | See structure below |
+| **data**            | `object` | The data to be plotted.                               | N/A         | See structure below. |
 
 **Data Object Structure:**
 
@@ -145,7 +145,7 @@ JSON configuration example:
 | **PGBOUNCER_COUNT**             | `string`  | Number of PgBouncers to be installed (with `SO_REUSEPORT`).                                       | `"1"`                                                   | `"2"`                                           |
 | **HAPROXY**                     | `string`  | Use HAProxy or not.                                                                             | `"false"`                                               | `"true"`                                        |
 | **POSTGRES_VERSION** (required) | `string`  | Postgres major version. Options: `10`, `11`, `12`, `13`, `14`, `15`, `16`, `17`.                | `"16"`                                                  | `"15"`                                          |
-| **TEST_RUNS** (required)        | `object`  | JSON object containing test series description.                                                 | N/A                                                     | See below                                       |
+| **TEST_RUNS** (required)        | `object`  | JSON object containing test series description.                                                 | N/A                                                     | See below.                                       |
 
 #### `TEST_RUNS` (JSON object)
 | **Parameter** | **Type**  | **Description**   | **Default** | **Example** |
@@ -171,7 +171,7 @@ Connects to Postgres database and executes SQL query. If database credentials ar
 | **Parameter** | **Type**  | **Description**   | **Default** | **Example** |
 |---|---|----|---|---|
 | **SQL** (required) | `string` | SQL query.                        | N/A         | `SELECT * FROM users` |
-| **DB** (required)  | `object` | DB connection credentials. | N/A         | See below               |
+| **DB** (required)  | `object` | DB connection credentials. | N/A         | See below.               |
 
 #### `DB` (JSON object)
 | **Parameter** | **Type**  | **Description**   | **Default** | **Example** |

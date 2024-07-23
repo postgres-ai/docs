@@ -2,11 +2,13 @@
 title: DB Migration Checker
 sidebar_label: Overview
 hide_title: false
-slug: /db-migration-checker
-description: "Check DB migrations as a part of a standard pipeline"
+description: "Automatically test DB migrations (DDL, DML) in CI/CD pipelines"
 keywords:
   - "DB migration in CI"
   - "Database Lab DB migration"
+  - "Test DB migrations in CI/CD"
+  - "Automated Postgres DDL testing in CI/CD"
+  - "Automated DB migration testing in CI/CD"
 ---
 
 ## Overview
