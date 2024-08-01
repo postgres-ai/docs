@@ -1,6 +1,29 @@
+:root {
+    --custom-note-color: var(--ifm-color-content-secondary)
+}
+
+[data-theme='dark']:root {
+    --custom-note-color: var(--ifm-color-gray-700)
+}
+
 .errorMessage {
     color: var(--ifm-color-danger);
     font: .75rem / var(--ifm-line-height-base) var(--ifm-font-family-base);
+
+}
+
+.noteMessage, .errorMessage {
     margin-top: .25rem;
     display: inline-block;
+}
+
+.noteMessage {
+    color: var(--custom-note-color);
+    font: .875rem / var(--ifm-line-height-base) var(--ifm-font-family-base);
+}
+
+@media (max-width: 380px) {
+    .noteMessage {
+        font-size: .75rem;
+    }
 }

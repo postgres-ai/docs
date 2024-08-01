@@ -45,6 +45,9 @@ export const BotSample = () => {
           disabled={messages && messages.length > 0 || connectionStatus !== ConnectionStatus.OPEN}
         />}
         {error && error.message && !isChatVisible && <span className={styles.errorMessage}>{error.message}</span>}
+        {!error && !isChatVisible && <span className={styles.noteMessage}>
+          By default, this communication is public. For private chats, register your own organization in Console.
+        </span>}
       </div>
     </div>
   )
