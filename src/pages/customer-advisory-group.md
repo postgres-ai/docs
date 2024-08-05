@@ -39,7 +39,7 @@ Companies who are accepted into the Customer Advisory Group will make the follow
 * Company must be willing to commit to a monthly 30-minute meeting to provide feedback
 
 
-Questions? Contact us using the Intercom bubble to the right and leave an email so we can reach back out.
+Questions? Contact us [here](https://postgres.ai/contact/) and leave an email so we can reach back out.
 
 
 <div style={{'margin-top': '50px'}}>

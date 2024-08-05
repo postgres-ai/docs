@@ -103,13 +103,11 @@ We plan to extend the list with the following platforms (please reach out to our
 ## How to delete my account / organization on Postgres.ai?
 If you want to delete your data on Postgres.ai, contact Support:
 - email: support@postgres.ai
-- Intercom chat widget available on [Postgres.ai](https://Postgres.ai) website
 
 ---
 
 ## Where to get help?
 We are always happy to help. Reach out to the support team using the following resources:
 - email: support@postgres.ai
-- Intercom chat widget available on [Postgres.ai](https://Postgres.ai) website
 - [Community Slack](https://slack.postgres.ai/)
 - [Telegram (Russian)](https://t.me/databaselabru)

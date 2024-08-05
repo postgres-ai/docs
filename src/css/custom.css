@@ -78,12 +78,6 @@ html[data-theme="dark"] .DocSearch {
   bottom: 6rem;
 }
 
-/* overwrite intercom widget position */
-.intercom-lightweight-app .intercom-lightweight-app-launcher {
-  right: 25px;
-  bottom: 25px;
-}
-
 .outline {
   border: 1px solid #999;
   border-radius: 5px;
@@ -937,13 +931,6 @@ html[data-theme="dark"] .sign-in-button {
   .card img {
     object-fit: cover;
     height: auto;
-  }
-}
-
-@media (max-width: 560px) {
-  .intercom-lightweight-app .intercom-lightweight-app-launcher {
-    bottom: 15px;
-    right: 15px;
   }
 }
 
