@@ -51,8 +51,9 @@ Categories of data in the RAG KB:
 By default, the search is limited to `docs` and `articles`.
 
 ### Input parameters
+
 | **Parameter** | **Type**  | **Description**   | **Default** | **Example** |
-|---|---|----|---|---|
+| --- |--- | ---- | --- | --- |
 | **input** (required) | `string`  | Search query string used to find relevant content. | N/A | `"Postgres installation guide"` |
 | **categories** | `json` | JSON array listing all categories to be used in search | `["docs", "articles"]` | `["src"]` |
 | **match_count**      | `integer` | Maximum number of records to return. If not specified, the default value is used. | `10` | `25` |
@@ -61,22 +62,23 @@ By default, the search is limited to `docs` and `articles`.
 Visualize some data such as benchmark results. This function uses QuickChart; see [QuickChart docs](https://quickchart.io/documentation/) to learn more about its capabilities.
 
 ### Input parameters
+
 | **Parameter** | **Type**  | **Description**   | **Default** | **Example** |
-|---|---|----|---|---|
+| --- |--- | ---- | --- | --- |
 | **type** (required) | `string` | The type of chart to create. (e.g., "bar" or "line"). | N/A         | `"bar"`             |
 | **data**            | `object` | The data to be plotted.                               | N/A         | See structure below. |
 
-**Data Object Structure:**
+**Data object structure:**
 
 | **Parameter** | **Type**  | **Description**   | **Default** | **Example** |
-|---|---|----|---|---|
+| --- |--- | ---- | --- | --- |
 | **labels** | `array` | List containing labels for the x-axis. | N/A | `["January", "February"]` |
 | **datasets** | `array` | Data to be visualized. Each dataset must have `label` and `data` (an array of numbers). | N/A | See structure below. |
 
-**Dataset Object Structure:**
+**Dataset object structure:**
 
 | **Parameter** | **Type** | **Description** | **Default** | **Example** |
-|---|---|----|---|---|
+| --- |--- | ---- | --- | --- |
 | **label** | `string`  | The label for the dataset. | N/A  | `"My Dataset"` |
 | **data**  | `array`   | Array of numbers representing the data points. | N/A | `[10, 20, 30, 40]` |
 
@@ -89,8 +91,9 @@ Fetch the content of a web page. As of July 2024, this feature is limited to the
 - `wiki.postgresql.org`
 
 ### Input parameters
+
 | **Parameter** | **Type**  | **Description**   | **Default** | **Example** |
-|---|---|----|---|---|
+| --- |--- | ---- | --- | --- |
 | **url** (required) | `string` | The URL of the page to fetch. | N/A | `https://www.postgresql.org/docs/17/release-17.html` |
 
 
@@ -128,8 +131,9 @@ JSON configuration example:
 ```
 
 ### Input parameters
+
 | **Parameter** | **Type**  | **Description**   | **Default** | **Example** |
-|---|---|----|---|---|
+| --- |--- | ---- | --- | --- |
 | **SERVER_TYPE** (required)      | `string`  | Type of server to deploy. Supported values: various configurations with specific vCPUs and RAM. | `"n2-standard-4"`                                       | `"n2-standard-4"`                               |
 | **SERVER_LOCATION**             | `string`  | GCP region or region+zone for server deployment. If not specified, an available zone will be selected. | `""`                                                    | `"us-central1"`                                 |
 | **SERVER_SPOT**                 | `string`  | Defines whether the GCP compute instance is preemptible (spot).                                 | `"true"`                                                | `"true"`                                        |
@@ -148,8 +152,9 @@ JSON configuration example:
 | **TEST_RUNS** (required)        | `object`  | JSON object containing test series description.                                                 | N/A                                                     | See below.                                       |
 
 #### `TEST_RUNS` (JSON object)
+
 | **Parameter** | **Type**  | **Description**   | **Default** | **Example** |
-|---|---|----|---|---|
+| --- |--- | ---- | --- | --- |
 | **pre_configs**                 | `array`  | Optional array of configuration settings specific to this scenario.                                                                                                                                                                                                                               | N/A         | `["wal_compression=off"]`                                                       |
 | **pre_shell**                   | `string` | Optional bash snippet to execute prior to workload.                                                                                                                                                                                                                                               | N/A         | `"echo '[some sql]' > /tmp/part1.sql && echo '[another sql]' > /tmp/part2.sql"` |
 | **pre_sql**                     | `string` | Optional SQL commands to be executed prior to workload.                                                                                                                                                                                                                                           | N/A         | `"SET work_mem = '64MB';"`                                                      |
@@ -160,22 +165,25 @@ JSON configuration example:
 Access and analyze experiment's results, or get pipeline's job statuses if the experiment is still running.
 
 ### Input parameters
+
 | **Parameter** | **Type**  | **Description**   | **Default** | **Example** |
-|---|---|----|---|---|
+| --- |--- | ---- | --- | --- |
 | **pipeline_id** (required) | `string` | Pipeline ID. | N/A         | `12345`   |
 
 ## Tool `sql_execute`
 Connects to Postgres database and executes SQL query. If database credentials are provided, they are used to establish Postgres connection. Otherwise, a new DBLab clone is created using `create_dblab_clone` and then clone's credentials are used.
 
 ### Input parameters
+
 | **Parameter** | **Type**  | **Description**   | **Default** | **Example** |
-|---|---|----|---|---|
+| --- |--- | ---- | --- | --- |
 | **SQL** (required) | `string` | SQL query.                        | N/A         | `SELECT * FROM users` |
 | **DB** (required)  | `object` | DB connection credentials. | N/A         | See below.               |
 
 #### `DB` (JSON object)
+
 | **Parameter** | **Type**  | **Description**   | **Default** | **Example** |
-|---|---|----|---|---|
+| --- |--- | ---- | --- | --- |
 | **db_name** (required)  | `string` | DB name.                           | N/A         | `my_database` |
 | **user** (required)     | `string` | DB user name. | N/A         | `admin`       |
 | **password** (required) | `string` | DB password.  | N/A         | `password`    |
@@ -187,22 +195,25 @@ Connects to Postgres database and executes SQL query. If database credentials ar
 Create a new DBLab clone for a specific Postgres major version (`16` by default). This function is called when user wants to execute a SQL query but hasn't provided DB connection information.
 
 ### Input parameters
+
 | **Parameter** | **Type**  | **Description**   | **Default** | **Example** |
-|---|---|----|---|---|
+| --- |--- | ---- | --- | --- |
 | **POSTGRES_VERSION** (required)       | `string` | Postgres major version. Options: `12`, `13`, `14`, `15`, `16`. Default: `16`          | `16`      | `13`      |
 
 ## Tool `reset_dblab_clone`
 Reset DBLab clone to its original state.
 
 ### Input parameters
+
 | **Parameter** | **Type**  | **Description**   | **Default** | **Example** |
-|---|---|----|---|---|
+| --- |--- | ---- | --- | --- |
 | **CLONE_ID** (required) | `string` | ID of existing DBLab clone. | N/A         | `clone123` |
 
 ## Tool `sql_plan_analysis_helper`
 Get EXPLAIN plan optimization insights from [pgMustard](https://pgMustard.com/).
 
 ### Input parameters
+
 | **Parameter** | **Type**  | **Description**   | **Default** | **Example** |
-|---|---|----|---|---|
+| --- |--- | ---- | --- | --- |
 | **plan** (required) | `string` | Postgres query plan in string format. | N/A         | `Seq Scan on users (cost=0.00..34.50 rows=2450 width=12) (actual time=0.012..0.045 rows=2450 loops=1)\nExecution Time: 0.067 ms` |

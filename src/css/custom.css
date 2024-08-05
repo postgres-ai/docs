@@ -28,11 +28,6 @@
   padding: 0 var(--ifm-pre-padding);
 }
 
-/* Hide table headers, manually create headers if needed. */
-thead {
-  display: none;
-}
-
 /* DocSearch */
 html[data-theme="light"] .DocSearch {
   /* --docsearch-primary-color: var(--ifm-color-primary); */
