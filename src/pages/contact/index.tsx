@@ -10,20 +10,7 @@ const ContactPage: React.FC = () => {
   const contactsItems = useMemo(() => {
     const openLink = (link: string) => window.open(link)
 
-    const showIntercom = () => {
-      if (window.Intercom) {
-        window.Intercom('show')
-      }
-    }
-
     return [
-      {
-        name: 'Intercom',
-        description: 'We’re here to help with any question or installation',
-        icon: '/assets/contact/intercom.svg',
-        buttonText: 'Chat with us now',
-        onButtonClick: showIntercom,
-      },
       {
         name: 'Community on Slack',
         description:
@@ -63,12 +50,12 @@ const ContactPage: React.FC = () => {
             <h1>Contact us</h1>
             <p>Get in touch and let us know how we can help</p>
           </div>
-          <div className="row margin-vert--lg">
+          <div className="row margin-vert--lg justify-content-center">
             {contactsItems.map((item, index) => {
               return (
                 <div
                   key={index}
-                  className="col-sm-12 col-md-4 px-4 margin-vert--lg"
+                  className="col-sm-12 col-md-6 col-lg-4 px-4 margin-vert--lg"
                 >
                   <CardInfo
                     title={item.name}

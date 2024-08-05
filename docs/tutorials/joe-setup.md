@@ -172,5 +172,5 @@ Instead of working using insecure HTTP, you can set up NGINX with SSL enabled an
 See available configuration options [here](/docs/reference-guides/joe-bot-configuration-reference).
 
 :::info Have questions?
-Reach out to our team, we'll be happy to help! Use the Intercom widget located at the right bottom corner.
+Reach out to our team [here](https://postgres.ai/contact/), we'll be happy to help!
 :::
