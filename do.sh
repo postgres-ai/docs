@@ -43,6 +43,7 @@ run_local() {
     --build-arg ARG_URL="${URL}" \
     --build-arg ARG_BASE_URL="${BASE_URL}" \
     --build-arg ARG_SIGN_IN_URL="${SIGN_IN_URL}" \
+    --build-arg ARG_BOT_WS_URL="${BOT_WS_URL}"
     .
 
   docker run \
