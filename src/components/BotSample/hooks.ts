@@ -16,13 +16,20 @@ export type BotMessage = {
   user_id: string
   org_id: string
   thread_id: string
-  type: 'message' | 'debug' | undefined
+  type: 'message' | undefined
   ai_model: string
 }
 
 export type StateMessage = {
   type: 'state'
   state: string | null
+  thread_id: string
+}
+
+export type StreamMessage = {
+  type: 'stream'
+  content: string
+  ai_model: string
   thread_id: string
 }
 
@@ -52,6 +59,7 @@ type UseBotMessages = {
   error: ErrorType | ErrorMessage | null;
   loading: boolean;
   connectionStatus: ConnectionStatus;
+  currentStreamMessage: StreamMessage | null
 }
 
 export enum ConnectionStatus {
@@ -70,6 +78,7 @@ export const useBotMessages = (): UseBotMessages => {
   const [error, setError] = useState<ErrorType | ErrorMessage | null>(null);
   const [stateMessage, setStateMessage] = useState<StateMessage | null>(null);
   const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>(ConnectionStatus.CLOSED);
+  const [currentStreamMessage, setCurrentStreamMessage] = useState<StreamMessage | null>(null)
 
   const websocketRef = useRef<WebSocket | null>(null);
   const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -95,7 +104,7 @@ export const useBotMessages = (): UseBotMessages => {
     };
 
     websocket.onmessage = (event) => {
-      const messageData: BotMessage | StateMessage | ErrorMessage = JSON.parse(event.data);
+      const messageData: BotMessage | StateMessage | ErrorMessage | StreamMessage = JSON.parse(event.data);
       if (messageData.type === 'state') {
         setStateMessage(messageData as StateMessage);
       } else if (messageData.type === 'error') {
@@ -103,7 +112,7 @@ export const useBotMessages = (): UseBotMessages => {
           setError({...messageData, errorType: 'ratelimit'});
         }
         setLoading(false);
-      } else if (messageData.type !== 'debug') {
+      } else if (messageData.type === 'message') {
         setMessages(prevMessages => {
           const currentMessages = [...prevMessages, messageData];
           setLoading(false);
@@ -114,8 +123,11 @@ export const useBotMessages = (): UseBotMessages => {
             setCookie('pgai_tmp_thread_id', threadId, duration)
             setCookie('pgai_bot_messages', JSON.stringify(currentMessages), duration)
           }
+          if (currentStreamMessage) setCurrentStreamMessage(null)
           return currentMessages;
         });
+      } else if (messageData.type === 'stream') {
+        setCurrentStreamMessage(messageData)
       }
     };
 
@@ -205,7 +217,8 @@ export const useBotMessages = (): UseBotMessages => {
     sendMessage,
     messages,
     stateMessage,
-    connectionStatus
+    connectionStatus,
+    currentStreamMessage
   };
 };
 
