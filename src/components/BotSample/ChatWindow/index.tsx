@@ -3,7 +3,7 @@ import { Message } from '@site/src/components/BotSample/Message'
 import styles from './styles.module.css';
 import cn from 'classnames'
 import { SignInBanner } from '@site/src/components/BotSample/SignInBanner'
-import { BotMessage, ErrorType, StateMessage } from '@site/src/components/BotSample/hooks'
+import { BotMessage, ErrorType, StateMessage, StreamMessage } from '@site/src/components/BotSample/hooks'
 
 type ChatWindowProps = {
   isChatVisible: boolean
@@ -12,6 +12,7 @@ type ChatWindowProps = {
   isLoading: boolean
   error: ErrorType
   onRetrySendingMessage: (content: string) => void
+  currentStreamMessage: StreamMessage | null
 }
 
 export const ChatWindow = (props: ChatWindowProps) => {
@@ -21,7 +22,8 @@ export const ChatWindow = (props: ChatWindowProps) => {
     isLoading,
     stateMessage,
     error,
-    onRetrySendingMessage
+    onRetrySendingMessage,
+    currentStreamMessage
   } = props;
 
   return (
@@ -39,7 +41,14 @@ export const ChatWindow = (props: ChatWindowProps) => {
           )
         }
         {
-          isLoading && <Message
+          currentStreamMessage && isLoading && <Message
+            isAi
+            content={currentStreamMessage.content}
+            canRetry={false}
+          />
+        }
+        {
+          isLoading && !currentStreamMessage && <Message
             isAi
             content={null}
             isLoading
