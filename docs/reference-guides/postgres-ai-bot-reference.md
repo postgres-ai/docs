@@ -41,7 +41,7 @@ Categories of data in the RAG KB:
     - pg_stat_kcache (PoWA)
     - libpg_query
 - `mbox` – mailing list archives; as of July 2024:
-    - gsql-admin
+    - pgsql-admin
     - pgsql-bugs
     - pgsql-general
     - pgsql-hackers
