@@ -80,7 +80,7 @@ Here is how the configuration file is structured:
 - `portPool` (key-value, required) - defines a pool of ports for Postgres clones
   - `from` (integer, required) - the lowest port value in the pool
   - `to` (integer, required) - the highest port value in the pool
-- `dockerImage` (string, required) - the Postgres Docker image that to be used when cloning
+- `dockerImage` (string, required) - Postgres Docker image to be used for cloning. IMPORTANT: Postgres version of this image should match the source's Postgres version. For logical mode, it is a recommendation. For physical mode, it is a *requirement*.
 - `useSudo` (boolean, optional, default: false) - use sudo for ZFS/LVM and Docker commands if Database Lab server running outside a container
 - `keepUserPasswords` (bool, optional, default: "false") - By default, in addition to creating a new user with administrative privileges, Database Lab Engine resets passwords for all existing users. This is done for security reasons. If this behavior is undesirable and you want to keep the ability authenticate for the existing users with their unchanged passwords, then set the value of the variable to `true`.
 - `containerConfig` (key-value, optional) - options to pass custom parameters to clone containers
