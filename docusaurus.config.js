@@ -30,7 +30,7 @@ module.exports = {
 
   scripts: [
     BASE_URL + 'js/githubButton.js',
-    { src: BASE_URL + 'js/cookieBanner.js', async: true, defer: true },
+    { src: BASE_URL + 'js/cookieBanner.js?v3', async: true, defer: true },
   ],
 
   themeConfig: {

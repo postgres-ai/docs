@@ -3,7 +3,7 @@
 }
 
 [data-theme='dark']:root {
-    --custom-note-color: var(--ifm-color-gray-700)
+    --custom-note-color: #c5c5c5
 }
 
 .errorMessage {

@@ -26,7 +26,7 @@ function IndexPage() {
       <section className="banner position-relative text-center">
         <div className="container">
           <div className="row justify-content-center align-items-center">
-            <div className="col-md-2"></div>
+            <div className="col-md-2 d-none d-md-block"></div>
             <div className="col-md-8">
               <div className="mb-4">
                 <BotSample />

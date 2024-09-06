@@ -19,7 +19,7 @@
   const renderCookieBanner = () => {
     const desc = element("p", {
       className: "cookie-banner__desc",
-      text: "This website or its third-party tools process personal data (e.g. browsing data or IP addresses) and use cookies or other identifiers, which are necessary for its functioning and required to achieve the purposes illustrated in the cookie policy. You accept the use of cookies or other identifiers by closing or dismissing this notice, by clicking a link or button or by continuing to browse otherwise."
+      text: "We use essential cookies to achieve the best user experience"
     });
     const href = "/privacy";
     const learnMoreButton = element("a", {
