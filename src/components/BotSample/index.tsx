@@ -3,6 +3,7 @@ import { ChatWindow } from '@site/src/components/BotSample/ChatWindow'
 import { CommandLine } from '@site/src/components/BotSample/CommandLine'
 import { ConnectionStatus, useBotMessages } from '@site/src/components/BotSample/hooks'
 import styles from './styles.module.css'
+import { HintCards } from '@site/src/components/BotSample/HintCards'
 
 export const BotSample = () => {
   const [isChatVisible, setChatVisible] = useState(false);
@@ -28,8 +29,15 @@ export const BotSample = () => {
     }
   }, [messages])
 
+  const handleHintClick = (prompt: string) => {
+    if (!error) {
+      handleSendMessage(prompt)
+    }
+  }
+
   return (
     <div>
+      {!isChatVisible && <HintCards onHintClick={handleHintClick} />}
       <div>
         <ChatWindow
           isChatVisible={isChatVisible}
