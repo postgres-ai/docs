@@ -709,7 +709,7 @@ html[data-theme="dark"] .avatar__name > a {
   border-radius: 0.25rem;
 }
 
-.navbar-sidebar__item div[class="menu__list-item"]:not(:first-of-type), .github-sm {
+.navbar-sidebar__item div[class="menu__list-item"]:not(:first-of-type), .github-sm, .navbar-sidebar__item .menu__list-item--sign-in-button {
   margin-top: 1rem;
   padding: var(--ifm-menu-link-padding-vertical)
       var(--ifm-menu-link-padding-horizontal);
