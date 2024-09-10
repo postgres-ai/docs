@@ -11,7 +11,9 @@ export default (function () {
       'github-star-placeholder',
     )[0]
 
-    gitHubButton.innerHTML = githubStars
+    if (gitHubButton) {
+      gitHubButton.innerHTML = githubStars
+    }
   }
 
   return {
