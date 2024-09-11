@@ -106,7 +106,6 @@ module.exports = {
       "reference-guides/db-migration-checker-configuration-reference",
       "reference-guides/joe-bot-configuration-reference",
       "reference-guides/joe-bot-commands-reference",
-      "reference-guides/postgres-ai-bot-reference"
     ],
   },
 };
