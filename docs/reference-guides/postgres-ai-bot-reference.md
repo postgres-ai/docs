@@ -1,12 +1,12 @@
 ---
-title: Postgres.AI Bot (beta) tools
-sidebar_label: Postgres.AI Bot tools
+title: Postgres.AI Assistant (beta) tools
+sidebar_label: Postgres.AI Assistant tools
 ---
 
 ## Overview
-This reference describes tools (functions) that are available to the Postgres.AI Bot Beta, including RAG KB semantic search, running benchmarks, executing SQL, and more. It aims to provide a comprehensive overview of the bot's capabilities and how to interact with it effectively.
+This reference describes tools (functions) that are available to the Postgres.AI Assistant Beta, including RAG KB semantic search, running benchmarks, executing SQL, and more. It aims to provide a comprehensive overview of the assistant's capabilities and how to interact with it effectively.
 
-Under normal circumstances, users are not expected to mention concrete tools when communicating with the bot. However, in certain situations, it might be useful to understand what is possible. In such cases, use this reference and discuss concrete functions and parameters with the bot, as this can help you achieve more predictable results.
+Under normal circumstances, users are not expected to mention concrete tools when communicating with the assistant. However, in certain situations, it might be useful to understand what is possible. In such cases, use this reference and discuss concrete functions and parameters with the assistant, as this can help you achieve more predictable results.
 
 ## Tool `rag_search`
 Using semantic search (pgvector), find relevant pieces of knowledge in the RAG KB (Retrieval Augmented Generation Knowledge Base).
