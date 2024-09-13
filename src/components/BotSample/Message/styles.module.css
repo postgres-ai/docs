@@ -33,6 +33,14 @@
     animation: rotate .8s ease-in-out infinite;
 }
 
+.content blockquote {
+    margin-top: .5em;
+}
+
+.content blockquote, .content blockquote > * {
+    font-size: 1rem!important;
+}
+
 .retryButton {
     padding: 0;
     margin: 0;
