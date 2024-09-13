@@ -1,9 +1,32 @@
-import React from 'react'
-import styles from './styles.module.css';
-import ReactMarkdown from 'react-markdown'
+import React, { useMemo } from 'react'
+import ReactMarkdown, { Components } from 'react-markdown'
+import rehypeRaw from "rehype-raw";
+import remarkGfm from "remark-gfm";
 import cn from 'classnames'
 import { RetryIcon } from '@site/src/icons/RetryIcon'
 import { LoadingIcon } from '@site/src/icons/LoadingIcon'
+import Mermaid from '@theme/Mermaid';
+import CodeBlock from '@theme/CodeBlock';
+import styles from './styles.module.css';
+
+const disallowedHtmlTagsForMarkdown= [
+  'script',
+  'style',
+  'iframe',
+  'form',
+  'input',
+  'link',
+  'meta',
+  'embed',
+  'object',
+  'applet',
+  'base',
+  'frame',
+  'frameset',
+  'audio',
+  'video',
+];
+
 
 type MessageProps = {
   isAi: boolean
@@ -22,6 +45,26 @@ export const Message = (props: MessageProps) => {
     }
   }
 
+  const renderers = useMemo<Components>(() => ({
+    p: ({ node, ...props }) => <div {...props} />,
+    img: ({ node, ...props }) => <img style={{ maxWidth: '60%' }} {...props} />,
+    code: ({ node, inline, className, children, ...props }) => {
+      const match = /language-(\w+)/.exec(className || '');
+      const matchMermaid = /language-mermaid/.test(className || '');
+      const language = match ? match[1] : '';
+      if (!inline) {
+        return (
+          <>
+            {matchMermaid && <Mermaid value={String(children).replace(/\n$/, '')} />}
+            <CodeBlock language={language} showLineNumbers>{children}</CodeBlock>
+          </>
+        )
+      } else {
+        return <code {...props}>{children}</code>
+      }
+    },
+  }), []);
+
   return (
     <div className={cn(styles.container, { [styles.aiMessage]: isAi })}>
       <div className={styles.heading}>
@@ -30,7 +73,14 @@ export const Message = (props: MessageProps) => {
       <div className={cn(styles.content, { [styles.loader]: isLoading })}>
         {
           content &&
-          <ReactMarkdown>
+          <ReactMarkdown
+            components={renderers}
+            linkTarget='_blank'
+            disallowedElements={disallowedHtmlTagsForMarkdown}
+            unwrapDisallowed
+            rehypePlugins={[rehypeRaw]}
+            remarkPlugins={[remarkGfm]}
+          >
             {content}
           </ReactMarkdown>
         }

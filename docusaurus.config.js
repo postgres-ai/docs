@@ -33,6 +33,8 @@ module.exports = {
     { src: BASE_URL + 'js/cookieBanner.js?v3', async: true, defer: true },
   ],
 
+  themes: ['@docusaurus/theme-mermaid'],
+
   themeConfig: {
     colorMode: {
       defaultMode: 'dark',
@@ -294,7 +296,8 @@ module.exports = {
     },
 
     prism: {
-      theme: require('prism-react-renderer/themes/nightOwl'),
+      theme: require('prism-react-renderer/themes/nightOwlLight'),
+      darkTheme: require('prism-react-renderer/themes/nightOwl'),
     },
   },
 
