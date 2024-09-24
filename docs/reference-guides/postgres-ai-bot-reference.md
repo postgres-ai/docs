@@ -198,7 +198,7 @@ Create a new DBLab clone for a specific Postgres major version (`16` by default)
 
 | **Parameter** | **Type**  | **Description**   | **Default** | **Example** |
 | --- |--- | ---- | --- | --- |
-| **POSTGRES_VERSION** (required)       | `string` | Postgres major version. Options: `12`, `13`, `14`, `15`, `16`. Default: `16`          | `16`      | `13`      |
+| **POSTGRES_VERSION** (required)       | `string` | Postgres major version. Options: `12`, `13`, `14`, `15`, `16`, `17`. Default: `16`          | `16`      | `13`      |
 
 ## Tool `reset_dblab_clone`
 Reset DBLab clone to its original state.
