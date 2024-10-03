@@ -1,0 +1,207 @@
+---
+authors:
+  - name: Nikolay Samokhvalov
+    title: Postgres.AI Founder
+    url: https://linkedin.com/in/samokhvalov
+    socials:
+      x: samokhvalov
+      github: NikolayS
+      gitlab: NikolayS
+  - name: Vitaliy Kukharik
+    title: Postgres DBA
+    socials:
+      x: vkukharik
+      github: vitabaks
+      gitlab: vitabaks
+date: 2024-10-03 13:21:12
+publishDate: 2024-10-03 13:21:12
+linktitle: "AI-assisted benchmark: number of partitions vs. planning time"
+title: "AI-assisted Postgres experiment: number of partitions vs. planning time"
+weight: 0
+image: /assets/thumbnails/ai_db_experiment_plannting_time_vs_partition_count.jpg
+tags:
+  - Postgres.AI bot
+  - AI
+  - LLM
+---
+
+import { BlogFooter } from '@site/src/components/BlogFooter'
+import { nik } from '@site/src/config/authors'
+import { TwitterEmbedScript } from '@site/src/components/TwitterEmbedScript'
+import { AssistantWidget } from '@site/src/components/AssistantWidget'
+
+<!--
+<p align="center">
+  <img
+    src="/assets/thumbnails/ai_db_experiment_plannting_time_vs_partition_count.jpg"
+    alt="TODO: add blog post thumbnail"
+    width="450px"
+    loading="eager"
+  />
+</p>
+-->
+
+In one of the recent [PostgresFM](https://postgres.fm/) episodes, Michael Christofides and Nikolay discussed planning time and what can affect it. One of the obvious negative factors we've discussed is the large number of partitions a partition table might have.
+
+<iframe width="100%" height="180" frameborder="no" scrolling="no" seamless="" src="https://share.transistor.fm/e/28f15b6d?color=FFFFFF&background=30343C"></iframe>
+
+In this post, I'm using our [Postgres.AI assistant](https://postgres.ai/blog/20240127-postgres-ai-bot) to see how planning time depends on the number of partitions.
+
+This is the very first blog post of its kind: it has an integrated AI that you can use to explore the topic discussed here further, to repeat the experiment, alter it in any direction, and study the Postgres behavior more effectively.
+
+<!--truncate-->
+
+If you, like some of us, prefer reading summaries, please [jump straight to the AI chat section](#explore-it-further) and ask for the "TL;DR" version. We don't mind.
+
+## Why
+It's quite a well-known fact that with the growth in the number of partitions, planning time also grows. [The official documentation](https://www.postgresql.org/docs/17/ddl-partitioning.html#DDL-PARTITIONING-DECLARATIVE-BEST-PRACTICES) says:
+
+> It is important to consider the overhead of partitioning during query planning and execution. The query planner is generally able to handle partition hierarchies with up to a few thousand partitions fairly well, provided that typical queries allow the query planner to prune all but a small number of partitions. Planning times become longer and memory consumption becomes higher when more partitions remain after the planner performs partition pruning.
+
+There is a long thread in the pgsql-hackers mailing list where this problem is discussed, and where there are patches proposed to improve this overhead:
+- [[PoC] Reducing planning time when tables have many partitions](https://www.postgresql.org/message-id/flat/CAJ2pMkZNCgoUKSE%2B_5LthD%2BKbXKvq6h2hQN8Esxpxd%2Bcxmgomg%40mail.gmail.com) (pgsql-hackers discussion),
+- [Reducing planning time when tables have many partitions](https://commitfest.postgresql.org/49/3701/) (commitfest entry).
+
+This work is still in progress (currently, patches need a next round of reviews). Meanwhile, fast-growing OLTP projects need to find a way to deal with multi-terabate tables, and partitioning is widely used. We thought it would be a good idea to conduct a simple database experiment to show how exactly the planning time depends on the number of partitions. 
+
+## Experiment steps
+The idea is straightforward: let's explore how the planning time grows when the number of partitions grows, in Postgres 16.
+
+1. Create a partitioned table, with PK:
+    ```sql
+    create table partitioned_table (  
+        id int8 primary key,  
+        data text  
+    ) partition by range (id);
+    ```
+2.  For a simple query, measure the planning time, buffer hits and reads used for planning (and do it 5 times):
+    ```sql
+    explain (analyze, buffers) select * from partitioned_table where id = 1;
+    ```
+3. Then, using a loop in a `DO` block with PL/pgSQL, partitions were added to the table, with each partition containing 9,999 rows:
+    ```sql
+    do $do$      
+    declare      
+        i int;      
+    begin      
+        for i in 0..99 loop      
+            execute format(    
+                $sql$       
+                    create table partitioned_table_%s       
+                    partition of partitioned_table       
+                    for values from (%s) to (%s)       
+                $sql$,       
+                i,       
+                i * 9999 + 1,       
+                (i + 1) * 9999 + 1       
+            );      
+                
+            execute format(    
+                $sql$       
+                    insert into partitioned_table_%s       
+                    select generate_series(%s, %s) as id, 'data'       
+                $sql$,       
+                i,       
+                i * 9999 + 1,       
+                (i + 1) * 9999       
+            );      
+                
+            execute format(    
+                $sql$       
+                    create index on partitioned_table_%s (id)       
+                $sql$,       
+                i       
+            );      
+        end loop;      
+    end $do$;
+    ```
+4. Run `vacuum analyze` on the partitioned table.
+5. Repeat the `explain (analyze, buffers)` as we did for 0 partitions. This time, looking at the plain returned by explain, ensure that partition pruning is working and we have Index Scan.
+6. Double-check the current number of partitions, using `pg_inherits`.
+7. Iterate, repeating steps 3 to 6 – we need data points for 0, 100, 200, ..., 1000 partitions.
+
+## Let's do it (with AI)
+We fed this detailed scenario to the Postgres AI system to start experimenting. The detailed communication can be found here: https://postgres.ai/chats/01924928-4727-78a4-a01a-c42e764f5466.
+
+Once the instructions were received, the Postgres.AI assistant communicated with DBLab Engine to provide a database clone for Postgres 16 (empty, in this case; we can consider this as regular Postgres running in Docker), created the schema and started iterating, reporting intermediate results. After several minutes, we had all the numbers, and asked AI to visualize them:
+<p align="center">
+  <a class="blog-responsive-image-wrapper" href="/assets/blog/20241003_planning_time_vs_number_of_partitions__planning_and_exec_time_4.png" target="blank">
+    <img src="/assets/blog/20241003_planning_time_vs_number_of_partitions__planning_and_exec_time_4.png" alt="Planning and execution time vs. number of partitions in Postgres 16" />
+  </a>
+</p>
+
+As we can see, the planning time grows linearly with the number of partitions, and in this environment, for this schema and query, a thousand partitions gives us 12+ ms for planning time. This is significant. On purpose, we used a primary key lookup query, to emphasize that the execution time remains very low, sub-millisecond (and it wouldn't change much with larger data sets, thanks to B-tree indexes). For 1,000 partitions, execution time was 0.354 ms, while planning time reached 12.435 – 35 times higher than execution time! And, as PostgresFM listeners know very well, we didn't forget to look at `BUFFERS`, which is also reported for the planning stage – we have linear growth here as well:
+<p align="center">
+  <a class="blog-responsive-image-wrapper" href="/assets/blog/20241003_planning_time_vs_number_of_partitions__buffer_hits_and_reads_4.png" target="blank">
+    <img src="/assets/blog/20241003_planning_time_vs_number_of_partitions__buffer_hits_and_reads_4.png" alt="Planning buffer hits and reads vs. number of partitions in Postgres 16" />
+  </a>
+</p>
+
+Is 10-12 ms a significant overhead? For OLTP – web, mobile, AI apps interacting with humans – the answer is definitely YES. As we discuss in ["What is a slow SQL query?"](https://postgres.ai/blog/20210909-what-is-a-slow-sql-query), in OLTP cases, in general, 10ms for SQL query execution (including the planning phase) should be considered "not fast". This is because human users typically notice delays exceeding 100-200ms, and one request from a user to the app usually leads to the execution of multiple SQL queries.
+
+## Explore it further
+You can explore these results further and even modify the experiment using the Postgres.AI assistant below. Feel free to ask questions, suggest modifications, or dive deeper into specific aspects of the study.
+
+<p align="center">
+    <AssistantWidget
+        aiContext={"Fetch https://postgres.ai/chats/01924928-4727-78a4-a01a-c42e764f5466 and https://postgres.ai/blog/20241003-how-does-planning-time-depend-on-number-of-partitions.\n" +
+"Be prepared to replicate experiment in DBLab:\n" +
+"- display the results in the following format: number of partitions: execution plan\n" +
+"- generate 2-3 data points and show intermediate results to user, before continuing\n\n" +
+"Answer the following question:\n"
+        }
+        hints={[
+              {
+                hint: 'TL;DR, please',
+                prompt: 'TL;DR, please',
+                type: 'common'
+              },
+              {
+                hint: 'Would it be the same on Postgres 17?',
+                prompt: 'Would it be the same on Postgres 17?',
+                type: 'settings'
+              },
+              {
+                hint: 'What type of partitioning was used?',
+                prompt: 'What type of partitioning was used?',
+                type: 'design'
+              },
+              {
+                hint: 'What if we have 10k partitions?',
+                prompt: 'What if we have 10k partitions?',
+                type: 'performance'
+              },
+        ]}
+    />
+</p>
+
+For example, when we initially conducted this experiment, PostgreSQL 17 wasn't available. Now that it's released and supported by both DBLab Engine and the Postgres.AI assistant, you can use the tool above to compare results across different versions or explore how recent optimizations might affect planning time with partitioned tables.
+
+Don't hesitate to experiment – your curiosity might uncover interesting insights or inspire further research!
+
+## Conclusions
+It's pretty clear that the more partitions we have, the bigger the planning time.
+
+
+Of course, this is a very trivial experiment, it's imperfect in many ways, defining potential future work:
+- **Statistical significance**: each data point was measured only once, which is not statistically robust; for a more comprehensive analysis, multiple measurements should be taken for each number of partitions to account for variability.
+- **Connection overhead**: current implementation of our AI system implies that every SQL is executed in a separate connection; the impact of fresh connections on system catalog caching wasn't considered here, but obviously some of those buffer hits for planning were related to the initial work with system catalogs performed for the very first planning event in a session.
+- **Planning buffer hits vs. planning time**: while it's clear that both planning buffer hits and planning time were growing with the growth of the number of partitions, the relationship between those numbers needs further exploration. Additionally, we could explore more complex situations: for example, having many indexes might amplify the issue with growing planning time – because during planning, Postgres needs to lock *all* indexes and tables involved in planning, using `AccessShareLock`.
+- **Plan complexity**: we explored only a trivial plan, searching for a single row by partition key. With more indexes defined on the table, and more sophisticated filtering, the overhead to the planning time might be even bigger, and different effects might be observed.
+- **Solution exploration**: this post focused on demonstrating the issue rather than exploring solutions.
+
+Speaking of solutions: if the number of partitions inevitably grows, one could consider using prepared statements to let Postgres cache plans, performing the planning operations much less often. However, in the case of partitioned tables, partition pruning, which usually happens during the planning phase, shifts to the execution phase if generic plan is used. This adds overhead to the execution phase, and in certain situations can lead to higher risks of `LWLock:LockManager` contention, an infamous performance cliff. Prepared statements might still be considered a valid solution in some cases, but their use requires thorough analysis. This topic of "partitioning + prepared statements" definitely deserves a separate discussion. For now, let's agree that the basic reliable "solution" to the problem is to keep the number of partitions low.
+
+There is a good rule many people follow: if we have tables exceeding 100 GiB, they have to be partitioned. If we aim to keep individual partition size below 100 GiB and have no more than 1,000 partitions, this already means a capacity of 100 GiB * 1000 = ~100 TiB for a partitioned table, which looks quite "enough" for most practical OLTP cases in 2024 (this might easily change in, say, 5-10 years).
+
+Based on all of the above, let's derive two principles to follow when partitioning large tables:
+1. Prefer low number of partitions, stay below 1,000 or at least below 5-10k. If you need that many, monitor planning time e.g., holistically using `pg_stat_statements` (note that by default, it has `pg_stat_statements.track_planning` disabled – to track planning time, this needs to be enabled; it is worth studying potential overhead of it separately).
+2. At the same time, keep individual partition sizes, say, below 100 GiB.
+
+We encourage you to experiment with the interactive AI assistant provided in this post, explore how these findings apply to your specific use cases, and share your experiences with the wider Postgres community.
+
+*Acknowledgments: We thank the people who participated in preparing the data for this blog post, reviewing it, iterating, and fixing: Dmitry Fomin, Bogdan Tsechoev, Tatiana Samokhvalova, and Andrei Lepikhov.*
+
+---
+
+<TwitterEmbedScript />

@@ -1,6 +1,13 @@
 // Duplicates data from the blog.
 const blog = [
   {
+    link: 'blog/20241003-how-does-planning-time-depend-on-number-of-partitions',
+    date: '2024-10-03 13:21:12',
+    title: 'AI-assisted benchmark: number of partitions vs. planning time',
+    description: 'How does planning time depends on the number of partitions? Let\'s explore with the Postgres.AI assistant',
+    image: '/assets/thumbnails/ai_db_experiment_plannting_time_vs_partition_count.jpg',
+  },
+  {
     link: 'blog/20240127-postgres-ai-bot',
     date: '2024-01-27 23:21:12',
     title: 'Postgres.AI Bot. Towards LLM OS for Postgres',
@@ -34,14 +41,15 @@ const blog = [
     title: 'DLE 3.2: config and logs in UI, Postgres 15, AWS Marketplace version is GA',
     description: 'The Postgres.ai team is happy to announce the release of version 3.2 of Database Lab Engine (DLE), an open-source tool that provides blazing-fast database cloning and branching for any PostgreSQL database to build powerful development, test, QA, and staging environments.',
     image: '/assets/thumbnails/dle-3.2-blog.png',
-  },{
+  },
+  /*
+  {
     link: 'blog/20220703-dle-in-aws-marketplace',
     date: '2022-07-03 23:59:00',
     title: 'Database Lab Engine for AWS Marketplace',
     description: 'Good news for the AWS users: fast, fixed-cost branching for your Postgres is just a step away. Now, for a fixed price (paying just for one EC2 instance and an EBS volume), you can have dozens of DB clones being provisioned in seconds and delivering independent databases for your Git branches, CI/CD pipelines, as well as manual optimization and testing activities.',
     image: '/assets/thumbnails/20220703-dle-in-aws-marketplace-2.png',
   },
-  /*
   {
     link: 'blog/20220525-common-db-schema-change-mistakes',
     date: '2022-05-25 22:14:00',
