@@ -2,7 +2,7 @@
 const blog = [
   {
     link: 'blog/20241003-how-does-planning-time-depend-on-number-of-partitions',
-    date: '2024-10-03 15:20:12',
+    date: '2024-10-03 21:45:12',
     title: 'AI-assisted benchmark: number of partitions vs. planning time',
     description: 'How does planning time depends on the number of partitions? Let\'s explore with the Postgres.AI assistant',
     image: '/assets/thumbnails/ai_db_experiment_plannting_time_vs_partition_count.jpg',
