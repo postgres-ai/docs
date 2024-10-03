@@ -933,3 +933,22 @@ html[data-theme="dark"] .sign-in-button {
 .row .col[class*=col--] {
   max-width: var(--ifm-col-width);
 }
+
+.row:has(.col[class*="authorCol_"]:nth-of-type(2)) .col[class*="authorCol_"] {
+  flex: 0 0 230px!important;
+}
+
+.row .col[class*="authorCol_"] .avatar__intro:has(.avatar__subtitle) {
+  grid-template-rows: auto 1fr;
+}
+
+.blog-responsive-image-wrapper img {
+  width: 73%;
+  height: auto;
+}
+
+@media (max-width: 600px) {
+  .blog-responsive-image-wrapper img {
+    width: 100%;
+  }
+}

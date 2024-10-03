@@ -1,0 +1,45 @@
+.container {
+    border: 1px solid #808080;
+    border-radius: 12px;
+    padding: 10px 10px 2px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+
+    transition: .2s ease-in;
+
+    background: linear-gradient(180deg, #ffe1d2 0%, #ffffff 100%);
+}
+
+[data-theme='dark'] .container {
+    background: var(--ifm-color-gray-800);
+}
+
+.pgaiLogo {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: .5rem;
+
+}
+
+.pgaiLogoImage {
+    margin-right: .5rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.errorMessage, .noteMessage {
+    font: .75rem / var(--ifm-line-height-base) var(--ifm-font-family-base);
+    display: inline-block;
+}
+
+.errorMessage {
+    color: var(--ifm-color-danger);
+}
+
+.noteMessage {
+    color: var(--custom-note-color);
+    margin-top: .125rem;
+    align-self: center;
+}

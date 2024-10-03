@@ -50,6 +50,7 @@ type SendMessageType = {
   content: string;
   thread_id?: string | null;
   org_id?: number | null;
+  padding?: string | null
 }
 
 type UseBotMessages = {
@@ -59,7 +60,8 @@ type UseBotMessages = {
   error: ErrorType | ErrorMessage | null;
   loading: boolean;
   connectionStatus: ConnectionStatus;
-  currentStreamMessage: StreamMessage | null
+  currentStreamMessage: StreamMessage | null;
+  threadId: string | null
 }
 
 export enum ConnectionStatus {
@@ -69,7 +71,12 @@ export enum ConnectionStatus {
   CONNECTING = 'connecting',
 }
 
-export const useBotMessages = (): UseBotMessages => {
+type UseBotMessagesProps = {
+  saveData?: boolean,
+}
+
+export const useBotMessages = (props: UseBotMessagesProps = {}): UseBotMessages => {
+  const { saveData = true } = props;
   const { siteConfig } = useDocusaurusContext();
   const botWSUrl = siteConfig.customFields.botWSUrl;
 
@@ -78,7 +85,8 @@ export const useBotMessages = (): UseBotMessages => {
   const [error, setError] = useState<ErrorType | ErrorMessage | null>(null);
   const [stateMessage, setStateMessage] = useState<StateMessage | null>(null);
   const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>(ConnectionStatus.CLOSED);
-  const [currentStreamMessage, setCurrentStreamMessage] = useState<StreamMessage | null>(null)
+  const [currentStreamMessage, setCurrentStreamMessage] = useState<StreamMessage | null>(null);
+  const [threadId, setThreadId] = useState<string | null>(null)
 
   const websocketRef = useRef<WebSocket | null>(null);
   const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -120,8 +128,11 @@ export const useBotMessages = (): UseBotMessages => {
           let threadId = messageData.thread_id;
           if (threadId) {
             const duration = 60 * 60 * 1000;
-            setCookie('pgai_tmp_thread_id', threadId, duration)
-            setCookie('pgai_bot_messages', JSON.stringify(currentMessages), duration)
+            setThreadId(threadId)
+            if (saveData) {
+              setCookie('pgai_tmp_thread_id', threadId, duration)
+              setCookie('pgai_bot_messages', JSON.stringify(currentMessages), duration)
+            }
           }
           if (currentStreamMessage) setCurrentStreamMessage(null)
           return currentMessages;
@@ -167,7 +178,7 @@ export const useBotMessages = (): UseBotMessages => {
     };
   }, [botWSUrl]);
 
-  const sendMessage = async ({ content, thread_id, org_id = 34 }: SendMessageType) => {
+  const sendMessage = async ({ content, thread_id, padding, org_id = 34 }: SendMessageType) => {
     setLoading(true);
     if (error && (error as ErrorType).errorType === 'ratelimit') {
       setError(null)
@@ -185,7 +196,7 @@ export const useBotMessages = (): UseBotMessages => {
           JSON.stringify({
             action: 'send',
             payload: {
-              content,
+              content: `${padding ? `${padding}\n  ` : ''}${content}`,
               thread_id,
               org_id,
               ai_model: `gcp/gemini-1.5-pro`,
@@ -200,13 +211,15 @@ export const useBotMessages = (): UseBotMessages => {
   };
 
   useEffect(() => {
-    const savedMessages = getCookie('pgai_bot_messages');
-    if (savedMessages) {
-      try {
-        const parsedMessages = JSON.parse(savedMessages)
-        setMessages(parsedMessages)
-      } catch (e) {
-        console.error('Error parsing cookie value:', e);
+    if (saveData) {
+      const savedMessages = getCookie('pgai_bot_messages');
+      if (savedMessages) {
+        try {
+          const parsedMessages = JSON.parse(savedMessages)
+          setMessages(parsedMessages)
+        } catch (e) {
+          console.error('Error parsing cookie value:', e);
+        }
       }
     }
   }, [])
@@ -218,7 +231,8 @@ export const useBotMessages = (): UseBotMessages => {
     messages,
     stateMessage,
     connectionStatus,
-    currentStreamMessage
+    currentStreamMessage,
+    threadId
   };
 };
 
