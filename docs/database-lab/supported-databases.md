@@ -12,7 +12,7 @@ Currently, Database Lab Engine fully supports the following [PostgreSQL major ve
 - 14 (released: 2021-09-31; EOL: 2026-11-12)
 - 15 (released: 2022-10-13; EOL: 2027-11-11)
 - 16 (released: 2023-09-14; EOL: 2028-11-09)
-- 17 (RC1)
+- 17 (released: 2024-09-26; EOL: 2029-11-08)
 
 By default, version 16 is used: `postgresai/extended-postgres:16`.
 
@@ -35,8 +35,8 @@ All these extended images include the following extensions:
 - [Citus](https://github.com/citusdata/citus) (only for Postgres 11-16)
 - [HypoPG](https://github.com/HypoPG/hypopg)
 - [pg_cron](https://github.com/citusdata/pg_cron)
-- [pg_qualstats](https://github.com/powa-team/pg_qualstats) (only for Postgres 9.6-16)
-- [pg_repack](https://github.com/reorg/pg_repack) (only for Postgres 9.6-16)
+- [pg_qualstats](https://github.com/powa-team/pg_qualstats)
+- [pg_repack](https://github.com/reorg/pg_repack)
 - [pg_show_plans](https://github.com/cybertec-postgresql/pg_show_plans) (only for Postgres 12+)
 - [pg_stat_kcache](https://github.com/powa-team/pg_stat_kcache)
 - [pg_wait_sampling](https://github.com/postgrespro/pg_wait_sampling)
