@@ -171,7 +171,6 @@ Don't hesitate to experiment – your curiosity might uncover interesting insigh
 ## Conclusions
 It's pretty clear that the more partitions we have, the bigger the planning time.
 
-
 Of course, this is a very trivial experiment, it's imperfect in many ways, defining potential future work:
 - **Statistical significance**: each data point was measured only once, which is not statistically robust; for a more comprehensive analysis, multiple measurements should be taken for each number of partitions to account for variability.
 - **Connection overhead**: current implementation of our AI system implies that every SQL is executed in a separate connection; the impact of fresh connections on system catalog caching wasn't considered here, but obviously some of those buffer hits for planning were related to the initial work with system catalogs performed for the very first planning event in a session.
@@ -184,12 +183,52 @@ Speaking of solutions: if the number of partitions inevitably grows, one could c
 There is a good rule many people follow: if we have tables exceeding 100 GiB, they have to be partitioned. If we aim to keep individual partition size below 100 GiB and have no more than 1,000 partitions, this already means a capacity of 100 GiB * 1000 = ~100 TiB for a partitioned table, which looks quite "enough" for most practical OLTP cases in 2024 (this might easily change in, say, 5-10 years).
 
 Based on all of the above, let's derive two principles to follow when partitioning large tables:
-1. Prefer low number of partitions, stay below 1,000 or at least below 5-10k. If you need that many, monitor planning time e.g., holistically using `pg_stat_statements` (note that by default, it has `pg_stat_statements.track_planning` disabled – to track planning time, this needs to be enabled; it is worth studying potential overhead of it separately).
+1. <s>Prefer low number of partitions, stay below 1,000 or at least below 5-10k. If you need that many, monitor planning time e.g., holistically using `pg_stat_statements` (note that by default, it has `pg_stat_statements.track_planning` disabled – to track planning time, this needs to be enabled; it is worth studying potential overhead of it separately).</s> **UPDATE:** see the post extension below. While planning time still might be at risk with partition number growth, it's definitely not the case for trivial cases like one tested here. We recommend repeating the test with your own schema and workload.
 2. At the same time, keep individual partition sizes, say, below 100 GiB.
 
-We encourage you to experiment with the interactive AI assistant provided in this post, explore how these findings apply to your specific use cases, and share your experiences with the wider Postgres community.
+## Update (2024-10-04): it's bad only for the first query in session
+As mentioned above, in our original test a new connection was established for each query. After this article was published, David Rowley pointed out that the conclusions in it look misleading:
+
+<p align="center">
+  <blockquote class="twitter-tweet"><p lang="en" dir="ltr">I just want to highlight that these results are misleading. Almost all of the additional overhead you&#39;re getting with more partitions is the repopulation of the partition descriptor in the relcache. This is because you&#39;re running 1 query before disposing of the backend.</p>&mdash; David Rowley (@davidrowley_pg) <a href="https://twitter.com/davidrowley_pg/status/1842092927390285928?ref_src=twsrc%5Etfw">October 4, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</p>
+
+Indeed, most heavily-loaded systems use connection pooling, so only the very first query in a session behaves like was demonstrated here.
+
+To explore the behavior of the second query, I entered into the Postgres.AI Assistant widget integrated to the post:
+
+> Let's repeat the experiment, but this time run double EXPLAIN in one call: `explain ...; explain ...;`. And take metrics for both of them. We'll need to closely look at both of them separately because we suspect that the second EXPLAIN in each case is supposed to have much lower overhead both for planning time and planning buffer hits+reads, because the very first query in each session. Let's do only one iteration at a time: first only 0 and 100 partitions, then discuss and continue with 200 and so on.
+> Clarify SQL you're going to use.
+> Don't forget to test the case with 0 partitions.
+> Also, keep in mind we need `explain ..; explain ...;` in a single call!
+
+Here is that session: https://postgres.ai/chats/01925880-7a47-794d-a075-ef32768a5f1d.
+
+And as David pointed out, the overhead goes away, so **the planning time stays below 0.1 ms even when we have 1,000 partitions**!
+<p align="center">
+  <a class="blog-responsive-image-wrapper" href="/assets/blog/20241003_planning_time_vs_number_of_partitions__planning_and_exec_time_2nd_explain.png" target="blank">
+    <img src="/assets/blog/20241003_planning_time_vs_number_of_partitions__planning_and_exec_time_2nd_explain.png" alt="Planning and execution time vs. number of partitions in Postgres 16" />
+  </a>
+</p>
+
+And looking at the `BUFFERS` operations used for the planning, we see it's constant, as low as 3 hits (3 * 8 KiB = 24 KiB), regardless of the number of partitions for this simple case:
+<p align="center">
+  <a class="blog-responsive-image-wrapper" href="/assets/blog/20241003_planning_time_vs_number_of_partitions__buffer_hits_and_reads_2nd_explain.png" target="blank">
+    <img src="/assets/blog/20241003_planning_time_vs_number_of_partitions__buffer_hits_and_reads_2nd_explain.png" alt="Planning buffer hits and reads vs. number of partitions in Postgres 16" />
+  </a>
+</p>
+
+This observation emphasizes the importance of persisting connections, of the use of connection poolers. 
+
+
+
+---
+
+We encourage you [to experiment with the interactive AI assistant](#explore-it-further) provided in this post, explore how these findings apply to your specific use cases, and share your experiences with the wider Postgres community.
 
 *Acknowledgments: We thank the people who participated in preparing the data for this blog post, reviewing it, iterating, and fixing: Vitaliy Kukharik, Dmitry Fomin, Bogdan Tsechoev, Tatiana Samokhvalova, Andrei Lepikhov, and Michael Christofides.*
+
+
 
 ---
 
