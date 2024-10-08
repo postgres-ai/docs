@@ -37,6 +37,7 @@ export const Messages = ({messages, isLoading, threadId, onHintClick, hints, cur
           isAi
           content={currentStreamMessage.content}
           canRetry={false}
+          isLoading={isLoading}
         />
       }
       {messages.length >= 2 &&
