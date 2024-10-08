@@ -44,6 +44,7 @@ export const ChatWindow = (props: ChatWindowProps) => {
           currentStreamMessage && isLoading && <Message
             isAi
             content={currentStreamMessage.content}
+            isLoading={isLoading}
             canRetry={false}
           />
         }

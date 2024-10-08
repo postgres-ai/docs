@@ -55,7 +55,7 @@ export const Message = (props: MessageProps) => {
       if (!inline) {
         return (
           <>
-            {matchMermaid && <Mermaid value={String(children).replace(/\n$/, '')} />}
+            {matchMermaid && !isLoading && <Mermaid value={String(children).replace(/\n$/, '')} />}
             <CodeBlock language={language} showLineNumbers>{children}</CodeBlock>
           </>
         )
