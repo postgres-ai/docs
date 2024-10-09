@@ -31,7 +31,7 @@ All these extended images include the following extensions:
 - [pg_auth_mon](https://github.com/RafiaSabih/pg_auth_mon)
 - [PoWA](https://github.com/powa-team/powa) (only for Postgres 9.6-16)
 - [pg_hint_plan](https://pghintplan.osdn.jp/pg_hint_plan.html)
-- [Timescale](https://github.com/timescale/timescaledb) (only for Postgres 12-16)
+- [Timescale](https://github.com/timescale/timescaledb) (only for Postgres 12+)
 - [Citus](https://github.com/citusdata/citus) (only for Postgres 11-16)
 - [HypoPG](https://github.com/HypoPG/hypopg)
 - [pg_cron](https://github.com/citusdata/pg_cron)
