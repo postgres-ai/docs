@@ -118,11 +118,6 @@ module.exports = {
           ],
         },
         {
-          to: '/consulting',
-          label: 'Services',
-          position: 'right',
-        },
-        {
           to: '/blog',
           label: 'Blog',
           position: 'right',
@@ -130,7 +125,13 @@ module.exports = {
         {
           type: 'html',
           className: 'menu__list-item--sign-in-button',
-          value: `<a href=${SIGN_IN_URL} class="sign-in-button">Sign in</a>`,
+          value: `<a href="/consulting" class="consulting-button">Consulting</a>`,
+          position: 'right',
+        },
+        {
+          type: 'html',
+          className: 'menu__list-item--sign-in-button',
+          value: `<a href=${SIGN_IN_URL} class="console-button">Console</a>`,
           position: 'right',
         },
       ],

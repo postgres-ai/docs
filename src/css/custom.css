@@ -702,14 +702,14 @@ html[data-theme="dark"] .avatar__name > a {
   font-size: 20px;
 }
 
-.sign-in-button {
+.sign-in-button, .console-button, .consulting-button {
   font-weight: var(--ifm-font-weight-semibold);
   padding: 0.275rem 1.25rem;
   vertical-align: middle;
   border-radius: 0.25rem;
 }
 
-.navbar-sidebar__item div[class="menu__list-item"]:not(:first-of-type), .github-sm, .navbar-sidebar__item .menu__list-item--sign-in-button {
+.navbar-sidebar__item div[class="menu__list-item"]:not(:first-of-type), .github-sm, .navbar-sidebar__item .menu__list-item--sign-in-button, .navbar-sidebar__item .menu__list-item--console-button, .navbar-sidebar__item .menu__list-item--consulting-button {
   margin-top: 1rem;
   padding: var(--ifm-menu-link-padding-vertical)
       var(--ifm-menu-link-padding-horizontal);
@@ -723,14 +723,25 @@ html[data-theme="dark"] .avatar__name > a {
   color: inherit;
 }
 
-html[data-theme="light"] .sign-in-button {
+html[data-theme="light"] .sign-in-button,  html[data-theme="light"] .consulting-button {
   color: var(--ifm-color-black);
   border: 1px solid #ff6112;
 }
 
-html[data-theme="dark"] .sign-in-button {
+html[data-theme="dark"] .sign-in-button, html[data-theme="dark"] .consulting-button {
   color: var(--ifm-color-base);
   background-color: #ff6112;
+  border: 1px solid transparent;
+}
+
+html[data-theme="light"] .console-button{
+  color: var(--ifm-color-black);
+  border: 1px solid #0F879D;
+}
+
+html[data-theme="dark"] .console-button{
+  color: var(--ifm-color-base);
+  background-color: #0F879D;
   border: 1px solid transparent;
 }
 
@@ -821,7 +832,7 @@ html[data-theme="dark"] .sign-in-button {
     padding-top: 1.75rem;
   }
 
-  .sign-in-button {
+  .sign-in-button, .console-button, .consulting-button {
     display: flex;
     width: 162px;
     justify-content: center;
