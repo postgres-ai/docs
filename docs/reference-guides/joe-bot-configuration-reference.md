@@ -53,6 +53,9 @@ platform:
   # Postgres.ai Platform API secret token.
   token: "platform_secret_token"
 
+  # Postgres.ai Platform project to which user sessions are to be assigned.
+  project: "project_name"
+
   # Enable command history in Postgres.ai Platform for collaboration and
   # visualization. Default: true.
   historyEnabled: true
@@ -90,9 +93,6 @@ channelMapping:
           # This is what users see in browser.
           - channelID: ProductionDB
 
-            # Postgres.ai Platform project to which user sessions are to be assigned.
-            project: "demo"
-
             # Database Lab alias from the "dblabServers" section.
             dblabServer: prod1
 
@@ -127,9 +127,6 @@ channelMapping:
           # need the last part consisting of 9 letters starting with "C".
           - channelID: CXXXXXXXX
 
-            # Postgres.ai Platform project to which user sessions are to be assigned.
-            project: "demo"
-
             # Database Lab alias from the "dblabServers" section.
             dblabServer: prod1
 
@@ -159,9 +156,6 @@ channelMapping:
           # and choose "Additional options > Copy link". From that link, we
           # need the last part consisting of 9 letters starting with "C".
           - channelID: CXXXXXXXX
-
-            # Postgres.ai Platform project to which user sessions are to be assigned.
-            project: "demo"
 
             # Database Lab alias from the "dblabServers" section.
             dblabServer: prod1
@@ -195,9 +189,6 @@ channelMapping:
           # and choose "Additional options > Copy link". From that link, we
           # need the last part consisting of 9 letters starting with "C".
           - channelID: CXXXXXXXX
-
-            # Postgres.ai Platform project to which user sessions are to be assigned.
-            project: "demo"
 
             # Database Lab alias from the "dblabServers" section.
             dblabServer: prod1
