@@ -206,12 +206,12 @@ html[data-theme="dark"] .banner {
 }
 
 html[data-theme="light"] .companies {
-  background: #f9f9f9;
+  /*background: #f9f9f9; -- colors have been saved in case the company list needs to be restored to its original position*/
   padding-top: 20px;
   padding-bottom: 10px;
 }
 html[data-theme="dark"] .companies {
-  background: #131313;
+  /*background: #131313;*/
   padding-top: 20px;
   padding-bottom: 10px;
 }
