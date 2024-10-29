@@ -33,58 +33,6 @@ const DBLabEngine = () => {
           </div>
         </div>
       </section>
-      <section className="companies position-relative">
-        <div className="container text-center">
-          <div className="row">
-            <div className="col-md-2 col-5">
-              <a>
-                <img
-                  src="/assets/landing/gitlab.svg"
-                  alt="GitLab"
-                  className="img-fluid"
-                />
-              </a>
-            </div>
-            <div className="col-md-2 col-5">
-              <a>
-                <img
-                  src="/assets/landing/chewy.svg"
-                  alt="Chewy.com"
-                  className="img-fluid"
-                />
-              </a>
-            </div>
-            <div className="col-md-2 col-5">
-              <a>
-                <img
-                  src="/assets/landing/miro.svg"
-                  alt="Miro"
-                  className="img-fluid"
-                />
-              </a>
-            </div>
-            <div className="col-md-2 col-5">
-              <a>
-                <img
-                  src="/assets/landing/ongres.svg"
-                  alt="OnGres"
-                  className="img-fluid"
-                />
-              </a>
-            </div>
-            <div className="col-md-2 col-5">
-              <a>
-                <img
-                  src="/assets/landing/nutanix.svg"
-                  alt="Nutanix"
-                  className="img-fluid"
-                />
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section className="six-sec position-relative">
         <div className="col-sm-12">
           <h3 className="text-center">
