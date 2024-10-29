@@ -12,8 +12,8 @@ Under normal circumstances, users are not expected to mention concrete tools whe
 Using semantic search (pgvector), find relevant pieces of knowledge in the RAG KB (Retrieval Augmented Generation Knowledge Base).
 
 Categories of data in the RAG KB:
-- `docs` – documentation; as of July 2024:
-    - Postgres versions 9.6–16 (including all contib modules)
+- `docs` – documentation; as of October 2024:
+    - Postgres versions 9.6–17 (including all contib modules)
     - Patroni
     - PoWA
     - Postgres.AI DBLab Engine
@@ -32,15 +32,15 @@ Categories of data in the RAG KB:
     - [Haki Benita's blog](https://hakibenita.com/)
     - [Jeremy Schneider's blog](https://ardentperf.com/)
     - [Postgres Wiki](https://wiki.postgresql.org/)
-- `src` – source code; as of July 2024:
-    - Postgres
+- `src` – source code; as of October 2024:
+    - Postgres versions 13-17
     - pgBackRest
     - PgBouncer
     - pgvector
     - HypoPG
     - pg_stat_kcache (PoWA)
     - libpg_query
-- `mbox` – mailing list archives; as of July 2024:
+- `mbox` – mailing list archives; as of October 2024:
     - pgsql-admin
     - pgsql-bugs
     - pgsql-general
