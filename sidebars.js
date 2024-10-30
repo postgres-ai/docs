@@ -73,6 +73,7 @@ module.exports = {
           "how-to-guides/cloning/reset-clone",
           "how-to-guides/cloning/destroy-clone",
           "how-to-guides/cloning/clone-protection",
+          "how-to-guides/cloning/clone-upgrade",
         ],
       },
       {

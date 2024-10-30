@@ -10,3 +10,4 @@ slug: /how-to-guides/cloning
 - [How to reset Database Lab clone](/docs/how-to-guides/cloning/reset-clone)
 - [How to destroy Database Lab clone](/docs/how-to-guides/cloning/destroy-clone)
 - [Protect clones from manual and automatic deletion](/docs/how-to-guides/cloning/clone-protection)
+- [How to upgrade Postgres to a new major version in the DBLab clone](/docs/how-to-guides/cloning/clone-upgrade)
