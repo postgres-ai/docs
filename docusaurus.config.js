@@ -72,7 +72,7 @@ module.exports = {
       },
       items: [
         {
-          label: 'Product',
+          label: 'Products',
           position: 'right',
           to: '/',
           activeBaseRegex: '^/products',
@@ -108,7 +108,7 @@ module.exports = {
               to: '/docs/tutorials/database-lab-tutorial-amazon-rds',
             },
             {
-              label: 'DBLab HowTo Guides',
+              label: 'DBLab HowTo guides',
               to: '/docs/how-to-guides',
             },
             {
@@ -172,27 +172,27 @@ module.exports = {
           title: 'Docs',
           items: [
             {
-              label: 'Platform overview',
-              to: '/docs/platform',
+              label: 'FAQ',
+              to: '/docs/questions-and-answers',
             },
             {
               label: 'Getting started',
               to: '/docs/',
             },
             {
-              label: 'FAQ',
-              to: '/docs/questions-and-answers',
+              label: 'PostgresAI Assistant reference',
+              to: '/docs/reference-guides/postgres-ai-bot-reference',
             },
             {
-              label: 'DBLab Guides',
+              label: 'DBLab guides',
               to: '/docs/how-to-guides',
             },
             {
-              label: 'DBLab API reference',
+              label: 'DBLab API',
               to: '/docs/reference-guides/database-lab-engine-api-reference',
             },
             {
-              label: 'DBLab CLI reference',
+              label: 'DBLab CLI',
               to: '/docs/reference-guides/dblab-client-cli-reference',
             },
             {
@@ -202,11 +202,15 @@ module.exports = {
           ],
         },
         {
-          title: 'Products',
+          title: 'Products & Services',
           items: [
             {
-              label: 'PostgresAI bot',
-              to: '/bot',
+              label: 'Consulting',
+              to: '/consulting',
+            },
+            {
+              label: 'PostgresAI assistant',
+              to: '/blog/20240127-postgres-ai-bot',
             },
             {
               label: 'DBLab Engine',
@@ -226,11 +230,11 @@ module.exports = {
               href: 'https://slack.postgres.ai/',
             },
             {
-              label: 'YouTube',
+              label: 'Postgres.TV (YouTube)',
               href: 'https://www.youtube.com/PostgresTV',
             },
             {
-              label: 'Podcast',
+              label: 'Postgres FM (podcast)',
               href: 'https://postgres.fm',
             },
             {
@@ -242,12 +246,12 @@ module.exports = {
               href: 'https://github.com/postgres-ai',
             },
             {
-              label: 'Twitter @Database_Lab',
-              href: 'https://twitter.com/Database_Lab',
-            },
-            {
               label: 'Twitter @postgres_ai',
               href: 'https://twitter.com/postgres_ai',
+            },
+            {
+              label: 'Twitter @Database_Lab',
+              href: 'https://twitter.com/Database_Lab',
             },
             {
               label: 'LinkedIn',
@@ -267,7 +271,7 @@ module.exports = {
               href: SIGN_IN_URL,
             },
             {
-              label: 'Contact',
+              label: 'Contact us',
               to: '/contact/',
             },
             {
@@ -275,11 +279,7 @@ module.exports = {
               to: '/docs/',
             },
             {
-              label: 'Services',
-              to: '/consulting',
-            },
-            {
-              label: 'Case Studies',
+              label: 'Case studies',
               to: '/resources/',
             },
             {

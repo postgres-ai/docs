@@ -25,6 +25,9 @@ const DBLabEngine = () => {
               <a className="btn btn1" href={DBLAB_START_URL} target="_blank">
                 Get started in 3 minutes
               </a>
+              <a className="btn btn4" href="https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec" target="_blank">
+                AWS Marketplace
+              </a>
               <a className="btn btn2" href="/products/how-it-works">
                 How it works
               </a>
@@ -91,6 +94,9 @@ const DBLabEngine = () => {
             <div className="col-sm-12">
               <a href={DBLAB_START_URL} className="btn btn1" target="_blank">
                 Get started in 3 minutes
+              </a>
+              <a className="btn btn4" href="https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec" target="_blank">
+                AWS Marketplace
               </a>
               <a className="btn btn2 btn2-margin" href="/products/how-it-works">
                 How it works
@@ -270,6 +276,9 @@ const DBLabEngine = () => {
             <div className="col-md-12 text-center">
               <a className="btn btn1" href={DBLAB_START_URL} target="_blank">
                 Get started in 3 minutes
+              </a>
+              <a className="btn btn4" href="https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec" target="_blank">
+                AWS Marketplace
               </a>
               <a className="btn btn2" href="/products/how-it-works">
                 How it works

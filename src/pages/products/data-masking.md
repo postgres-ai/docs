@@ -76,6 +76,9 @@ within their organization and to comply with security standards.
   <a className="btn btn1" href='https://console.postgres.ai/' target="_blank">
     Get started in 3 minutes
   </a>
+  <a className="btn btn4" href="https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec" target="_blank">
+    AWS Marketplace
+  </a>
   <a className="btn btn2" href='/resources'>Case Studies</a>
 </div>
 
