@@ -169,6 +169,15 @@ html[data-theme="dark"] .DocSearch {
   color: #fff;
 }
 
+.btn4 {
+  background: red;
+}
+
+.btn1:hover {
+  background: #ff4444;
+  color: #fff;
+}
+
 .h-d {
   display: none;
 }
