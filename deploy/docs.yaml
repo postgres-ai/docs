@@ -43,3 +43,5 @@ spec:
             value: $BASE_URL
           - name: BOT_WS_URL
             value: $BOT_WS_URL
+          - name: API_URL_PREFIX
+            value: $API_URL_PREFIX
