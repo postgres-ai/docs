@@ -200,6 +200,7 @@ export const useBotMessages = (props: UseBotMessagesProps = {}): UseBotMessages 
               thread_id,
               org_id,
               ai_model: `gcp/gemini-1.5-pro`,
+              is_public: false
             },
           })
         );

@@ -4,9 +4,16 @@ import { CommandLine } from '@site/src/components/BotSample/CommandLine'
 import { ConnectionStatus, useBotMessages } from '@site/src/components/BotSample/hooks'
 import styles from './styles.module.css'
 import { HintCards } from '@site/src/components/BotSample/HintCards'
+import { KBStats } from '@site/src/components/KBStats'
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 
 export const BotSample = () => {
   const [isChatVisible, setChatVisible] = useState(false);
+
+  const { siteConfig } = useDocusaurusContext()
+  const { customFields } = siteConfig
+  const { signInUrl } = customFields
+
   const {
     messages,
     sendMessage,
@@ -56,9 +63,11 @@ export const BotSample = () => {
         />}
         {error && error.message && !isChatVisible && <span className={styles.errorMessage}>{error.message}</span>}
         {!error && !isChatVisible && <span className={styles.noteMessage}>
-          By default, this communication is public. For private chats, register your own organization in Console.
+          By default, this communication is public. For private chats, register your own organization in&nbsp;
+          <a href={signInUrl as string} className={styles.link}>Console</a>.
         </span>}
       </div>
+      {!isChatVisible && <KBStats />}
     </div>
   )
 }

@@ -22,6 +22,10 @@
     font: .875rem / var(--ifm-line-height-base) var(--ifm-font-family-base);
 }
 
+.link {
+    color: var(--ifm-link-color);
+}
+
 @media (max-width: 380px) {
     .noteMessage {
         font-size: .75rem;
