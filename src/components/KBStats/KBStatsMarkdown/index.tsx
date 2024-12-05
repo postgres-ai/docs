@@ -32,6 +32,7 @@ type ProcessedItem = {
   link: string;
   date: string | null;
   count: number;
+  name: string
 }
 
 type ProcessedCategory = {
@@ -40,9 +41,20 @@ type ProcessedCategory = {
   items: ProcessedItem[];
 }
 
+const extractLastPart = (url: string): string => {
+    return url.split('/').filter(Boolean).pop() || '';
+};
+
 const processData = (data: KBStats[]) => {
   return data.reduce((acc: { [key: string]: ProcessedCategory }, item) => {
     const { category, domain, last_document_date, count, total_count } = item;
+
+    let name = domain;
+
+    if (category === 'mbox') {
+      name = extractLastPart(domain)
+    }
+
     const link = domain.startsWith('http') ? domain : `https://${domain}`;
 
     if (!acc[category]) {
@@ -62,6 +74,7 @@ const processData = (data: KBStats[]) => {
 
     acc[category].items.push({
       link,
+      name,
       date: last_document_date,
       count: count || 0,
     });
@@ -76,8 +89,8 @@ const generateMarkdownContent = (data: KBStats[]) => {
   const markdownParts = Object.entries(categoriesDescriptions)
     .map(([category, description]) => {
       const categoryData = categoriesData[category];
-      const header = `- \`${category}\` – ${description}, documents count: ${categoryData?.totalCount?.toLocaleString(navigator.language)}${
-        categoryData?.latestDate ? `; as of ${new Date(categoryData?.latestDate).toISOString().replace('T', ' ').split('.')[0]}` : ''
+      const header = `- \`${category}\` – ${description}: ${categoryData?.totalCount?.toLocaleString(navigator.language)} items${
+        categoryData?.latestDate ? `; latest update: ${new Date(categoryData?.latestDate).toISOString().replace('T', ' ').split('.')[0]}` : ''
       }:\n`;
 
       let itemsMarkdown = '';
@@ -91,9 +104,9 @@ const generateMarkdownContent = (data: KBStats[]) => {
 
         itemsMarkdown = sortedItems
           .map((item) => {
-            let itemLine = `  - [${item.link}](${item.link})`;
+            let itemLine = `  - [${item.name}](${item.link})`;
             if (category !== 'mbox') {
-              itemLine += ` ${item.count.toLocaleString(navigator.language)} documents`;
+              itemLine += ` ${item.count.toLocaleString(navigator.language)} items`;
             }
             if (item.date) {
               itemLine += ` (${new Date(item.date).toISOString().replace('T', ' ').split('.')[0]})`;
