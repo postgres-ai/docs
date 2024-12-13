@@ -1,32 +1,29 @@
 ---
-title: Database Lab development roadmap
-sidebar_label: Roadmap
-description: Development roadmap for Database Lab Engine and related products.
+title: DBLab Engine development roadmap
+sidebar_label: DBLab Engine roadmap
+description: Development roadmap for DBLab Engine and related products
 keywords:
-  - "Postgres.ai development roadmap"
-  - "Database Lab development roadmap"
+  - "DBLab Engine development roadmap"
 ---
 
-## Roadmap
-We work hard to develop the Database Lab Platform (DLP) and its open-source core component, Database Lab Engine (DLE). Below you can find the main ideas we are working on now or planning to work soon.
-
-*Updated: 2022-01-20*
+## DBLab Engine (DLE) Roadmap
+We are working hard to develop the Database Lab Platform (DLP) and its open-source core component, Database Lab Engine (DLE). Below you can find the main ideas we are working on now or planning to work soon.
 
 ### [DLE] Physical provisioning
-Physical provisioning: native support of provisioning from archives created by a specific backup solution or based on an existing Postgres database
+Physical provisioning: native support of DB provisioning from archives created by a specific backup solution or based on an existing Postgres database
 
 - [ ] Support various sources
     - [x] Generic (anything: pg_basebackup, rsync, any backup tools)
     - Native support for specific backup tools
         - [x] WAL-E/WAL-G
-        - [ ] pgBackRest
+        - [x] pgBackRest
         - [ ] Barman
         - [ ] pg_probackup
 - [x] Continuously updated state (physical replication based on WAL shipping)
 - [x] Snapshot management (schedule, retention policy)
 
 ### [DLE] Logical provisioning
-Logical provisioning: native support of provisioning for managed PostgreSQL databases
+Logical provisioning: native support of DB provisioning for managed PostgreSQL databases
 
 - [x] Support various sources
     - [x] Any PostgreSQL DB via dump/restore: Amazon RDS, Heroku Postgres, Azure PostgreSQL, GCP CloudSQL, Digital Ocean Postgres, etc.
@@ -47,12 +44,12 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
     - [ ] arbitrary filtering (column and row filtering)
 
 ### [DLE] Engine features
-- [x] Persist clones when the engine restarts (added in DLE 3.0.0)
+- [x] Persisting clones when the engine restarts (added in DLE 3.0.0)
 - [ ] Point-in-time recovery (PITR) (Can be used for ultra-fast recovery of accidentally deleted data)
 - [ ] Troubleshoot/test standby behavior
-    - [ ] Create clone running in read-only mode to allow troubleshooting hot standby issues
-    - [ ] Allow launching N replicas for a clone
-    - [ ] For the "physical" mode: create clone from "pre" snapshot (read-only, unpromoted; admins only)
+    - [ ] Creating a clone running in read-only mode to allow troubleshooting hot standby issues
+    - [ ] Support for launching N replicas for a clone
+    - [ ] For the "physical" mode: creating clone from "pre" snapshot (read-only, unpromoted; admins only)
 - [ ] Duplicate DLE (create a new DLE based on existing one)
 - [ ] Clone observability
     - [ ] "Temporary" system- and Postgres-level monitoring for clones/sessions
@@ -72,7 +69,7 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
 - [ ] Fast connection to clone's DB via CLI
 - [ ] Advanced snapshot management
     - [ ] API handle to create/destroy snapshots (for continuously updated state)
-    - [ ] User-defined snapshots for clones
+    - [x] User-defined snapshots for clones
     - [ ] Snapshot export/import (S3)
 - [ ] Advanced schema management
     - [ ] schema diff
@@ -95,12 +92,13 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
     - [x] Basic audit logging
     - [ ] Advanced audit logging and alerting
     - [ ] Export audit logs from GUI
+    - [ ] Send events to SIEM
 - [ ] Usage stats
-- [ ] Monitoring
+- [x] Monitoring (Netdata)
 - [ ] Notifications
     - [ ] Notification management – turn on/off all or specific ones
     - [ ] Non-deletable clone is abandoned / not used for too long 
-    - [ ] Clone and snapshot is using too much disk space / out-of-disk-space risks
+    - [ ] Clone and snapshot are using too much disk space / out-of-disk-space risks
     - [ ] CPU saturation
     - [ ] Disk space saturation
     - [ ] Disk IO saturation 
@@ -112,11 +110,10 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
     - [ ] Initial data retrieval finished
     - [ ] Snapshot created
     - [ ] Snapshot deleted
-- [ ] Pricing, billing
-    - [x] pricing based on disk space used
+- [x] Pricing, billing
     - [x] report usage to postgres.ai
-    - [ ] flexible pricing options
-    - [ ] AWS: instance type and size based
+    - [x] flexible pricing options
+    - [x] AWS: instance type and size based
 
 ### [DLP] Automated verification of database schema and complex data changes a.k.a. DB migrations
 - [x] History and logging for clones/sessions
@@ -127,7 +124,7 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
 - [ ] Integration with CI tools – advanced integration
     - [x] GitHub Actions
     - [ ] Bitbucket CI/CD
-    - [ ] CitcleCI
+    - [ ] CircleCI
     - [ ] Jenkins
     - [ ] GitLab CI/CD
     - [ ] Bamboo
@@ -149,14 +146,14 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
 ### [DLP] Automation, clouds, Kubernetes
 - [ ] Simplify setup for major Cloud Service Providers, automation of installation in clients' accounts
     - [x] Basic Terraform templates
-    - [ ] One-click setup on AWS. AWS Marketplace
+    - [x] One-click setup on AWS. AWS Marketplace
     - [ ] One-click setup on GCP. GCP Marketplace
-    - [ ] One-click setup on Azure. GCP Marketplace
+    - [ ] One-click setup on Azure. Azure Marketplace
 - [ ] Cloud DLP ("DLP SaaS"): cloud offering (fully managed DLE and DLP)
     - [ ] AWS
     - [ ] GCP
     - [ ] Azure
-- [ ] Self-managed DLP ("DLP Enterprise"): work multiple DLEs and all DLP features in customer's account
+- [ ] Self-managed DLP ("DLP Enterprise"): work with multiple DLEs and all DLP features in customer's account
 - [ ] Cost optimization
     - [ ] AWS spot instances
     - [ ] GCP preemptible instances (24h max)
@@ -178,7 +175,7 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
     - [x] explain.depesz
     - [x] explain.dalibo (PEV2)
     - [ ] pgMustard (WebUI/SaaS only)
-    - [ ] FlameGraphs
+    - [x] FlameGraphs
 - [ ] Better optimization recommendations
 - [ ] Macroanalysis insights (suggestions based on postgres-checkup / pgss)
 - [x] Hypothetical indexes
@@ -186,14 +183,15 @@ Logical provisioning: native support of provisioning for managed PostgreSQL data
 - [ ] Index advisor
 - [ ] Utilization control
 - [x] Restore user sessions after Joe container restarts
-- [ ] Better chatbot security
+- [ ] Chatbot security
     - [x] Do not use DB superuser
     - [x] Quotas (rate limits)
-    - [ ] Alert admins when a quota is reached
+    - [ ] Alerting admins when a quota is reached
 - [ ] Runtime execution plan observability: [pg_query_state](https://github.com/postgrespro/pg_query_state)
 - [ ] Reset to specific `dataStateAt`
 - [ ] perf/FlameGraphs
 - [ ] Wait event sampling
+- [ ] Heavylock analysis
 
 ### [SaaS] Data masking and anonymization
 - [x] Basic support for masking and obfuscation
