@@ -8,3 +8,4 @@ slug: /how-to-guides/platform
 - [Start using Database Lab Platform](/docs/how-to-guides/platform/start-using-platform)
 - [Create and use Database Lab Platform tokens](/docs/how-to-guides/platform/tokens)
 - [Database Lab Platform onboarding checklist](/docs/how-to-guides/platform/onboarding)
+- [Audit logs and SIEM integration](/docs/how-to-guides/platform/audit-logs)

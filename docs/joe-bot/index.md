@@ -1,5 +1,5 @@
 ---
-title: Joe Bot
+title: Joe bot
 sidebar_label: Overview
 slug: /joe-bot
 ---
