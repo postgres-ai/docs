@@ -18,7 +18,7 @@ module.exports = {
       "database-lab/db-migration-checker",
       "database-lab/telemetry",
     ],
-    "Joe Bot": [
+    "Joe bot": [
       "joe-bot/index",
       "joe-bot/example",
     ],
@@ -77,7 +77,7 @@ module.exports = {
         ],
       },
       {
-        "SQL Optimization Chatbot (Joe Bot)": [
+        "SQL optimization chatbot (Joe bot)": [
           "how-to-guides/joe-bot/index",
           "how-to-guides/joe-bot/get-query-plan",
           "how-to-guides/joe-bot/create-index",
@@ -95,6 +95,7 @@ module.exports = {
           "how-to-guides/platform/start-using-platform",
           "how-to-guides/platform/tokens",
           "how-to-guides/platform/onboarding",
+          "how-to-guides/platform/audit-logs",
         ],
       },
     ],

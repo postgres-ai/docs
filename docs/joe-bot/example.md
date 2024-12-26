@@ -1,5 +1,5 @@
 ---
-title: Joe Bot demo and example
+title: Joe bot demo and example
 sidebar_label: Demo and example
 ---
 
@@ -34,7 +34,7 @@ where likes > 10 and created > '2019-10-01';
 
 #### Read the summary
 - Execution Time: *2.5 minutes*
-- Joe Bot provides recommendations:
+- Joe bot provides recommendations:
     - **Query processes too much data to return a relatively small number of rows**
     - **Specialized index needed**    
 - Shared buffers reads: 165789 (**~1.30 GiB**) from the OS file cache, including disk I/O
