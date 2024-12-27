@@ -21,7 +21,7 @@ Run the following command to install the Envoy proxy and obtain a Let's Encrypt 
 docker run --rm -it \
   -v $HOME/.ssh:/root/.ssh:ro \
   -e ANSIBLE_SSH_ARGS="-F none" \
-  postgresai/dle-se-ansible:v1.0 \
+  postgresai/dle-se-ansible:v1.4 \
     ansible-playbook software.yml --tags proxy --extra-vars \
       "dblab_host='user@server-ip-address' \
        proxy_install='true' \
