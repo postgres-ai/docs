@@ -56,7 +56,7 @@ module.exports = {
     announcementBar: {
       id: 'advisory_group', // Any value that will identify this message to save the hidden status.
       content:
-        "<a href='/blog/20240127-postges-ai-bot'>🚀 New Postgres.AI assistant: free GPT-4 and Gemini 1.5 for Postgres topics</a>",
+        "<a href='/blog/20240127-postges-ai-bot'>🚀 New Postgres.AI assistant: free GPT-4o for Postgres topics</a>",
       backgroundColor: '#D7EEF2',
       textColor: '#013A44',
       isCloseable: false,
