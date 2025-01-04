@@ -972,3 +972,49 @@ html[data-theme="dark"] .console-button{
     width: 100%;
   }
 }
+
+/* Consulting page */
+.testimonials-container {
+  display: grid;
+  gap: 20px;
+  margin-top: 30px;
+  padding: 20px;
+}
+
+.testimonial {
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial blockquote {
+  margin: 0;
+  font-style: italic;
+  color: #333333;
+}
+
+.testimonial footer {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #555555;
+}
+
+.cta-button {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 12px 20px;
+  font-size: 1.2rem;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.cta-button:hover {
+  background-color: #0056b3;
+}
+/* -- */
