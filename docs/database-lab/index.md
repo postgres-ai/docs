@@ -1,5 +1,5 @@
 ---
-title: Database Lab Engine
+title: DBLab Engine
 sidebar_label: Overview
 hide_title: false
 slug: /database-lab
@@ -10,8 +10,8 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 <img src={useBaseUrl('assets/database-lab/dblab.png')} width="256" align="right" vspace="20" hspace="20" />
 
 ## Tutorials and explanations
-- [Database Lab tutorial for any PostgreSQL database](/docs/tutorials/database-lab-tutorial)
-- [Database Lab tutorial for Amazon RDS Postgres](/docs/tutorials/database-lab-tutorial-amazon-rds)
+- [DBLab tutorial for any PostgreSQL database](/docs/tutorials/database-lab-tutorial)
+- [DBLab tutorial for Amazon RDS Postgres](/docs/tutorials/database-lab-tutorial-amazon-rds)
 - [Supported databases](/docs/database-lab/supported-databases)
 - [DBLab UI](/docs/database-lab/masking)
 - [Data masking](/docs/database-lab/user-interface)
@@ -19,61 +19,80 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 - [Telemetry](/docs/database-lab/telemetry)
 
 ## References
-- [Database Lab Engine components](/docs/reference-guides/database-lab-engine-components)
-- [Database Lab Engine API reference](/docs/reference-guides/database-lab-engine-api-reference)
+- [DBLab Engine components](/docs/reference-guides/database-lab-engine-components)
+- [DBLab Engine API reference](/docs/reference-guides/database-lab-engine-api-reference)
 - [Client CLI reference (`dblab`)](/docs/reference-guides/dblab-client-cli-reference)
-- [Database Lab Engine configuration reference](/docs/reference-guides/database-lab-engine-configuration-reference)
+- [DBLab Engine configuration reference](/docs/reference-guides/database-lab-engine-configuration-reference)
 
 ## User Guides
-- [How to create Database Lab clones](/docs/how-to-guides/cloning/create-clone)
-- [How to connect to Database Lab clones](/docs/how-to-guides/cloning/connect-clone)
-- [How to reset Database Lab clone](/docs/how-to-guides/cloning/reset-clone)
-- [How to destroy Database Lab clone](/docs/how-to-guides/cloning/destroy-clone)
+- [How to create DBLab clones](/docs/how-to-guides/cloning/create-clone)
+- [How to connect to DBLab clones](/docs/how-to-guides/cloning/connect-clone)
+- [How to reset DBLab clone](/docs/how-to-guides/cloning/reset-clone)
+- [How to destroy DBLab clone](/docs/how-to-guides/cloning/destroy-clone)
 - [Protect clones from manual and automatic deletion](/docs/how-to-guides/cloning/clone-protection)
-- [How to install and initialize Database Lab CLI](/docs/how-to-guides/cli/cli-install-init)
+- [How to install and initialize DBLab CLI](/docs/how-to-guides/cli/cli-install-init)
 
 ## Overview
-**Database Lab Engine** – an open-source technology that is a core component of the Database Lab Platform. It is used to build powerful, state-of-the-art development and testing environments, based on a simple idea: with modern thin cloning technologies, it becomes possible to iterate 100x faster in development and testing. It is extremely helpful for larger or small but very agile teams that want to achieve high development velocity and the most competitive "time to market" characteristics and save budgets on non-production infrastructure.
+**DBLab Engine** – an open-source technology that is one of the core components of the DBLab / Postgres.AI Platform, it implements instant cloning and database branching with constant time and money overhead.
 
-**Database Lab Platform** is a paid SaaS offering developed and maintained by [Postgres.ai](https://Postgres.ai). It provides GUI, user management, permissions control, token management, more.
+DBLab Engine is used to build powerful, state-of-the-art development and testing environments, based on a simple idea: with modern thin cloning and database branching, it becomes possible to iterate 100x faster in development and testing. It is extremely helpful for teams of any size that want to achieve high development velocity and the most competitive "time to market" characteristics and save budgets on non-production infrastructure.
 
-## Database Lab Engine
-Database Lab Engine is distributed under AGPL v3 license. Repositories:
+**DBLab Platform** (a.k.a. Postgres.AI Console) is a paid SaaS offering developed and maintained by [Postgres.AI](https://Postgres.ai). It provides GUI, user management, permissions control, token management, audit, and more.
+
+## DBLab Engine (open source)
+DBLab Engine is distributed under Apache 2.0 license.
+
+Repositories:
 - GitLab: https://gitlab.com/postgres-ai/database-lab,
 - GitHub https://github.com/postgres-ai/database-lab (mirror).
 
->Database Lab Engine is hosted and developed on GitLab.com. Why? GitLab Inc. is our (Postgres.ai) long-term client and early adopter (see [GitLab Development Docs](https://docs.gitlab.com/ee/development/understanding_explain_plans.html#database-lab)). GitLab has an open-source version. Last but not least: GitLab uses PostgreSQL.<br/><br/>
->However, nowadays, not many open-source projects are hosted at GitLab.com unfortunately.<br/> ⭐️ Please support the project giving a star on GitLab! It's on [the main page of the Database Lab Engine repository](https://gitlab.com/postgres-ai/database-lab), at the upper right corner:
+> DBLab Engine code is hosted and developed on GitLab.com. Why? GitLab Inc. is our (Postgres.ai) long-term client and early adopter (see [GitLab Development Docs](https://docs.gitlab.com/ee/development/understanding_explain_plans.html#database-lab)). GitLab has an open-source version. Last but not least: GitLab uses PostgreSQL.<br/><br/>
+>However, nowadays, not many open-source projects are hosted at GitLab.com, unfortunately.<br/> ⭐️ Please support the project giving a star on GitLab! It's on [the main page of the DBLab Engine repository](https://gitlab.com/postgres-ai/database-lab), at the upper right corner:
 >
 >![Add a GitLab star](/assets/star.gif)
+>
+> You're welcome to add a GitHub star too – there is a mirror here: https://github.com/postgres-ai/database-lab-engine.
 
-However, nowadays, not many open-source projects are hosted at GitLab.com unfortunately. Please support the project giving a GitLab star! It's on [the main page](https://gitlab.com/postgres-ai/database-lab), at the upper right corner:
+DBLab Engine includes the server with API with basic single-user authentication, UI, and client CLI.
 
-Database Lab Engine provides the server with API, and client CLI, with basic single-user authentication.
+As an example, cloning of 10 TiB PostgreSQL database takes less than 2 seconds when a single user is using the DBLab Engine instance, and up to 30 seconds when 15 users are working with it at the same time. Moreover, such cloning (called "thin cloning") does not increase budgets: on a single mid-size machine with a single physical copy of the database, it is possible to run dozens of thin clones simultaneously.
 
-As an example, cloning of 10 TiB PostgreSQL database takes less than 2 seconds when a single user is using the Database Lab Engine instance, and up to 30 seconds when 15 users are working with it at the same time. Moreover, such cloning (called "thin cloning") does not increase budgets: on a single mid-size machine with a single physical copy of the database, it is possible to run dozens of thin clones simultaneously.
+Thin cloning is possible thanks to [copy-on-write](https://en.wikipedia.org/wiki/Copy-on-write) capabilities provided by either [ZFS filesystem](https://en.wikipedia.org/wiki/ZFS) or [LVM2](https://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)) (other options such as hardware-based support of thin cloning, can be developed thanks to the modular and open architecture of DBLab Engine).
 
-Thin cloning is possible thanks to [copy-on-write](https://en.wikipedia.org/wiki/Copy-on-write) capabilities provided by either [ZFS filesystem](https://en.wikipedia.org/wiki/ZFS) or [LVM2](https://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)) (other options such as hardware-based support of thin cloning are possible to develop thanks to modular and open architecture of Database Lab Engine).
+Some problems that can be solved by using DBLab:
 
-Some problems that can be solved by using Database Lab:
-
-- help build independent development and testing environments involving full-size database without extra time and money spending,
-- provide temporary full-size database clones for SQL query optimization (see also: [Joe bot](https://postgres.ai/products/joe/), which works on top of Database Lab),
+- help build independent development and testing environments involving a full-size database without extra time or money spent,
+- provide temporary full-size database clones for SQL query optimization (see also: [Joe bot](https://postgres.ai/products/joe/), which works on top of DBLab),
 - help verify database migrations (DB schema changes) and massive data operations.
 
 ### Features
-- Works well both on premise and in clouds.
-- Thin provisioning in seconds thanks to copy-on-write (CoW) provided by [ZFS](https://en.wikipedia.org/wiki/ZFS) and special methodology of preparing PostgreSQL database snapshots. There is also an option to use [LVM](https://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)) instead of ZFS.
+- Works well both on-premise and in clouds.
+- Thin provisioning in seconds thanks to copy-on-write (CoW) provided by [ZFS](https://en.wikipedia.org/wiki/ZFS) and a special methodology for preparing PostgreSQL database snapshots. There is also an option to use [LVM](https://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)) instead of ZFS.
 - Unlimited size of databases (Postgres database size [is unlimited](https://www.postgresql.org/docs/current/limits.html), ZFS volume can be up to 21^28 bytes, or [256 trillion yobibytes](https://en.wikipedia.org/wiki/ZFS)).
-- Supports PostgreSQL 9.6, 10, 11, 12, 13 and 14.
+- Supports PostgreSQL from version 9.6 up to the most recently released version.
 - Thin cloning takes only a few seconds, regardless of the database size.
 - REST API.
-- Client CLI.
-- Automated deletion of clones after specified amount of minutes of inactivity (configurable).
-- Protection from deletion, to disable automated and accidental deletions.
+- Client CLI included.
+- UI included in all versions.
+- Automated deletion of clones after a specified number of minutes of inactivity (configurable).
+- Protection from deletion, to avoid automated and accidental deletions.
 - Continuously updated original copy of data is supported.
 - Multiple snapshots to allow provisioning of various versions of the database.
 - Custom PostgreSQL Docker images to work with extended PostgreSQL setups (extensions, additional tools, or even modified PostgreSQL engine).
+
+### Paid versions: DBLab SE and EE
+DBLab Engine is also packaged in two paid offerings:
+- **DBLab SE (Standard Edition)** – standalone DBLab Engine, installed via [Postgres.AI Console](https://postgres.ai/docs/how-to-guides/administration/install-dle-from-postgres-ai) or [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec), ideal for small to mid-size teams. It extends the free open-source option with commercial support and compatibility with various Postgres flavours such as AWS RDS and RDS Aurora, GCP CloudSQL, Heroku, Supabase, Timescale Cloud, PostGIS.
+- **DBLab EE (Enterprise Edition)** – full-fledged solution that includes enterprise features like unified control plane, user management, comprehensive audit capabilities, SSO, holistic query optimization workflows, and more.
+
+Version comparison and pricing info – see the [DBLab pricing](https://postgres.ai/pricing) page.
+
+You can install DBLab SE using these options:
+- [Postgres.AI Console](https://postgres.ai/docs/how-to-guides/administration/install-dle-from-postgres-ai)
+- [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec)
+
+For DBLab EE inquiries, reach out to the Postgres.AI team: **<a href="mailto:contact@postgres.ai">contact@postgres.ai</a>**.
+
 
 ### More
 - [Repository](https://gitlab.com/postgres-ai/database-lab)
