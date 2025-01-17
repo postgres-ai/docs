@@ -15,12 +15,13 @@ const DBLabEngine = () => {
           <div className="row justify-content-center align-items-center">
             <div className="col-md-2"></div>
             <div className="col-md-8">
-              <h1>DBLab Engine - Database branching<br />
+              <h1>DBLab — instant database branching<br />
                 for <em>any</em> Postgres database</h1>
               <p>
-                Empower database testing in CI/CD.<br />
-                Optimize DB-related costs while improving<br />
-                time-to-market and software quality
+                empower database testing — from manual to CI/CD,<br />
+                give every engineer their own full-size database,<br />
+                optimize SQL queries risk-free<br /><br />
+                – with fixed Storage & <em>Compute</em> costs!<br /><br />
               </p>
               <a className="btn btn1" href={DBLAB_START_URL} target="_blank">
                 Get started in 3 minutes
