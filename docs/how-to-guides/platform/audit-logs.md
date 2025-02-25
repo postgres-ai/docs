@@ -16,15 +16,16 @@ Only organization owner and admins can access audit logs.
 ## Audit events
 Currently, the following events are captured:
 
-| Event category (code) | Available actions | Notes |
-| ----------- | ----------------- | ------- |
-| Organization settings (`orgs`) | `update` |  |
-| Organization membership (`users_orgs`) | add (`insert`), remove (`delete`) |  |
-| API tokens (`api_tokens`) | generate (`insert`), update (`update`) |  |
-| DBLab Engine instances (`dblab_instances`) | add (`insert`), remove (`delete`) |  |
-| Joe bot instances (`joe_instances`) | add (`insert`), remove (`delete`) |  |
-| Joe bot messages (`joe_messages`) | create (`insert`), update (`update`), remove (`delete`) | Only user-created messages |
-| AI Assistant messages (`chats`) | create (`insert`), update (`update`) | Only user-created messages |
+| Event category (code)                      | Available actions                                                          | Notes                      |
+|--------------------------------------------|----------------------------------------------------------------------------|----------------------------|
+| Organization settings (`orgs`)             | `update`                                                                   |                            |
+| Organization membership (`users_orgs`)     | add (`insert`), remove (`delete`)                                          |                            |
+| API tokens (`api_tokens`)                  | generate (`insert`), update (`update`)                                     |                            |
+| DBLab Engine instances (`dblab_instances`) | add (`insert`), remove (`delete`)                                          |                            |
+| Joe bot instances (`joe_instances`)        | add (`insert`), remove (`delete`)                                          |                            |
+| Joe bot messages (`joe_messages`)          | create (`insert`), update (`update`), remove (`delete`)                    | Only user-created messages |
+| AI Assistant messages (`chats`)            | create (`insert`), update (`update`)                                       | Only user-created messages |
+| DBLab Engine clones (`dblab_clone`)        | create (`insert`), reset (`update`), destroy (`delete`), update (`update`) |                            |
 
 The DBLab Engine actions (snapshot, branch, clone creation/modification/deletion) are not currently supported in SIEM integration.
 
