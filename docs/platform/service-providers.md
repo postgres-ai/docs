@@ -2,7 +2,7 @@
 title: 3rd-party Data Subprocessors and Service Providers
 sidebar_label: Postgres.ai data subprocessors
 ---
-Effective date: 2023-12-20
+Effective date: 2025-02-05
 
 Postgres.ai aims to be fully transparent regarding how your data is used, how it is collected, and with whom it can be shared.
 
@@ -18,7 +18,8 @@ Postgres.ai uses the following data suprocessors:
 | [Google Workspace](https://workspace.google.com/) | USA | Email and cloud office apps used by the Postgres.ai Team for business |
 | [Hetzner](https://hetzner.com/) | USA, Germany | Cloud and dedicated hosting provider (currently not used for Customer Data) |
 | [Intercom](https://www.intercom.com/) | USA | Customer support system |
-| [OpenAI](https://openai.com/) | USA | AI models provided via API (such as Whisper, GPT). **Customer Data is not used in OpenAI API calls, unless explicitly approved by Customer**
+| [Microsoft Azure](https://azure.microsoft.com/) | USA | Azure AI – access to LLM such as DeepSeek (deployed in US locations only) |
+| [OpenAI](https://openai.com/) | USA | AI models provided via API (such as Whisper, GPT). *Customer Data is not used in OpenAI API calls, unless explicitly approved by Customer*
 | [SendGrid](https://www.sendgrid.com/) | USA | Transactional mail services provider |
 | [Slack](https://slack.com) | USA | Business communication platform |
 | [Stripe](https://stripe.com) | USA | Payment provider |
