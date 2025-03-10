@@ -68,7 +68,7 @@ Fetch the content of a web page. As of July 2024, this feature is limited to the
 
 
 ## Tool `run_db_experiment_dedicated_env`
-Database experiment in dedicated environment: creates a PostgreSQL cluster in Google Cloud and executes a series of 
+Database experiment in dedicated environment: creates a PostgreSQL cluster in Hetzner Cloud and executes a series of 
 experiment runs on it using a GitLab CI pipeline.
 
 When started, provides pipeline URL. Once experiment is finished, either succesfully or with errors, 
@@ -78,9 +78,9 @@ JSON configuration example:
 ```json
 {
   "ref":"master",
-  "SERVER_TYPE":"n2-standard-2",
+  "SERVER_TYPE":"CCX13",
   "VOLUME_SIZE":"100",
-  "POSTGRES_VERSION":"16",
+  "POSTGRES_VERSION":"17",
   "MODE": "dedicated",
   "PGBENCH_INIT_COMMAND": "pgbench -i -s 100 -q",
   "TEST_RUNS": {
@@ -104,21 +104,23 @@ JSON configuration example:
 
 | **Parameter** | **Type**  | **Description**   | **Default** | **Example** |
 | --- |--- | ---- | --- | --- |
-| **SERVER_TYPE** (required)      | `string`  | Type of server to deploy. Supported values: various configurations with specific vCPUs and RAM. | `"n2-standard-4"`                                       | `"n2-standard-4"`                               |
-| **SERVER_LOCATION**             | `string`  | GCP region or region+zone for server deployment. If not specified, an available zone will be selected. | `""`                                                    | `"us-central1"`                                 |
-| **SERVER_SPOT**                 | `string`  | Defines whether the GCP compute instance is preemptible (spot).                                 | `"true"`                                                | `"true"`                                        |
+| **CLOUD_PROVIDER**              | `string`  | The Cloud provider for server creation. Available options: 'aws', 'gcp', 'azure', 'digitalocean', 'hetzner'. | `"hetzner"`                                       | `"hetzner"`                               |
+| **SERVER_TYPE** (required)      | `string`  | Type of server to deploy. Available values: 'CCX13' (2 vCPUs, 8 GB RAM), 'CCX23' (4 vCPUs, 16 GB RAM), 'CCX33' (8 vCPUs, 32 GB RAM), 'CCX43' (16 vCPUs, 64 GB RAM), 'CCX53' (32 vCPUs, 128 GB RAM), 'CCX63' (48 vCPUs, 192 GB RAM). | `"CCX13"`                                       | `"CCX13"`                               |
+| **SERVER_LOCATION**             | `string`  | Hetzner region for server deployment. | `"ash"`                                                    | `"ash"`                                 |
 | **SERVERS_COUNT**               | `string`  | Number of Postgres VMs in cluster.                                                              | `"1"`                                                   | `"2"`                                           |
-| **SERVER_IMAGE**                | `string`  | OS and Postgres versions available on the server image.                                         | `"ubuntu-2204-postgres-17beta1-163-157-1412-1315-1219"` | `"ubuntu-2204-postgres-162-156-1411-1314-1218"` |
+| **SERVER_IMAGE**                | `string`  | OS.                                         | `"ubuntu-24.04"` | `"ubuntu-24.04"` |
 | **SERVER_FSTYPE**               | `string`  | File system type.                                                                           | `"ext4"`                                                | `"xfs"`                                         |
 | **FLUSH_CACHES**                | `boolean` | Flush the page cache and restart Postgres before each run of test experiments.                  | `false`                                                 | `true`                                          |
 | **VOLUME_SIZE** (required)      | `string`  | Disk size, in GiB.                                                                              | `"100"`                                                 | `"200"`                                         |
 | **VOLUME_TYPE**                 | `string`  | Volume type.                                                                                | `"pd-ssd"`                                              | `"pd-extreme"`                                  |
 | **CLEANUP_AFTER_SECONDS**       | `string`  | How long (in seconds) the server stays up after the test finishes.                              | `"1"`                                                   | `"60"`                                          |
 | **PGBENCH_INIT_COMMAND**        | `string`  | pgbench initialization command.                                                                 | `"pgbench -i -q -s 100"`                                | `"pgbench -i -q -s 500"`                        |
-| **PGBOUNCER**                   | `string`  | Use PgBouncer or not.                                                                           | `"false"`                                               | `"true"`                                        |
+| **PGBOUNCER**                   | `boolean`  | Use PgBouncer or not.                                                                           | `"false"`                                               | `"true"`                                        |
 | **PGBOUNCER_COUNT**             | `string`  | Number of PgBouncers to be installed (with `SO_REUSEPORT`).                                       | `"1"`                                                   | `"2"`                                           |
-| **HAPROXY**                     | `string`  | Use HAProxy or not.                                                                             | `"false"`                                               | `"true"`                                        |
-| **POSTGRES_VERSION** (required) | `string`  | Postgres major version. Options: `10`, `11`, `12`, `13`, `14`, `15`, `16`, `17`.                | `"16"`                                                  | `"15"`                                          |
+| **HAPROXY**              | `boolean`  | Use HAProxy or not.                                                                             | `"false"`                                               | `"true"`                                        |
+| **PG_STAT_KCACHE**              | `boolean`  | Install pg_stat_kcache extension or not.                                                        | `"true"`                                               | `"true"`                                        |
+| **PG_WAIT_SAMPLING**            | `boolean`  | Install pg_wait_sampling extension or not.                                                      | `"true"`                                               | `"true"`                                        |
+| **POSTGRES_VERSION** (required) | `string`  | Postgres major version. Options: `10`, `11`, `12`, `13`, `14`, `15`, `16`, `17`.                | `"17"`                                                  | `"15"`                                          |
 | **TEST_RUNS** (required)        | `object`  | JSON object containing test series description.                                                 | N/A                                                     | See below.                                       |
 
 #### `TEST_RUNS` (JSON object)
