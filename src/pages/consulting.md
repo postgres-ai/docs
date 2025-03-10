@@ -22,39 +22,39 @@ We break down complex database problems into clear, actionable steps. Through pr
 
 ## What our clients say
 
-<div className="testimonials-container">
+<div class="testimonials-container">
 
-<div className="testimonial">
-<blockquote>
-"We were looking for a way to create database snapshots with ZFS/filesystem snapshotting. When I found out about DBLab, we started using it instead. The professional support we get from Postgres.AI is amazing, and the team is really to the point and deeply experienced in Postgres. We solved the problems we had when we started with the help of Postgres.AI."
-</blockquote>
-<footer>
-<strong><a href="https://se.linkedin.com/in/andreas-pelme-6b9a3483" target="_blank">Andreas Pelme</a></strong><br/>
-CTO at <a href="https://personalkollen.se/" target="_blank">Personalkollen</a>, Sweden<br/>
-<em>Scheduling and payroll management solution for the hospitality sector</em>
-</footer>
+<div class="testimonial">
+    <blockquote>
+        "We were looking for a way to create database snapshots with ZFS/filesystem snapshotting. When I found out about DBLab, we started using it instead. The professional support we get from Postgres.AI is amazing, and the team is really to the point and deeply experienced in Postgres. We solved the problems we had when we started with the help of Postgres.AI."
+    </blockquote>
+    <footer>
+        <strong><a href="https://se.linkedin.com/in/andreas-pelme-6b9a3483" target="_blank">Andreas Pelme</a></strong><br/>
+        CTO at <a href="https://personalkollen.se/" target="_blank">Personalkollen</a>, Sweden<br/>
+        <em>Scheduling and payroll management solution for the hospitality sector</em>
+    </footer>
+</div>
+
+<div class="testimonial">
+    <blockquote>
+        "We chose to partner with Postgres.AI to enhance our database performance and build our internal expertise. Working with Postgres.AI has been insightful—the team brings a depth of expertise that's evident across consultations. While we're still implementing improvements, we've already seen benefits from a DBA perspective."
+    </blockquote>
+    <footer>
+        <strong><a href="https://de.linkedin.com/in/tomas-ostasevicius" target="_blank">Tomas Ostasevicius</a></strong><br/>
+        Software Engineer and Technical Lead at <a href="https://luminovo.com" target="_blank">Luminovo</a>, Germany<br/>
+        <em>Luminovo offers software solutions that streamline processes in the electronics industry, bridging design, procurement, and manufacturing.</em>
+    </footer>
 </div>
 
 <div className="testimonial">
-<blockquote>
-"We chose to partner with Postgres.AI to enhance our database performance and build our internal expertise. Working with Postgres.AI has been insightful—the team brings a depth of expertise that's evident across consultations. While we're still implementing improvements, we've already seen benefits from a DBA perspective."
-</blockquote>
-<footer>
-<strong><a href="https://de.linkedin.com/in/tomas-ostasevicius" target="_blank">Tomas Ostasevicius</a></strong><br/>
-Software Engineer and Technical Lead at <a href="https://luminovo.com" target="_blank">Luminovo</a>, Germany<br/>
-<em>Luminovo offers software solutions that streamline processes in the electronics industry, bridging design, procurement, and manufacturing.</em>
-</footer>
-</div>
-
-<div className="testimonial">
-<blockquote>
-"The expertise of Nik and team at Postgres.AI has helped us significantly with the performance of our PostgreSQL database. Nik's understanding of PostgreSQL internals and ability to transfer his knowledge to us has helped prepare us for scale. Additionally, we use Row Level Security heavily, which is not a widely used feature. When we ran into some obscure performance issues with it, Nik was able to root cause it very quickly. This likely saved us weeks of time. Look forward to working with Postgres.AI in the future."
-</blockquote>
-<footer>
-<strong><a href="https://www.linkedin.com/in/kencaruso" target="_blank">Ken Caruso</a></strong><br/>
-Chief Engineer at <a href="https://turngate.io/" target="_blank">Turngate</a>, United States<br/>
-<em>Turngate simplifies logs so anyone can investigate</em>
-</footer>
+    <blockquote>
+        "The expertise of Nik and team at Postgres.AI has helped us significantly with the performance of our PostgreSQL database. Nik's understanding of PostgreSQL internals and ability to transfer his knowledge to us has helped prepare us for scale. Additionally, we use Row Level Security heavily, which is not a widely used feature. When we ran into some obscure performance issues with it, Nik was able to root cause it very quickly. This likely saved us weeks of time. Look forward to working with Postgres.AI in the future."
+    </blockquote>
+    <footer>
+        <strong><a href="https://www.linkedin.com/in/kencaruso" target="_blank">Ken Caruso</a></strong><br/>
+        Chief Engineer at <a href="https://turngate.io/" target="_blank">Turngate</a>, United States<br/>
+        <em>Turngate simplifies logs so anyone can investigate</em>
+    </footer>
 </div>
 
 </div>
