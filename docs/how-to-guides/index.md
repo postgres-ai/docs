@@ -24,6 +24,14 @@ slug: /how-to-guides
 - [Protect clones from manual and automatic deletion](/docs/how-to-guides/cloning/clone-protection)
 - [How to upgrade Postgres to a new major version in the DBLab clone](/docs/how-to-guides/cloning/clone-upgrade)
 
+## How to work with Database Lab branches
+- [How to create a database branch](/docs/how-to-guides/branching/create-branch)
+- [How to delete a database branch](/docs/how-to-guides/branching/delete-branch)
+
+## How to work with Database Lab snapshots
+- [How to create a snapshot](/docs/how-to-guides/snapshots/create-snapshot)
+- [How to delete a snapshot](/docs/how-to-guides/snapshots/delete-snapshot)
+
 ## How to work with Joe bot
 - [How to get a query execution plan (EXPLAIN)](/docs/how-to-guides/joe-bot/get-query-plan)
 - [How to create an index using Joe bot](/docs/how-to-guides/joe-bot/create-index)

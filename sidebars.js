@@ -39,6 +39,7 @@ module.exports = {
           "how-to-guides/administration/install-dle-from-postgres-ai",
           "how-to-guides/administration/install-dle-from-aws-marketplace",
           "how-to-guides/administration/install-dle-manually",
+          "how-to-guides/administration/run-database-lab-on-mac",
           "how-to-guides/administration/postgresql-configuration",
           "how-to-guides/administration/engine-manage",
           "how-to-guides/administration/joe-manage",
@@ -77,6 +78,20 @@ module.exports = {
         ],
       },
       {
+        "Branching": [
+          "how-to-guides/branching/index",
+          "how-to-guides/branching/create-branch",
+          "how-to-guides/branching/delete-branch",
+        ],
+      },
+      {
+        "Snapshots": [
+          "how-to-guides/snapshots/index",
+          "how-to-guides/snapshots/create-snapshot",
+          "how-to-guides/snapshots/delete-snapshot",
+        ],
+      },
+      {
         "SQL optimization chatbot (Joe bot)": [
           "how-to-guides/joe-bot/index",
           "how-to-guides/joe-bot/get-query-plan",
@@ -100,6 +115,7 @@ module.exports = {
       },
     ],
     "Reference guides": [
+      "reference-guides/index",
       "reference-guides/postgres-ai-bot-reference",
       "reference-guides/database-lab-engine-components",
       "reference-guides/database-lab-engine-api-reference",
