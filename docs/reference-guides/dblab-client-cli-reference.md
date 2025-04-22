@@ -60,6 +60,10 @@ To list available commands, either run `dblab` with no parameters or with flag `
 
     The environment variable `DBLAB_CLI_DEBUG` can be used as well.
 
+- `--current-branch` (string, default: ""; DLE 4.0+) - current branch.
+
+    The environment variable `DBLAB_CLI_CURRENT_BRANCH` can be used as well.
+
 - `--help`, `-h` (boolean, default: false) - show help.
 
 - `--version`, `-v` (boolean, default: false) - print the version.
@@ -70,7 +74,7 @@ dblab --url "127.0.0.1:2345" --token "SECRET_TOKEN" --insecure clone list
 ```
 
 ```bash
-DBLAB_INSTANCE_URL="example.com" DBLAB_VERIFICATION_TOKEN="SECRET_TOKEN" dblab clone list
+DBLAB_INSTANCE_URL="http://127.0.0.1:2345" DBLAB_VERIFICATION_TOKEN="SECRET_TOKEN" dblab clone list
 ```
 
 :::tip
@@ -80,13 +84,17 @@ If you register a Database Lab instance on the Postgres.ai Platform through the 
 ## Command Overview
 ```
 COMMANDS:
-   init          initialize Database Lab CLI.
-   port-forward  start port forwarding to the Database Lab instance.
-   clone         manages clones.
-   instance      displays instance info.
-   snapshot      manage snapshots.
-   config        configure CLI environments.
-   help, h       shows a list of commands or help for one command.
+   init          initialize Database Lab CLI
+   port-forward  start port forwarding to DBLab instance
+   branch        list, create, or delete branch
+   switch        switch to specified branch
+   commit        create a new snapshot containing the current state of data and the given log message describing the changes
+   log           show snapshot history for branch
+   clone         create, update, delete, reset, or retrieve clone
+   instance      display instance info
+   snapshot      create, retrieve, or delete snapshot
+   config        configure CLI environments
+   help, h       shows a list of commands or help for one command
 ```
 
 
@@ -132,6 +140,97 @@ dblab [global options] port-forward
 dblab --forwarding-server-url "ssh://user@remote.host:22" --forwarding-local-port 8888 port-forward
 ```
 
+## Command: `branch`
+List, create, or delete branches. DLE 4.0+ only.
+
+**Usage**
+```bash
+dblab branch [command options] BRANCH_NAME
+```
+
+**Options**
+- `--parent-branch` (string, optional) - name of the parent branch
+- `--snapshot-id` (string, optional) - snapshot ID for the new branch
+- `--delete`, `-d` (string, optional) - delete a database branch
+
+:::note
+The parameters `--parent-branch` and `--snapshot-id` cannot be specified at the same time.
+:::
+
+**Example**
+
+List branches:
+```bash
+dblab branch
+```
+
+Create a new branch specifying its name, e.g. `test`:
+```bash
+dblab branch test
+```
+
+To create a new branch named `test` based on another `dev`:
+```bash
+dblab branch --parent-branch dev test
+```
+
+To delete branch named `test`:
+```bash
+dblab branch --delete test
+```
+
+## Command: `switch`
+Switch to a specified branch. DLE 4.0+ only.
+
+**Usage**
+To switch to the branch named `test`:
+```bash
+dblab switch BRANCH_NAME
+```
+
+**Example**
+
+Switch to the branch named `test`:
+```bash
+dblab switch test
+```
+
+## Command: `commit`
+Create a new snapshot containing the current state of data and the given log message describing the changes.  DLE 4.0+ only.
+
+**Usage**
+```bash
+dblab commit [command options] [arguments...]
+```
+
+**Options**
+- `--clone-id` (string, required) - clone ID
+- `--message` (string, optional) - use the given message as the commit message
+
+**Arguments**
+- `CLONE_ID` (string, required) - an ID of the Database Lab clone
+
+**Example**
+
+Create a snapshot from clone `test-clone`.
+```bash
+dblab commit --clone-id test-clone
+```
+
+## Command: `log`
+Shows the snapshot logs. DLE 4.0+ only.
+
+**Usage**
+```bash
+dblab log BRANCH_NAME
+```
+
+**Example**
+
+Display snapshot logs logs of branch `test`.
+```bash
+dblab log test
+```
 
 ## Command: `clone`
 Manage Database Lab clones. 
@@ -148,6 +247,10 @@ dblab clone command [command options] [arguments...]
 - `update` - update existing clone
 - `reset` - reset clone's state
 - `destroy` - destroy clone
+- `start-observation` - start clone state monitoring
+- `stop-observation` - summarize clone monitoring and check results
+- `summary-observation` - display summary of an observation session
+- `download-artifact` - download artifact of an observation session
 - `port-forward` - start port forwarding
 - `help` , `h` -  shows a list of commands or help for one command
 
@@ -183,17 +286,19 @@ dblab clone create [command options]
 **Options**
 - `--username` (string, required) - database username
 - `--password` (string, required) - database password
-- `--id` (string, optional) - clone ID
-- `--snapshot-id` (string, optional) - snapshot ID
-- `--protected` , `-p` (boolean, default: false) - mark instance as protected from deletion
 - `--restricted` (boolean, default: false) - use database user with restricted permissions (not a superuser, DML and DDL allowed, `CREATE EXTENSION` is not allowed)
+- `--db-name` (string, optional) - database available to the user with restricted permissions
+- `--id` (string, optional) - clone ID
+- `--snapshot-id` (string, optional; DLE 4.0+) - snapshot ID
+- `--branch` (string, optional; DLE 4.0+) - branch name
+- `--protected` , `-p` (boolean, default: false) - mark instance as protected from deletion
 - `--async` , `-a` (boolean, default: false) - run the command asynchronously
 - `--extra-config` (string, optional)  set an extra database configuration for the clone. An example: statement_timeout='1s'
 - `--help` , `-h` (boolean, default: false) - show help
 
 **Example**
 ```bash
-dblab clone create --username someuser --password somepassword
+dblab clone create --username someuser --password SomePassword --branch main --id test  
 ```
 
 ---
@@ -230,8 +335,8 @@ dblab clone reset [command options] CLONE_ID
 **Options**
 - `--async` , `-a` (boolean, default: false) - run the command asynchronously
 - `--help` , `-h` (boolean, default: false) - show help
-- `--latest`, (boolean, default: false; DLE 2.5+) - reset clone using the latest available snapshot
-- `--snapshot-id` , (string, default: ""; DLE 2.5+) - reset clone using the specified snapshot
+- `--latest`, (boolean, default: false) - reset clone using the latest available snapshot
+- `--snapshot-id` , (string, default: "") - reset clone using the specified snapshot
 
 :::note
 The parameters `--latest` and `--snapshot-id` cannot be specified at the same time.
@@ -403,6 +508,8 @@ dblab snapshot command [command options] [arguments...]
 
 **Subcommands**
 - `list` - list all existing snapshots.
+- `create` - create a snapshot. DLE 4.0+.
+- `delete` - delete existing snapshot. DLE 4.0+.
 - `help` , `h` -  shows a list of commands or help for one command.
 
 ---
@@ -412,6 +519,28 @@ Get the list of snapshots.
 **Usage**
 ```bash
 dblab snapshot list
+```
+
+### Subcommand `create`
+Create a snapshot. DLE 4.0+ only.
+
+**Usage**
+```bash
+dblab snapshot create CLONE_ID
+```
+
+### Subcommand `delete`
+Delete a snapshot. DLE 4.0+ only.
+
+**Usage**
+```bash
+dblab snapshot delete SNAPSHOT_ID
+```
+
+**Example**
+
+```bash
+dblab snapshot delete "dblab_pool/dataset_1@snapshot_20241028174127"
 ```
 
 ---
@@ -439,8 +568,8 @@ dblab config command [command options] [arguments...]
 - `list` - display list of all available CLI environments
 - `switch` - switch to another CLI environment
 - `remove` - remove CLI environment
-- `show-global` - show global CLI settings (DLE 3.1+)
-- `set-global` - update global CLI settings (DLE 3.1+)
+- `show-global` - show global CLI settings
+- `set-global` - update global CLI settings
 - `help` , `h` -  shows a list of commands or help for one command
 
 ---
@@ -538,7 +667,7 @@ dblab config remove ENVIRONMENT_ID
 
 ---
 ### Subcommand `show-global`
-Show global CLI settings. DLE 3.1+ only.
+Show global CLI settings.
 
 **Usage**
 ```bash
@@ -547,7 +676,7 @@ dblab config show-global
 
 ---
 ### Subcommand `set-global`
-Update global CLI settings. DLE 3.1+ only.
+Update global CLI settings.
 
 **Usage**
 ```bash

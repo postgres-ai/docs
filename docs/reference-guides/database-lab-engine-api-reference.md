@@ -17,6 +17,6 @@ DBLab API (DLE API) is a REST API. It can be used in multiple ways:
 
 DBLab API reference documentation is available at the following locations:
 - [DLE 3.5.x API Reference](https://dblab.readme.io/v3.5.0/)
-- [DBLab 4.0-alpha.x API Reference](https://dblab.readme.io/v4.0.0-alpha/)
+- [DBLab 4.0-rc.x API Reference](https://dblab.readme.io/v4.0.0-rc1/)
 
 The references are published using the comprehensive ReadMe service. equipped with a developer dashboard and provides code snippets in numerous languages.
