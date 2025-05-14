@@ -141,7 +141,10 @@ dblab --forwarding-server-url "ssh://user@remote.host:22" --forwarding-local-por
 ```
 
 ## Command: `branch`
-List, create, or delete branches. DLE 4.0+ only.
+:::note
+Requires DBLab 4.0 or higher
+:::
+List, create, or delete branches.
 
 **Usage**
 ```bash
@@ -180,7 +183,10 @@ dblab branch --delete test
 ```
 
 ## Command: `switch`
-Switch to a specified branch. DLE 4.0+ only.
+:::note
+Requires DBLab 4.0 or higher
+:::
+Switch to a specified branch.
 
 **Usage**
 To switch to the branch named `test`:
@@ -196,7 +202,10 @@ dblab switch test
 ```
 
 ## Command: `commit`
-Create a new snapshot containing the current state of data and the given log message describing the changes.  DLE 4.0+ only.
+:::note
+Requires DBLab 4.0 or higher
+:::
+Create a new snapshot containing the current state of data and the given log message describing the changes.
 
 **Usage**
 ```bash
@@ -218,7 +227,10 @@ dblab commit --clone-id test-clone
 ```
 
 ## Command: `log`
-Shows the snapshot logs. DLE 4.0+ only.
+:::note
+Requires DBLab 4.0 or higher
+:::
+Shows the snapshot logs.
 
 **Usage**
 ```bash
@@ -468,6 +480,7 @@ dblab instance command [command options] [arguments...]
 **Subcommands**
 - `status` - display instance's status
 - `version` - display instance's version
+- `full-refresh` - initiate full refresh
 - `help` , `h` -  shows a list of commands or help for one command
 
 ---
@@ -487,6 +500,48 @@ Get the version of the instance we are working with.
 ```bash
 dblab instance version
 ```
+
+---
+### Subcommand `full-refresh`
+:::note
+Requires DBLab 4.0 or higher
+:::
+Initiate full refresh of the instance.
+
+**Usage**
+```bash
+dblab instance full-refresh
+```
+
+On success, it prints the confirmation message from the server.
+```bash
+Full refresh started
+```
+
+**Errors**  
+
+If the refresh cannot be initiated, the command returns an error message.
+
+Possible errors:
+
+```bash
+The data refresh/snapshot is currently in progress. Skip a new data refresh iteration
+```
+
+This means that a data refresh or snapshot operation is already running.  
+You must wait until the current process is completed before starting a new refresh.
+
+```bash
+Data retrieving suspended because Retrieval state is pending
+```
+The instance is in the pending state.  
+It needs to be properly configured before refresh operations can be triggered.
+
+```bash
+Pool to perform full refresh not found. Skip refreshing
+```
+No available storage pool was found for the refresh.  
+Check that there is at least one pool without active clones; refresh is possible only on pools without clones.
 
 ---
 ### Subcommand `help` , `h`
@@ -522,7 +577,10 @@ dblab snapshot list
 ```
 
 ### Subcommand `create`
-Create a snapshot. DLE 4.0+ only.
+:::note
+Requires DBLab 4.0 or higher
+:::
+Create a snapshot.
 
 **Usage**
 ```bash
@@ -530,7 +588,10 @@ dblab snapshot create CLONE_ID
 ```
 
 ### Subcommand `delete`
-Delete a snapshot. DLE 4.0+ only.
+:::note
+Requires DBLab 4.0 or higher
+:::
+Delete a snapshot.
 
 **Usage**
 ```bash
