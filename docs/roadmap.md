@@ -7,7 +7,7 @@ keywords:
 ---
 
 ## DBLab Engine (DLE) Roadmap
-We are working hard to develop the Database Lab Platform (DLP) and its open-source core component, Database Lab Engine (DLE). Below you can find the main ideas we are working on now or planning to work soon.
+We are working hard to develop the DBLab Platform (DLP) and its open-source core component, DBLab Engine (DLE). Below you can find the main ideas we are working on now or planning to work soon.
 
 ### [DLE] Physical provisioning
 Physical provisioning: native support of DB provisioning from archives created by a specific backup solution or based on an existing Postgres database

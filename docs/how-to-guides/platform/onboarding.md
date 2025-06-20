@@ -1,10 +1,10 @@
 ---
-title: Database Lab Platform onboarding checklist
+title: DBLab Platform onboarding checklist
 sidebar_label: Platform onboarding checklist
 keywords:
-  - "Database Lab Platform onboarding"
-  - "Start using Database Lab Engine"
-description: In this document, we will cover tasks that you can start with to work with the Database Lab Platform.
+  - "DBLab Platform onboarding"
+  - "Start using DBLab Engine"
+description: In this document, we will cover tasks that you can start with to work with the DBLab Platform.
 ---
 
 :::note
@@ -13,7 +13,7 @@ You can copy [the Markdown version of this page](https://gitlab.com/postgres-ai/
 
 ## Onboarding
 Welcome! :rocket:
-To start using the Postgres.ai Platform, you need to register using your work account/email here: https://postgres.ai/signin.
+To start using the Postgres AI Platform, you need to register using your work account/email here: https://postgres.ai/signin.
 
 ## Joe Web UI
 ### Chatbot
@@ -21,7 +21,7 @@ First, try using the basic features:
 - [ ] Create an optimization session using Joe Web UI:
     - Go to `SQL Optimization / Ask Joe`
     - Select an instance
-    - Type `explain select 1` and wait for Joe's response (normally, it takes several seconds; might be up to 1 minute if the Database Lab Engine is busy)
+    - Type `explain select 1` and wait for Joe's response (normally, it takes several seconds; might be up to 1 minute if the DBLab Engine is busy)
     - Type `\dt+` to get the full list of tables, with sizes. In the response, press the "Full command output" to see the full list
 - [ ] Try running `EXPLAIN` for some query you've been working on recently and optimize it, e.g. create an index. Remember, for DDL (database schema changes), you need to use `exec`, while `explain` is for getting execution plans for DML (`SELECT`, `INSERT`, `UPDATE`, `DELETE`, `WITH`)
 - [ ] Mark to acknowledge that you understand the following concepts of performance optimization in Database Lab environments:
@@ -60,7 +60,7 @@ First, try using the basic features:
 
 ## Database Lab GUI, API, and CLI
 If you have access to the production:
-- [ ] Ask your administrator to add SSH / GPG keys or OS login to be able to connect to the machine. Also, you will need to know the Database Lab Engine hostname (URL) and the database name (DBNAME). Ask your organization administrator for the details.
+- [ ] Ask your administrator to add SSH / GPG keys or OS login to be able to connect to the machine. Also, you will need to know the DBLab Engine hostname (URL) and the database name (DBNAME). Ask your organization administrator for the details.
 - [ ] Create a personal token (you will need it for connection to Database Lab instance): go to `Settings / Access tokens` and add your personal token.
 - [ ] Install Database Lab CLI:
 ```bash
@@ -79,7 +79,7 @@ ssh -L localhost:6XXX:URL:6XXX URL
 - [ ] Create another clone using the GUI. Go to Database Lab / Instances, and proceed with clone creation. Then set up another SSH tunnel and try working with the new clone.
 
 :::warning
-Please remember that clones are automatically destroyed after some time of inactivity (configurable, the default is 2 hours). You can mark clones as protected from deletion, but please do not leave them for more than a few days -- this might quickly lead to an out-of-disk-space event if continuous synchronization is enabled in your Database Lab Engine (ask your administrator for details). You can always check free disk space by going to Database Lab / Instances and checking the details of your Database Lab Engine. So, please delete your long-living clones once your work is done. In some cases, if needed, may want to ask the administrator to add more disk space.
+Please remember that clones are automatically destroyed after some time of inactivity (configurable, the default is 2 hours). You can mark clones as protected from deletion, but please do not leave them for more than a few days -- this might quickly lead to an out-of-disk-space event if continuous synchronization is enabled in your DBLab Engine (ask your administrator for details). You can always check free disk space by going to Database Lab / Instances and checking the details of your DBLab Engine. So, please delete your long-living clones once your work is done. In some cases, if needed, may want to ask the administrator to add more disk space.
 :::
 
 ## Next steps

@@ -297,7 +297,7 @@ const DBLabEngine = () => {
               <h3>Open source and extensible</h3>
               <p>
                 We work hard to make our products open, accessible, and
-                extensible. Join the Database Lab Engine Community and help us
+                extensible. Join the DBLab Engine Community and help us
                 build even better products.
                 <br />
                 <br />
@@ -332,7 +332,7 @@ const DBLabEngine = () => {
 
           <div className={styles.repos}>
             <RepoCard
-              title="Database Lab Engine"
+              title="DBLab Engine"
               logoUrl="/assets/landing/dblab.svg"
               description="Provision independent, multi-terabyte, PostgreSQL databases in a few seconds."
               repoName="postgres-ai/database-lab-engine"

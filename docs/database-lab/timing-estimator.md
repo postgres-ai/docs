@@ -9,7 +9,7 @@ keywords:
   - "Database Lab timing estimator"
 ---
 
-The Query Estimator is an experimental feature of [Database Lab Engine](https://gitlab.com/postgres-ai/database-lab) and [SQL Optimization Chatbot (Joe Bot)](https://gitlab.com/postgres-ai/joe) to estimate a timing of queries on the production database.
+The Query Estimator is an experimental feature of [DBLab Engine](https://gitlab.com/postgres-ai/database-lab) and [SQL Optimization Chatbot (Joe Bot)](https://gitlab.com/postgres-ai/joe) to estimate a timing of queries on the production database.
 
 :::caution Experimental feature
 This feature has been removed in DLE 3.4.0. Future versions might include a different implementation of this feature.
@@ -112,7 +112,7 @@ write_ratio = write_speed_on_prod / write_speed_on_clone
 
 These read and write ratios are supposed to be stored in the bot configuration (later it will be moved to the DLE configuration). There might be a need to update them periodically, synchronizing with statistics observed on the production.
 
-To configure the estimator for Database Lab Engine (DLE) and Virtual DBA (Joe bot) you will need to add the `estimator` section to the [Database Lab Engine configuration](https://postgres.ai/docs/reference-guides/database-lab-engine-configuration-reference) and change options according to your deployment.
+To configure the estimator for DBLab Engine (DLE) and Virtual DBA (Joe bot) you will need to add the `estimator` section to the [DBLab Engine configuration](https://postgres.ai/docs/reference-guides/database-lab-engine-configuration-reference) and change options according to your deployment.
 
 `estimator` section example:
 ```

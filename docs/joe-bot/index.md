@@ -13,7 +13,7 @@ Joe is a Postgres query optimization assistant. Joe allows to boost the developm
 - eliminating annoying waiting time needed to provision copies of large databases for development and testing purposes
 - helping engineers understand details of SQL query performance
 
-Joe works on top of [Database Lab Engine](/docs/database-lab/). Every time when an engineer starts communicating with Joe, a new full-size copy of the database is provisioned.
+Joe works on top of [DBLab Engine](/docs/database-lab/). Every time when an engineer starts communicating with Joe, a new full-size copy of the database is provisioned.
 
 This process is fully automated and takes only a few seconds, even for multi-terabyte databases. Such database copies are called "thin clones" because multiple clones share the same data blocks, so provisioning is super fast, and disk space consumption is very low. The clones are fully independent, so developers can modify databases. Finally, SQL execution plans are identical to production, which makes possible to troubleshoot and optimize queries reliably without involving production databases.
 
@@ -39,8 +39,8 @@ This process is fully automated and takes only a few seconds, even for multi-ter
 - Using the `exec` command one can set or reset any PostgreSQL variables such as `enable_seqscan` or `random_page_cost` (e.g., `exec set random_page_cost to 1;`), controlling planner parameters.
 - Each session will be destroyed after the specified amount of minutes of inactivity (configurable on the Database Lab). The corresponding thin clone will be deleted.
 - Joe can work with a Database Lab instance, which is constantly updated (being a replica of some Postgres server or consuming WALs from WAL archive). Sophisticated snapshot strategies can be used. In this case, Joe will always use the latest snapshot, reporting its timestamp (`Snapshot data state at`) to users.
-- Integration with Postgres.ai Platform to allow history viewing, plan visualization, and sharing.
-- SQL optimization knowledge base – a history of Joe sessions, including details of `EXPLAIN` plans, recommendations, various visualization of query plans, and additional meta-data, to support "team memory" and collaboration within particular engineering teams and between various teams/departments in an organization (e.g., between DBA and Development teams).
+- Integration with Postgres AI Platform to allow history viewing, plan visualization, and sharing.
+- SQL optimization knowledge base – a history of Joe sessions, including details of `EXPLAIN` plans, recommendations, various visualization of query plans, and additional meta-data, to support "team memory" and collaboration within particular engineering teams and between various teams/departments in an organization (e.g., between DBA and Development teams).
 
 ## Resources 
 - Open-source repository: https://gitlab.com/postgres-ai/joe/

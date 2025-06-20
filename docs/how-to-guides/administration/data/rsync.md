@@ -4,12 +4,12 @@ sidebar_label: "rsync"
 ---
 
 :::info
-As the first step, you need to set up a machine for Database Lab Engine instance. See the [guide](/docs/how-to-guides/administration/install-dle-manually).
+As the first step, you need to set up a machine for DBLab Engine instance. See the [guide](/docs/how-to-guides/administration/install-dle-manually).
 :::
 
 ## Configuration
 ### Jobs
-In order to set up Database Lab Engine to automatically get the data from database using [rsync](https://rsync.samba.org/) you need to use following jobs:
+In order to set up DBLab Engine to automatically get the data from database using [rsync](https://rsync.samba.org/) you need to use following jobs:
 - [physicalRestore](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalrestore)
 - [physicalSnapshot](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalsnapshot)
 
@@ -36,7 +36,7 @@ Copy the example configuration file [`config.example.physical_generic.yml`](http
 
 <!-- TODO -->
 
-## Run Database Lab Engine
+## Run DBLab Engine
 ```bash
 sudo docker run \
   --name dblab_server \
@@ -70,5 +70,5 @@ TBD
 ```
 
 :::note
-This page is unfinished. Reach out to the Postgres.ai team to learn more.
+This page is unfinished. Reach out to the Postgres AI team to learn more.
 :::

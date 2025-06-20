@@ -1,16 +1,16 @@
 ---
-title: Database Lab Platform security
+title: DBLab Platform security
 sidebar_label: Security
 keywords:
   - "Database Lab Security"
-  - "Database Lab Engine Security"
+  - "DBLab Engine Security"
   - "Postgres.ai SaaS"
   - "Database Lab SaaS"
-  - "protect database lab engine"
+  - "protect dblab engine"
   - "secure postgresql staging"
 ---
 
-Database Lab Platform and its components are developed with a strong focus on security. To ensure that your data is secure, please carefully read this document.
+DBLab Platform and its components are developed with a strong focus on security. To ensure that your data is secure, please carefully read this document.
 
 ## Found a security issue or have questions?
 If you found a possible vulnerability or have an urgent security-related concern, please reach out to Postgres.ai Support as soon as possible, using one of the following options:
@@ -19,7 +19,7 @@ If you found a possible vulnerability or have an urgent security-related concern
 ## Security incidents and incident management
 ### Security incident
 Security incident – any violation or reasonable risk (or threat) to violate of:
-- Database Lab Platform (Postgres.ai) integral security (including but not limited to: databases, backups, application code, infrastructure components, customer data)
+- DBLab Platform (Postgres AI) integral security (including but not limited to: databases, backups, application code, infrastructure components, customer data)
 - Internal Postgres.ai Information Security Policies
 
 ### How incidents are processed

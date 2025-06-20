@@ -8,12 +8,12 @@ requirements:
 
 # Senior Frontend Developer
 
-As a Senior Frontend Developer, you will be building components of the [Postgres.ai Platform](https://postgres.ai/docs).
+As a Senior Frontend Developer, you will be building components of the [Postgres AI Platform](https://postgres.ai/docs).
 
 ## Job Details
 
 - Employment type: full-time/ part-time remote
-- Company: Postgres.ai, headquartered in California
+- Company: Postgres AI, headquartered in California
 
 ## Requirements
 
@@ -27,7 +27,7 @@ As a Senior Frontend Developer, you will be building components of the [Postgres
 
 ## Nice-to-haves
 
-None of the following is a requirement, yet having any of these items increases your chances to be a perfect match for the Postgres.ai team.
+None of the following is a requirement, yet having any of these items increases your chances to be a perfect match for the Postgres AI team.
 
 - Rest API development experience
 - PostgreSQL experience is a plus

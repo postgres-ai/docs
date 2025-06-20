@@ -4,9 +4,9 @@ description: Mask sensitive data to ensure security and compliance
 ---
 
 # Sensitive Data Masking
-Database Lab allows a robust and centralized means to both mask<sup>1</sup>
+DBLab Engine allows a robust and centralized means to both mask<sup>1</sup>
 and control access to test and staging databases. Implement masking rules
-within the Database Lab Engine to adhere to security best practices and
+within the DBLab Engine to adhere to security best practices and
 simplify external audits.
 
 ## Control Data Access for Security and Compliance
@@ -21,11 +21,11 @@ several things:
 1. This access is regularly audited
 1. Internal systems (such as staging or test environments) have no sensitive data
 
-Database Lab gives organizations a clear and centralized means to achieve these objectives.
+DBLab Engine gives organizations a clear and centralized means to achieve these objectives.
 
 
 ## A Comprehensive Approach to Masking
-The Database Lab Engine provides a robust API that gives software teams the power to implement
+The DBLab Engine provides a robust API that gives software teams the power to implement
 a multi-faceted and comprehensive approach to data masking.  There are three pillars
 to well-implemented masking:
 
@@ -38,7 +38,7 @@ Learn more about masking techniques with our recommended tool:
 
 
 ## Clear and Auditable Rules
-Database Lab recommends a declarative approach to data masking using
+DBLab Engine recommends a declarative approach to data masking using
 [PostgreSQL Anonymizer](https://postgresql-anonymizer.readthedocs.io/en/stable/declare_masking_rules.html).
 
 Masking rules are declared as security labels within the schema itself.
@@ -69,7 +69,7 @@ access to data.
 * Security rules can be reviewed and audited using standard code reviews
 * Security rules can share the same access control scheme as the database
 
-Database Lab gives organizations a flexible and powerful way to protect sensitive data
+DBLab Engine gives organizations a flexible and powerful way to protect sensitive data
 within their organization and to comply with security standards.
 
 <div className="products-btn-container">
@@ -85,7 +85,7 @@ within their organization and to comply with security standards.
 <ul class='footnotes'>
   <li>
     <sup>1</sup> We use the term "masking" to refer to the general process of both data masking and data anonymization.
-    Database Lab allows customers to implement a variety of specific approaches to data masking including both
+    DBLab Engine allows customers to implement a variety of specific approaches to data masking including both
     dynamic and persistent (or "in-place") methods.
   </li>
 </ul>

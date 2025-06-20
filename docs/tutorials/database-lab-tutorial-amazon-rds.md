@@ -2,16 +2,16 @@
 title: Database Lab tutorial for Amazon RDS
 sidebar_label: Tutorial for Amazon RDS
 keywords:
-  - "Database Lab Engine tutorial for Amazon RDS"
-  - "Start using Database Lab Engine for Amazon RDS"
+  - "DBLab Engine tutorial for Amazon RDS"
+  - "Start using DBLab Engine for Amazon RDS"
   - "Postgres.ai tutorial for Amazon RDS"
-description: In this tutorial, we are going to set up a Database Lab Engine for an existing PostgreSQL DB instance on Amazon RDS. Database Lab is used to boost software development and testing processes via enabling ultra-fast provisioning of databases of any size.
+description: In this tutorial, we are going to set up a DBLab Engine for an existing PostgreSQL DB instance on Amazon RDS. Database Lab is used to boost software development and testing processes via enabling ultra-fast provisioning of databases of any size.
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Database Lab Engine (DLE) is used to boost software development and testing processes by enabling ultra-fast provisioning of databases of any size. In this tutorial, we will install Database Lab Engine from [the AWS Marketplace](https://bit.ly/dleawsmarketplace). If you are an AWS user, this is the fastest way to have powerful database branching for any database, including RDS and RDS Aurora. But not only RDS: any Postgres and Postgres-compatible database can be a source for DLE.
+DBLab Engine (DLE) is used to boost software development and testing processes by enabling ultra-fast provisioning of databases of any size. In this tutorial, we will install DBLab Engine from [the AWS Marketplace](https://bit.ly/dleawsmarketplace). If you are an AWS user, this is the fastest way to have powerful database branching for any database, including RDS and RDS Aurora. But not only RDS: any Postgres and Postgres-compatible database can be a source for DLE.
 
 :::info
 Currently, the AWS Marketplace version of DLE focuses on the "logical" data provisioning mode (dump/restore) – the only possible method for managed PostgreSQL cloud services such as RDS Postgres, RDS Aurora Postgres, Azure Postgres, or Heroku. "Physical" mode (obtaining databases at the file level) is also supported in DLE but requires additional efforts – namely, editing [the DLE configuration file](/docs/reference-guides/database-lab-engine-configuration-reference) manually. More information about various data retrieval options can be found [here](/docs/how-to-guides/administration/data).
@@ -41,8 +41,8 @@ Outcome:
 
 ## Steps
 1. Install DLE from the AWS Marketplace
-1. Configure and launch the Database Lab Engine
-1. Start using DLE UI, API and client CLI to clone Postgres database in seconds
+1. Configure and launch the DBLab Engine
+1. Start using DBLab UI, API and client CLI to clone Postgres database in seconds
 
 ## Step 1. Install DLE from the AWS Marketplace
 First steps to install DLE from the AWS Marketplace are trivial:
@@ -51,23 +51,23 @@ First steps to install DLE from the AWS Marketplace are trivial:
 
 And then press the "Continue..." buttons a couple of times:
 <p align="center">
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step1.png" alt="Database Lab Engine in AWS Marketplace: step 1" /><br />
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step2.png" alt="Database Lab Engine in AWS Marketplace: step 2" />
+    <img src="/assets/dle-aws/AWS_DLE_3.2_step1.png" alt="DBLab Engine in AWS Marketplace: step 1" /><br />
+    <img src="/assets/dle-aws/AWS_DLE_3.2_step2.png" alt="DBLab Engine in AWS Marketplace: step 2" />
 </p>
 
 Now check that the DLE version (the latest should be the best) and the AWS region are both chosen correctly, and press "Continue to Launch":
 <p align="center">
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step3.png" alt="Database Lab Engine in AWS Marketplace: step 3" />
+    <img src="/assets/dle-aws/AWS_DLE_3.2_step3.png" alt="DBLab Engine in AWS Marketplace: step 3" />
 </p>
 
 On this page, you need to choose "Launch CloudFormation" and press "Launch":
 <p align="center">
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step4.png" alt="Database Lab Engine in AWS Marketplace: step 4" />
+    <img src="/assets/dle-aws/AWS_DLE_3.2_step4.png" alt="DBLab Engine in AWS Marketplace: step 4" />
 </p>
 
 This page should be left unmodified, just press the "Next" button:
 <p align="center">
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step5.png" alt="Database Lab Engine in AWS Marketplace: step 5" />
+    <img src="/assets/dle-aws/AWS_DLE_3.2_step5.png" alt="DBLab Engine in AWS Marketplace: step 5" />
 </p>
 
 Now it is time to fill the form that defines the AWS resources that we need:
@@ -76,59 +76,59 @@ Now it is time to fill the form that defines the AWS resources that we need:
 - VPC and subnet – you can choose any of them if you're testing DLE for some database which is publicly available (the only thing to remember: subnet belongs to a VPC, so make sure they match); for production database, you need to choose those options that will allow DLE to connect to the source for the successful data retrieval process;
 - choose your AWS key pair (has to be created already).
 <p align="center">
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step6new.png" alt="Database Lab Engine in AWS Marketplace: step 6" />
+    <img src="/assets/dle-aws/AWS_DLE_3.2_step6new.png" alt="DBLab Engine in AWS Marketplace: step 6" />
 </p>
 
 Next, on the same page:
 - define the size of EBS volume that will be created (you can find pricing calculator here: ["Amazon EBS pricing"](https://aws.amazon.com/ebs/pricing/)):
     - put as many GiB as roughtly your database has (it is always possible to add more space without downtime),
-    - define how many snapshots you'll be needed (minumym 2);
+    - define how many snapshots you'll be needed (minimum 2);
 - define secret token (at least 9 characters are required!) – it will be used to communicate with DLE API, CLI, and UI.
 
 Then press "Next":
 <p align="center">
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step7.png" alt="Database Lab Engine in AWS Marketplace: step 7" />
+    <img src="/assets/dle-aws/AWS_DLE_3.2_step7.png" alt="DBLab Engine in AWS Marketplace: step 7" />
 </p>
 
 This page should be left unmodified, just press the "Next" button:
 <p align="center">
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step8.png" alt="Database Lab Engine in AWS Marketplace: step 8" />
+    <img src="/assets/dle-aws/AWS_DLE_3.2_step8.png" alt="DBLab Engine in AWS Marketplace: step 8" />
 </p>
 
 At the bottom of the next page, acknowledge that AWS CloudFormation might create IAM resources. Once you've pressed "Create stack", the process begins:
 <p align="center">
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step9.png" alt="Database Lab Engine in AWS Marketplace: step 9" />
+    <img src="/assets/dle-aws/AWS_DLE_3.2_step9.png" alt="DBLab Engine in AWS Marketplace: step 9" />
 </p>
 
 You need to wait a few minutes while all resources are being provisioned. Check out the "Outputs" section periodically. Once DLE API and UI are ready, you should see the ordered list of instructions on how to connect to UI and API.
 
-## Step 2. Configure and launch the Database Lab Engine
+## Step 2. Configure and launch the DBLab Engine
 Enter the verification token, you have created earlier. You can also find it in the "Outputs" section.
 
 <p align="center">
-    <img src="/assets/dle-aws/DLE_config_step1.png" alt="Database Lab Engine configuration: step 1" />
+    <img src="/assets/dle-aws/DLE_config_step1.png" alt="DBLab Engine configuration: step 1" />
 </p>
 
-Now it's time to define DB credentials of the source to initiate database privisioning – this is how DLE will be initialized, performing the very first data retrieval, and then the same parameters will be used for scheduled full refreshes according to the schedule defined. Fill the forms, and use the information in the tooltips if needed.
+Now it's time to define DB credentials of the source to initiate database provisioning – this is how DLE will be initialized, performing the very first data retrieval, and then the same parameters will be used for scheduled full refreshes according to the schedule defined. Fill the forms, and use the information in the tooltips if needed.
 
 <p align="center">
-    <img src="/assets/dle-aws/DLE_config_step2.png" alt="Database Lab Engine configuration: step 2" />
+    <img src="/assets/dle-aws/DLE_config_step2.png" alt="DBLab Engine configuration: step 2" />
 </p>
 
 Then press "Test connection". If your database is ready for dump and restore, save the form and press "Switch to Overview" to track the process of data retrieval.
 
 <p align="center">
-    <img src="/assets/dle-aws/DLE_config_step4_copy.png" alt="Database Lab Engine configuration: step 3" />
+    <img src="/assets/dle-aws/DLE_config_step4_copy.png" alt="DBLab Engine configuration: step 3" />
 </p>
 
 In the Overview tab, you can see the status of the data retrieval. Note that the initial data retrieval takes some time – it depends on the source database size. However, DLE API, CLI, and UI are already available for use. To observe the current activity on both source and target sides use "Show details".
 
 <p align="center">
-    <img src="/assets/dle-aws/DLE_config_step5_copy.png" alt="Database Lab Engine configuration: step 4" />
+    <img src="/assets/dle-aws/DLE_config_step5_copy.png" alt="DBLab Engine configuration: step 4" />
 </p>
 
 <p align="center">
-    <img src="/assets/dle-aws/DLE_config_step7.png" alt="Database Lab Engine configuration: step 5" />
+    <img src="/assets/dle-aws/DLE_config_step7.png" alt="DBLab Engine configuration: step 5" />
 </p>
 
 Once the retrieval is done, you can create your first clone. Happy cloning!
@@ -150,7 +150,7 @@ If something went south in general and you need a fresh start, go back to AWS Cl
 With DLE installed from AWS Marketplace, the guaranteed vendor support is included – please use [one of the available ways to contact](https://postgres.ai/contact).
 
 ## Troubleshooting
-To troubleshot:
+To troubleshoot:
 - Use SSH to connect to the EC2 instance
 - Check the containers that are running: `sudo docker ps` (to see all containers including the stopped ones: `sudo docker ps -a`)
 - See and observe the DLE logs: `sudo docker logs -f dblab_server` (the same logs you can observe in UI – the "Logs" tab)
@@ -160,14 +160,14 @@ To troubleshot:
 ### UI
 #### Create a clone
 1. Click the **Create clone** button.
- ![Database Lab engine clone creation page](/assets/dle-aws/AWS_DLE_create_clone1.png)
+ ![DBLab Engine clone creation page](/assets/dle-aws/AWS_DLE_create_clone1.png)
 1. Fill the **ID** field with a meaningful name.
 1. (optional) By default, the latest data snapshot (closest to production state) will be used to provision a clone. You can choose another snapshot if any.
-1. Fill **database credentials**. Remember the password (it will not be available later, Database Lab Platform does not store it!) – you will need to use it to connect to the clone.
+1. Fill **database credentials**. Remember the password (it will not be available later, DBLab Platform does not store it!) – you will need to use it to connect to the clone.
 1. Click the **Create clone** button and wait for a clone to be provisioned. The process should take only a few seconds.
-![Database Lab engine clone creation page](/assets/dle-aws/AWS_DLE_create_clone2.png)
+![DBLab Engine clone creation page](/assets/dle-aws/AWS_DLE_create_clone2.png)
 1. You will be redirected to the **Database Lab clone** page.
-    ![Database Lab engine clone page](/assets/dle-aws/AWS_DLe_create_clone3.png)
+    ![DBLab Engine clone page](/assets/dle-aws/AWS_DLe_create_clone3.png)
 
 #### Connect to a clone
 1. From the **Database Lab clone** page under section **Connection info**, copy the **psql connection string** field contents by clicking the **Copy** button.
@@ -284,5 +284,5 @@ Now check the database objects you've dropped or partially deleted – the "dama
 For more, see [the full client CLI reference](/docs/reference-guides/dblab-client-cli-reference).
 
 :::info Have questions?
-[Reach out to the Postgres.ai team](https://postgres.ai/contact), we'll be happy to help!
+[Reach out to the Postgres AI team](https://postgres.ai/contact), we'll be happy to help!
 :::

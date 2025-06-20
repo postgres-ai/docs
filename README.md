@@ -1,5 +1,5 @@
 # Principles
-This repository contains both Postgres.ai website (excluding the Console/Platform part) and Postgres.ai Documentation.
+This repository contains both Postgres AI website (excluding the Console/Platform part) and Postgres AI Documentation.
 
 ## Documentation – principles
 

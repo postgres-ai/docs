@@ -4,14 +4,14 @@ const blog = [
     link: 'blog/20241003-how-does-planning-time-depend-on-number-of-partitions',
     date: '2024-10-03 21:45:12',
     title: 'AI-assisted benchmark: number of partitions vs. planning time',
-    description: 'How does planning time depends on the number of partitions? Let\'s explore with the Postgres.AI assistant',
+    description: 'How does planning time depends on the number of partitions? Let\'s explore with the Postgres AI assistant',
     image: '/assets/thumbnails/ai_db_experiment_plannting_time_vs_partition_count.jpg',
   },
   {
     link: 'blog/20240127-postgres-ai-bot',
     date: '2024-01-27 23:21:12',
-    title: 'Postgres.AI Bot. Towards LLM OS for Postgres',
-    description: 'What is inside Postgres.AI Bot alpha?',
+    title: 'Postgres AI Bot. Towards LLM OS for Postgres',
+    description: 'What is inside Postgres AI Bot alpha?',
     image: '/assets/thumbnails/postgres-ai-bot-announcement-2.jpg',
   },
   {
@@ -39,7 +39,7 @@ const blog = [
     link: 'blog/20221020-database-lab-engine-3-2-released',
     date: '2022-10-20 22:11:12',
     title: 'DLE 3.2: config and logs in UI, Postgres 15, AWS Marketplace version is GA',
-    description: 'The Postgres.ai team is happy to announce the release of version 3.2 of Database Lab Engine (DLE), an open-source tool that provides blazing-fast database cloning and branching for any PostgreSQL database to build powerful development, test, QA, and staging environments.',
+    description: 'The Postgres AI team is happy to announce the release of version 3.2 of DBLab Engine (DLE), an open-source tool that provides blazing-fast database cloning and branching for any PostgreSQL database to build powerful development, test, QA, and staging environments.',
     image: '/assets/thumbnails/dle-3.2-blog.png',
   },
   /*
@@ -61,7 +61,7 @@ const blog = [
     link: 'blog/20220405-database-lab-engine-3-1-released',
     date: '2022-04-05 23:16:17',
     title: 'DLE 3.1: pgBackRest, timezones for CLI, DLE community',
-    description: 'The Postgres.ai team is happy to announce the release of version 3.1 of Database Lab Engine (DLE), the most advanced open-source software ever released that empowers development, testing, and troubleshooting environments for fast-growing projects.',
+    description: 'The Postgres AI team is happy to announce the release of version 3.1 of DBLab Engine (DLE), the most advanced open-source software ever released that empowers development, testing, and troubleshooting environments for fast-growing projects.',
     image: '/assets/thumbnails/dle-3.1-blog.png',
   },
   {
@@ -153,16 +153,16 @@ const blog = [
   {
     link: 'blog/dle-2-2-release',
     date: '2021-02-22 06:45:00',
-    title: 'Database Lab Engine 2.2 and Joe Bot 0.9',
-    description: 'Database Lab Engine 2.2.0 and SQL Optimization Chatbot “Joe” 0.9.0 released: multiple pools for automated “logical” initialization, production timing estimation (experimental), and improved security.',
+    title: 'DBLab Engine 2.2 and Joe Bot 0.9',
+    description: 'DBLab Engine 2.2.0 and SQL Optimization Chatbot "Joe" 0.9.0 released: multiple pools for automated "logical" initialization, production timing estimation (experimental), and improved security.',
     image: '/assets/thumbnails/dle-2.2-blog.png',
   },
   {
     link: 'blog/dle-2-1-release',
     date: '2020-12-31 09:22:00',
     publishDate: '2020-12-31 09:22:00',
-    title: 'Database Lab Engine 2.1',
-    description: 'Database Lab Engine 2.1 released: automated physical and logical initialization, Amazon RDS PostgreSQL support, basic data transformation and masking',
+    title: 'DBLab Engine 2.1',
+    description: 'DBLab Engine 2.1 released: automated physical and logical initialization, Amazon RDS PostgreSQL support, basic data transformation and masking',
     image: '/assets/thumbnails/dle-2.1-blog.png',
   },
   
@@ -189,29 +189,29 @@ const blog = [
   {
     link: '/blog/dblab-0.3',
     date: '2020-03-04 08:02:00',
-    title: 'Database Lab Engine 0.3, supports both ZFS and LVM',
-    description: 'Database Lab Engine 0.3: now LVM can be used instead of ZFS for thin cloning',
+    title: 'DBLab Engine 0.3, supports both ZFS and LVM',
+    description: 'DBLab Engine 0.3: now LVM can be used instead of ZFS for thin cloning',
     image: '/assets/dblab.svg',
   },
   {
     link: '/blog/joe-0.5',
     date: '2020-02-26 21:42:00',
     title: 'Joe bot, an SQL query optimization assistant, updated to version 0.5.0',
-    description: 'Postgres.ai team is proud to present version 0.5.0 of Joe bot, an SQL query optimization assistant',
+    description: 'Postgres AI team is proud to present version 0.5.0 of Joe bot, an SQL query optimization assistant',
     image: '/assets/joe-3-silhouettes.svg',
   },
   {
     link: '/blog/dblab-0.2',
     date: '2020-02-06 10:38:00',
-    title: 'Database Lab Engine 0.2',
-    description: 'Database Lab Engine updated to 0.2: everything in containers, better API and CLI',
+    title: 'DBLab Engine 0.2',
+    description: 'DBLab Engine updated to 0.2: everything in containers, better API and CLI',
     image: '/assets/dblab.svg',
   },
   {
     link: '/blog/dblab-first-release',
     date: '2020-01-28 14:15:00',
-    title: 'The first public release of Database Lab Engine',
-    description: 'Postgres.ai team is proud to announce the very first public release of Database Lab Engine',
+    title: 'The first public release of DBLab Engine',
+    description: 'Postgres AI team is proud to announce the very first public release of DBLab Engine',
     image: '/assets/dblab.svg',
   },*/
 ];

@@ -6,7 +6,7 @@ sidebar_label: Visualize a query plan
 ## SQL optimization history
 
 :::info
-Enable the "History" feature using the configuration options [`HISTORY_ENABLED`](/docs/reference-guides/joe-bot-configuration-reference#history_enabled) and [`PLATFORM_`](/docs/reference-guides/joe-bot-configuration-reference#platform_url).
+Enable the "History" feature using the configuration options [`HISTORY_ENABLED`](/docs/reference-guides/joe-bot-configuration-reference#history_enabled) and [`PLATFORM_URL`](/docs/reference-guides/joe-bot-configuration-reference#platform_url).
 :::
 
 - Execute any [`explain`](/docs/reference-guides/joe-bot-commands-reference#explain) query and click the **Permalink** at the end of the response

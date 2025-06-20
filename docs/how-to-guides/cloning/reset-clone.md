@@ -6,11 +6,11 @@ With Database Lab clones, you can verify any changes and without any risks for t
 
 ## GUI
 1. Connect to your clone and execute DDL or DML query – for example, drop some table:
-  ![Database Lab engine page / Create clone](/assets/guides/reset-clone-1.png)
+  ![DBLab Engine page / Create clone](/assets/guides/reset-clone-1.png)
 1. At the **Database Lab clone page**, click the **Reset** button:
-  ![Database Lab engine page / Create clone](/assets/guides/reset-clone-2.png)
+  ![DBLab Engine page / Create clone](/assets/guides/reset-clone-2.png)
 1. Wait for the **OK** status and connect to your clone again. The data will be recovered to the initial state:
-  ![Database Lab engine page / Create clone](/assets/guides/reset-clone-3.png)
+  ![DBLab Engine page / Create clone](/assets/guides/reset-clone-3.png)
 
 ## CLI
 Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/how-to-guides/cli/cli-install-init).
@@ -20,7 +20,7 @@ Before you run any commands, install Database Lab CLI and initialize configurati
 
 ### Reset a clone
 
-If you need to reset the clone to the initial state and discard all changes were done (revert to the snapshot that was used for clone creation):
+If you need to reset the clone to the initial state and discard all changes that were done (revert to the snapshot that was used for clone creation):
 ```bash
 dblab clone reset CLONE_ID
 ```

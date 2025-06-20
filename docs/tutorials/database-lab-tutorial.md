@@ -5,12 +5,12 @@ keywords:
   - "DBLab tutorial"
   - "Start using DBLab Engine"
   - "Postgres.ai tutorial"
-description: In this tutorial, we are going set up a DBLab Engine (Database Lab Engine) in the Cloud. DBLab is used to boost software development and testing processes via enabling ultra-fast provisioning of databases of any size.
+description: In this tutorial, we are going set up a DBLab Engine in the Cloud. DBLab is used to boost software development and testing processes via enabling ultra-fast provisioning of databases of any size.
 ---
 
 DBLab Engine is used to boost software development and testing processes by enabling ultra-fast provisioning of databases of any size.
 
-Use [the Postgres.ai Console](https://console.postgres.ai/) for an easy and quick installation of DBLab. Following the steps below, in a few minutes, you will get:
+Use [the Postgres AI Console](https://console.postgres.ai/) for an easy and quick installation of DBLab. Following the steps below, in a few minutes, you will get:
 - A single DBLab Standard Edition (DBLab SE) installed in your infrastructure (Postgres.ai does not have access to it)
 - Additional components such as monitoring
 - Ready-to-use, well-tested, vendor-supported Postgres images for DBLab that are compatible with your source databases located in popular managed Postgres services like RDS, CloudSQL, Supabase, and Heroku
@@ -82,7 +82,7 @@ In this example the database size is 100 GiB, we want to create 3 datasets to be
 
 Provide a name for your DBLab instance:
 <p align="center">
-    <img src="/assets/dle-platform/Platform_DLE_step5.png" alt="DDBLab Engine in DBLab Platform: step 5" />
+    <img src="/assets/dle-platform/Platform_DLE_step5.png" alt="DBLab Engine in DBLab Platform: step 5" />
 </p>
 
 Define DBLab verification token (a non-trivial, password-like value is recommended):
@@ -165,7 +165,7 @@ ok: [root@5.161.212.233] => {
 }
 ```
 :::note
-Save the data from the "Print usage instructions" task, because the Postgres.ai Platform does not save this data on its side.
+Save the data from the "Print usage instructions" task, because the Postgres AI Platform does not save this data on its side.
 :::
 
 
@@ -185,7 +185,7 @@ Now UI should be available at http://127.0.0.1:2346
 ## Step 2. Configure DBLab and run the data retrieval
 
 :::note
-Currently, configuring DBLab in UI allows config changes only for the "logical" mode of data retrieval (dump/restore) – the only available method for managed PostgreSQL cloud services such as RDS Postgres, RDS Aurora Postgres, Azure Postgres, or Heroku. "Physical" mode is not yet supported in UI but is still possible (thru SSH connection and [editing DBLab config file directly](/docs/how-to-guides/administration/engine-manage)). More about [various data retrieval options for DBLab](/docs/how-to-guides/administration/data).
+Currently, configuring DBLab in UI allows config changes only for the "logical" mode of data retrieval (dump/restore) – the only available method for managed PostgreSQL cloud services such as RDS Postgres, RDS Aurora Postgres, Azure Postgres, or Heroku. "Physical" mode is not yet supported in UI but is still possible (through SSH connection and [editing DBLab config file directly](/docs/how-to-guides/administration/engine-manage)). More about [various data retrieval options for DBLab](/docs/how-to-guides/administration/data).
 :::
 
 Enter the verification token, you have created earlier.
@@ -194,7 +194,7 @@ Enter the verification token, you have created earlier.
     <img src="/assets/dle-platform/DLE_config_step1.png" alt="DBLab Engine configuration: step 1" />
 </p>
 
-Now it's time to define DB credentials of the source to initiate database privisioning – this is how DBLab will be initialized, performing the very first data retrieval, and then the same parameters will be used for scheduled full refreshes according to the schedule defined. Fill the forms, and use the information in the tooltips if needed.
+Now it's time to define DB credentials of the source to initiate database provisioning – this is how DBLab will be initialized, performing the very first data retrieval, and then the same parameters will be used for scheduled full refreshes according to the schedule defined. Fill the forms, and use the information in the tooltips if needed.
 
 <p align="center">
     <img src="/assets/dle-platform/DLE_config_step2.png" alt="DBLab Engine configuration: step 2" />
@@ -403,7 +403,7 @@ Now check the database objects you've dropped or partially deleted – the "dama
 For more, see [the full client CLI reference](/docs/reference-guides/dblab-client-cli-reference).
 
 ## Troubleshooting
-To troubleshot:
+To troubleshoot:
 - Use SSH to connect to the DBLab server
 - Check the containers that are running: `sudo docker ps`
 - Check the DBLab container's logs: `sudo docker logs dblab_server`

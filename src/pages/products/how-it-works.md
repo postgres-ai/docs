@@ -1,10 +1,10 @@
 ---
 title: How Database Lab Works
-description: Basics of the Database Lab Platform
+description: Basics of the DBLab Platform
 ---
 
 # How it Works
-The Database Lab Engine is an open-source experimentation platform for PostgreSQL
+The DBLab Engine is an open-source experimentation platform for PostgreSQL
 databases. Instantly create full-size clones of your production database and use
 them to test your database migrations, optimize SQL, or deploy full-size staging
 apps.
@@ -15,44 +15,44 @@ apps.
   <img src="/assets/architecture.png" alt="Database Lab Architecture" class='outline' />
 </a>
 
-The Database Lab Engine (DLE) runs on an independent server within your own infrastructure.
+The DBLab Engine runs on an independent server within your own infrastructure.
 The engine stores a single, full-size copy of production data on the specialized ZFS
 filesystem.<sup>1</sup>
 
-Using the copy-on-write capabilities of ZFS, the DLE is able to generate full-size
+Using the copy-on-write capabilities of ZFS, the DBLab Engine is able to generate full-size
 replicas of the production database in seconds. These writable "thin clones" will behave
 identically to production: they will have the same data and generate the same query plans.
 
-[Learn more about the DLE](/docs/database-lab)
+[Learn more about the DBLab Engine](/docs/database-lab)
 
 ## Security
 <a href='/assets/saas-security-model.png' target='_blank' class='diagram-thumbnail clear'>
   <img src="/assets/saas-security-model.png" alt="Security Model" class='outline' />
 </a>
 
-Instances of the Database Lab Engine (DLE) and all thin clones reside completely within
+Instances of the DBLab Engine and all thin clones reside completely within
 your own infrastructure at all times.
 
-The DLE is managed via an API that can be exposed either over HTTPS or an SSH tunnel.
-The team at Postgres.ai and all platform components:
+The DBLab Engine is managed via an API that can be exposed either over HTTPS or an SSH tunnel.
+The team at Postgres AI and all platform components:
 * ___cannot___ reach your databases
 * ___cannot___ read or modify the data in your databases
 * ___cannot___ SSH to your machines
 
-Production data is sensitive - even within your own organization. You can configure the DLE
+Production data is sensitive - even within your own organization. You can configure the DBLab Engine
 to generate fully masked clones so that engineers without production authorization
 can also gain the benefits of experimenting with thin clones.
 
 [Learn more about our Security Model](/docs/platform/security)
 
 ## Setup
-You can install the Database Lab Engine (DLE) on a Linux<sup>2</sup> server where you can provision a ZFS volume.
+You can install the DBLab Engine on a Linux<sup>2</sup> server where you can provision a ZFS volume.
 If you run your infrastructure on AWS, you can follow our
 [Getting Started Guide for RDS](/docs/tutorials/database-lab-tutorial-amazon-rds).
 
-Here's what you can expect when setting up the DLE:
-* Experienced engineers can setup the DLE in less than 1 hour
-* The DLE host instance should have a disk 30% larger than the production DB
+Here's what you can expect when setting up the DBLab Engine:
+* Experienced engineers can setup the DBLab Engine in less than 1 hour
+* The DBLab Engine host instance should have a disk 30% larger than the production DB
 * [Sensitive data masking](/products/data-masking) can be achieved with a set of declarative rules
 
 <div className="products-btn-container">
@@ -72,5 +72,5 @@ Here's what you can expect when setting up the DLE:
       documentation
     </a>
   </li>
-  <li><sup>2</sup> The DLE has been tested on Ubuntu and RHEL/CentOS.</li>
+  <li><sup>2</sup> The DBLab Engine has been tested on Ubuntu and RHEL/CentOS.</li>
 </ul>

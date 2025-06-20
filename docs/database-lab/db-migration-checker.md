@@ -23,8 +23,8 @@ DB Migration Checker is a DLE's component that enables integration with CI/CD to
 - **Lots of helpful data points**: Collect useful artifacts (such as `pg_stat_***` system views) and use them to empower your DB changes review process
 
 ## How to set up a DB migration checker
-- Make sure that the Database Lab Engine is running
-- Copy the example configuration file [`config.example.ci_checker.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/master/engine/configs/config.example.ci_checker.yml) from the Database Lab Engine repository to `~/.dblab/ci_checker/configs/ci_checker.yml`:
+- Make sure that the DBLab Engine is running
+- Copy the example configuration file [`config.example.ci_checker.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/master/engine/configs/config.example.ci_checker.yml) from the DBLab Engine repository to `~/.dblab/ci_checker/configs/ci_checker.yml`:
 
   ```bash
   mkdir -p ~/.dblab/ci_checker/configs
