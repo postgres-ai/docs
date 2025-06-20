@@ -4,11 +4,11 @@ sidebar_label: "Custom"
 ---
 
 :::info
-As the first step, you need to set up a machine for Database Lab Engine instance. See the [guide](/docs/how-to-guides/administration/install-dle-manually).
+As the first step, you need to set up a machine for DBLab Engine instance. See the [guide](/docs/how-to-guides/administration/install-dle-manually).
 :::
 
 ## Configuration
-With this data source type you can use any PostgreSQL backup tool (e.g. pg_basebackup, Barman, pgBackRest) to transfer the data to the Database Lab Engine instance.
+With this data source type you can use any PostgreSQL backup tool (e.g. pg_basebackup, Barman, pgBackRest) to transfer the data to the DBLab Engine instance.
 
 ### Jobs
 To set up it you need to use following jobs:
@@ -25,7 +25,7 @@ Copy the example configuration file [`config.example.physical_generic.yml`](http
 - Set a proper version in Postgres Docker image tag (change the images itself only if you know what are you doing):
     - `databaseContainer:dockerImage`
 
-## Run Database Lab Engine
+## Run DBLab Engine
 ```bash
 sudo docker run \
   --name dblab_server \

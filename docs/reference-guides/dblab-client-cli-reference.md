@@ -383,7 +383,7 @@ dblab clone destroy TestCloneID
 ### Subcommand `start-observation`
 
 :::note 🚧 Experimental
-This is an experimental feature (its working title: "CI Observer"). If you have questions, suggestions, or bug reports, please open an issue in the [Database Lab Engine issue tracker](https://gitlab.com/postgres-ai/database-lab/-/issues) and/or raise a discussion in one of [the Database Lab Community channels](https://postgres.ai/docs/database-lab#more).
+This is an experimental feature (its working title: "CI Observer"). If you have questions, suggestions, or bug reports, please open an issue in the [DBLab Engine issue tracker](https://gitlab.com/postgres-ai/database-lab/-/issues) and/or raise a discussion in one of [the Database Lab Community channels](https://postgres.ai/docs/database-lab#more).
 :::
 
 Start clone state monitoring.

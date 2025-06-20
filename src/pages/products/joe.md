@@ -5,8 +5,8 @@ description: Joe Bot, a virtual DBA for SQL optimization
 
 # SQL Optimization with Joe Bot
 
-Database Lab includes a virtual DBA that leverages the Database Lab Engine (DLE) to
-assist engineers with SQL optimization. [Learn how the DLE works](/products/how-it-works).
+Database Lab includes a virtual DBA that leverages the DBLab Engine to
+assist engineers with SQL optimization. [Learn how the DBLab Engine works](/products/how-it-works).
 
 ## The SQL Optimization Paradox
 
@@ -27,12 +27,12 @@ This leaves organizations with three _bad_ options:
 ## Joe Bot to the Rescue!
 <img alt="Joe bot for SQL optimization" src="/assets/joe-robot.svg" style={{width: '140px'}} align="right" hspace="5" vspace="5" />
 
-Built atop the Database Lab Engine (DLE), Joe Bot resolves the SQL optimization paradox and
+Built atop the DBLab Engine, Joe Bot resolves the SQL optimization paradox and
 gives engineers the power to improve query performance in a fully realistic, safe, and secure
 manner.
 
 Joe Bot acts as a mediator between an engineer and a thin clone of the production database generated
-by the DLE. Joe Bot accepts SQL commands from the engineer, executes them against the database clone,
+by the DBLab Engine. Joe Bot accepts SQL commands from the engineer, executes them against the database clone,
 and returns performance statistics and SQL recommendations.
 
 <blockquote class='em-quote'>

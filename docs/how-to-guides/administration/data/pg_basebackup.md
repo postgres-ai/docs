@@ -4,12 +4,12 @@ sidebar_label: "pg_basebackup"
 ---
 
 :::info
-As the first step, you need to set up a machine for Database Lab Engine instance. See the [guide](/docs/how-to-guides/administration/install-dle-manually).
+As the first step, you need to set up a machine for DBLab Engine instance. See the [guide](/docs/how-to-guides/administration/install-dle-manually).
 :::
 
 ## Configuration
 ### Jobs
-In order to set up Database Lab Engine to automatically get the data from database using [pg_basebackup](https://www.postgresql.org/docs/current/app-pgbasebackup.html) you need to use following jobs:
+In order to set up DBLab Engine to automatically get the data from database using [pg_basebackup](https://www.postgresql.org/docs/current/app-pgbasebackup.html) you need to use following jobs:
 - [physicalRestore](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalrestore)
 - [physicalSnapshot](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalsnapshot)
 
@@ -26,7 +26,7 @@ Copy the contents of configuration example [`config.example.physical_generic.yml
 - Set a proper version in Postgres Docker image tag (change the images itself only if you know what are you doing):
     - `databaseContainer:dockerImage`
 
-## Run Database Lab Engine
+## Run DBLab Engine
 ```bash
 sudo docker run \
   --name dblab_server \

@@ -17,7 +17,7 @@ access to Database Lab for 6 months.
 
 Companies who are accepted into the Customer Advisory Group will make the following commitments.
 
-* They will fully setup the [Database Lab Engine](/products/how-it-works) and [Joe Bot](/products/joe).
+* They will fully setup the [DBLab Engine](/products/how-it-works) and [Joe Bot](/products/joe).
 * They will designate at least two people to serve as internal product champions for Database Lab.
 * The designated product champions will attend a monthly, 30-minute feedback session with our team.
 

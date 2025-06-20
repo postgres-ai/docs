@@ -1,14 +1,14 @@
 ---
-title: How to manage Database Lab Engine
-sidebar_label: Manage Database Lab Engine
-description: Learn how to configure and maintain Database Lab Engine instances to build powerful non-production environments for PostgreSQL.
+title: How to manage DBLab Engine
+sidebar_label: Manage DBLab Engine
+description: Learn how to configure and maintain DBLab Engine instances to build powerful non-production environments for PostgreSQL.
 keywords:
-  - "database lab engine management"
-  - "administration database lab engine"
+  - "dblab engine management"
+  - "administration dblab engine"
   - "postgres.ai cloning management"
 ---
 
-## Configure and start a Database Lab Engine instance
+## Configure and start a DBLab Engine instance
 Define config file `~/.dblab/engine/configs/server.yml`
 
 :::tip
@@ -19,7 +19,7 @@ For instance, you can define a binding with `&` and then refer to it using an al
 See config examples [here](https://gitlab.com/postgres-ai/database-lab/-/tree/v3.5.0/engine/configs)
 :::
 
-After configuring Database Lab Engine, run the following command:
+After configuring DBLab Engine, run the following command:
 
 ```bash
 sudo docker run \
@@ -48,8 +48,8 @@ See more details in the official [Docker command-line reference](https://docs.do
 :::
 
 
-## Reconfigure Database Lab Engine
-Database Lab Engine supports reconfiguration without a restart (therefore, without any downtime):
+## Reconfigure DBLab Engine
+DBLab Engine supports reconfiguration without a restart (therefore, without any downtime):
 
 - Edit the configuration file (usually, `~/.dblab/engine/configs/server.yml`). 
 - Issue a [SIGHUP](https://en.wikipedia.org/wiki/SIGHUP) signal to the main process in the DLE container – if the container name is `dblab_server`, then run this (note that `kill` here is not killing the process, it just sends the SIGHUP signal to it):
@@ -74,8 +74,8 @@ echo 'set backupcopy=yes' >> ~/.vimrc
 ```
 :::
 
-## Upgrade Database Lab Engine
-Stop and remove the container using `sudo docker stop dblab_server` and `sudo docker rm dblab_server` After that, [launch](#start-database-lab-instance) a new container.
+## Upgrade DBLab Engine
+Stop and remove the container using `sudo docker stop dblab_server` and `sudo docker rm dblab_server` After that, [launch](#configure-and-start-a-dblab-engine-instance) a new container.
 
 :::caution
 Prior to version 3.0.0, upgrading or restarting DLE meant losing all the running clones. In DLE 3.0.0, clones became persistent: after any restart – including VM restart - existing Postgres containers are restarted as well. The same should apply to future upgrades unless a specific upgrade breaks backward compatibility (consulting release notes is advised).
@@ -94,8 +94,8 @@ Option 1: upgrade your system to use ZFS 2.1, optionally upgrade your pool (`zpo
 Option 2: postpone the ZFS upgrade, stay on ZFS 0.8, and upgrade DLE to version 3.1 using a special image, `postgresai/dblab-server:3.5.0-zfs08`
 :::
 
-## Observe Database Lab Engine logs
-To observe the logs for Database Lab Engine running in a container (remove `--since 1m` to see the log from the very beginning):
+## Observe DBLab Engine logs
+To observe the logs for DBLab Engine running in a container (remove `--since 1m` to see the log from the very beginning):
 ```bash
 sudo docker logs --since 1m -f dblab_server
 ```
@@ -111,7 +111,7 @@ If you want to see more details, enable debug mode setting option `debug` to `tr
 When debug mode is turned on, logs may contain sensitive data such as API secret keys for the backup system.
 :::
 
-## Check Database Lab Engine status
+## Check DBLab Engine status
 
 To check the status of the running container, perform an HTTP request `GET /healthz`. For example, using cURL:
 ```bash

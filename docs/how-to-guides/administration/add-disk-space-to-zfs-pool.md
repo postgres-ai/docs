@@ -3,7 +3,7 @@ title: How to add disk space to a ZFS pool without downtime
 sidebar_label: Increase ZFS pool size without downtime
 ---
 
-For ZFS, performance degradation might occur when more than 80% of disk space is used. Therefore, it is recommended to monitor the used and free disk space and increase the size of the pool for the Database Lab Engine (DLE) in a timely fashion.
+For ZFS, performance degradation might occur when more than 80% of disk space is used. Therefore, it is recommended to monitor the used and free disk space and increase the size of the pool for the DBLab Engine (DLE) in a timely fashion.
 
 ZFS on Linux does support online pool resizing, or "auto-expand". Thanks to this, we can increase the pool size without any downtime.
 

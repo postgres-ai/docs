@@ -5,13 +5,13 @@ slug: /how-to-guides
 ---
 
 ## Administration
-- [How to install DLE from Postgres.ai Console](/docs/how-to-guides/administration/install-dle-from-postgres-ai)
-- [How to install DLE from AWS Marketplace](/docs/how-to-guides/administration/install-dle-from-aws-marketplace)
-- [How to install DLE manually (Community Edition)](/docs/how-to-guides/administration/install-dle-manually)
-- [How to configure PostgreSQL used by Database Lab Engine](/docs/how-to-guides/administration/postgresql-configuration)
-- [How to manage Database Lab Engine](/docs/how-to-guides/administration/engine-manage)
+- [How to install DBLab Engine from Postgres AI Console](/docs/how-to-guides/administration/install-dle-from-postgres-ai)
+- [How to install DBLab Engine from AWS Marketplace](/docs/how-to-guides/administration/install-dle-from-aws-marketplace)
+- [How to install DBLab Engine manually (Community Edition)](/docs/how-to-guides/administration/install-dle-manually)
+- [How to configure PostgreSQL used by DBLab Engine](/docs/how-to-guides/administration/postgresql-configuration)
+- [How to manage DBLab Engine](/docs/how-to-guides/administration/engine-manage)
 - [How to manage Joe Bot](/docs/how-to-guides/administration/joe-manage)
-- [Secure Database Lab Engine](/docs/how-to-guides/administration/engine-secure)
+- [Secure DBLab Engine](/docs/how-to-guides/administration/engine-secure)
 - [How to refresh data when working in the "logical" mode](/docs/how-to-guides/administration/logical-full-refresh)
 - [Masking sensitive data in PostgreSQL logs when using CI Observer](/docs/how-to-guides/administration/ci-observer-postgres-log-masking)
 - [Add disk space to ZFS pool without downtime](/docs/how-to-guides/administration/add-disk-space-to-zfs-pool)
@@ -57,7 +57,7 @@ slug: /how-to-guides
 - [pgBackRest](/docs/how-to-guides/administration/data/pgBackRest)
 - [Custom](/docs/how-to-guides/administration/data/custom)
 
-## Database Lab (Postgres.ai) Platform
-- [Start using Postgres.ai Platform](/docs/how-to-guides/platform/start-using-platform)
-- [Create and use Database Lab Platform access tokens](/docs/how-to-guides/platform/tokens)
-- [Database Lab Platform onboarding checklist](/docs/how-to-guides/platform/onboarding)
+## Database Lab (Postgres AI) Platform
+- [Start using Postgres AI Platform](/docs/how-to-guides/platform/start-using-platform)
+- [Create and use DBLab Platform access tokens](/docs/how-to-guides/platform/tokens)
+- [DBLab Platform onboarding checklist](/docs/how-to-guides/platform/onboarding)

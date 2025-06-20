@@ -8,7 +8,7 @@ We love startups. And we're extremely passionate about Postgres, an awesome DBMS
 
 Over 5 years, we've helped dozens of startups master their PostgreSQL challenges. Two of them, GitLab (NASDAQ:GTLB) and Chewy (NYSE: CHWY), went through successful IPOs with our team helping them ensure Postgres clusters stayed reliable and performant as they scaled to many thousands of engineers and $10-20B market caps. We know how to help teams handle database growth with confidence.
 
-Reach out to the Postgres.AI team to get help with Postgres now: **[consulting@postgres.ai](mailto:consulting@postgres.ai)**.
+Reach out to the Postgres AI team to get help with Postgres now: **[consulting@postgres.ai](mailto:consulting@postgres.ai)**.
 
 ## When to engage
 
@@ -26,7 +26,7 @@ We break down complex database problems into clear, actionable steps. Through pr
 
 <div class="testimonial">
     <blockquote>
-        "We were looking for a way to create database snapshots with ZFS/filesystem snapshotting. When I found out about DBLab, we started using it instead. The professional support we get from Postgres.AI is amazing, and the team is really to the point and deeply experienced in Postgres. We solved the problems we had when we started with the help of Postgres.AI."
+        "We were looking for a way to create database snapshots with ZFS/filesystem snapshotting. When I found out about DBLab, we started using it instead. The professional support we get from Postgres AI is amazing, and the team is really to the point and deeply experienced in Postgres. We solved the problems we had when we started with the help of Postgres AI."
     </blockquote>
     <footer>
         <strong><a href="https://se.linkedin.com/in/andreas-pelme-6b9a3483" target="_blank">Andreas Pelme</a></strong><br/>
@@ -37,7 +37,7 @@ We break down complex database problems into clear, actionable steps. Through pr
 
 <div class="testimonial">
     <blockquote>
-        "We chose to partner with Postgres.AI to enhance our database performance and build our internal expertise. Working with Postgres.AI has been insightful—the team brings a depth of expertise that's evident across consultations. While we're still implementing improvements, we've already seen benefits from a DBA perspective."
+        "We chose to partner with Postgres AI to enhance our database performance and build our internal expertise. Working with Postgres AI has been insightful—the team brings a depth of expertise that's evident across consultations. While we're still implementing improvements, we've already seen benefits from a DBA perspective."
     </blockquote>
     <footer>
         <strong><a href="https://de.linkedin.com/in/tomas-ostasevicius" target="_blank">Tomas Ostasevicius</a></strong><br/>
@@ -48,7 +48,7 @@ We break down complex database problems into clear, actionable steps. Through pr
 
 <div className="testimonial">
     <blockquote>
-        "The expertise of Nik and team at Postgres.AI has helped us significantly with the performance of our PostgreSQL database. Nik's understanding of PostgreSQL internals and ability to transfer his knowledge to us has helped prepare us for scale. Additionally, we use Row Level Security heavily, which is not a widely used feature. When we ran into some obscure performance issues with it, Nik was able to root cause it very quickly. This likely saved us weeks of time. Look forward to working with Postgres.AI in the future."
+        "The expertise of Nik and team at Postgres AI has helped us significantly with the performance of our PostgreSQL database. Nik's understanding of PostgreSQL internals and ability to transfer his knowledge to us has helped prepare us for scale. Additionally, we use Row Level Security heavily, which is not a widely used feature. When we ran into some obscure performance issues with it, Nik was able to root cause it very quickly. This likely saved us weeks of time. Look forward to working with Postgres AI in the future."
     </blockquote>
     <footer>
         <strong><a href="https://www.linkedin.com/in/kencaruso" target="_blank">Ken Caruso</a></strong><br/>

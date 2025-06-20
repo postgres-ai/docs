@@ -4,17 +4,17 @@ sidebar_label: "AWS RDS"
 ---
 
 :::info
-As the first step, you need to set up a machine for Database Lab Engine instance. See the [guide](/docs/how-to-guides/administration/install-dle-manually).
+As the first step, you need to set up a machine for DBLab Engine instance. See the [guide](/docs/how-to-guides/administration/install-dle-manually).
 :::
 
 :::tip See also
-To get started using Database Lab for Amazon RDS databses, see the [Database Lab tutorial for Amazon RDS](/docs/tutorials/database-lab-tutorial-amazon-rds).
+To get started using DBLab Engine for Amazon RDS databses, see the [Database Lab tutorial for Amazon RDS](/docs/tutorials/database-lab-tutorial-amazon-rds).
 :::
 
 We have two options to connect to the RDS database, you need to consider the **Database authentication** method that is assigned to your RDS database.
 
 Options:
-- Using **password authentication (master password)**. This option can be used for all **Database authentication** method enabled for your database and requires to set the master password of the database in the Database Lab configuration file
+- Using **password authentication (master password)**. This option can be used for all **Database authentication** method enabled for your database and requires to set the master password of the database in the DBLab Engine configuration file
 - **IAM database authentication**. This option can be used only with **Password and IAM database authentication**, it requires AWS user credentials and does not require the master password, use this option for granular control of the access to your database
 
 If you want to use **IAM database authentication**, read how to enable it [here](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.Enabling.html).
@@ -25,7 +25,7 @@ If you want to use **IAM database authentication**, read how to enable it [here]
 You need to know the **master password**. If you lost the password it can be reset. Read how to reset it [here](https://aws.amazon.com/premiumsupport/knowledge-center/reset-master-user-password-rds/).
 :::
 
-Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.5.0/engine/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml` and update the following options:
+Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.5.0/engine/configs/config.example.logical_generic.yml) from the DBLab Engine repository to `~/.dblab/engine/configs/server.yml` and update the following options:
 - Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine
 - Set connection options in `retrieval:spec:logicalDump:options:source:connection`:
     - `dbname`: database name to connect to
@@ -36,7 +36,7 @@ Copy the contents of configuration example [`config.example.logical_generic.yml`
 - Set proper version in Postgres Docker image tag (change the images itself only if you know what are you doing):
     - `databaseContainer:dockerImage`
 
-Launch Database Lab Engine:
+Launch DBLab Engine:
 ```bash
 sudo docker run \
   --name dblab_server \
@@ -79,8 +79,8 @@ Read how you can get the AWS access keys for the existing user [here](https://do
 Alternatively, you can add `AmazonRDSFullAccess`, `IAMFullAccess` policies to an AWS user (not recommended).
 :::
 
-### Set up and run Database Lab Engine
-Copy the contents of configuration example [`config.example.logical_rds_iam.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.5.0/engine/configs/config.example.logical_rds_iam.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml` and update the following options:
+### Set up and run DBLab Engine
+Copy the contents of configuration example [`config.example.logical_rds_iam.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.5.0/engine/configs/config.example.logical_rds_iam.yml) from the DBLab Engine repository to `~/.dblab/engine/configs/server.yml` and update the following options:
 - Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine
 - Set connection options `retrieval:spec:logicalDump:options:source:connection`:
     - `dbname`: database name to connect to
@@ -98,8 +98,8 @@ This type of data retrieval requires a secure connection to a database. To setup
 wget https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem -P ~/.dblab/
 ```
 
-### Run Database Lab Engine
-Run Database Lab Engine (set proper **AWS access keys** and update **Verification token**):
+### Run DBLab Engine
+Run DBLab Engine (set proper **AWS access keys** and update **Verification token**):
 ```bash
 sudo docker run \
   --name dblab_server \
@@ -133,7 +133,7 @@ See more details in the official [Docker command-line reference](https://docs.do
 ## Restart in the case of failure
 
 ```bash
-# Stop and remove the Database Lab Engine control container.
+# Stop and remove the DBLab Engine control container.
 sudo docker rm -f dblab_server
 
 # Clean up data directory.

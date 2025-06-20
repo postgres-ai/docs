@@ -57,7 +57,7 @@ where likes > 10 and created > '2019-10-01';
     Index Cond: (posts.likes > 10)
     Filter: (posts.created > '2019-10-01 00:00:00'::timestamp without time zone)
     ```
-- The conclustion: **a specialized index is needed**
+- The conclusion: **a specialized index is needed**
 
 #### Optimize: build a new index
 - Using the `exec` command, we are going to create the following new index in the current session:

@@ -1,17 +1,17 @@
 ---
-title: How to install DBLab using the Postgres.ai Console
-sidebar_label: Install DBLab from Postgres.ai Console
+title: How to install DBLab using the Postgres AI Console
+sidebar_label: Install DBLab from Postgres AI Console
 ---
 
-Use [the Postgres.ai Console](https://console.postgres.ai/) for an easy and quick installation of DBLab. Following the steps below, in a few minutes, you will get:
-- A single DBLab Standard Edition (DBLab SE) installed in your infrastructure (Postgres.ai does not have access to it)
+Use [the Postgres AI Console](https://console.postgres.ai/) for an easy and quick installation of DBLab. Following the steps below, in a few minutes, you will get:
+- A single DBLab Standard Edition (DBLab SE) installed in your infrastructure (Postgres AI does not have access to it)
 - Additional components such as monitoring
 - Ready-to-use, well-tested, vendor-supported Postgres images for DBLab that are compatible with your source databases located in popular managed Postgres services like RDS, CloudSQL, Supabase, and Heroku
 - A DBLab SE subscription with guaranteed vendor support
 
 The DBLab SE pricing model is simple:
 1. For resources (VM, disk), direct payment is made to your cloud provider unless these resources are already owned.
-1. For the DBLab SE license, payment is made to Postgres.ai, billed hourly through Stripe. This fee is based on the "compute" size of your instance, which is determined by CPU and RAM, and *does not depend on the database size*. Detailed information can be found on [the Pricing page](https://postgres.ai/pricing). Note that this cost is generally less than AWS EC2 pricing. For example, for a small machine with 2 vCPUs and 8 GiB RAM, it is as low as $0.086/h (~$62.78 per month).
+1. For the DBLab SE license, payment is made to Postgres AI, billed hourly through Stripe. This fee is based on the "compute" size of your instance, which is determined by CPU and RAM, and *does not depend on the database size*. Detailed information can be found on [the Pricing page](https://postgres.ai/pricing). Note that this cost is generally less than AWS EC2 pricing. For example, for a small machine with 2 vCPUs and 8 GiB RAM, it is as low as $0.086/h (~$62.78 per month).
 
 ## Any database is compatible
 DBLab SE supports instant cloning and database branching for source Postgres databases located anywhere:
@@ -47,22 +47,22 @@ The first steps are trivial:
 
 And then press the "Create" button to deploy DBLab in your cloud:
 <p align="center">
-    <img src="/assets/dle-platform/Platform_DLE_step1.png" alt="Database Lab Engine in Database Lab Platform: step 1" />
+    <img src="/assets/dle-platform/Platform_DLE_step1.png" alt="DBLab Engine in DBLab Platform: step 1" />
 </p>
 
 Select your cloud provider and region:
 <p align="center">
-    <img src="/assets/dle-platform/Platform_DLE_step2.png" alt="Database Lab Engine in Database Lab Platform: step 2" />
+    <img src="/assets/dle-platform/Platform_DLE_step2.png" alt="DBLab Engine in DBLab Platform: step 2" />
 </p>
 
 Choose the instance type:
 <p align="center">
-    <img src="/assets/dle-platform/Platform_DLE_step3.png" alt="Database Lab Engine in Database Lab Platform: step 3" />
+    <img src="/assets/dle-platform/Platform_DLE_step3.png" alt="DBLab Engine in DBLab Platform: step 3" />
 </p>
 
 Choose the volume type and size:
 <p align="center">
-    <img src="/assets/dle-platform/Platform_DLE_step4.png" alt="Database Lab Engine in Database Lab Platform: step 4" />
+    <img src="/assets/dle-platform/Platform_DLE_step4.png" alt="DBLab Engine in DBLab Platform: step 4" />
 </p>
 
 :::note
@@ -71,12 +71,12 @@ In this example the database size is 100 GiB, we want to create 3 datasets to be
 
 Provide a name for your DBLab instance:
 <p align="center">
-    <img src="/assets/dle-platform/Platform_DLE_step5.png" alt="Database Lab Engine in Database Lab Platform: step 5" />
+    <img src="/assets/dle-platform/Platform_DLE_step5.png" alt="DBLab Engine in DBLab Platform: step 5" />
 </p>
 
 Define DBLab verification token (a non-trivial, password-like value is recommended):
 <p align="center">
-    <img src="/assets/dle-platform/Platform_DLE_step6.png" alt="Database Lab Engine in Database Lab Platform: step 6" />
+    <img src="/assets/dle-platform/Platform_DLE_step6.png" alt="DBLab Engine in DBLab Platform: step 6" />
 </p>
 
 :::note
@@ -85,12 +85,12 @@ You can use the "Generate random" button to generate a new unique token.
 
 Choose DBLab version:
 <p align="center">
-    <img src="/assets/dle-platform/Platform_DLE_step7.v2.png" alt="Database Lab Engine in Database Lab Platform: step 7" />
+    <img src="/assets/dle-platform/Platform_DLE_step7.v2.png" alt="DBLab Engine in DBLab Platform: step 7" />
 </p>
 
 Provide SSH public keys:
 <p align="center">
-    <img src="/assets/dle-platform/Platform_DLE_step8.png" alt="Database Lab Engine in Database Lab Platform: step 8" />
+    <img src="/assets/dle-platform/Platform_DLE_step8.png" alt="DBLab Engine in DBLab Platform: step 8" />
 </p>
 
 :::note
@@ -99,12 +99,12 @@ These SSH public keys will be added to the DBLab server's  ~/.ssh/authorized_key
 
 Review the specifications of the virtual machine, and click "Create":
 <p align="left">
-    <img src="/assets/dle-platform/Platform_DLE_step9.v2.png" alt="Database Lab Engine in Database Lab Platform: step 9" width="50%"/>
+    <img src="/assets/dle-platform/Platform_DLE_step9.v2.png" alt="DBLab Engine in DBLab Platform: step 9" width="50%"/>
 </p>
 
 Select the installation method and follow the instructions to create server and install DLE SE:
 <p align="center">
-    <img src="/assets/dle-platform/Platform_DLE_step10.v3.png" alt="Database Lab Engine in Database Lab Platform: step 10" />
+    <img src="/assets/dle-platform/Platform_DLE_step10.v3.png" alt="DBLab Engine in DBLab Platform: step 10" />
 </p>
 
 :::note
@@ -154,7 +154,7 @@ ok: [root@5.161.212.233] => {
 }
 ```
 :::note
-Save the data from the "Print usage instructions" task, because the Postgres.ai Platform does not save this data on its side.
+Save the data from the "Print usage instructions" task, because the Postgres AI Platform does not save this data on its side.
 :::
 
 
@@ -166,11 +166,11 @@ ssh -N -L 2346:127.0.0.1:2346 user@server-ip-address
 
 Now UI should be available at http://127.0.0.1:2346
 <p align="center">
-    <img src="/assets/dle-platform/Platform_DLE_step11.v2.png" alt="Database Lab Engine in Database Lab Platform: step 11" />
+    <img src="/assets/dle-platform/Platform_DLE_step11.v2.png" alt="DBLab Engine in DBLab Platform: step 11" />
 </p>
 
 :::note
-Currently, configuring DBLab in UI allows config changes only for the "logical" mode of data retrieval (dump/restore) – the only available method for managed PostgreSQL cloud services such as RDS Postgres, RDS Aurora Postgres, Azure Postgres, or Heroku. "Physical" mode is not yet supported in UI but is still possible (thru SSH connection and [editing DBLab config file directly](/docs/how-to-guides/administration/engine-manage)). More about [various data retrieval options for DBLab](/docs/how-to-guides/administration/data).
+Currently, configuring DBLab in UI allows config changes only for the "logical" mode of data retrieval (dump/restore) – the only available method for managed PostgreSQL cloud services such as RDS Postgres, RDS Aurora Postgres, Azure Postgres, or Heroku. "Physical" mode is not yet supported in UI but is still possible (through SSH connection and [editing DBLab config file directly](/docs/how-to-guides/administration/engine-manage)). More about [various data retrieval options for DBLab](/docs/how-to-guides/administration/data).
 :::
 
 ## Configure DBLab and run the first data retrieval
@@ -178,11 +178,11 @@ Proceed with configuration in UI as described here: https://postgres.ai/docs/tut
 
 
 ## Troubleshooting
-To troubleshot:
+To troubleshoot:
 - Use SSH to connect to the DBLab server
 - Check the containers that are running: `sudo docker ps`
 - Check the DBLab container's logs: `sudo docker logs dblab_server`
 - If needed, check Postgres logs for the main branch. They are located in `/var/lib/dblab/dblab_pool/dataset_1/data/log` for the first snapshot of the database, in ``/var/lib/dblab/dblab_pool/dataset_2/data/log` for the second one (if it's already fetched); if you've configured DBLab to have more than 2 snapshots, check out the other directories too (`/var/lib/dblab/dblab_pool/dataset_$N/data/log`, where `$N` is the snapshot number, starting with `1`)
 
 ## Getting support
-With DBLab installed from Database Lab Platform, guaranteed vendor support is included – please use [one of the available ways to contact](https://postgres.ai/contact).
+With DBLab installed from DBLab Platform, guaranteed vendor support is included – please use [one of the available ways to contact](https://postgres.ai/contact).

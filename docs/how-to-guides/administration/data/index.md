@@ -17,7 +17,7 @@ slug: /how-to-guides/administration/data
 - [Custom](/docs/how-to-guides/administration/data/custom)
 
 ## Overview
-To start using cloning, you need to transfer the data to the Database Lab Engine machine first. Data retrieval can be also considered as "thick" cloning. Once it's done, users can use "thin" cloning to get independent full-size clones of the database in seconds, for testing and development. Normally, retrieval (thick cloning) is a slow operation (1 TiB/h is a good speed). Optionally, the process of keeping the Database Lab data directory in sync with the source (being continuously updated) can be configured.
+To start using cloning, you need to transfer the data to the DBLab Engine machine first. Data retrieval can be also considered as "thick" cloning. Once it's done, users can use "thin" cloning to get independent full-size clones of the database in seconds, for testing and development. Normally, retrieval (thick cloning) is a slow operation (1 TiB/h is a good speed). Optionally, the process of keeping the Database Lab data directory in sync with the source (being continuously updated) can be configured.
 
 :::info
 Read how you can protect personal data: [Data masking](/docs/database-lab/masking).

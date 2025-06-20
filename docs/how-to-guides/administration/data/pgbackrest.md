@@ -24,7 +24,7 @@ Copy the example configuration file [`config.example.physical_pgbackrest.yml`](h
 - Set pgBackRest settings in `physicalRestore:options:pgbackrest`:
     - `stanza` - defines the stanza name to restore ([pgBackRest docs](https://pgbackrest.org/user-guide.html#quickstart/configure-stanza))
     - `delta` - defines usage the `--delta` option for restore using checksums ([pgBackRest docs](https://pgbackrest.org/user-guide.html#restore/option-delta); this will override `PGBACKREST_DELTA` if it is specified in `physicalRestore:options:envs`))
-- Set a proper version of Postgres Docker image (change the tag only leaving the image name itsesf as is, unless you need to use some custom built Postgres image and know what you are doing):
+- Set a proper version of Postgres Docker image (change the tag only leaving the image name itself as is, unless you need to use some custom built Postgres image and know what you are doing):
     - `databaseContainer:dockerImage`
 
 ## Run DLE

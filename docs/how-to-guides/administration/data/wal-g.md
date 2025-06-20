@@ -4,17 +4,17 @@ sidebar_label: "WAL-G"
 ---
 
 :::info
-As the first step, you need to set up a machine for Database Lab Engine instance. See the [guide](/docs/how-to-guides/administration/install-dle-manually).
+As the first step, you need to set up a machine for DBLab Engine instance. See the [guide](/docs/how-to-guides/administration/install-dle-manually).
 :::
 
 ## Configuration
 ### Jobs
-In order to set up Database Lab Engine to automatically get the data from database using [WAL-G](https://github.com/wal-g/wal-g) archival restoration tool you need to use following jobs:
+In order to set up DBLab Engine to automatically get the data from database using [WAL-G](https://github.com/wal-g/wal-g) archival restoration tool you need to use following jobs:
 - [physicalRestore](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalrestore)
 - [physicalSnapshot](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalsnapshot)
 
 ### Options
-Copy the example configuration file [`config.example.physical_walg.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.5.0/engine/configs/config.example.physical_walg.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml` and update the following options:
+Copy the example configuration file [`config.example.physical_walg.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.5.0/engine/configs/config.example.physical_walg.yml) from the DBLab Engine repository to `~/.dblab/engine/configs/server.yml` and update the following options:
 - Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine
 - Set connection options in `physicalRestore:options:envs`:
     - Use WAL-G environment variables to configure the job, see the [WAL-G configuration reference](https://github.com/wal-g/wal-g#configuration)
@@ -23,7 +23,7 @@ Copy the example configuration file [`config.example.physical_walg.yml`](https:/
 - Set a proper version in Postgres Docker image tag (change the images itself only if you know what are you doing):
     - `databaseContainer:dockerImage`
 
-## Run Database Lab Engine
+## Run DBLab Engine
 
 :::tip
 Use Docker volumes to make credential files available to WAL-G. 
@@ -66,5 +66,5 @@ TBD
 ```
 
 :::note
-This page is unfinished. Reach out to the Postgres.ai team to learn more.
+This page is unfinished. Reach out to the Postgres AI team to learn more.
 :::

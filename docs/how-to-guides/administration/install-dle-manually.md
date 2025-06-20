@@ -7,10 +7,10 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 :::info
-You can use [Postgres.ai Console](/docs/how-to-guides/administration/install-dle-from-postgres-ai) or [AWS Marketplace](/docs/how-to-guides/administration/install-dle-from-aws-marketplace) for fast and automated installation of DBLab Standard Edition. This document describes step-by-step manual installation of DBLab Community Edition.
+You can use [Postgres AI Console](/docs/how-to-guides/administration/install-dle-from-postgres-ai) or [AWS Marketplace](/docs/how-to-guides/administration/install-dle-from-aws-marketplace) for fast and automated installation of DBLab Standard Edition. This document describes step-by-step manual installation of DBLab Community Edition.
 :::
 
-Here describes how to manually install the DBLab Engine Community Edition (DBLab CE).
+This describes how to manually install the DBLab Engine Community Edition (DBLab CE).
 
 **Steps**:
 
@@ -24,8 +24,8 @@ Create a virtual machine with Ubuntu 22.04, and add a disk to store the data. Yo
 ### (optional) Ports need to be open
 You will need to open the following ports:
 - `22`: to connect to the instance using SSH
-- `2346`: to work with Database Lab Engine UI and API (can be changed in the Database Lab Engine configuration file)
-- `6000-6100`: to connect to PostgreSQL clones (this is the default port range used in the Database Lab Engine configuration file, and can be changed if needed)
+- `2346`: to work with DBLab Engine UI and API (can be changed in the DBLab Engine configuration file)
+- `6000-6100`: to connect to PostgreSQL clones (this is the default port range used in the DBLab Engine configuration file, and can be changed if needed)
 
 :::caution
 For real-life use, it is not a good idea to open ports to the public. Instead, it is recommended to use VPN or SSH port forwarding to access both Database Lab API and PostgreSQL clones, or to enforce encryption for all connections using NGINX with SSL and configuring SSL in PostgreSQL configuration.
@@ -61,7 +61,7 @@ sudo apt-get update && sudo apt-get install -y \
 ```
 
 ### Set $DBLAB_DISK
-Further, we will need environment variable `$DBLAB_DISK`. It must contain the device name that corresponds to the disk where all the Database Lab Engine data will be stored.
+Further, we will need environment variable `$DBLAB_DISK`. It must contain the device name that corresponds to the disk where all the DBLab Engine data will be stored.
 
 To understand what needs to be specified in `$DBLAB_DISK` in your case, check the output of `lsblk`:
 ```bash
@@ -188,15 +188,15 @@ sudo sed -i 's/snapshot_autoextend_percent.*/snapshot_autoextend_percent = 20/g'
 </TabItem>
 </Tabs>
 
-## Step 2. Configure and launch the Database Lab Engine
+## Step 2. Configure and launch the DBLab Engine
 :::caution
-To make your work with Database Lab API secure, do not open Database Lab API and Postgres clone ports to the public and instead use VPN or SSH port forwarding. It is also a good idea to encrypt all the traffic: for Postgres clones, set up SSL in the configuration files; and for Database Lab API, install, and configure NGINX with a self-signed SSL certificate. See the [How to Secure Database Lab Engine](/docs/how-to-guides/administration/engine-secure).
+To make your work with Database Lab API secure, do not open Database Lab API and Postgres clone ports to the public and instead use VPN or SSH port forwarding. It is also a good idea to encrypt all the traffic: for Postgres clones, set up SSL in the configuration files; and for Database Lab API, install, and configure NGINX with a self-signed SSL certificate. See the [How to Secure DBLab Engine](/docs/how-to-guides/administration/engine-secure).
 :::
 
 ### Prepare database data directory
-Next, we need to get the data to the Database Lab Engine server. For our testing needs, we have 3 options:
+Next, we need to get the data to the DBLab Engine server. For our testing needs, we have 3 options:
 1. "Generated database": generate a synthetic database for testing purposes
-1. "Physical copy" (`pg_basebackup`): copy an existing database (perform "think cloning" once) using a "physical" method such as `pg_basebackup`
+1. "Physical copy" (`pg_basebackup`): copy an existing database (perform "thick cloning" once) using a "physical" method such as `pg_basebackup`
 1. "Logical copy" (dump/restore): copy an existing database using the "logical" method (dump/restore)
 
 <Tabs
@@ -242,7 +242,7 @@ sudo docker stop dblab_pg_initdb
 sudo docker rm dblab_pg_initdb
 ```
 
-Now, we need to take care of Database Lab Engine configuration. Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.5.0/engine/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
+Now, we need to take care of DBLab Engine configuration. Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.5.0/engine/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
 ```bash
 mkdir -p ~/.dblab/engine/configs
 
@@ -251,7 +251,7 @@ curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/v3.5.0/engine/confi
 ```
 
 Open `~/.dblab/engine/configs/server.yml` and edit the following options:
-- Set secure `server:verificationToken`, it will be used to authorize API requests to the Database Lab Engine
+- Set secure `server:verificationToken`, it will be used to authorize API requests to the DBLab Engine
 - Remove `logicalDump` section completely
 - Remove `logicalRestore` section completely
 - Leave `logicalSnapshot` as is
@@ -261,7 +261,7 @@ Open `~/.dblab/engine/configs/server.yml` and edit the following options:
 </TabItem>
 <TabItem value="physical-copy">
 
-If you want to try Database Lab for an existing database, you need to copy the data to PostgreSQL data directory on the Database Lab server, to the directory `/var/lib/dblab/dblab_pool/data`. This step is called "thick cloning". It only needs to be completed once. There are several options to physically copy the data directory. Here we will use the standard PostgreSQL tool, `pg_basebackup`. However, we are not going to use it directly (although, it is possible) – we will specify its options in the Database Lab Engine configuration file.
+If you want to try Database Lab for an existing database, you need to copy the data to PostgreSQL data directory on the Database Lab server, to the directory `/var/lib/dblab/dblab_pool/data`. This step is called "thick cloning". It only needs to be completed once. There are several options to physically copy the data directory. Here we will use the standard PostgreSQL tool, `pg_basebackup`. However, we are not going to use it directly (although, it is possible) – we will specify its options in the DBLab Engine configuration file.
 
 First, copy the example configuration file[`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.5.0/engine/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
 ```bash
@@ -272,7 +272,7 @@ curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/v3.5.0/engine/confi
 ```
 
 Next, open `~/.dblab/engine/configs/server.yml` and edit the following options:
-- Set secure `server:verificationToken`, it will be used to authorize API requests to the Database Lab Engine
+- Set secure `server:verificationToken`, it will be used to authorize API requests to the DBLab Engine
 - In `retrieval:spec:physicalRestore:options:envs`, specify how to reach the source Postgres database to run `pg_basebackup`: `PGUSER`, `PGPASSWORD`, `PGHOST`, and `PGPORT`
 - If your Postgres major version is not 14 (default), set the proper version in Postgres Docker image tag:
     - `databaseContainer:dockerImage`
@@ -286,7 +286,7 @@ Optionally, you might want to keep PGDATA up-to-date (which is being continuousl
 
 If you want to try Database Lab for an existing database, you need to copy the data to the PostgreSQL data directory on the Database Lab server, to the directory `/var/lib/dblab/dblab_pool/data`. This step is called "thick cloning". It only needs to be completed once.
 
-Here we will configure Database Lab Engine to use a "logical" method of thick cloning, dump/restore.
+Here we will configure DBLab Engine to use a "logical" method of thick cloning, dump/restore.
 
 First, copy the configuration example configuration file[`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.5.0/engine/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
 ```bash
@@ -297,7 +297,7 @@ curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/v3.5.0/engine/confi
 ```
 
 Now open `~/.dblab/engine/configs/server.yml` and edit the following options:
-- Set secure `server:verificationToken`, it will be used to authorize API requests to the Database Lab Engine
+- Set secure `server:verificationToken`, it will be used to authorize API requests to the DBLab Engine
 - Set connection options in `retrieval:spec:logicalDump:options:source:connection`:
     - `dbname`: database name to connect to
     - `host`: database server host
@@ -400,7 +400,7 @@ See more details in the official [Docker command-line reference](https://docs.do
 :::
 
 
-### Check the Database Lab Engine logs
+### Check the DBLab Engine logs
 ```bash
 sudo docker logs dblab_server -f
 ```

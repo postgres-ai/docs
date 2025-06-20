@@ -33,11 +33,11 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 - [How to install and initialize DBLab CLI](/docs/how-to-guides/cli/cli-install-init)
 
 ## Overview
-**DBLab Engine** – an open-source technology that is one of the core components of the DBLab / Postgres.AI Platform, it implements instant cloning and database branching with constant time and money overhead.
+**DBLab Engine** – an open-source technology that is one of the core components of the DBLab / Postgres AI Platform, it implements instant cloning and database branching with constant time and money overhead.
 
 DBLab Engine is used to build powerful, state-of-the-art development and testing environments, based on a simple idea: with modern thin cloning and database branching, it becomes possible to iterate 100x faster in development and testing. It is extremely helpful for teams of any size that want to achieve high development velocity and the most competitive "time to market" characteristics and save budgets on non-production infrastructure.
 
-**DBLab Platform** (a.k.a. Postgres.AI Console) is a paid SaaS offering developed and maintained by [Postgres.AI](https://Postgres.ai). It provides GUI, user management, permissions control, token management, audit, and more.
+**DBLab Platform** (a.k.a. Postgres AI Console) is a paid SaaS offering developed and maintained by [Postgres AI](https://postgres.ai). It provides GUI, user management, permissions control, token management, audit, and more.
 
 ## DBLab Engine (open source)
 DBLab Engine is distributed under Apache 2.0 license.
@@ -46,7 +46,7 @@ Repositories:
 - GitLab: https://gitlab.com/postgres-ai/database-lab,
 - GitHub https://github.com/postgres-ai/database-lab (mirror).
 
-> DBLab Engine code is hosted and developed on GitLab.com. Why? GitLab Inc. is our (Postgres.ai) long-term client and early adopter (see [GitLab Development Docs](https://docs.gitlab.com/ee/development/understanding_explain_plans.html#database-lab)). GitLab has an open-source version. Last but not least: GitLab uses PostgreSQL.<br/><br/>
+> DBLab Engine code is hosted and developed on GitLab.com. Why? GitLab Inc. is our (Postgres AI) long-term client and early adopter (see [GitLab Development Docs](https://docs.gitlab.com/ee/development/understanding_explain_plans.html#database-lab)). GitLab has an open-source version. Last but not least: GitLab uses PostgreSQL.<br/><br/>
 >However, nowadays, not many open-source projects are hosted at GitLab.com, unfortunately.<br/> ⭐️ Please support the project giving a star on GitLab! It's on [the main page of the DBLab Engine repository](https://gitlab.com/postgres-ai/database-lab), at the upper right corner:
 >
 >![Add a GitLab star](/assets/star.gif)
@@ -82,16 +82,16 @@ Some problems that can be solved by using DBLab:
 
 ### Paid versions: DBLab SE and EE
 DBLab Engine is also packaged in two paid offerings:
-- **DBLab SE (Standard Edition)** – standalone DBLab Engine, installed via [Postgres.AI Console](https://postgres.ai/docs/how-to-guides/administration/install-dle-from-postgres-ai) or [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec), ideal for small to mid-size teams. It extends the free open-source option with commercial support and compatibility with various Postgres flavours such as AWS RDS and RDS Aurora, GCP CloudSQL, Heroku, Supabase, Timescale Cloud, PostGIS.
+- **DBLab SE (Standard Edition)** – standalone DBLab Engine, installed via [Postgres AI Console](https://postgres.ai/docs/how-to-guides/administration/install-dle-from-postgres-ai) or [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec), ideal for small to mid-size teams. It extends the free open-source option with commercial support and compatibility with various Postgres flavours such as AWS RDS and RDS Aurora, GCP CloudSQL, Heroku, Supabase, Timescale Cloud, PostGIS.
 - **DBLab EE (Enterprise Edition)** – full-fledged solution that includes enterprise features like unified control plane, user management, comprehensive audit capabilities, SSO, holistic query optimization workflows, and more.
 
 Version comparison and pricing info – see the [DBLab pricing](https://postgres.ai/pricing) page.
 
 You can install DBLab SE using these options:
-- [Postgres.AI Console](https://postgres.ai/docs/how-to-guides/administration/install-dle-from-postgres-ai)
+- [Postgres AI Console](https://postgres.ai/docs/how-to-guides/administration/install-dle-from-postgres-ai)
 - [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec)
 
-For DBLab EE inquiries, reach out to the Postgres.AI team: **<a href="mailto:contact@postgres.ai">contact@postgres.ai</a>**.
+For DBLab EE inquiries, reach out to the Postgres AI team: **<a href="mailto:contact@postgres.ai">contact@postgres.ai</a>**.
 
 
 ### More

@@ -12,7 +12,7 @@ const BOT_WS_URL = !!process.env.BOT_WS_URL ? process.env.BOT_WS_URL : '/ai-bot-
 
 module.exports = {
   title:
-    'Postgres.AI', // Title for your website.
+    'Postgres AI', // Title for your website.
   tagline:
     'Branching 🖖 and thin cloning ⚡️ for any Postgres database. Empower database testing in CI/CD. Optimize DB-related costs while improving time-to-market and software quality.',
   url: URL, // Your website URL.
@@ -44,7 +44,7 @@ module.exports = {
       // This options will overwrite options from pages with the same name/property.
       { 'http-equiv': 'x-dns-prefetch-control', content: 'on' },
       { property: 'og:locale', content: 'en_US' },
-      { property: 'og:site_name', content: 'Postgres.AI' },
+      { property: 'og:site_name', content: 'Postgres AI' },
       { property: 'og:image', content: `${URL}/img/og-image-xl.png` },
       {
         property: 'article:publisher',
@@ -59,16 +59,16 @@ module.exports = {
     announcementBar: {
       id: 'advisory_group', // Any value that will identify this message to save the hidden status.
       content:
-        "<a href='/blog/20240127-postges-ai-bot'>🚀 New Postgres.AI assistant: free GPT-4o for Postgres topics</a>",
+        "<a href='/blog/20240127-postges-ai-bot'>🚀 New Postgres AI assistant: free GPT-4o for Postgres topics</a>",
       backgroundColor: '#D7EEF2',
       textColor: '#013A44',
       isCloseable: false,
     },
 
     navbar: {
-      title: 'Postgres.AI',
+                title: 'Postgres AI',
       logo: {
-        alt: 'Postgres.AI logo',
+                  alt: 'Postgres AI logo',
         src: 'img/logo.svg',
         width: '32px',
         height: '32px',
@@ -81,7 +81,7 @@ module.exports = {
           activeBaseRegex: '^/products',
           items: [
             {
-              label: 'Postgres.AI Assistant',
+              label: 'Postgres AI Assistant',
               to: '/blog/20240127-postgres-ai-bot',
             },
             {
@@ -296,7 +296,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Postgres.AI`,
+      copyright: `Copyright © ${new Date().getFullYear()} Postgres AI`,
     },
 
     prism: {
@@ -428,7 +428,7 @@ module.exports = {
             type: 'all',
             title: '', // default to siteConfig.title
             description: '', // default to  `${siteConfig.title} Blog`
-            copyright: 'Postgres.AI',
+            copyright: 'Postgres AI',
             language: undefined, // possible values: http://www.w3.org/TR/REC-html40/struct/dirlang.html#langcodes
           },
         },

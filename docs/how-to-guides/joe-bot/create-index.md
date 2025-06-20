@@ -22,11 +22,11 @@ In the case of big tables when index creation may take many hours you can experi
 2. Use the [`plan`](/docs/reference-guides/joe-bot-commands-reference#plan) command instead of the [`explain`](/docs/reference-guides/joe-bot-commands-reference#explain) command to get the Plan without execution, as hypothetical indexes can be taken into account only there.
 
 :::info
-Joe bot uses a restricted database user that is not allowed to create extensions. Therefore, to use hypothetical indexes, you must configure Database Lab Engine to install the HypoPG extension at snapshot preparation time. To do so:
+Joe bot uses a restricted database user that is not allowed to create extensions. Therefore, to use hypothetical indexes, you must configure DBLab Engine to install the HypoPG extension at snapshot preparation time. To do so:
 - Create a new SQL file with the query: `create extension if not exists hypopg;`
 - In the `queryPreprocessing` section, specify the option `queryPath ` to create HypoPG extension
 
-Fore more details, see [Database Lab Engine configuration](/docs/reference-guides/database-lab-engine-configuration-reference).
+Fore more details, see [DBLab Engine configuration](/docs/reference-guides/database-lab-engine-configuration-reference).
 :::
 
 ## Related guides

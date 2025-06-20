@@ -14,10 +14,10 @@ sidebar_label: Install and initialize Database Lab CLI
 curl -sSL dblab.sh | bash
 ```
 
-2. (optional) Connect to Database Lab Engine using SSH port forwarding
+2. (optional) Connect to DBLab Engine using SSH port forwarding
 
 :::note
-A Database Lab instance might be running behind firewalls and opening proper ports might be impossible or prohibited. In this case, SSH keys should be on the server with Database Lab Engine in order to use this connection option.
+A Database Lab instance might be running behind firewalls and opening proper ports might be impossible or prohibited. In this case, SSH keys should be on the server with DBLab Engine in order to use this connection option.
 :::
 
 In a separate terminal tab launch SSH port forwarding. Use `http://localhost:2344` as URL in the step 3 below.

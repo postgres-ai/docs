@@ -72,7 +72,7 @@ DBNAME=#
 
 ## SSH port forwarding
 :::tip
-SSH keys need to be on the server with the Database Lab engine to use this connection option.
+SSH keys need to be on the server with the DBLab Engine to use this connection option.
 :::
 
 ### GUI

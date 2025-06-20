@@ -17,7 +17,7 @@ description: Learn how to use Joe bot to build a swift workflow of PostgreSQL qu
 [↵ Back to Guides](/docs/guides/)
 
 ## Step 1. Requirements
-- Set up [Database Lab Engine](/docs/tutorials/database-lab-tutorial) (e.g., running on address https://dblab.domain.com) before configuring Joe Bot
+- Set up [DBLab Engine](/docs/tutorials/database-lab-tutorial) (e.g., running on address https://dblab.domain.com) before configuring Joe Bot
 :::note
 Make sure the address used in `accessHost` is accessible from where you are going to run Joe Bot.
 :::
@@ -25,7 +25,7 @@ Make sure the address used in `accessHost` is accessible from where you are goin
 
 ## Step 2. Configure communication channels
 There are two available types of communication with Joe:
-- Web UI powered by [Postgres.ai Console](https://postgres.ai/console/)
+- Web UI powered by [Postgres AI Console](https://postgres.ai/console/)
 - Slack
 
 You can use both of them in parallel. If you can develop in Go language, feel free to implement more types of communication: see [communication channels issues](https://gitlab.com/postgres-ai/joe/-/issues?label_name%5B%5D=Communication+channel).
@@ -42,15 +42,15 @@ curl -fsSL https://gitlab.com/postgres-ai/joe/-/raw/0.10.0/configs/config.exampl
 
 Then, configure ways of communication with Joe.
 
-### Step 2a. Set up Joe in Postgres.ai Console ("Web UI")
+### Step 2a. Set up Joe in Postgres AI Console ("Web UI")
 If you don't need Web UI and prefer working with Joe only in messengers (such as Slack), comment out `channelMapping: communicationTypes: webui` subsection in Jog config, and proceed to the next step.
 
-Before configuring Web UI make sure you have a Postgres.ai account.
+Before configuring Web UI make sure you have a Postgres AI account.
 
-If you don't have a Postgres.ai account yet, see the guide on how to start working with [Postgres.ai Console](/docs/platform).
+If you don't have a Postgres AI account yet, see the guide on how to start working with [Postgres AI Console](/docs/platform).
 
 To configure Web UI:
-1. First, get your `JOE_PLATFORM_TOKEN`. This token lets Joe Bot talk to Postgres.ai Platform to enable Web UI chat window, save the history of commands, and visualize query plans. In [Postgres.ai Console](https://postgres.ai/console/), switch to proper organization and open the `Access Tokens` page. Save it to Joe config (`platform: token`).
+1. First, get your `JOE_PLATFORM_TOKEN`. This token lets Joe Bot talk to Postgres AI Platform to enable Web UI chat window, save the history of commands, and visualize query plans. In [Postgres AI Console](https://postgres.ai/console/), switch to proper organization and open the `Access Tokens` page. Save it to Joe config (`platform: token`).
 1. Then, go to the `Joe instances` page in the `SQL Optimization` sidebar section.
 1. Choose a project from the dropdown menu and press the `Add instance` button.
 1. Generate `Signing secret`. Put it in the configuration file (`channelMapping: webui: <your channel name>: credentials: signingSecret`). We will add and verify the URL on the last step, so do not close the page.
@@ -152,7 +152,7 @@ and we are ready to run Joe Bot.
 
 1. Make a publicly accessible HTTP(S) server port specified in the configuration to receive requests from communication channels Request URL (e.g., http://35.200.200.200:2400, https://joe.dev.domain.com).
 
-Instead of working using insecure HTTP, you can set up NGINX with SSL enabled and open port 443, similarly as described in ["Secure Database Lab Engine"](/docs/how-to-guides/administration/engine-secure).
+Instead of working using insecure HTTP, you can set up NGINX with SSL enabled and open port 443, similarly as described in ["Secure DBLab Engine"](/docs/how-to-guides/administration/engine-secure).
 
 ## Step 4. Verify the configuration
 ### Step 4a. Finish the Web UI configuration

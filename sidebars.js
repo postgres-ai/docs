@@ -10,7 +10,7 @@ module.exports = {
       "tutorials/database-lab-tutorial-amazon-rds",
       "tutorials/joe-setup",
     ],
-    "Database Lab Engine": [
+    "DBLab Engine": [
       "database-lab/index",
       "database-lab/supported-databases",
       "database-lab/user-interface",
@@ -22,7 +22,7 @@ module.exports = {
       "joe-bot/index",
       "joe-bot/example",
     ],
-    "Database Lab Platform (SaaS)": [
+    "DBLab Platform (SaaS)": [
       "platform/index",
       "platform/security",
     ],

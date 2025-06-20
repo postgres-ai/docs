@@ -5,9 +5,9 @@ description: Add DB change testing to your CI/CD pipeline using thin DB clones p
 
 # Database Migration Testing
 
-The Database Lab Engine's (DLE) ability to instantly create full-size clones of your
+The DBLab Engine's ability to instantly create full-size clones of your
 production database allows you to integrate fully automated DB migration testing into
-your CI/CD pipeline. [Learn how the DLE works](/products/how-it-works).
+your CI/CD pipeline. [Learn how the DBLab Engine works](/products/how-it-works).
 
 ## Realistic DB Migration Testing is Hard
 <a href='/assets/db-testing-hierarchy.png' target='_blank' class='diagram-thumbnail large clear'>
@@ -38,8 +38,8 @@ environment:
 
 ## Database Lab Makes Realistic Testing Easy
 
-The Database Lab Engine (DLE) eliminates the time and cost that make it difficult to set up automated
-testing of database migrations. Companies can use the DLE to build a migration specific
+The DBLab Engine eliminates the time and cost that make it difficult to set up automated
+testing of database migrations. Companies can use the DBLab Engine to build a migration specific
 CI job which:
 
 1. Instantly creates a thin clone of the production database

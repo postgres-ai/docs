@@ -1,5 +1,5 @@
 ---
-title: Database Lab Engine components
+title: DBLab Engine components
 sidebar_label: DLE components
 ---
 
