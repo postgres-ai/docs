@@ -44,7 +44,7 @@ sudo docker run \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:3.5.0
+  postgresai/dblab-server:4.0.0-rc.3
 ```
 
 :::info
