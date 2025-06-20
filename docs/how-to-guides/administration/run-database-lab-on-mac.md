@@ -2,9 +2,11 @@
 title: How to run Database Lab Engine on macOS
 sidebar_label: Run Database Lab on macOS
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 This guide explains how to run the Database Lab Engine (DLE) with full ZFS support **on macOS**, using [**Colima**](https://github.com/abiosoft/colima) — a lightweight Linux VM with Docker support.  
-All ZFS operations happen **inside the Colima VM**, so you don’t need ZFS installed on your Mac.
+All ZFS operations happen **inside the Colima VM**, so you don't need ZFS installed on your Mac.
 
 :::note
 This guide provides an experimental way to run Database Lab Engine on macOS.
@@ -35,7 +37,7 @@ Expected:
 go version go1.23.x darwin/arm64
 ```
 
-If you’re using an older version of Go, update it:
+If you're using an older version of Go, update it:
 ```bash
 brew update
 brew upgrade go
@@ -62,7 +64,9 @@ The `--mount $HOME:w` flag makes your home directory accessible inside Colima at
 
 You can either use the provided setup script or run all steps manually.
 
-### Option 1: Run the setup script
+<Tabs>
+<TabItem value="script" label="Option 1: Run the setup script" default>
+
 ```bash
 colima ssh < ./scripts/init-zfs-colima.sh
 ```
@@ -72,8 +76,8 @@ This will:
  - Create a loop device-backed ZFS pool (`dblab_pool`)
  - Create default datasets: `dataset_1`, `dataset_2`, `dataset_3`
 
-
-### Option 2: Manual setup (inside Colima)
+</TabItem>
+<TabItem value="manual" label="Option 2: Manual setup (inside Colima)">
 
 **Step 1.** Open a Colima shell from your macOS terminal:
 ```bash
@@ -148,6 +152,9 @@ dblab_pool/dataset_3           0B    20G       96.5K  /var/lib/dblab/dblab_pool/
 exit
 ```
 
+</TabItem>
+</Tabs>
+
 ## 4. Build engine
 
 Compile DLE binary for Linux:
@@ -203,6 +210,7 @@ docker run \
   -v "$(pwd)/configs:/home/dblab/configs:rw" \
   -v "$(pwd)/configs/standard:/home/dblab/standard:ro" \
   -v "$(pwd)/meta:/home/dblab/meta" \
+  --env DOCKER_API_VERSION=1.39 \
   -p 2345:2345 \
   dblab_server:local
 ```
@@ -211,7 +219,7 @@ docker run \
 Once the container is running, open your browser and go to [http://localhost:2346](http://localhost:2346).
 > By default, the web interface is exposed on port 2346 (configured in server.yml).
 
-You’ll see a **"refreshing"** state while the engine initializes.  
+You'll see a **"refreshing"** state while the engine initializes.  
 This may take some time — please wait until the refresh is complete.
 
 Once the refresh is finished, the Database Lab Engine UI will become available.
