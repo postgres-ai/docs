@@ -37,7 +37,7 @@ sudo docker run \
   --volume /lib/modules:/lib/modules:ro \
   --volume /proc:/host_proc:ro \
   --env DOCKER_API_VERSION=1.41 \
-  postgresai/dblab-server:3.5.0
+  postgresai/dblab-server:4.0.0-rc.3
 ``` 
 
 :::info
