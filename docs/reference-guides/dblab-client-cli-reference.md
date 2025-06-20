@@ -402,6 +402,7 @@ dblab clone start-observation [command options] CLONE_ID
 - `--max-lock-duration` (integer, default: 0) - maximum allowed duration for locks (in seconds). The environment variable `DBLAB_MAX_LOCK_DURATION`.
 - `--max-duration` (integer, default: 0) - maximum allowed duration for observation (in seconds). The environment variable `DBLAB_MAX_DURATION`.
 - `--tags` (string, optional) - set tags for the observation session. An example: branch=patch-1.
+- `--db-name` (string, optional) - database name to observe.
 - `--help` , `-h` (boolean, default: false) - show help.
 
 **Example**
@@ -434,6 +435,36 @@ dblab clone stop-observation [command options] CLONE_ID
 ```bash
 dblab clone stop-observation TestCloneID
 ```
+
+---
+### Subcommand `summary-observation`
+Display summary of an observation session.
+
+**Usage**
+```bash
+dblab clone summary-observation [command options]
+```
+
+**Options**
+- `--clone-id` (string, required) - clone ID. The environment variable `DBLAB_OBSERVATION_CLONE_ID`.
+- `--session-id` (string, required) - observing session ID. The environment variable `DBLAB_OBSERVATION_SESSION_ID`.
+- `--help` , `-h` (boolean, default: false) - show help.
+
+---
+### Subcommand `download-artifact`
+Download artifact of an observation session.
+
+**Usage**
+```bash
+dblab clone download-artifact [command options]
+```
+
+**Options**
+- `--clone-id` (string, required) - clone ID. The environment variable `DBLAB_OBSERVATION_CLONE_ID`.
+- `--session-id` (string, required) - observing session ID. The environment variable `DBLAB_OBSERVATION_SESSION_ID`.
+- `--artifact-type` (string, required) - artifact type to download.
+- `--output`, `-o` (string, optional) - write an artifact to file.
+- `--help` , `-h` (boolean, default: false) - show help.
 
 ---
 ### Subcommand `port-forward`
@@ -584,8 +615,13 @@ Create a snapshot.
 
 **Usage**
 ```bash
-dblab snapshot create CLONE_ID
+dblab snapshot create [command options]
 ```
+
+**Options**
+- `--pool` (string, optional) - pool name.
+- `--clone-id` (string, optional) - create a snapshot from existing clone.
+- `--message` (string, optional) - optional message for new snapshot created from existing clone.
 
 ### Subcommand `delete`
 :::note
