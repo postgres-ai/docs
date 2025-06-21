@@ -159,6 +159,7 @@ Here is how the configuration file is structured:
 
 ## Section `server`: DBLab Engine API server
 - `verificationToken` (string, required) - the token that is used to work with Database Lab API
+- `host` (string, optional) - The host which the DBLab Engine API server accepts HTTP connections from. An empty string (default) means "all available addresses".
 - `port` (string, required, default: 2345) - HTTP server port
 - `disableConfigModification` (boolean, optional, default: false) - disable modifying configuration via UI/API; when enabled, configuration changes can only be made by editing the config file directly
 
