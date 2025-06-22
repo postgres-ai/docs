@@ -294,7 +294,7 @@ Set up SSH port forwarding for UI/API port 2346:
 ssh -N -L 2346:127.0.0.1:2346 ubuntu@35.183.123.243
 ```
 
-Initialize CLI configuration (assuming that `localhost:2346` forwards to DBLab machine's port 2346):
+Initialize CLI configuration (assuming that `127.0.0.1:2346` forwards to DBLab machine's port 2346):
 ```bash
 dblab init \
   --environment-id=dle-demo \
