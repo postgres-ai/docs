@@ -1,10 +1,10 @@
 ---
-title: How to create a Database Lab clone
+title: How to create a DBLab clone
 sidebar_label: Create a clone
 ---
 
 ## GUI
-1. Go to the **Database Lab instance** page.
+1. Go to the **DBLab instance** page.
 1. Click the **Create clone** button.
   ![DBLab Engine page / Create clone](/assets/guides/create-clone-1.png)
 1. Fill the **ID** field with a meaningful name.
@@ -13,11 +13,11 @@ sidebar_label: Create a clone
 1. (optional) Enable protected status (it can be done later if needed). Please be careful: abandoned protected clones may cause out-of-disk-space events. Read the details [here](/docs/how-to-guides/cloning/clone-protection).
 1. Click the **Create clone** button and wait for a clone to provision.
 ![DBLab Engine clone creation page](/assets/guides/create-clone-2.png)
-1. You will be redirected to the **Database Lab clone** page.
+1. You will be redirected to the **DBLab clone** page.
   ![DBLab Engine clone page](/assets/guides/create-clone-3.png)
 
 ## CLI
-Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/how-to-guides/cli/cli-install-init).
+Before you run any commands, install DBLab CLI and initialize configuration. For more information, see [Install and initialize DBLab CLI](/docs/how-to-guides/cli/cli-install-init).
 
 ### Reference
 - Command [`dblab clone create`](/docs/reference-guides/dblab-client-cli-reference#subcommand-create)

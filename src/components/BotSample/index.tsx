@@ -63,7 +63,7 @@ export const BotSample = () => {
         />}
         {error && error.message && !isChatVisible && <span className={styles.errorMessage}>{error.message}</span>}
         {!error && !isChatVisible && <span className={styles.noteMessage}>
-          By default, this communication is public. For private chats, register your own organization in&nbsp;
+          Public by default. For private chats, register in&nbsp;
           <a href={signInUrl as string} className={styles.link}>Console</a>.
         </span>}
       </div>

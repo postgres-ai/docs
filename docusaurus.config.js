@@ -57,12 +57,12 @@ module.exports = {
     ],
 
     announcementBar: {
-      id: 'advisory_group', // Any value that will identify this message to save the hidden status.
+      id: 'consulting_banner', // Any value that will identify this message to save the hidden status.
       content:
-        "<a href='/blog/20240127-postges-ai-bot'>🚀 New Postgres AI assistant: free GPT-4o for Postgres topics</a>",
+        "<a href='/consulting'>🚀 Postgres scaling issues? Get help from our team</a>",
       backgroundColor: '#D7EEF2',
       textColor: '#013A44',
-      isCloseable: false,
+      isCloseable: true,
     },
 
     navbar: {
@@ -81,12 +81,20 @@ module.exports = {
           activeBaseRegex: '^/products',
           items: [
             {
-              label: 'Postgres AI Assistant',
-              to: '/blog/20240127-postgres-ai-bot',
+              label: 'postgres_ai (monitoring)',
+              to: '/products/postgres-ai-monitoring'
             },
             {
               label: 'DBLab Engine',
               to: '/products/dblab_engine'
+            },
+            {
+              label: 'Zero-downtime upgrades',
+              to: '/products/postgres-ai-zdu'
+            },
+            {
+              label: 'PostgresAI Assistant',
+              to: '/blog/20240127-postgres-ai-bot',
             },
           ],
         },
@@ -115,7 +123,7 @@ module.exports = {
               to: '/docs/how-to-guides',
             },
             {
-              label: 'DBLab FAQ',
+              label: 'Questions & answers',
               to: '/docs/questions-and-answers',
             },
           ],
@@ -164,7 +172,7 @@ module.exports = {
                 height="61" 
                 frameBorder="0" 
                 scrolling="no" 
-                style="border: none;"
+                class="footer-status-iframe"
               >
               </iframe>            
                 `,
@@ -175,7 +183,7 @@ module.exports = {
           title: 'Docs',
           items: [
             {
-              label: 'FAQ',
+              label: 'Questions & answers',
               to: '/docs/questions-and-answers',
             },
             {
@@ -187,7 +195,7 @@ module.exports = {
               to: '/docs/reference-guides/postgres-ai-bot-reference',
             },
             {
-              label: 'DBLab guides',
+              label: 'DBLab HowTos',
               to: '/docs/how-to-guides',
             },
             {
@@ -212,12 +220,20 @@ module.exports = {
               to: '/consulting',
             },
             {
-              label: 'PostgresAI assistant',
-              to: '/blog/20240127-postgres-ai-bot',
+              label: 'postgres_ai (monitoring)',
+              to: '/products/postgres-ai-monitoring',
             },
             {
               label: 'DBLab Engine',
-              to: '/',
+              to: '/docs/database-lab',
+            },
+            {
+              label: 'Zero-downtime upgrades',
+              to: '/products/postgres-ai-zdu',
+            },
+            {
+              label: 'PostgresAI assistant',
+              to: '/blog/20240127-postgres-ai-bot',
             },
             {
               label: 'Joe bot for SQL Optimization',
@@ -447,3 +463,4 @@ module.exports = {
     ],
   ],
 }
+

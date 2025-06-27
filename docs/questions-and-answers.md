@@ -1,113 +1,264 @@
 ---
-title: Database Lab questions and answers
-sidebar_label: Q&A
+title: Questions & answers
+sidebar_label: Questions & answers
 keywords:
-  - "zfs clones"
-  - "postgresql clones"
-  - "fast postgresql cloning"
-  - "instant postgres clones"
-  - "postgresql staging clones"
-  - "postgresql thin clones"
-  - "copy on write for postgres"
-  - "postgres test environments"
-  - "virtual postgres databases"
+  - "database branching"
+  - "postgresql thin cloning"
+  - "zero downtime postgres upgrades"
+  - "instant database clones"
+  - "postgresql development environments"
+  - "database lab engine"
+  - "postgres ai assistant"
+  - "postgresql testing automation"
+  - "copy on write postgres"
 ---
 
-## What is Postgres.ai (the company)?
-Postgres.ai brings continuous integration to full-size databases drastically improving the quality of software development and testing. The DBLab Engine, developed by Postgres.ai, is an open-source platform to create instant, full-size clones of your production database. Use these clones to test your database migrations, optimize SQL, or deploy full-size staging apps.
+# Questions & answers
 
-The website https://Postgres.ai/ hosts the SaaS version of Database Lab.
+## About Postgres AI
 
-Additionally, Postgres.ai's database experts provide database performance and scalability consulting services to a very limited number of fast-growing companies.
+### What is Postgres AI?
 
-## What is "thin cloning"? Thin vs. thick clones
-There are two types of cloning used by DBLab Engine:
+Postgres AI is a technology company revolutionizing PostgreSQL development and operations. We provide tools and services that make working with PostgreSQL databases faster, safer, and more efficient:
 
-1. **Thick cloning** is a regular way to copy data. It is how data is copied to Database Lab initially. There are several options:
-    - logical: dump/restore (using `pg_dump` and `pg_restore`),
-    - physical:
-        - `pg_basebackup`,
-        - restore data from a physical archive created by a backup tool such as WAL-E/WAL-G, Barman, pgBackRest, or pg_probackup.
+- **DBLab Engine**: Our flagship open-source platform for instant database cloning and branching
+- **PostgresAI Assistant**: Free AI-powered PostgreSQL expert available 24/7
+- **Zero-downtime solutions**: Tools and expertise for seamless PostgreSQL upgrades
+- **Expert consulting**: PostgreSQL performance optimization and architecture services
 
-    For managed PostgreSQL databases in clouds (such as Amazon RDS), only the first option, dump/restore, is supported.
+We help companies ship database changes 10x faster while reducing infrastructure costs and preventing production incidents.
 
-    In addition to initial mandatory thick cloning, DBLab Engine supports continuous synchronization with the source database. It is achieved using either logical or physical replication, depending on which thick cloning method you initially used.
+### What makes Postgres AI different?
 
-2. **Thin cloning** is how we get local database clones in a few seconds. Such databases can be considered as "virtual databases" because physically, they share most of the data blocks, but logically they look fully independent. The speed of thin cloning does not depend on the database size.
+We provide a comprehensive PostgreSQL platform that transforms how teams work with databases:
 
-    Thin cloning is fast because it is based on the [CoW (Copy-on-Write)](https://en.wikipedia.org/wiki/Copy-on-write#In_computer_storage).
+**DBLab Engine - Database Branching & Cloning:**
+- **Instant database branching**: Create full-size database branches in 10 seconds (vs. hours with traditional methods)
+- **True CI/CD for databases**: Test every migration with production data using DBLab clones
+- **Cost efficiency**: Run 50+ DBLab clones on a single machine
+- **Developer empowerment**: Self-service database environments on demand with DBLab
 
-    Currently, DBLab Engine supports two technologies to enable CoW and thin cloning: ZFS and LVM. <!-- TODO: move explanation about snapshot management to a separate paragraph --> With ZFS, DBLab Engine periodically creates a new snapshot of the data directory, and maintains a set of snapshots, periodically deleting the old ones. When requesting a new clone, users choose which snapshot to use. For example, one can request to create two clones, one with a very fresh database state, and another corresponding to yesterday morning. In a few seconds, clones are created, and it immediately becomes possible to compare two database versions: data, SQL query plans, and so on.
+**PostgresAI Assistant - AI-Powered Expertise:**
+- **Multi-model AI support**: Choose between GPT, Claude, and Gemini for PostgreSQL assistance
+- **24/7 availability**: Get expert-level answers instantly, no waiting for human experts
+- **Context-aware responses**: Understands complex PostgreSQL scenarios and best practices
+
+**Professional Services & Tools:**
+- **Zero-downtime upgrades**: Proven methodologies and tools for risk-free PostgreSQL migrations
+- **Performance optimization**: Expert consulting for query tuning and architecture design
+- **Custom solutions**: Tailored PostgreSQL tools for specific enterprise needs
+
+**Open Source Leadership:**
+- **Community-driven development**: Core products are open source with transparent roadmaps
+- **PostgreSQL ecosystem contributions**: Active participation in advancing PostgreSQL technology
+
+## DBLab
+
+### What is DBLab Engine?
+
+DBLab Engine is an open-source platform that enables instant cloning and branching for PostgreSQL databases. It allows you to:
+
+- Create full-size database clones in seconds, regardless of size
+- Test migrations, optimize queries, and debug issues with real data
+- Integrate database testing into CI/CD pipelines
+- Provide isolated development environments to every team member
+
+### How fast is database cloning?
+
+- **1 TB database**: ~10 seconds
+- **10 TB database**: ~10 seconds
+- **Speed is constant** regardless of database size
+
+Traditional approaches would take hours or days for such operations.
+
+### What editions are available?
+
+**Community Edition (Free)**
+- Open-source (Apache 2.0 license)
+- Full thin cloning capabilities
+- Community support
+- Perfect for small teams and POCs
+
+**Standard Edition (SE)**
+- Commercial support included
+- Compatible with managed databases (RDS, Cloud SQL, etc.)
+- One-click deployment via Console
+- Monitoring and alerting included
+- Starting from $0.27/hour
+
+**Enterprise Edition (EE)**
+- Everything in SE, plus:
+- Unified control plane for multiple instances
+- SSO and advanced user management
+- Comprehensive audit logs
+- API for automation
+- Custom pricing based on requirements
+
+### What is "thin cloning"?
+
+Thin cloning uses Copy-on-Write (CoW) technology to create virtual database copies that:
+- Share unchanged data blocks between clones
+- Appear as completely independent databases
+- Support full read/write operations
+- Use minimal additional storage
+
+This is fundamentally different from traditional copying, which duplicates all data.
+
+### How does DBLab Engine work?
+
+1. **Initial sync**: DBLab copies data from your source database (thick clone)
+2. **Continuous sync**: Keeps data up-to-date using logical or physical replication
+3. **Snapshot management**: Automatically creates and manages data snapshots
+4. **Instant cloning**: Creates thin clones from any snapshot in seconds
+5. **Isolation**: Each clone is fully isolated and can be modified independently
+
+### What technologies does DBLab use?
+
+- **Storage**: ZFS (recommended) or LVM for Copy-on-Write capabilities
+- **Containerization**: Docker for clone isolation
+- **Replication**: PostgreSQL logical/physical replication for data sync
+- **API**: RESTful API for automation and integration
+
+### Do I need to modify my production database?
+
+**No.** DBLab runs completely separately from your production environment. It only needs:
+- Read access to your database (for initial copy)
+- Replication connection (for continuous sync)
+- No ZFS, Docker, or special software on production
+
+### Who uses DBLab Engine?
+
+**Development Teams**
+- Get production-like data for development
+- Test database changes before deployment
+- Debug production issues safely
+
+**DevOps Engineers**
+- Automate database provisioning in CI/CD
+- Reduce staging environment costs
+- Standardize database workflows
+
+**QA Teams**
+- Test with real data scenarios
+- Reproduce production bugs
+- Validate data migrations
+
+**DBAs**
+- Optimize queries with production data
+- Test PostgreSQL upgrades safely
+- Train junior DBAs without risk
+
+### What problems does DBLab solve?
+
+✅ **Long wait times** for database copies
+✅ **High infrastructure costs** for non-production environments
+✅ **Production incidents** from untested database changes
+✅ **Developer productivity** bottlenecks
+✅ **Compliance issues** with production data access
+
+### What infrastructure do I need for DBLab?
+
+**For DBLab Engine:**
+- Dedicated machine (VM or physical)
+- Disk space = database size + 20% overhead
+- 16GB+ RAM recommended
+- Any modern Linux distribution
+- Network access to source database
+
+**Supported environments:**
+- ✅ AWS, GCP, Azure
+- ✅ On-premises data centers
+- ✅ VMware, Nutanix
+- ✅ Any PostgreSQL 9.6+
+
+### Can I use DBLab with managed databases?
+
+Yes! DBLab works with:
+- Amazon RDS & Aurora
+- Google Cloud SQL
+- Azure Database for PostgreSQL
+- Heroku Postgres
+- Supabase
+- Any PostgreSQL-compatible service
+
+For managed databases, we use logical replication for data synchronization.
+
+### How quickly can I get started with DBLab?
+
+- **Community Edition**: 1-2 hours to first clone
+- **Standard Edition**: 15 minutes with guided setup
+- **POC Support**: We offer free POC assistance
+
+
+### Is my data secure?
+
+- DBLab runs in your infrastructure
+- No data leaves your environment
+- Full audit logging (Enterprise Edition)
+- Encryption at rest and in transit
+- Role-based access control
+
+### Can I mask sensitive data?
+
+Yes! DBLab supports:
+- Custom data masking rules
+- Subset data for smaller clones
+- Compliance with GDPR, HIPAA, SOC2
+
+### How is DBLab priced?
+
+**Community Edition**: Free forever (Apache 2.0 license)
+
+**Standard Edition**: Based on compute resources
+- Starts at ~$63/month (excl. costs of cloud resources)
+- No per-database or per-clone fees
+- Transparent hourly billing
+
+**Enterprise Edition**: Annual contracts
+- Custom pricing based on scale
+- Includes professional services
+- SLA guarantees
+
+### How do I get support?
+
+**Community Edition:**
+- [Community Slack](https://slack.postgres.ai)
+- [GitLab issues](https://gitlab.com/postgres-ai/database-lab/-/issues)
+- [Documentation](/docs)
+
+**Paid Editions:**
+- Dedicated support team
+- Email/Slack/Zoom priority support
+- Support of custom Postgres images and Postgres images for popular Postgres platforms ([details](https://postgres.ai/docs/database-lab/#paid-versions-dblab-se-and-ee))
+- Custom training available
+
+### Where can I learn more?
+
+- [Documentation](/docs)
+- [DBLab Engine GitLab repository](https://gitlab.com/postgres-ai/database-lab)
+- [Blog](/blog) – echnical articles and case studies
+
+### How do I contact Postgres AI?
+
+See the ["Contact us"](/contact) page.
+
+## PostgresAI Assistant
+
+### What is PostgresAI Assistant?
+
+An AI-powered chatbot specifically trained for PostgreSQL questions, supporting multiple leading AI models including GPT, Claude, and Gemini. It helps with:
+- Query optimization
+- Schema design
+- Performance troubleshooting
+- Best practices guidance
+- PostgreSQL feature explanations
+
+Available at https://postgres.ai - no registration required for public conversations.
+
+### Is PostgresAI Assistant really free?
+
+Yes! Public conversations are completely free. For private conversations with sensitive data, you can register your organization in the Console.
 
 ---
 
-## Do I need ZFS on production servers?
-No.
-
-If you are going to use Database Lab with ZFS, you do **not** need to install ZFS on production servers. ZFS is needed only to enable thin provisioning. Therefore, ZFS is to be used only on Database Lab instances.
-
----
-
-## Why ZFS?
-[ZFS](https://en.wikipedia.org/wiki/ZFS) is an efficient filesystem with rich capabilities, including CoW (Copy-on-Write) and transparent compression, simple installation, and an easy-to-use CLI. It makes ZFS perfectly suitable for use in development and testing environments.
-
-As an alternative to ZFS, DBLab Engine supports LVM to enable thin cloning. Moreover, since [DBLab Engine](https://gitlab.com/postgres-ai/database-lab) is an open-source component with a modular architecture, it is quite easy to extend it to support other systems, such as Ceph, or enterprise-grade storage systems with CoW. Contributions are welcome!
-
----
-
-## How stable is ZFS?
-Modern versions of [ZFS on Linux](https://zfsonlinux.org/) are very stable.
-
-Multi-terabyte DBLab Engine instances run for many months, synchronizing changes from sources with dozens of thousand TPS, having many dozens of clones, and serving dozens of engineers simultaneously. With such a scale, cloning time may grow to 10-30 seconds, and the lag of applying changes from the source can grow to dozens of seconds. Such numbers still beat any traditional approach to organizing non-production infrastructure by all means.
-
----
-
-## What do I need to use Database Lab?
-- For each DBLab Engine instance, having a dedicated machine is recommended, either physical or virtual:
-    - it does not matter where the machine is located, on-premise or in clouds;
-    - it is possible to run multiple DBLab Engine instances on a single machine, but it is a requirement that each one of them will operate with its own ZFS pool or LVM2 volume (depending on what is used for thin cloning in your case). 
-- For each PostgreSQL source database (most usually, production), a separate DBLab Engine instance is recommended. In systems with micro-service architecture, in most cases, each service has a separate database, usually isolated (separate PostgreSQL cluster) – for each such database, it is recommended to set up a separate DBLab Engine.
-- Machine for DBLab Engine needs to have a separate disk partition with size enough to store Postgres directory fetched from the source.
-- With ZFS, it is highly recommended to always maintain at least 20% of free disk space. Note that ZFS transparently compresses data, so for a 10 TiB database, a 10 TiB disk space is usually enough.
-- Any modern Linux is supported. For the Enterprise version, the following systems are officially supported:
-    - Ubuntu 16.04 or later,
-    - RHEL/CentOS 7 or later.
-
-See [DBLab Engine configuration reference](/docs/database-lab/config-reference) and [Database Lab Tutorial](/docs/tutorials/database-lab-tutorial) to learn more.
-
----
-
-## What is needed to use Database Lab for an Amazon RDS database?
-For more details, see [Database Lab tutorial for Amazon RDS](/docs/tutorials/database-lab-tutorial-amazon-rds).
-
----
-
-## Cloud vs. on-premise
-You can install Database Lab on any machine which matches our requirements listed above. It doesn't matter whether this machine is in clouds or on-premise.
-
-For the Enterprise version, officially supported platforms:
-- [Amazon Web Services](https://aws.amazon.com/),
-- [Google Cloud Platform](https://cloud.google.com/),
-- [VMWare](https://www.vmware.com/).
-
-We plan to extend the list with the following platforms (please reach out to our support team if you are interested in it now):
-- [Microsoft Azure](https://azure.microsoft.com/),
-- [Nutanix Era](https://www.nutanix.com/products/era),
-- [Yandex Cloud](https://cloud.yandex.com/).
-
-<!-- Q&A for Joe, for Platform GUI -->
-
-
----
-
-## How to delete my account / organization on Postgres.ai?
-If you want to delete your data on Postgres.ai, contact Support:
-- email: support@postgres.ai
-
----
-
-## Where to get help?
-We are always happy to help. Reach out to the support team using the following resources:
-- email: support@postgres.ai
-- [Community Slack](https://slack.postgres.ai/)
-- [Telegram (Russian)](https://t.me/databaselabru)
+*Have a question not answered here? Contact us at support@postgres.ai*

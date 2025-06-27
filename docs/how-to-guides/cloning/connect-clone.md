@@ -1,13 +1,13 @@
 ---
-title: How to connect to a Database Lab clone
+title: How to connect to a DBLab clone
 sidebar_label: Connect to a clone
 ---
 
 <!-- TODO proofread this (and all the HowTos (guides) -->
 ## Direct connection (psql)
 ### GUI
-1. From the **Database Lab clone** page under section **Connection info** copy **psql connection string** field contents by clicking the **Copy** button.
-  ![Database Lab clone page / psql connection string](/assets/guides/connect-clone-1.png)
+1. From the **DBLab clone** page under section **Connection info** copy **psql connection string** field contents by clicking the **Copy** button.
+  ![DBLab clone page / psql connection string](/assets/guides/connect-clone-1.png)
 1. In terminal type `psql` and paste **psql connection string** field contents. Change the database name `DBNAME` parameter, you can always use `postgres` for the initial connection.
 1. Run the command and type the password you've set during clone creation.
 1. Test established connection by listing tables in the database with `\d` command.

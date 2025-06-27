@@ -1,6 +1,6 @@
 ---
-title: How to install and initialize Database Lab CLI
-sidebar_label: Install and initialize Database Lab CLI
+title: How to install and initialize DBLab CLI
+sidebar_label: Install and initialize DBLab CLI
 ---
 
 <!-- TODO proofread this (and all the HowTos (guides) -->

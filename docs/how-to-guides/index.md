@@ -1,5 +1,5 @@
 ---
-title: Database Lab guides
+title: DBLab HowTo guides
 sidebar_label: Overview
 slug: /how-to-guides
 ---
@@ -16,19 +16,19 @@ slug: /how-to-guides
 - [Masking sensitive data in PostgreSQL logs when using CI Observer](/docs/how-to-guides/administration/ci-observer-postgres-log-masking)
 - [Add disk space to ZFS pool without downtime](/docs/how-to-guides/administration/add-disk-space-to-zfs-pool)
 
-## How to work with Database Lab clones
-- [How to create Database Lab clones](/docs/how-to-guides/cloning/create-clone)
-- [How to connect to Database Lab clones](/docs/how-to-guides/cloning/connect-clone)
-- [How to reset Database Lab clone](/docs/how-to-guides/cloning/reset-clone)
-- [How to destroy Database Lab clone](/docs/how-to-guides/cloning/destroy-clone)
+## How to work with DBLab clones
+- [How to create DBLab clones](/docs/how-to-guides/cloning/create-clone)
+- [How to connect to DBLab clones](/docs/how-to-guides/cloning/connect-clone)
+- [How to reset DBLab clone](/docs/how-to-guides/cloning/reset-clone)
+- [How to destroy DBLab clone](/docs/how-to-guides/cloning/destroy-clone)
 - [Protect clones from manual and automatic deletion](/docs/how-to-guides/cloning/clone-protection)
 - [How to upgrade Postgres to a new major version in the DBLab clone](/docs/how-to-guides/cloning/clone-upgrade)
 
-## How to work with Database Lab branches
+## How to work with DBLab branches
 - [How to create a database branch](/docs/how-to-guides/branching/create-branch)
 - [How to delete a database branch](/docs/how-to-guides/branching/delete-branch)
 
-## How to work with Database Lab snapshots
+## How to work with DBLab snapshots
 - [How to create a snapshot](/docs/how-to-guides/snapshots/create-snapshot)
 - [How to delete a snapshot](/docs/how-to-guides/snapshots/delete-snapshot)
 
@@ -42,10 +42,10 @@ slug: /how-to-guides
 - [How to get row counts for arbitrary SELECTs](/docs/how-to-guides/joe-bot/count-rows)
 - [How to get sizes of PostgreSQL databases, tables, and indexes with psql commands](/docs/how-to-guides/joe-bot/get-database-table-index-size)
 
-## Database Lab CLI
-- [How to install and initialize Database Lab CLI](/docs/how-to-guides/cli/cli-install-init)
+## DBLab CLI
+- [How to install and initialize DBLab CLI](/docs/how-to-guides/cli/cli-install-init)
 
-## Obtaining data for Database Lab
+## Obtaining data for DBLab
 ### Logical retrieval
 - [Amazon RDS](/docs/how-to-guides/administration/data/rds)
 - [Any database (dump/restore)](/docs/how-to-guides/administration/data/dump)
@@ -57,7 +57,7 @@ slug: /how-to-guides
 - [pgBackRest](/docs/how-to-guides/administration/data/pgBackRest)
 - [Custom](/docs/how-to-guides/administration/data/custom)
 
-## Database Lab (Postgres AI) Platform
+## DBLab (Postgres AI) Platform
 - [Start using Postgres AI Platform](/docs/how-to-guides/platform/start-using-platform)
 - [Create and use DBLab Platform access tokens](/docs/how-to-guides/platform/tokens)
 - [DBLab Platform onboarding checklist](/docs/how-to-guides/platform/onboarding)

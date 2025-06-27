@@ -1,0 +1,22 @@
+/* Apply JetBrains Mono font to the entire consulting page */
+:global(body) h1,
+:global(body) h2,
+:global(body) h3,
+:global(body) h4,
+:global(body) h5,
+:global(body) h6,
+:global(body) p,
+:global(body) li,
+:global(body) blockquote,
+:global(body) .testimonial,
+:global(body) .testimonial blockquote,
+:global(body) .testimonial footer {
+  font-family: "JetBrains Mono", "Fira Code", "Source Code Pro", Consolas, monospace !important;
+}
+
+/* Make sure buttons and links also use the font */
+:global(body) .btn,
+:global(body) .cta-button,
+:global(body) a {
+  font-family: "JetBrains Mono", "Fira Code", "Source Code Pro", Consolas, monospace !important;
+} 

@@ -1,5 +1,5 @@
 :root {
-    --bot-form-height: 4rem;
+    --bot-form-height: 3rem;
 }
 
 .form {
@@ -28,7 +28,7 @@
     flex: 1;
     padding: 1rem calc(var(--bot-form-height) / 2);
     box-sizing: border-box;
-    font: 1.75rem / 100% var(--ifm-font-family-base);
+    font: 1.25rem / 100% var(--ifm-font-family-base);
 }
 
 .formInput::placeholder {

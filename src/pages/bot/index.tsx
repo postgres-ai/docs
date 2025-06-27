@@ -8,7 +8,7 @@ import styles from './styles.module.css'
 import botStyles from './signupForm/styles.module.css'
 
 const textSequence = [
-  'Free GPT-4 and Gemini 1.5 for everyone (Postgres-related topics only).',
+  'Free GPT, Claude, and Gemini for everyone (Postgres-related topics only).',
   2000,
   'Rich knowledge base: over 1 million items including the Postgres docs for all current versions and Postgres-related software such as PgBouncer, Patroni, pgvector.',
   4000,

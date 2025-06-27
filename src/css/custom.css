@@ -7,6 +7,7 @@
 
 @import url("../../static/css/bootstrap.css");
 @import url("../../static/css/cookie-banner.css");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
 
 /* You can override the default Infima variables here. */
@@ -18,7 +19,9 @@
   --ifm-color-primary-light: #ff732c;
   --ifm-color-primary-lighter: #ff7c3a;
   --ifm-color-primary-lightest: #ff9763;
-  --ifm-code-font-size: 95%;
+  --ifm-code-font-size: 90%;
+  --ifm-font-family-base: "JetBrains Mono", "Fira Code", "Source Code Pro", Consolas, monospace;
+  --ifm-font-size-base: 15px;
 }
 
 .docusaurus-highlight-code-line {
@@ -67,6 +70,11 @@ html[data-theme="dark"] .DocSearch {
     var(--ifm-color-emphasis-200) 0%,
     var(--ifm-color-emphasis-100) 100%
   );
+}
+
+/* Apply monospace font to search input */
+.DocSearch-Input {
+  font-family: "JetBrains Mono", "Fira Code", "Source Code Pro", Consolas, monospace !important;
 }
 
 .menu--responsive .menu__button {
@@ -201,16 +209,61 @@ html[data-theme="dark"] .banner {
 
 .banner h1 {
   font-weight: bold;
-  font-size: 42px;
-  line-height: 42px;
+  font-size: 28px;
+  line-height: 32px;
   color: #ff6112;
   margin: 0;
 }
 
+.banner .btn {
+  display: inline-block;
+  margin: 8px 8px;
+  white-space: nowrap;
+}
+
+/* Product pages styling improvements */
+.markdown ul,
+article ul,
+.theme-doc-markdown ul {
+  margin-bottom: 1rem;
+}
+
+.markdown ul li,
+article ul li,
+.theme-doc-markdown ul li {
+  margin-bottom: 0.05rem !important;
+  margin-top: 0.05rem !important;
+  line-height: 1.4 !important;
+  padding-left: 0.25rem;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.markdown ul li.tabs__item,
+article ul li.tabs__item,
+.theme-doc-markdown ul li.tabs__item {
+  padding: 1rem .5rem!important;
+}
+
+
+.markdown ul li ul,
+article ul li ul,
+.theme-doc-markdown ul li ul {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.markdown ul li ul li,
+article ul li ul li,
+.theme-doc-markdown ul li ul li {
+  margin-bottom: 0.3rem !important;
+  line-height: 1.4 !important;
+}
+
 .banner p {
   font-weight: 300;
-  font-size: 28px;
-  line-height: 37px;
+  font-size: 18px;
+  line-height: 24px;
   margin: 30px 0;
 }
 
@@ -664,7 +717,7 @@ table.docs-home td {
 .navbar__title {
   font-size: 1.4rem;
   line-height: 2rem;
-  font-family: 'Encode Sans',roboto,sans-serif;
+  font-family: "JetBrains Mono", "Fira Code", "Source Code Pro", Consolas, monospace;
   font-weight: 400;
 }
 
@@ -1032,3 +1085,192 @@ html[data-theme="dark"] .testimonial footer {
   background-color: #0056b3;
 }
 /* -- */
+
+/* Announcement banner styling */
+.announcement-bar a,
+div[class*="announcementBar"] a,
+.announcement-bar .announcement-bar-content,
+div[class*="announcementBar"] div[class*="content"] {
+  font-family: "JetBrains Mono", "Fira Code", "Source Code Pro", Consolas, monospace !important;
+  font-weight: 500 !important;
+  font-size: 15px !important;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Footer iframe styling */
+.footer-status-iframe {
+  border: none;
+}
+
+/* FORCE announcement bar font size - highest specificity */
+div[class*="announcementBar"] *,
+.announcement-bar *,
+[class*="announcement"] *,
+[class*="AnnouncementBar"] *,
+div[data-theme] > div:first-child *,
+body > div:first-child *,
+html body > div:first-child * {
+  font-size: 15px !important;
+  font-family: "JetBrains Mono", "Fira Code", "Source Code Pro", Consolas, monospace !important;
+}
+
+/* Target the top banner specifically */
+body > div:first-child,
+html body > div:first-child {
+  font-size: 15px !important;
+}
+
+/* Mobile-specific fixes */
+@media (max-width: 768px) {
+  /* Fix announcement banner text wrapping on mobile */
+  .announcement-bar {
+    padding: 8px 12px !important;
+  }
+  
+  .announcement-bar .announcement-bar-content,
+  div[class*="announcementBar"] div[class*="content"] {
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+    text-align: center;
+  }
+  
+  .announcement-bar a,
+  div[class*="announcementBar"] a {
+    font-size: 14px !important;
+    display: block;
+    padding: 4px 0;
+  }
+  
+  /* Improve mobile navbar - make logo bigger */
+  .navbar .navbar__title,
+  .navbar__brand .navbar__title,
+  .navbar__inner .navbar__brand .navbar__title {
+    font-size: 1.8rem !important;
+    line-height: 2.2rem !important;
+  }
+  
+  /* Better mobile bot interface */
+  .bot-container {
+    padding: 10px !important;
+  }
+  
+  .bot-input {
+    font-size: 1rem !important;
+  }
+  
+  /* Mobile-friendly hint cards */
+  .hint-card {
+    font-size: 14px !important;
+    padding: 8px !important;
+    margin: 4px !important;
+  }
+  
+  /* Improve mobile readability */
+  .markdown p,
+  .markdown li {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+  }
+  
+  /* Assistant Widget mobile fixes */
+  [class*="AssistantWidget_container"] {
+    margin: 10px !important;
+    padding: 8px !important;
+  }
+  
+  [class*="AssistantWidget_pgaiLogo"] {
+    margin-bottom: 0.25rem !important;
+  }
+  
+  [class*="AssistantWidget_pgaiLogo"] .navbar__title {
+    font-size: 18px !important;
+  }
+  
+  /* FORCE mobile input field font size and vertical centering */
+  [class*="Input_textarea"],
+  textarea[placeholder*="talk"] {
+    font-size: 1.2rem !important;
+    line-height: 1.2 !important;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+    text-align: left !important;
+    vertical-align: middle !important;
+  }
+
+  
+
+  
+  [class*="Input_sendButton"] {
+    width: 2.5rem !important;
+    height: 1.8rem !important;
+  }
+  
+  [class*="Input_sendButton"] svg {
+    width: 1.5rem !important;
+  }
+  
+  [class*="HintsList_container"] {
+    gap: 8px !important;
+    margin: 0.5rem !important;
+  }
+  
+  [class*="HintCard_container"] {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 4rem !important;
+    padding: 0.5rem !important;
+    font-size: 14px !important;
+  }
+  
+  [class*="noteMessage"] {
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+    margin-top: 0.5rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Even smaller screens */
+  .announcement-bar a,
+  div[class*="announcementBar"] a {
+    font-size: 14px !important;
+    padding: 6px 0;
+  }
+  
+  .navbar .navbar__title,
+  .navbar__brand .navbar__title,
+  .navbar__inner .navbar__brand .navbar__title {
+    font-size: 1.6rem !important;
+    line-height: 2rem !important;
+  }
+  
+  /* Compact bot interface for very small screens */
+  .bot-input {
+    font-size: 15px !important;
+    padding: 8px !important;
+  }
+  
+  .hint-card {
+    font-size: 13px !important;
+    padding: 6px !important;
+  }
+  
+  /* Very small screen assistant widget fixes */
+  [class*="AssistantWidget_container"] {
+    margin: 5px !important;
+    padding: 6px !important;
+  }
+  
+
+  
+  [class*="HintCard_container"] {
+    font-size: 13px !important;
+    padding: 0.4rem !important;
+    min-height: 3.5rem !important;
+  }
+  
+  [class*="noteMessage"] {
+    font-size: 12px !important;
+  }
+}
