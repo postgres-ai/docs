@@ -31,7 +31,7 @@ module.exports = {
       "data-recovery/index",
       "data-access/index",
     ],
-    "How-to guides": [
+    "DBLab HowTos": [
       "how-to-guides/index",
       {
         "Administration": [

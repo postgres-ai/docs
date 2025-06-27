@@ -28,7 +28,7 @@ keywords:
         <li><a href='/docs/tutorials/database-lab-tutorial-amazon-rds'>Database Lab tutorial for Amazon RDS</a></li>
         <li><a href='/docs/tutorials/database-lab-tutorial'>Database Lab tutorial for any PostgreSQL database</a></li>
         <li><a href='/docs/tutorials/joe-setup'>Joe Bot setup</a></li>
-        <li><a href='/docs/questions-and-answers'>FAQ</a></li>
+        <li><a href='/docs/questions-and-answers'>Questions & answers</a></li>
       </ul>
     </td>
     <td>

@@ -2,6 +2,8 @@
 title: Postgres consulting
 ---
 
+import './consulting.module.css';
+
 # Postgres consulting: complex problems, clear solutions
 
 We love startups. And we're extremely passionate about Postgres, an awesome DBMS.

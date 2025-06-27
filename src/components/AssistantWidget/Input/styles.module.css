@@ -66,8 +66,16 @@
     fill: var(--ifm-font-color-base)
 }
 
+@media (max-width: 768px) {
+    .textarea {
+        font-size: 0.8rem;
+        max-height: 5.563rem;
+    }
+}
+
 @media (max-width: 480px) {
     .textarea {
+        font-size: 0.75rem;
         max-height: 5.563rem;
     }
 }
