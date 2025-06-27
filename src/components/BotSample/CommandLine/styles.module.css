@@ -86,21 +86,21 @@
         --bot-form-height: 3.5rem;
     }
     .formInput {
-        padding: .9rem 1rem;
-        font-size: 1.5rem;
+        padding: 1.2rem 1rem;
+        font-size: 1.25rem;
     }
     .sendButton svg {
         width: 1.75rem;
     }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 451px) {
     :root {
         --bot-form-height: 3rem;
     }
     .formInput {
-        padding: .9rem .75rem;
-        font-size: 1.25rem;
+        padding: 1rem .75rem;
+        font-size: 1rem;
     }
     .sendButton svg {
         width: 1.5rem;
