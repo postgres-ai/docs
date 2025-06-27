@@ -1187,20 +1187,6 @@ html body > div:first-child {
     font-size: 18px !important;
   }
   
-  /* FORCE mobile input field font size and vertical centering */
-  [class*="Input_textarea"],
-  textarea[placeholder*="talk"] {
-    font-size: 1.2rem !important;
-    line-height: 1.2 !important;
-    padding-top: 1rem !important;
-    padding-bottom: 1rem !important;
-    text-align: left !important;
-    vertical-align: middle !important;
-  }
-
-  
-
-  
   [class*="Input_sendButton"] {
     width: 2.5rem !important;
     height: 1.8rem !important;
