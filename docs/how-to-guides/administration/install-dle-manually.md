@@ -246,7 +246,7 @@ Now, we need to take care of DBLab Engine configuration. Copy the contents of co
 ```bash
 mkdir -p ~/.dblab/engine/configs
 
-curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/v3.5.0/engine/configs/config.example.logical_generic.yml \
+curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/master/engine/configs/config.example.logical_generic.yml \
   --output ~/.dblab/engine/configs/server.yml
 ```
 
