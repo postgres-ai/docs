@@ -16,7 +16,7 @@ In order to configure DLE to automatically restore the database using the [pgBac
 - [physicalSnapshot](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalsnapshot)
 
 ### Options
-Copy the example configuration file [`config.example.physical_pgbackrest.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v3.5.0/engine/configs/config.example.physical_pgbackrest.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml` and update the following options:
+Copy the example configuration file [`config.example.physical_pgbackrest.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.0.0-rc.4/engine/configs/config.example.physical_pgbackrest.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml` and update the following options:
 - Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine
 - Set repository options in `physicalRestore:options:envs`:
     - pgBackRest allows using environment variables instead of command-line options (see [pgBackRest docs](https://pgbackrest.org/command.html#introduction)):
@@ -70,7 +70,7 @@ sudo docker run \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:4.0.0-rc.3
+  postgresai/dblab-server:4.0.0-rc.4
 ```
 
 :::info

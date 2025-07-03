@@ -10,7 +10,7 @@ DBLab Engine behavior can be controlled using the main configuration file that h
 DBLab Engine supports [YAML 1.2](https://yaml.org/spec/1.2/spec.html) including anchors, aliases, tags, map merging.
 :::
 
-Example config files can be found here: https://gitlab.com/postgres-ai/database-lab/-/tree/v3.5.0/configs.
+Example config files can be found here: https://gitlab.com/postgres-ai/database-lab/-/tree/v4.0.0-rc.4/engine/configs.
 
 You may store configuration files in any suitable location. The recommended location of configuration files for DBLab Engine is `~/.dblab/engine/configs`.
 
