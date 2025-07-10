@@ -13,8 +13,7 @@ keywords:
 DBLab Platform and its components are developed with a strong focus on security. To ensure that your data is secure, please carefully read this document.
 
 ## Found a security issue or have questions?
-If you found a possible vulnerability or have an urgent security-related concern, please reach out to Postgres.ai Support as soon as possible, using one of the following options:
-1. Write an email to <a href="mailto:security@postgres.ai">security@postgres.ai</a>
+If you found a possible vulnerability or have an urgent security-related concern, please reach out to Postgres AI Support as soon as possible by writing an email to <a href="mailto:security@postgres.ai">security@postgres.ai</a>.
 
 ## Security incidents and incident management
 ### Security incident

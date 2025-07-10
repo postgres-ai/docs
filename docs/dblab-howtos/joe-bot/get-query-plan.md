@@ -25,13 +25,13 @@ Let's analyze how it works step by step.
 2. If this was the first command, Joe creates a session and automatically requests a new thin clone to be provisioned. Such clone is a full-size copy of the source database, provisioning takes only a few seconds and, this clone is fully independent (you can analyze it or change it however you want, it will not disturb the work of others, neither it will affect the performance of the source database).
 3. First, the **Plan without execution** appears, it can be useful as a preview of **Plan with execution** for long-running queries.
 4. When the query is successfully executed (✅ **OK** status) you will see much more information about it, including **Plan with execution**, **Recommendations**, **Summary** (of performance metrics), raw database responses in the attachments. You can read more about plans in the [official Postgres documentation](https://www.postgresql.org/docs/current/using-explain.html).
-5. When the query execution is finished, the session is still present. You can [change the database schema or create an index](/docs/how-to-guides/joe-bot/create-index) and run the [`explain`](/docs/reference-guides/joe-bot-commands-reference#explain) again.
+5. When the query execution is finished, the session is still present. You can [change the database schema or create an index](/docs/dblab-howtos/joe-bot/create-index) and run the [`explain`](/docs/reference-guides/joe-bot-commands-reference#explain) again.
 
 #### Related official PostgreSQL documentation
 - [PostgreSQL documentation: EXPLAIN](https://www.postgresql.org/docs/current/sql-explain.html)
 - [PostgreSQL documentation: Using EXPLAIN](https://www.postgresql.org/docs/current/using-explain.html)
 
 #### Related Database Lab guides
-- [How to create an index using Joe bot](/docs/how-to-guides/joe-bot/create-index)
-- [How to reset the state of a Joe session / clone](/docs/how-to-guides/joe-bot/reset-session)
-- [How to get a list of active queries in a Joe session and stop long-running queries](/docs/how-to-guides/joe-bot/query-activity-and-termination)
+- [How to create an index using Joe bot](/docs/dblab-howtos/joe-bot/create-index)
+- [How to reset the state of a Joe session / clone](/docs/dblab-howtos/joe-bot/reset-session)
+- [How to get a list of active queries in a Joe session and stop long-running queries](/docs/dblab-howtos/joe-bot/query-activity-and-termination)

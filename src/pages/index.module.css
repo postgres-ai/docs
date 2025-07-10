@@ -1,7 +1,15 @@
 .repos {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin-top: 40px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.repos > * {
+  width: 50%;
+  flex: 0 0 50% !important;
 }
 
 @media (max-width: 991px) {

@@ -1,7 +1,7 @@
 ---
 title: How to work with snapshots
 sidebar_label: Overview
-slug: /how-to-guides/snapshots
+slug: /dblab-howtos/snapshots
 ---
 
 ## Guides

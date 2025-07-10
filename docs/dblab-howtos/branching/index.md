@@ -1,7 +1,7 @@
 ---
 title: How to work with database branches
 sidebar_label: Overview
-slug: /how-to-guides/branching
+slug: /dblab-howtos/branching
 ---
 
 ## Guides

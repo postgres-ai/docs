@@ -67,7 +67,7 @@ Here's what you can expect when setting up the DBLab Engine:
 
 <ul class='footnotes'>
   <li><sup>1</sup> If desired, alternate copy-on-write systems may be used. See the &nbsp;
-    <a href="/docs/how-to-guides/administration/install-dle-manually"
+    <a href="/docs/dblab-howtos/administration/install-dle-manually"
        target="_blank">
       documentation
     </a>

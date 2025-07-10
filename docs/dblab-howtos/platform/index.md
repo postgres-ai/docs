@@ -1,7 +1,7 @@
 ---
 title: DBLab Platform
 sidebar_label: Overview
-slug: /how-to-guides/platform
+slug: /dblab-howtos/platform
 ---
 
 ## Guides

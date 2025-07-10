@@ -152,7 +152,7 @@ and we are ready to run Joe Bot.
 
 1. Make a publicly accessible HTTP(S) server port specified in the configuration to receive requests from communication channels Request URL (e.g., http://35.200.200.200:2400, https://joe.dev.domain.com).
 
-Instead of working using insecure HTTP, you can set up NGINX with SSL enabled and open port 443, similarly as described in ["Secure DBLab Engine"](/docs/how-to-guides/administration/engine-secure).
+Instead of working using insecure HTTP, you can set up NGINX with SSL enabled and open port 443, similarly as described in ["Secure DBLab Engine"](/docs/dblab-howtos/administration/engine-secure).
 
 ## Step 4. Verify the configuration
 ### Step 4a. Finish the Web UI configuration
