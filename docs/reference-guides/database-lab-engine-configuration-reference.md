@@ -243,7 +243,7 @@ Options:
   - `"--exclude-schema=information_schema"` - exclude specific schemas
 - `immediateRestore` (key-value, optional) - provides options for direct restore to a DBLab Engine instance.
    - `enabled` (boolean, optional, default: false) - enable immediate restore.
-   - `forceInit` (deprecated, boolean, optional, default: false) - init data even if the Postgres directory (see the configuration options `global.mountDir` and `global.dataSubDir`) is not empty; note the existing data might be overwritten; deprecated since DBLab Engine 3.4.0
+   - `forceInit` (removed, boolean, optional, default: false) - init data even if the Postgres directory (see the configuration options `global.mountDir` and `global.dataSubDir`) is not empty; note the existing data might be overwritten; removed since DBLab Engine 3.4.0
    - `configs` (key-value, optional) - applies PostgreSQL configuration parameters for the immediate restore process. Can be inherited using YAML anchors (see `databaseConfigs` pattern above)
    - `customOptions` (list of strings, optional) - defines one or multiple `pg_restore` options. See available options in [the official PostgreSQL documentation](https://www.postgresql.org/docs/current/app-pgrestore.html)
 - `ignoreErrors` (boolean, optional, default: false) - ignore errors that occurred during logical data dump; supported since DBLab Engine 3.4
@@ -255,7 +255,7 @@ Options:
 - `dumpLocation` (string, required) - specifies the location of the archive files (or directories, for directory-format archives) on the host machine to be restored
 - `dockerImage` (string, required) - specifies the Docker image containing the restore-required tool
 - `containerConfig` (key-value, optional) - options to pass custom parameters to logicalRestore container
-- `forceInit` (deprecated, boolean, optional, default: false) - init data even if the Postgres directory (see the configuration options `global.mountDir` and `global.dataSubDir`) is not empty; note the existing data might be overwritten; deprecated since DBLab Engine 3.4.0
+- `forceInit` (removed, boolean, optional, default: false) - init data even if the Postgres directory (see the configuration options `global.mountDir` and `global.dataSubDir`) is not empty; note the existing data might be overwritten; removed since DBLab Engine 3.4.0
 - `parallelJobs` (integer, optional, default: 1) - defines the number of concurrent jobs using the `pg_restore` option `jobs`. This option can dramatically reduce the time to restore a large database to a server running on a multiprocessor machine
 - `databases` (key-value, optional) - defines options for specifying the database list that must be restored. By default, DBLab Engine restores all available databases. Do not specify the databases section to restore all databases. Available options for each database: `tables`, `format`
     - `format` (string, optional, default: "") - defines a dump format. Available formats: `directory`, `custom`, `plain`. Default format: `directory`. See the description of each format in the [official PostgreSQL documentation](https://www.postgresql.org/docs/current/app-pgdump.html).
