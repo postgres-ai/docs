@@ -335,10 +335,7 @@ module.exports = {
       '@docusaurus/plugin-client-redirects',
       {
         redirects: [
-          {
-            from: ['/docs/oldDocPathFrom2019', '/docs/legacyDocPathFrom2016'], // string | string[]
-            to: '/docs/roadmap' // string
-          },
+
           {
             to: '/docs/reference-guides/database-lab-engine-api-reference',
             from: '/docs/database-lab/api-reference',
