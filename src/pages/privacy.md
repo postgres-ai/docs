@@ -1,5 +1,5 @@
 ---
-title: Privacy Policy
+title: Privacy policy
 ---
 
 Terms of Service: https://postgres.ai/tos/

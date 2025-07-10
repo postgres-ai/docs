@@ -1,5 +1,5 @@
 ---
-title: DBLab HowTo guides
+title: DBLab how-to guides
 sidebar_label: Overview
 slug: /how-to-guides
 ---

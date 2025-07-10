@@ -1,6 +1,6 @@
 ---
 id: get-started
-title: Database Lab Documentation
+title: Database Lab documentation
 hide_title: false
 sidebar_label: Documentation Home
 slug: /

@@ -3,8 +3,8 @@ author: 'Nikolay Samokhvalov'
 authorimg: /assets/images/nik.jpg
 date: 2021-08-31 12:06:00
 publishDate: 2021-08-31 12:06:00
-linktitle: 'PostgreSQL Subtransactions Considered Harmful'
-title: 'PostgreSQL Subtransactions Considered Harmful'
+linktitle: 'PostgreSQL subtransactions considered harmful'
+title: 'PostgreSQL subtransactions considered harmful'
 description: 'PostgreSQL subtransactions (nested transactions) may cause multiple performance and scalability issues: higher rates of XID growth and higher risks of transaction ID wraparound, performance degradation when more than PGPROC_MAX_CACHED_SUBXIDS (64) are used in a session, drastic performance slowdowns when subtransactions are combined with SELECT .. FOR UPDATE, and finally, brief downtime on standbys when subtranasctions used on the primary in paralell with long-running transactions or just slow statements. Subtransactions can be created using SAVEPOINT in regular SQL or using EXCEPTION WHEN blocks in PL/pgSQL.'
 weight: 0
 image: /assets/thumbnails/20210831-harmful-subtransactions.png

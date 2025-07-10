@@ -1,5 +1,5 @@
 ---
-title: Mid-Market Customer Advisory Group
+title: Mid-market customer advisory group
 description: Join our Customer Advisory Group
 ---
 

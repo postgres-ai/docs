@@ -1,5 +1,5 @@
 ---
-title: Database Migration Testing in CI/CD
+title: Database migration testing in CI/CD
 description: Add DB change testing to your CI/CD pipeline using thin DB clones provided by Database Lab.
 ---
 
