@@ -72,4 +72,4 @@ keywords:
 |Standard support|❌|✅|✅|
 |Premium support (24/7, 1 hour), trainings|❌|✅|✅|
 
-See also: [Development roadmap](/docs/roadmap).
+See also: [Development roadmap](/docs/dblab-roadmap).

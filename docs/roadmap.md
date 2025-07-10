@@ -1,12 +1,12 @@
 ---
-title: DBLab Engine development roadmap
-sidebar_label: DBLab Engine roadmap
+title: DBLab roadmap
+sidebar_label: DBLab roadmap
+slug: /dblab-roadmap
 description: Development roadmap for DBLab Engine and related products
 keywords:
   - "DBLab Engine development roadmap"
 ---
 
-## DBLab Engine (DLE) Roadmap
 We are working hard to develop the DBLab Platform (DLP) and its open-source core component, DBLab Engine (DLE). Below you can find the main ideas we are working on now or planning to work soon.
 
 ### [DLE] Physical provisioning
