@@ -23,8 +23,8 @@ keywords:
     <td>
       <h3>Getting started</h3>
       <ul>
-        <li><a href='/docs/how-to-guides/administration/install-dle-from-postgres-ai'>How to install DBLab Engine from Postgres AI Console</a></li>
-        <li><a href='/docs/how-to-guides/administration/install-dle-from-aws-marketplace'>How to install DBLab Engine from the AWS Marketplace</a></li>
+        <li><a href='/docs/dblab-howtos/administration/install-dle-from-postgres-ai'>How to install DBLab Engine from Postgres AI Console</a></li>
+<li><a href='/docs/dblab-howtos/administration/install-dle-from-aws-marketplace'>How to install DBLab Engine from the AWS Marketplace</a></li>
         <li><a href='/docs/tutorials/database-lab-tutorial-amazon-rds'>Database Lab tutorial for Amazon RDS</a></li>
         <li><a href='/docs/tutorials/database-lab-tutorial'>Database Lab tutorial for any PostgreSQL database</a></li>
         <li><a href='/docs/tutorials/joe-setup'>Joe Bot setup</a></li>
@@ -47,7 +47,7 @@ keywords:
       <ul>
         <li><a href='/docs/platform/security'>Platform security</a></li>
         <li><a href='/docs/database-lab/masking'>Data masking setup & configuration</a></li>
-        <li><a href='/docs/how-to-guides/administration/engine-secure'>How to make work with Database Lab secure</a></li>
+        <li><a href='/docs/dblab-howtos/administration/engine-secure'>How to make work with Database Lab secure</a></li>
       </ul>
     </td>
     <td>

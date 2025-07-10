@@ -324,7 +324,7 @@ const DBLabEngine = () => {
             <div className="col-md-3"></div>
             <div className="col-md-6">
               <p>
-                Postgres.ai ❤ open source.
+                Postgres AI ❤ open source
                 <br />
               </p>
             </div>
@@ -334,17 +334,9 @@ const DBLabEngine = () => {
             <RepoCard
               title="DBLab Engine"
               logoUrl="/assets/landing/dblab.svg"
-              description="Provision independent, multi-terabyte, PostgreSQL databases in a few seconds."
+              description="DBLab Engine enables 🖖 database branching and ⚡️ thin cloning for any Postgres database and empowers DB testing in CI/CD."
               repoName="postgres-ai/database-lab-engine"
               repoUrl="https://github.com/postgres-ai/database-lab-engine"
-              githubButtonText="Star us"
-            />
-            <RepoCard
-              title="Joe Bot 🤖 for SQL optimization"
-              logoUrl="/assets/landing/joe-bot.svg"
-              description="Database Lab's Virtual DBA, Joe, helps engineers quickly troubleshoot and optimize SQL. Joe runs on top of Database Lab."
-              repoName="postgres-ai/joe"
-              repoUrl="https://github.com/postgres-ai/joe"
               githubButtonText="Star us"
             />
           </div>

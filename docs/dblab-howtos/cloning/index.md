@@ -1,7 +1,7 @@
 ---
 title: How to work with DBLab clones
 sidebar_label: Overview
-slug: /how-to-guides/cloning
+slug: /dblab-howtos/cloning
 ---
 
 ## Guides

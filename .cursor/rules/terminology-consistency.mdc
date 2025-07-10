@@ -1,0 +1,47 @@
+---
+alwaysApply: true
+description: "Terminology consistency guidelines for documentation"
+---
+
+# Terminology Consistency Guidelines
+
+## Database Technology
+- ✅ **Postgres** (preferred)
+- ❌ PostgreSQL (use only when absolutely necessary for technical accuracy)
+
+## Company Name
+- ✅ **Postgres AI** (uppercase AI, no dot)
+- ❌ Postgres.ai (old branding with dot)
+- ❌ postgres.ai (lowercase)
+
+## Documentation Sections
+- ✅ **"how-to guides"** (full form in titles and descriptions)
+- ✅ **"how-tos"** (acceptable in short contexts like menus, navigation)
+- ❌ "HowTo guides" (inconsistent capitalization)
+- ❌ "HowTos" (inconsistent capitalization)
+
+## Product Names
+- ✅ **DBLab** (current branding)
+- ✅ **DBLab Engine** (full product name)
+- ❌ DLE (deprecated abbreviation)
+- ❌ Database Lab (old name, deprecated)
+- ❌ Database Lab Engine (old name, deprecated)
+
+## Usage Examples
+
+### Correct Usage:
+- "DBLab Engine enables database branching for Postgres"
+- "Visit the Postgres AI documentation"
+- "Check out our how-to guides for detailed instructions"
+- "Navigate to how-tos in the sidebar"
+
+### Incorrect Usage:
+- "DLE enables database branching for PostgreSQL"
+- "Visit the Postgres.ai documentation"
+- "Check out our HowTo guides for detailed instructions"
+- "Navigate to HowTos in the sidebar"
+
+## Special Cases
+- Environment variables with "DLE_" prefix should remain unchanged for backward compatibility
+- Historical blog posts may preserve original terminology when updating would change meaning
+- Technical documentation requiring precise PostgreSQL references (like official extension names)

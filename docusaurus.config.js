@@ -119,8 +119,8 @@ module.exports = {
               to: '/docs/tutorials/database-lab-tutorial-amazon-rds',
             },
             {
-              label: 'DBLab HowTo guides',
-              to: '/docs/how-to-guides',
+              label: 'DBLab how-tos',
+              to: '/docs/dblab-howtos',
             },
             {
               label: 'Questions & answers',
@@ -195,8 +195,8 @@ module.exports = {
               to: '/docs/reference-guides/postgres-ai-bot-reference',
             },
             {
-              label: 'DBLab HowTos',
-              to: '/docs/how-to-guides',
+              label: 'DBLab how-tos',
+              to: '/docs/dblab-howtos',
             },
             {
               label: 'DBLab API',
@@ -335,7 +335,85 @@ module.exports = {
       '@docusaurus/plugin-client-redirects',
       {
         redirects: [
-
+          // DBLab how-tos redirects (moved from /docs/how-to-guides to /docs/dblab-howtos)
+          { from: '/docs/how-to-guides', to: '/docs/dblab-howtos' },
+          { from: '/docs/how-to-guides/index', to: '/docs/dblab-howtos' },
+          
+          // Administration redirects
+          { from: '/docs/how-to-guides/administration', to: '/docs/dblab-howtos' },
+          { from: '/docs/how-to-guides/administration/index', to: '/docs/dblab-howtos' },
+          { from: '/docs/how-to-guides/administration/add-disk-space-to-zfs-pool', to: '/docs/dblab-howtos/administration/add-disk-space-to-zfs-pool' },
+          { from: '/docs/how-to-guides/administration/ci-observer-postgres-log-masking', to: '/docs/dblab-howtos/administration/ci-observer-postgres-log-masking' },
+          { from: '/docs/how-to-guides/administration/engine-manage', to: '/docs/dblab-howtos/administration/engine-manage' },
+          { from: '/docs/how-to-guides/administration/engine-secure', to: '/docs/dblab-howtos/administration/engine-secure' },
+          { from: '/docs/how-to-guides/administration/install-database-lab-with-terraform', to: '/docs/dblab-howtos/administration/install-database-lab-with-terraform' },
+          { from: '/docs/how-to-guides/administration/install-dle-from-aws-marketplace', to: '/docs/dblab-howtos/administration/install-dle-from-aws-marketplace' },
+          { from: '/docs/how-to-guides/administration/install-dle-from-postgres-ai', to: '/docs/dblab-howtos/administration/install-dle-from-postgres-ai' },
+          { from: '/docs/how-to-guides/administration/install-dle-manually', to: '/docs/dblab-howtos/administration/install-dle-manually' },
+          { from: '/docs/how-to-guides/administration/joe-manage', to: '/docs/dblab-howtos/administration/joe-manage' },
+          { from: '/docs/how-to-guides/administration/logical-full-refresh', to: '/docs/dblab-howtos/administration/logical-full-refresh' },
+          { from: '/docs/how-to-guides/administration/postgresql-configuration', to: '/docs/dblab-howtos/administration/postgresql-configuration' },
+          { from: '/docs/how-to-guides/administration/run-database-lab-on-mac', to: '/docs/dblab-howtos/administration/run-database-lab-on-mac' },
+          
+          // Data sources redirects
+          { from: '/docs/how-to-guides/administration/data', to: '/docs/dblab-howtos' },
+          { from: '/docs/how-to-guides/administration/data/index', to: '/docs/dblab-howtos' },
+          { from: '/docs/how-to-guides/administration/data/custom', to: '/docs/dblab-howtos/administration/data/custom' },
+          { from: '/docs/how-to-guides/administration/data/dump', to: '/docs/dblab-howtos/administration/data/dump' },
+          { from: '/docs/how-to-guides/administration/data/pg_basebackup', to: '/docs/dblab-howtos/administration/data/pg_basebackup' },
+          { from: '/docs/how-to-guides/administration/data/pgbackrest', to: '/docs/dblab-howtos/administration/data/pgbackrest' },
+          { from: '/docs/how-to-guides/administration/data/rds', to: '/docs/dblab-howtos/administration/data/rds' },
+          { from: '/docs/how-to-guides/administration/data/rsync', to: '/docs/dblab-howtos/administration/data/rsync' },
+          { from: '/docs/how-to-guides/administration/data/wal-g', to: '/docs/dblab-howtos/administration/data/wal-g' },
+          
+          // CLI redirects
+          { from: '/docs/how-to-guides/cli', to: '/docs/dblab-howtos' },
+          { from: '/docs/how-to-guides/cli/index', to: '/docs/dblab-howtos' },
+          { from: '/docs/how-to-guides/cli/cli-install-init', to: '/docs/dblab-howtos/cli/cli-install-init' },
+          
+          // Cloning redirects
+          { from: '/docs/how-to-guides/cloning', to: '/docs/dblab-howtos' },
+          { from: '/docs/how-to-guides/cloning/index', to: '/docs/dblab-howtos' },
+          { from: '/docs/how-to-guides/cloning/clone-protection', to: '/docs/dblab-howtos/cloning/clone-protection' },
+          { from: '/docs/how-to-guides/cloning/clone-upgrade', to: '/docs/dblab-howtos/cloning/clone-upgrade' },
+          { from: '/docs/how-to-guides/cloning/connect-clone', to: '/docs/dblab-howtos/cloning/connect-clone' },
+          { from: '/docs/how-to-guides/cloning/create-clone', to: '/docs/dblab-howtos/cloning/create-clone' },
+          { from: '/docs/how-to-guides/cloning/destroy-clone', to: '/docs/dblab-howtos/cloning/destroy-clone' },
+          { from: '/docs/how-to-guides/cloning/reset-clone', to: '/docs/dblab-howtos/cloning/reset-clone' },
+          
+          // Branching redirects
+          { from: '/docs/how-to-guides/branching', to: '/docs/dblab-howtos' },
+          { from: '/docs/how-to-guides/branching/index', to: '/docs/dblab-howtos' },
+          { from: '/docs/how-to-guides/branching/create-branch', to: '/docs/dblab-howtos/branching/create-branch' },
+          { from: '/docs/how-to-guides/branching/delete-branch', to: '/docs/dblab-howtos/branching/delete-branch' },
+          
+          // Snapshots redirects
+          { from: '/docs/how-to-guides/snapshots', to: '/docs/dblab-howtos' },
+          { from: '/docs/how-to-guides/snapshots/index', to: '/docs/dblab-howtos' },
+          { from: '/docs/how-to-guides/snapshots/create-snapshot', to: '/docs/dblab-howtos/snapshots/create-snapshot' },
+          { from: '/docs/how-to-guides/snapshots/delete-snapshot', to: '/docs/dblab-howtos/snapshots/delete-snapshot' },
+          
+          // Joe Bot redirects
+          { from: '/docs/how-to-guides/joe-bot', to: '/docs/dblab-howtos' },
+          { from: '/docs/how-to-guides/joe-bot/index', to: '/docs/dblab-howtos' },
+          { from: '/docs/how-to-guides/joe-bot/count-rows', to: '/docs/dblab-howtos/joe-bot/count-rows' },
+          { from: '/docs/how-to-guides/joe-bot/create-index', to: '/docs/dblab-howtos/joe-bot/create-index' },
+          { from: '/docs/how-to-guides/joe-bot/get-database-table-index-size', to: '/docs/dblab-howtos/joe-bot/get-database-table-index-size' },
+          { from: '/docs/how-to-guides/joe-bot/get-query-plan', to: '/docs/dblab-howtos/joe-bot/get-query-plan' },
+          { from: '/docs/how-to-guides/joe-bot/query-activity-and-termination', to: '/docs/dblab-howtos/joe-bot/query-activity-and-termination' },
+          { from: '/docs/how-to-guides/joe-bot/reset-session', to: '/docs/dblab-howtos/joe-bot/reset-session' },
+          { from: '/docs/how-to-guides/joe-bot/sql-optimization-history', to: '/docs/dblab-howtos/joe-bot/sql-optimization-history' },
+          { from: '/docs/how-to-guides/joe-bot/visualize-query-plan', to: '/docs/dblab-howtos/joe-bot/visualize-query-plan' },
+          
+          // Platform redirects
+          { from: '/docs/how-to-guides/platform', to: '/docs/dblab-howtos' },
+          { from: '/docs/how-to-guides/platform/index', to: '/docs/dblab-howtos' },
+          { from: '/docs/how-to-guides/platform/audit-logs', to: '/docs/dblab-howtos/platform/audit-logs' },
+          { from: '/docs/how-to-guides/platform/onboarding', to: '/docs/dblab-howtos/platform/onboarding' },
+          { from: '/docs/how-to-guides/platform/start-using-platform', to: '/docs/dblab-howtos/platform/start-using-platform' },
+          { from: '/docs/how-to-guides/platform/tokens', to: '/docs/dblab-howtos/platform/tokens' },
+          
+          // Existing redirects
           {
             to: '/docs/reference-guides/database-lab-engine-api-reference',
             from: '/docs/database-lab/api-reference',
@@ -368,19 +446,19 @@ module.exports = {
             to: '/blog/20220106-explain-analyze-needs-buffers-to-improve-the-postgres-query-optimization-process',
             from: '/blog/20220106-explain-analyze-needs-buffers-to-improve-postgres-query-optimization process',
           },
-          { to: '/docs/how-to-guides', from: '/docs/guides' },
-          { from: '/docs/guides/administration', to: '/docs/how-to-guides/administration' },
-          { from: '/docs/guides/data', to: '/docs/how-to-guides/administration/data' },
-          { from: '/docs/guides/cli', to: '/docs/how-to-guides/cli' },
-          { from: '/docs/guides/cloning', to: '/docs/how-to-guides/cloning' },
-          { from: '/docs/guides/joe-bot', to: '/docs/how-to-guides/joe-bot' },
-          { from: '/docs/guides/platform', to: '/docs/how-to-guides/platform' },
-          { from: '/docs/tutorials/onboarding', to: '/docs/how-to-guides/platform/onboarding' },
+          { to: '/docs/dblab-howtos', from: '/docs/guides' },
+          { from: '/docs/guides/administration', to: '/docs/dblab-howtos' },
+          { from: '/docs/guides/data', to: '/docs/dblab-howtos' },
+          { from: '/docs/guides/cli', to: '/docs/dblab-howtos' },
+          { from: '/docs/guides/cloning', to: '/docs/dblab-howtos' },
+          { from: '/docs/guides/joe-bot', to: '/docs/dblab-howtos' },
+          { from: '/docs/guides/platform', to: '/docs/dblab-howtos' },
+          { from: '/docs/tutorials/onboarding', to: '/docs/dblab-howtos/platform/onboarding' },
           { from: '/support', to: '/contact/' },
           { from: '/careers/dba', to: '/careers/dbe' },
           {
             from: '/docs/how-to-guides/administration/machine-setup',
-            to: '/docs/how-to-guides/administration/install-dle-manually' 
+            to: '/docs/dblab-howtos/administration/install-dle-manually' 
           },
           {
             from: '/blog/20240127-postges-ai-bot',
@@ -429,6 +507,8 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl: 'https://gitlab.com/postgres-ai/docs/-/edit/master/',
           routeBasePath: '/docs/',
+          sidebarCollapsible: true,
+          sidebarCollapsed: true,
         },
         blog: {
           showReadingTime: true,

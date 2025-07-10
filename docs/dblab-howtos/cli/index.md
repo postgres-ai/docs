@@ -1,7 +1,7 @@
 ---
 title: How to work with DBLab CLI
 sidebar_label: Overview
-slug: /how-to-guides/cli
+slug: /dblab-howtos/cli
 ---
 
 ## Guides

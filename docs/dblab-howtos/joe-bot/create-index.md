@@ -12,7 +12,7 @@ You can use any PostgreSQL command with Joe's [`exec`](/docs/reference-guides/jo
 ## Basic
 1. Execute [`exec`](/docs/reference-guides/joe-bot-commands-reference#exec) command with your query, e.g. `exec create index on pgbench_accounts (bid)`.
 2. After a moment session to execute your query and experiment with the database will be created, if it didn't exist before.
-3. When the query is successfully executed you will see the ✅ **OK** status and the time it took to complete. The session is still present. You can [check new query plans](/docs/how-to-guides/joe-bot/get-query-plan) or make other changes now. Also, you can reset the state of the session with the `reset` command, see the [How to reset the state of a Joe session](/docs/how-to-guides/joe-bot/reset-session) guide.
+3. When the query is successfully executed you will see the ✅ **OK** status and the time it took to complete. The session is still present. You can [check new query plans](/docs/dblab-howtos/joe-bot/get-query-plan) or make other changes now. Also, you can reset the state of the session with the `reset` command, see the [How to reset the state of a Joe session](/docs/dblab-howtos/joe-bot/reset-session) guide.
 
 
 ## Advanced
@@ -30,6 +30,6 @@ Fore more details, see [DBLab Engine configuration](/docs/reference-guides/datab
 :::
 
 ## Related guides
-- [How to reset the state of a Joe session](/docs/how-to-guides/joe-bot/reset-session)
-- [How to get a plan of a query using Joe bot](/docs/how-to-guides/joe-bot/get-query-plan)
-- [How to get a list of active queries in a Joe session and stop long-running queries](/docs/how-to-guides/joe-bot/query-activity-and-termination)
+- [How to reset the state of a Joe session](/docs/dblab-howtos/joe-bot/reset-session)
+- [How to get a plan of a query using Joe bot](/docs/dblab-howtos/joe-bot/get-query-plan)
+- [How to get a list of active queries in a Joe session and stop long-running queries](/docs/dblab-howtos/joe-bot/query-activity-and-termination)

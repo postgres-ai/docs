@@ -1,7 +1,7 @@
 ---
 title: DBLab Engine administration
 sidebar_label: Administration
-slug: /how-to-guides/administration
+slug: /dblab-howtos/administration
 description: How to administer DBLab Engine
 ---
 
