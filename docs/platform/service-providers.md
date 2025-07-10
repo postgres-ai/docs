@@ -1,5 +1,5 @@
 ---
-title: 3rd-party Data Subprocessors and Service Providers
+title: 3rd-party data subprocessors and service providers
 sidebar_label: Postgres.ai data subprocessors
 ---
 Effective date: 2025-02-05

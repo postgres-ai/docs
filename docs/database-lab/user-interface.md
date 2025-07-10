@@ -1,5 +1,5 @@
 ---
-title: DBLab Engine User Interface
+title: DBLab Engine user interface
 sidebar_label: DBLab UI
 description: Embedded visual interface for interacting with DBLab Engine
 keywords:

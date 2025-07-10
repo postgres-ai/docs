@@ -1,5 +1,5 @@
 ---
-title: How Database Lab Works
+title: How Database Lab works
 description: Basics of the DBLab Platform
 ---
 

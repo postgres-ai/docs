@@ -1,5 +1,5 @@
 ---
-title: Zero-downtime Postgres major upgrades - Battle-tested at GitLab scale
+title: Zero-downtime Postgres major upgrades - battle-tested at GitLab scale
 description: Physical-to-logical replication technique for zero-downtime, zero-data-loss, reversible Postgres major version upgrades, proven on multi-terabyte production clusters
 ---
 

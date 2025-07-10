@@ -1,5 +1,5 @@
 ---
-title: SQL Optimization with Joe Bot
+title: SQL optimization with Joe Bot
 description: Joe Bot, a virtual DBA for SQL optimization
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: Sensitive Data Masking
+title: Sensitive data masking
 description: Mask sensitive data to ensure security and compliance
 ---
 
