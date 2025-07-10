@@ -347,7 +347,7 @@ Options:
 
 ## Section `cloning`: thin cloning policies
 - `accessHost` (string, required) - the host that will be specified in the database connection string to inform users about how to connect to database clones. This should match one of the addresses specified in `provision.cloneAccessAddresses` or be a hostname that resolves to one of those addresses. Use public IP address if database connections are allowed from outside, or "localhost"/private IP for local-only access.
-- `maxIdleMinutes` (integer, optional, default: 0) - automatically delete clones after the specified minutes of inactivity, 0 is being used to disable this feature. Inactivity means no active sessions (queries being processed) and no recently logged queries in the query log.
+- `maxIdleMinutes` (integer, optional, default: 120) - automatically delete clones after the specified minutes of inactivity, 0 is being used to disable this feature. Inactivity means no active sessions (queries being processed) and no recently logged queries in the query log.
 
 ## Section `platform`: Postgres AI Platform integration
 - `url` (string, optional, default: "https://postgres.ai/api/general") - Platform API URL
