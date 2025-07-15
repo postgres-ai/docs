@@ -1,0 +1,1 @@
+export { DbDesignPage as default } from './rules-pages'; 

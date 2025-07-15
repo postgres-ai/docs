@@ -191,7 +191,7 @@ module.exports = {
               to: '/docs/',
             },
             {
-              label: 'PostgresAI Assistant reference',
+              label: 'PostgresAI Assistant',
               to: '/docs/reference-guides/postgres-ai-bot-reference',
             },
             {
@@ -207,8 +207,12 @@ module.exports = {
               to: '/docs/reference-guides/dblab-client-cli-reference',
             },
             {
-              label: 'DBLab configuration reference',
+              label: 'DBLab config',
               to: '/docs/reference-guides/database-lab-engine-configuration-reference',
+            },
+            {
+              label: 'AI rules',
+              to: '/rules',
             },
           ],
         },

@@ -1,0 +1,1 @@
+export { PostgresHackingPage as default } from './rules-pages'; 
