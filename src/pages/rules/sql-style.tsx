@@ -1,0 +1,1 @@
+export { SqlStylePage as default } from './rules-pages'; 
