@@ -1,8 +1,8 @@
-- Use `int8 ... generated always as identity` instead of `int4/serial`
+- For PKs, use `int8 ... generated always as identity` instead of `int4/serial`
 - Prefer `timestamptz` over `timestamp`
 - Prefer `text` over `varchar`
 - Use **UUIDv7** when applicable (function `uuidv7()`, PG18+)
-- Never use "money" data type - store as cents/smallest unit instead
+- Never use `money` data type - store as cents/smallest unit instead
 - Avoid SQL reserved words in names
 - Ensure names are unique and under 63 characters
 - Use snake_case for all identifiers
