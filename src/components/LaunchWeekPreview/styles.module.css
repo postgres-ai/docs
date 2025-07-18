@@ -1,0 +1,279 @@
+.container {
+  padding: 2rem 1rem;
+  font-family: "JetBrains Mono", "Fira Code", "Source Code Pro", Consolas, monospace;
+}
+
+.terminal {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #0a0a0a;
+  border-radius: 8px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  border: 1px solid #333;
+}
+
+.terminalHeader {
+  background: #2d2d2d;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #444;
+}
+
+.terminalButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.close, .minimize, .maximize {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.close:hover, .minimize:hover, .maximize:hover {
+  opacity: 0.8;
+}
+
+/* Ensure Link doesn't interfere with button styling */
+.terminalButtons a {
+  text-decoration: none;
+  display: inline-block;
+}
+
+.close {
+  background: #ff5f56;
+}
+
+.minimize {
+  background: #ffbd2e;
+}
+
+.maximize {
+  background: #27ca3f;
+}
+
+.terminalTitle {
+  color: #ccc;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.terminalContent {
+  padding: 20px;
+  color: #00ff00;
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 400px;
+}
+
+.welcome {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.prompt {
+  color: #00ff00;
+  margin-right: 12px;
+  font-weight: bold;
+}
+
+.command {
+  color: #ffffff;
+  flex: 1;
+}
+
+.output {
+  color: #00ff00;
+  margin-bottom: 16px;
+  padding-left: 24px;
+}
+
+.schedule {
+  margin: 20px 0;
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 0.5rem 0;
+  scroll-behavior: smooth;
+  margin-left: -20px;
+  margin-right: -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  scroll-padding: 0 40px;
+}
+
+/* Preview-specific styles */
+.dayCard {
+  
+  width: 280px;
+  flex-shrink: 0;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.viewAllButton {
+  display: inline-block;
+  background: transparent;
+  color: #00ff00;
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #00ff00;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.viewAllButton:hover {
+  background: #00ff00;
+  color: #000;
+  text-decoration: none;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 255, 0, 0.3);
+}
+
+.cursor {
+  width: 8px;
+  height: 16px;
+  background: #00ff00;
+  animation: blink 1s infinite;
+  margin-left: 8px;
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+/* Scrollbar styling */
+.schedule::-webkit-scrollbar {
+  height: 6px;
+}
+
+.schedule::-webkit-scrollbar-track {
+  background: #1a1a1a;
+  border-radius: 3px;
+}
+
+.schedule::-webkit-scrollbar-thumb {
+  background: #00ff00;
+  border-radius: 3px;
+}
+
+.schedule::-webkit-scrollbar-thumb:hover {
+  background: #00cc00;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1.5rem;
+    margin: 1rem 0;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+  }
+  
+  .dayCard {
+    min-width: 240px;
+    max-width: 240px;
+    padding: 1rem;
+  }
+  
+  .dayName {
+    font-size: 1rem;
+  }
+  
+  .releaseName {
+    font-size: 0.9rem;
+  }
+  
+  .description {
+    font-size: 0.8rem;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 390px) {
+  .container {
+    padding: 1rem 0.5rem;
+  }
+  
+  .terminalContent {
+    padding: 15px;
+    font-size: 12px;
+  }
+  
+  .terminalTitle {
+    font-size: 12px;
+  }
+  
+  .welcome {
+    margin-bottom: 6px;
+  }
+  
+  .prompt {
+    margin-right: 8px;
+  }
+  
+  .command {
+    font-size: 12px;
+  }
+  
+  .output {
+    font-size: 12px;
+    margin-bottom: 12px;
+    padding-left: 20px;
+  }
+  
+  .dayCard {
+    width: 240px;
+    padding: 12px;
+  }
+  
+  .schedule {
+    gap: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+  
+  .viewAllButton {
+    font-size: 0.8rem;
+    padding: 0.6rem 1.2rem;
+  }
+}
+
+/* Scrollbar styling */
+.cardsContainer::-webkit-scrollbar {
+  height: 6px;
+}
+
+.cardsContainer::-webkit-scrollbar-track {
+  background: #1a1a1a;
+  border-radius: 3px;
+}
+
+.cardsContainer::-webkit-scrollbar-thumb {
+  background: #00ff00;
+  border-radius: 3px;
+}
+
+.cardsContainer::-webkit-scrollbar-thumb:hover {
+  background: #00cc00;
+} 
