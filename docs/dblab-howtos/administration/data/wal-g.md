@@ -14,7 +14,7 @@ In order to set up DBLab Engine to automatically get the data from database usin
 - [physicalSnapshot](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalsnapshot)
 
 ### Options
-Copy the example configuration file [`config.example.physical_walg.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.0.0-rc.4/engine/configs/config.example.physical_walg.yml) from the DBLab Engine repository to `~/.dblab/engine/configs/server.yml` and update the following options:
+Copy the example configuration file [`config.example.physical_walg.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.0.0/engine/configs/config.example.physical_walg.yml) from the DBLab Engine repository to `~/.dblab/engine/configs/server.yml` and update the following options:
 - Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine
 - Set connection options in `physicalRestore:options:envs`:
     - Use WAL-G environment variables to configure the job, see the [WAL-G configuration reference](https://github.com/wal-g/wal-g#configuration)
@@ -50,7 +50,7 @@ sudo docker run \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:4.0.0-rc.4
+  postgresai/dblab-server:4.0.0
 ```
 
 :::info

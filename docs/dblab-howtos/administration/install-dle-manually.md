@@ -242,11 +242,11 @@ sudo docker stop dblab_pg_initdb
 sudo docker rm dblab_pg_initdb
 ```
 
-Now, we need to take care of DBLab Engine configuration. Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.0.0-rc.4/engine/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
+Now, we need to take care of DBLab Engine configuration. Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.0.0/engine/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
 ```bash
 mkdir -p ~/.dblab/engine/configs
 
-curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/v4.0.0-rc.4/engine/configs/config.example.logical_generic.yml \
+curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/v4.0.0/engine/configs/config.example.logical_generic.yml \
   --output ~/.dblab/engine/configs/server.yml
 ```
 
@@ -263,11 +263,11 @@ Open `~/.dblab/engine/configs/server.yml` and edit the following options:
 
 If you want to try Database Lab for an existing database, you need to copy the data to PostgreSQL data directory on the Database Lab server, to the directory `/var/lib/dblab/dblab_pool/data`. This step is called "thick cloning". It only needs to be completed once. There are several options to physically copy the data directory. Here we will use the standard PostgreSQL tool, `pg_basebackup`. However, we are not going to use it directly (although, it is possible) – we will specify its options in the DBLab Engine configuration file.
 
-First, copy the example configuration file[`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.0.0-rc.4/engine/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
+First, copy the example configuration file[`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.0.0/engine/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
 ```bash
 mkdir -p ~/.dblab/engine/configs
 
-curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/v4.0.0-rc.4/engine/configs/config.example.physical_generic.yml \
+curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/v4.0.0/engine/configs/config.example.physical_generic.yml \
   --output ~/.dblab/engine/configs/server.yml
 ```
 
@@ -288,11 +288,11 @@ If you want to try Database Lab for an existing database, you need to copy the d
 
 Here we will configure DBLab Engine to use a "logical" method of thick cloning, dump/restore.
 
-First, copy the configuration example configuration file[`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.0.0-rc.4/engine/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
+First, copy the configuration example configuration file[`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.0.0/engine/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
 ```bash
 mkdir -p ~/.dblab/engine/configs
 
-curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/v4.0.0-rc.4/engine/configs/config.example.logical_generic.yml \
+curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/v4.0.0/engine/configs/config.example.logical_generic.yml \
   --output ~/.dblab/engine/configs/server.yml
 ```
 
@@ -340,7 +340,7 @@ sudo docker run \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:4.0.0-rc.4
+  postgresai/dblab-server:4.0.0
 ```
 
 </TabItem>
@@ -363,7 +363,7 @@ sudo docker run \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:4.0.0-rc.4
+  postgresai/dblab-server:4.0.0
 ```
 
 </TabItem>
@@ -386,7 +386,7 @@ sudo docker run \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:4.0.0-rc.4
+  postgresai/dblab-server:4.0.0
 ```
 
 </TabItem>
