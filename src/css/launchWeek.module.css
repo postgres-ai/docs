@@ -1,0 +1,207 @@
+/* Common Launch Week styles */
+
+/* Day Card Base Styles */
+.dayCard {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.currentDay {
+  border-color: #00ff00;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+  transform: scale(1.05);
+}
+
+.availableDay {
+  border-color: #666;
+  opacity: 0.8;
+}
+
+.availableDay:hover {
+  border-color: #00ff00;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.lockedDay {
+  opacity: 0.6;
+  filter: grayscale(0.3);
+  cursor: not-allowed;
+}
+
+.hiddenDay {
+  opacity: 0.6;
+  filter: grayscale(0.3);
+  cursor: not-allowed;
+}
+
+.hiddenDay:hover {
+  opacity: 0.6;
+  filter: grayscale(0.3);
+  border-color: #333;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Day Header */
+.dayHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #333;
+}
+
+.dayName {
+  color: #00ff00;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.dayDate {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.lockedIcon {
+  font-size: 1rem;
+  margin-left: 0.5rem;
+}
+
+.lockedIndicator {
+  font-size: 16px;
+  margin-left: 8px;
+}
+
+/* Main Release */
+.mainRelease {
+  margin-bottom: 0.75rem;
+}
+
+.releaseLabel {
+  color: #888;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.releaseName {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* Description */
+.description {
+  color: #ccc;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+}
+
+/* Minor Releases */
+.minorReleases {
+  margin-bottom: 16px;
+}
+
+.minorLabel {
+  color: #888;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.minorList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.minorItem {
+  color: #aaa;
+  font-size: 13px;
+  margin-bottom: 4px;
+  padding-left: 0;
+}
+
+/* Blog Links */
+.blogLink {
+  margin-top: 16px;
+}
+
+.blogButton {
+  display: inline-block;
+  background: #00ff00;
+  color: #000;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.blogButton:hover {
+  background: #00cc00;
+  color: #000;
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 255, 0, 0.3);
+}
+
+/* Locked Content */
+.lockedContent {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.lockedMessage {
+  color: #888;
+  font-size: 14px;
+  margin-bottom: 12px;
+  font-style: italic;
+}
+
+.lockedPreview {
+  color: #666;
+  font-size: 16px;
+  font-weight: bold;
+  opacity: 0.7;
+}
+
+.lockedText {
+  color: #888;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .dayCard {
+    padding: 1rem;
+  }
+  
+  .dayName {
+    font-size: 1rem;
+  }
+  
+  .releaseName {
+    font-size: 0.9rem;
+  }
+  
+  .description {
+    font-size: 0.8rem;
+  }
+} 

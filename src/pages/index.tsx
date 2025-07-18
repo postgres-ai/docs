@@ -5,6 +5,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 
 import { RepoCard } from '@site/src/components/RepoCard'
+import LaunchWeekPreview from '@site/src/components/LaunchWeekPreview'
 
 import blog from '../data/blog'
 
@@ -23,6 +24,12 @@ function IndexPage() {
 
   return (
     <Layout>
+      {/* <div className="launch-week-section">
+        <div className="container">
+          <LaunchWeekPreview />
+        </div>
+      </div> */}
+      {/* Return SECTION!!! and  banner class after launch week */}
       <section className="banner position-relative text-center">
         <div className="container">
           <div className="row justify-content-center align-items-center">
@@ -36,6 +43,8 @@ function IndexPage() {
           </div>
         </div>
       </section>
+      
+      
     </Layout>
   )
 }

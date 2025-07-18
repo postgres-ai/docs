@@ -1260,3 +1260,7 @@ html body > div:first-child {
     font-size: 12px !important;
   }
 }
+
+.launch-week-section {
+  margin-bottom: 10rem;
+}
