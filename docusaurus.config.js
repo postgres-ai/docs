@@ -57,9 +57,9 @@ module.exports = {
     ],
 
     announcementBar: {
-      id: 'consulting_banner', // Any value that will identify this message to save the hidden status.
+      id: 'launch_week_banner', // Any value that will identify this message to save the hidden status.
       content:
-        "<a href='/consulting'>🚀 Postgres scaling issues? Get help from our team</a>",
+        "<a href='/launch-week'>✨ Our very first Launch Week - July 21-25</a>",
       backgroundColor: '#D7EEF2',
       textColor: '#013A44',
       isCloseable: true,
