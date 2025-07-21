@@ -2,13 +2,14 @@ export const launchWeekData = [
   {
     day: 'Monday',
     date: 'Jul 21',
-    isLocked: true,
-    mainRelease: '',
-    description: '',
-    minorReleases: [],
+    isLocked: false,
+    mainRelease: 'DBLab Engine 4.0',
+    description: 'Instant database branching with O(1) economics.',
+    minorReleases: [
+    ],
     blogPost: {
-      title: '',
-      url: '#'
+      title: 'DBLab 4.0: instant database branching with O(1) economics',
+      url: '/blog/20250721-dblab-engine-4-0-released'
     }
   },
   {

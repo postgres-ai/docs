@@ -77,7 +77,7 @@ export const AuthorBanner = (props: Props) => {
       <div className={styles.content}>
         <h6 className={styles.name}>{name}</h6>
         <p className={styles.role}>
-          {role} <a href="/">Postgres.ai</a>
+          {role} <a href="/">Postgres AI</a>
         </p>
         {hasAnyLink && (
           <nav className={styles.links}>

@@ -68,12 +68,12 @@ export const CommandLine = (props: CommandLineProps) => {
       return
     }
   }
-
-  useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.focus();
-    }
-  }, []);
+  // TODO: uncomment this after launch week
+  // useEffect(() => {
+  //   if (textareaRef.current) {
+  //     textareaRef.current.focus();
+  //   }
+  // }, []);
 
   return (
     <form

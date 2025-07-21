@@ -1,9 +1,79 @@
 /* Common Launch Week styles */
 
+/* CSS Variables for theming */
+:root {
+  --card-bg: #1a1a1a;
+  --card-border: #333;
+  --card-border-hover: #666;
+  --card-border-active: #00ff00;
+  --card-text-primary: #ffffff;
+  --card-text-secondary: #ccc;
+  --card-text-muted: #888;
+  --card-text-accent: #00ff00;
+  --card-text-faded: #aaa;
+  --card-text-preview: #666;
+  --button-bg: #00ff00;
+  --button-bg-hover: #00cc00;
+  --button-text: #000;
+}
+
+/* Light theme for Docusaurus */
+[data-theme='light'] {
+  --card-bg: #ffffff;
+  --card-border: #6c757d;
+  --card-border-hover: #495057;
+  --card-border-active: #198754;
+  --card-text-primary: #000000;
+  --card-text-secondary: #212529;
+  --card-text-muted: #495057;
+  --card-text-accent: #198754;
+  --card-text-faded: #6c757d;
+  --card-text-preview: #495057;
+  --button-bg: #198754;
+  --button-bg-hover: #146c43;
+  --button-text: #ffffff;
+}
+
+/* Light theme page background */
+[data-theme='light'] .container {
+  background-color: #f8f9fa !important;
+}
+
+[data-theme='light'] .main-wrapper {
+  background-color: #f8f9fa !important;
+}
+
+/* System preference light theme fallback */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --card-bg: #ffffff;
+    --card-border: #6c757d;
+    --card-border-hover: #495057;
+    --card-border-active: #198754;
+    --card-text-primary: #000000;
+    --card-text-secondary: #212529;
+    --card-text-muted: #495057;
+    --card-text-accent: #198754;
+    --card-text-faded: #6c757d;
+    --card-text-preview: #495057;
+    --button-bg: #198754;
+    --button-bg-hover: #146c43;
+    --button-text: #ffffff;
+  }
+  
+  :root:not([data-theme]) .container {
+    background-color: #f8f9fa !important;
+  }
+  
+  :root:not([data-theme]) .main-wrapper {
+    background-color: #f8f9fa !important;
+  }
+}
+
 /* Day Card Base Styles */
 .dayCard {
-  background: #1a1a1a;
-  border: 1px solid #333;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 8px;
   padding: 1.5rem;
   transition: all 0.3s ease;
@@ -12,19 +82,19 @@
 }
 
 .currentDay {
-  border-color: #00ff00;
-  box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+  border-color: var(--card-border-active);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--card-border-active) 30%, transparent);
   transform: scale(1.05);
 }
 
 .availableDay {
-  border-color: #666;
+  border-color: var(--card-border-hover);
   opacity: 0.8;
 }
 
 .availableDay:hover {
-  border-color: #00ff00;
-  box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+  border-color: var(--card-border-active);
+  box-shadow: 0 0 15px color-mix(in srgb, var(--card-border-active) 20%, transparent);
   transform: translateY(-2px);
 }
 
@@ -43,7 +113,7 @@
 .hiddenDay:hover {
   opacity: 0.6;
   filter: grayscale(0.3);
-  border-color: #333;
+  border-color: var(--card-border);
   box-shadow: none;
   transform: none;
 }
@@ -55,17 +125,17 @@
   align-items: center;
   margin-bottom: 1rem;
   padding-bottom: 0.75rem;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid var(--card-border);
 }
 
 .dayName {
-  color: #00ff00;
+  color: var(--card-text-accent);
   font-size: 1.1rem;
   font-weight: bold;
 }
 
 .dayDate {
-  color: #888;
+  color: var(--card-text-muted);
   font-size: 0.9rem;
 }
 
@@ -85,7 +155,7 @@
 }
 
 .releaseLabel {
-  color: #888;
+  color: var(--card-text-muted);
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -94,14 +164,14 @@
 }
 
 .releaseName {
-  color: #ffffff;
+  color: var(--card-text-primary);
   font-size: 1rem;
   font-weight: bold;
 }
 
 /* Description */
 .description {
-  color: #ccc;
+  color: var(--card-text-secondary);
   font-size: 0.85rem;
   line-height: 1.4;
   margin-bottom: 1rem;
@@ -113,7 +183,7 @@
 }
 
 .minorLabel {
-  color: #888;
+  color: var(--card-text-muted);
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -128,7 +198,7 @@
 }
 
 .minorItem {
-  color: #aaa;
+  color: var(--card-text-faded);
   font-size: 13px;
   margin-bottom: 4px;
   padding-left: 0;
@@ -141,8 +211,8 @@
 
 .blogButton {
   display: inline-block;
-  background: #00ff00;
-  color: #000;
+  background: var(--button-bg);
+  color: var(--button-text);
   text-decoration: none;
   padding: 8px 16px;
   border-radius: 4px;
@@ -154,11 +224,11 @@
 }
 
 .blogButton:hover {
-  background: #00cc00;
-  color: #000;
+  background: var(--button-bg-hover);
+  color: var(--button-text);
   text-decoration: none;
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 255, 0, 0.3);
+  box-shadow: 0 4px 8px color-mix(in srgb, var(--button-bg) 30%, transparent);
 }
 
 /* Locked Content */
@@ -168,21 +238,21 @@
 }
 
 .lockedMessage {
-  color: #888;
+  color: var(--card-text-muted);
   font-size: 14px;
   margin-bottom: 12px;
   font-style: italic;
 }
 
 .lockedPreview {
-  color: #666;
+  color: var(--card-text-preview);
   font-size: 16px;
   font-weight: bold;
   opacity: 0.7;
 }
 
 .lockedText {
-  color: #888;
+  color: var(--card-text-muted);
   font-size: 0.9rem;
   font-style: italic;
 }
