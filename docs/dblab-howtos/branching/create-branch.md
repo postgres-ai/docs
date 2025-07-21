@@ -21,7 +21,7 @@ DBLab Engine must be version `4.0` or higher.
    ![Database Lab instance page / Create branch](/assets/guides/create-branch-4.png) 
 
 ## CLI
-Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/how-to-guides/cli/cli-install-init).
+Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/dblab-howtos/cli/cli-install-init).
 
 ### Reference
 - Command [`dblab branch`](/docs/reference-guides/dblab-client-cli-reference#command-branch)
@@ -67,4 +67,4 @@ $ dblab branch --snapshot-id SNAPSHOT_ID_1 test
 ```
 
 ## Related
-- Guide: [Delete a database branch](/docs/how-to-guides/branching/delete-branch)
+- Guide: [Delete a database branch](/docs/dblab-howtos/branching/delete-branch)

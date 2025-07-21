@@ -9,7 +9,7 @@ For the "logical" provisioning mode, the "sync" instance is not yet supported (a
 Note, that the process described here requires a maintenance window (brief period of downtime) for the DBLab Engine. Also, the existing clones are deleted and completely lost during the process. It means that the proper planning of the maintenance windows is needed. 
 :::
 
-If you are using the "physical" provisioning mode, read [how to configure the "sync" instance](/docs/how-to-guides/administration/postgresql-configuration#the-sync-instance) instead.
+If you are using the "physical" provisioning mode, read [how to configure the "sync" instance](/docs/dblab-howtos/administration/postgresql-configuration#the-sync-instance) instead.
 
 ## Refresh data from source
 ### 1. Cleanup
@@ -143,7 +143,7 @@ sudo zpool create -f \
 ```
 
 ### 3. Define a refresh timetable
-Set up a desirable timetable in the `retrieval` section of [your configuration](/docs/how-to-guides/administration/engine-manage#configure-and-start-a-database-lab-engine-instance) to perform a full refresh automatically
+Set up a desirable timetable in the `retrieval` section of [your configuration](/docs/dblab-howtos/administration/engine-manage#configure-and-start-a-database-lab-engine-instance) to perform a full refresh automatically
 ```yaml
 retrieval:
   refresh:

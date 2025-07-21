@@ -108,7 +108,7 @@ global:
   ...
 ```
 
-If the change is done when DLE is running, follow the [DLE reconfiguration guide](/docs/how-to-guides/administration/engine-manage#reconfigure-database-lab-engine) to apply the change without restart.
+If the change is done when DLE is running, follow the [DLE reconfiguration guide](/docs/dblab-howtos/administration/engine-manage#reconfigure-database-lab-engine) to apply the change without restart.
 
 ## Enabling telemetry
 If telemetry was disabled earlier, you can enable it again changing the flag `global.telemetry.enabled` to `true`.
@@ -119,4 +119,4 @@ global:
   ...
 ```
 
-If the change is done when DLE is running, follow the [DLE reconfiguration guide](/docs/how-to-guides/administration/engine-manage#reconfigure-database-lab-engine) to apply the change without restart.
+If the change is done when DLE is running, follow the [DLE reconfiguration guide](/docs/dblab-howtos/administration/engine-manage#reconfigure-database-lab-engine) to apply the change without restart.

@@ -13,7 +13,7 @@ With Database Lab clones, you can verify any changes and without any risks for t
   ![DBLab Engine page / Create clone](/assets/guides/reset-clone-3.png)
 
 ## CLI
-Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/how-to-guides/cli/cli-install-init).
+Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/dblab-howtos/cli/cli-install-init).
 
 ### Reference
 - Command [`dblab clone reset`](/docs/reference-guides/dblab-client-cli-reference#subcommand-reset)
@@ -45,4 +45,4 @@ The parameters `--latest` and `--snapshot-id` must not be specified at the same 
 :::
 
 ## Related
-- Guide: [Destroy a clone](/docs/how-to-guides/cloning/destroy-clone)
+- Guide: [Destroy a clone](/docs/dblab-howtos/cloning/destroy-clone)

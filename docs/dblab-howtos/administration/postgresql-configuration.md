@@ -13,7 +13,7 @@ Normally, there is no need in configuring this PostgreSQL instance, as DBLab Eng
 
 ### PostgreSQL configuration in clones
 :::info
-For [DBLab SE](https://postgres.ai/docs/how-to-guides/administration/install-dle-from-postgres-ai), this step is automated – no additional actions are required.
+For [DBLab SE](https://postgres.ai/docs/dblab-howtos/administration/install-dle-from-postgres-ai), this step is automated – no additional actions are required.
 :::
 
 It is possible and in many cases necessary to configure various PostgreSQL options in clones. It can be done both for logical and physical modes of data directory initialization:

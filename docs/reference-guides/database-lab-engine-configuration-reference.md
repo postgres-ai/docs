@@ -22,8 +22,8 @@ Make sure that the file name is `server.yml` and its directory is mounted to `/h
 :::
 
 Useful guides that help manage DBLab Engine:
-- [How to configure and start DBLab Engine](/docs/how-to-guides/administration/engine-manage#configure-and-start-a-database-lab-engine-instance)
-- [Reconfigure DBLab Engine without downtime](/docs/how-to-guides/administration/engine-manage#reconfigure-database-lab-engine)
+- [How to configure and start DBLab Engine](/docs/dblab-howtos/administration/engine-manage#configure-and-start-a-database-lab-engine-instance)
+- [Reconfigure DBLab Engine without downtime](/docs/dblab-howtos/administration/engine-manage#reconfigure-database-lab-engine)
 
 :::tip
 The configuration of DBLab Engine can be reloaded without downtime:
@@ -287,7 +287,7 @@ Options:
     - `maxParallelWorkers` (integer, optional, default: 2) - defines the worker limit for parallel queries. Parallelization doesn't work for inline SQL queries
     - `inline` (string, optional, default: "") - inline SQL queries to execute; if specified, queries from `queryPath` are executed before `inline`
 - `preprocessingScript` (string, optional) - path on the host machine to a pre-processing script
-- `configs` (key-value, optional) - applies PostgreSQL configuration parameters when preparing a working snapshot. These parameters are inherited by all clones. See also: [How to configure PostgreSQL used by DBLab Engine](/docs/how-to-guides/administration/postgresql-configuration)
+- `configs` (key-value, optional) - applies PostgreSQL configuration parameters when preparing a working snapshot. These parameters are inherited by all clones. See also: [How to configure PostgreSQL used by DBLab Engine](/docs/dblab-howtos/administration/postgresql-configuration)
 
 ### Job `physicalRestore`
 Restores data from a physical backup.
@@ -336,7 +336,7 @@ Options:
    - `configs` (key-value, optional) - applies PostgreSQL configuration parameters to the promotion instance
 - `sysctls` (key-value, optional) - allows configuring namespaced kernel parameters (sysctls) of Docker container for a promotion stage of taking a snapshot. See supported parameters: https://docs.docker.com/reference/cli/docker/container/run/#sysctl
 - `preprocessingScript` (string, optional) - path on the host machine to a pre-processing script
-- `configs` (key-value, optional) - applies PostgreSQL configuration parameters to snapshot. These parameters are inherited by all clones. See also: [How to configure PostgreSQL used by DBLab Engine](/docs/how-to-guides/administration/postgresql-configuration)
+- `configs` (key-value, optional) - applies PostgreSQL configuration parameters to snapshot. These parameters are inherited by all clones. See also: [How to configure PostgreSQL used by DBLab Engine](/docs/dblab-howtos/administration/postgresql-configuration)
 - `envs` (key-value, optional) - passes custom environment variables to the promotion Docker container
 - `scheduler` (key-value, required) - contains tasks which run on a schedule:
    - `snapshot` (key-value, optional) - defines rules to create a new snapshot on a schedule:

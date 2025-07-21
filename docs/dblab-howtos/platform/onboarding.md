@@ -8,7 +8,7 @@ description: In this document, we will cover tasks that you can start with to wo
 ---
 
 :::note
-You can copy [the Markdown version of this page](https://gitlab.com/postgres-ai/docs/-/blob/master/docs/how-to-guides/platform/onboarding.md) and use it as a GitHub or GitLab issue with interactive checkboxes.
+You can copy [the Markdown version of this page](https://gitlab.com/postgres-ai/docs/-/blob/master/docs/dblab-howtos/platform/onboarding.md) and use it as a GitHub or GitLab issue with interactive checkboxes.
 :::
 
 ## Onboarding

@@ -4,7 +4,7 @@ sidebar_label: "rsync"
 ---
 
 :::info
-As the first step, you need to set up a machine for DBLab Engine instance. See the [guide](/docs/how-to-guides/administration/install-dle-manually).
+As the first step, you need to set up a machine for DBLab Engine instance. See the [guide](/docs/dblab-howtos/administration/install-dle-manually).
 :::
 
 ## Configuration

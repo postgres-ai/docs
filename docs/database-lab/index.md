@@ -13,8 +13,8 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 - [DBLab tutorial for any PostgreSQL database](/docs/tutorials/database-lab-tutorial)
 - [DBLab tutorial for Amazon RDS Postgres](/docs/tutorials/database-lab-tutorial-amazon-rds)
 - [Supported databases](/docs/database-lab/supported-databases)
-- [DBLab UI](/docs/database-lab/masking)
-- [Data masking](/docs/database-lab/user-interface)
+- [DBLab UI](/docs/database-lab/user-interface)
+- [Data masking](/docs/database-lab/masking)
 - [DB Migration Checker](/docs/database-lab/db-migration-checker)
 - [Telemetry](/docs/database-lab/telemetry)
 
@@ -25,12 +25,12 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 - [DBLab Engine configuration reference](/docs/reference-guides/database-lab-engine-configuration-reference)
 
 ## User Guides
-- [How to create DBLab clones](/docs/how-to-guides/cloning/create-clone)
-- [How to connect to DBLab clones](/docs/how-to-guides/cloning/connect-clone)
-- [How to reset DBLab clone](/docs/how-to-guides/cloning/reset-clone)
-- [How to destroy DBLab clone](/docs/how-to-guides/cloning/destroy-clone)
-- [Protect clones from manual and automatic deletion](/docs/how-to-guides/cloning/clone-protection)
-- [How to install and initialize DBLab CLI](/docs/how-to-guides/cli/cli-install-init)
+- [How to create DBLab clones](/docs/dblab-howtos/cloning/create-clone)
+- [How to connect to DBLab clones](/docs/dblab-howtos/cloning/connect-clone)
+- [How to reset DBLab clone](/docs/dblab-howtos/cloning/reset-clone)
+- [How to destroy DBLab clone](/docs/dblab-howtos/cloning/destroy-clone)
+- [Protect clones from manual and automatic deletion](/docs/dblab-howtos/cloning/clone-protection)
+- [How to install and initialize DBLab CLI](/docs/dblab-howtos/cli/cli-install-init)
 
 ## Overview
 **DBLab Engine** – an open-source technology that is one of the core components of the DBLab / Postgres AI Platform, it implements instant cloning and database branching with constant time and money overhead.
@@ -82,13 +82,13 @@ Some problems that can be solved by using DBLab:
 
 ### Paid versions: DBLab SE and EE
 DBLab Engine is also packaged in two paid offerings:
-- **DBLab SE (Standard Edition)** – standalone DBLab Engine, installed via [Postgres AI Console](https://postgres.ai/docs/how-to-guides/administration/install-dle-from-postgres-ai) or [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec), ideal for small to mid-size teams. It extends the free open-source option with commercial support and compatibility with various Postgres flavours such as AWS RDS and RDS Aurora, GCP CloudSQL, Heroku, Supabase, Timescale Cloud, PostGIS.
+- **DBLab SE (Standard Edition)** – standalone DBLab Engine, installed via [Postgres AI Console](https://postgres.ai/docs/dblab-howtos/administration/install-dle-from-postgres-ai) or [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec), ideal for small to mid-size teams. It extends the free open-source option with commercial support and compatibility with various Postgres flavours such as AWS RDS and RDS Aurora, GCP CloudSQL, Heroku, Supabase, Timescale Cloud, PostGIS.
 - **DBLab EE (Enterprise Edition)** – full-fledged solution that includes enterprise features like unified control plane, user management, comprehensive audit capabilities, SSO, holistic query optimization workflows, and more.
 
 Version comparison and pricing info – see the [DBLab pricing](https://postgres.ai/pricing) page.
 
 You can install DBLab SE using these options:
-- [Postgres AI Console](https://postgres.ai/docs/how-to-guides/administration/install-dle-from-postgres-ai)
+- [Postgres AI Console](https://postgres.ai/docs/dblab-howtos/administration/install-dle-from-postgres-ai)
 - [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec)
 
 For DBLab EE inquiries, reach out to the Postgres AI team: **<a href="mailto:contact@postgres.ai">contact@postgres.ai</a>**.

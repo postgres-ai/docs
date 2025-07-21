@@ -6,5 +6,5 @@ slug: /dblab-howtos/snapshots
 
 ## Guides
 
-- [How to create a snapshot](/docs/how-to-guides/snapshots/create-snapshot)
-- [How to delete a snapshot](/docs/how-to-guides/snapshots/delete-snapshot)
+- [How to create a snapshot](/docs/dblab-howtos/snapshots/create-snapshot)
+- [How to delete a snapshot](/docs/dblab-howtos/snapshots/delete-snapshot)

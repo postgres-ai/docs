@@ -12,7 +12,7 @@ Enable the "History" feature using the configuration options [`HISTORY_ENABLED`]
 - Execute any [`explain`](/docs/reference-guides/joe-bot-commands-reference#explain) query and click the **Permalink** at the end of the response
 - Or open the **Command** page by clicking the command card on the **SQL optimization history**
 
-Learn more about how you can discover command in SQL optimization history [here](/docs/how-to-guides/joe-bot/sql-optimization-history).
+Learn more about how you can discover command in SQL optimization history [here](/docs/dblab-howtos/joe-bot/sql-optimization-history).
 
 Click on one of the plan visualization methods you want to use:
 - **Explain Depesz** - classic PostgreSQL plan visualization made by [depesz](https://explain.depesz.com/)
