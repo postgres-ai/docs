@@ -9,7 +9,7 @@ keywords:
   - "PostgreSQL EXPLAIN"
   - "Verify PostgreSQL index ideas"
   - "Joe bot tutorial"
-  - "postgres.ai joe bot"
+  - "Postgres AI Joe bot"
   - "sql optimization chatbot"
 description: Learn how to use Joe bot to build a swift workflow of PostgreSQL query optimization running EXPLAIN commands on ultra-fast thin clones.
 ---

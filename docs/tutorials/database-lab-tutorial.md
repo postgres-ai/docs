@@ -4,14 +4,14 @@ sidebar_label: Tutorial for any Postgres
 keywords:
   - "DBLab tutorial"
   - "Start using DBLab Engine"
-  - "Postgres.ai tutorial"
+  - "Postgres AI tutorial"
 description: In this tutorial, we are going set up a DBLab Engine in the Cloud. DBLab is used to boost software development and testing processes via enabling ultra-fast provisioning of databases of any size.
 ---
 
 DBLab Engine is used to boost software development and testing processes by enabling ultra-fast provisioning of databases of any size.
 
 Use [the Postgres AI Console](https://console.postgres.ai/) for an easy and quick installation of DBLab. Following the steps below, in a few minutes, you will get:
-- A single DBLab Standard Edition (DBLab SE) installed in your infrastructure (Postgres.ai does not have access to it)
+- A single DBLab Standard Edition (DBLab SE) installed in your infrastructure (Postgres AI does not have access to it)
 - Additional components such as monitoring
 - Ready-to-use, well-tested, vendor-supported Postgres images for DBLab that are compatible with your source databases located in popular managed Postgres services like RDS, CloudSQL, Supabase, and Heroku
 - A DBLab SE subscription with guaranteed vendor support
@@ -49,12 +49,12 @@ In both scenarios, your data remains securely within your infrastructure.
 - [Create](https://console.postgres.ai/addorg) a new organization
 - Inside your organization, go to the "Billing" section and add a new payment method:
    - press the "Edit payment methods" button,
-   - you will see the Stripe portal – note it has the address `https://billing.stripe.com/...` (Postgres.ai partners with Stripe for simplified billing),
+   - you will see the Stripe portal – note it has the address `https://billing.stripe.com/...` (Postgres AI partners with Stripe for simplified billing),
    - add your payment methods there and close the page.
 
 ### DBLab installation
 The first steps are trivial:
-- Go to "Database Lab / Instances"
+- Go to "Database Lab / Instances" and press "New DBLab"
 
 And then press the "Create" button to deploy DBLab in your cloud:
 <p align="center">
@@ -144,7 +144,7 @@ ok: [root@5.161.212.233] => {
         "",
         "5) DBLab CLI:",
         "  - CLI ('dblab') setup:",
-        "      export DBLAB_CLI_VERSION=3.5.0",
+        "      export DBLAB_CLI_VERSION=4.0.0",
         "      curl -sSL dblab.sh | bash",
         "      dblab init --environment-id=dblab-demo --token=edlhYHOgBPkr4ix1qP3YvQMytfK2JSxH --url=http://127.0.0.1:2346/api",
         "  - CLI docs: https://cli-docs.dblab.dev/",
@@ -232,9 +232,17 @@ In the Overview tab, you can see the status of the data retrieval. Note that the
 
 Once the retrieval is done, you can create your first clone. Happy cloning!
 
-## Step 3. Start cloning!
-### UI
-#### Create a clone
+## Step 3. Start experimenting!
+
+With DBLab, you can create safe, instant copies of your database. It is perfect for testing, experimenting, troubleshooting incidents, query optimization, and development of new features. In this step, you’ll learn how to:
+- Make a clone (your own private copy)
+- Save a snapshot (bookmark your progress)
+- Branch off to experiment without risk
+
+### Cloning
+#### UI
+**Create a clone**
+
 1. Click the **Create clone** button.
  ![DBLab engine clone creation page](/assets/dle-platform/DLE_create_clone1.png)
 1. Fill the **ID** field with a meaningful name.
@@ -248,7 +256,7 @@ Once the retrieval is done, you can create your first clone. Happy cloning!
 You also can click the "Enable deletion protection" box. When enabled no one can delete this clone and automated deletion is also disabled.
 :::
 
-#### Connect to a clone
+**Connect to a clone**
 1. From the **DBLab clone** page under section **Connection info**, copy the **psql connection string** field contents by clicking the **Copy** button.
     ![DBLab clone page / psql connection string](/assets/dle-platform/DLE_connect_clone1.png)
 2. To connect to clones, also use SSH port forwarding:
@@ -280,8 +288,8 @@ test=# \dt
 test=# \q
 ```
 
-### CLI
-#### Install DBLab client CLI (`dblab`)
+#### CLI
+**Install DBLab client CLI (`dblab`)**
 CLI can be used on any machine, you just need to be able to reach the DBLab UI/API (port 2346).
 
 ```bash
@@ -308,7 +316,7 @@ Check the configuration by fetching the status of the instance:
 dblab instance status
 ```
 
-#### Create a clone
+**Create a clone**
 ```bash
 dblab clone create \
   --username dblab_user_1 \
@@ -359,7 +367,7 @@ After a second or two, if everything is configured correctly, you will see that 
 }
 ```
 
-#### Connect to a clone
+**Connect to a clone**
 You can work with the clone you created earlier using any PostgreSQL client, for example, `psql`. To install `psql`:
 - macOS (with [Homebrew](https://brew.sh/)):
     ```bash
@@ -399,6 +407,86 @@ Reconnect to the clone:
 ```
 
 Now check the database objects you've dropped or partially deleted – the "damage" has gone.
+
+### Create a snapshot
+#### UI
+
+Let's capture a snapshot of your database state. Think of it as creating a checkpoint - you can always return to this exact moment later, or use it as a starting point for new experiments.
+
+1. Find the **Snapshots** section on your DBLab instance page.
+![Database Lab instance page / Create snapshot](/assets/guides/create-snapshot-1.png)
+2. Click **Create snapshot** - you'll see a form appear.
+3. Choose which clone you want to snapshot and give it a meaningful message.
+5. Click **Create**. 
+![Database Lab instance page / Create snapshot](/assets/guides/create-snapshot-3.png)
+6. You'll be taken to your **DBLab Snapshot** page - success! 🎉
+![Database Lab instance page / Create snapshot](/assets/guides/create-snapshot-4.png) 
+
+You can now use the snapshot as a base for new clones or branches!
+
+**Pro tip:** You can also create snapshots directly from any clone page - just look for the "Create snapshot" button there.
+
+![Database Lab instance page / Create snapshot](/assets/guides/create-snapshot-5.png)
+
+#### CLI
+
+You can also create snapshots from the CLI:
+
+```bash
+dblab commit --clone-id my_first_clone --message "Snapshot message"
+```
+
+Replace `my_first_clone` with your actual clone ID (you can see it in the UI or use `dblab clone list` to list them).
+
+Want to see all your snapshots? Just run:
+
+```bash
+dblab snapshot list
+```
+
+### Instant database branching
+#### UI
+
+Now let's create your first branch! Branches let you experiment safely, try new features, or test fixes in your own 
+isolated environment.
+
+1. Find the **Branches** section on your DBLab instance page.
+![Database Lab instance page / Create branch](/assets/guides/create-branch-1.png)
+2. Click **Create branch**.
+3. Give your branch a meaningful name.
+4. Choose the parent branch (`main` by default) and/or a snapshot that will be memorized as a forking point.
+5. Click **Create**.
+![Database Lab instance page / Create branch](/assets/guides/create-branch-3.png)
+6. You'll be taken to your **DBLab Branch** page - you're all set! 🚀
+![Database Lab instance page / Create branch](/assets/guides/create-branch-4.png) 
+
+Your new branch is now ready for you to use!
+
+#### CLI
+
+To create a branch from the command line:
+
+```bash
+dblab branch my_first_branch
+```
+
+By default, the current branch will be the parent of the new one. You can see your current branch, along with other existing branches, using this command:
+
+```bash
+dblab branch
+```
+
+Additionally, you can specify the parent branch or the snapshot when creating a branch:
+
+```bash
+dblab branch --parent-branch my_first_branch my_second_branch
+
+dblab branch --snapshot-id SNAPSHOT_ID my_first_branch
+```
+
+You'll see a list of all your branches with their current status.
+
+**Try it out:** Create a branch, make some changes to your data, then create another branch from that point. You're now branching like a pro! 🌿
 
 For more, see [the full client CLI reference](/docs/reference-guides/dblab-client-cli-reference).
 
