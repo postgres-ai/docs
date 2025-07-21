@@ -4,7 +4,7 @@ sidebar_label: Tutorial for Amazon RDS
 keywords:
   - "DBLab Engine tutorial for Amazon RDS"
   - "Start using DBLab Engine for Amazon RDS"
-  - "Postgres.ai tutorial for Amazon RDS"
+  - "Postgres AI tutorial for Amazon RDS"
 description: In this tutorial, we are going to set up a DBLab Engine for an existing PostgreSQL DB instance on Amazon RDS. Database Lab is used to boost software development and testing processes via enabling ultra-fast provisioning of databases of any size.
 ---
 
@@ -49,55 +49,64 @@ First steps to install DLE from the AWS Marketplace are trivial:
 - Log in into AWS: https://console.aws.amazon.com/
 - Open the DLE on [AWS Marketplace page](https://bit.ly/dleawsmarketplace)
 
-And then press the "Continue..." buttons a couple of times:
+And press the "View purchase options" button:
 <p align="center">
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step1.png" alt="DBLab Engine in AWS Marketplace: step 1" /><br />
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step2.png" alt="DBLab Engine in AWS Marketplace: step 2" />
+    <img src="/assets/dblab-aws/AWS_DBLAB_step1.png" alt="DBLab Engine in AWS Marketplace: step 1" /><br />
 </p>
 
-Now check that the DLE version (the latest should be the best) and the AWS region are both chosen correctly, and press "Continue to Launch":
+Then, press "Subscribe":
 <p align="center">
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step3.png" alt="DBLab Engine in AWS Marketplace: step 3" />
+    <img src="/assets/dblab-aws/AWS_DBLAB_step2.png" alt="DBLab Engine in AWS Marketplace: step 2" />
 </p>
 
-On this page, you need to choose "Launch CloudFormation" and press "Launch":
+Next, press "Launch your software":
 <p align="center">
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step4.png" alt="DBLab Engine in AWS Marketplace: step 4" />
+    <img src="/assets/dblab-aws/AWS_DBLAB_step3.png" alt="DBLab Engine in AWS Marketplace: step 3" />
+</p>
+
+Now, check that the DBLab Engine version (the latest is recommended) and the AWS regions are chosen correctly, then press "Continue to Launch":
+<p align="center">
+    <img src="/assets/dblab-aws/AWS_DBLAB_step4.png" alt="DBLab Engine in AWS Marketplace: step 4" />
+</p>
+
+On this page you need to choose "Launch CloudFormation" and press "Launch":
+<p align="center">
+    <img src="/assets/dblab-aws/AWS_DBLAB_step5.png" alt="DBLab Engine in AWS Marketplace: step 5" />
 </p>
 
 This page should be left unmodified, just press the "Next" button:
 <p align="center">
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step5.png" alt="DBLab Engine in AWS Marketplace: step 5" />
+    <img src="/assets/dblab-aws/AWS_DBLAB_step6.png" alt="DBLab Engine in AWS Marketplace: step 6" />
 </p>
 
-Now it is time to fill the form that defines the AWS resources that we need:
+Now, it is time to fill the form that defines the AWS resources that we need:
 - EC2 instance type and size – it defines the hourly price for "compute" (see [the full price list](https://postgres.ai/pricing#aws-pricing-details));
 - subnet mask to restrict connections (for testing, you can use `0.0.0.0/0`; for production use, restrict connections wisely);
-- VPC and subnet – you can choose any of them if you're testing DLE for some database which is publicly available (the only thing to remember: subnet belongs to a VPC, so make sure they match); for production database, you need to choose those options that will allow DLE to connect to the source for the successful data retrieval process;
+- VPC and subnet – you can choose any of them if you're testing DBLab for some database which is publicly available (the only thing to remember: subnet belongs to a VPC, so make sure they match); for production database, you need to choose those options that will allow DBLab to connect to the source for the successful data retrieval process;
 - choose your AWS key pair (has to be created already).
 <p align="center">
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step6new.png" alt="DBLab Engine in AWS Marketplace: step 6" />
+    <img src="/assets/dblab-aws/AWS_DBLAB_step7.png" alt="DBLab Engine in AWS Marketplace: step 7" />
 </p>
 
 Next, on the same page:
 - define the size of EBS volume that will be created (you can find pricing calculator here: ["Amazon EBS pricing"](https://aws.amazon.com/ebs/pricing/)):
-    - put as many GiB as roughtly your database has (it is always possible to add more space without downtime),
+    - put as many GiB as roughly your database has (it is always possible to add more space without downtime),
     - define how many snapshots you'll be needed (minimum 2);
-- define secret token (at least 9 characters are required!) – it will be used to communicate with DLE API, CLI, and UI.
+- define secret token (at least 9 characters are required!) – it will be used to communicate with DBLab API, CLI, and UI.
 
-Then press "Next":
+Then, press "Next".
 <p align="center">
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step7.png" alt="DBLab Engine in AWS Marketplace: step 7" />
+    <img src="/assets/dblab-aws/AWS_DBLAB_step8.png" alt="DBLab Engine in AWS Marketplace: step 8" />
 </p>
 
-This page should be left unmodified, just press the "Next" button:
+At the bottom of the next page acknowledge that AWS CloudFormation might create IAM resources. Then, press the "Next" button:
 <p align="center">
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step8.png" alt="DBLab Engine in AWS Marketplace: step 8" />
+    <img src="/assets/dblab-aws/AWS_DBLAB_step9.png" alt="DBLab Engine in AWS Marketplace: step 9" />
 </p>
 
-At the bottom of the next page, acknowledge that AWS CloudFormation might create IAM resources. Once you've pressed "Create stack", the process begins:
+Once you've pressed "Submit", the process begins.
 <p align="center">
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step9.png" alt="DBLab Engine in AWS Marketplace: step 9" />
+    <img src="/assets/dblab-aws/AWS_DBLAB_step10.png" alt="DBLab Engine in AWS Marketplace: step 10" />
 </p>
 
 You need to wait a few minutes while all resources are being provisioned. Check out the "Outputs" section periodically. Once DLE API and UI are ready, you should see the ordered list of instructions on how to connect to UI and API.
@@ -156,9 +165,17 @@ To troubleshoot:
 - See and observe the DLE logs: `sudo docker logs -f dblab_server` (the same logs you can observe in UI – the "Logs" tab)
 - If needed, check Postgres logs for the main branch. They are located in `/var/lib/dblab/dblab_pool/dataset_1/data/log` for the first snapshot of the database, in `/var/lib/dblab/dblab_pool/dataset_2/data/log` for the second one (if it's already fetched); if you have configured DLE to have more than 2 snapshots, check out the other directories too (`/var/lib/dblab/dblab_pool/dataset_$N/data/log`, where `$N` is the snapshot number, starting with `1`)
 
-## Step 3. Start cloning!
-### UI
-#### Create a clone
+## Step 3. Start experimenting!
+
+With DBLab, you can create safe, instant copies of your database: perfect for testing, experimenting, or trying out new ideas. In this step, you'll learn how to:
+- Make a clone (your own private copy)
+- Save a snapshot (bookmark your progress)
+- Branch off to experiment without risk
+
+### Cloning
+#### UI
+##### Create a clone
+
 1. Click the **Create clone** button.
  ![DBLab Engine clone creation page](/assets/dle-aws/AWS_DLE_create_clone1.png)
 1. Fill the **ID** field with a meaningful name.
@@ -169,7 +186,7 @@ To troubleshoot:
 1. You will be redirected to the **Database Lab clone** page.
     ![DBLab Engine clone page](/assets/dle-aws/AWS_DLe_create_clone3.png)
 
-#### Connect to a clone
+##### Connect to a clone
 1. From the **Database Lab clone** page under section **Connection info**, copy the **psql connection string** field contents by clicking the **Copy** button.
     ![Database Lab clone page / psql connection string](/assets/dle-aws/AWS_DLE_connect_clone1.png)
 1. Here we assume that you have `psql` installed on your working machine. In the terminal, type `psql` and paste the **psql connection string** field contents. Change the database name `DBNAME` parameter, you can always use `postgres` for the initial connection.
@@ -177,8 +194,8 @@ To troubleshoot:
 1. Test established connection by listing tables in the database using `\d`.
     ![Terminal / psql](/assets/guides/connect-clone-2.png)
 
-### CLI
-#### Install DLE client CLI (`dblab`)
+#### CLI
+##### Install DLE client CLI (`dblab`)
 CLI can be used on any machine, you just need to be able to reach the DLE API (port 2345 by default). In this tutorial, we will install and use CLI locally on the EC2 instance.
 
 ```bash
@@ -200,7 +217,7 @@ Check the configuration by fetching the status of the instance:
 dblab instance status
 ```
 
-#### Create a clone
+##### Create a clone
 ```bash
 dblab clone create \
   --username dblab_user_1 \
@@ -240,7 +257,7 @@ After a second or two, if everything is configured correctly, you will see that 
 }
 ```
 
-#### Connect to a clone
+##### Connect to a clone
 You can work with the clone you created earlier using any PostgreSQL client, for example, `psql`. To install `psql`:
 - macOS (with [Homebrew](https://brew.sh/)):
     ```bash
@@ -280,6 +297,83 @@ Reconnect to the clone:
 ```
 
 Now check the database objects you've dropped or partially deleted – the "damage" has gone.
+
+### Create a snapshot
+#### UI
+
+Let's capture a snapshot of your database state. Think of it as creating a checkpoint - you can always return to this exact moment later, or use it as a starting point for new experiments.
+
+1. Find the **Snapshots** section on your DBLab instance page.
+![Database Lab instance page / Create snapshot](/assets/guides/create-snapshot-1.png)
+2. Click **Create snapshot** - you'll see a form appear.
+3. Choose which clone you want to snapshot and give it a meaningful message.
+4. Click **Create**.
+![Database Lab instance page / Create snapshot](/assets/guides/create-snapshot-3.png)
+5. You'll be taken to your **DBLab Snapshot** page - success! 🎉
+![Database Lab instance page / Create snapshot](/assets/guides/create-snapshot-4.png) 
+
+You can now use the snapshot as a base for new clones or branches!
+
+**Pro tip:** You can also create snapshots directly from any clone page - just look for the "Create snapshot" button there.
+
+![Database Lab instance page / Create snapshot](/assets/guides/create-snapshot-5.png)
+
+#### CLI
+
+You can also create snapshots from the CLI:
+
+```bash
+dblab commit --clone-id my_first_clone --message "Snapshot message"
+```
+
+Replace `my_first_clone` with your actual clone ID (you can see it in the UI or use `dblab clone list` to list them).
+
+Want to see all your snapshots? Just run:
+
+```bash
+dblab snapshot list
+```
+
+### Instant database branching
+#### UI
+
+Now let's create your first branch! Branches let you experiment safely, try new features, or test fixes in your own isolated environment.
+
+1. Find the **Branches** section on your DBLab instance page.
+![Database Lab instance page / Create branch](/assets/guides/create-branch-1.png)
+2. Click **Create branch**.
+3. Give your branch a meaningful name.
+4. Choose the parent branch (`main` by default) and/or a snapshot that will be memorized as a forking point.
+5. Click **Create**.
+![Database Lab instance page / Create branch](/assets/guides/create-branch-3.png)
+6. You'll be taken to your **DBLab Branch** page - you're all set! 🚀
+![Database Lab instance page / Create branch](/assets/guides/create-branch-4.png) 
+
+Your new branch is now ready for you to use!
+
+#### CLI
+
+To create a branch from the command line:
+
+```bash
+dblab branch my_first_branch
+```
+
+By default, the current branch will be the parent of the new one. You can see your current branch, along with other existing branches, using this command:
+
+```bash
+dblab branch
+```
+
+Additionally, you can specify the parent branch or the snapshot when creating a branch:
+
+```bash
+dblab branch --parent-branch my_first_branch my_second_branch
+
+dblab branch --snapshot-id SNAPSHOT_ID my_first_branch
+```
+
+**Try it out:** Create a branch, make some changes to your data, then create another branch from that point. You're now branching like a pro! 🌿
 
 For more, see [the full client CLI reference](/docs/reference-guides/dblab-client-cli-reference).
 

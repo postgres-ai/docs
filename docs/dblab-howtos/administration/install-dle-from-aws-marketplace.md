@@ -28,34 +28,43 @@ The first steps are trivial:
 - Log in into AWS: https://console.aws.amazon.com/
 - Open [the DBLab on AWS Marketplace page](https://bit.ly/dleawsmarketplace)
 
-And then press the "Continue..." buttons a couple of times:
+And press the "View purchase options" button:
 <p align="center">
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step1.png" alt="DBLab Engine in AWS Marketplace: step 1" /><br />
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step2.png" alt="DBLab Engine in AWS Marketplace: step 2" />
+    <img src="/assets/dblab-aws/AWS_DBLAB_step1.png" alt="DBLab Engine in AWS Marketplace: step 1" /><br />
 </p>
 
-Now check that the DBLab Engine version (the latest is recommended) and the AWS regions are chosen correctly, then press "Continue to Launch":
+Then, press "Subscribe":
 <p align="center">
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step3.png" alt="DBLab Engine in AWS Marketplace: step 3" />
+    <img src="/assets/dblab-aws/AWS_DBLAB_step2.png" alt="DBLab Engine in AWS Marketplace: step 2" />
+</p>
+
+Next, press "Launch your software":
+<p align="center">
+    <img src="/assets/dblab-aws/AWS_DBLAB_step3.png" alt="DBLab Engine in AWS Marketplace: step 3" />
+</p>
+
+Now, check that the DBLab Engine version (the latest is recommended) and the AWS regions are chosen correctly, then press "Continue to Launch":
+<p align="center">
+    <img src="/assets/dblab-aws/AWS_DBLAB_step4.png" alt="DBLab Engine in AWS Marketplace: step 4" />
 </p>
 
 On this page you need to choose "Launch CloudFormation" and press "Launch":
 <p align="center">
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step4.png" alt="DBLab Engine in AWS Marketplace: step 4" />
+    <img src="/assets/dblab-aws/AWS_DBLAB_step5.png" alt="DBLab Engine in AWS Marketplace: step 5" />
 </p>
 
 This page should be left unmodified, just press the "Next" button:
 <p align="center">
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step5.png" alt="DBLab Engine in AWS Marketplace: step 5" />
+    <img src="/assets/dblab-aws/AWS_DBLAB_step6.png" alt="DBLab Engine in AWS Marketplace: step 6" />
 </p>
 
-Now it is time to fill the form that defines the AWS resources that we need:
+Now, it is time to fill the form that defines the AWS resources that we need:
 - EC2 instance type and size – it defines the hourly price for "compute" (see [the full price list](https://postgres.ai/pricing#aws-pricing-details));
 - subnet mask to restrict connections (for testing, you can use `0.0.0.0/0`; for production use, restrict connections wisely);
 - VPC and subnet – you can choose any of them if you're testing DBLab for some database which is publicly available (the only thing to remember: subnet belongs to a VPC, so make sure they match); for production database, you need to choose those options that will allow DBLab to connect to the source for the successful data retrieval process;
 - choose your AWS key pair (has to be created already).
 <p align="center">
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step6new.png" alt="DBLab Engine in AWS Marketplace: step 6" />
+    <img src="/assets/dblab-aws/AWS_DBLAB_step7.png" alt="DBLab Engine in AWS Marketplace: step 7" />
 </p>
 
 Next, on the same page:
@@ -64,22 +73,22 @@ Next, on the same page:
     - define how many snapshots you'll be needed (minimum 2);
 - define secret token (at least 9 characters are required!) – it will be used to communicate with DBLab API, CLI, and UI.
 
-Then press "Next".
+Then, press "Next".
 
 <p align="center">
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step7.png" alt="DBLab Engine in AWS Marketplace: step 7" />
+    <img src="/assets/dblab-aws/AWS_DBLAB_step8.png" alt="DBLab Engine in AWS Marketplace: step 8" />
 </p>
 
-This page should be left unmodified, just press the "Next" button:
+At the bottom of the next page acknowledge that AWS CloudFormation might create IAM resources. Then, press the "Next" button:
 
 <p align="center">
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step8.png" alt="DBLab Engine in AWS Marketplace: step 8" />
+    <img src="/assets/dblab-aws/AWS_DBLAB_step9.png" alt="DBLab Engine in AWS Marketplace: step 9" />
 </p>
 
-At the bottom of the next page acknowledge that AWS CloudFormation might create IAM resources. Once you've pressed "Create stack", the process begins.
+Once you've pressed "Submit", the process begins.
 
 <p align="center">
-    <img src="/assets/dle-aws/AWS_DLE_3.2_step9.png" alt="DBLab Engine in AWS Marketplace: step 9" />
+    <img src="/assets/dblab-aws/AWS_DBLAB_step10.png" alt="DBLab Engine in AWS Marketplace: step 10" />
 </p>
 
 You need to wait a few minutes, while all resources are provisioned and DBLab setup is complete. Check out the "Outputs" section – once DBLab API and UI are ready, you'll see the ordered list of instructions on how to connect to UI and API.
