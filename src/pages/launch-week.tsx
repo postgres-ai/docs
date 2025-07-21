@@ -88,7 +88,7 @@ function LaunchWeekPage() {
                       {day.blogPost.title && (
                         <div className={commonStyles.blogLink}>
                           <Link to={day.blogPost.url} className={commonStyles.blogButton}>
-                            📖 Read: {day.blogPost.title}
+                          📖 Read more
                           </Link>
                         </div>
                       )}

@@ -15,16 +15,13 @@ export const DbLabBanner = () => {
         height="170px"
       />
       <div className={styles.content}>
-        <h6 className={styles.title}>Database Lab by Postgres.ai</h6>
+        <h6 className={styles.title}>DBLab Engine 4.0</h6>
         <p className={styles.desc}>
-          An open-source experimentation platform for PostgreSQL databases.
-          Instantly create full-size clones of your production database and use
-          them to test your database migrations, optimize SQL, or deploy
-          full-size staging apps.
+          Instant database branching with O(1) economics.
         </p>
         <nav className={styles.links}>
-          <StyledLink href="/products/how-it-works" className={styles.link}>
-            How it works
+          <StyledLink href="/blog/20250721-dblab-engine-4-0-released" className={styles.link}>
+            Read detailed blog post
           </StyledLink>
           <StyledLink href="/docs" className={styles.link}>
             Read documentation

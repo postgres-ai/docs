@@ -24,13 +24,13 @@ function IndexPage() {
 
   return (
     <Layout>
-      {/* <div className="launch-week-section">
+      <div className="launch-week-section">
         <div className="container">
           <LaunchWeekPreview />
         </div>
-      </div> */}
+      </div>
       {/* Return SECTION!!! and  banner class after launch week */}
-      <section className="banner position-relative text-center">
+      <div className="position-relative text-center">
         <div className="container">
           <div className="row justify-content-center align-items-center">
             <div className="col-md-2 d-none d-md-block"></div>
@@ -42,7 +42,7 @@ function IndexPage() {
             <div className="col-md-2"></div>
           </div>
         </div>
-      </section>
+      </div>
       
       
     </Layout>

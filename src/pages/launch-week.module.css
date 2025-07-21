@@ -127,6 +127,46 @@
   opacity: 0.7;
 }
 
+/* Light theme terminal styles */
+[data-theme='light'] .container {
+  background: none !important;
+}
+
+[data-theme='light'] .terminal {
+  background-color: #ffffff !important;
+  border: 2px solid #495057 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+[data-theme='light'] .terminalHeader {
+  background-color: #495057 !important;
+  border-bottom: 2px solid #495057 !important;
+}
+
+[data-theme='light'] .terminalTitle {
+  color: #ffffff !important;
+}
+
+[data-theme='light'] .terminalContent {
+  background-color: #ffffff !important;
+  color: #198754 !important;
+}
+
+[data-theme='light'] .command {
+  color: #000000 !important;
+}
+
+[data-theme='light'] .output {
+  color: #198754 !important;
+}
+
+[data-theme='light'] .prompt {
+  color: #198754 !important;
+}
+
+[data-theme='light'] .cursor {
+  background-color: #198754 !important;
+}
 .dayHeader {
   display: flex;
   justify-content: space-between;

@@ -34,3 +34,11 @@ export const artyom = {
   gitlabUrl: 'https://github.com/agneum',
   githubUrl: 'https://gitlab.com/akartasov',
 }
+
+export const bogdan = {
+  avatarUrl: '/assets/author/bogdan.jpg',
+  name: 'Bogdan Tsechoev',
+  role: 'Software Engineer at',
+  gitlabUrl: 'https://gitlab.com/bogdan.tsechoev',
+  githubUrl: 'https://github.com/bogdan-ts'
+}
