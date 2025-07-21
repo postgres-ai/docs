@@ -5,4 +5,4 @@ slug: /dblab-howtos/cli
 ---
 
 ## Guides
-- [How to install and initialize DBLab CLI](/docs/how-to-guides/cli/cli-install-init)
+- [How to install and initialize DBLab CLI](/docs/dblab-howtos/cli/cli-install-init)

@@ -212,7 +212,7 @@ And verify it works:
 dblab instance status
 ```
 
-More about DBLab CLI: [How to install and initialize Database Lab CLI](/docs/how-to-guides/cli/cli-install-init).
+More about DBLab CLI: [How to install and initialize Database Lab CLI](/docs/dblab-howtos/cli/cli-install-init).
 
 ## How to clean up to start from scratch
 Stop the container:

@@ -21,7 +21,7 @@ DBLab Engine must be version `4.0` or higher.
    ![Database Lab instance page / Create snapshot](/assets/guides/create-snapshot-4.png) 
 
 ## CLI
-Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/how-to-guides/cli/cli-install-init).
+Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/dblab-howtos/cli/cli-install-init).
 
 ### Reference
 - Command [`dblab snapshot`](/docs/reference-guides/dblab-client-cli-reference#command-snapshot)
@@ -59,4 +59,4 @@ $ dblab snapshot list
 ```
 
 ## Related
-- Guide: [Delete a snapshot](/docs/how-to-guides/snapshots/delete-snapshot)
+- Guide: [Delete a snapshot](/docs/dblab-howtos/snapshots/delete-snapshot)

@@ -18,7 +18,7 @@ From the **Database Lab clone** page enable or disable the **Enable deletion pro
   ![DBLab Engine page / Create clone](/assets/guides/clone-protection-1.png)
 
 ## CLI
-Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/how-to-guides/cli/cli-install-init).
+Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/dblab-howtos/cli/cli-install-init).
 
 ### Reference
 - Command [`dblab clone update`](/docs/reference-guides/dblab-client-cli-reference#subcommand-update)
@@ -47,7 +47,7 @@ dblab clone update CLONE_ID
 }
 ```
 
-Also, clones can marked as protected at creation time. See [Create a clone](/docs/how-to-guides/cloning/create-clone).
+Also, clones can marked as protected at creation time. See [Create a clone](/docs/dblab-howtos/cloning/create-clone).
 
 ## Related
-- Guide: [Destroy a clone](/docs/how-to-guides/cloning/destroy-clone)
+- Guide: [Destroy a clone](/docs/dblab-howtos/cloning/destroy-clone)

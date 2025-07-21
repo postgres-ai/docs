@@ -7,7 +7,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 :::info
-You can use [Postgres AI Console](/docs/how-to-guides/administration/install-dle-from-postgres-ai) or [AWS Marketplace](/docs/how-to-guides/administration/install-dle-from-aws-marketplace) for fast and automated installation of DBLab Standard Edition. This document describes step-by-step manual installation of DBLab Community Edition.
+You can use [Postgres AI Console](/docs/dblab-howtos/administration/install-dle-from-postgres-ai) or [AWS Marketplace](/docs/dblab-howtos/administration/install-dle-from-aws-marketplace) for fast and automated installation of DBLab Standard Edition. This document describes step-by-step manual installation of DBLab Community Edition.
 :::
 
 This describes how to manually install the DBLab Engine Community Edition (DBLab CE).
@@ -190,7 +190,7 @@ sudo sed -i 's/snapshot_autoextend_percent.*/snapshot_autoextend_percent = 20/g'
 
 ## Step 2. Configure and launch the DBLab Engine
 :::caution
-To make your work with Database Lab API secure, do not open Database Lab API and Postgres clone ports to the public and instead use VPN or SSH port forwarding. It is also a good idea to encrypt all the traffic: for Postgres clones, set up SSL in the configuration files; and for Database Lab API, install, and configure NGINX with a self-signed SSL certificate. See the [How to Secure DBLab Engine](/docs/how-to-guides/administration/engine-secure).
+To make your work with Database Lab API secure, do not open Database Lab API and Postgres clone ports to the public and instead use VPN or SSH port forwarding. It is also a good idea to encrypt all the traffic: for Postgres clones, set up SSL in the configuration files; and for Database Lab API, install, and configure NGINX with a self-signed SSL certificate. See the [How to Secure DBLab Engine](/docs/dblab-howtos/administration/engine-secure).
 :::
 
 ### Prepare database data directory
@@ -426,4 +426,4 @@ sudo zpool destroy dblab_pool
 ```
 
 ## Related
-- [Data sources](/docs/how-to-guides/administration/data)
+- [Data sources](/docs/dblab-howtos/administration/data)

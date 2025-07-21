@@ -25,7 +25,7 @@ In a separate terminal tab launch SSH port forwarding. Use `http://localhost:234
 ssh -NTML 2344:localhost:2345 ssh://USERNAME@HOSTNAME:22 -i ~/.ssh/id_rsa
 ```
 
-3. Initialize configuration. Use URL and verification token of your instance. Instead of using verification token you can generate and use your personal access token. See details [here](/docs/how-to-guides/platform/tokens).
+3. Initialize configuration. Use URL and verification token of your instance. Instead of using verification token you can generate and use your personal access token. See details [here](/docs/dblab-howtos/platform/tokens).
 
 ```bash
 dblab init --environment-id=ENV_ID --url=URL --token=TOKEN

@@ -17,7 +17,7 @@ User-defined.
 - Generates an internal DLE RuntimeID on each start to mark related components
 
 #### How to manage
-Operates as a Docker container. See the [guide](/docs/how-to-guides/administration/engine-manage) for administering DLE.
+Operates as a Docker container. See the [guide](/docs/dblab-howtos/administration/engine-manage) for administering DLE.
 
 ---
 

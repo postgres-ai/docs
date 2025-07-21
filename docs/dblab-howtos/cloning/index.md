@@ -5,9 +5,9 @@ slug: /dblab-howtos/cloning
 ---
 
 ## Guides
-- [How to create DBLab clones](/docs/how-to-guides/cloning/create-clone)
-- [How to connect to DBLab clones](/docs/how-to-guides/cloning/connect-clone)
-- [How to reset DBLab clone](/docs/how-to-guides/cloning/reset-clone)
-- [How to destroy DBLab clone](/docs/how-to-guides/cloning/destroy-clone)
-- [Protect clones from manual and automatic deletion](/docs/how-to-guides/cloning/clone-protection)
-- [How to upgrade Postgres to a new major version in the DBLab clone](/docs/how-to-guides/cloning/clone-upgrade)
+- [How to create DBLab clones](/docs/dblab-howtos/cloning/create-clone)
+- [How to connect to DBLab clones](/docs/dblab-howtos/cloning/connect-clone)
+- [How to reset DBLab clone](/docs/dblab-howtos/cloning/reset-clone)
+- [How to destroy DBLab clone](/docs/dblab-howtos/cloning/destroy-clone)
+- [Protect clones from manual and automatic deletion](/docs/dblab-howtos/cloning/clone-protection)
+- [How to upgrade Postgres to a new major version in the DBLab clone](/docs/dblab-howtos/cloning/clone-upgrade)

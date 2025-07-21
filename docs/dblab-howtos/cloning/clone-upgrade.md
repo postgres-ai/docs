@@ -14,9 +14,9 @@ The process described here is semi-automated. Full automation of Postgres upgrad
 :::
 
 ## 1. Create a clone and mark it "protected"
-Create a clone [as usual](/docs/how-to-guides/cloning/create-clone).
+Create a clone [as usual](/docs/dblab-howtos/cloning/create-clone).
 
-It is recommended to mark the clone [protected](/docs/how-to-guides/cloning/clone-protection), so that DBLab Engine does not delete it during database maintenance.
+It is recommended to mark the clone [protected](/docs/dblab-howtos/cloning/clone-protection), so that DBLab Engine does not delete it during database maintenance.
 
 Once the clone is created, remember its port.
 :::
@@ -196,4 +196,4 @@ exit
 ```
 
 ## 3. Connect to clone
-Now you can [connect](/docs/how-to-guides/cloning/connect-clone) to the clone and perform any tests and work on the new Postgres version.
+Now you can [connect](/docs/dblab-howtos/cloning/connect-clone) to the clone and perform any tests and work on the new Postgres version.

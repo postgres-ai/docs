@@ -10,14 +10,14 @@ sidebar_label: Create a clone
 1. Fill the **ID** field with a meaningful name.
 1. (optional) By default, the latest data snapshot (closest to production state) will be used to provision a clone. You can select any other available snapshot.
 1. Fill **database credentials**. Remember the password, it will not be available later, but you will need to use it to connect to the clone.
-1. (optional) Enable protected status (it can be done later if needed). Please be careful: abandoned protected clones may cause out-of-disk-space events. Read the details [here](/docs/how-to-guides/cloning/clone-protection).
+1. (optional) Enable protected status (it can be done later if needed). Please be careful: abandoned protected clones may cause out-of-disk-space events. Read the details [here](/docs/dblab-howtos/cloning/clone-protection).
 1. Click the **Create clone** button and wait for a clone to provision.
 ![DBLab Engine clone creation page](/assets/guides/create-clone-2.png)
 1. You will be redirected to the **DBLab clone** page.
   ![DBLab Engine clone page](/assets/guides/create-clone-3.png)
 
 ## CLI
-Before you run any commands, install DBLab CLI and initialize configuration. For more information, see [Install and initialize DBLab CLI](/docs/how-to-guides/cli/cli-install-init).
+Before you run any commands, install DBLab CLI and initialize configuration. For more information, see [Install and initialize DBLab CLI](/docs/dblab-howtos/cli/cli-install-init).
 
 ### Reference
 - Command [`dblab clone create`](/docs/reference-guides/dblab-client-cli-reference#subcommand-create)
@@ -95,7 +95,7 @@ $ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --sna
 ```
 
 ### Protected status
-You can make clone protected during the creation or later (if needed). Please be careful: abandoned protected clones may cause out-of-disk-space events. Read the details [here](/docs/how-to-guides/cloning/clone-protection).
+You can make clone protected during the creation or later (if needed). Please be careful: abandoned protected clones may cause out-of-disk-space events. Read the details [here](/docs/dblab-howtos/cloning/clone-protection).
 ```bash
 $ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --protected
 ```
@@ -113,5 +113,5 @@ $ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --pro
 ```
 
 ## Related
-- Guide: [Connect to a clone](/docs/how-to-guides/cloning/connect-clone)
-- Guide: [Destroy a clone](/docs/how-to-guides/cloning/destroy-clone)
+- Guide: [Connect to a clone](/docs/dblab-howtos/cloning/connect-clone)
+- Guide: [Destroy a clone](/docs/dblab-howtos/cloning/destroy-clone)

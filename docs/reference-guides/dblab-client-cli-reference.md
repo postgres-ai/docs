@@ -14,7 +14,7 @@ The Database Lab Command Line Interface (`dblab`) is a tool that allows working 
 
 
 ## Getting started
-Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/how-to-guides/cli/cli-install-init).
+Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/dblab-howtos/cli/cli-install-init).
 
 
 ## Synopsis

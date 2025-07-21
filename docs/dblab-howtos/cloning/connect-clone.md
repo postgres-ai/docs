@@ -14,7 +14,7 @@ sidebar_label: Connect to a clone
   ![Terminal / psql](/assets/guides/connect-clone-2.png)
 
 ### CLI
-Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/how-to-guides/cli/cli-install-init).
+Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/dblab-howtos/cli/cli-install-init).
 
 #### Reference
 - Command [`dblab clone status`](/docs/reference-guides/dblab-client-cli-reference#subcommand-status)
@@ -88,7 +88,7 @@ SSH keys need to be on the server with the DBLab Engine to use this connection o
   ![Terminal / psql with port forward](/assets/guides/connect-clone-10.png)
 
 ### CLI
-Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/how-to-guides/cli/cli-install-init).
+Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/dblab-howtos/cli/cli-install-init).
 
 #### Reference
 - Command [`dblab clone status`](/docs/reference-guides/dblab-client-cli-reference#subcommand-status)
@@ -140,5 +140,5 @@ DBNAME=#
 
 ## Related
 - Video: [Connect to Database Lab clone through SSH port forwarding](https://www.youtube.com/watch?v=Yq2Kv0-GYXg)
-- Guide: [Resetting a clone state](/docs/how-to-guides/cloning/reset-clone)
-- Guide: [Destroy a clone](/docs/how-to-guides/cloning/destroy-clone)
+- Guide: [Resetting a clone state](/docs/dblab-howtos/cloning/reset-clone)
+- Guide: [Destroy a clone](/docs/dblab-howtos/cloning/destroy-clone)

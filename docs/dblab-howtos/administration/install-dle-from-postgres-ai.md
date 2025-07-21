@@ -170,7 +170,7 @@ Now UI should be available at http://127.0.0.1:2346
 </p>
 
 :::note
-Currently, configuring DBLab in UI allows config changes only for the "logical" mode of data retrieval (dump/restore) – the only available method for managed PostgreSQL cloud services such as RDS Postgres, RDS Aurora Postgres, Azure Postgres, or Heroku. "Physical" mode is not yet supported in UI but is still possible (through SSH connection and [editing DBLab config file directly](/docs/how-to-guides/administration/engine-manage)). More about [various data retrieval options for DBLab](/docs/how-to-guides/administration/data).
+Currently, configuring DBLab in UI allows config changes only for the "logical" mode of data retrieval (dump/restore) – the only available method for managed PostgreSQL cloud services such as RDS Postgres, RDS Aurora Postgres, Azure Postgres, or Heroku. "Physical" mode is not yet supported in UI but is still possible (through SSH connection and [editing DBLab config file directly](/docs/dblab-howtos/administration/engine-manage)). More about [various data retrieval options for DBLab](/docs/dblab-howtos/administration/data).
 :::
 
 ## Configure DBLab and run the first data retrieval
