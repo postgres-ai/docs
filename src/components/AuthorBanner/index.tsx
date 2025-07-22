@@ -11,12 +11,12 @@ import styles from './styles.module.css'
 export type Props = {
   avatarUrl: string
   name: string
-  role: string
+  role?: string
   twitterUrl?: string
   gitlabUrl?: string
   githubUrl?: string
   linkedinUrl?: string
-  note: string
+  note?: string
   anchorId?: string
 }
 
@@ -76,9 +76,11 @@ export const AuthorBanner = (props: Props) => {
       <img className={styles.avatar} src={avatarUrl} alt={name} />
       <div className={styles.content}>
         <h6 className={styles.name}>{name}</h6>
-        <p className={styles.role}>
-          {role} <a href="/">Postgres AI</a>
-        </p>
+        {role && (
+          <p className={styles.role}>
+            {role} <a href="/">Postgres AI</a>
+          </p>
+        )}
         {hasAnyLink && (
           <nav className={styles.links}>
             {twitterUrl && (
@@ -119,7 +121,7 @@ export const AuthorBanner = (props: Props) => {
             )}
           </nav>
         )}
-        <p className={styles.note}>{note}</p>
+        {note && <p className={styles.note}>{note}</p>}
       </div>
     </div>
   )

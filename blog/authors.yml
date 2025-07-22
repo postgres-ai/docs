@@ -1,0 +1,17 @@
+dementii:
+  name: Dementii Priadko
+  title: Postgres engineer
+  email: dementii@postgres.ai
+  image_url: '/assets/author/dementii.png'
+
+dmitry:
+  name: Dmitry Fomin
+  title: Sr. Postgres engineer
+  email: dmitry@postgres.ai
+  image_url: '/assets/author/dmitry.jpeg'
+
+bogdan:
+  name: Bogdan Tsechoev
+  title: Software Engineer
+  email: bogdan@postgres.ai
+  image_url: '/assets/author/bogdan.jpg'

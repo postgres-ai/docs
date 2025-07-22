@@ -15,13 +15,13 @@ export const launchWeekData = [
   {
     day: 'Tuesday',
     date: 'Jul 22',
-    isLocked: true,
-    mainRelease: '',
-    description: '',
+    isLocked: false,
+    mainRelease: 'postgres_ai monitoring',
+    description: 'Expert-level PostgreSQL monitoring for humans and AI systems.',
     minorReleases: [],
     blogPost: {
-      title: '',
-      url: '#'
+      title: 'postgres_ai monitoring – expert-level Postgres monitoring tool for humans and AI',
+      url: '/blog/20250722-postgres-ai-v0-7-expert-level-postgresql-monitoring'
     }
   },
   {
