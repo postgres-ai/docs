@@ -1007,9 +1007,9 @@ html[data-theme="dark"] .console-button{
   max-width: var(--ifm-col-width);
 }
 
-.row:has(.col[class*="authorCol_"]:nth-of-type(2)) .col[class*="authorCol_"] {
+/* .row:has(.col[class*="authorCol_"]:nth-of-type(2)) .col[class*="authorCol_"] {
   flex: 0 0 230px!important;
-}
+} */
 
 .row .col[class*="authorCol_"] .avatar__intro:has(.avatar__subtitle) {
   grid-template-rows: auto 1fr;
@@ -1263,4 +1263,8 @@ html body > div:first-child {
 
 .launch-week-section {
   margin-bottom: 8rem;
+}
+
+header .avatar {
+  display: flex;
 }

@@ -42,3 +42,15 @@ export const bogdan = {
   gitlabUrl: 'https://gitlab.com/bogdan.tsechoev',
   githubUrl: 'https://github.com/bogdan-ts'
 }
+
+export const dmitry = {
+  avatarUrl: '/assets/author/dmitry.jpeg',
+  name: 'Dmitry Fomin',
+  role: 'Sr. Postgres engineer at',
+}
+
+export const dementii = {
+  avatarUrl: '/assets/author/dementii.png',
+  name: 'Dementii Priadko',
+  role: 'Postgres engineer at',
+}

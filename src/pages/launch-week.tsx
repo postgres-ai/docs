@@ -12,8 +12,7 @@ function LaunchWeekPage() {
     const dayOfWeek = today.getDay();
     // Convert to our array index (Monday = 0, Tuesday = 1, etc.)
     const mondayIndex = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // Sunday becomes 6, Monday becomes 0
-    //return Math.min(mondayIndex, 4); // Cap at Friday (index 4)
-    return 0
+    return Math.min(mondayIndex, 4); // Cap at Friday (index 4)
   };
 
   const [activeDay, setActiveDay] = useState(getCurrentDayIndex());
