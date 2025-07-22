@@ -1,0 +1,97 @@
+---
+authors: 
+  - denis
+  - tanya
+date: 2025-07-22 20:00:00
+publishDate: 2025-07-22 20:00:00
+linktitle: 'SQL query toolkit in Postgres AI Console – analyze, visualize and share query plans with popular tools'
+title: 'SQL query toolkit in Postgres AI Console – analyze, visualize and share query plans with popular tools'
+description: 'A toolkit for PostgreSQL professionals to input and analyze custom queries and execution plans using visualization tools, AI insights, and easy sharing capabilities.'
+weight: 0
+image: /assets/thumbnails/20250722_query_analysis_toolkit.png
+tags:
+  - SQL query toolkit
+  - Query analysis
+  - Query optimization
+  - Launch week
+---
+
+import { BlogFooter } from '@site/src/components/BlogFooter'
+import { denis, tanya } from '@site/src/config/authors'
+
+# SQL query toolkit in Postgres AI Console – analyze, visualize and share query plans with popular tools
+
+<p align="center">
+  <img
+    src="/assets/thumbnails/20250722_query_analysis_toolkit.png"
+    alt="SQL query toolkit"
+    width="450px"
+    loading="eager" 
+  />
+</p>
+
+Today we're launching the **SQL query toolkit**, a tool to analyze, explore, and share SQL queries with plans, that lives inside [Postgres AI Console](https://console.postgres.ai).
+
+## Why we built this
+
+Our [Postgres AI Joe Bot](https://postgres.ai/docs/joe-bot) has always maintained query analysis history, allowing users to revisit analyzed queries, view execution plans, and explore performance visualizations. We've integrated two super popular open-source visualization services, explain.depesz.com and PEV2 (explain.dalibo.com), directly into [Postgres AI Console](https://console.postgres.ai), giving you a secure, private environment to analyze and share queries with your team.
+
+Our approach is "private by default" — your queries and execution plans stay confidential within your workspace. But we know collaboration extends beyond your immediate team.
+
+## Core features
+
+The SQL query toolkit lets you bring your own SQL queries and execution plans from any environment, and then analyze them using different visualization tools. The integrated Postgres AI Assistant provides optimization suggestions and explains performance issues based on your actual plans. You can also easily share your analysis with others through simple permalinks that don't require an account to view.
+
+## Real-world use case
+
+Let's consider an example. A developer encounters a slow query with multiple subqueries in production. They use the SQL Query Toolkit to:
+
+1. **Import the query and plan** - paste the problematic SQL and execution plan into the toolkit
+
+<p align="center">
+  <img
+    src="/assets/blog/20250722_query_analysis_toolkit_1.png"
+    alt="SQL query toolkit"
+    width="800px"
+    loading="eager" 
+  />
+</p>
+
+2. **Analyze with visualization tools** 
+
+<p align="center">
+  <img
+    src="/assets/blog/20250722_query_analysis_toolkit_2.png"
+    alt="SQL query toolkit"
+    width="800px"
+    loading="eager" 
+  />
+</p>
+
+3. **Get insights from the Postgres AI Assistant**
+
+<p align="center">
+  <img
+    src="/assets/blog/20250722_query_analysis_toolkit_3.png"
+    alt="SQL query toolkit"
+    width="800px"
+    loading="eager" 
+  />
+</p>
+
+4. **Share findings** - generate a permalink to collaborate with the team on solutions
+
+<p align="center">
+  <img
+    src="/assets/blog/20250722_query_analysis_toolkit_4.png"
+    alt="SQL query toolkit"
+    width="800px"
+    loading="eager" 
+  />
+</p>
+
+*Query example courtesy of [explain.depesz.com](https://explain.depesz.com)*
+
+## Getting started
+
+The SQL Query Toolkit is available as part of the postgres.ai platform at https://console.postgres.ai. Just log into Console, navigate to **SQL Optimization** → **Add Query**, and you're good to go!

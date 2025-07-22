@@ -204,6 +204,19 @@
   padding-left: 0;
 }
 
+.minorBlogLink {
+  color: var(--button-bg);
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.minorBlogLink:hover {
+  color: var(--button-bg-hover);
+  text-decoration: none;
+  transform: scale(1.1);
+}
+
 /* Blog Links */
 .blogLink {
   margin-top: 16px;

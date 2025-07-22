@@ -15,3 +15,15 @@ bogdan:
   title: Software Engineer
   email: bogdan@postgres.ai
   image_url: '/assets/author/bogdan.jpg'
+
+denis:
+  name: Denis Morozov
+  title: Lead Engineer
+  email: denis@postgres.ai
+  image_url: '/assets/author/denis.png'
+
+tanya:
+  name: Tanya Samokhvalova
+  title: Data Scientist
+  email: tanya@postgres.ai
+  image_url: '/assets/author/tanya.png'

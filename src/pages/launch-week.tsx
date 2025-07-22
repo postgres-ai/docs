@@ -77,7 +77,18 @@ function LaunchWeekPage() {
                           <ul className={commonStyles.minorList}>
                             {day.minorReleases.map((release, idx) => (
                               <li key={idx} className={commonStyles.minorItem}>
-                                • {release}
+                                {typeof release === 'string' ? (
+                                  <>• {release}</>
+                                ) : (
+                                  <>
+                                    • {release.name}
+                                    {release.blogPost && release.blogPost.url && (
+                                      <Link to={release.blogPost.url} className={commonStyles.minorBlogLink}>
+                                        {' '}→ read more
+                                      </Link>
+                                    )}
+                                  </>
+                                )}
                               </li>
                             ))}
                           </ul>
