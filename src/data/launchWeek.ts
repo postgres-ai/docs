@@ -18,7 +18,15 @@ export const launchWeekData = [
     isLocked: false,
     mainRelease: 'postgres_ai monitoring',
     description: 'Expert-level PostgreSQL monitoring for humans and AI systems.',
-    minorReleases: [],
+    minorReleases: [
+      {
+        name: 'SQL query toolkit',
+        blogPost: {
+          title: 'SQL query toolkit – analyze, explore, and share custom queries with AI-powered insights',
+          url: '/blog/20250722-query-analysis-toolkit'
+        }
+      }
+    ],
     blogPost: {
       title: 'postgres_ai monitoring – expert-level Postgres monitoring tool for humans and AI',
       url: '/blog/20250722-postgres-ai-v0-7-expert-level-postgresql-monitoring'

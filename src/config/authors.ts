@@ -43,6 +43,20 @@ export const bogdan = {
   githubUrl: 'https://github.com/bogdan-ts'
 }
 
+export const denis = {
+  avatarUrl: '/assets/author/denis.jpeg',
+  name: 'Denis Morozov',
+  role: 'Lead Engineer at',
+  gitlabUrl: 'https://gitlab.com/Sarumyan9999'
+}
+
+export const tanya = {
+  avatarUrl: '/assets/author/tanya.jpeg',
+  name: 'Tanya Samokhvalova',
+  role: 'Data Scientist at',
+  gitlabUrl: 'https://gitlab.com/Tanya301'
+}
+
 export const dmitry = {
   avatarUrl: '/assets/author/dmitry.jpeg',
   name: 'Dmitry Fomin',
