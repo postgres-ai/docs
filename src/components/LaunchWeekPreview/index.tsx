@@ -81,9 +81,35 @@ function LaunchWeekPreview() {
               {day.description}
             </div>
             {day.blogPost.title && (
-              <Link to={day.blogPost.url} className={commonStyles.blogLink}>
-                <span className={commonStyles.blogButton}>📖 Read more</span>
-              </Link>
+              <div className={commonStyles.blogLink}>
+                <Link to={day.blogPost.url} className={commonStyles.blogButton}>
+                  📖 Read more
+                </Link>
+              </div>
+            )}
+            
+            {day.minorReleases.length > 0 && (
+              <div className={commonStyles.minorReleases}>
+                <span className={commonStyles.minorLabel}>Minor releases:</span>
+                <ul className={commonStyles.minorList}>
+                  {day.minorReleases.map((release, idx) => (
+                    <li key={idx} className={commonStyles.minorItem}>
+                      {typeof release === 'string' ? (
+                        <>• {release}</>
+                      ) : (
+                        <>
+                          • {release.name}
+                          {release.blogPost && release.blogPost.url && (
+                            <Link to={release.blogPost.url} className={commonStyles.minorBlogLink}>
+                              {' '}→ read more
+                            </Link>
+                          )}
+                        </>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             )}
           </>
         ) : (
