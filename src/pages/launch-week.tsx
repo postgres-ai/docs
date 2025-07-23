@@ -71,6 +71,14 @@ function LaunchWeekPage() {
                         {day.description}
                       </div>
                       
+                      {day.blogPost.title && (
+                        <div className={commonStyles.blogLink}>
+                          <Link to={day.blogPost.url} className={commonStyles.blogButton}>
+                          📖 Read more
+                          </Link>
+                        </div>
+                      )}
+                      
                       {day.minorReleases.length > 0 && (
                         <div className={commonStyles.minorReleases}>
                           <span className={commonStyles.minorLabel}>Minor releases:</span>
@@ -92,14 +100,6 @@ function LaunchWeekPage() {
                               </li>
                             ))}
                           </ul>
-                        </div>
-                      )}
-                      
-                      {day.blogPost.title && (
-                        <div className={commonStyles.blogLink}>
-                          <Link to={day.blogPost.url} className={commonStyles.blogButton}>
-                          📖 Read more
-                          </Link>
                         </div>
                       )}
                     </>
