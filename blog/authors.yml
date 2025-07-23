@@ -16,6 +16,12 @@ bogdan:
   email: bogdan@postgres.ai
   image_url: '/assets/author/bogdan.jpg'
 
+nik:
+  name: Nikolay Samokhvalov
+  title: CEO & Founder
+  email: nik@postgres.ai
+  image_url: '/assets/author/nik.jpg'
+
 denis:
   name: Denis Morozov
   title: Lead Engineer

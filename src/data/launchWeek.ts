@@ -35,13 +35,13 @@ export const launchWeekData = [
   {
     day: 'Wednesday',
     date: 'Jul 23',
-    isLocked: true,
-    mainRelease: '',
-    description: '',
+    isLocked: false,
+    mainRelease: 'Postgres AI Checkup service',
+    description: 'Expert-led, AI-assisted comprehensive database health assessment.',
     minorReleases: [],
     blogPost: {
-      title: '',
-      url: '#'
+      title: 'Postgres AI Checkup service: expert-led, AI-assisted comprehensive database health assessment',
+      url: '/blog/20250723-postgres-ai-checkup-service'
     }
   },
   {
