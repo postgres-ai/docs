@@ -15,7 +15,7 @@ function LaunchWeekPreview() {
     const today = new Date()
     const dayOfWeek = today.getDay()
     const mondayIndex = dayOfWeek === 0 ? 6 : dayOfWeek - 1
-    const currentIndex = Math.min(mondayIndex, 4)
+    const currentIndex = 1
     setCurrentDayIndex(currentIndex)
     
     // Calculate visible days: yesterday, today, tomorrow
