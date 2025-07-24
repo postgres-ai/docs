@@ -6,7 +6,7 @@ description: Rules and style guides for AI tools like Cursor, Claude Code, and m
 # AI rules – vibe coding for Postgres
 
 1. [SQL style guide](/rules/sql-style) – Postgres AI's SQL code style derived from [Mozilla's](https://docs.telemetry.mozilla.org/concepts/sql_style.html)
-2. [DB design principles](/rules/db-design)
+2. [DB schema design guide](/rules/db-design)
 3. [Postgres hacking](/rules/postgres-hacking) – rules for vibe hacking ([Postgres.TV sessions](https://www.youtube.com/playlist?list=PLH8y1BNPAKjKDdJA7sDmFWUkbbYux3TRz))
 
 ---
