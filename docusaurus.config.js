@@ -45,14 +45,14 @@ module.exports = {
       { 'http-equiv': 'x-dns-prefetch-control', content: 'on' },
       { property: 'og:locale', content: 'en_US' },
       { property: 'og:site_name', content: 'Postgres AI' },
-      { property: 'og:image', content: `${URL}/img/og-image-xl.png` },
+      { property: 'og:image', content: `${URL}/img/og-image.png` },
       {
         property: 'article:publisher',
         content: 'https://www.linkedin.com/company/postgres-ai/',
       },
       { name: 'twitter:site', content: '@Database_Lab' },
       { name: 'twitter:creator', content: '@Database_Lab' },
-      { name: 'twitter:image', content: `${URL}/img/og-image-xl.png` },
+      { name: 'twitter:image', content: `${URL}/img/og-image.png` },
       { name: 'twitter:card', content: 'summary_large_image' }
     ],
 
