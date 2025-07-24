@@ -58,7 +58,15 @@ export const launchWeekData = [
     isLocked: false,
     mainRelease: 'Postgres how-tos',
     description: 'Dozens of practical guides for real-world PostgreSQL challenges.',
-    minorReleases: [],
+    minorReleases: [
+      {
+        name: 'Full-stack preview environments with DBLab 4.0',
+        blogPost: {
+          title: 'Full-stack preview environments with DBLab 4.0',
+          url: '/blog/20250724-full-stack-preview-environments-with-dblab'
+        }
+      }
+    ],
     blogPost: {
       title: 'Introducing Postgres how-tos: practical guides for real-world database challenges',
       url: '/blog/20250724-postgres-howtos-launch'
