@@ -55,13 +55,13 @@ export const launchWeekData = [
   {
     day: 'Thursday',
     date: 'Jul 24',
-    isLocked: true,
-    mainRelease: '',
-    description: '',
+    isLocked: false,
+    mainRelease: 'Postgres how-tos',
+    description: 'Dozens of practical guides for real-world PostgreSQL challenges.',
     minorReleases: [],
     blogPost: {
-      title: '',
-      url: '#'
+      title: 'Introducing Postgres how-tos: practical guides for real-world database challenges',
+      url: '/blog/20250724-postgres-howtos-launch'
     }
   },
   {

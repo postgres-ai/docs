@@ -15,7 +15,7 @@ function LaunchWeekPage() {
   //   return 1; // Cap at Friday (index 4)
   // };
 
-  const [activeDay, setActiveDay] = useState(2);
+  const [activeDay, setActiveDay] = useState(3);
 
   return (
     <Layout title="Launch Week - Postgres AI">
