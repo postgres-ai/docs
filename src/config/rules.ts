@@ -16,7 +16,7 @@ export const ruleConfigs: Record<string, RuleConfig> = {
     slug: 'postgres-hacking'
   },
   'db-design': {
-    title: 'DB design principles',
+    title: 'DB schema design guide',
     description: 'Database design principles and best practices for PostgreSQL schema design',
     slug: 'db-design'
   }
