@@ -129,6 +129,11 @@ module.exports = {
           ],
         },
         {
+          label: 'Postgres how-tos',
+          to: '/docs/postgres-howtos',
+          position: 'right',
+        },
+        {
           to: '/blog',
           label: 'Blog',
           position: 'right',
@@ -325,6 +330,10 @@ module.exports = {
     },
   },
 
+  clientModules: [
+    require.resolve('./src/clientModules/howtoButtons.js'),
+  ],
+  
   plugins: [
     [
       '@docusaurus/plugin-ideal-image',
@@ -341,7 +350,6 @@ module.exports = {
         redirects: [
           // DBLab how-tos redirects (moved from /docs/how-to-guides to /docs/dblab-howtos)
           { from: '/docs/how-to-guides', to: '/docs/dblab-howtos' },
-          { from: '/docs/how-to-guides/index', to: '/docs/dblab-howtos' },
           
           // Administration redirects
           { from: '/docs/how-to-guides/administration', to: '/docs/dblab-howtos' },

@@ -45,7 +45,7 @@ export default function RulesPage({ title, description, children, markdownConten
               tabIndex={0}
               onKeyDown={(e) => e.key === 'Enter' && copyToClipboard()}
             >
-              {copied ? 'Copied!' : 'Copy as markdown'}
+              {copied ? 'Copied!' : 'Copy for LLM'}
             </span>
             <span className={styles.separator}> | </span>
             <a

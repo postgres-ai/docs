@@ -18,4 +18,4 @@ These rules are designed to be used as instructions for AI coding assistants:
 3. **GitHub Copilot**: configure coding guidelines ([docs](https://docs.github.com/en/copilot/how-tos/agents/copilot-code-review/configuring-coding-guidelines))
 4. **Other AI tools**: see your tool docs, looking for "rules", "guidelines", "memory" or similar instructions.
 
-Each rule page includes "Copy as markdown" and  "View raw" buttons for easy copying.
+Each rule page includes "Copy for LLM" and "View raw" buttons for easy copying.
