@@ -42,7 +42,7 @@ We break down complex database problems into clear, actionable steps. Through pr
     <footer>
         <strong><a href="https://www.linkedin.com/in/harrybrundage/" target="_blank">Harry Brundage</a></strong><br/>
        Co-founder & CTO at <a href="https://www.linkedin.com/company/gadget-dev/" target="_blank">Gadget</a>, Canada<br/>
-        <em>Gadget -faster full-stack app development.</em>
+        <em>Gadget – faster full-stack app development.</em>
     </footer>
 </div>
 <div class="testimonial">
