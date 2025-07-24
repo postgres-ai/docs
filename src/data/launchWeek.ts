@@ -38,7 +38,15 @@ export const launchWeekData = [
     isLocked: false,
     mainRelease: 'Postgres AI Checkup service',
     description: 'Expert-led, AI-assisted comprehensive database health assessment.',
-    minorReleases: [],
+    minorReleases: [
+      {
+        name: 'AI rules for copilots',
+        blogPost: {
+          title: 'AI rules – vibe coding for Postgres',
+          url: '/rules'
+        }
+      }
+    ],
     blogPost: {
       title: 'Postgres AI Checkup service: expert-led, AI-assisted comprehensive database health assessment',
       url: '/blog/20250723-postgres-ai-checkup-service'
