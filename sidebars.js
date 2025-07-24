@@ -1,14 +1,18 @@
 module.exports = {
   baseSidebar: {
-    "Overview": [
-      "get-started",
-      "questions-and-answers",
-      "roadmap",
+    Overview: ['get-started', 'questions-and-answers', 'roadmap'],
+    Tutorials: [
+      'tutorials/database-lab-tutorial',
+      'tutorials/database-lab-tutorial-amazon-rds',
+      'tutorials/joe-setup',
     ],
-    "Tutorials": [
-      "tutorials/database-lab-tutorial",
-      "tutorials/database-lab-tutorial-amazon-rds",
-      "tutorials/joe-setup",
+    'Database Lab Engine': [
+      'database-lab/index',
+      'database-lab/supported-databases',
+      'database-lab/user-interface',
+      'database-lab/masking',
+      'database-lab/db-migration-checker',
+      'database-lab/telemetry',
     ],
     "DBLab": [
       "database-lab/index",
@@ -80,7 +84,9 @@ module.exports = {
           "dblab-howtos/branching/index",
           "dblab-howtos/branching/create-branch",
           "dblab-howtos/branching/delete-branch",
-        ]},
+          "dblab-howtos/branching/preview-environments-with-dblab-and-coolify",
+        ],
+      },
       {
         "Snapshots": [
           "dblab-howtos/snapshots/index",
@@ -375,4 +381,6 @@ module.exports = {
       "reference-guides/db-migration-checker-configuration-reference",
       "reference-guides/joe-bot-configuration-reference",
       "reference-guides/joe-bot-commands-reference",
-    ]}};
+    ],
+  },
+}
