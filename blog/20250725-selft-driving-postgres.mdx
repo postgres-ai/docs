@@ -1,0 +1,135 @@
+---
+title: "Self-driving Postgres"
+authors: nik
+description: "Building the first truly self-driving PostgreSQL: zero downtime upgrades, AI-powered automation, and a roadmap to full database autonomy."
+tags: 
+  - launch-week
+  - automation
+  - postgres
+  - database-management
+  - ai
+  - self-driving
+
+---
+
+import { BlogContactForm } from '@site/src/components/BlogContactForm'
+
+# SDP – Self-Driving Postgres. Open-source
+
+I'm excited to announce that Postgres AI has started work on a new project – open-source Self-Driving Postgres (SDP).
+
+In the AI era, Postgres is the natural choice for AI builders. With fast-growing database clusters, the highest level of automation is essential. AI-driven growth demands efficient, proactive, and intelligent database management. Our goal is to reduce manual interventions as much as possible to achieve the highest level of operational efficiency and reliability.
+
+<!--truncate-->
+
+How can we define levels of automation?
+
+For self-driving cars, there is a widely used approach – [SAE J3016 Automation Levels](https://www.sae.org/news/2019/01/sae-updates-j3016-automated-driving-graphic). We can apply a similar methodology to each area of database operations:
+
+#### Automation levels (SAE J3016-inspired, simplified)
+
+| Level | Name                   | Description                           |
+| ----- | ---------------------- | ------------------------------------- |
+| 0     | No Automation          | Fully manual management               |
+| 1     | DBA Assistance         | Recommendations provided, DBA action  |
+| 2     | Partial Automation     | Basic tasks automated, DBA oversight  |
+| 3     | Conditional Automation | Autonomous within boundaries          |
+| 4     | High Automation        | Predictive and proactive optimization |
+| 5     | Full Automation        | Complete autonomy                     |
+
+## Defining the roadmap
+
+What do you imagine when you hear "Self-Driving Postgres"? Most people would name these characteristics:
+- The database has automated tuning to improve performance
+- Indexes can be created automatically
+- The planner is smart; it learns from the past query execution to improve plan choices
+
+These are "cool" areas that attract the minds of many researchers and engineers. But are these areas the main ones that need our attention now, in 2025?
+
+Based on our extensive research, thorough analysis of 20+ recent [consulting](/consulting) projects, and consultation with industry leaders, we've identified these 25 key automation features:
+
+1. Advanced monitoring  
+2. Advanced log processing  
+3. Query analysis & workload optimization  
+4. Automated index creation  
+5. Automated index removal  
+6. Zero downtime schema changes  
+7. Automated partitioning  
+8. Automated sharding  
+9. Automated experiments  
+10. Autoscaling of compute  
+11. Autoscaling of storage  
+12. Automated checkpoint tuning  
+13. Automated autovacuum tuning  
+14. Fully automated backups, PITR, and recovery  
+15. Patch automation (minor upgrades)  
+16. Zero downtime major upgrades  
+17. Automated table repacking  
+18. Automated reindexing  
+19. Corruption detection  
+20. Automated corruption repair  
+21. Data lifecycle management  
+22. Auto failover  
+23. Intelligent RCAs  
+24. Security advisor  
+25. Cost analysis & optimization  
+
+Some of them are very well automated. Moreover, open-source components for such automation achieved maturity:
+- Patroni (just celebrated 10 years since the beginning of development) gives a very solid solution for HA
+- WAL-G and pgBackRest for backups (though you still need to add monitoring pieces and testing pipelines)
+
+These two areas, DR and HA, are considered the most crucial in database operations. It is already possible to build a system that will avoid data loss and provide a very good uptime, with certain limitations, up to [four nines](https://en.wikipedia.org/wiki/High_availability).
+
+With recent development of sharding tools, [pgDog](https://github.com/pgdogdev/pgdog), [Multigres](https://github.com/multigres/multigres), [SPQR](https://github.com/pg-sharding/spqr), and matured [Citus](https://github.com/citusdata/citus), there is also a clearer path to scale, which is exciting.
+
+So we have a solid open-source foundation. But what's missing, what should be the main focus for development of SDP now?
+
+Here comes a surprising answer. When we look at the database ops areas and pain points, the answer is obvious – it's not automated index creation, but rather automated index health management (with bloat mitigation and removal of unused and redundant indexes), that's truly needed (and some of our customers already have it, via custom solutions). It's not a smart planner that's needed, but rather true zero-downtime.
+
+## 8 Least advanced areas across the market
+
+Based on our research and analysis of recent cases with 20+ clients, these are the areas where automation remains the least advanced in the database industry (Postgres particularly), where automation levels are stuck at 1 or even 0:
+
+1. Root Cause Analysis (RCAs)  
+2. Cost optimization  
+3. Data lifecycle management  
+4. Upgrades  
+5. Corruption control  
+6. Partitioning  
+7. Schema changes  
+8. Bloat management  
+
+## Recent developments & current focus
+These areas naturally became our focus, and we achieved excellent results with our customers, which allows us to build components SDP needs:
+- **Zero downtime upgrades:**  
+    - we developed truly zero downtime (only a few seconds of latency spike!), zero data loss, and fully reversible major upgrades  
+    - battle-tested them with GitLab, Gadget, Supabase ([see testimonials](https://postgres.ai/consulting); GitLab [talks at conferences](https://www.youtube.com/watch?v=o08kJggkovg)).  
+- **pg_index_pilot:** A new project for automated index management starting with fully automated reindexing (it has its own roadmap — see [README](https://gitlab.com/postgres-ai/pg_index_pilot/)).
+- **Holistic database problem-solving framework: **  
+    - [Postgres AI monitoring](/blog/20250722-postgres-ai-v0-7-expert-level-postgresql-monitoring) released earlier this week  
+    - [Comprehensive checkup service](/blog/20250723-postgres-ai-checkup-service) released earlier this week  
+    - Knowledge base that includes 1.1 million articles in Postgres AI Assistant [knowledge base](https://postgres.ai/docs/reference-guides/postgres-ai-bot-reference#tool-rag_search) and benchmark framework supporting millions of experiments on both thin clones in DBLab and full clones (thanks to [cloud credits provided by Google through the Google AI Startup program](https://postgres.ai/blog/20240127-postgres-ai-bot), allowing us to conduct high-scale experiments) — reinforce and accelerate our work in automation.
+
+<p align="center">
+  <img
+    src="/assets/blog/20250725-selft-driving-postgres-diagram.svg"
+    alt="Postgres AI Checkup service: expert-led, AI-assisted comprehensive database health assessment"
+    width="625px"
+    loading="eager"
+  />
+</p>
+
+Next, these areas are to be covered:
+- Cost optimization
+- Assisted RCAs
+- Data lifecycle management
+
+The current goal is to achieve automation levels 3-4 in each of these areas. This should allow us to drastically increase the number of nines while reducing costs.
+
+With each release of SDP we plan to conduct a complete assessment of automation level in each area and publish a report.
+
+## Let's discuss
+
+If you're excited about the future of self-driving Postgres and want to explore how it might help your team — let's talk.
+
+<BlogContactForm />
