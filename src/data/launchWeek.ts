@@ -75,13 +75,13 @@ export const launchWeekData = [
   {
     day: 'Friday',
     date: 'Jul 25',
-    isLocked: true,
-    mainRelease: '',
-    description: '',
+    isLocked: false,
+    mainRelease: 'Self-driving Postgres',
+    description: 'Building the first truly self-driving PostgreSQL: zero downtime upgrades, AI-powered automation, and a roadmap to full database autonomy. ',
     minorReleases: [],
     blogPost: {
-      title: '',
-      url: '#'
+      title: 'Self-driving Postgres',
+      url: '/blog/20250725-selft-driving-postgres'
     }
   }
 ] 
