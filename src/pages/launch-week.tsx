@@ -6,16 +6,7 @@ import styles from './launch-week.module.css'
 import commonStyles from '@site/src/css/launchWeek.module.css'
 
 function LaunchWeekPage() {
-  // // Get current day of week (0 = Sunday, 1 = Monday, etc.)
-  // const getCurrentDayIndex = () => {
-  //   const today = new Date();
-  //   const dayOfWeek = today.getDay();
-  //   // Convert to our array index (Monday = 0, Tuesday = 1, etc.)
-  //   const mondayIndex = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // Sunday becomes 6, Monday becomes 0
-  //   return 1; // Cap at Friday (index 4)
-  // };
-
-  const [activeDay, setActiveDay] = useState(4);
+  const [activeDay, setActiveDay] = useState(-1);
 
   return (
     <Layout title="Launch Week - Postgres AI">
