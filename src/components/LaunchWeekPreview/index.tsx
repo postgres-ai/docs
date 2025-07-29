@@ -5,66 +5,19 @@ import styles from './styles.module.css'
 import commonStyles from '@site/src/css/launchWeek.module.css'
 
 function LaunchWeekPreview() {
-  const [currentDayIndex, setCurrentDayIndex] = useState(0)
-  const [visibleDays, setVisibleDays] = useState<number[]>([])
   const [isVisible, setIsVisible] = useState(true)
-  const scheduleRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    // Determine current day index (0-4 for Monday-Friday)
-    const today = new Date()
-    const dayOfWeek = today.getDay()
-    const mondayIndex = dayOfWeek === 0 ? 6 : dayOfWeek - 1
-    const currentIndex = 4
-    setCurrentDayIndex(currentIndex)
-    
-    // Calculate visible days: yesterday, today, tomorrow
-    const yesterday = Math.max(0, currentIndex - 1)
-    const tomorrow = Math.min(4, currentIndex + 1)
-    
-    // Ensure we have unique days and handle edge cases
-    let daysToShow = []
-    if (currentIndex === 0) {
-      // Monday: show Monday, Tuesday
-      daysToShow = [0, 1, 2]
-    } else if (currentIndex === 4) {
-      // Friday: show Thursday, Friday
-      daysToShow = [2, 3, 4]
-    } else {
-      // Other days: show yesterday, today, tomorrow
-      daysToShow = [yesterday, currentIndex, tomorrow]
-    }
-    
-    setVisibleDays(daysToShow)
-  }, [])
-
-  // Scroll to current day when component mounts or current day changes
-  useEffect(() => {
-    if (scheduleRef.current && visibleDays.length > 0) {
-      const currentDayPosition = visibleDays.indexOf(currentDayIndex)
-      if (currentDayPosition !== -1) {
-        const currentDayElement = scheduleRef.current.children[currentDayPosition] as HTMLElement
-        if (currentDayElement) {
-          // Use scrollIntoView with scroll-padding
-          currentDayElement.scrollIntoView({
-            behavior: 'smooth',
-            block: 'nearest',
-            inline: 'center'
-          })
-        }
-      }
-    }
-  }, [currentDayIndex, visibleDays])
+  
+  // All days are always visible (Monday-Friday)
+  const allDays = [0, 1, 2, 3, 4]
 
   const getDayCard = (dayIndex: number) => {
     const day = launchWeekData[dayIndex]
-    const isCurrentDay = dayIndex === currentDayIndex
     const isLocked = day.isLocked
 
     return (
       <div 
         key={dayIndex}
-        className={`${commonStyles.dayCard} ${styles.dayCard} ${isCurrentDay ? commonStyles.currentDay : isLocked ? commonStyles.lockedDay : commonStyles.availableDay}`}
+        className={`${commonStyles.dayCard} ${styles.dayCard} ${isLocked ? commonStyles.lockedDay : commonStyles.availableDay}`}
       >
         <div className={commonStyles.dayHeader}>
           <span className={commonStyles.dayName}>{day.day}</span>
@@ -164,8 +117,8 @@ function LaunchWeekPreview() {
             <div className={styles.command}>cat launch-week.txt</div>
           </div>
 
-          <div className={styles.schedule} ref={scheduleRef}>
-            {visibleDays.map(dayIndex => getDayCard(dayIndex))}
+          <div className={styles.schedule}>
+            {allDays.map(dayIndex => getDayCard(dayIndex))}
           </div>
 
           <div className={styles.welcome}>
