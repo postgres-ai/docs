@@ -330,9 +330,7 @@ module.exports = {
     },
   },
 
-  clientModules: [
-    require.resolve('./src/clientModules/howtoButtons.js'),
-  ],
+  clientModules: [],
   
   plugins: [
     [
@@ -498,7 +496,8 @@ module.exports = {
             path: '/chats/:chatId',
             exact: false,
             component: path.resolve(__dirname, 'src/dynamicPages/chats'),
-          }
+          },
+
         ],
       },
     ],

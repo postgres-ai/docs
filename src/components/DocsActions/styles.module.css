@@ -1,0 +1,72 @@
+.docsActions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 1rem 0 2rem 0;
+  padding: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.docsActionButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #666;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.docsActionButton:hover {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.docsActionButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Success state */
+.docsActionButton.success {
+  color: #28a745;
+}
+
+[data-theme='dark'] .docsActionButton.success {
+  color: #6fcf97;
+}
+
+
+
+/* Dark mode adjustments */
+[data-theme='dark'] .docsActionButton {
+  color: #bbb;
+}
+
+[data-theme='dark'] .docsActionButton:hover {
+  color: #4da6ff;
+}
+
+/* Icon colors for better contrast */
+.docsActionButton svg {
+  opacity: 0.8;
+}
+
+.docsActionButton:hover svg {
+  opacity: 1;
+}
+
+[data-theme='dark'] .docsActionButton svg {
+  opacity: 0.9;
+}
+
+[data-theme='dark'] .docsActionButton:hover svg {
+  opacity: 1;
+} 
