@@ -6,14 +6,6 @@ module.exports = {
       'tutorials/database-lab-tutorial-amazon-rds',
       'tutorials/joe-setup',
     ],
-    'Database Lab Engine': [
-      'database-lab/index',
-      'database-lab/supported-databases',
-      'database-lab/user-interface',
-      'database-lab/masking',
-      'database-lab/db-migration-checker',
-      'database-lab/telemetry',
-    ],
     "DBLab": [
       "database-lab/index",
       "database-lab/supported-databases",
