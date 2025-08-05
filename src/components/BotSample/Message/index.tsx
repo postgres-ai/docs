@@ -68,7 +68,7 @@ export const Message = (props: MessageProps) => {
   return (
     <div className={cn(styles.container, { [styles.aiMessage]: isAi })}>
       <div className={styles.heading}>
-                  <span>{isAi ? 'Postgres AI' : 'You'}</span>
+                  <span>{isAi ? 'PostgresAI' : 'You'}</span>
       </div>
       <div className={cn(styles.content, { [styles.loader]: isLoading })}>
         {

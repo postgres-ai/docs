@@ -49,7 +49,7 @@ To support growth plans, CDEK improves DevOps to reduce development time and con
 </p>
 
 ## Solution
-DBLab was deployed in just three weeks with very limited resources — a success made possible by support from Postgres AI (documentation and advice). CDEK uses DBLab for its PostgreSQL databases, which are hosted in a private cloud.
+DBLab was deployed in just three weeks with very limited resources — a success made possible by support from PostgresAI (documentation and advice). CDEK uses DBLab for its PostgreSQL databases, which are hosted in a private cloud.
 
 ## Results
 Database Lab has enabled CDEK to speed up development and testing significantly, reducing data provisioning time to seconds. Previously, it took several days to restore the CDEK staging database, but now the environment can be restored in a few seconds. Staging databases was updated only in special technological windows and the data could be outdated for several months. Now, thanks to automation, staging databases is updated daily (enough for development and testing, but can be updated more often if necessary). Using Database Lab allowed the existing team to support the rapid growth of database administration tasks. Development teams now also have the opportunity to use their own personal staging and conduct production-like experiments.

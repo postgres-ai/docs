@@ -39,7 +39,7 @@ This process is fully automated and takes only a few seconds, even for multi-ter
 - Using the `exec` command one can set or reset any PostgreSQL variables such as `enable_seqscan` or `random_page_cost` (e.g., `exec set random_page_cost to 1;`), controlling planner parameters.
 - Each session will be destroyed after the specified amount of minutes of inactivity (configurable on the Database Lab). The corresponding thin clone will be deleted.
 - Joe can work with a Database Lab instance, which is constantly updated (being a replica of some Postgres server or consuming WALs from WAL archive). Sophisticated snapshot strategies can be used. In this case, Joe will always use the latest snapshot, reporting its timestamp (`Snapshot data state at`) to users.
-- Integration with Postgres AI Platform to allow history viewing, plan visualization, and sharing.
+- Integration with PostgresAI Platform to allow history viewing, plan visualization, and sharing.
 - SQL optimization knowledge base – a history of Joe sessions, including details of `EXPLAIN` plans, recommendations, various visualization of query plans, and additional meta-data, to support "team memory" and collaboration within particular engineering teams and between various teams/departments in an organization (e.g., between DBA and Development teams).
 
 ## Resources 

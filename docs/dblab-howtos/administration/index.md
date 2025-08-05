@@ -6,7 +6,7 @@ description: How to administer DBLab Engine
 ---
 
 ## Guides
-- [Install DBLab Engine from Postgres AI Console](/docs/dblab-howtos/administration/install-dle-from-postgres-ai)
+- [Install DBLab Engine from PostgresAI Console](/docs/dblab-howtos/administration/install-dle-from-postgres-ai)
 - [Install DBLab Engine from AWS Marketplace](/docs/dblab-howtos/administration/install-dle-from-aws-marketplace)
 - [Install DBLab Engine manually](/docs/dblab-howtos/administration/install-dle-manually)
 - [How to configure PostgreSQL used by DBLab Engine](/docs/dblab-howtos/administration/postgresql-configuration)

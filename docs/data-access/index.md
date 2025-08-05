@@ -13,5 +13,5 @@ Better performance for analytics
 - Production servers are not in danger: autovacuum activity is not affected, long-running queries are not causing bloat
 
 :::note
-This page is unfinished. Reach out to the Postgres AI team to learn more.
+This page is unfinished. Reach out to the PostgresAI team to learn more.
 :::

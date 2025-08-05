@@ -4,14 +4,14 @@ const blog = [
     link: 'blog/20241003-how-does-planning-time-depend-on-number-of-partitions',
     date: '2024-10-03 21:45:12',
     title: 'AI-assisted benchmark: number of partitions vs. planning time',
-    description: 'How does planning time depends on the number of partitions? Let\'s explore with the Postgres AI assistant',
+    description: 'How does planning time depends on the number of partitions? Let\'s explore with the PostgresAI assistant',
     image: '/assets/thumbnails/ai_db_experiment_plannting_time_vs_partition_count.jpg',
   },
   {
     link: 'blog/20240127-postgres-ai-bot',
     date: '2024-01-27 23:21:12',
-    title: 'Postgres AI Bot. Towards LLM OS for Postgres',
-    description: 'What is inside Postgres AI Bot alpha?',
+    title: 'PostgresAI Bot. Towards LLM OS for Postgres',
+    description: 'What is inside PostgresAI Bot alpha?',
     image: '/assets/thumbnails/postgres-ai-bot-announcement-2.jpg',
   },
   {
@@ -39,7 +39,7 @@ const blog = [
     link: 'blog/20221020-database-lab-engine-3-2-released',
     date: '2022-10-20 22:11:12',
     title: 'DLE 3.2: config and logs in UI, Postgres 15, AWS Marketplace version is GA',
-    description: 'The Postgres AI team is happy to announce the release of version 3.2 of DBLab Engine (DLE), an open-source tool that provides blazing-fast database cloning and branching for any PostgreSQL database to build powerful development, test, QA, and staging environments.',
+    description: 'The PostgresAI team is happy to announce the release of version 3.2 of DBLab Engine (DLE), an open-source tool that provides blazing-fast database cloning and branching for any PostgreSQL database to build powerful development, test, QA, and staging environments.',
     image: '/assets/thumbnails/dle-3.2-blog.png',
   },
   /*
@@ -61,7 +61,7 @@ const blog = [
     link: 'blog/20220405-database-lab-engine-3-1-released',
     date: '2022-04-05 23:16:17',
     title: 'DLE 3.1: pgBackRest, timezones for CLI, DLE community',
-    description: 'The Postgres AI team is happy to announce the release of version 3.1 of DBLab Engine (DLE), the most advanced open-source software ever released that empowers development, testing, and troubleshooting environments for fast-growing projects.',
+    description: 'The PostgresAI team is happy to announce the release of version 3.1 of DBLab Engine (DLE), the most advanced open-source software ever released that empowers development, testing, and troubleshooting environments for fast-growing projects.',
     image: '/assets/thumbnails/dle-3.1-blog.png',
   },
   {
@@ -197,7 +197,7 @@ const blog = [
     link: '/blog/joe-0.5',
     date: '2020-02-26 21:42:00',
     title: 'Joe bot, an SQL query optimization assistant, updated to version 0.5.0',
-    description: 'Postgres AI team is proud to present version 0.5.0 of Joe bot, an SQL query optimization assistant',
+    description: 'PostgresAI team is proud to present version 0.5.0 of Joe bot, an SQL query optimization assistant',
     image: '/assets/joe-3-silhouettes.svg',
   },
   {
@@ -211,7 +211,7 @@ const blog = [
     link: '/blog/dblab-first-release',
     date: '2020-01-28 14:15:00',
     title: 'The first public release of DBLab Engine',
-    description: 'Postgres AI team is proud to announce the very first public release of DBLab Engine',
+    description: 'PostgresAI team is proud to announce the very first public release of DBLab Engine',
     image: '/assets/dblab.svg',
   },*/
 ];

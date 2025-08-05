@@ -8,7 +8,7 @@ keywords:
 - "Built-in DBLab UI"
 ---
 
-DBLab Engine comes with a basic UI. The DBLab Platform (Postgres AI Platform) extends the UI with more features, such as user management, SSO, audit logs. You can see the feature differentiation on the [Pricing page](/pricing).
+DBLab Engine comes with a basic UI. The DBLab Platform (PostgresAI Platform) extends the UI with more features, such as user management, SSO, audit logs. You can see the feature differentiation on the [Pricing page](/pricing).
 
 ## What is the DBLab UI?
 DBLab UI is a web UI application that allows observing the current state of the instance and performing basic operations with clones, snapshots, and branches.
@@ -27,6 +27,6 @@ When running, the UI container connects to the internal DLE Docker network and e
 
 DBLab UI accepts:
 - the **verification token** specified in the configuration file (DLE CE, DLE SE) – the same that is used with DLE API and CLI
-- and **personal tokens** if the [Secure User Access Tokens](https://postgres.ai/pricing) feature is activated (requires integration with the Postgres AI Platform, DLE EE only)
+- and **personal tokens** if the [Secure User Access Tokens](https://postgres.ai/pricing) feature is activated (requires integration with the PostgresAI Platform, DLE EE only)
 
 From version 3.0 onwards, DLE can be run with an empty verification token, although this is not recommended. In such cases, the UI application will not require any credentials.

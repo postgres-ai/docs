@@ -324,7 +324,7 @@ const DBLabEngine = () => {
             <div className="col-md-3"></div>
             <div className="col-md-6">
               <p>
-                Postgres AI ❤ open source
+                PostgresAI ❤ open source
                 <br />
               </p>
             </div>

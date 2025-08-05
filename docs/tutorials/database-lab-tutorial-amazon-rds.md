@@ -4,7 +4,7 @@ sidebar_label: Tutorial for Amazon RDS
 keywords:
   - "DBLab Engine tutorial for Amazon RDS"
   - "Start using DBLab Engine for Amazon RDS"
-  - "Postgres AI tutorial for Amazon RDS"
+  - "PostgresAI tutorial for Amazon RDS"
 description: In this tutorial, we are going to set up a DBLab Engine for an existing PostgreSQL DB instance on Amazon RDS. Database Lab is used to boost software development and testing processes via enabling ultra-fast provisioning of databases of any size.
 ---
 
@@ -378,5 +378,5 @@ dblab branch --snapshot-id SNAPSHOT_ID my_first_branch
 For more, see [the full client CLI reference](/docs/reference-guides/dblab-client-cli-reference).
 
 :::info Have questions?
-[Reach out to the Postgres AI team](https://postgres.ai/contact), we'll be happy to help!
+[Reach out to the PostgresAI team](https://postgres.ai/contact), we'll be happy to help!
 :::

@@ -8,18 +8,18 @@ keywords:
   - "instant database clones"
   - "postgresql development environments"
   - "database lab engine"
-  - "postgres ai assistant"
+  - "postgresai assistant"
   - "postgresql testing automation"
   - "copy on write postgres"
 ---
 
 # Questions & answers
 
-## About Postgres AI
+## About PostgresAI
 
-### What is Postgres AI?
+### What is PostgresAI?
 
-Postgres AI is a technology company revolutionizing PostgreSQL development and operations. We provide tools and services that make working with PostgreSQL databases faster, safer, and more efficient:
+PostgresAI is a technology company revolutionizing PostgreSQL development and operations. We provide tools and services that make working with PostgreSQL databases faster, safer, and more efficient:
 
 - **DBLab Engine**: Our flagship open-source platform for instant database cloning and branching
 - **PostgresAI Assistant**: Free AI-powered PostgreSQL expert available 24/7
@@ -28,7 +28,7 @@ Postgres AI is a technology company revolutionizing PostgreSQL development and o
 
 We help companies ship database changes 10x faster while reducing infrastructure costs and preventing production incidents.
 
-### What makes Postgres AI different?
+### What makes PostgresAI different?
 
 We provide a comprehensive PostgreSQL platform that transforms how teams work with databases:
 
@@ -238,7 +238,7 @@ Yes! DBLab supports:
 - [DBLab Engine GitLab repository](https://gitlab.com/postgres-ai/database-lab)
 - [Blog](/blog) – echnical articles and case studies
 
-### How do I contact Postgres AI?
+### How do I contact PostgresAI?
 
 See the ["Contact us"](/contact) page.
 

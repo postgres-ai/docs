@@ -143,8 +143,8 @@ Here is how the configuration file is structured:
 | `provision` | Describes how thin cloning and database branching are organized. |
 | `retrieval` | Defines the data flow: a series of "jobs" for initial retrieval of the data, and, optionally, continuous data synchronization with the source, snapshot creation and retention policies. The initial retrieval may be either "logical" (dump/restore) or "physical" (based on replication or restoration from a archive). |
 | `cloning` | Thin cloning policies.                                                                                                                                                                                                                                                                                                    |
-| `platform` | Postgres AI Platform integration (provides GUI, advanced features such as user management, logs).                                                                                                                                                                                                                         |
-| `observer` | CI Observer configuration. CI Observer helps verify database schema changes (database migrations) automatically, in CI/CD pipelines. Available on the Postgres AI Platform.                                                                                                                                               |
+| `platform` | PostgresAI Platform integration (provides GUI, advanced features such as user management, logs).                                                                                                                                                                                                                         |
+| `observer` | CI Observer configuration. CI Observer helps verify database schema changes (database migrations) automatically, in CI/CD pipelines. Available on the PostgresAI Platform.                                                                                                                                               |
 | `webhooks` | Webhook configuration for clone lifecycle events. Allows integration with external systems for notifications and automation.                                                                                                                                                                                               |
 | Environment Variables | Supported environment variables for configuration override and sensitive data management.                                                                                                                                                                                                                                   |
 | `diagnostic`  | Configuration to collect diagnostics logs - containers output, Postgres logs.                                                                                                                                                                                                                                             | 
@@ -349,16 +349,16 @@ Options:
 - `accessHost` (string, required) - the host that will be specified in the database connection string to inform users about how to connect to database clones. This should match one of the addresses specified in `provision.cloneAccessAddresses` or be a hostname that resolves to one of those addresses. Use public IP address if database connections are allowed from outside, or "localhost"/private IP for local-only access.
 - `maxIdleMinutes` (integer, optional, default: 120) - automatically delete clones after the specified minutes of inactivity, 0 is being used to disable this feature. Inactivity means no active sessions (queries being processed) and no recently logged queries in the query log.
 
-## Section `platform`: Postgres AI Platform integration
+## Section `platform`: PostgresAI Platform integration
 - `url` (string, optional, default: "https://postgres.ai/api/general") - Platform API URL
-- `accessToken` (string, required) - the token for authorization in Platform API. This token can be obtained on the Postgres AI Console
+- `accessToken` (string, required) - the token for authorization in Platform API. This token can be obtained on the PostgresAI Console
 - `enablePersonalTokens` (boolean, optional, default: false) - enables authorization with personal tokens of the organization's members
 - `projectName` (string, optional) - project name for identification in the Platform
 - `orgKey` (string, optional) - organization key for Platform integration
-- `enableTelemetry` (boolean, optional, default: true) - enable anonymous statistics collection sent to Postgres AI; used to analyze DBLab Engine usage and help development decisions. See [telemetry documentation](https://postgres.ai/docs/database-lab/telemetry) for the full list of collected data points
+- `enableTelemetry` (boolean, optional, default: true) - enable anonymous statistics collection sent to PostgresAI; used to analyze DBLab Engine usage and help development decisions. See [telemetry documentation](https://postgres.ai/docs/database-lab/telemetry) for the full list of collected data points
 
 ## Section `observer`: CI Observer configuration
-CI Observer helps verify database schema changes (database migrations) automatically in CI/CD pipelines. Available on the Postgres AI Platform.
+CI Observer helps verify database schema changes (database migrations) automatically in CI/CD pipelines. Available on the PostgresAI Platform.
 
 - `replacementRules` (key-value, optional) - set up rules based on regular expressions (a pair of values `"regexp":"replace"`; to check syntax, use [this document](https://github.com/google/re2/wiki/Syntax )) for Postgres logs that will be sent to the Platform when running Observed Sessions; this helps ensure that sensitive data is masked properly and it doesn't leave the origin
 

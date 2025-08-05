@@ -12,7 +12,7 @@ const BOT_WS_URL = !!process.env.BOT_WS_URL ? process.env.BOT_WS_URL : '/ai-bot-
 
 module.exports = {
   title:
-    'Postgres AI', // Title for your website.
+    'PostgresAI', // Title for your website.
   tagline:
     'Branching 🖖 and thin cloning ⚡️ for any Postgres database. Empower database testing in CI/CD. Optimize DB-related costs while improving time-to-market and software quality.',
   url: URL, // Your website URL.
@@ -44,7 +44,7 @@ module.exports = {
       // This options will overwrite options from pages with the same name/property.
       { 'http-equiv': 'x-dns-prefetch-control', content: 'on' },
       { property: 'og:locale', content: 'en_US' },
-      { property: 'og:site_name', content: 'Postgres AI' },
+      { property: 'og:site_name', content: 'PostgresAI' },
       { property: 'og:image', content: `${URL}/img/og-image.png` },
       {
         property: 'article:publisher',
@@ -66,9 +66,9 @@ module.exports = {
     },
 
     navbar: {
-                title: 'Postgres AI',
+                title: 'PostgresAI',
       logo: {
-                  alt: 'Postgres AI logo',
+                  alt: 'PostgresAI logo',
         src: 'img/logo.svg',
         width: '32px',
         height: '32px',
@@ -321,7 +321,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Postgres AI`,
+      copyright: `Copyright © ${new Date().getFullYear()} PostgresAI`,
     },
 
     prism: {
@@ -532,7 +532,7 @@ module.exports = {
             type: 'all',
             title: '', // default to siteConfig.title
             description: '', // default to  `${siteConfig.title} Blog`
-            copyright: 'Postgres AI',
+            copyright: 'PostgresAI',
             language: undefined, // possible values: http://www.w3.org/TR/REC-html40/struct/dirlang.html#langcodes
           },
         },

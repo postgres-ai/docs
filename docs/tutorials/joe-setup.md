@@ -9,7 +9,7 @@ keywords:
   - "PostgreSQL EXPLAIN"
   - "Verify PostgreSQL index ideas"
   - "Joe bot tutorial"
-  - "Postgres AI Joe bot"
+  - "PostgresAI Joe bot"
   - "sql optimization chatbot"
 description: Learn how to use Joe bot to build a swift workflow of PostgreSQL query optimization running EXPLAIN commands on ultra-fast thin clones.
 ---
@@ -25,7 +25,7 @@ Make sure the address used in `accessHost` is accessible from where you are goin
 
 ## Step 2. Configure communication channels
 There are two available types of communication with Joe:
-- Web UI powered by [Postgres AI Console](https://postgres.ai/console/)
+- Web UI powered by [PostgresAI Console](https://postgres.ai/console/)
 - Slack
 
 You can use both of them in parallel. If you can develop in Go language, feel free to implement more types of communication: see [communication channels issues](https://gitlab.com/postgres-ai/joe/-/issues?label_name%5B%5D=Communication+channel).
@@ -42,15 +42,15 @@ curl -fsSL https://gitlab.com/postgres-ai/joe/-/raw/0.10.0/configs/config.exampl
 
 Then, configure ways of communication with Joe.
 
-### Step 2a. Set up Joe in Postgres AI Console ("Web UI")
+### Step 2a. Set up Joe in PostgresAI Console ("Web UI")
 If you don't need Web UI and prefer working with Joe only in messengers (such as Slack), comment out `channelMapping: communicationTypes: webui` subsection in Jog config, and proceed to the next step.
 
-Before configuring Web UI make sure you have a Postgres AI account.
+Before configuring Web UI make sure you have a PostgresAI account.
 
-If you don't have a Postgres AI account yet, see the guide on how to start working with [Postgres AI Console](/docs/platform).
+If you don't have a PostgresAI account yet, see the guide on how to start working with [PostgresAI Console](/docs/platform).
 
 To configure Web UI:
-1. First, get your `JOE_PLATFORM_TOKEN`. This token lets Joe Bot talk to Postgres AI Platform to enable Web UI chat window, save the history of commands, and visualize query plans. In [Postgres AI Console](https://postgres.ai/console/), switch to proper organization and open the `Access Tokens` page. Save it to Joe config (`platform: token`).
+1. First, get your `JOE_PLATFORM_TOKEN`. This token lets Joe Bot talk to PostgresAI Platform to enable Web UI chat window, save the history of commands, and visualize query plans. In [PostgresAI Console](https://postgres.ai/console/), switch to proper organization and open the `Access Tokens` page. Save it to Joe config (`platform: token`).
 1. Then, go to the `Joe instances` page in the `SQL Optimization` sidebar section.
 1. Choose a project from the dropdown menu and press the `Add instance` button.
 1. Generate `Signing secret`. Put it in the configuration file (`channelMapping: webui: <your channel name>: credentials: signingSecret`). We will add and verify the URL on the last step, so do not close the page.

@@ -5,7 +5,7 @@ slug: /dblab-howtos
 ---
 
 ## Administration
-- [How to install DBLab Engine from Postgres AI Console](/docs/dblab-howtos/administration/install-dle-from-postgres-ai)
+- [How to install DBLab Engine from PostgresAI Console](/docs/dblab-howtos/administration/install-dle-from-postgres-ai)
 - [How to install DBLab Engine from AWS Marketplace](/docs/dblab-howtos/administration/install-dle-from-aws-marketplace)
 - [How to install DBLab Engine manually (Community Edition)](/docs/dblab-howtos/administration/install-dle-manually)
 - [How to configure PostgreSQL used by DBLab Engine](/docs/dblab-howtos/administration/postgresql-configuration)
@@ -57,7 +57,7 @@ slug: /dblab-howtos
 - [pgBackRest](/docs/dblab-howtos/administration/data/pgBackRest)
 - [Custom](/docs/dblab-howtos/administration/data/custom)
 
-## DBLab (Postgres AI) Platform
-- [Start using Postgres AI Platform](/docs/dblab-howtos/platform/start-using-platform)
+## DBLab (PostgresAI) Platform
+- [Start using PostgresAI Platform](/docs/dblab-howtos/platform/start-using-platform)
 - [Create and use DBLab Platform access tokens](/docs/dblab-howtos/platform/tokens)
 - [DBLab Platform onboarding checklist](/docs/dblab-howtos/platform/onboarding)

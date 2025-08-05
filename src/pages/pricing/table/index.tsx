@@ -71,7 +71,7 @@ const Table = () => {
         <ul>
           <li>
             DBLab SE is built using open-source components. You install it to
-            <i>your</i> infrastructure. You pay Postgres AI for support,
+            <i>your</i> infrastructure. You pay PostgresAI for support,
             guaranteed packaging quality, keeping the product up-to-date (think
             Postgres versions, extensions, tools) and feature-rich. You can
             switch from DBLab SE to a free offering (DBLab CE, Community
@@ -79,7 +79,7 @@ const Table = () => {
             use the DBLab SE bundle and the guaranteed vendor support.
           </li>
           <li>
-            Postgres AI teamed up with{' '}
+            PostgresAI teamed up with{' '}
             <a href="https://stripe.com/" target="blank">
               Stripe
             </a>{' '}
@@ -94,7 +94,7 @@ const Table = () => {
             For certain clouds like AWS, GCP, DigitalOcean, and Hetzner.Cloud,
             there is a simpler setup available in{' '}
             <a href="https://console.postgres.ai" target="blank">
-              the Postgres AI Console
+              the PostgresAI Console
             </a>
             . Costs for cloud resources like VM, storage, network, dedicated IP
             addresses are not part of DBLab SE pricing. You will pay them

@@ -34,7 +34,7 @@ Instances of the DBLab Engine and all thin clones reside completely within
 your own infrastructure at all times.
 
 The DBLab Engine is managed via an API that can be exposed either over HTTPS or an SSH tunnel.
-The team at Postgres AI and all platform components:
+The team at PostgresAI and all platform components:
 * ___cannot___ reach your databases
 * ___cannot___ read or modify the data in your databases
 * ___cannot___ SSH to your machines

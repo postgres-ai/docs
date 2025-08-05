@@ -37,7 +37,7 @@ const Bot = () => (
               height="32px"
               width="32px"
             />
-            <span>Postgres AI</span>
+            <span>PostgresAI</span>
           </div>
         </nav>
         <SignupForm />

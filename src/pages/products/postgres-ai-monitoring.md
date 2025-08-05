@@ -23,7 +23,7 @@ Get deep insights into your Postgres performance with our comprehensive monitori
   - **Wait event analysis** – Similar to AWS RDS Performance Insights and CloudSQL Query Insights, providing deep visibility into database wait events
 
 
-- **Renowned Postgres AI health check reports** – Comprehensive health assessments with actionable recommendations based on industry best practices and real-world experience
+- **Renowned PostgresAI health check reports** – Comprehensive health assessments with actionable recommendations based on industry best practices and real-world experience
 
 - **AI-powered insights backed by human expertise** – From diagnostics to mitigation strategies, combining artificial intelligence with seasoned Postgres expert knowledge for actionable recommendations
 

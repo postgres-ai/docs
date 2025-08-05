@@ -70,5 +70,5 @@ TBD
 ```
 
 :::note
-This page is unfinished. Reach out to the Postgres AI team to learn more.
+This page is unfinished. Reach out to the PostgresAI team to learn more.
 :::
