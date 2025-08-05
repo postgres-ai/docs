@@ -90,7 +90,7 @@ export const Chatscontent = () => {
               height="32px"
               width="32px"
             />
-            <span>Postgres.ai</span>
+            <span>PostgresAI</span>
           </Link>
         </nav>
         <div

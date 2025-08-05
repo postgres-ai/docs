@@ -4,14 +4,14 @@ sidebar_label: Tutorial for any Postgres
 keywords:
   - "DBLab tutorial"
   - "Start using DBLab Engine"
-  - "Postgres AI tutorial"
+  - "PostgresAI tutorial"
 description: In this tutorial, we are going set up a DBLab Engine in the Cloud. DBLab is used to boost software development and testing processes via enabling ultra-fast provisioning of databases of any size.
 ---
 
 DBLab Engine is used to boost software development and testing processes by enabling ultra-fast provisioning of databases of any size.
 
-Use [the Postgres AI Console](https://console.postgres.ai/) for an easy and quick installation of DBLab. Following the steps below, in a few minutes, you will get:
-- A single DBLab Standard Edition (DBLab SE) installed in your infrastructure (Postgres AI does not have access to it)
+Use [the PostgresAI Console](https://console.postgres.ai/) for an easy and quick installation of DBLab. Following the steps below, in a few minutes, you will get:
+- A single DBLab Standard Edition (DBLab SE) installed in your infrastructure (PostgresAI does not have access to it)
 - Additional components such as monitoring
 - Ready-to-use, well-tested, vendor-supported Postgres images for DBLab that are compatible with your source databases located in popular managed Postgres services like RDS, CloudSQL, Supabase, and Heroku
 - A DBLab SE subscription with guaranteed vendor support
@@ -49,7 +49,7 @@ In both scenarios, your data remains securely within your infrastructure.
 - [Create](https://console.postgres.ai/addorg) a new organization
 - Inside your organization, go to the "Billing" section and add a new payment method:
    - press the "Edit payment methods" button,
-   - you will see the Stripe portal – note it has the address `https://billing.stripe.com/...` (Postgres AI partners with Stripe for simplified billing),
+   - you will see the Stripe portal – note it has the address `https://billing.stripe.com/...` (PostgresAI partners with Stripe for simplified billing),
    - add your payment methods there and close the page.
 
 ### DBLab installation
@@ -165,7 +165,7 @@ ok: [root@5.161.212.233] => {
 }
 ```
 :::note
-Save the data from the "Print usage instructions" task, because the Postgres AI Platform does not save this data on its side.
+Save the data from the "Print usage instructions" task, because the PostgresAI Platform does not save this data on its side.
 :::
 
 

@@ -9,7 +9,7 @@ function LaunchWeekPage() {
   const [activeDay, setActiveDay] = useState(-1);
 
   return (
-    <Layout title="Launch Week - Postgres AI">
+    <Layout title="Launch Week - PostgresAI">
       <main className={styles.container}>
         <div className={styles.terminal}>
           <div className={styles.terminalHeader}>
@@ -24,11 +24,11 @@ function LaunchWeekPage() {
           <div className={styles.terminalContent}>
             <div className={styles.welcome}>
               <div className={styles.prompt}>$</div>
-              <div className={styles.command}>echo "🚀 Welcome to Postgres AI launch week July 2025! 🚀"</div>
+              <div className={styles.command}>echo "🚀 Welcome to PostgresAI launch week July 2025! 🚀"</div>
             </div>
             
             <div className={styles.output}>
-              🚀 Welcome to Postgres AI launch week July 2025! 🚀
+              🚀 Welcome to PostgresAI launch week July 2025! 🚀
             </div>
 
             <div className={styles.welcome}>

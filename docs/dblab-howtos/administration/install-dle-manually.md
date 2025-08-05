@@ -7,7 +7,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 :::info
-You can use [Postgres AI Console](/docs/dblab-howtos/administration/install-dle-from-postgres-ai) or [AWS Marketplace](/docs/dblab-howtos/administration/install-dle-from-aws-marketplace) for fast and automated installation of DBLab Standard Edition. This document describes step-by-step manual installation of DBLab Community Edition.
+You can use [PostgresAI Console](/docs/dblab-howtos/administration/install-dle-from-postgres-ai) or [AWS Marketplace](/docs/dblab-howtos/administration/install-dle-from-aws-marketplace) for fast and automated installation of DBLab Standard Edition. This document describes step-by-step manual installation of DBLab Community Edition.
 :::
 
 This describes how to manually install the DBLab Engine Community Edition (DBLab CE).

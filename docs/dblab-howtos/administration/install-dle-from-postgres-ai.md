@@ -1,17 +1,17 @@
 ---
-title: How to install DBLab using the Postgres AI Console
-sidebar_label: Install DBLab from Postgres AI Console
+title: How to install DBLab using the PostgresAI Console
+sidebar_label: Install DBLab from PostgresAI Console
 ---
 
-Use [the Postgres AI Console](https://console.postgres.ai/) for an easy and quick installation of DBLab. Following the steps below, in a few minutes, you will get:
-- A single DBLab Standard Edition (DBLab SE) installed in your infrastructure (Postgres AI does not have access to it)
+Use [the PostgresAI Console](https://console.postgres.ai/) for an easy and quick installation of DBLab. Following the steps below, in a few minutes, you will get:
+- A single DBLab Standard Edition (DBLab SE) installed in your infrastructure (PostgresAI does not have access to it)
 - Additional components such as monitoring
 - Ready-to-use, well-tested, vendor-supported Postgres images for DBLab that are compatible with your source databases located in popular managed Postgres services like RDS, CloudSQL, Supabase, and Heroku
 - A DBLab SE subscription with guaranteed vendor support
 
 The DBLab SE pricing model is simple:
 1. For resources (VM, disk), direct payment is made to your cloud provider unless these resources are already owned.
-1. For the DBLab SE license, payment is made to Postgres AI, billed hourly through Stripe. This fee is based on the "compute" size of your instance, which is determined by CPU and RAM, and *does not depend on the database size*. Detailed information can be found on [the Pricing page](https://postgres.ai/pricing). Note that this cost is generally less than AWS EC2 pricing. For example, for a small machine with 2 vCPUs and 8 GiB RAM, it is as low as $0.086/h (~$62.78 per month).
+1. For the DBLab SE license, payment is made to PostgresAI, billed hourly through Stripe. This fee is based on the "compute" size of your instance, which is determined by CPU and RAM, and *does not depend on the database size*. Detailed information can be found on [the Pricing page](https://postgres.ai/pricing). Note that this cost is generally less than AWS EC2 pricing. For example, for a small machine with 2 vCPUs and 8 GiB RAM, it is as low as $0.086/h (~$62.78 per month).
 
 ## Any database is compatible
 DBLab SE supports instant cloning and database branching for source Postgres databases located anywhere:
@@ -154,7 +154,7 @@ ok: [root@5.161.212.233] => {
 }
 ```
 :::note
-Save the data from the "Print usage instructions" task, because the Postgres AI Platform does not save this data on its side.
+Save the data from the "Print usage instructions" task, because the PostgresAI Platform does not save this data on its side.
 :::
 
 

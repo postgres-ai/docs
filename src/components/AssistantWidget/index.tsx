@@ -65,10 +65,10 @@ export const AssistantWidget = (props: AssistantWidgetProps) => {
         <div className={styles.pgaiLogo}>
           <img
             src="/img/chatbot-avatar.png"
-            alt="Postgres AI logo"
+                          alt="PostgresAI logo"
             className={styles.pgaiLogoImage}
           />
-          <b className="navbar__title text--truncate">Postgres AI Assistant</b>
+                      <b className="navbar__title text--truncate">PostgresAI Assistant</b>
         </div>
         <Messages
           isLoading={loading}

@@ -8,24 +8,24 @@ Terms of Service: https://postgres.ai/tos/
 
 *Last Updated: June 19, 2025*
 
-This Privacy Policy (this "Policy") is adopted by Nombox LLC d.b.a. Postgres AI located at 15076 Eastvale Rd, Poway, CA 92064, USA ("Postgres AI" or "we").
+This Privacy Policy (this "Policy") is adopted by Nombox LLC d.b.a. PostgresAI located at 15076 Eastvale Rd, Poway, CA 92064, USA ("PostgresAI" or "we").
 
-Postgres AI has the utmost respect for your privacy, and thus, we want to give you the best possible experience while you are using our website. Hence, please take your time to review this Policy. Your continued use of our website and our services will constitute your representation that you have read, understood and agreed to this Policy.
+PostgresAI has the utmost respect for your privacy, and thus, we want to give you the best possible experience while you are using our website. Hence, please take your time to review this Policy. Your continued use of our website and our services will constitute your representation that you have read, understood and agreed to this Policy.
 
-Postgres AI will not disclose or sell your personal information, without your consent, to third parties who are not affiliated with Postgres AI except as otherwise provided below in this Policy.
+PostgresAI will not disclose or sell your personal information, without your consent, to third parties who are not affiliated with PostgresAI except as otherwise provided below in this Policy.
 
 We believe that you have the right to know what kind and how information may be collected by this website. Moreover, you ought to know how this information may be used, disclosed, and the amount of protection we instill upon your privacy.
 
-This Policy applies to our customers and users who have visited our website and inquired about or bought our services, as well as those who have visited and used the Postgres AI website (https://postgres.ai/) without purchasing our services.
+This Policy applies to our customers and users who have visited our website and inquired about or bought our services, as well as those who have visited and used the PostgresAI website (https://postgres.ai/) without purchasing our services.
 
 ## INFORMATION WE COLLECT
-- **Your personal details** – name, address, phone number, email address when you submit web forms on our website, including opportunities to sign up for and agree to receive email communications from us. We also may ask you to submit such personal information if you choose to use interactive features of our website, including participation in surveys, contests, promotions, sweepstakes, requesting customer support, registration for attendance at an event sponsored by Postgres AI or otherwise communicating with us.
+- **Your personal details** – name, address, phone number, email address when you submit web forms on our website, including opportunities to sign up for and agree to receive email communications from us. We also may ask you to submit such personal information if you choose to use interactive features of our website, including participation in surveys, contests, promotions, sweepstakes, requesting customer support, registration for attendance at an event sponsored by PostgresAI or otherwise communicating with us.
 - **Log Files** – certain information including but is not limited to Internet Protocol (IP) addresses, system configuration information, URLs of referring pages, and locale and language preferences when you visit and interact with most websites and services delivered via the Internet, when you visit our website and interactive areas offered by it.
-- **Cookies and Other Tracking Technologies** – we may use cookies to provide you with a user-friendly interface, features and general access to our website. You can control how our website use cookies by configuring your browser's privacy settings (please refer to your browser's help function to learn more about cookie controls). Note that if you disable cookies entirely, our website may not function properly. Third parties may use the data collected by the cookies. The purpose of the use of cookies on our website is site improvement, as well as the analysis of our customer-provider relationships and marketing intentions. For more information about the cookies Postgres AI uses, please see our Cookie Policy.
+- **Cookies and Other Tracking Technologies** – we may use cookies to provide you with a user-friendly interface, features and general access to our website. You can control how our website use cookies by configuring your browser's privacy settings (please refer to your browser's help function to learn more about cookie controls). Note that if you disable cookies entirely, our website may not function properly. Third parties may use the data collected by the cookies. The purpose of the use of cookies on our website is site improvement, as well as the analysis of our customer-provider relationships and marketing intentions. For more information about the cookies PostgresAI uses, please see our Cookie Policy.
 - **Interactive Areas** – publicly accessible blogs, chats, community forums, comments sections, discussion forums, or other interactive features (“Interactive Areas”). If you choose to participate in any of these Interactive Areas, please be aware that that any information that you post in an Interactive Area might be read, collected, and used by others who access it. If you wish to remove your personal information from any of our Interactive Areas, please contact us at: privacy@postgres.ai.
 
 ## HOW WE USE INFORMATION WE COLLECT
-Postgres AI only processes personal information in a way that is compatible with and relevant for the purpose for which it was collected or authorized. As a general matter, for all categories of data we collect, we may use the information we collect to:
+PostgresAI only processes personal information in a way that is compatible with and relevant for the purpose for which it was collected or authorized. As a general matter, for all categories of data we collect, we may use the information we collect to:
 
 - provide, operate, maintain, improve, and promote our website and services;
 - enable you to access and use our website and services;
@@ -38,7 +38,7 @@ Postgres AI only processes personal information in a way that is compatible with
 - process for other purposes for which we obtain your consent.
 
 ## INFORMATION SECURITY AND ACCURACY
-We intend to protect your personal information and to maintain its accuracy. Postgres AI implements reasonable physical, administrative and technical safeguards to help us protect your personal information from unauthorized access, use and disclosure. For example, we encrypt passwords when stored and encrypt all and personal information when we transmit such information over the Internet. We also require that our suppliers protect information from unauthorized access, use and disclosure.
+We intend to protect your personal information and to maintain its accuracy. PostgresAI implements reasonable physical, administrative and technical safeguards to help us protect your personal information from unauthorized access, use and disclosure. For example, we encrypt passwords when stored and encrypt all and personal information when we transmit such information over the Internet. We also require that our suppliers protect information from unauthorized access, use and disclosure.
 
 ## INFORMATION SHARING
 We work with other companies who help us run our business (“Service Providers”). Service Providers provide services to help us deliver customer support, process credit card payments, manage and contact our existing Customers as well as sales leads, provide marketing support, and otherwise operate and improve our Services. These Service Providers may only process personal information pursuant to our instructions and in compliance both with this Privacy Policy and other applicable confidentiality and security measures and regulations.
@@ -58,7 +58,7 @@ In addition to sharing with Service Providers as described above, we may also sh
 We do not sell, rent, or share personal information with third parties for their direct marketing purposes.
 
 ## PERSONAL DATA OF CHILDREN
-Postgres AI's services are not designed for users who are under the age of 16. Hence, we will never knowingly collect, use, or process personal data provided by someone who is under the age of 16.
+PostgresAI's services are not designed for users who are under the age of 16. Hence, we will never knowingly collect, use, or process personal data provided by someone who is under the age of 16.
 
 ## CHANGES TO THIS PRIVACY POLICY
 We recognize that transparency is an ongoing responsibility so we will keep this Policy under regular review.
@@ -69,7 +69,7 @@ This Policy was last updated on May 26, 2021.
 If you have any questions about this Policy or how and why we process personal data, please contact us at:
 
 ```
-NOMBOX LLC d.b.a. Postgres AI
+NOMBOX LLC d.b.a. PostgresAI
 15076 Eastvale Rd, Poway, CA 92064, USA
 Email: privacy@postgres.ai
 ```
@@ -131,9 +131,9 @@ To exercise your right to data portability, please email us at privacy@postgres.
 
 ### Your right to withdraw consent
 
-Where we process personal data based on consent, individuals have a right to withdraw consent at any time. We do not generally process personal data based on consent (as we can usually rely on another legal basis). Where we rely on your consent for our processing of your personal data, to withdraw your consent please email us at privacy@postgres.ai or, to stop receiving an email from a Postgres AI marketing list.
+Where we process personal data based on consent, individuals have a right to withdraw consent at any time. We do not generally process personal data based on consent (as we can usually rely on another legal basis). Where we rely on your consent for our processing of your personal data, to withdraw your consent please email us at privacy@postgres.ai or, to stop receiving an email from a PostgresAI marketing list.
 
-You may manage your receipt of commercial communications by clicking on the "unsubscribe" link located on the bottom of such emails, through your account settings if you have a Postgres AI account, or you may send a request to unsubscribe@postgres.ai
+You may manage your receipt of commercial communications by clicking on the "unsubscribe" link located on the bottom of such emails, through your account settings if you have a PostgresAI account, or you may send a request to unsubscribe@postgres.ai
 
 ### Complaints
 

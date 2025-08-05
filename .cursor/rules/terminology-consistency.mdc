@@ -10,7 +10,8 @@ description: "Terminology consistency guidelines for documentation"
 - ❌ PostgreSQL (use only when absolutely necessary for technical accuracy)
 
 ## Company Name
-- ✅ **Postgres AI** (uppercase AI, no dot)
+- ✅ **PostgresAI** (no space, no dot)
+- ❌ Postgres AI (old branding with space)
 - ❌ Postgres.ai (old branding with dot)
 - ❌ postgres.ai (lowercase)
 
@@ -31,7 +32,7 @@ description: "Terminology consistency guidelines for documentation"
 
 ### Correct Usage:
 - "DBLab Engine enables database branching for Postgres"
-- "Visit the Postgres AI documentation"
+- "Visit the PostgresAI documentation"
 - "Check out our how-to guides for detailed instructions"
 - "Navigate to how-tos in the sidebar"
 

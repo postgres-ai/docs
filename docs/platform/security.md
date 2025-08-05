@@ -13,12 +13,12 @@ keywords:
 DBLab Platform and its components are developed with a strong focus on security. To ensure that your data is secure, please carefully read this document.
 
 ## Found a security issue or have questions?
-If you found a possible vulnerability or have an urgent security-related concern, please reach out to Postgres AI Support as soon as possible by writing an email to <a href="mailto:security@postgres.ai">security@postgres.ai</a>.
+If you found a possible vulnerability or have an urgent security-related concern, please reach out to PostgresAI Support as soon as possible by writing an email to <a href="mailto:security@postgres.ai">security@postgres.ai</a>.
 
 ## Security incidents and incident management
 ### Security incident
 Security incident – any violation or reasonable risk (or threat) to violate of:
-- DBLab Platform (Postgres AI) integral security (including but not limited to: databases, backups, application code, infrastructure components, customer data)
+- DBLab Platform (PostgresAI) integral security (including but not limited to: databases, backups, application code, infrastructure components, customer data)
 - Internal Postgres.ai Information Security Policies
 
 ### How incidents are processed

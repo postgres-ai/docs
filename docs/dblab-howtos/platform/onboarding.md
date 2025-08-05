@@ -13,7 +13,7 @@ You can copy [the Markdown version of this page](https://gitlab.com/postgres-ai/
 
 ## Onboarding
 Welcome! :rocket:
-To start using the Postgres AI Platform, you need to register using your work account/email here: https://postgres.ai/signin.
+To start using the PostgresAI Platform, you need to register using your work account/email here: https://postgres.ai/signin.
 
 ## Joe Web UI
 ### Chatbot
