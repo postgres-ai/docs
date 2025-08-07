@@ -1,5 +1,7 @@
 ---
 title: "Introducing Postgres how-tos: practical guides for real-world database challenges"
+date: 2025-07-24 20:00:00
+publishDate: 2025-07-24 20:00:00
 authors: [nik]
 image: /assets/thumbnails/20250724-postgres-howtos-launch.png
 tags: [postgres, howtos, documentation, launch-week]
