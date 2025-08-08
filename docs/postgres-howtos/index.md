@@ -46,7 +46,9 @@ Various PostgreSQL tips, antipatterns, and general advice that don't fit into sp
 
 ## Credits
 
-**Author and main maintainer**: Nikolay Samokhvalov (except where otherwise noted in individual guides)
+**Author and main maintainer**: [Nikolay Samokhvalov](https://www.linkedin.com/in/samokhvalov/) (except where otherwise noted in individual guides)
+
+**Initial markdown compilation**: [Sadeq Dousti](https://www.linkedin.com/in/msdousti/)
 
 **Reviewers**: We gratefully acknowledge the following people who helped review these guides:
 - Sadeq Dousti
