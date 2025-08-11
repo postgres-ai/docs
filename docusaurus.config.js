@@ -477,6 +477,10 @@ module.exports = {
           {
             from: '/docs/db-migration-checker',
             to: '/docs/database-lab/db-migration-checker'
+          },
+          {
+            from: '/blog/20250725-selft-driving-postgres',
+            to: '/blog/20250725-self-driving-postgres'
           }
         ],
       },
