@@ -81,7 +81,7 @@ export const launchWeekData = [
     minorReleases: [],
     blogPost: {
       title: 'Self-driving Postgres',
-      url: '/blog/20250725-selft-driving-postgres'
+      url: '/blog/20250725-self-driving-postgres'
     }
   }
 ] 
