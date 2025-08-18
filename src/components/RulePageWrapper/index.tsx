@@ -24,7 +24,7 @@ export default function RulePageWrapper({ slug, children }: RulePageWrapperProps
       title={config.title}
       description={config.description}
       markdownPath={`/content/rules/${slug}.md`}
-      editUrl={`https://gitlab.com/postgres-ai/docs/-/edit/feature/ai-rules/src/content/rules/${slug}.md`}
+      editUrl={`https://gitlab.com/postgres-ai/docs/-/edit/master/src/content/rules/${slug}.md`}
       rawMarkdownUrl={`/rules/${slug}.md`}
     >
       {children}
