@@ -21,9 +21,12 @@ Follow the official platform-specific notes:
 ./configure \
   --enable-depend \
   --enable-cassert \
-  --prefix=/usr/local/pgsql \
+  --enable-debug \
+  --prefix=/tmp/pg18_featureXXX \
   --with-openssl
 ```
+
+**Important**: Always use `--prefix` with a descriptive path in `/tmp` (e.g., `/tmp/pg18_featureXXX` where XXX describes your feature) to avoid conflicts with system PostgreSQL installations and easily identify different builds.
 
 ## Building
 
@@ -34,7 +37,7 @@ make -j8
 
 ### Full build sequence:
 ```bash
-./configure --enable-depend --enable-cassert --prefix=/usr/local/pgsql
+./configure --enable-depend --enable-cassert --enable-debug --prefix=/tmp/pg18_featureXXX
 make -j8
 make install
 ```
@@ -50,24 +53,41 @@ This prevents loading of the user's `.psqlrc` file, ensuring consistent behavior
 
 ## Git workflow
 
-### Professional commit messages:
+### Commit message format:
+Follow PostgreSQL's commit message style - comprehensive and detailed:
+
 ```
-Short descriptive message (50 chars max)
+Short descriptive title (50 chars max)
 
+Detailed explanation of what this change does and why it's needed.
+Be precise, concise, and brief while explaining all important details.
 
-Detailed description of the change if needed.
-Optional list of changes:
-- First change
-- Second change
-- Third change
+Changes made:
+- Specific change 1 with technical details
+- Specific change 2 with rationale
+- Specific change 3 with impact description
+
+Testing performed:
+- Test scenario 1
+- Test scenario 2
+
+No emojis in commit messages.
 ```
 
-### What NOT to add to git:
+### What NOT to commit or include in patches/diffs:
 - ❌ Test files and logs
-- ❌ Temporary binaries
+- ❌ Temporary binaries  
 - ❌ Core dumps
 - ❌ Build artifacts
 - ❌ Personal configuration files
+- ❌ AI rules directories and files (`.cursor/`, `CLAUDE.md`, `.cursorrules`, etc.)
+- ❌ IDE-specific files and directories
+
+**Important**: When creating `.patch` or `.diff` files, ensure AI tooling files are excluded. Use `git diff` with pathspec exclusions:
+```bash
+# Exclude AI tooling files from patches
+git diff -- . ':(exclude).cursor' ':(exclude)CLAUDE.md' ':(exclude).cursorrules'
+```
 
 ### File placement:
 - Place temporary files in `/tmp` instead of the repo directory
