@@ -188,7 +188,6 @@ export const useBotMessages = (props: UseBotMessagesProps = {}): UseBotMessages 
         const message = {
           content,
           type: 'message',
-          ai_model: 'gcp/gemini-1.5-pro',
         } as BotMessage;
         setMessages([message]);
 
@@ -199,7 +198,6 @@ export const useBotMessages = (props: UseBotMessagesProps = {}): UseBotMessages 
               content: `${padding ? `${padding}\n  ` : ''}${content}`,
               thread_id,
               org_id,
-              ai_model: `gcp/gemini-1.5-pro`,
               is_public: false
             },
           })
