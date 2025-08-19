@@ -27,7 +27,47 @@ We break down complex database problems into clear, actionable steps. Through pr
 <div class="testimonials-container">
 <div class="testimonial">
     <blockquote>
-        "PostgresAI was instrumental in driving us toward zero-downtime upgrades and improving our disaster recovery process, achieving 7 TiB/hour restore speeds. Their commitment to putting developers first aligns perfectly with our open-source philosophy."
+        "Postgres.ai was instrumental in driving us toward zero-downtime upgrades and improving our disaster recovery process, achieving 7 TiB/hour restore speeds. Their commitment to putting developers first aligns perfectly with our open-source philosophy"
+    </blockquote>
+    <footer>
+        <strong><a href="https://www.linkedin.com/in/oliver-r-9a16b943/" target="_blank">Oliver Rice</a></strong><br/>
+       Head of Engineering, Ph.D. at <a href="https://www.linkedin.com/company/supabase/" target="_blank">Supabase</a>, USA<br/>
+        <em>Supabase is the Postgres development platform.</em>
+    </footer>
+</div>
+<div class="testimonial">
+    <blockquote>
+        "When you're powering thousands of developer apps, database downtime isn't an option—Postgres AI's expertise over the years culminated in a flawless zero-downtime Postgres upgrade that kept our platform running seamlessly while we scaled for the future."
+    </blockquote>
+    <footer>
+        <strong><a href="https://www.linkedin.com/in/harrybrundage/" target="_blank">Harry Brundage</a></strong><br/>
+       Co-founder & CTO at <a href="https://www.linkedin.com/company/gadget-dev/" target="_blank">Gadget</a>, Canada<br/>
+        <em>Gadget - faster full-stack app development.</em>
+    </footer>
+</div>
+<div class="testimonial">
+    <blockquote>
+        "The Postgres AI team’s forensic approach to our database incident provided the technical evidence we needed to gain support and resolution with our infrastructure provider, and their subsequent health check showed valuable insights into our platform’s scaling needs."
+    </blockquote>
+    <footer>
+        <strong><a href="https://www.linkedin.com/in/agershman/" target="_blank">Andrew Gershman</a></strong><br/>
+       Staff SRE at <a href="https://www.linkedin.com/company/cinder-intelligence/" target="_blank">Cinder</a>, USA<br/>
+        <em>Cinder is the industry’s first Trust and Safety operations platform to help organizations combat Internet abuse at scale.</em>
+    </footer>
+</div>
+<div class="testimonial">
+    <blockquote>
+        "The Postgres AI team brought clarity to our database challenges—implementing partitioning for our growing dataset, optimizing performance through deep health checks, and providing the strategic guidance we needed to make confident platform decisions."
+    </blockquote>
+    <footer>
+        <strong><a href="https://www.linkedin.com/in/zrupani/" target="_blank">Zubin Rupani</a></strong><br/>
+        Engineering Leader, Data Platform and Observability at <a href="https://www.linkedin.com/company/swiftlyinc/" target="_blank">Swiftly, Inc.</a>, USA <br/>
+        <em> Leading transit data platform for agencies to share real-time passenger information.</em>
+    </footer>
+</div>
+<div class="testimonial">
+    <blockquote>
+        "We were looking for a way to create database snapshots with ZFS/filesystem snapshotting. When I found out about DBLab, we started using it instead. The professional support we get from Postgres AI is amazing, and the team is really to the point and deeply experienced in Postgres. We solved the problems we had when we started with the help of Postgres AI."
     </blockquote>
     <footer>
         <strong><a href="https://www.linkedin.com/in/oliver-r-9a16b943/" target="_blank">Oliver Rice, Ph.D</a></strong><br/>
