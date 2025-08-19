@@ -24,9 +24,13 @@ description: "Terminology consistency guidelines for documentation"
 ## Product Names
 - ✅ **DBLab** (current branding)
 - ✅ **DBLab Engine** (full product name)
+- ✅ **postgres_ai monitoring**
+- ✅ **pg_index_pilot**
 - ❌ DLE (deprecated abbreviation)
 - ❌ Database Lab (old name, deprecated)
 - ❌ Database Lab Engine (old name, deprecated)
+- ❌ Postgres.AI monitoring
+- ❌ Index Pilot
 
 ## Usage Examples
 
