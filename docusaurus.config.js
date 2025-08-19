@@ -9,6 +9,7 @@ const SIGN_IN_URL = !!process.env.SIGN_IN_URL
   ? process.env.SIGN_IN_URL
   : '/signin'
 const BOT_WS_URL = !!process.env.BOT_WS_URL ? process.env.BOT_WS_URL : '/ai-bot-ws/'
+const CONSULTING_WEBHOOK = process.env.CONSULTING_WEBHOOK ? process.env.CONSULTING_WEBHOOK : ''
 
 module.exports = {
   title:
@@ -25,7 +26,8 @@ module.exports = {
   customFields: {
     signInUrl: SIGN_IN_URL,
     apiUrlPrefix: API_URL_PREFIX,
-    botWSUrl: BOT_WS_URL
+    botWSUrl: BOT_WS_URL,
+    consultingWebhook: CONSULTING_WEBHOOK,
   },
 
   scripts: [
@@ -511,6 +513,8 @@ module.exports = {
         trackingID: 'G-SM4CXEQJYY',
       },
     ],
+    // Meta Pixel (Facebook)
+    path.resolve(__dirname, 'plugins/meta-pixel'),
     require.resolve('./plugins/route-change'),
   ],
 
