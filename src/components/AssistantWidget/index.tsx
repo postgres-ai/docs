@@ -24,6 +24,8 @@ export const AssistantWidget = (props: AssistantWidgetProps) => {
     error,
     threadId,
     currentStreamMessage,
+    currentSecondaryStreamMessage,
+    secondaryStreamBuffer,
   } = useBotMessages({
     saveData: false,
   })
@@ -77,6 +79,8 @@ export const AssistantWidget = (props: AssistantWidgetProps) => {
           hints={hints}
           onHintClick={handleHintClick}
           currentStreamMessage={currentStreamMessage}
+          currentSecondaryStreamMessage={currentSecondaryStreamMessage}
+          secondaryStreamBuffer={secondaryStreamBuffer}
         />
         {messages.length < 2 && <>
           <Input
