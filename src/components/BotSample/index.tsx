@@ -46,7 +46,12 @@ export const BotSample = () => {
 
   return (
     <div>
-      {!isChatVisible && <HintCards onHintClick={handleHintClick} />}
+      {!isChatVisible && (
+        <HintCards
+          onHintClick={handleHintClick}
+          isConnected={connectionStatus === ConnectionStatus.OPEN}
+        />
+      )}
       <div>
         <ChatWindow
           isChatVisible={isChatVisible}
@@ -65,11 +70,20 @@ export const BotSample = () => {
           isLoading={loading}
           disabled={messages && messages.length > 0 || connectionStatus !== ConnectionStatus.OPEN}
         />}
-        {error && error.message && !isChatVisible && <span className={styles.errorMessage}>{error.message}</span>}
-        {!error && !isChatVisible && <span className={styles.noteMessage}>
-          Public by default. For private chats, register in&nbsp;
-          <a href={signInUrl as string} className={styles.link}>Console</a>.
-        </span>}
+        {!isChatVisible && (
+          connectionStatus !== ConnectionStatus.OPEN ? (
+            <span className={styles.errorMessage}>
+              {error && error.message ? error.message : 'Connecting…'}
+            </span>
+          ) : (
+            !error && (
+              <span className={styles.noteMessage}>
+                Public by default. For private chats, register in&nbsp;
+                <a href={signInUrl as string} className={styles.link}>Console</a>.
+              </span>
+            )
+          )
+        )}
       </div>
       {!isChatVisible && <KBStats />}
     </div>
