@@ -21,7 +21,9 @@ export const BotSample = () => {
     stateMessage,
     connectionStatus,
     error,
-    currentStreamMessage
+    currentStreamMessage,
+    currentSecondaryStreamMessage,
+    secondaryStreamBuffer
   } = useBotMessages();
 
   const handleSendMessage = (content: string) => {
@@ -54,6 +56,8 @@ export const BotSample = () => {
           error={error}
           onRetrySendingMessage={handleSendMessage}
           currentStreamMessage={currentStreamMessage}
+          currentSecondaryStreamMessage={currentSecondaryStreamMessage}
+          secondaryStreamBuffer={secondaryStreamBuffer}
         />
         {messages.length < 2 && <CommandLine
           isChatVisible={isChatVisible}

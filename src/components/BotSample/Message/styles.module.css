@@ -72,3 +72,46 @@
         transform: rotate(360deg);
     }
 }
+
+.secondaryContainer {
+    background: transparent;
+    color: #666;
+    border: none;
+    border-radius: 6px;
+    padding: .5rem;
+    margin-bottom: .5rem;
+}
+
+.secondaryHeader {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0 0 .25rem 0;
+    font-weight: 600;
+    font-size: .9rem;
+    color: #666;
+    cursor: pointer;
+}
+
+.chevron {
+    display: inline-block;
+    transition: transform .15s ease-in-out;
+}
+
+.chevronOpen {
+    transform: rotate(180deg);
+}
+
+.secondaryBody {
+    max-height: 240px;
+    overflow-y: auto;
+    font-size: .9rem;
+}
+
+.secondaryBody * {
+    font-size: .9rem !important;
+    color: #666;
+}

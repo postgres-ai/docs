@@ -16,7 +16,7 @@ export type BotMessage = {
   user_id: string
   org_id: string
   thread_id: string
-  type: 'message' | undefined
+  type: 'message' | 'tool_call_result' | undefined
   ai_model: string
 }
 
@@ -28,6 +28,13 @@ export type StateMessage = {
 
 export type StreamMessage = {
   type: 'stream'
+  content: string
+  ai_model: string
+  thread_id: string
+}
+
+export type SecondaryStreamMessage = {
+  type: 'secondary_llm_message_stream'
   content: string
   ai_model: string
   thread_id: string
@@ -61,6 +68,8 @@ type UseBotMessages = {
   loading: boolean;
   connectionStatus: ConnectionStatus;
   currentStreamMessage: StreamMessage | null;
+  currentSecondaryStreamMessage: SecondaryStreamMessage | null;
+  secondaryStreamBuffer: string;
   threadId: string | null
 }
 
@@ -86,6 +95,8 @@ export const useBotMessages = (props: UseBotMessagesProps = {}): UseBotMessages 
   const [stateMessage, setStateMessage] = useState<StateMessage | null>(null);
   const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>(ConnectionStatus.CLOSED);
   const [currentStreamMessage, setCurrentStreamMessage] = useState<StreamMessage | null>(null);
+  const [currentSecondaryStreamMessage, setCurrentSecondaryStreamMessage] = useState<SecondaryStreamMessage | null>(null);
+  const [secondaryStreamBuffer, setSecondaryStreamBuffer] = useState<string>('');
   const [threadId, setThreadId] = useState<string | null>(null)
 
   const websocketRef = useRef<WebSocket | null>(null);
@@ -112,7 +123,7 @@ export const useBotMessages = (props: UseBotMessagesProps = {}): UseBotMessages 
     };
 
     websocket.onmessage = (event) => {
-      const messageData: BotMessage | StateMessage | ErrorMessage | StreamMessage = JSON.parse(event.data);
+      const messageData: BotMessage | StateMessage | ErrorMessage | StreamMessage | SecondaryStreamMessage = JSON.parse(event.data);
       if (messageData.type === 'state') {
         setStateMessage(messageData as StateMessage);
       } else if (messageData.type === 'error') {
@@ -120,6 +131,9 @@ export const useBotMessages = (props: UseBotMessagesProps = {}): UseBotMessages 
           setError({...messageData, errorType: 'ratelimit'});
         }
         setLoading(false);
+        setCurrentStreamMessage(null)
+        setCurrentSecondaryStreamMessage(null)
+        setSecondaryStreamBuffer('')
       } else if (messageData.type === 'message') {
         setMessages(prevMessages => {
           const currentMessages = [...prevMessages, messageData];
@@ -134,11 +148,16 @@ export const useBotMessages = (props: UseBotMessagesProps = {}): UseBotMessages 
               setCookie('pgai_bot_messages', JSON.stringify(currentMessages), duration)
             }
           }
-          if (currentStreamMessage) setCurrentStreamMessage(null)
+          setCurrentStreamMessage(null)
+          setCurrentSecondaryStreamMessage(null)
+          setSecondaryStreamBuffer('')
           return currentMessages;
         });
       } else if (messageData.type === 'stream') {
         setCurrentStreamMessage(messageData)
+      } else if (messageData.type === 'secondary_llm_message_stream') {
+        setSecondaryStreamBuffer((messageData as SecondaryStreamMessage).content || '')
+        setCurrentSecondaryStreamMessage(messageData as SecondaryStreamMessage)
       }
     };
 
@@ -231,6 +250,8 @@ export const useBotMessages = (props: UseBotMessagesProps = {}): UseBotMessages 
     stateMessage,
     connectionStatus,
     currentStreamMessage,
+    currentSecondaryStreamMessage,
+    secondaryStreamBuffer,
     threadId
   };
 };
