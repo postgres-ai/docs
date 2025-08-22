@@ -25,12 +25,21 @@
     transition: .2s ease-in;
 }
 
+.disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
 [data-theme='dark']:root {
     --hint-card-border-color: rgba(255, 255, 255, .15);
 }
 
 .container:hover, .container:focus-visible {
     background: var(--ifm-background-surface-color);
+}
+
+.disabled:hover, .disabled:focus-visible {
+    background: transparent;
 }
 
 .container svg {
