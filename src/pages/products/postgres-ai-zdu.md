@@ -11,7 +11,7 @@ description: Physical-to-logical replication technique for zero-downtime, revers
 
 Our solution delivers all three essential characteristics for enterprise-grade major upgrades for Postgres:
 
-- ⚡ **Zero downtime**
+- ⚡️ **Zero downtime**
 - 🔄 **Reversible**
 - ✅ **Zero data loss** (in both directions)
 
