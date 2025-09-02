@@ -144,7 +144,7 @@ ok: [root@5.161.212.233] => {
         "",
         "5) DBLab CLI:",
         "  - CLI ('dblab') setup:",
-        "      export DBLAB_CLI_VERSION=4.0.0",
+        "      export DBLAB_CLI_VERSION=4.0.1",
         "      curl -sSL dblab.sh | bash",
         "      dblab init --environment-id=dblab-demo --token=edlhYHOgBPkr4ix1qP3YvQMytfK2JSxH --url=http://127.0.0.1:2346/api",
         "  - CLI docs: https://cli-docs.dblab.dev/",

@@ -15,7 +15,7 @@ In order to set up DBLab Engine to automatically get the data from database usin
 - [logicalSnapshot](/docs/reference-guides/database-lab-engine-configuration-reference#job-logicalsnapshot)
 
 ### Options
-Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.0.0/engine/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml` and update the following options:
+Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.0.1/engine/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml` and update the following options:
 - Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine
 - Set connection options in `retrieval:spec:logicalDump:options:source:connection`:
     - `dbname`: database name to connect to
@@ -44,7 +44,7 @@ sudo docker run \
   --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:4.0.0
+  postgresai/dblab-server:4.0.1
 ```
 
 You can use PGPASSWORD env to set the password.
