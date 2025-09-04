@@ -4,8 +4,11 @@ sidebar_label: Overview
 slug: /reference-guides
 ---
 
-## Postgres.AI Assistant
-- [Postgres.AI Assistant tools](/docs/reference-guides/postgres-ai-bot-reference)
+## Monitoring
+- [postgres_ai monitoring reference](/docs/reference-guides/postgres-ai-monitoring-reference)
+
+## PostgresAI Assistant
+- [PostgresAI Assistant tools](/docs/reference-guides/postgres-ai-bot-reference)
 
 ## Database Lab
 - [Database Lab components](/docs/reference-guides/database-lab-engine-components)
