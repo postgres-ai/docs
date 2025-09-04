@@ -84,7 +84,7 @@ module.exports = {
           items: [
             {
               label: 'postgres_ai (monitoring)',
-              to: '/products/postgres-ai-monitoring'
+              to: '/docs/monitoring'
             },
             {
               label: 'DBLab Engine',
@@ -232,7 +232,7 @@ module.exports = {
             },
             {
               label: 'postgres_ai (monitoring)',
-              to: '/products/postgres-ai-monitoring',
+              to: '/docs/monitoring',
             },
             {
               label: 'DBLab Engine',
