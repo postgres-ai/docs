@@ -20,6 +20,7 @@ Postgres.ai uses the following data subprocessors:
 | [Intercom](https://www.intercom.com/) | USA | Customer support system |
 | [Microsoft Azure](https://azure.microsoft.com/) | USA | Azure AI – access to LLM such as DeepSeek (deployed in US locations only) |
 | [OpenAI](https://openai.com/) | USA | AI models provided via API (such as Whisper, GPT). *Customer Data is not used in OpenAI API calls, unless explicitly approved by Customer*
+| [pgMustard](https://www.pgmustard.com/) | UK, Finland | SQL plan analysis provider (used only when enabled by Customer; query plans may be sent for analysis) |
 | [SendGrid](https://www.sendgrid.com/) | USA | Transactional mail services provider |
 | [Slack](https://slack.com) | USA | Business communication platform |
 | [Stripe](https://stripe.com) | USA | Payment provider |
