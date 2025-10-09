@@ -1,0 +1,101 @@
+---
+alwaysApply: true
+description: "Professional communication and writing style guidelines for all content"
+---
+
+# Professional communication guidelines
+
+## Core principles
+
+### 1. Professional writing standards
+- **No emotions**: Maintain objective, neutral tone throughout all content
+- **No emojis**: Never use emojis in any generated content
+- **Professional language**: Use formal, technical language appropriate for business documentation
+- **Objective tone**: Present information factually without subjective expressions
+- Use **objective, data-driven language** at all times
+- Avoid **emotional language** or **subjective criticism**
+
+### 2. Platform neutrality and client respect
+- **Never recommend leaving or switching platforms**, especially when the platform is our client (e.g., Supabase)
+- **Never suggest platform abandonment** as a solution to limitations or challenges
+- Focus on **working within platform constraints** and **collaborative solutions**
+- Treat all platforms as valuable partners, not obstacles
+
+### 3. Constructive problem-solving approach
+- **Focus on reasoning and rationale** for why changes should happen
+- Present **business impact** and **technical justification** for recommendations
+- Offer **collaborative solutions** that work with platform capabilities
+- Frame limitations as **opportunities for partnership** and improvement
+
+## Language guidelines
+
+### ✅ Professional phrasing examples:
+- "The configuration requires optimization."
+- "This setting should be adjusted for better performance."
+- "Analysis indicates potential issues with the current setup."
+- "Working with [Platform] support to enable these parameters would provide..."
+- "The current configuration represents an opportunity to optimize..."
+- "Engaging with [Platform] to make these settings configurable would benefit..."
+- "This limitation can be addressed through collaboration with [Platform] support..."
+- "The business impact of this optimization includes..."
+
+### ❌ Avoid these patterns:
+- "This configuration is terrible! 😱"
+- "You should definitely fix this ASAP!"
+- "This looks great! 👍"
+- "If [Platform] cannot provide..." (pessimistic framing)
+- "Consider whether this platform limitation is acceptable..." (suggesting platform change)
+- "This platform prevents..." (accusatory tone)
+- "You should switch to..." (platform abandonment)
+- Any emotional language or harsh criticism
+- Emojis or casual language in professional reports
+
+## Content application
+
+### Applies to:
+- PostgreSQL health check reports
+- Documentation
+- Code comments
+- README files
+- Technical analysis
+- Recommendations and conclusions
+- Client reports and communications
+
+### Recommendation structure
+1. **State the objective need** (performance, security, compliance)
+2. **Provide data-driven justification** (metrics, impact analysis)
+3. **Suggest collaborative approach** (working with platform support)
+4. **Focus on business benefits** (improved performance, cost savings, user experience)
+
+### Platform limitation handling
+- Frame as **"current configuration"** rather than **"platform limitation"**
+- Emphasize **partnership opportunities** for improvement
+- Suggest **engagement with platform support** as the primary solution
+- Focus on **business case** for why changes matter
+
+## Report writing standards
+
+### Technical recommendations:
+- Lead with **quantified impact** (performance metrics, cost implications)
+- Provide **clear technical rationale** for each recommendation
+- Include **implementation approach** that works within platform constraints
+- Reference **industry best practices** and **benchmarks**
+
+### Client interaction:
+- Always position recommendations as **collaborative opportunities**
+- Emphasize **partnership** between client and platform provider
+- Focus on **mutual benefits** of implementing changes
+- Maintain **professional respect** for all parties involved
+
+## Typography and formatting
+
+### Em dash spacing
+- **Always use spaces around em dashes**: `word — word` (not `word—word`)
+- **Examples**: 
+  - ✅ "This isn't a tool for beginners — it's designed for experts"
+  - ❌ "This isn't a tool for beginners—it's designed for experts"
+- **Application**: All documentation, reports, comments, and written content
+- **Note**: This is our custom style preference, differing from traditional typography rules
+
+## Implementation
+This rule takes precedence over any casual or informal language patterns and must be consistently applied across all generated content. This approach ensures we maintain strong client relationships while providing valuable, actionable technical guidance that works within real-world platform constraints.

@@ -4,78 +4,41 @@ linktitle: "Database Lab Engine for AWS Marketplace. Fast, fixed-cost branching 
 title: "Database Lab Engine for AWS Marketplace. Fast, fixed-cost branching for your Postgres is just a step away"
 date: 2022-07-03 23:59:00
 publishDate: 2022-07-03 23:59:00
-description: "<div><img src=\"/assets/thumbnails/20220703-dle-in-aws-marketplace-2.png\" alt=\"Database Lab Engine for AWS Marketplace – the fastest way to start branching your RDS database\"/></div>
-<p>I'm very pleased to announce the very first preview version of <a href=\"https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec\">Database Lab Engine (DLE) for AWS Marketplace</a>. If you're using AWS, this is the fastest way to have powerful database branching for any database, including RDS and RDS Aurora. But not only RDS: any Postgres and Postgres-compatible database is supported as a source for DLE.</p>
-<p>Now, for a fixed price (paying just for one EC2 instance and an EBS volume), you can have dozens of DB clones being provisioned in seconds and delivering independent databases for your Git branches, CI/CD pipelines, as well as manual optimization and testing activities.</p>
-<p>Achieving the lowest entry barrier for the new DLE users remains to be one of our primary goals. In addition to the tutorials (we have several, including <a href=\"https://postgres.ai/docs/tutorials/database-lab-tutorial-amazon-rds\">one for the RDS users</a>) and <a href=\"https://gitlab.com/postgres-ai/terraform-postgres-ai-database-lab\">Terraform module template for DLE</a>, we now offer a way to install DLE on AWS only using a web browser.</p>
-<p>What's included:
-<ol>
-  <li>DLE (same as Community Edition; the latest minor versions of DLE are available)</li>
-  <li>Automated data provisioning at the logical level from live Postgres database (can be any Postgres, version 9.6 or newer)</li>
-  <li>Automated refresh using two or more snapshots, using one EBS volume (of a bigger size), with configurable full refresh schedule  (read about DLE's automated full refresh on schedule <a href=\"https://postgres.ai/docs/how-to-guides/administration/logical-full-refresh#automatic-full-refresh-data-from-a-source\">in the docs</a>; note in AWS Marketplace version, we use a single ZFS pool but 2 (or more, if you request it) datasets to enable work with multiple full snapshots of the database – therefore, during a full refresh, users can still work with multiple clones created for the snapshot that is not being refreshed at the moment.)</li>
-  <li>Full refresh schedule can be defined when DLE instance is created</li>
-  <li>UI, CLI, and API to work with any number of thin clones – as usual</li>
-  <li>Optional generation of certificates and access to UI and API via HTTPS (via Envoy proxy), as well as access to the Postgres clones created by DLE users</li>
-  <li>Guaranteed support via <a href=\"https://postgres.ai/contact\">one of the available channels</a></li>
-</ol>
-</p>
-<p>
-What's not yet included in this \"preview\" version:
-<ol>
-  <li>Physical mode (for those who manage Postgres themselves)</li>
-  <li>Many advanced DLE configuration options are not available in AWS Marketplace / CloudFormation interface; however, they can still be adjusted once the instance is created (most of them can be changed without DLE restart – see <a href=\"https://postgres.ai/docs/how-to-guides/administration/engine-manage#reconfigure-database-lab-engine\">the docs</a>)</li>
-</ol>
-</p>
-<p>
-To start, please read the documentation: <a href=\"/docs/how-to-guides/administration/install-dle-from-aws-marketplace\">\"How to install DLE from the AWS Marketplace\"</a>.
-<br/><a href=\"https://postgres.ai/blog/20220703-dle-in-aws-marketplace\">Continue reading and watch a 3-minute demo →</a>
-</p>"
+description: "Database Lab Engine for AWS Marketplace provides fast, fixed-cost branching for your Postgres databases with instant provisioning."
 weight: 0
 image: /assets/thumbnails/20220703-dle-in-aws-marketplace-2.png
 tags:
+  - Product announcements
   - Database Lab Engine
-  - AWS
-  - Clouds
+  - AWS Marketplace
 ---
 
 import { BlogFooter } from '@site/src/components/BlogFooter'
 import { nik } from '@site/src/config/authors'
 
-<p align="center">
-    <img 
-      src="/assets/thumbnails/20220703-dle-in-aws-marketplace-2.png" 
-      alt="Database Lab Engine for AWS Marketplace. Fast, fixed-cost branching for your RDS Postgres is just a step awa"
-      width="440px"
-      height="345px"
-      loading="eager" 
-    />
-</p>
-
 I'm very pleased to announce the very first preview version of [Database Lab Engine (DLE) for AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec). If you're using AWS, this is the fastest way to have powerful database branching for any database, including RDS and RDS Aurora. But not only RDS: any Postgres and Postgres-compatible database is supported as a source for DLE.
 
 Now, for a fixed price (paying just for one EC2 instance and an EBS volume), you can have dozens of DB clones being provisioned in seconds and delivering independent databases for your Git branches, CI/CD pipelines, as well as manual optimization and testing activities.
 
+<!--truncate-->
+
 Achieving the lowest entry barrier for the new DLE users remains to be one of our primary goals. In addition to the tutorials (we have several, including [one for the RDS users](https://postgres.ai/docs/tutorials/database-lab-tutorial-amazon-rds)) and [Terraform module template for DLE](https://gitlab.com/postgres-ai/terraform-postgres-ai-database-lab), we now offer a way to install DLE on AWS only using a web browser.
 
-What's included:
-- DLE (same as Community Edition; the latest minor versions of DLE are available)
-- Automated data provisioning at the logical level from live Postgres database (can be any Postgres, version 9.6 or newer)
-- Automated refresh using two or more snapshots, using one EBS volume (of a bigger size), with configurable full refresh schedule  (read about DLE's automated full refresh on schedule [in the docs](https://postgres.ai/docs/how-to-guides/administration/logical-full-refresh#automatic-full-refresh-data-from-a-source); note in AWS Marketplace version, we use a single ZFS pool but 2 (or more, if you request it) datasets to enable work with multiple full snapshots of the database – therefore, during a full refresh, users can still work with multiple clones created for the snapshot that is not being refreshed at the moment.)
-- Full refresh schedule can be defined when DLE instance is created
-- UI, CLI, and API to work with any number of thin clones – as usual
-– Optional generation of certificates and access to UI and API via HTTPS (via Envoy proxy), as well as access to the Postgres clones created by DLE users
-- Guaranteed support via [one of the available channels](https://postgres.ai/contact)
+## What's included:
 
-What's not yet included in this "preview" version:
-- Physical mode (for those who manage Postgres themselves)
-- Many advanced DLE configuration options are not available in AWS Marketplace / CloudFormation interface; however, they can still be adjusted once the instance is created (most of them can be changed without DLE restart – see [the docs](https://postgres.ai/docs/how-to-guides/administration/engine-manage#reconfigure-database-lab-engine))
+1. DLE (same as Community Edition; the latest minor versions of DLE are available)
+2. Automated data provisioning at the logical level from live Postgres database (can be any Postgres, version 9.6 or newer)
+3. Automated refresh using two or more snapshots, using one EBS volume (of a bigger size), with configurable full refresh schedule
+4. Full refresh schedule can be defined when DLE instance is created
+5. UI, CLI, and API to work with any number of thin clones – as usual
+6. Optional generation of certificates and access to UI and API via HTTPS (via Envoy proxy), as well as access to the Postgres clones created by DLE users
+7. Guaranteed support via [one of the available channels](https://postgres.ai/contact)
 
-To start, please read the documentation: ["How to install DLE from the AWS Marketplace"](/docs/how-to-guides/administration/install-dle-from-aws-marketplace). Below you can watch a 3-minute video demonstrating the setup process.
+## What's not yet included in this "preview" version:
 
-If you have any questions, use this page to contact us: https://postgres.ai/contact.
+1. Physical mode (for those who manage Postgres themselves)
+2. Many advanced DLE configuration options are not available in AWS Marketplace / CloudFormation interface; however, they can still be adjusted once the instance is created
 
-<div class="embed-responsive embed-responsive-4by3 mb-4">
-  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/kaUSrANXec4?autoplay=0&origin=https://postgres.ai&modestbranding=1&playsinline=0&loop=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+To start, please read the documentation: ["How to install DLE from the AWS Marketplace"](/docs/how-to-guides/administration/install-dle-from-aws-marketplace).
 
 <BlogFooter author={nik} />

@@ -1,0 +1,20 @@
+---
+title: Writing Title Capitalization
+description: PostgresAI rule - Writing Title Capitalization
+---
+
+---
+alwaysApply: true
+description: Title and heading capitalization style guide
+---
+
+# Title capitalization style
+
+Use **sentence-style capitalization** for all titles and headings - only capitalize the first word and proper nouns (PostgreSQL, GitLab, DBLab Engine).
+
+## Examples:
+✅ "Database migration testing with DBLab Engine"
+❌ "Database Migration Testing With DBLab Engine"
+
+## Applies to:
+Markdown headings, page titles, button text, documentation sections, blog posts.

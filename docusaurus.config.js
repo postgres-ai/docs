@@ -535,7 +535,10 @@ module.exports = {
           path: 'blog',
           routeBasePath: 'blog',
           postsPerPage: 10,
-          blogSidebarCount: 0, // 0 to disable the sidebar with a list of posts.
+          blogSidebarTitle: 'Categories',
+          blogSidebarCount: 1, // Disable posts list in sidebar
+          blogTagsListComponent: '@theme/BlogTagsListPage',
+          blogTagsPostsComponent: '@theme/BlogTagsPostsPage',
           feedOptions: {
             type: 'all',
             title: '', // default to siteConfig.title
