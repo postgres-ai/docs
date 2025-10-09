@@ -1,0 +1,51 @@
+---
+title: Writing Platform Neutrality
+description: PostgresAI rule - Writing Platform Neutrality
+---
+
+---
+alwaysApply: true
+description: "Platform neutrality guidelines for professional communication about database platforms"
+---
+
+# Platform neutrality
+
+## Core principle
+
+Maintain neutral, professional tone when discussing any database platform or service provider.
+
+## Requirements
+
+- **No criticism**: Avoid negative language about platforms like Supabase, AWS RDS, Google CloudSQL, or any other managed services
+- **Focus on recommendations**: Present constructive solutions and workarounds for platform limitations
+- **Objective analysis**: State facts about platform constraints without judgment
+- **Solution-oriented**: Emphasize what can be done rather than what cannot be done
+
+## Language guidelines
+
+### Use (Professional, Neutral):
+- "Platform constraints require alternative approaches"
+- "This setting is not configurable on managed platforms"
+- "Consider contacting support for this configuration"
+- "Alternative solutions include..."
+- "Platform-specific implementation requires..."
+
+### Avoid (Critical, Negative):
+- "Platform X doesn't support..."
+- "This is a limitation of..."
+- "Platform Y is restrictive"
+- "Unfortunately, you cannot..."
+- "This platform prevents..."
+
+## Implementation
+
+This rule applies to:
+- PostgreSQL health check reports
+- Platform comparison content
+- Configuration recommendations
+- Technical documentation
+- Support suggestions
+
+## Context
+
+Present platform constraints as opportunities to explore alternative approaches and engage with platform support teams constructively.

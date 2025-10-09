@@ -4,19 +4,11 @@ date: 2025-07-24 20:00:00
 publishDate: 2025-07-24 20:00:00
 authors: [nik]
 image: /assets/thumbnails/20250724-postgres-howtos-launch.png
-tags: [postgres, howtos, documentation, launch-week]
+tags: [Guides & best practices, Launch Week, postgres, howtos, documentation]
 ---
 
 # Introducing Postgres how-tos: practical guides for real-world database challenges
 
-<p align="center">
-  <img
-    src="/assets/thumbnails/20250724-postgres-howtos-launch.png"
-    alt="Postgres AI Checkup service: expert-led, AI-assisted comprehensive database health assessment"
-    width="825px"
-    loading="eager"
-  />
-</p>
 
 Today, as part of our Launch Week (Day 4), we're excited to announce the release of our [Postgres how-to guides collection](/docs/postgres-howtos) – a comprehensive set of dozens of practical guides covering real-world PostgreSQL challenges.
 

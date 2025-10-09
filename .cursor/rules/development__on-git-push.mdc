@@ -1,0 +1,42 @@
+---
+alwaysApply: true
+description: "Generate summary description for every git push"
+---
+
+# Git Push Summary Rule
+
+When performing any git push, always generate a **short** summary description in markdown format and print it directly in the chat for easy reference and potential use in merge requests.
+
+## Requirements:
+- **DO NOT** create `.md` files for MR descriptions
+- Print the description directly in the chat in a markdown code block for easy copy/paste
+- Keep it concise and focused
+- Use markdown formatting with emojis for visual appeal
+- Include key changes and benefits
+- Format it so user can easily copy/paste into GitLab MR description field
+
+## Structure:
+```markdown
+# [Brief title]
+
+## Changes
+- Key change 1
+- Key change 2
+- Key change 3
+
+## Benefits
+- Benefit 1
+- Benefit 2
+
+## Files changed
+- List of main files modified
+```
+
+## When to apply:
+- Every git push operation
+- User asks for MR description
+- User says "md MR desc" or similar
+- Any git workflow involving merge requests
+
+## Important:
+Always provide the summary in a markdown code block (```markdown) for easy copy-paste into GitLab MR descriptions!

@@ -7,34 +7,15 @@ linktitle: "Three cases against IF NOT EXISTS / IF EXISTS in Postgres DDL"
 title: "Three cases against IF NOT EXISTS / IF EXISTS in Postgres DDL"
 weight: 0
 image: /assets/thumbnails/20211101_postgresql_ddl_if_exists_shakespeare_meme.png
-description: "<div><img src=\"/assets/thumbnails/20211103-three-cases-against-if-not-exists-and-if-exists-in-postgresql-ddl.png\" alt=\"EXISTS OR NOT EXISTS (meme)\"/></div>
-
-<h2>What is this about?</h2>
-<p>Many DDL statements in PostgreSQL support modified IF EXISTS / IF NOT EXISTS. For example:</p>
-<div class=\"highlight\"><pre class=\"highlight\">
-test=# create table if not exists mytable();
-CREATE TABLE
-test=# drop table if exists mytable;
-DROP TABLE
-</pre></div>
-<p>I recommend using `IF EXISTS` / `IF NOT EXISTS` in DDL only when necessary. Here are three examples that demonstrate how the overuse of these words may lead to negative consequences.</p>"
+description: "Three cases against IF NOT EXISTS / IF EXISTS in Postgres DDL"
 tags:
+  - Postgres insights
   - DDL
 ---
 
 import { DbLabBanner } from '@site/src/components/DbLabBanner'
 import { BlogFooter } from '@site/src/components/BlogFooter'
 import { nik } from '@site/src/config/authors'
-
-<p align="center">
-  <img
-    src="/assets/thumbnails/20211103-three-cases-against-if-not-exists-and-if-exists-in-postgresql-ddl.png"
-    alt="EXISTS OR NOT EXISTS (meme)"
-    width="825px"
-    height="615px"
-    loading="eager"
-  />
-</p>
 
 ## What is this about?
 
