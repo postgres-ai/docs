@@ -1,0 +1,421 @@
+---
+title: "#PostgresMarathon 2-006: Mysterious max_locks_per_transaction"
+date: 2025-10-10
+authors: nik
+tags: [Postgres insights, PostgresMarathon, internals, locks]
+image: /assets/blog/20251010-postgres-marathon-2-006-cover.png
+---
+
+The setting `max_locks_per_transaction` is mysterious, it is a good illustration of Socrates' "I know that I know nothing". This is the main fact to memorize about `max_locks_per_transaction`. Don't try to remember details. Unless you touch it often, you'll forget (I do). Instead, let's rely on the [docs](https://www.postgresql.org/docs/18/runtime-config-locks.html#GUC-MAX-LOCKS-PER-TRANSACTION):
+
+> The shared lock table has space for max_locks_per_transaction objects (e.g., tables) per server process or prepared transaction; hence, no more than this many distinct objects can be locked at any one time. This parameter limits the average number of object locks used by each transaction; individual transactions can lock more objects as long as the locks of all transactions fit in the lock table. This is not the number of rows that can be locked; that value is unlimited. The default, 64, has historically proven sufficient, but you might need to raise this value if you have queries that touch many different tables in a single transaction, e.g., query of a parent table with many children. This parameter can only be set at server start.
+
+> When running a standby server, you must set this parameter to have the same or higher value as on the primary server. Otherwise, queries will not be allowed in the standby server.
+
+Unless you read academic papers every day, you'll need a few minutes to understand what's written here.
+
+Let's take even more time and understand every single detail, and also cover what's not covered in this description.
+
+<!--truncate-->
+
+By the end of this writeup, I want us to fully understand the mechanics of lock limitation – because this is one of a very unpleasant situations, when you bump into the main lock table limit and see:
+
+```
+ERROR:  out of shared memory
+HINT:  You might need to increase "max_locks_per_transaction".
+```
+
+One might be very confused by "out of shared memory", especially on a server with a terabyte of RAM, 25% of which went to `shared_buffers` – the thing here is that this confusing "out of shared memory" is not about the buffer pool at all! This is a case when HINT matters much more than ERROR.
+
+## First: it's not "maximum number of locks per transaction"
+
+First, `max_locks_per_transaction` is not "maximum number of locks per transaction", not at all. It's not even a limit for transaction. And not for backend. It's one of the parameters that define the size of the main lock table that resides in shared memory.
+
+See the [source code](https://github.com/postgres/postgres/blob/3a36543d7d08eef6496fe3511f4cf04cba14f572/src/backend/storage/lmgr/lock.c#L56-L57):
+
+```c
+#define NLOCKENTS() \
+	mul_size(max_locks_per_xact, add_size(MaxBackends, max_prepared_xacts))
+```
+
+So, the size of the main lock table (which doesn't include fast-path locks – they are stored individually for each backend, they are extras) is defined by this formula:
+
+```
+Max number of locks = max_locks_per_transaction × (max_connections + max_prepared_transactions)
+```
+
+// **WARNING**: don't take this formula as granted, keep reading, I promise surprises.
+
+Let's consider defaults in PG18:
+- `max_locks_per_transaction = 64`
+- `max_connections = 100`
+- `max_prepared_transactions = 0`
+
+This gives us `64 × (100 + 0) = 6400` locks.
+
+Now let's look at [this part of the code](https://github.com/postgres/postgres/blob/ed047ce0a881e628a17e0a3fe6a19c0faa155563/src/backend/storage/lmgr/lock.c#L3722-L3745):
+
+```c
+/*
+ * Estimate shared-memory space used for lock tables
+ */
+Size
+LockManagerShmemSize(void)
+{
+	Size		size = 0;
+	long		max_table_size;
+
+	/* lock hash table */
+	max_table_size = NLOCKENTS();
+	size = add_size(size, hash_estimate_size(max_table_size, sizeof(LOCK)));
+
+	/* proclock hash table */
+	max_table_size *= 2;
+	size = add_size(size, hash_estimate_size(max_table_size, sizeof(PROCLOCK)));
+
+	/*
+	 * Since NLOCKENTS is only an estimate, add 10% safety margin.
+	 */
+	size = add_size(size, size / 10);
+
+	return size;
+}
+```
+
+Notice +10%, the "safety margin".
+
+## Testing the limits
+
+Now, let's test.
+
+In one psql, as we did before (see [2-001](/blog/20251005-postgres-marathon-2-001)):
+
+```
+test=# create table t(i int8);
+CREATE TABLE
+test=# create index on t(i);
+CREATE INDEX
+
+test=# select pg_backend_pid();
+ pg_backend_pid
+----------------
+            127
+(1 row)
+
+test=# set idle_in_transaction_session_timeout = 0;
+SET
+test=# begin; drop table t;
+BEGIN
+DROP TABLE
+test=*#
+```
+
+Created a table with a single index, then memorized the backend PID, and dropped table (implicitly with its index) in a transaction block, not closing it.
+
+Why we do that: dropping the table, we drop all its indexes too – and DROP is better for our purposes than SELECT simply because it will acquire AccessExclusiveLock on each relation, which cannot be fast-path. So, our locks will go straight to the main lock table, and we'll see when we bump into the limit.
+
+In another psql:
+
+```
+test=# select relation::regclass, locktype, relation, mode, granted, fastpath 
+from pg_locks where pid = 127;
+ relation |   locktype    | relation |        mode         | granted | fastpath
+----------+---------------+----------+---------------------+---------+----------
+          | virtualxid    |          | ExclusiveLock       | t       | t
+          | object        |          | AccessExclusiveLock | t       | f
+          | object        |          | AccessExclusiveLock | t       | f
+          | transactionid |          | ExclusiveLock       | t       | f
+ t        | relation      |    16394 | AccessExclusiveLock | t       | f
+ t_i_idx  | relation      |    16397 | AccessExclusiveLock | t       | f
+(6 rows)
+```
+
+Total number of non-fastpath locks is 5, 2 of which are relation-level locks, on the table and its index.
+
+Now, if we're right and maximum 6400 locks are possible, then we should have `6400 - 3 - 2 = 6395` more indexes on table "t", so we could see that we don't have an error when having 6400 locks (I hope autovacuum won't come and won't eat some of the lock capacity, ha) and do have the error when it becomes 6401 locks. Let's see.
+
+In the 1st psql (before that, temporarily raise `max_locks_per_transaction` to a higher value, to avoid crashes during index creation; and then return it back to 64):
+
+```
+test=*# rollback;
+ROLLBACK
+
+test=# do $$
+declare
+  i int;
+begin
+  for i in 1..6395 loop
+    create index on t(i);
+  end loop;
+end
+$$; -- will take some time
+```
+
+Now return `max_locks_per_transaction` back to 64 and restart.
+
+```
+test=# show max_locks_per_transaction;
+ max_locks_per_transaction
+---------------------------
+ 64
+(1 row)
+
+test=# select pg_backend_pid();
+ pg_backend_pid
+----------------
+             42
+(1 row)
+
+test=# begin; drop table t;
+BEGIN
+DROP TABLE
+test=*# 
+```
+
+In the 2nd psql:
+
+```
+test=# select mode, fastpath, count(*)
+from pg_locks
+where pid = 42
+group by 1, 2
+order by 1, 2;
+        mode         | fastpath | count
+---------------------+----------+-------
+ AccessExclusiveLock | f        |  6399
+ ExclusiveLock       | f        |     1
+ ExclusiveLock       | t        |     1
+(3 rows)
+```
+
+Total 6400 non-fast-path locks, acquired by a single session (we got lucky: if a concurrent session acquired at least one lock, we wouldn't succeed).
+
+So, we now know that a single session can acquire a lot of locks, despite the "per_transaction" suffix. And the docs were pretty clear about it:
+
+> individual transactions can lock more objects as long as the locks of all transactions fit in the lock table
+
+Now in the 1st psql ROLLBACK, add one more index and repeat the check again:
+
+```
+test=*# rollback;
+ROLLBACK
+
+test=# create index on t(i);
+CREATE INDEX
+test=#
+test=# begin; drop table t;
+BEGIN
+DROP TABLE
+test=*# 
+```
+
+Hmmm, success. This is unexpected. We managed to get 6401 non-fast-path locks:
+
+```
+test=# select mode, fastpath, count(*) from pg_locks where pid = 42 
+group by 1, 2 order by 1, 2;
+        mode         | fastpath | count
+---------------------+----------+-------
+ AccessExclusiveLock | f        |  6400
+ ExclusiveLock       | f        |     1
+ ExclusiveLock       | t        |     1
+(3 rows)
+```
+
+We don't face the limit.
+
+## Testing with lower settings
+
+Let's test it again, this time, choosing very low settings, to bump into limits sooner. Using a Docker container (we know, by default, it will allocate 64 MiB of shared memory – we can adjust it later, let's leave default for now):
+
+```bash
+docker run -d \
+  --name pg18 \
+  -e POSTGRES_PASSWORD=postgres \
+  -p 5433:5432 \
+  -v pg18_data:/var/lib/postgresql/data postgres:18 \
+  -c max_locks_per_transaction=10 \
+  -c max_connections=4 \
+  -c max_prepared_transactions=0
+```
+
+```
+test=# show max_connections;
+ max_connections
+-----------------
+ 4
+(1 row)
+
+test=# show max_prepared_transactions;
+ max_prepared_transactions
+---------------------------
+ 0
+(1 row)
+
+test=# show max_locks_per_transaction;
+ max_locks_per_transaction
+---------------------------
+ 10
+(1 row)
+```
+
+Our expectations, per formula (which we came up with after reading the docs and source code), would give us `10 × (4 + 0) = 40` locks. With 10% extra, 44. This should be maximum for the lock table – maximum number of non-fast-path locks that can be acquired by all backends.
+
+Let's test this in the 1st psql. Let's just create a table and keep adding indexes to it – doing this, we'll be acquiring locks to new objects immediately, and they will be non-fast-path ones:
+
+```
+test=# begin; create table t5(i int8); do $$
+declare
+  i int;
+begin
+  for i in 1..800 loop
+    raise info 'i: %', i;
+
+    create index on t5(i);
+  end loop;
+end
+$$;
+BEGIN
+CREATE TABLE
+INFO:  i: 1
+INFO:  i: 2
+INFO:  i: 3
+INFO:  i: 4
+...
+INFO:  i: 799
+INFO:  i: 800
+DO
+test=*#
+test=*# select pg_backend_pid();
+ pg_backend_pid
+----------------
+             49
+(1 row)
+```
+
+Checking in the 2nd psql:
+
+```
+test=# select mode, fastpath, count(*) from pg_locks where pid = 49 
+group by 1, 2 order by 1, 2;
+        mode         | fastpath | count
+---------------------+----------+-------
+ AccessExclusiveLock | f        |   801
+ AccessShareLock     | f        |     1
+ ExclusiveLock       | f        |     1
+ ExclusiveLock       | t        |     1
+ ShareLock           | f        |     1
+(5 rows)
+```
+
+802 non-fast-path locks successfully acquired! When expected maximum for these settings was as low as ~40.
+
+## Investigating shared memory
+
+I looked at the new system view called [`pg_shmem_allocations`](https://www.postgresql.org/docs/18/view-pg-shmem-allocations.html) into analysis:
+
+```
+test=# select  name, allocated_size, pg_size_pretty(allocated_size)
+from pg_shmem_allocations
+where name ~* 'lock';
+                name                 | allocated_size | pg_size_pretty
+-------------------------------------+----------------+----------------
+ PROCLOCK hash                       |           2944 | 2944 bytes
+ PREDICATELOCKTARGET hash            |           2944 | 2944 bytes
+ Buffer Blocks                       |      134221824 | 128 MiB
+ PREDICATELOCK hash                  |           2944 | 2944 bytes
+ Fast Path Strong Relation Lock Data |           4224 | 4224 bytes
+ Fast-Path Lock Array                |           5632 | 5632 bytes
+ ProcStructLock spinlock             |            128 | 128 bytes
+ LOCK hash                           |           2944 | 2944 bytes
+(8 rows)
+```
+
+But it didn't help, it looks like the lock table's entries are not registered, only headers... Breaking down what we see here and what's related to Lock Manager:
+
+```
+Just the HEADER/directory structures (2,944 bytes each):
+  LOCK hash                       |  2,944 bytes  -- Header only
+  PROCLOCK hash                   |  2,944 bytes  -- Header only
+  PREDICATELOCKTARGET hash        |  2,944 bytes  -- Header (serializable locks)
+  PREDICATELOCK hash              |  2,944 bytes  -- Header (serializable locks)
+
+Fast-path lock storage (separate mechanism):
+  Fast Path Strong Relation Lock Data |  4,224 bytes  -- Metadata
+  Fast-Path Lock Array                |  5,632 bytes  -- Per-backend storage
+```
+
+This doesn't explain why we were able to acquire 802 non-fast-path locks having minimal settings.
+
+Tracing how the shared memory for a lock table's entry is allocated:
+
+1. `SetupLockInTable` call in [lock.c:1066](https://github.com/postgres/postgres/blob/ed047ce0a881e628a17e0a3fe6a19c0faa155563/src/backend/storage/lmgr/lock.c#L1066)
+2. `get_hash_entry` in [dynahash.c:1086](https://github.com/postgres/postgres/blob/ed047ce0a881e628a17e0a3fe6a19c0faa155563/src/backend/utils/hash/dynahash.c#L1086)
+3. `element_alloc` in [dynahash.c:1291](https://github.com/postgres/postgres/blob/ed047ce0a881e628a17e0a3fe6a19c0faa155563/src/backend/utils/hash/dynahash.c#L1291)
+4. `hashp->alloc` in [dynahash.c:1725](https://github.com/postgres/postgres/blob/ed047ce0a881e628a17e0a3fe6a19c0faa155563/src/backend/utils/hash/dynahash.c#L1725)
+5. What is `hashp->alloc`? It's set during hash table creation, using `ShmemAllocNoError`: [shmem.c:349](https://github.com/postgres/postgres/blob/ed047ce0a881e628a17e0a3fe6a19c0faa155563/src/backend/storage/ipc/shmem.c#L349)
+6. `ShmemAllocNoError` calls `ShmemAllocRaw`: [shmem.c:176](https://github.com/postgres/postgres/blob/ed047ce0a881e628a17e0a3fe6a19c0faa155563/src/backend/storage/ipc/shmem.c#L176)
+7. `ShmemAllocRaw` allocates unnamed chunks from shared memory: [shmem.c:186](https://github.com/postgres/postgres/blob/ed047ce0a881e628a17e0a3fe6a19c0faa155563/src/backend/storage/ipc/shmem.c#L186)
+
+So, perhaps, the lock table's entries are registered as `<anonymous>`:
+
+```
+test=# select  name, allocated_size, pg_size_pretty(allocated_size) 
+from pg_shmem_allocations where name = '<anonymous>';
+    name     | allocated_size | pg_size_pretty
+-------------+----------------+----------------
+ <anonymous> |        1924736 | 1880 KiB
+(1 row)
+```
+
+## Back to the experiment
+
+If, in the 1st psql, we keep adding indexes, it will bump into limit, soon:
+
+```
+INFO:  i: 803
+INFO:  i: 804
+ERROR:  out of shared memory
+HINT:  You might need to increase "max_locks_per_transaction".
+CONTEXT:  SQL statement "create index on t5(i)"
+PL/pgSQL function inline_code_block line 8 at SQL statement
+```
+
+There is a limit, but not where we expected it, reading the docs and the tip of the code iceberg.
+
+Let's double-check Postgres 17 (container launched with the very same settings):
+
+```
+...
+INFO:  i: 670
+INFO:  i: 671
+INFO:  i: 672
+ERROR:  out of shared memory
+HINT:  You might need to increase "max_locks_per_transaction".
+CONTEXT:  SQL statement "create index on t5(i)"
+PL/pgSQL function inline_code_block line 8 at SQL statement
+```
+
+We reach the limit significantly sooner.
+
+## The mystery
+
+Re-reading the docs for PG18:
+
+> The shared lock table has space for max_locks_per_transaction objects (e.g., tables) per server process or prepared transaction; hence, no more than this many distinct objects can be locked at any one time.
+
+Well, this investigation took an unexpected turn. I set out to understand the mysterious `max_locks_per_transaction` and ended up with an even bigger mystery. What we learned:
+
+- The documented formula `max_locks_per_transaction × (max_connections + max_prepared_transactions)` doesn't give us the actual lock limit
+- A single backend can acquire far more locks than the formula suggests (802 vs expected ~44!)
+- The lock table appears to grow dynamically, consuming anonymous shared memory until exhaustion
+- Different Postgres versions hit different limits with identical settings
+
+What remains unclear:
+
+- The exact mechanism allowing lock table expansion beyond the calculated size
+- Why the documentation states "no more than this many distinct objects can be locked" when clearly more can be
+
+Socrates would be happy studying `max_locks_per_transaction`.
+
+If you know what's really going on here, please reach out – I'd love to understand this fully!
