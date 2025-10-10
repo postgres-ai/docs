@@ -308,7 +308,7 @@ group by 1, 2 order by 1, 2;
 (5 rows)
 ```
 
-802 non-fast-path locks successfully acquired! When expected maximum for these settings was as low as ~40.
+803 non-fast-path locks successfully acquired! When expected maximum for these settings was as low as ~40.
 
 ## Investigating shared memory
 
@@ -407,7 +407,7 @@ Re-reading the docs for PG18:
 Well, this investigation took an unexpected turn. I set out to understand the mysterious `max_locks_per_transaction` and ended up with an even bigger mystery. What we learned:
 
 - The documented formula `max_locks_per_transaction × (max_connections + max_prepared_transactions)` doesn't give us the actual lock limit
-- A single backend can acquire far more locks than the formula suggests (802 vs expected ~44!)
+- A single backend can acquire far more locks than the formula suggests (>800 vs expected ~40!)
 - The lock table appears to grow dynamically, consuming anonymous shared memory until exhaustion
 - Different Postgres versions hit different limits with identical settings
 
