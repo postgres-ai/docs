@@ -1,0 +1,242 @@
+---
+title: "#PostgresMarathon 2-008: LWLock:LockManager and prepared statements"
+date: 2025-10-14 23:59:59
+authors: nik
+tags: [Postgres insights, PostgresMarathon, internals, locks, prepared statements]
+image: /assets/blog/20251014-postgres-marathon-2-008-cover.jpg
+---
+
+As was discussed in [#PostgresMarathon 2-002](https://postgres.ai/blog/20251005-postgres-marathon-2-002), for a simple SELECT from a table, at planning time, Postgres locks the table and all of its indexes with `AccessShareLock`. A simple demo to remind it (let me be a bit weird here and save some bytes when typing SQL):
+
+```
+test=# create table t();
+CREATE TABLE
+test=# create index on t((1));
+CREATE INDEX
+test=# create index on t((1));
+CREATE INDEX
+test=# create index on t((1));
+CREATE INDEX
+test=# create index on t((1));
+CREATE INDEX
+test=# create index on t((1));
+CREATE INDEX
+test=# \d t
+                Table "public.t"
+ Column | Type | Collation | Nullable | Default
+--------+------+-----------+----------+---------
+Indexes:
+    "t_expr_idx" btree ((1))
+    "t_expr_idx1" btree ((1))
+    "t_expr_idx2" btree ((1))
+    "t_expr_idx3" btree ((1))
+    "t_expr_idx4" btree ((1))
+
+test=#
+test=# begin; explain select from t;
+BEGIN
+                     QUERY PLAN
+-----------------------------------------------------
+ Seq Scan on t  (cost=0.00..39.10 rows=2910 width=0)
+(1 row)
+
+test=*# select relation::regclass, mode from pg_locks where pid = pg_backend_pid();
+  relation   |      mode
+-------------+-----------------
+ t_expr_idx2 | AccessShareLock
+ pg_locks    | AccessShareLock
+ t_expr_idx3 | AccessShareLock
+ t_expr_idx4 | AccessShareLock
+ t_expr_idx  | AccessShareLock
+ t_expr_idx1 | AccessShareLock
+ t           | AccessShareLock
+             | ExclusiveLock
+(8 rows)
+
+test=*#
+```
+
+– indeed, all indexes locked.
+
+## Using prepared statements to reduce locking
+
+To mitigate it, we can just use prepared statements. Let's create one:
+```sql
+prepare test_query (int) as select from t;
+```
+
+<!--truncate-->
+
+And then run this snippet 7 times:
+
+```sql
+begin;
+explain (verbose) execute test_query(1);
+
+select relation::regclass, mode
+from pg_locks
+where pid = pg_backend_pid() and relation::regclass <> 'pg_locks'::regclass;
+
+rollback;
+```
+
+Six (6) times, we'll see that all indexes are locked:
+
+```
+  relation   |      mode
+-------------+-----------------
+ t_expr_idx2 | AccessShareLock
+ t_expr_idx3 | AccessShareLock
+ t_expr_idx4 | AccessShareLock
+ t_expr_idx  | AccessShareLock
+ t_expr_idx1 | AccessShareLock
+ t           | AccessShareLock
+(6 rows)
+```
+
+And on the 7th time, we'll see this:
+
+```
+ relation |      mode
+----------+-----------------
+ t        | AccessShareLock
+(1 row)
+```
+
+– only the table is locked.
+
+## The mystery of the 6th execution
+
+I was surprised to see single lock on the 7th call, not on the 6th. I expected that for the first 5 times, so-called custom plan would be used and all 6 relations (table + 5 its indexes) locked, and on the 6th time, we switch to generic plan and lock only the table itself. 
+Why 5 calls? Per [the docs](https://www.postgresql.org/docs/current/sql-prepare.html):
+
+> By default (that is, when `plan_cache_mode` is set to `auto`), the server will automatically choose whether to use a generic or custom plan for a prepared statement that has parameters. The current rule for this is that **the first five executions are done with custom plans** and the average estimated cost of those plans is calculated. Then a generic plan is created and its estimated cost is compared to the average custom-plan cost. Subsequent executions use the generic plan if its cost is not so much higher than the average custom-plan cost as to make repeated replanning seem preferable.
+
+But why do we see, the locking behavior changes only on the 7th call, not 6th?
+
+Checking prepared statements stats:
+
+```
+test=# select * from pg_prepared_statements \gx
+-[ RECORD 1 ]---+-------------------------------------------
+name            | test_query
+statement       | prepare test_query (int) as select from t;
+prepare_time    | 2025-10-15 02:06:25.570003+00
+parameter_types | {integer}
+result_types    | {}
+from_sql        | t
+generic_plans   | 2
+custom_plans    | 5
+```
+
+-- indeed, we had custom plan used 5 and then it switched to generic plan, using it for 6th and 7th call. But why on the 6th, call we saw all indexes being locked? That's a mystery.
+
+So, why does the 6th execution use generic plan but still locks all indexes?
+
+The answer lies in two different locking mechanisms in PostgreSQL's plan cache:
+
+1. Planner locks - lock everything in the Query tree (all potential access paths)
+2. Executor locks - lock only what's in the `PlannedStmt` (what's actually used)
+
+Let's look at source code (I use PG18 code here).
+
+## The first five
+
+As already mentioned, for the first 5 executions, it uses custom plans. Looking inside [`GetCachedPlan`](https://github.com/postgres/postgres/blob/a6598aac5295fcb169bd251cbc9fe125fa019a2d/src/backend/utils/cache/plancache.c#L1280), we see the sequence of steps:
+
+1. [Acquire planner locks](https://github.com/postgres/postgres/blob/a6598aac5295fcb169bd251cbc9fe125fa019a2d/src/backend/utils/cache/plancache.c#L726):
+    ```c
+    AcquirePlannerLocks(plansource->query_list, true);
+    ```
+    - Locks the Query tree (parser output)
+    - Query tree contains: table + all 5 indexes in our case
+    - In result, it locks the table and its 5 indexes – overall, 6 locks
+2. [Decide plan type](https://github.com/postgres/postgres/blob/a6598aac5295fcb169bd251cbc9fe125fa019a2d/src/backend/utils/cache/plancache.c#L1186-L1187):
+    ```c
+    /* Generate custom plans until we have done at least 5 (arbitrary) */
+    if (plansource->num_custom_plans < 5)
+        return true;  // Use custom plan
+    ```
+3. [Build custom plan](https://github.com/postgres/postgres/blob/a6598aac5295fcb169bd251cbc9fe125fa019a2d/src/backend/utils/cache/plancache.c#L1356):
+    ```c
+    plan = BuildCachedPlan(plansource, qlist, boundParams, queryEnv);
+                                            // ^^^^^^^^^^^ actual parameter value
+    ```
+    - Planner creates plan with specific parameter value
+    - Plan is not cached (thrown away after execution)
+    - Result: 6 planner locks remain until the end of transaction
+
+## The number six
+
+On the 6th execution, the start is the same as for the first five. It all looks the same, except one thing – the process of building cached plan is different.
+
+1. Acquire planner locks – the same as before (see above)
+2. Decide plan type – now it's [different](https://github.com/postgres/postgres/blob/a6598aac5295fcb169bd251cbc9fe125fa019a2d/src/backend/utils/cache/plancache.c#L1201), for default `plan_cache_mode` (`auto`), the switch to generic plan happens:
+    ```c
+	/*
+	 * Prefer generic plan if it's less expensive than the average custom
+	 * plan.  (Because we include a charge for cost of planning in the
+	 * custom-plan costs, this means the generic plan only has to be less
+	 * expensive than the execution cost plus replan cost of the custom
+	 * plans.)
+	 *
+	 * Note that if generic_cost is -1 (indicating we've not yet determined
+	 * the generic plan cost), we'll always prefer generic at this point.
+	 */
+    if (plansource->generic_cost < avg_custom_cost)
+      return false;  // Use generic plan
+    ```
+    - this time `num_custom_plans = 5`, so threshold reached
+    - `generic_cost = -1` (not calculated yet)
+    - `-1 < avg_custom_cost` – this means try generic plan
+3. [Check for cached plan](https://github.com/postgres/postgres/blob/a6598aac5295fcb169bd251cbc9fe125fa019a2d/src/backend/utils/cache/plancache.c#L1302)
+    ```c
+    if (CheckCachedPlan(plansource))  // Returns FALSE - no plan yet
+    ```
+4. [Build generic plan](https://github.com/postgres/postgres/blob/a6598aac5295fcb169bd251cbc9fe125fa019a2d/src/backend/utils/cache/plancache.c#L1311):
+    ```c
+    plan = BuildCachedPlan(plansource, qlist, NULL, queryEnv);
+                                              // ^^^^ NULL here means 'generic'
+    plansource->gplan = plan;  // Cache it
+    ```
+    - Planner builds plan without parameter values
+    - Creates `PlannedStmt` with only table in our case (seq scan chosen)
+    - Plan is cached for future use
+    - Result: still 6 planner locks (from Step 1) - no executor locks acquired yet (!!)
+
+So, here is what I didn't understand properly when I was reading just the docs: **on execution 6, we build the generic plan but don't go through the "use cached plan" path that would acquire executor locks**. We still use planner locks – it means, we lock all indexes.
+
+## Finally there – number seven and beyond
+
+Starting with execution 7 and further, we use cached generic plan, and executor locks – in our case (seq scan), it means only the table is locked:
+
+1. Acquire planner locks (table + 5 indexes)
+2. Decide plan type → use generic
+3. [Check for cached plan](https://github.com/postgres/postgres/blob/a6598aac5295fcb169bd251cbc9fe125fa019a2d/src/backend/utils/cache/plancache.c#L1302-L1305):
+    ```c
+    if (CheckCachedPlan(plansource))  // Returns TRUE - plan exists!
+    {
+        plan = plansource->gplan;  // Use cached plan
+    }
+    ```
+4. Inside [`CheckCachedPlan`](CheckCachedPlan) executor locks are acquired:
+    ```c
+    AcquireExecutorLocks(plan->stmt_list, true);
+    ```
+    - Locks the `PlannedStmt` (planner output)
+    - `PlannedStmt` contains: only table (seq scan chosen) in our case
+    - 1 executor lock acquired
+    - Result: Only 1 lock
+
+
+## What we learned
+
+To summarize, here is what's happening:
+
+| Execution | Plan type | What happens                             | Locks                 |
+|-----------|-----------|------------------------------------------|-----------------------|
+| 1-5       | Custom    | Build plan with params → planner locks   | 6 (table + 5 indexes) |
+| 6         | Generic   | Build generic plan → planner locks       | 6 (table + 5 indexes) |
+| 7+        | Generic   | Use cached generic plan → executor locks | 1 (table only)        |
+
+Prepared statements can dramatically reduce `LWLock:LockManager` contention - but only starting with the 7th execution, not 6th. During executions 1-6, with default `plan_cache_mode` (`auto`), Postgres still uses planner locks that lock all tables involved in the query, with all their indexes.
