@@ -142,22 +142,22 @@ Let's look at source code (I use PG18 code here).
 
 ## The first five
 
-As already mentioned, for the first 5 executions, it uses custom plans. Looking inside [`GetCachedPlan`](https://github.com/postgres/postgres/blob/REL_18_STABLE/src/backend/utils/cache/plancache.c#L1280), we see the sequence of steps:
+As already mentioned, for the first 5 executions, it uses custom plans. Looking inside [`GetCachedPlan`](https://github.com/postgres/postgres/blob/a6598aac5295fcb169bd251cbc9fe125fa019a2d/src/backend/utils/cache/plancache.c#L1280), we see the sequence of steps:
 
-1. [Acquire planner locks]((https://github.com/postgres/postgres/blob/REL_18_STABLE/src/backend/utils/cache/plancache.c#L726)):
+1. [Acquire planner locks](https://github.com/postgres/postgres/blob/a6598aac5295fcb169bd251cbc9fe125fa019a2d/src/backend/utils/cache/plancache.c#L726):
     ```c
     AcquirePlannerLocks(plansource->query_list, true);
     ```
     - Locks the Query tree (parser output)
     - Query tree contains: table + all 5 indexes in our case
     - In result, it locks the table and its 5 indexes – overall, 6 locks
-2. [Decide plan type](https://github.com/postgres/postgres/blob/REL_18_STABLE/src/backend/utils/cache/plancache.c#L1186-L1187):
+2. [Decide plan type](https://github.com/postgres/postgres/blob/a6598aac5295fcb169bd251cbc9fe125fa019a2d/src/backend/utils/cache/plancache.c#L1186-L1187):
     ```c
     /* Generate custom plans until we have done at least 5 (arbitrary) */
     if (plansource->num_custom_plans < 5)
         return true;  // Use custom plan
     ```
-3. [Build custom plan](https://github.com/postgres/postgres/blob/REL_18_STABLE/src/backend/utils/cache/plancache.c#L1356):
+3. [Build custom plan](https://github.com/postgres/postgres/blob/a6598aac5295fcb169bd251cbc9fe125fa019a2d/src/backend/utils/cache/plancache.c#L1356):
     ```c
     plan = BuildCachedPlan(plansource, qlist, boundParams, queryEnv);
                                             // ^^^^^^^^^^^ actual parameter value
@@ -171,7 +171,7 @@ As already mentioned, for the first 5 executions, it uses custom plans. Looking 
 On the 6th execution, the start is the same as for the first five. It all looks the same, except one thing – the process of building cached plan is different.
 
 1. Acquire planner locks – the same as before (see above)
-2. Decide plan type – now it's [different](https://github.com/postgres/postgres/blob/REL_18_STABLE/src/backend/utils/cache/plancache.c#L1201), for default `plan_cache_mode` (`auto`), the switch to generic plan happens:
+2. Decide plan type – now it's [different](https://github.com/postgres/postgres/blob/a6598aac5295fcb169bd251cbc9fe125fa019a2d/src/backend/utils/cache/plancache.c#L1201), for default `plan_cache_mode` (`auto`), the switch to generic plan happens:
     ```c
 	/*
 	 * Prefer generic plan if it's less expensive than the average custom
@@ -189,11 +189,11 @@ On the 6th execution, the start is the same as for the first five. It all looks 
     - this time `num_custom_plans = 5`, so threshold reached
     - `generic_cost = -1` (not calculated yet)
     - `-1 < avg_custom_cost` – this means try generic plan
-3. [Check for cached plan](https://github.com/postgres/postgres/blob/REL_18_STABLE/src/backend/utils/cache/plancache.c#L1302)
+3. [Check for cached plan](https://github.com/postgres/postgres/blob/a6598aac5295fcb169bd251cbc9fe125fa019a2d/src/backend/utils/cache/plancache.c#L1302)
     ```c
     if (CheckCachedPlan(plansource))  // Returns FALSE - no plan yet
     ```
-4. [Build generic plan](https://github.com/postgres/postgres/blob/REL_18_STABLE/src/backend/utils/cache/plancache.c#L1311):
+4. [Build generic plan](https://github.com/postgres/postgres/blob/a6598aac5295fcb169bd251cbc9fe125fa019a2d/src/backend/utils/cache/plancache.c#L1311):
     ```c
     plan = BuildCachedPlan(plansource, qlist, NULL, queryEnv);
                                               // ^^^^ NULL here means 'generic'
@@ -212,7 +212,7 @@ Starting with execution 7 and further, we use cached generic plan, and executor 
 
 1. Acquire planner locks (table + 5 indexes)
 2. Decide plan type → use generic
-3. [Check for cached plan](https://github.com/postgres/postgres/blob/REL_18_STABLE/src/backend/utils/cache/plancache.c#L1302-L1305):
+3. [Check for cached plan](https://github.com/postgres/postgres/blob/a6598aac5295fcb169bd251cbc9fe125fa019a2d/src/backend/utils/cache/plancache.c#L1302-L1305):
     ```c
     if (CheckCachedPlan(plansource))  // Returns TRUE - plan exists!
     {
