@@ -7,7 +7,7 @@ description: One observability tool to rule them all - comprehensive monitoring 
 
 Get deep insights into your Postgres performance with our comprehensive monitoring platform that combines powerful analytics with AI-driven recommendations.
 
-## Key Features
+## Key features
 
 - **Open source foundation** – postgres_ai core components are Apache 2.0 licensed, ensuring transparency and community-driven development
 
@@ -27,7 +27,7 @@ Get deep insights into your Postgres performance with our comprehensive monitori
 
 - **AI-powered insights backed by human expertise** – From diagnostics to mitigation strategies, combining artificial intelligence with seasoned Postgres expert knowledge for actionable recommendations
 
-## Currently in Preview
+## Currently in preview
 
 postgres_ai monitoring is currently in preview. We're working with select customers to refine the platform and ensure it meets the highest standards for production use.
 

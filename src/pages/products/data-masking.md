@@ -3,13 +3,13 @@ title: Sensitive data masking
 description: Mask sensitive data to ensure security and compliance
 ---
 
-# Sensitive Data Masking
+# Sensitive data masking
 DBLab Engine allows a robust and centralized means to both mask<sup>1</sup>
 and control access to test and staging databases. Implement masking rules
 within the DBLab Engine to adhere to security best practices and
 simplify external audits.
 
-## Control Data Access for Security and Compliance
+## Control data access for security and compliance
 <img src="/assets/landing/feature3.svg" style={{width: '100px'}} align="right" hspace="5" vspace="5" />
 
 Security certifications such as SOC2, ISO 27001, and HIPPA dictate strict controls
@@ -24,7 +24,7 @@ several things:
 DBLab Engine gives organizations a clear and centralized means to achieve these objectives.
 
 
-## A Comprehensive Approach to Masking
+## A comprehensive approach to masking
 The DBLab Engine provides a robust API that gives software teams the power to implement
 a multi-faceted and comprehensive approach to data masking.  There are three pillars
 to well-implemented masking:
@@ -37,7 +37,7 @@ Learn more about masking techniques with our recommended tool:
 [PostgreSQL Anonymizer](https://postgresql-anonymizer.readthedocs.io/en/stable/).
 
 
-## Clear and Auditable Rules
+## Clear and auditable rules
 DBLab Engine recommends a declarative approach to data masking using
 [PostgreSQL Anonymizer](https://postgresql-anonymizer.readthedocs.io/en/stable/declare_masking_rules.html).
 

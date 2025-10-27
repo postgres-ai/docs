@@ -11,35 +11,35 @@ description: Physical-to-logical replication technique for zero-downtime, revers
 
 Our solution delivers all three essential characteristics for enterprise-grade major upgrades for Postgres:
 
-– ⚡️ **Zero downtime**
-– 🔄 **Reversible**
-– ✅ **Zero data loss** (in both directions)
+- **Zero downtime**
+- **Reversible**
+- **Zero data loss** (in both directions)
 
 ## The problem
 
 Traditional Postgres major version upgrades require:
 
-– **Hours of downtime for multi-terabyte databases** if you want to properly test things (otherwise, operations like `ANALYZE` can take significant time and are not automated)
-– **Complete database shutdown** during `pg_upgrade`  
-– **Irreversible process** – no easy way back if issues arise
-– **Hard to test and verify** procedures for various issues like incompatibilities
-– **Risks of plan flips** and performance regressions after upgrade
+- **Hours of downtime for multi-terabyte databases** if you want to properly test things (otherwise, operations like `ANALYZE` can take significant time and are not automated)
+- **Complete database shutdown** during `pg_upgrade`  
+- **Irreversible process** — no easy way back if issues arise
+- **Hard to test and verify** procedures for various issues like incompatibilities
+- **Risks of plan flips** and performance regressions after upgrade
 
 ## Our solution: Four-component approach
 
 A complete system:
 
-– **Reliable, safe, battle-proven `physical2logical`** conversion technique for zero data loss
-– **PgBouncer's `PAUSE`/`RESUME`** for true zero-downtime connection management
-– **Reverse replication** enabling full reversibility – go back if needed with zero data loss
-– **Extensive testing before deployment** including for plan flips and compatibility issues
+- **Reliable, safe, battle-proven `physical2logical`** conversion technique for zero data loss
+- **PgBouncer's `PAUSE`/`RESUME`** for true zero-downtime connection management
+- **Reverse replication** enabling full reversibility — go back if needed with zero data loss
+- **Extensive testing before deployment** including for plan flips and compatibility issues
 
 ## Case studies
 
-– [GitLab's conference talks](https://www.youtube.com/results?search_query=gitlab+postgres+upgrade+conference) about their zero-downtime upgrade experience
-– [pganalyze technical review](https://pganalyze.com/blog/5mins-postgres-zero-downtime-upgrades-logical-replication) of zero-downtime upgrade approaches including our method
-– [Gadget's zero-downtime upgrade](https://gadget.dev/blog/zero-downtime-postgres-upgrades-using-logical-replication) of their core production database from Postgres 13 to 15
-– More cases (TBD)
+- [GitLab's conference talks](https://www.youtube.com/results?search_query=gitlab+postgres+upgrade+conference) about their zero-downtime upgrade experience
+- [pganalyze technical review](https://pganalyze.com/blog/5mins-postgres-zero-downtime-upgrades-logical-replication) of zero-downtime upgrade approaches including our method
+- [Gadget's zero-downtime upgrade](https://gadget.dev/blog/zero-downtime-postgres-upgrades-using-logical-replication) of their core production database from Postgres 13 to 15
+- More cases (TBD)
 
 ## Get preview access
 This solution is **fully developed and battle-tested**. We're offering preview access to select enterprise customers.
