@@ -3,14 +3,14 @@ title: Realistic dev and test environments
 description: Give your developers and QA team realistic environments
 ---
 
-# Realistic Test Environments
+# Realistic test environments
 
 A single instance of the DBLab Engine can generate many
 fully isolated database clones.  These clones can replace the need
 to setup, maintain, and pay for standalone development and staging databases.
 [Learn how the DBLab Engine works](/products/how-it-works).
 
-## Your Staging Server Doesn't Give You the Full Picture
+## Your staging server doesn't give you the full picture
 
 Most organizations take one of the following approaches to build a staging server:
 
@@ -23,7 +23,7 @@ Most organizations take one of the following approaches to build a staging serve
 None of these approaches are ideal because they leave organizations with either
 suboptimal testing environments or high development and maintenance costs.
 
-## Find and Fix Bugs Earlier
+## Find and fix bugs earlier
 
 The DBLab Engine resolves these limitations by providing instantaneous
 access to full-size, [safely-masked](/products/data-masking) clones of production data.
@@ -40,7 +40,7 @@ Examples of what teams can do with instantly available production clones:
 1. Preview _precisely_ how code and data changes will impact production prior to release
 
 
-## Save Money _And_ Simplify Setup
+## Save money and simplify setup
 
 A single instance of the DBLab Engine can generate many fully isolated database clones.
 Allocating new clones is governed by role-based permissions and can easily be done either through

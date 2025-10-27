@@ -3,11 +3,8 @@ title: How Database Lab works
 description: Basics of the DBLab Platform
 ---
 
-# How it Works
-The DBLab Engine is an open-source experimentation platform for PostgreSQL
-databases. Instantly create full-size clones of your production database and use
-them to test your database migrations, optimize SQL, or deploy full-size staging
-apps.
+# How it works
+The DBLab Engine is an open-source experimentation platform for Postgres databases. Instantly create full-size clones of your production database and use them to test your database migrations, optimize SQL, or deploy full-size staging apps.
 
 
 ## Architecture
