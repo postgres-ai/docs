@@ -156,7 +156,7 @@ Summary for testing with data:
 
 | Setting | Exec 1 | Exec 2-5 | Exec 6 | Exec 7+ | Planning | Notes |
 |---------|--------|----------|--------|---------|----------|-------|
-| `auto` | 8 locks | 8 locks | 52 locks (eval) | 8 or 13 locks* | Every time | *8 if rejects generic (data), 13 if accepts (empty) |
+| `auto` | 8 locks | 8 locks | 52 locks (eval) | 8 or 13 locks* | Every time or 6 | *8 if rejects generic (data), 13 if accepts (empty) |
 | `force_generic_plan` | 52 locks | 13 locks | 13 locks | 13 locks | Once | Lock explosion on exec 1, then O(n) |
 | `force_custom_plan` | 8 locks | 8 locks | 8 locks | 8 locks | Every time | Consistent, explicit |
 
@@ -166,7 +166,7 @@ For unpartitioned tables, this works beautifully. Custom plans during executions
 
 But with partitioned tables, the solution becomes the problem. Custom plans acquire 8 locks (parent + 1 partition + indexes), which is efficient. Generic plan building in execution 1 causes a lock explosion of 52 locks. Subsequent executions with the cached generic plan acquire 13 locks (all partitions) every time. The optimization we came for actually increases lock contention.
 
-The ultimate irony: we use prepared statements to avoid re-planning and reduce lock contention, but with partitioned tables, we need to disable the prepared statement optimization (plan caching) to avoid lock contention.
+Isn't it an irony? We use prepared statements to avoid re-planning and reduce lock contention, but with partitioned tables, we need to disable the prepared statement optimization (plan caching) to avoid lock contention.
 
 The obvious question arises: doesn't re-planning on every execution have overhead? Yes, and this is the real trade-off. With `force_custom_plan`, you get consistent 8 locks every time and no lock explosion risk, but you pay planning overhead on every execution and lose plan caching benefits. With `force_generic_plan`, you pay planning cost once and cache the result, avoiding re-planning overhead, but execution 1 causes 52 locks (again, this is in our simple case, with just 12 partitions and 4 indexes) and execution 2+ causes 13 locks with O(n) scaling relative to partition count.
 
