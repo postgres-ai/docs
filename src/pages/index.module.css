@@ -91,8 +91,8 @@ html[data-theme="dark"] .signupSectionFullWidth {
 /* Mobile Responsive */
 @media (max-width: 767px) {
   .mainTitle {
-    font-size: 24px;
-    line-height: 30px;
+    font-size: 16px;
+    line-height: 22px;
   }
 
   .subtitle {
