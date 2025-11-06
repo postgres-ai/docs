@@ -1,6 +1,6 @@
 ---
 title: "#PostgresMarathon 2-012: Ultra-fast replica creation with pgBackRest"
-date: 2025-11-05 13:59:59
+date: 2025-11-05 23:59:59
 authors: [nik, maxim]
 tags: [Postgres insights, PostgresMarathon, cloning, pgBackRest, performance]
 ---
@@ -40,8 +40,6 @@ Multi-threaded pg_basebackup has been a recurring topic on pgsql-hackers over th
 ## Alternative: pgBackRest 
 
 pgBackRest is a direct replacement that becomes efficient with `--process-max=8` or higher. The setup requires no special configuration on the source database — neither Postgres nor pgBackRest need to be pre-configured on the primary server.
-
-**Credit:** This recipe was shared with me by Maxim Boguk, a Postgres expert I've known for many years. Maxim has invented and shared numerous amazing techniques for Postgres optimization over the years. The pgBackRest approach works with any Postgres version, not just 18 — the parallel processing benefits apply regardless of the server version.
 
 ### Prerequisites
 
