@@ -33,7 +33,7 @@ function IndexPage() {
                     <iframe
                       width="100%"
                       height="100%"
-                      src="https://www.youtube.com/embed/O6UTwEGOFio"
+                      src="https://www.youtube.com/embed/ZWGY64V8AHw?modestbranding=1&rel=0"
                       title="postgres_ai monitoring demo"
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
