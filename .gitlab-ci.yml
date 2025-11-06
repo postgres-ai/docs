@@ -3,6 +3,7 @@
 image: docker:20.10.12
 
 stages:
+  - validate
   - prepare_image
   - deploy
 
@@ -13,6 +14,26 @@ variables:
   TAG_VERSION: "${REGISTRY}:${NAMESPACE}-${CI_PIPELINE_IID}"
   TAG_LATEST: "${REGISTRY}:${NAMESPACE}-latest"
   DOCS_NAME: "docs"
+
+# Validate RSS/Atom feeds before building and deploying
+validate_feeds:
+  stage: validate
+  image: node:18
+  before_script:
+    # Install xmllint for XML validation
+    - apt-get update && apt-get install -y libxml2-utils jq
+    - npm ci
+  script:
+    - bash .ci/validate-feeds.sh
+  artifacts:
+    when: on_failure
+    paths:
+      - build/blog/*.xml
+      - build/blog/*.json
+    expire_in: 1 week
+  only:
+    - merge_requests
+    - master
 
 # Stages templates.
 .job_template: &build_and_push_definition
