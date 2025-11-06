@@ -348,6 +348,9 @@ module.exports = {
       '@docusaurus/plugin-client-redirects',
       {
         redirects: [
+          // Blog post URL improvements
+          { from: '/blog/20251105-postgres-marathon-2-012', to: '/blog/20251105-postgres-marathon-2-012-ultra-fast-replica-creation-pgbackrest' },
+          
           // DBLab how-tos redirects (moved from /docs/how-to-guides to /docs/dblab-howtos)
           { from: '/docs/how-to-guides', to: '/docs/dblab-howtos' },
           
