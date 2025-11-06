@@ -231,9 +231,9 @@ article ul,
 .markdown ul li,
 article ul li,
 .theme-doc-markdown ul li {
-  margin-bottom: 0.05rem !important;
-  margin-top: 0.05rem !important;
-  line-height: 1.4 !important;
+  margin-bottom: 0.5rem !important;
+  margin-top: 0.5rem !important;
+  line-height: 1.6 !important;
   padding-left: 0.25rem;
   padding-top: 0 !important;
   padding-bottom: 0 !important;

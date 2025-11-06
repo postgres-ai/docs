@@ -33,3 +33,9 @@ tanya:
   title: Data Scientist
   email: tanya@postgres.ai
   image_url: '/assets/author/tanya.png'
+
+maxim:
+  name: Maxim Boguk
+  title: Postgres Expert
+  url: https://www.linkedin.com/in/maxim-boguk-b1bb9980/
+  image_url: '/assets/author/maxim.png'
