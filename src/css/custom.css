@@ -196,21 +196,21 @@ html[data-theme="dark"] .DocSearch {
 
 html[data-theme="light"] .banner {
   background: linear-gradient(180deg, #ffe1d2 0%, #ffffff 100%);
-  min-height: 80vh;
+  /* min-height: 80vh; */
 }
 
 html[data-theme="dark"] .banner {
-  min-height: 80vh;
+  /* min-height: 80vh; */
 }
 
 .banner .row {
-  min-height: 80vh;
+  /* min-height: 80vh; */
 }
 
 .banner h1 {
   font-weight: bold;
-  font-size: 28px;
-  line-height: 32px;
+  font-size: 48px !important;
+  line-height: 1.2 !important;
   color: #ff6112;
   margin: 0;
 }
@@ -519,8 +519,8 @@ table.docs-home td {
     min-height: 540px;
   }
   .banner h1 {
-    font-size: 32px;
-    line-height: 37px;
+    font-size: 48px !important;
+    line-height: 1.2 !important;
   }
   .banner p {
     font-size: 26px;
@@ -600,8 +600,8 @@ table.docs-home td {
     min-height: 540px;
   }
   .banner h1 {
-    font-size: 32px;
-    line-height: 37px;
+    font-size: 48px !important;
+    line-height: 1.2 !important;
   }
   .banner p {
     font-size: 26px;
