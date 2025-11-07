@@ -32,7 +32,7 @@ pg_basebackup \
 
 Despite having fast NVMe storage and 75 Gbps network capacity, pg_basebackup is fundamentally limited by its single-threaded design. On Postgres versions prior to 18, pg_basebackup typically delivers only 300-500 MiB/s regardless of hardware capabilities.
 
-PostgreSQL 18's [new io_uring support](https://www.postgresql.org/docs/18/runtime-config-resource.html#GUC-IO-METHOD) can speed it up significantly. For our experiment on i4i.32xlarge machines with local NVMe disks, we managed to reach 1.08 GiB/s which is very impressive. But it's still limited. For large databases, this creates a significant operational bottleneck, especially in cases when disk IO and network capactity is high and we could have many gigabytes per second.
+PostgreSQL 18's [new io_uring support](https://www.postgresql.org/docs/18/runtime-config-resource.html#GUC-IO-METHOD) can speed it up significantly. For our experiment on i4i.32xlarge machines with local NVMe disks, we managed to reach 1.08 GiB/s which is very impressive. But it's still limited. For large databases, this creates a significant operational bottleneck, especially in cases when disk IO and network capacity is high and we could have many gigabytes per second.
 
 Multi-threaded pg_basebackup has been a recurring topic on pgsql-hackers over the years ([one](https://www.postgresql.org/message-id/CAEHH7R5sBCRyiu5_qanE741VWGE-LPbVnCdxJZh2U1y1BRPW7A@mail.gmail.com), [two](https://www.postgresql.org/message-id/CADM=Jeg3ZN+kPQpiSfeWCXr=xgpLrq4cBQE5ZviUxygKq3VqiA@mail.gmail.com). However, the feature was never completed or merged. To this day, pg_basebackup remains single-threaded.
 
