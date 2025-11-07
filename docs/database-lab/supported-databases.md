@@ -9,7 +9,7 @@ Currently, DBLab Engine fully supports the following [PostgreSQL major versions]
 - 11 (released: 2018-10-18; EOL: 2023-11-09)
 - 12 (released: 2019-10-03; EOL: 2024-11-14)
 - 13 (released: 2020-09-24; EOL: 2025-11-13)
-- 14 (released: 2021-09-31; EOL: 2026-11-12)
+- 14 (released: 2021-09-30; EOL: 2026-11-12)
 - 15 (released: 2022-10-13; EOL: 2027-11-11)
 - 16 (released: 2023-09-14; EOL: 2028-11-09)
 - 17 (released: 2024-09-26; EOL: 2029-11-08)
