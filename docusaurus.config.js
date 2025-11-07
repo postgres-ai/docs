@@ -91,6 +91,10 @@ module.exports = {
               to: '/products/dblab_engine'
             },
             {
+              label: 'DBLab Pricing',
+              to: '/pricing'
+            },
+            {
               label: 'Zero-downtime upgrades',
               to: '/products/postgres-ai-zdu'
             },
@@ -99,11 +103,6 @@ module.exports = {
               to: '/blog/20240127-postgres-ai-bot',
             },
           ],
-        },
-        {
-          to: '/pricing',
-          label: 'DBLab Pricing',
-          position: 'right',
         },
         {
           label: 'Docs',
@@ -129,11 +128,6 @@ module.exports = {
               to: '/docs/questions-and-answers',
             },
           ],
-        },
-        {
-          label: 'Postgres how-tos',
-          to: '/docs/postgres-howtos',
-          position: 'right',
         },
         {
           to: '/blog',
