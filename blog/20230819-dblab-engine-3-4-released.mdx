@@ -63,7 +63,7 @@ Some DBLab Engine users experienced issues with logical data provisioning (autom
 ## Postgres restarts in clone containers
 Postgres clone containers under DBLab Engine's management were always supposed to support Postgres restarts - although, due to a bug, it didn't really work in versions 3.0—3.2. With a proper fix, it works again – just make sure you're using tags with the `-0.3.0` suffix or later, such as `postgresai/extended-postgres:15-0.3.0`.
 
-With restart support, it is possible, for example, to run `pg_upgrade -k` inside a particular clone container (of course, with previous installation of newer binaries) – and start testing a newer Postgres major version right away, in an isolated environment. And, most importantly, you don't need to spend extra time or money – this is exactly why we created and develop DBLab Engine. Any testing has to be fast, cheap, and scalable, even for mutli-terabyte databases.
+With restart support, it is possible, for example, to run `pg_upgrade -k` inside a particular clone container (of course, with previous installation of newer binaries) – and start testing a newer Postgres major version right away, in an isolated environment. And, most importantly, you don't need to spend extra time or money – this is exactly why we created and develop DBLab Engine. Any testing has to be fast, cheap, and scalable, even for multi-terabyte databases.
 
 ## UI improvements
 The "Configuration" tab received numerous improvements (though, config editing is still only supported for the logical mode), as well as "Logs" which now has filter buttons:
