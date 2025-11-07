@@ -27,7 +27,7 @@ Here are those 10 tips (+bonus) Michael and I have discussed.
 One of the foundational aspects of PostgreSQL that surprises many newcomers is the concept of tuples. In simple terms, a tuple in Postgres is the physical version of a row of data. What this means is that when data in a row changes, rather than altering the existing data, Postgres adds a new version of that row, a tuple. This versioning system is called MVCC, Multiversion concurrency control, and it is important to understand it to design well-performing systems.
 
 Here's what happens during various write operations:
-1. When you execute a `DELETE` command, it doesn't immediately reclaim disk space. Instead, the old tuple gets marked as dead but stays around untill `VACUUM` deletes it. If these dead tuples can accumulate and got deleted by vacuuming in large volumes, this leads to table and index bloat.
+1. When you execute a `DELETE` command, it doesn't immediately reclaim disk space. Instead, the old tuple gets marked as dead but stays around until `VACUUM` deletes it. If these dead tuples can accumulate and got deleted by vacuuming in large volumes, this leads to table and index bloat.
 2. Similarly, when you `UPDATE` a row, Postgres doesn't modify the existing tuple. Instead, it creates a new version of that row (a new tuple) and marks the old one as dead.
 3. Even a canceled `INSERT` creates a dead tuple, which can be surprising for many. It means that if you attempt to insert a record and then rollback that action, the tuple that was to be inserted is marked dead.
 
@@ -185,7 +185,7 @@ Related podcast episodes:
 Indexes are pivotal for performance in any relational database, and Postgres is no exception.
 
 ### Why it's important
-Over time, as data changes, indexes become fragmented and less efficient. Even with modern Postgres versions (especially with btree optimization Postgres 13 and 14 received) and a well-tuned autovacuum, index health still declines over time, while numerious writes are happening.
+Over time, as data changes, indexes become fragmented and less efficient. Even with modern Postgres versions (especially with btree optimization Postgres 13 and 14 received) and a well-tuned autovacuum, index health still declines over time, while numerous writes are happening.
 
 ### Declining health of indexes
 When data is inserted, updated, or deleted, the indexes reflecting this data undergo changes. These changes can cause the index structure to become unbalanced or have dead entries, slowing down search performance.
