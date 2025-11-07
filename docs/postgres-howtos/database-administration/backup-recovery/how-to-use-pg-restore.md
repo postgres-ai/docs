@@ -67,7 +67,7 @@ process:
 
 1. "pre-data" – schema definitions except indexes, constraints, triggers, and rules
 2. "data" – well, table data
-3. "post-data" – indexes, constraints, triggers, and and rules
+3. "post-data" – indexes, constraints, triggers, and rules
 
 The option `--section` allows you to run only one of these three steps of the restore process. This may be helpful if
 you want to perform restoration as normal, but do some additional actions between the steps or, say, use different
