@@ -10,7 +10,8 @@ const BLOG_CATEGORIES = [
   {name: 'All posts', permalink: '/blog'},
   {name: 'Product announcements', permalink: '/blog/tags/product-announcements'},
   {name: 'Postgres insights', permalink: '/blog/tags/postgres-insights'},
-  {name: 'Guides and best practices', permalink: '/blog/tags/guides-best-practices'},
+  {name: 'Guides and best practices', permalink: '/blog/tags/guides-and-best-practices'},
+  {name: '#PostgresMarathon', permalink: '/blog/tags/postgres-marathon'},
   {name: 'Launch Week', permalink: '/blog/tags/launch-week'},
 ];
 
