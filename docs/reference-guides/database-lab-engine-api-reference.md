@@ -19,4 +19,4 @@ DBLab API reference documentation is available at the following locations:
 - [DLE 3.5.x API Reference](https://dblab.readme.io/v3.5.0/)
 - [DBLab 4.0.x API Reference](https://dblab.readme.io/v4.0.0/)
 
-The references are published using the comprehensive ReadMe service. equipped with a developer dashboard and provides code snippets in numerous languages.
+The references are published using the comprehensive ReadMe service, equipped with a developer dashboard and provides code snippets in numerous languages.

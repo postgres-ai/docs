@@ -236,7 +236,7 @@ Yes! DBLab supports:
 
 - [Documentation](/docs)
 - [DBLab Engine GitLab repository](https://gitlab.com/postgres-ai/database-lab)
-- [Blog](/blog) – echnical articles and case studies
+- [Blog](/blog) – Technical articles and case studies
 
 ### How do I contact PostgresAI?
 
