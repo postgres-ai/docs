@@ -44,7 +44,7 @@ Database Lab Engine (DLE) 2.2.0 further improves support for both types of Postg
 Other improvements include:
 
 - Auto completion for the client CLI (“dblab”)
-- Clone container configuration — Docker parameters now can be defined in DLE config (such as `--shm--size` that is needed to avoid errors in newer versions of Postgres when parallel workers are used to process queries)
+- Clone container configuration — Docker parameters now can be defined in DLE config (such as `--shm-size` that is needed to avoid errors in newer versions of Postgres when parallel workers are used to process queries)
 - Allow requesting a clone with non-superuser access — This appears as a new option in the API and CLI called “restricted”
 
 Database Lab Engine links:
@@ -73,7 +73,7 @@ Joe Bot users not only get reliable and risk-free information on how a query wil
 
 One key aspect of Joe Bot, is the fact that users do not see the data directly, they only work with metadata. Therefore, teams without access to production data can be granted permissions to use this tool [1]
 
-The main change in Joe Bot 0.9.0 is improved security: in past versions, DB superuser was used. Now a non-superuser is used for all requests. This makes it impossible to use plpythonu, COPY TO PROGRAM, FDW, or dblink to perform a massive copy of data outside infrastructructure which is not well protected by a strict firewall. All users are strongly recommended to upgrade as soon as possible.
+The main change in Joe Bot 0.9.0 is improved security: in past versions, DB superuser was used. Now a non-superuser is used for all requests. This makes it impossible to use plpythonu, COPY TO PROGRAM, FDW, or dblink to perform a massive copy of data outside infrastructure which is not well protected by a strict firewall. All users are strongly recommended to upgrade as soon as possible.
 
 Another major new feature is the production duration estimator, currently in an “experimental” state. This feature is intended to help users understand how long a specific operation - for example, an index creation operation - will actually take on the production database, which is likely to have a different physical infrastructure (for example a different filesystem, more RAM, and/or more CPU cores) than the thin clone running on the DLE. Read more: [“Query duration difference between Database Lab and production environments”](https://postgres.ai/docs/database-lab/timing-estimator).
 
