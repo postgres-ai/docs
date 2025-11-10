@@ -355,7 +355,7 @@ In the blog post ["Exponential Backoff And Jitter"](https://aws.amazon.com/blogs
 
 If you're interested in details, I encourage you to read the blog post. It also has the link to the GitHub repo, where you can find the source code for experimenting: https://github.com/aws-samples/aws-arch-backoff-simulator.
 
-Let's rework the PL/pgSQL snippet for deploying DDLs to introduce the exponential backup with jitter (it's quite easy to translate this snippet to the "pure SQL" one using SAVEPOINTs, or to "whole transaction" approach without subtransactions using retries based on your language of chouse; so won't provide those snippets here):
+Let's rework the PL/pgSQL snippet for deploying DDLs to introduce the exponential backoff with jitter (it's quite easy to translate this snippet to the "pure SQL" one using SAVEPOINTs, or to "whole transaction" approach without subtransactions using retries based on your language of choice; so won't provide those snippets here):
 
 ```sql
 do $do$
@@ -446,6 +446,6 @@ The bigger this value is, the older snapshot is being held, the more it affects 
 - Be careful with subtransactions. They can be very useful, but:
   - may suddenly cause painful performance issues at some point if workloads grow – if you do use them and run PostgreSQL 13 or newer, add [`pg_stat_slru`](https://www.postgresql.org/docs/current/monitoring-stats.html#MONITORING-PG-STAT-SLRU-VIEW) to your monitoring system and watch for Subtrans SLRU reads;
   - if the transaction containing subtransactions lasts long, it might contribute to the bloat growth of all tables in the database.
-- Exponential backup and jitter can help achieve results faster and with fewer attempts – consider using them with or without subtransactions involved.
+- Exponential backoff and jitter can help achieve results faster and with fewer attempts – consider using them with or without subtransactions involved.
 
 <BlogFooter author={nik} />

@@ -135,7 +135,7 @@ One may assume that many applications that use PL/pgSQL or PL/Python functions u
 
 ## Problem 1: XID growth
 
-One of the basic issues with subtransactions is that they increment XID – the global transaction ID. As with regular transactions, this happens only if there is some modifying work – but if there are multiple nested subtransactions, all of them get their own XID assigned, even if a single modification happened inside the inneter-most of them.
+One of the basic issues with subtransactions is that they increment XID – the global transaction ID. As with regular transactions, this happens only if there is some modifying work – but if there are multiple nested subtransactions, all of them get their own XID assigned, even if a single modification happened inside the innermost of them.
 
 Let's see, in a database where no activity is happening:
 
@@ -285,7 +285,7 @@ The key aspects in this case are:
 - On the primary:
   - Subtransactions are used (even rare use of them is enough), issuing UPDATEs to some records (DELETEs may be a problem too, though this needs double-checking)
   - There is an ongoing long-running transaction; the exact meaning of "long" here depends on the XID growth in the system: say, if you have 1k TPS incrementing XID, the problem might occur after dozens of seconds, so "long" = "dozens of seconds long", and if you have 10k TPS, "long" might mean just "a few seconds long". So in some systems, just a regular slow query may become such an offending transaction
-- On standbys: SELECTs dealing with the same tuples there were changed by those recent transactions with subtransactions
+- On standbys: SELECTs dealing with the same tuples that were changed by those recent transactions with subtransactions
 
 The problem was analyzed and reproduced in this GitLab issue: https://gitlab.com/postgres-ai/postgresql-consulting/tests-and-benchmarks/-/issues/21. Here I provide a brief summary for those who don't have time to read through all the attempts presented in the GitLab issue.
 

@@ -21,7 +21,7 @@ import { nik } from '@site/src/config/authors'
 
 ## Database Lab Engine 2.4 is out
 
-The Database Lab Engine (DLE) is an open-source technology to enable thin cloning for PostgreSQL. Thin clones are exceptionally useful when you need to scale the development process. DLE can manage dozens of an independent clones of your database on a single machine, so each engineer or automation process works with their own database provisioned in seconds without extra costs.
+The Database Lab Engine (DLE) is an open-source technology to enable thin cloning for PostgreSQL. Thin clones are exceptionally useful when you need to scale the development process. DLE can manage dozens of independent clones of your database on a single machine, so each engineer or automation process works with their own database provisioned in seconds without extra costs.
 
 DLE 2.4 brings two major capabilities to those who are interested in working with PostgreSQL thin clones:
 
@@ -68,7 +68,7 @@ Let's open this job and see the details:
 
 ---
 
-What happened here? Behind the schenes, a pre-installed DLE server (in AWS) quickly provisioned a thin clone of the Demo database. <!--The size of that database is ~37 GiB and cloning took just TODO: add details and sreenshot here -->Next, the DB change was applied in this clone, and DB Migration Checker collected telemetry, and it becomes clear that such change is going to hold an `AccessExclusiveLockё` blocking other queries for a significant time (according to the settings, longer than for 10 seconds). Therefore, this change marked as failed in CI/CD. This is exactly what we need to be protected to avoid deploying such changes to production.
+What happened here? Behind the scenes, a pre-installed DLE server (in AWS) quickly provisioned a thin clone of the Demo database. <!--The size of that database is ~37 GiB and cloning took just TODO: add details and screenshot here -->Next, the DB change was applied in this clone, and DB Migration Checker collected telemetry, and it becomes clear that such change is going to hold an `AccessExclusiveLock` blocking other queries for a significant time (according to the settings, longer than for 10 seconds). Therefore, this change marked as failed in CI/CD. This is exactly what we need to be protected to avoid deploying such changes to production.
 
 Of course, if we get the word `CONCURRENTLY` back (as I did in [commit 6059bf4](https://github.com/postgres-ai/green-zone/commit/6059bf4b80a1930bcb531ecd5ae607d623f2a64d)), we'll have our "green light":
 
