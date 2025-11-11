@@ -13,7 +13,7 @@ function IndexPage() {
   if (typeof signInUrl !== 'string') return null
 
   return (
-    <Layout title="PostgresAI copilot — Expert-level Postgres observability">
+    <Layout title="PostgresAI – self-healing Postgres for fast-growing startups">
       <main>
         {/* Hero Section with Video */}
         <section className="banner position-relative text-center">
@@ -21,10 +21,10 @@ function IndexPage() {
             <div className="row justify-content-center align-items-center">
               <div className="col-lg-10">
                 <h1 className={styles.mainTitle}>
-                  Ship features instead of fighting Postgres fires
+                  Self-healing Postgres for fast&#8209;growing startups
                 </h1>
                 <p className={styles.subtitle}>
-                  15 min from start to your first database improvement
+                  Ship features instead of fighting Postgres fires
                 </p>
                 
                 {/* Video Container */}
