@@ -6,17 +6,19 @@ authors: [nik, maxim]
 tags: [Postgres insights, PostgresMarathon, cloning, pgBackRest, performance]
 ---
 
-Suppose you need to create a replica for a 1 TiB database. You have a fast server with NVMe storage and 75 Gbps network, but pg_basebackup typically delivers only 300-500 MiB/s due to its single-threaded architecture — regardless of how powerful your hardware is (though PG18 brings a surprise we'll discuss later).
+Suppose you need to create a replica for a 1 TiB database. You have a fast server with NVMe storage and 75 Gbps network, but `pg_basebackup` typically delivers only 300-500 MiB/s due to its single-threaded architecture — regardless of how powerful your hardware is (though PG18 brings a surprise we'll discuss later).
 
-The solution: replace pg_basebackup with pgBackRest and leverage parallel processing to achieve significantly faster replica creation, saturating (≈97% of) line rate on a 75 Gbps link.
+The solution: replace `pg_basebackup` with pgBackRest and leverage parallel processing to achieve significantly faster replica creation, saturating (≈97% of) line rate on a 75 Gbps link.
 
 **Note:** This is an R&D-style exploration focused on performance benchmarking on idle systems, not a production-ready automation guide. Many considerations important for production environments (monitoring, retry logic, integration with orchestration tools, etc.) are intentionally omitted to focus on the core performance characteristics.
 
 <!--truncate-->
 
+*// 2025-11-12: Reviewed and updated for accuracy*
+
 ## pg_basebackup is single-threaded
 
-The standard approach to creating a Postgres replica uses pg_basebackup:
+The standard approach to creating a Postgres replica uses `pg_basebackup`:
 
 ```bash
 pg_basebackup \
@@ -30,13 +32,13 @@ pg_basebackup \
   --pgdata=$PG_DATA_DIR
 ```
 
-Despite having fast NVMe storage and 75 Gbps network capacity, pg_basebackup is fundamentally limited by its single-threaded design. On Postgres versions prior to 18, pg_basebackup typically delivers only 300-500 MiB/s regardless of hardware capabilities.
+Despite having fast NVMe storage and 75 Gbps network capacity, `pg_basebackup` is fundamentally limited by its single-threaded design. On Postgres versions prior to 18, `pg_basebackup` typically delivers only 300-500 MiB/s regardless of hardware capabilities.
 
-PostgreSQL 18's [new io_uring support](https://www.postgresql.org/docs/18/runtime-config-resource.html#GUC-IO-METHOD) can speed it up significantly. For our experiment on i4i.32xlarge machines with local NVMe disks, we managed to reach 1.08 GiB/s which is very impressive. But it's still limited. For large databases, this creates a significant operational bottleneck, especially in cases when disk IO and network capacity is high and we could have many gigabytes per second.
+PostgreSQL 18's new [asynchronous I/O](https://www.postgresql.org/docs/18/runtime-config-resource.html#GUC-IO-METHOD) (we left settings default: [`io_method=worker`](https://postgresqlco.nf/doc/en/param/io_method/) and [`io_workers=3`](https://postgresqlco.nf/doc/en/param/io_workers/)) can speed it up significantly. For our experiment on `i4i.32xlarge` machines with local NVMe disks, we managed to reach 1.08 GiB/s which is very impressive. But it's still limited. For large databases, this creates a significant operational bottleneck, especially in cases when disk IO and network capacity is high and we could have many gigabytes per second.
 
-Multi-threaded pg_basebackup has been a recurring topic on pgsql-hackers over the years ([one](https://www.postgresql.org/message-id/CAEHH7R5sBCRyiu5_qanE741VWGE-LPbVnCdxJZh2U1y1BRPW7A@mail.gmail.com), [two](https://www.postgresql.org/message-id/CADM=Jeg3ZN+kPQpiSfeWCXr=xgpLrq4cBQE5ZviUxygKq3VqiA@mail.gmail.com). However, the feature was never completed or merged. To this day, pg_basebackup remains single-threaded.
+Multi-threaded `pg_basebackup` has been a recurring topic on pgsql-hackers over the years ([one](https://www.postgresql.org/message-id/CAEHH7R5sBCRyiu5_qanE741VWGE-LPbVnCdxJZh2U1y1BRPW7A@mail.gmail.com), [two](https://www.postgresql.org/message-id/CADM=Jeg3ZN+kPQpiSfeWCXr=xgpLrq4cBQE5ZviUxygKq3VqiA@mail.gmail.com). However, the feature was never completed or merged. To this day, `pg_basebackup` remains single-threaded.
 
-**Note:** PostgreSQL 18's io_uring support was a pleasant surprise, delivering 1.08 GiB/s compared to the typical 300-500 MiB/s from pre-18 versions. This represents a 2-3x improvement, but it's still single-threaded and leaves most of the available network and storage bandwidth unused.
+**Note:** The default performance of PostgreSQL 18, with its async I/O,was a pleasant surprise, delivering 1.08 GiB/s compared to the expected typical 300-500 MiB/s from pre-18 versions. This represents a 2-3x improvement (roughly matching the 3 default I/O workers), but `pg_basebackup` remains fundamentally single-threaded and leaves most of the available network and storage bandwidth unused.
 
 ## Alternative: pgBackRest 
 
@@ -46,9 +48,9 @@ pgBackRest is primarily a backup and restore tool for Postgres, but nothing prev
 
 1. Passwordless SSH access to `postgres@$PRIMARY` via private key
 2. Passwordless psql connection for `$REPLICATION_USER` to `$PRIMARY` (standard SQL connectivity for pgBackRest verification; replication wiring with slot + primary_conninfo happens at the end)
-3. pgBackRest installed on both primary and replica servers with the same version. Use a recent version (2.50+) to ensure PostgreSQL 18 support and optimal performance features
+3. pgBackRest installed on both primary and replica servers with the same version. Use a recent version (2.55+) to ensure PostgreSQL 18 support and optimal performance features
 
-All configuration is performed on the destination server, similar to pg_basebackup.
+All configuration is performed on the destination server, similar to `pg_basebackup`.
 
 ### Configuration
 
@@ -195,17 +197,17 @@ For production deployments with WAL archiving configured on the primary, you may
 
 Testing environment:
 - **Database:** 1.023 TiB (70 pgbench databases, ~7 billion rows)
-- **Storage:** 8x 3,750 GB NVMe SSD in RAID0 (AWS i4i.32xlarge)
+- **Storage:** 8x 3,750 GB NVMe SSD in RAID0 (AWS `i4i.32xlarge`)
 - **Network:** 75 Gbps = 9.375 GB/s (decimal) = 8.73 GiB/s (binary). We report GiB/s below
 - **CPUs:** 128 vCPUs
-- **PostgreSQL:** 18.0 with io_uring support
+- **PostgreSQL:** 18.0 with default worker-based async I/O (`io_method=worker`, `io_workers=3`)
 - **Testing:** no network compression (compress-type=none), no checksum verification for maximum throughput
 - **Cold cache:** between tests, we restarted PostgreSQL on the replica and flushed OS page cache on both servers (`sync; echo 3 > /proc/sys/vm/drop_caches`). This is imperfect but ensures reasonably cold conditions for each run
 
 Results (cold cache for each test):
 
 ```bash
-# pg_basebackup baseline (PostgreSQL 18 with io_uring)
+# pg_basebackup baseline (PostgreSQL 18 with worker-based async I/O)
 time pg_basebackup \
   --pgdata="$PG_DATA_DIR" \
   --write-recovery-conf \
@@ -281,13 +283,13 @@ The actual on-wire throughput peaks at approximately 8.5 GiB/s (measured via net
 
 Key observations:
 
-- **PostgreSQL 18 io_uring improvement:** pg_basebackup achieves 1.08 GiB/s, which is 2-3x faster than older PostgreSQL versions (typically 300-500 MiB/s)
+- **PostgreSQL 18 async I/O improvement:** `pg_basebackup` achieves 1.08 GiB/s with worker-based async I/O, which is 2-3x faster than older PostgreSQL versions (typically 300-500 MiB/s) — roughly matching the 3 default I/O workers
 - **Nearly linear scaling:** performance doubles with each doubling of parallelism up to 16 processes (96% efficiency)
 - **Network saturation at 32 processes:** on-wire saturation at ~8.5 GiB/s (~97% of theoretical 8.73 GiB/s); logical throughput shows 10.13 GiB/s due to pgBackRest skipping sparse regions and zero-filled blocks
-- **Optimal configuration:** `--process-max=32` provides best performance (9.4x faster than pg_basebackup)
+- **Optimal configuration:** `--process-max=32` provides best performance (9.4x faster than `pg_basebackup`)
 - **Network compression minimal benefit:** `--compress-level-network=1` provides only 5-6% improvement on 75 Gbps network, not worth the CPU overhead for high-bandwidth environments
 - **Diminishing returns beyond 32:** higher parallelism adds SSH overhead without throughput improvement
-- **For 1 TiB database:** replica creation time reduced from 15.8 minutes to 1.7 minutes (89% faster)
+- **For 1 TiB database:** replica creation time reduced from 15.8 minutes to 1.7 minutes (89% reduction in time)
 
 ## Practical considerations
 
@@ -299,18 +301,17 @@ For production deployments:
 4. Consider using `renice` on the source server if CPU contention affects production workload
 5. Ensure sufficient I/O capacity on the destination to handle parallel writes
 6. For high parallelism (64+), increase SSH limits: `MaxStartups=200:30:300` and `MaxSessions=200` in `/etc/ssh/sshd_config`. Alternatively, SSH ControlMaster creates a single persistent connection that all subsequent SSH sessions multiplex through — we haven't tested this approach yet, but it's worth exploring for reducing connection overhead at high parallelism levels
-7. For real-world scenarios, consider using `--delta` option to handle interrupted transfers or refresh an existing but stale replica. Delta mode copies only changed files instead of the entire database, which is particularly useful for resuming failed operations or re-syncing a replica that has diverged from the primary
-8. Enable checksum verification in production (`--checksum-page=y`) for data integrity validation, though this will reduce throughput. Our benchmarks omitted checksums to measure maximum raw transfer speed
+7. Enable checksum verification in production (`--checksum-page=y`) for data integrity validation, though this will reduce throughput. Our benchmarks omitted checksums to measure maximum raw transfer speed
 
 The performance gain is substantial for large databases: reducing replica creation time from 15.8 minutes to 1.7 minutes enables more aggressive disaster recovery testing, faster environment provisioning, and reduced operational risk during failover scenarios.
 
 ## When to use standard pg_basebackup instead
 
-While pgBackRest provides significant performance benefits for large databases with fast infrastructure, stick with standard pg_basebackup in these scenarios:
+While pgBackRest provides significant performance benefits for large databases with fast infrastructure, stick with standard `pg_basebackup` in these scenarios:
 
 - **Small databases (< 100 GiB):** setup overhead and complexity outweigh speed benefits. The time saved is minimal and not worth the additional configuration
 - **Slow storage (non-NVMe):** disk I/O becomes the bottleneck before network utilization. Parallel processing won't help if storage can't keep up
-- **Limited network (< 10 Gbps):** pg_basebackup can already saturate 1-8 Gbps networks. The single-threaded limitation isn't the bottleneck in these environments
+- **Limited network (< 10 Gbps):** `pg_basebackup` can already saturate 1-8 Gbps networks. The single-threaded limitation isn't the bottleneck in these environments
 - **Resource-constrained primary:** limited CPU or memory makes parallel processing counterproductive. The overhead of managing multiple processes can degrade primary performance
 - **Simple environments:** when 15 minutes vs 2 minutes doesn't justify the additional complexity. Sometimes operational simplicity is more valuable than raw speed
 
@@ -338,17 +339,26 @@ While these benchmarks demonstrate significant performance improvements, there's
 
 - **Measure actual network throughput:** our current numbers show "effective" throughput (logical size ÷ time) which exceeds physical network limits due to pgBackRest's optimization of sparse files and metadata. For next iteration, measure actual on-wire throughput using NIC counters or tools like `ifstat`/`sar -n DEV` during the run to distinguish between logical and physical transfer rates
 
-- **Testing on newer AWS instances:** AWS i7i and i7ie instances feature 100 Gbps network connectivity (vs. 75 Gbps on i4i), which could deliver approximately 30% better throughput — potentially reaching 13+ GiB/s with pgBackRest at `--process-max=32` or higher
+- **Testing on newer AWS instances:** AWS `i7i` and `i7ie` instances feature 100 Gbps network connectivity (vs. 75 Gbps on `i4i`), which could deliver approximately 30% better throughput — potentially reaching 13+ GiB/s with pgBackRest at `--process-max=32` or higher
+
+- **PostgreSQL I/O method comparisons:** test `pg_basebackup` performance with different I/O configurations to understand the impact of each:
+  - Higher `io_workers` values (default is 3, max is 32) to see if more workers improve throughput
+  - `io_method=io_uring` for systems built with liburing support
+  - `io_method=sync` on PostgreSQL 18 and PostgreSQL 17 as baselines to quantify the improvement from async I/O
 
 These optimizations may help push throughput even higher and reduce the overhead we observed at very high parallelism levels.
 
 ## Key takeaways
 
-- pg_basebackup's single-threaded architecture limits throughput regardless of hardware capabilities (though PostgreSQL 18's io_uring provides significant improvement)
+- `pg_basebackup`'s single-threaded architecture limits throughput regardless of hardware capabilities (though PostgreSQL 18's worker-based async I/O provides significant improvement)
 - pgBackRest with parallel processing can utilize full network and disk bandwidth
 - it makes sense to expect much better throughput to start at `--process-max=8` or higher
 - optimal process count depends on available CPU cores, network bandwidth, and disk I/O capacity
 - for very large databases with fast infrastructure, pgBackRest can reduce replica creation time by 6-10x or even more
 - the setup requires no special configuration on the source database
-- all operations are performed from the destination server, similar to pg_basebackup workflow
+- all operations are performed from the destination server, similar to `pg_basebackup` workflow
 - storage location matters critically — always use fast storage (NVMe, not EBS) for pgBackRest's repo and spool directories to avoid 80x performance degradation
+
+## Acknowledgments
+
+Thanks to David Steele (pgBackRest creator) and Michael Christofides (pgMustard) for corrections and feedback on this article. Our discussion with David also inspired [PR #2693](https://github.com/pgbackrest/pgbackrest/pull/2693) adding native process priority support to pgBackRest.
