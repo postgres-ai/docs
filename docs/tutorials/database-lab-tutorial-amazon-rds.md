@@ -11,7 +11,7 @@ description: In this tutorial, we are going to set up a DBLab Engine for an exis
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-DBLab Engine (DLE) is used to boost software development and testing processes by enabling ultra-fast provisioning of databases of any size. In this tutorial, we will install DBLab Engine from [the AWS Marketplace](https://bit.ly/dleawsmarketplace). If you are an AWS user, this is the fastest way to have powerful database branching for any database, including RDS and RDS Aurora. But not only RDS: any Postgres and Postgres-compatible database can be a source for DLE.
+DBLab Engine (DLE) is used to boost software development and testing processes by enabling ultra-fast provisioning of databases of any size. In this tutorial, we will install DBLab Engine from [the AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec). If you are an AWS user, this is the fastest way to have powerful database branching for any database, including RDS and RDS Aurora. But not only RDS: any Postgres and Postgres-compatible database can be a source for DLE.
 
 :::info
 Currently, the AWS Marketplace version of DLE focuses on the "logical" data provisioning mode (dump/restore) – the only possible method for managed PostgreSQL cloud services such as RDS Postgres, RDS Aurora Postgres, Azure Postgres, or Heroku. "Physical" mode (obtaining databases at the file level) is also supported in DLE but requires additional efforts – namely, editing [the DLE configuration file](/docs/reference-guides/database-lab-engine-configuration-reference) manually. More information about various data retrieval options can be found [here](/docs/dblab-howtos/administration/data).
@@ -47,7 +47,7 @@ Outcome:
 ## Step 1. Install DLE from the AWS Marketplace
 First steps to install DLE from the AWS Marketplace are trivial:
 - Log in into AWS: https://console.aws.amazon.com/
-- Open the DLE on [AWS Marketplace page](https://bit.ly/dleawsmarketplace)
+- Open the DBLab on [AWS Marketplace page](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec)
 
 And press the "View purchase options" button:
 <p align="center">
