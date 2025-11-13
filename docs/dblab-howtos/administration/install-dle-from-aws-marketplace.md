@@ -7,7 +7,7 @@ sidebar_label: Install DBLab from AWS Marketplace
     <img src="/assets/dle-for-aws-marketplace.png" alt="DBLab Engine and AWS Marketplace"/>
 </p>
 
-If you're using AWS, [installing DBLab from the AWS Marketplace](https://bit.ly/dleawsmarketplace) is the fastest way to have powerful database branching for any database, including RDS and RDS Aurora. But not only RDS: any Postgres and Postgres-compatible source is supported as a source for DBLab.
+If you're using AWS, [installing DBLab from the AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec) is the fastest way to have powerful database branching for any database, including RDS and RDS Aurora. But not only RDS: any Postgres and Postgres-compatible source is supported as a source for DBLab.
 
 :::info
 Currently, only the "logical" mode of data retrieval (dump/restore) is supported – the only available method for managed PostgreSQL cloud services such as RDS Postgres, RDS Aurora Postgres, Azure Postgres, or Heroku. "Physical" mode is not yet supported by the module, but it will be in the future. More about [various data retrieval options for DBLab](/docs/dblab-howtos/administration/data).
@@ -26,7 +26,7 @@ Check out the DBLab installation tutorial:
 ## Steps to install DBLab Engine from AWS Marketplace
 The first steps are trivial:
 - Log in into AWS: https://console.aws.amazon.com/
-- Open [the DBLab on AWS Marketplace page](https://bit.ly/dleawsmarketplace)
+- Open [the DBLab on AWS Marketplace page](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec)
 
 And press the "View purchase options" button:
 <p align="center">
