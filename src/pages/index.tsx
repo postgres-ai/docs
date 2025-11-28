@@ -20,11 +20,19 @@ function IndexPage() {
           <div className="container">
             <div className="row justify-content-center align-items-center">
               <div className="col-lg-10">
+{/* Alternative value proposition for future consideration:
+                <h1 className={styles.mainTitle}>
+                  Not dashboards. Fixes
+                </h1>
+                <p className={styles.subtitle}>
+                  Ship your product features instead of fighting Postgres fires
+                </p>
+*/}
                 <h1 className={styles.mainTitle}>
                   Self-healing Postgres for fast&#8209;growing startups
                 </h1>
                 <p className={styles.subtitle}>
-                  Ship features instead of fighting Postgres fires
+                  Ship your product features instead of fighting Postgres fires
                 </p>
                 
                 {/* Video Container */}
@@ -34,7 +42,7 @@ function IndexPage() {
                       width="100%"
                       height="100%"
                       src="https://www.youtube.com/embed/ZWGY64V8AHw?modestbranding=1&rel=0"
-                      title="postgres_ai monitoring demo"
+                      title="postgres_ai copilot demo"
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
@@ -42,23 +50,81 @@ function IndexPage() {
                   </div>
                 </div>
 
+                {/* Copilot Diagram */}
+                <div className={styles.copilotDiagram}>
+                  <div className={styles.copilotDiagramInner}>
+                    <pre className={styles.copilotDiagramDesktop}>{`╔════════════╗        ╔══════════ POSTGRESAI COPILOT ════════════╗
+║    Your    ║░       ║  ┏━━━━━━━━━━━━━━┓     ┏━━━━━━━━━━━━━━┓   ║░
+║  Postgres  ║░──────▶║  ┃  Monitoring  ┃────▶┃ Health check ┃   ║░
+║  database  ║░       ║  ┗━━━━━━━━━━━━━━┛     ┃   & Issues   ┃   ║░
+╚════════════╝░       ║                       ┗━━━━━━━━━━━━━━┛   ║░
+ ░░░░░░░░░░░░░░       ╚══════════════════════════════════════════╝░
+      ▲                ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+      │                                                │
+      │                                                ▼
+      │     ╔═════════════════════════╗     ╔═════════════════════╗
+      └─────║ GitHub PRs / GitLab MRs ║░◀───║ AI tool (Cursor, …) ║░
+            ╚═════════════════════════╝░    ╚═════════════════════╝░
+             ░░░░░░░░░░░░░░░░░░░░░░░░░░░     ░░░░░░░░░░░░░░░░░░░░░░░`}</pre>
+                    <pre className={styles.copilotDiagramMobile}>{`    ╔════════════════╗
+    ║      Your      ║░
+    ║    Postgres    ║░◀─────────┐
+    ╚════════════════╝░          │
+     ░░░░░░░░░░░░░░░░░░          │
+            │                    │
+            ▼                    │
+╔══ POSTGRESAI COPILOT ══╗       │
+║  ┏━━━━━━━━━━━━━━━━━┓   ║░      │
+║  ┃   Monitoring    ┃   ║░      │
+║  ┗━━━━━━━━━━━━━━━━━┛   ║░      │
+║          ▼             ║░      │
+║  ┏━━━━━━━━━━━━━━━━━┓   ║░      │
+║  ┃  Health check   ┃   ║░      │
+║  ┃   & Issues      ┃   ║░      │
+║  ┗━━━━━━━━━━━━━━━━━┛   ║░      │
+╚════════════════════════╝░      │
+ ░░░░░░░░░░░░░░░░░░░░░░░░░░      │
+            │                    │
+            ▼                    │
+  ╔════════════════════╗         │
+  ║ AI tool (Cursor,…) ║░        │
+  ╚════════════════════╝░        │
+   ░░░░░░░░░░░░░░░░░░░░░░        │
+            │                    │
+            ▼                    │
+  ╔════════════════════╗         │
+  ║ GitHub PRs /       ║░────────┘
+  ║ GitLab MRs         ║░
+  ╚════════════════════╝░
+   ░░░░░░░░░░░░░░░░░░░░░░`}</pre>
+                  </div>
+                </div>
+
                 {/* Key Features */}
                 <div className={styles.featuresGrid}>
                   <div className={styles.feature}>
                     <h3>Effortless index maintenance</h3>
-                    <p>Continuously clean up unused and redundant indexes. Automatically mitigate index bloat — all while maintaining full control</p>
+                    <p>Copilot continuously cleans up unused and redundant indexes, mitigates bloat — following battle-tested methodologies, not just AI guessing</p>
+                  </div>
+                  <div className={styles.feature}>
+                    <h3>Query analysis</h3>
+                    <p>Copilot identifies slow queries, missing indexes, and delivers actionable fixes tested on clones of your database</p>
+                  </div>
+                  <div className={styles.feature}>
+                    <h3>Performance cliffs</h3>
+                    <p>Copilot detects and predicts issues like LWLock:LockManager contention, MultiXact exhaustion, XID wraparound — helping you avoid disastrous consequences</p>
                   </div>
                   <div className={styles.feature}>
                     <h3>Built for fast-moving teams</h3>
-                    <p>For startups and growing companies with solid engineering teams. Focus on shipping features — we've got your database covered</p>
+                    <p>For startups with solid engineering teams. Focus on shipping features — we've got your database covered</p>
                   </div>
                   <div className={styles.feature}>
                     <h3>Universal integration</h3>
-                    <p>Works with any Postgres, from self-managed and Kubernetes setups to RDS, CloudSQL, Supabase, and other managed services</p>
+                    <p>Works with any Postgres: self-managed, Kubernetes, RDS, CloudSQL, Supabase, and other managed services</p>
                   </div>
                   <div className={styles.feature}>
                     <h3>Battle-tested expertise</h3>
-                    <p>We've helped companies like GitLab, Chewy, Supabase, Miro, ClickUp, Midjourney, Suno, Gamma, Photoroom, and <a href="/consulting">many others</a>. We'll help you avoid various cliffs, from XID wraparound to LWLock:LockManager. Don't fall — we've got you</p>
+                    <p>Trusted by GitLab, Chewy, Supabase, Miro, Orb, Midjourney, Suno, Gamma, Photoroom, and <a href="/consulting">many others</a></p>
                   </div>
                 </div>
 

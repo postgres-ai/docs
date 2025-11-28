@@ -5,6 +5,21 @@ const COLOR_MODE = typeof window !== 'undefined' && window.localStorage.getItem(
 const API_URL_PREFIX = !!process.env.API_URL_PREFIX ? process.env.API_URL_PREFIX : 'https://postgres.ai/api/general' // was: 'https://v2.postgres.ai/api/general/'
 const BASE_URL = !!process.env.BASE_URL ? process.env.BASE_URL : '/'
 const REPOSITORY_URL = 'https://github.com/postgres-ai/database-lab-engine'
+const UMAMI_WEBSITE_ID = process.env.UMAMI_WEBSITE_ID || ''
+const UMAMI_SCRIPT_URL = process.env.UMAMI_SCRIPT_URL || ''
+const IS_PROD = process.env.NODE_ENV === 'production'
+
+const scripts = [
+  BASE_URL + 'js/githubButton.js',
+]
+
+if (IS_PROD && UMAMI_WEBSITE_ID && UMAMI_SCRIPT_URL) {
+  scripts.push({
+    src: UMAMI_SCRIPT_URL,
+    async: true,
+    'data-website-id': UMAMI_WEBSITE_ID,
+  })
+}
 const SIGN_IN_URL = !!process.env.SIGN_IN_URL
   ? process.env.SIGN_IN_URL
   : '/signin'
@@ -15,7 +30,7 @@ module.exports = {
   title:
     'PostgresAI', // Title for your website.
   tagline:
-    'Branching 🖖 and thin cloning ⚡️ for any Postgres database. Empower database testing in CI/CD. Optimize DB-related costs while improving time-to-market and software quality.',
+    'Self-healing Postgres for fast-growing startups. Ship features instead of fighting database fires.',
   url: URL, // Your website URL.
   baseUrl: BASE_URL, // Base URL for your project.
   onBrokenLinks: 'log', //'throw',
@@ -28,12 +43,11 @@ module.exports = {
     apiUrlPrefix: API_URL_PREFIX,
     botWSUrl: BOT_WS_URL,
     consultingWebhook: CONSULTING_WEBHOOK,
+    umamiWebsiteId: UMAMI_WEBSITE_ID,
+    umamiScriptUrl: UMAMI_SCRIPT_URL,
   },
 
-  scripts: [
-    BASE_URL + 'js/githubButton.js',
-    { src: BASE_URL + 'js/cookieBanner.js?v3', async: true, defer: true },
-  ],
+  scripts,
 
   themes: ['@docusaurus/theme-mermaid'],
 
@@ -61,16 +75,16 @@ module.exports = {
     announcementBar: {
       id: 'postgres_marathon_banner', // Any value that will identify this message to save the hidden status.
       content:
-        "<a href='/blog/tags/postgres-marathon'>#PostgresMarathon is live: deep-dive technical insights every day</a>",
+        "<a href='/blog/tags/postgres-marathon'>#PostgresMarathon is live: deep-dive technical insights</a>",
       backgroundColor: '#D7EEF2',
       textColor: '#013A44',
       isCloseable: true,
     },
 
     navbar: {
-                title: 'PostgresAI',
+        title: 'PostgresAI',
       logo: {
-                  alt: 'PostgresAI logo',
+        alt: 'PostgresAI logo',
         src: 'img/logo.svg',
         width: '32px',
         height: '32px',
@@ -91,7 +105,7 @@ module.exports = {
               to: '/products/dblab_engine'
             },
             {
-              label: 'DBLab Pricing',
+              label: 'DBLab pricing',
               to: '/pricing'
             },
             {
@@ -157,7 +171,7 @@ module.exports = {
     footer: {
       style: 'light',
       logo: {
-        alt: 'Database Lab logo',
+        alt: 'PostgresAI logo',
         src: 'img/logo.svg',
         width: '64px',
         height: '64px',
@@ -181,7 +195,7 @@ module.exports = {
           ],
         },
         {
-          title: 'Docs',
+          title: 'DOCS',
           items: [
             {
               label: 'Questions & answers',
@@ -196,20 +210,8 @@ module.exports = {
               to: '/docs/reference-guides/postgres-ai-bot-reference',
             },
             {
-              label: 'DBLab how-tos',
-              to: '/docs/dblab-howtos',
-            },
-            {
-              label: 'DBLab API',
-              to: '/docs/reference-guides/database-lab-engine-api-reference',
-            },
-            {
-              label: 'DBLab CLI',
-              to: '/docs/reference-guides/dblab-client-cli-reference',
-            },
-            {
-              label: 'DBLab config',
-              to: '/docs/reference-guides/database-lab-engine-configuration-reference',
+              label: 'DBLab docs',
+              to: '/docs/database-lab',
             },
             {
               label: 'AI rules',
@@ -218,11 +220,11 @@ module.exports = {
           ],
         },
         {
-          title: 'Products & Services',
+          title: 'PRODUCTS',
           items: [
             {
-              label: 'Consulting',
-              to: '/consulting',
+              label: 'PostgresAI Console',
+              href: SIGN_IN_URL,
             },
             {
               label: 'postgres_ai (monitoring)',
@@ -241,13 +243,13 @@ module.exports = {
               to: '/blog/20240127-postgres-ai-bot',
             },
             {
-              label: 'Joe bot for SQL Optimization',
+              label: 'Joe bot for SQL optimization',
               to: '/products/joe',
             },
           ],
         },
         {
-          title: 'Social',
+          title: 'SOCIAL',
           items: [
             {
               label: 'Community Slack',
@@ -260,14 +262,6 @@ module.exports = {
             {
               label: 'Postgres FM (podcast)',
               href: 'https://postgres.fm',
-            },
-            {
-              label: 'GitLab',
-              href: 'https://gitlab.com/postgres-ai',
-            },
-            {
-              label: 'GitHub',
-              href: 'https://github.com/postgres-ai',
             },
             {
               label: 'Twitter @postgres_ai',
@@ -284,23 +278,19 @@ module.exports = {
           ],
         },
         {
-          title: 'Links',
+          title: 'LINKS',
           items: [
             {
-              label: 'Home',
-              to: '/',
+              label: 'GitLab',
+              href: 'https://gitlab.com/postgres-ai',
             },
             {
-              label: 'Sign in',
-              href: SIGN_IN_URL,
+              label: 'GitHub',
+              href: 'https://github.com/postgres-ai',
             },
             {
-              label: 'Contact us',
-              to: '/contact/',
-            },
-            {
-              label: 'Documentation',
-              to: '/docs/',
+              label: 'Blog',
+              to: '/blog',
             },
             {
               label: 'Case studies',
@@ -313,6 +303,10 @@ module.exports = {
             {
               label: 'Privacy policy',
               to: '/privacy/',
+            },
+            {
+              label: 'Contact us',
+              to: '/contact/',
             },
           ],
         },
@@ -504,15 +498,9 @@ module.exports = {
         ],
       },
     ],
-    [
-      path.resolve(__dirname, 'plugins/docusaurus-plugin-google-gtm'),
-      {
-        trackingID: 'G-SM4CXEQJYY',
-      },
-    ],
-    // Meta Pixel (Facebook)
-    path.resolve(__dirname, 'plugins/meta-pixel'),
-    require.resolve('./plugins/route-change'),
+    // Google Tag Manager disabled
+    // Meta Pixel (Facebook) disabled
+    path.resolve(__dirname, 'plugins/route-change'),
   ],
 
   presets: [
