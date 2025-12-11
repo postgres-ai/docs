@@ -34,7 +34,7 @@ module.exports = {
   url: URL, // Your website URL.
   baseUrl: BASE_URL, // Base URL for your project.
   onBrokenLinks: 'log', //'throw',
-  favicon: 'img/favicon.svg',
+  favicon: 'favicon.svg',
   organizationName: 'postgres-ai',
   projectName: 'docs',
 
@@ -48,6 +48,55 @@ module.exports = {
   },
 
   scripts,
+
+  headTags: [
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'icon',
+        type: 'image/png',
+        href: '/favicon-96x96.png',
+        sizes: '96x96',
+      },
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'icon',
+        type: 'image/svg+xml',
+        href: '/favicon.svg',
+      },
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'shortcut icon',
+        href: '/favicon.ico',
+      },
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'apple-touch-icon',
+        sizes: '180x180',
+        href: '/apple-touch-icon.png',
+      },
+    },
+    {
+      tagName: 'meta',
+      attributes: {
+        name: 'apple-mobile-web-app-title',
+        content: 'PostgresAI',
+      },
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'manifest',
+        href: '/site.webmanifest',
+      },
+    },
+  ],
 
   themes: ['@docusaurus/theme-mermaid'],
 
