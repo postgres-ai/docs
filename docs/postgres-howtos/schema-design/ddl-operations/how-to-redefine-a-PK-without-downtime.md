@@ -117,6 +117,8 @@ This means that we just need to do this:
 Interestingly, it is okay to skip step 3 here if our final goal is a PK creation – the `NOT NULL` constraint will be
 created implicitly, during PK creation; and it will be fast thanks to already existing `CHECK (... NOT NULL)`.
 
+UPDATE-2025: Starting with Postgres 18, `NOT NULL` constraints support `NOT VALID` too ([commit](https://git.postgresql.org/gitweb/?p=postgresql.git;a=commitdiff;h=a379061a2)).
+
 ## UNIQUE
 
 The second ingredient we need for a new PK creation is a `UNIQUE` constraint. Fortunately, it can be created in two
