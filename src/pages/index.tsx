@@ -41,8 +41,8 @@ function IndexPage() {
                     <iframe
                       width="100%"
                       height="100%"
-                      src="https://www.youtube.com/embed/ZWGY64V8AHw?modestbranding=1&rel=0"
-                      title="postgres_ai copilot demo"
+                      src="https://www.youtube.com/embed/PJ4bh1TnpLE?modestbranding=1&rel=0"
+                      title="PostgresAI demo"
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
@@ -53,7 +53,7 @@ function IndexPage() {
                 {/* Copilot Diagram */}
                 <div className={styles.copilotDiagram}>
                   <div className={styles.copilotDiagramInner}>
-                    <pre className={styles.copilotDiagramDesktop}>{`╔════════════╗        ╔══════════ POSTGRESAI COPILOT ════════════╗
+                    <pre className={styles.copilotDiagramDesktop}>{`╔════════════╗        ╔══════════════ POSTGRESAI ═══════════════╗
 ║    Your    ║░       ║  ┏━━━━━━━━━━━━━━┓     ┏━━━━━━━━━━━━━━┓   ║░
 ║  Postgres  ║░──────▶║  ┃  Monitoring  ┃────▶┃ Health check ┃   ║░
 ║  database  ║░       ║  ┗━━━━━━━━━━━━━━┛     ┃   & Issues   ┃   ║░
@@ -73,7 +73,7 @@ function IndexPage() {
      ░░░░░░░░░░░░░░░░░░          │
             │                    │
             ▼                    │
-╔══ POSTGRESAI COPILOT ══╗       │
+╔════ POSTGRESAI ════╗           │
 ║  ┏━━━━━━━━━━━━━━━━━┓   ║░      │
 ║  ┃   Monitoring    ┃   ║░      │
 ║  ┗━━━━━━━━━━━━━━━━━┛   ║░      │
@@ -101,22 +101,33 @@ function IndexPage() {
                 </div>
 
                 {/* Key Features */}
+                <p className={styles.subtitle}>
+                  Autonomous Postgres, Level 3
+                </p>
                 <div className={styles.featuresGrid}>
                   <div className={styles.feature}>
-                    <h3>Effortless index maintenance</h3>
-                    <p>Copilot continuously cleans up unused and redundant indexes, mitigates bloat — following battle-tested methodologies, not just AI guessing</p>
+                    <h3>Index maintenance and bloat control</h3>
+                    <p>PostgresAI continuously cleans up unused and redundant indexes and mitigates bloat – following battle-tested methodologies, not guesswork</p>
                   </div>
                   <div className={styles.feature}>
-                    <h3>Query analysis</h3>
-                    <p>Copilot identifies slow queries, missing indexes, and delivers actionable fixes tested on clones of your database</p>
+                    <h3>Query optimization</h3>
+                    <p>PostgresAI identifies slow queries and missing indexes, and delivers actionable fixes tested on clones of your database</p>
                   </div>
                   <div className={styles.feature}>
-                    <h3>Performance cliffs</h3>
-                    <p>Copilot detects and predicts issues like LWLock:LockManager contention, MultiXact exhaustion, XID wraparound — helping you avoid disastrous consequences</p>
+                    <h3>Postgres configuration tuning</h3>
+                    <p>PostgresAI tunes 20+ configuration parameters – continuously expanding coverage based on real-world workloads</p>
+                  </div>
+                  <div className={styles.feature}>
+                    <h3>Performance cliffs and risk analysis</h3>
+                    <p>PostgresAI detects and predicts hard issues – LWLock:LockManager contention, MultiXact exhaustion, XID wraparound – helping you avoid disastrous consequences</p>
+                  </div>
+                  <div className={styles.feature}>
+                    <h3>Monitoring for self-driving Postgres</h3>
+                    <p>Monitoring designed for deep visibility, AI workflows, and a high degree of automation – supporting both detailed investigation and hands-off operations</p>
                   </div>
                   <div className={styles.feature}>
                     <h3>Built for fast-moving teams</h3>
-                    <p>For startups with solid engineering teams. Focus on shipping features — we've got your database covered</p>
+                    <p>For teams that ship fast. Focus on features – we've got your database covered</p>
                   </div>
                   <div className={styles.feature}>
                     <h3>Universal integration</h3>
@@ -124,7 +135,7 @@ function IndexPage() {
                   </div>
                   <div className={styles.feature}>
                     <h3>Battle-tested expertise</h3>
-                    <p>Trusted by GitLab, Chewy, Supabase, Miro, Orb, Midjourney, Suno, Gamma, Photoroom, and <a href="/consulting">many others</a></p>
+                    <p>Trusted by GitLab, Chewy, Supabase, Miro, Orb, Midjourney, Suno, WorkOS, Photoroom, and <a href="/consulting">many others</a></p>
                   </div>
                 </div>
 
