@@ -6,7 +6,7 @@ keywords:
   - "postgresql monitoring"
   - "database branching"
   - "postgresql thin cloning"
-  - "postgresai copilot"
+  - "autonomous postgres"
   - "database lab engine"
   - "postgresql automation"
 ---
@@ -15,68 +15,18 @@ keywords:
 
 ## What is PostgresAI?
 
-We're building self-driving Postgres. Your database monitors itself,
-diagnoses problems, tests fixes, and hands you a PR. You approve, it ships.
+We're building Self-Driving Postgres. Your database monitors itself, diagnoses problems, and delivers fixes — performance improvements, security patches, zero-downtime upgrades. Each recommendation is tested and verified on a clone of your real data.
 
-## What is self-driving Postgres?
+We're not fully autonomous yet. PostgresAI watches, diagnoses, and prepares pull requests. You review, approve, and merge. Human in the loop on every change.
 
-Every week, another million Postgres databases spin up. AI builders, startups,
-side projects — everyone's shipping. But there are maybe 50,000 people on
-Earth who truly understand Postgres internals. The math doesn't work.
+See the full [Vision & roadmap](/docs/roadmap).
 
-Self-driving Postgres is the solution: databases that take care of themselves.
+## How does PostgresAI work?
 
-### The roadmap
+PostgresAI combines 24/7 AI monitoring with expert validation.
 
 ```
-2018-2024    │   FOUNDATION
-             │
-             │   Consulting: GitLab, Midjourney, Miro, Chewy, Suno...
-             │   Thousands of RCAs, production incidents, 3am fixes
-             │   Clusters scaled from 10 GiB to 100+ TiB
-             │
-             │   Building blocks:
-             │   ├── postgres-checkup (health analysis)
-             │   ├── DBLab Engine (thin cloning, branching)
-             │   ├── postgres_ai monitoring (FOSS)
-             │   └── PostgresAI Assistant (AI chat)
-             │
-             │
-2025         │   COPILOT                                    ◄── WE ARE HERE
-             │
-             │   AI watches, diagnoses, suggests
-             │   Expert validation on every recommendation
-             │   You approve, you merge
-             │
-             │
-2026         │   AUTOPILOT
-             │
-             │   Safe operations run automatically
-             │   Risky changes still need approval
-             │   Self-driving: first versions late 2026
-             │
-             │
-2027+        │   SELF-DRIVING
-             │
-             │   Full autonomy
-             │   Your Postgres runs itself
-             │   You ship product
-             │
-             ▼
-```
-
-## What is DBLab?
-
-DBLab Engine enables database branching — instant, full-size clones of your
-Postgres in seconds, not hours. This lets us test every fix on a copy of your
-real database before it reaches you. Experiment at incredible speed, risk-free.
-
-More: [DBLab Engine documentation](/docs/database-lab)
-
-## How does PostgresAI Copilot work?
-
-```
-╔════════════╗        ╔═ PostgresAI Copilot ═════════════════════╗
+╔════════════╗        ╔════════════ PostgresAI ═══════════════════╗
 ║    Your    ║░       ║  ┏━━━━━━━━━━━━━━┓     ┏━━━━━━━━━━━━━━┓   ║░
 ║  Postgres  ║░──────▶║  ┃  Monitoring  ┃────▶┃ Health check ┃   ║░
 ║  database  ║░       ║  ┗━━━━━━━━━━━━━━┛     ┃   & Issues   ┃   ║░
@@ -91,36 +41,85 @@ More: [DBLab Engine documentation](/docs/database-lab)
              ░░░░░░░░░░░░░░░░░░░░░░░░░░░     ░░░░░░░░░░░░░░░░░░░░░░░
 ```
 
-Open-source monitoring (postgres_ai) runs in your infra. Copilot watches 24/7,
-catches issues before they page you, and delivers fixes as pull requests.
-
-This isn't another monitoring tool with dashboards and alerts. Copilot gives
-you actual solutions:
+PostgresAI gives you actual solutions, not just alerts:
 
 > `CREATE INDEX idx_orders_customer_id ON orders(customer_id);`
 > — tested on a clone, validated by experts, ready to merge.
 
-We don't throw metrics at an LLM and pray. Our AI is built on battle-tested
-methodologies from 20 years of production incidents. Every recommendation is
-verified against your actual data. We're a Google for Startups AI company with
-rigorous experimental pipelines.
+## What is postgres_ai monitoring?
 
-Expert + AI > Either alone.
+Open-source (Apache 2.0), enterprise-grade Postgres observability. It runs in your infrastructure and powers PostgresAI's analysis.
 
-## How much?
+Features:
+- **Emergency dashboard** — identify problems in 1 minute
+- **Query analysis** — comprehensive performance metrics
+- **Wait event analysis** — similar to AWS RDS Performance Insights
+- **Health check reports** — actionable recommendations
 
-$500/month per cluster.
+More: [postgres_ai monitoring documentation](/docs/monitoring)
 
-Monitoring is free, forever, open source. Copilot adds the AI layer, expert
-validation, monthly deep-dive health checks, and direct Slack access to
-people who've seen everything.
+## What is DBLab Engine?
+
+DBLab Engine enables database branching — instant, full-size clones of your Postgres in seconds, not hours. This lets us test every fix on a copy of your real database before it reaches you.
+
+Key capabilities:
+- Thin clones using ZFS or LVM
+- Full production data, created in seconds
+- Test migrations, indexes, and queries risk-free
+
+More: [DBLab Engine documentation](/docs/database-lab)
+
+## What are Issues?
+
+Issues are core to PostgresAI. When a problem is detected, the system creates an Issue with:
+
+- Clear description of the problem
+- Severity and impact assessment
+- Specific fix recommendation
+- Supporting evidence
+
+Issues can be turned into pull requests using AI coding tools (Cursor, etc.).
+
+## How much does it cost?
+
+**$512/month per cluster** for PostgresAI.
+
+postgres_ai monitoring is open source (Apache 2.0).
+
+PostgresAI adds:
+- AI analysis layer
+- Expert validation on recommendations
+- Monthly deep-dive health checks
+- Direct Slack access to senior DBAs
 
 ## Is my data safe?
 
-Yes. Monitoring runs in your infrastructure. We see query shapes and
-performance metrics — not your actual data. Your secrets stay yours.
+Yes. Monitoring can run in PostgresAI Cloud or in your own infrastructure. We see query shapes and performance metrics — not your actual data. Your secrets stay yours.
 
-## How do I start?
+## What Postgres versions are supported?
 
-Currently in preview — reach out to nik@postgres.ai if you believe your case
-can positively influence our development and need to get access faster.
+postgres_ai monitoring supports Postgres 14-17. DBLab Engine supports Postgres 9.6+.
+
+## Does it work with managed Postgres?
+
+Yes. PostgresAI works with:
+- Amazon RDS and Aurora
+- Google Cloud SQL
+- Azure Database for Postgres
+- Supabase
+- Any self-managed Postgres
+
+## How do I get started?
+
+1. [Install postgres_ai monitoring](/docs/monitoring/how-to-install)
+2. Start receiving Issues and fixes
+
+**Live demo**: https://demo.postgres.ai (login: demo / password: demo)
+
+**Contact**: nik@postgres.ai
+
+## Where can I learn more?
+
+- [Vision & roadmap](/docs/roadmap) — The Self-Driving Postgres journey
+- [Monitoring areas](/docs/howtos/monitoring-areas) — What PostgresAI monitors
+- [Postgres how-tos](/docs/postgres-howtos) — 100+ practical guides

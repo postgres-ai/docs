@@ -10,7 +10,7 @@ keywords:
 
 # How to install postgres_ai monitoring
 
-~This documentation is under deveklopment; currently, the process includes many manual steps~
+~This documentation is under development; currently, the process includes many manual steps~
 
 ## Choose your installation method
 

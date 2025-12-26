@@ -1,12 +1,11 @@
 module.exports = {
   baseSidebar: {
     Overview: ['get-started', 'questions-and-answers', 'roadmap'],
-    Tutorials: [
-      'tutorials/database-lab-tutorial',
-      'tutorials/database-lab-tutorial-amazon-rds',
-      'tutorials/joe-setup',
+    "Monitoring": [
+      "monitoring/index",
+      "monitoring/how-to-install"
     ],
-    "DBLab": [
+    "DBLab Engine": [
       "database-lab/index",
       "database-lab/supported-databases",
       "database-lab/user-interface",
@@ -28,9 +27,10 @@ module.exports = {
           "platform/security",
         ]},
     ],
-    "Monitoring": [
-      "monitoring/index",
-      "monitoring/how-to-install"
+    "DBLab tutorials": [
+      'tutorials/database-lab-tutorial',
+      'tutorials/database-lab-tutorial-amazon-rds',
+      'tutorials/joe-setup',
     ],
     "DBLab how-tos": [
       "dblab-howtos/index",
