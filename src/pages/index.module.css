@@ -40,7 +40,7 @@
   border-radius: 4px;
 }
 
-.copilotDiagram {
+.architectureDiagram {
   margin: 50px auto 40px auto;
   max-width: 100%;
   width: 100%;
@@ -49,20 +49,20 @@
   padding: 24px 0;
 }
 
-.copilotDiagramInner {
+.architectureDiagramInner {
   max-width: 100%;
   overflow-x: visible;
 }
 
-.copilotDiagramDesktop {
+.architectureDiagramDesktop {
   display: block;
 }
 
-.copilotDiagramMobile {
+.architectureDiagramMobile {
   display: none;
 }
 
-.copilotDiagram pre {
+.architectureDiagram pre {
   font-family: "JetBrains Mono Variable", "JetBrains Mono", "Fira Code", "Source Code Pro", monospace;
   font-size: 13px;
   font-weight: 450;
@@ -82,28 +82,28 @@
   text-rendering: geometricPrecision;
 }
 
-html[data-theme="dark"] .copilotDiagram {
+html[data-theme="dark"] .architectureDiagram {
   background: #0a0a12;
   color: #e8e8e8;
   border: 1px solid #2a2a3a;
 }
 
-html[data-theme="light"] .copilotDiagram {
+html[data-theme="light"] .architectureDiagram {
   background: #f8f8f8;
   color: #1a1a1a;
   border: 1px solid #e0e0e0;
 }
 
 @media (max-width: 768px) {
-  .copilotDiagramInner {
+  .architectureDiagramInner {
     overflow-x: auto;
   }
 
-  .copilotDiagramDesktop {
+  .architectureDiagramDesktop {
     display: none;
   }
 
-  .copilotDiagramMobile {
+  .architectureDiagramMobile {
     display: block;
   }
 }
@@ -182,7 +182,7 @@ html[data-theme="dark"] .signupSectionFullWidth {
     line-height: 1.4;
   }
 
-  .copilotDiagram pre {
+  .architectureDiagram pre {
     font-size: 1rem;
     padding: 15px;
     line-height: 1.3;

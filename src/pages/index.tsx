@@ -50,10 +50,10 @@ function IndexPage() {
                   </div>
                 </div>
 
-                {/* Copilot Diagram */}
-                <div className={styles.copilotDiagram}>
-                  <div className={styles.copilotDiagramInner}>
-                    <pre className={styles.copilotDiagramDesktop}>{`╔════════════╗        ╔══════════════ POSTGRESAI ═══════════════╗
+                {/* Architecture Diagram */}
+                <div className={styles.architectureDiagram}>
+                  <div className={styles.architectureDiagramInner}>
+                    <pre className={styles.architectureDiagramDesktop}>{`╔════════════╗        ╔══════════════ POSTGRESAI ═══════════════╗
 ║    Your    ║░       ║  ┏━━━━━━━━━━━━━━┓     ┏━━━━━━━━━━━━━━┓   ║░
 ║  Postgres  ║░──────▶║  ┃  Monitoring  ┃────▶┃ Health check ┃   ║░
 ║  database  ║░       ║  ┗━━━━━━━━━━━━━━┛     ┃   & Issues   ┃   ║░
@@ -65,8 +65,8 @@ function IndexPage() {
       │     ╔═════════════════════════╗     ╔═════════════════════╗
       └─────║ GitHub PRs / GitLab MRs ║░◀───║ AI tool (Cursor, …) ║░
             ╚═════════════════════════╝░    ╚═════════════════════╝░
-             ░░░░░░░░░░░░░░░░░░░░░░░░░░░     ░░░░░░░░░░░░░░░░░░░░░░░`}</pre>
-                    <pre className={styles.copilotDiagramMobile}>{`    ╔════════════════╗
+             ░░░░░░░░░░░░░░░░░░░░░░░░░░░     ░   ░░░░░░░░░░░░░░░░░░░░░░`}</pre>
+                    <pre className={styles.architectureDiagramMobile}>{`    ╔════════════════╗
     ║      Your      ║░
     ║    Postgres    ║░◀─────────┐
     ╚════════════════╝░          │
