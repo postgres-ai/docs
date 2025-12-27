@@ -14,7 +14,7 @@ const ContactPage: React.FC = () => {
       {
         name: 'Community on Slack',
         description:
-          'Join other Database Lab users to get help and latest news',
+          'Join other PostgresAI users to get help and latest news',
         icon: '/assets/contact/slack.svg',
         buttonText: 'Join the Community',
         onButtonClick: () => openLink('https://slack.postgres.ai/'),
@@ -23,9 +23,9 @@ const ContactPage: React.FC = () => {
         name: 'Email',
         description: (
           <>
-            For all suggestions, partnerships, use{' '}
-            <a className={styles.link} href="mailto:team@postgres.ai">
-              team@postgres.ai
+            For support inquiries, reach out to{' '}
+            <a className={styles.link} href="mailto:support@postgres.ai">
+              support@postgres.ai
             </a>
           </>
         ),
@@ -35,7 +35,7 @@ const ContactPage: React.FC = () => {
           </div>
         ),
         buttonText: 'Send a message',
-        onButtonClick: () => (window.location.href = 'mailto:team@postgres.ai'),
+        onButtonClick: () => (window.location.href = 'mailto:support@postgres.ai'),
       },
     ]
   }, [])
@@ -78,6 +78,14 @@ const ContactPage: React.FC = () => {
                 </div>
                 <div className={styles.footerText}>
                   Report and get support on{' '}
+                  <a
+                    href="https://github.com/postgres-ai/"
+                    target="_blank"
+                    className={styles.link}
+                  >
+                    GitHub
+                  </a>
+                  {' '}or{' '}
                   <a
                     href="https://gitlab.com/postgres-ai/database-lab/-/issues"
                     target="_blank"
