@@ -53,7 +53,7 @@ function IndexPage() {
                 {/* Architecture Diagram */}
                 <div className={styles.architectureDiagram}>
                   <div className={styles.architectureDiagramInner}>
-                    <pre className={styles.architectureDiagramDesktop}>{`╔════════════╗        ╔══════════════ POSTGRESAI ═══════════════╗
+                    <pre className={styles.architectureDiagramDesktop}>{`╔════════════╗        ╔═══════════════ POSTGRESAI ═══════════════╗
 ║    Your    ║░       ║  ┏━━━━━━━━━━━━━━┓     ┏━━━━━━━━━━━━━━┓   ║░
 ║  Postgres  ║░──────▶║  ┃  Monitoring  ┃────▶┃ Health check ┃   ║░
 ║  database  ║░       ║  ┗━━━━━━━━━━━━━━┛     ┃   & Issues   ┃   ║░
@@ -73,7 +73,7 @@ function IndexPage() {
      ░░░░░░░░░░░░░░░░░░          │
             │                    │
             ▼                    │
-╔════ POSTGRESAI ════╗           │
+╔══════ POSTGRESAI ══════╗       │
 ║  ┏━━━━━━━━━━━━━━━━━┓   ║░      │
 ║  ┃   Monitoring    ┃   ║░      │
 ║  ┗━━━━━━━━━━━━━━━━━┛   ║░      │
