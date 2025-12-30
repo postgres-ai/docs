@@ -1,6 +1,6 @@
 ---
 title: DBLab Engine components
-sidebar_label: DLE components
+sidebar_label: DBLab components
 ---
 
 ## Main container

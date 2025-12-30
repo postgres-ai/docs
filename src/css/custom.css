@@ -20,7 +20,7 @@
   --ifm-color-primary-lightest: #ff9763;
   --ifm-code-font-size: 90%;
   --ifm-font-family-base: "JetBrains Mono Variable", "JetBrains Mono", "Fira Code", "Source Code Pro", Consolas, monospace;
-  --ifm-font-size-base: 15px;
+  --ifm-font-size-base: 13px;
 }
 
 .docusaurus-highlight-code-line {
@@ -1107,7 +1107,7 @@ div[class*="announcementBar"] a,
 div[class*="announcementBar"] div[class*="content"] {
   font-family: "JetBrains Mono", "Fira Code", "Source Code Pro", Consolas, monospace !important;
   font-weight: 500 !important;
-  font-size: 15px !important;
+  font-size: 13px !important;
   text-decoration: none;
   color: inherit;
 }
@@ -1140,14 +1140,14 @@ div[class*="announcementBar"] *,
 div[data-theme] > div:first-child *,
 body > div:first-child *,
 html body > div:first-child * {
-  font-size: 15px !important;
+  font-size: 13px !important;
   font-family: "JetBrains Mono", "Fira Code", "Source Code Pro", Consolas, monospace !important;
 }
 
 /* Target the top banner specifically */
 body > div:first-child,
 html body > div:first-child {
-  font-size: 15px !important;
+  font-size: 13px !important;
 }
 
 /* Mobile-specific fixes */
@@ -1262,7 +1262,7 @@ html body > div:first-child {
   
   /* Compact bot interface for very small screens */
   .bot-input {
-    font-size: 15px !important;
+    font-size: 13px !important;
     padding: 8px !important;
   }
   

@@ -168,13 +168,18 @@ module.exports = {
           ],
         },
         {
+          to: '/pricing',
+          label: 'Pricing',
+          position: 'right',
+        },
+        {
           label: 'Docs',
           to: '/docs',
           activeBaseRegex: '^/docs',
           position: 'right',
           items: [
             {
-              label: 'Documentation Home',
+              label: 'Documentation home',
               to: '/docs',
               activeBaseRegex: '^/docs',
             },
@@ -294,6 +299,10 @@ module.exports = {
             {
               label: 'Joe bot for SQL optimization',
               to: '/products/joe',
+            },
+            {
+              label: 'Pricing',
+              to: '/pricing',
             },
           ],
         },
