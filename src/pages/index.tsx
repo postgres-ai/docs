@@ -2,8 +2,33 @@ import React from 'react'
 import Layout from '@theme/Layout'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 
-import SignupForm from '../components/signupForm/signupForm'
 import styles from './index.module.css'
+import { TRUSTED_BY_COMPANIES } from './pricing'
+
+// Testimonials
+const testimonials = [
+  {
+    quote: "PostgresAI was instrumental in driving us toward zero-downtime upgrades and improving our disaster recovery process, achieving 7 TiB/hour restore speeds. Their commitment to putting developers first aligns perfectly with our open-source philosophy",
+    name: "Oliver Rice, Ph.D.",
+    title: "Head of Engineering",
+    company: "Supabase",
+    location: "USA",
+  },
+  {
+    quote: "When you're powering thousands of developer apps, database downtime isn't an option—PostgresAI's expertise over the years culminated in a flawless zero-downtime Postgres upgrade that kept our platform running seamlessly while we scaled for the future.",
+    name: "Harry Brundage",
+    title: "Co-founder & CTO",
+    company: "Gadget",
+    location: "Canada",
+  },
+  {
+    quote: "The PostgresAI team's forensic approach to our database incident provided the technical evidence we needed to gain support and resolution with our infrastructure provider, and their subsequent health check showed valuable insights into our platform's scaling needs.",
+    name: "Andrew Gershman",
+    title: "Staff SRE",
+    company: "Cinder",
+    location: "USA",
+  },
+]
 
 function IndexPage() {
   const { siteConfig } = useDocusaurusContext()
@@ -29,10 +54,11 @@ function IndexPage() {
                 </p>
 */}
                 <h1 className={styles.mainTitle}>
-                  Self-healing Postgres for fast&#8209;growing startups
+                  Your next Postgres outage is already in your logs
                 </h1>
                 <p className={styles.subtitle}>
-                  Ship your product features instead of fighting Postgres fires
+                  PostgresAI scans your database automatically and delivers fixes.<br />
+                  Before problems take your Postgres down
                 </p>
                 
                 {/* Video Container */}
@@ -144,16 +170,80 @@ function IndexPage() {
           </div>
         </section>
 
-        {/* Signup Section */}
-        <section className={styles.signupSectionFullWidth}>
+        {/* Testimonials Section */}
+        <section className={styles.testimonialsSection}>
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-lg-10">
-                <SignupForm />
+                <div className={styles.testimonialsGrid}>
+                  {testimonials.map((t, i) => (
+                    <div key={i} className={styles.testimonialCard}>
+                      <blockquote className={styles.testimonialQuote}>
+                        "{t.quote}"
+                      </blockquote>
+                      <div className={styles.testimonialAuthor}>
+                        <strong>{t.name}</strong>
+                        <span>{t.title} at <strong>{t.company}</strong>, {t.location}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </section>
+
+        {/* Trusted By Section */}
+        <section className={styles.trustedBySection}>
+          <div className="container">
+            <div className="row justify-content-center">
+              <div className="col-lg-10">
+                <div className={styles.trustedByTitle}>Trusted by thousands of engineers</div>
+                <div className={styles.logoGrid}>
+                  {TRUSTED_BY_COMPANIES.map(({ name, Logo, logoScale }) => (
+                    <div key={name} className={styles.logoCard}>
+                      {Logo ? (
+                        <Logo
+                          className={styles.logoSvg}
+                          aria-label={name}
+                          style={
+                            logoScale
+                              ? { transform: `scale(${logoScale})`, transformOrigin: 'center' }
+                              : undefined
+                          }
+                        />
+                      ) : (
+                        <span className={styles.logoText}>{name}</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className={styles.ctaSection}>
+          <div className="container">
+            <div className="row justify-content-center">
+              <div className="col-lg-10 text-center">
+                <h2 className={styles.ctaTitle}>
+                  <span className={styles.ctaTitleLight}>Start free,</span> scale with confidence
+                </h2>
+                <div className={styles.ctaButtons}>
+                  <a href={signInUrl} className={styles.ctaPrimary}>
+                    Start free
+                  </a>
+                  <a href="/contact" className={styles.ctaSecondary}>
+                    Talk to us
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
       </main>
     </Layout>
   )

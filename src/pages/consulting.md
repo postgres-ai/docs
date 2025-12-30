@@ -30,8 +30,8 @@ We break down complex database problems into clear, actionable steps. Through pr
         "PostgresAI was instrumental in driving us toward zero-downtime upgrades and improving our disaster recovery process, achieving 7 TiB/hour restore speeds. Their commitment to putting developers first aligns perfectly with our open-source philosophy"
     </blockquote>
     <footer>
-        <strong><a href="https://www.linkedin.com/in/oliver-r-9a16b943/" target="_blank">Oliver Rice</a></strong><br/>
-       Head of Engineering, Ph.D. at <a href="https://www.linkedin.com/company/supabase/" target="_blank">Supabase</a>, USA<br/>
+        <strong><a href="https://www.linkedin.com/in/oliver-r-9a16b943/" target="_blank">Oliver Rice, Ph.D.</a></strong><br/>
+       Head of Engineering at <strong><a href="https://www.linkedin.com/company/supabase/" target="_blank">Supabase</a></strong>, USA<br/>
         <em>Supabase is the Postgres development platform.</em>
     </footer>
 </div>
@@ -41,7 +41,7 @@ We break down complex database problems into clear, actionable steps. Through pr
     </blockquote>
     <footer>
         <strong><a href="https://www.linkedin.com/in/harrybrundage/" target="_blank">Harry Brundage</a></strong><br/>
-       Co-founder & CTO at <a href="https://www.linkedin.com/company/gadget-dev/" target="_blank">Gadget</a>, Canada<br/>
+       Co-founder & CTO at <strong><a href="https://www.linkedin.com/company/gadget-dev/" target="_blank">Gadget</a></strong>, Canada<br/>
         <em>Gadget - faster full-stack app development.</em>
     </footer>
 </div>
@@ -51,7 +51,7 @@ We break down complex database problems into clear, actionable steps. Through pr
     </blockquote>
     <footer>
         <strong><a href="https://www.linkedin.com/in/agershman/" target="_blank">Andrew Gershman</a></strong><br/>
-       Staff SRE at <a href="https://www.linkedin.com/company/cinder-intelligence/" target="_blank">Cinder</a>, USA<br/>
+       Staff SRE at <strong><a href="https://www.linkedin.com/company/cinder-intelligence/" target="_blank">Cinder</a></strong>, USA<br/>
         <em>Cinder is the industry’s first Trust and Safety operations platform to help organizations combat Internet abuse at scale.</em>
     </footer>
 </div>

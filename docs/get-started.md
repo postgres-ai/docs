@@ -2,7 +2,7 @@
 id: get-started
 title: PostgresAI documentation
 hide_title: false
-sidebar_label: Documentation Home
+sidebar_label: Documentation home
 slug: /
 description: PostgresAI is building Self-Driving Postgres. Your database monitors itself, diagnoses problems, tests fixes, and hands you a PR. AI watches, diagnoses, suggests; you approve, you merge.
 keywords:

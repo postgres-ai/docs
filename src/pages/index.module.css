@@ -229,6 +229,193 @@ html[data-theme="dark"] .signupSectionFullWidth {
   }
 }
 
+/* Testimonials Section */
+.testimonialsSection {
+  padding: 60px 0 40px 0;
+}
+
+.testimonialsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 991px) {
+  .testimonialsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.testimonialCard {
+  background: var(--ifm-color-emphasis-100);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.testimonialQuote {
+  font-size: 13px;
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", "Fira Code", "Source Code Pro", monospace;
+  line-height: 1.6;
+  margin: 0;
+  font-style: italic;
+  color: var(--ifm-font-color-base);
+}
+
+.testimonialAuthor {
+  font-size: 13px;
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", "Fira Code", "Source Code Pro", monospace;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.testimonialAuthor a {
+  color: var(--ifm-font-color-base);
+  text-decoration: none;
+}
+
+.testimonialAuthor a:hover {
+  text-decoration: underline;
+}
+
+.testimonialAuthor span {
+  color: var(--ifm-font-color-secondary);
+}
+
+/* Trusted By Section */
+.trustedBySection {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.trustedByTitle {
+  font-size: 13px;
+  font-weight: 700;
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", "Fira Code", "Source Code Pro", monospace;
+  color: var(--ifm-font-color-secondary);
+  margin-bottom: 20px;
+}
+
+.logoGrid {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 991px) {
+  .logoGrid {
+    flex-wrap: wrap;
+  }
+}
+
+.logoCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 110px;
+  height: 44px;
+  padding: 10px 12px;
+  border-radius: 0;
+  background-color: var(--ifm-color-emphasis-100);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  box-shadow: none;
+  flex-shrink: 0;
+}
+
+.logoSvg {
+  height: 18px;
+  width: auto;
+  max-width: 100%;
+  max-height: 100%;
+  color: var(--ifm-font-color-base);
+  display: block;
+  filter: grayscale(1);
+}
+
+.logoText {
+  font-size: 15px;
+  font-weight: 700;
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", "Fira Code", "Source Code Pro", monospace;
+  color: var(--ifm-font-color-base);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+/* CTA Section */
+.ctaSection {
+  padding: 40px 0 80px 0;
+  text-align: center;
+}
+
+.ctaTitle {
+  font-size: 13px;
+  font-weight: 700;
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", "Fira Code", "Source Code Pro", monospace;
+  margin-bottom: 32px;
+  color: var(--ifm-heading-color);
+}
+
+.ctaTitleLight {
+  color: var(--ifm-font-color-secondary);
+}
+
+.ctaButtons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.ctaPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  background: var(--ifm-color-primary);
+  color: #fff;
+  font-size: 13px;
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", "Fira Code", "Source Code Pro", monospace;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background 0.2s;
+  line-height: 1;
+}
+
+.ctaPrimary:hover {
+  background: var(--ifm-color-primary-dark);
+  color: #fff;
+  text-decoration: none;
+}
+
+.ctaSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  background: transparent;
+  color: var(--ifm-font-color-base);
+  font-size: 13px;
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", "Fira Code", "Source Code Pro", monospace;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  line-height: 1;
+  transition: border-color 0.2s;
+}
+
+.ctaSecondary:hover {
+  border-color: var(--ifm-color-emphasis-500);
+  color: var(--ifm-font-color-base);
+  text-decoration: none;
+}
+
 /* Legacy styles for backward compatibility */
 .repos {
   display: flex;
