@@ -13,12 +13,13 @@ Currently, DBLab Engine fully supports the following [PostgreSQL major versions]
 - 15 (released: 2022-10-13; EOL: 2027-11-11)
 - 16 (released: 2023-09-14; EOL: 2028-11-09)
 - 17 (released: 2024-09-26; EOL: 2029-11-08)
+- 18 (released: 2025-09-25; EOL: 2030-11-13)
 
-By default, version 16 is used: `postgresai/extended-postgres:16`.
+By default, version 17 is used: `postgresai/extended-postgres:17`.
 
 The images are published in [Docker Hub](https://hub.docker.com/r/postgresai/extended-postgres).
 
-For paid customers having production systems running on AWS RDS and RDS Aurora, GCP CloudSQL, Heroku, Supabase, Timescale Cloud or using PostGIS, Postgres.AI maintains a set of special images. Contact sales@postgres.ai for details.
+For paid customers having production systems running on AWS RDS and RDS Aurora, GCP CloudSQL, Heroku, Supabase, Timescale Cloud or using PostGIS, PostgresAI maintains a set of special images. Contact sales@postgres.ai for details.
 
 ## Extensions included by default
 By default, the DBLab Engine uses [the extended PostgresAI Docker images](https://hub.docker.com/r/postgresai/extended-postgres) built on top of the official Docker images for PostgreSQL. It is easy to change the images – see the options named `dockerImage` in various sections of [the DBLab Engine configuration](https://postgres.ai/docs/reference-guides/database-lab-engine-configuration-reference).

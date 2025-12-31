@@ -10,7 +10,7 @@ keywords:
   - "autonomous postgres"
   - "postgresql monitoring"
   - "postgresql automation"
-  - "postgres_ai monitoring"
+  - "postgresai monitoring"
   - "DBLab Engine"
   - "database branching"
   - "postgresql thin cloning"
@@ -29,22 +29,13 @@ We're not fully autonomous yet. The system watches, diagnoses, and prepares pull
     <td>
       <h3>PostgresAI</h3>
       <ul>
-        <li><a href='/docs/roadmap'>Vision & roadmap</a></li>
-        <li><a href='/docs/monitoring/how-to-install'>Install postgres_ai monitoring</a></li>
-        <li><a href='/docs/questions-and-answers'>Questions & answers</a></li>
-      </ul>
-    </td>
-    <td>
-      <h3>Monitoring</h3>
-      <ul>
-        <li><a href='/docs/monitoring'>postgres_ai monitoring overview</a></li>
-        <li><a href='/docs/monitoring/how-to-install'>Installation guide</a></li>
-        <li><a href='/docs/howtos/monitoring-areas'>Monitoring areas deep dive</a></li>
+        <li><a href='/docs/postgresai-howtos/install-postgres-ai-monitoring-from-postgresai-console'>Install monitoring</a></li>
+        <li><a href='/docs/postgresai-howtos/postgresai-cli'>PostgresAI CLI</a></li>
+        <li><a href='/docs/postgresai-howtos/how-to-install-mcp'>Install MCP</a></li>
+        <li><a href='/docs/postgresai-howtos/how-to-work-with-issues'>Work with Issues</a></li>
         <li><a href='https://demo.postgres.ai'>Live demo</a></li>
       </ul>
     </td>
-  </tr>
-  <tr>
     <td>
       <h3>DBLab Engine</h3>
       <ul>
@@ -54,13 +45,24 @@ We're not fully autonomous yet. The system watches, diagnoses, and prepares pull
         <li><a href='/docs/dblab-howtos'>DBLab how-to guides</a></li>
       </ul>
     </td>
+  </tr>
+  <tr>
     <td>
-      <h3>PostgreSQL How-tos</h3>
+      <h3>PostgreSQL how-tos</h3>
       <ul>
         <li><a href='/docs/postgres-howtos'>All PostgreSQL how-tos</a></li>
         <li><a href='/docs/postgres-howtos/performance-optimization'>Performance & optimization</a></li>
         <li><a href='/docs/postgres-howtos/database-administration'>Administration</a></li>
         <li><a href='/docs/postgres-howtos/monitoring-troubleshooting'>Monitoring & troubleshooting</a></li>
+      </ul>
+    </td>
+    <td>
+      <h3>Reference guides</h3>
+      <ul>
+        <li><a href='/docs/reference-guides/postgresai-cli-reference'>PostgresAI CLI reference</a></li>
+        <li><a href='/docs/reference-guides/postgres-ai-bot-reference'>PostgresAI Assistant tools</a></li>
+        <li><a href='/docs/reference-guides/database-lab-engine-components'>DBLab Engine components</a></li>
+        <li><a href='/docs/reference-guides/dblab-client-cli-reference'>DBLab CLI reference</a></li>
       </ul>
     </td>
   </tr>
@@ -74,12 +76,10 @@ We're not fully autonomous yet. The system watches, diagnoses, and prepares pull
       </ul>
     </td>
     <td>
-      <h3>Reference guides</h3>
+      <h3>About</h3>
       <ul>
-        <li><a href='/docs/reference-guides/postgres-ai-monitoring-reference'>postgres_ai monitoring reference</a></li>
-        <li><a href='/docs/reference-guides/postgres-ai-bot-reference'>PostgresAI Assistant tools</a></li>
-        <li><a href='/docs/reference-guides/database-lab-engine-components'>DBLab Engine components</a></li>
-        <li><a href='/docs/reference-guides/dblab-client-cli-reference'>DBLab CLI reference</a></li>
+        <li><a href='/docs/roadmap'>Vision & roadmap</a></li>
+        <li><a href='/docs/questions-and-answers'>Questions & answers</a></li>
       </ul>
     </td>
   </tr>

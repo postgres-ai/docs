@@ -98,7 +98,7 @@ Yes. Monitoring can run in PostgresAI Cloud or in your own infrastructure. We se
 
 ## What Postgres versions are supported?
 
-postgres_ai monitoring supports Postgres 14-17. DBLab Engine supports Postgres 9.6+.
+postgres_ai monitoring supports Postgres 14+. DBLab Engine supports Postgres 9.6+.
 
 ## Does it work with managed Postgres?
 
@@ -111,7 +111,7 @@ Yes. PostgresAI works with:
 
 ## How do I get started?
 
-1. [Install postgres_ai monitoring](/docs/monitoring/how-to-install)
+1. [Install PostgresAI monitoring](/docs/postgresai-howtos/install-postgres-ai-monitoring-from-postgresai-console)
 2. Start receiving Issues and fixes
 
 **Live demo**: https://demo.postgres.ai (login: demo / password: demo)

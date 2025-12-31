@@ -146,7 +146,7 @@ postgres_ai monitoring is open source (Apache 2.0). PostgresAI adds the AI layer
 
 ## Get started
 
-- [Install postgres_ai monitoring](/docs/monitoring/how-to-install)
+- [Install PostgresAI monitoring](/docs/postgresai-howtos/install-postgres-ai-monitoring-from-postgresai-console)
 - [Live demo](https://demo.postgres.ai)
 - Contact: nik@postgres.ai
 

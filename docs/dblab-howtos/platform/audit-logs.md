@@ -52,11 +52,11 @@ Logs are sent as JSON payloads containing:
     - Category, according to [the list above](#audit-events) (`event.category`)
     - Action: `insert`, `update`, or `delete` (`action`)
 - Organization info (`org`):
-    - Postgres.AI organization ID (`org.id`)
+    - PostgresAI organization ID (`org.id`)
     - Name (`org.name`)
     - Alias (`org.alias`)
 - Actor (user) information (`actor`):
-    - Postgres.AI user ID (`actor.id`)
+    - PostgresAI user ID (`actor.id`)
     - Email (`actor.email`)
     - Name (`actor.first_name`, `actor.last_name`)
 - Changes (`changes`), including:

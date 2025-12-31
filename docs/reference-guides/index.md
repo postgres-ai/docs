@@ -6,6 +6,7 @@ slug: /reference-guides
 
 ## Monitoring
 - [postgres_ai monitoring reference](/docs/reference-guides/postgres-ai-monitoring-reference)
+- [PostgresAI CLI reference](/docs/reference-guides/postgresai-cli-reference)
 
 ## PostgresAI Assistant
 - [PostgresAI Assistant tools](/docs/reference-guides/postgres-ai-bot-reference)

@@ -1,9 +1,14 @@
 module.exports = {
   baseSidebar: {
     Overview: ['get-started', 'questions-and-answers', 'roadmap'],
+    "PostgresAI how-tos": [
+      "postgresai-howtos/postgresai-cli",
+      "postgresai-howtos/how-to-install-mcp",
+      "postgresai-howtos/how-to-work-with-issues",
+      "postgresai-howtos/install-postgres-ai-monitoring-from-postgresai-console",
+    ],
     "Monitoring": [
       "monitoring/index",
-      "monitoring/how-to-install"
     ],
     "DBLab Engine": [
       "database-lab/index",
@@ -369,6 +374,7 @@ module.exports = {
     "Reference guides": [
       "reference-guides/index",
       "reference-guides/postgres-ai-monitoring-reference",
+      "reference-guides/postgresai-cli-reference",
       "reference-guides/postgres-ai-bot-reference",
       "reference-guides/database-lab-engine-components",
       "reference-guides/database-lab-engine-api-reference",
