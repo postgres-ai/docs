@@ -396,7 +396,15 @@ module.exports = {
         redirects: [
           // Blog post URL improvements
           { from: '/blog/20251105-postgres-marathon-2-012', to: '/blog/20251105-postgres-marathon-2-012-ultra-fast-replica-creation-pgbackrest' },
-          
+
+          // PostgresAI how-tos redirects (moved from monitoring and platform)
+          { from: '/docs/monitoring/how-to-install', to: '/docs/postgresai-howtos/install-postgres-ai-monitoring-from-postgresai-console' },
+          { from: '/docs/monitoring/administration/how-to-install', to: '/docs/postgresai-howtos/install-postgres-ai-monitoring-from-postgresai-console' },
+          { from: '/docs/monitoring/administration/install-postgres-ai-monitoring-from-postgresai-console', to: '/docs/postgresai-howtos/install-postgres-ai-monitoring-from-postgresai-console' },
+          { from: '/docs/monitoring/cli/postgresai-cli', to: '/docs/postgresai-howtos/postgresai-cli' },
+          { from: '/docs/platform/how-to-install-mcp', to: '/docs/postgresai-howtos/how-to-install-mcp' },
+          { from: '/docs/platform/how-to-work-with-issues', to: '/docs/postgresai-howtos/how-to-work-with-issues' },
+
           // DBLab how-tos redirects (moved from /docs/how-to-guides to /docs/dblab-howtos)
           { from: '/docs/how-to-guides', to: '/docs/dblab-howtos' },
           
