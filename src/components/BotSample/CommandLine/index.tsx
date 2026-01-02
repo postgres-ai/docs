@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react'
 import styles from './styles.module.css';
-import cn from 'classnames'
+import cn from 'clsx'
 import { addNewLine, checkIsNewLineCmd, checkIsSendCmd } from '@site/src/components/BotSample/CommandLine/utils'
 import { ConnectionStatus, useCaret } from '@site/src/components/BotSample/hooks'
 import { SendIcon } from '@site/src/icons/SendIcon'

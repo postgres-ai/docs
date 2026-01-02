@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
-import classNames from 'classnames'
+import classNames from 'clsx'
 import Layout from '@theme/Layout'
 
 import styles from './consulting-landing.module.css'

@@ -2,7 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 import React from 'react'
 import Layout from '@theme/Layout'
 import Masonry from 'react-masonry-css'
-import classNames from 'classnames'
+import classNames from 'clsx'
 
 import collections from '../../../data/collections'
 import { ROUTES } from '../../routes'

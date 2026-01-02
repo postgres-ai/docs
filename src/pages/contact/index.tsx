@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import classNames from 'classnames'
+import classNames from 'clsx'
 import Layout from '@theme/Layout'
 
 import { CardInfo } from '../../components/CardInfo'
