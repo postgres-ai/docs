@@ -1,4 +1,9 @@
 # 2019 © PostgresAI
+#
+# SAST customization: https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
+
+include:
+  - template: Security/SAST.gitlab-ci.yml
 
 image: docker:20.10.12
 
@@ -6,6 +11,7 @@ stages:
   - validate
   - prepare_image
   - deploy
+  - test
 
 variables:
   ENV: "local" # Should be overwritten by environment template.
@@ -50,6 +56,7 @@ validate_feeds:
     # Login to Google Container Registry.
     - echo $GCP_SERVICE_ACCOUNT | base64 -d > ./key.json
     - docker login -u _json_key --password-stdin https://gcr.io < ./key.json
+    - rm -f ./key.json  # Clean up credentials
 
     # Pull latest image to use it as a cache source.
     # Docker image with `$TAG_LATEST` can be unavailable during the build - it is okay for us -
