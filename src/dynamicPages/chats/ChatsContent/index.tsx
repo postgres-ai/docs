@@ -1,7 +1,6 @@
 import Layout from '@theme/Layout'
 import Link from '@docusaurus/Link'
-import classNames from 'classnames'
-import emoji from 'emoji-dictionary'
+import classNames from 'clsx'
 import ReactMarkdown from 'react-markdown'
 import { useParams } from 'react-router-dom'
 import React, { useCallback, useEffect } from 'react'
@@ -10,6 +9,20 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import { getElapsedTimeString } from '../utils'
 
 import styles from './styles.module.css'
+
+// Common Slack emoji mappings
+const slackEmojiMap: Record<string, string> = {
+  ':smile:': '😄', ':grinning:': '😀', ':joy:': '😂', ':heart:': '❤️',
+  ':thumbsup:': '👍', ':thumbsdown:': '👎', ':+1:': '👍', ':-1:': '👎',
+  ':wave:': '👋', ':clap:': '👏', ':fire:': '🔥', ':rocket:': '🚀',
+  ':star:': '⭐', ':check:': '✅', ':x:': '❌', ':warning:': '⚠️',
+  ':bulb:': '💡', ':memo:': '📝', ':link:': '🔗', ':mag:': '🔍',
+  ':eyes:': '👀', ':thinking:': '🤔', ':tada:': '🎉', ':sparkles:': '✨',
+}
+
+const getEmojiUnicode = (name: string): string => {
+  return slackEmojiMap[name] || name
+}
 
 interface ChatProps {
   id: string
@@ -35,7 +48,7 @@ const convertSlackContentToMarkdown = (item: {
   let replacedContent = item.content
   if (item.via_app === 'slack') {
     replacedContent = item.content
-      .replace(/:\w+:/gi, (name) => emoji.getUnicode(name))
+      .replace(/:\w+:/gi, (name) => getEmojiUnicode(name))
       .replace(/\*(.*?)\*/gi, (name) => `**${name}**`)
       .replace(/\n•/gi, () => `\n-`)
       .replace(/\n/gi, () => `\n\n`)

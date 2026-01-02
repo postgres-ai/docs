@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Message } from '@site/src/components/BotSample/Message'
 import styles from './styles.module.css';
-import cn from 'classnames'
+import cn from 'clsx'
 import { SignInBanner } from '@site/src/components/BotSample/SignInBanner'
 import { BotMessage, ErrorType, StateMessage, StreamMessage, SecondaryStreamMessage } from '@site/src/components/BotSample/hooks'
 
