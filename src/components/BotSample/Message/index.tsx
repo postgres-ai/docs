@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import ReactMarkdown, { Components } from 'react-markdown'
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
-import cn from 'classnames'
+import cn from 'clsx'
 import { RetryIcon } from '@site/src/icons/RetryIcon'
 import { LoadingIcon } from '@site/src/icons/LoadingIcon'
 import Mermaid from '@theme/Mermaid';
