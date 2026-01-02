@@ -45,3 +45,7 @@ spec:
             value: $BOT_WS_URL
           - name: API_URL_PREFIX
             value: $API_URL_PREFIX
+          - name: UMAMI_WEBSITE_ID
+            value: $UMAMI_WEBSITE_ID
+          - name: UMAMI_SCRIPT_URL
+            value: $UMAMI_SCRIPT_URL
