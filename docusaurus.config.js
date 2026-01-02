@@ -33,7 +33,7 @@ module.exports = {
     'Self-healing Postgres for fast-growing startups. Ship features instead of fighting database fires.',
   url: URL, // Your website URL.
   baseUrl: BASE_URL, // Base URL for your project.
-  onBrokenLinks: 'log', //'throw',
+  onBrokenLinks: 'warn', //'throw',
   favicon: 'favicon.svg',
   organizationName: 'postgres-ai',
   projectName: 'docs',
