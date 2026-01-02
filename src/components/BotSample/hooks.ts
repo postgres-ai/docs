@@ -112,7 +112,6 @@ export const useBotMessages = (props: UseBotMessagesProps = {}): UseBotMessages 
       setConnectionStatus(ConnectionStatus.OPEN);
       reconnectDelayRef.current = 1000;
       setError(null);
-      console.log('WebSocket connection established');
     };
 
     websocket.onerror = (event) => {
@@ -164,7 +163,6 @@ export const useBotMessages = (props: UseBotMessagesProps = {}): UseBotMessages 
     websocket.onclose = (event) => {
       setConnectionStatus(ConnectionStatus.CLOSED);
       setLoading(false);
-      console.log('WebSocket connection closed', event);
       if (event.reason !== 'Valid JWT required') {
         scheduleReconnect();
         setError({ message: 'WebSocket connection error: attempting to reconnect', errorType: 'connection' });
