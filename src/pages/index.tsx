@@ -4,6 +4,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 
 import styles from './index.module.css'
 import { TRUSTED_BY_COMPANIES } from './pricing'
+import { SITE_NAME, SITE_SLOGAN } from '../config/site'
 
 // Testimonials
 const testimonials = [
@@ -38,7 +39,7 @@ function IndexPage() {
   if (typeof signInUrl !== 'string') return null
 
   return (
-    <Layout title="PostgresAI – self-healing Postgres for fast-growing startups">
+    <Layout title={`${SITE_NAME} – ${SITE_SLOGAN}`}>
       <main>
         {/* Hero Section with Video */}
         <section className="banner position-relative text-center">

@@ -1,5 +1,9 @@
 const path = require('path')
 
+// Site-wide constants
+const SITE_NAME = 'PostgresAI'
+const SITE_SLOGAN = 'Self-healing Postgres for fast-growing startups'
+
 const URL = !!process.env.URL ? process.env.URL : 'https://v2.postgres.ai/'
 const COLOR_MODE = typeof window !== 'undefined' && window.localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'
 const API_URL_PREFIX = !!process.env.API_URL_PREFIX ? process.env.API_URL_PREFIX : 'https://postgres.ai/api/general' // was: 'https://v2.postgres.ai/api/general/'
@@ -27,14 +31,12 @@ const BOT_WS_URL = !!process.env.BOT_WS_URL ? process.env.BOT_WS_URL : '/ai-bot-
 const CONSULTING_WEBHOOK = process.env.CONSULTING_WEBHOOK ? process.env.CONSULTING_WEBHOOK : ''
 
 module.exports = {
-  title:
-    'PostgresAI', // Title for your website.
-  tagline:
-    'Self-healing Postgres for fast-growing startups. Ship features instead of fighting database fires.',
+  title: SITE_NAME,
+  tagline: SITE_SLOGAN,
   url: URL, // Your website URL.
   baseUrl: BASE_URL, // Base URL for your project.
   onBrokenLinks: 'warn', //'throw',
-  favicon: 'favicon.svg',
+  favicon: '/favicon.svg',
   organizationName: 'postgres-ai',
   projectName: 'docs',
 
@@ -86,7 +88,7 @@ module.exports = {
       tagName: 'meta',
       attributes: {
         name: 'apple-mobile-web-app-title',
-        content: 'PostgresAI',
+        content: SITE_NAME,
       },
     },
     {
@@ -109,7 +111,7 @@ module.exports = {
       // This options will overwrite options from pages with the same name/property.
       { 'http-equiv': 'x-dns-prefetch-control', content: 'on' },
       { property: 'og:locale', content: 'en_US' },
-      { property: 'og:site_name', content: 'PostgresAI' },
+      { property: 'og:site_name', content: SITE_NAME },
       { property: 'og:image', content: `${URL}/img/og-image.png` },
       {
         property: 'article:publisher',
@@ -131,7 +133,7 @@ module.exports = {
     },
 
     navbar: {
-        title: 'PostgresAI',
+        title: SITE_NAME,
       logo: {
         alt: 'PostgresAI logo',
         src: 'img/logo.svg',
@@ -369,7 +371,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} PostgresAI`,
+      copyright: `Copyright © ${new Date().getFullYear()} ${SITE_NAME}`,
     },
 
     prism: {
@@ -594,7 +596,7 @@ module.exports = {
             type: 'all',
             title: '', // default to siteConfig.title
             description: '', // default to  `${siteConfig.title} Blog`
-            copyright: 'PostgresAI',
+            copyright: SITE_NAME,
             language: undefined, // possible values: http://www.w3.org/TR/REC-html40/struct/dirlang.html#langcodes
           },
         },
