@@ -59,7 +59,7 @@ function IndexPage() {
                   Your next Postgres outage is already in your logs
                 </h1>
                 <p className={styles.subtitle}>
-                  PostgresAI delivers database fixes in minutes. You stay focused on building
+                  PostgresAI monitors your database, finds problems, and delivers the fixes. So you can focus on your roadmap.
                 </p>
                 
                 {/* Video Container */}
