@@ -59,8 +59,8 @@ function IndexPage() {
                   Your next Postgres outage is already in your logs
                 </h1>
                 <p className={styles.subtitle}>
-                  PostgresAI scans your database automatically and delivers fixes.<br />
-                  Before problems take your Postgres down
+                  PostgresAI delivers DBA-level analysis in minutes — complete with fixes.<br />
+                  Your engineers can get back to building
                 </p>
                 
                 {/* Video Container */}
