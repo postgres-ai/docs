@@ -59,7 +59,7 @@ function IndexPage() {
                   Your next Postgres outage is already in your logs
                 </h1>
                 <p className={styles.subtitle}>
-                  PostgresAI delivers database fixes in minutes. Your engineers stay focused on building
+                  PostgresAI delivers database fixes in minutes. You stay focused on building
                 </p>
                 
                 {/* Video Container */}
