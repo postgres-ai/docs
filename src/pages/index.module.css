@@ -1,5 +1,14 @@
+.tagline {
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", "Fira Code", "Source Code Pro", monospace;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #ff6112;
+  margin: 32px 0 8px 0 !important;
+  letter-spacing: 0.02em;
+}
+
 .mainTitle {
-  margin: 32px 0 12px 0 !important;
+  margin: 0 0 12px 0 !important;
   font-family: "JetBrains Mono Variable", "JetBrains Mono", "Fira Code", "Source Code Pro", monospace;
   font-size: 1rem !important;
   line-height: 1.4;

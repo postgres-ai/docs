@@ -54,6 +54,7 @@ function IndexPage() {
                   Ship your product features instead of fighting Postgres fires
                 </p>
 */}
+                <p className={styles.tagline}>{SITE_SLOGAN}</p>
                 <h1 className={styles.mainTitle}>
                   Your next Postgres outage is already in your logs
                 </h1>
