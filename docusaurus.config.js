@@ -1,8 +1,7 @@
 const path = require('path')
 
-// Site-wide constants
-const SITE_NAME = 'PostgresAI'
-const SITE_SLOGAN = 'Self-healing Postgres for fast-growing startups'
+// Site-wide constants (single source of truth)
+const { SITE_NAME, SITE_SLOGAN } = require('./src/config/site.json')
 
 const URL = !!process.env.URL ? process.env.URL : 'https://v2.postgres.ai/'
 const COLOR_MODE = typeof window !== 'undefined' && window.localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'

@@ -1,10 +1,11 @@
 /**
  * Site-wide constants for PostgresAI documentation
  *
- * Note: These constants are also defined in docusaurus.config.js for the
- * Docusaurus configuration. When updating, ensure both files stay in sync.
+ * Re-exports from site.json which serves as the single source of truth
+ * for both Docusaurus config (CommonJS) and React components (ESM).
  */
 
-export const SITE_NAME = 'PostgresAI'
+import siteConfig from './site.json'
 
-export const SITE_SLOGAN = 'Self-healing Postgres for fast-growing startups'
+export const SITE_NAME: string = siteConfig.SITE_NAME
+export const SITE_SLOGAN: string = siteConfig.SITE_SLOGAN
