@@ -4,6 +4,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 
 import styles from './index.module.css'
 import { TRUSTED_BY_COMPANIES } from './pricing'
+import { SITE_NAME, SITE_SLOGAN } from '../config/site'
 
 // Testimonials
 const testimonials = [
@@ -38,7 +39,7 @@ function IndexPage() {
   if (typeof signInUrl !== 'string') return null
 
   return (
-    <Layout title="PostgresAI – self-healing Postgres for fast-growing startups">
+    <Layout title={`${SITE_NAME} – ${SITE_SLOGAN}`}>
       <main>
         {/* Hero Section with Video */}
         <section className="banner position-relative text-center">
@@ -53,12 +54,12 @@ function IndexPage() {
                   Ship your product features instead of fighting Postgres fires
                 </p>
 */}
+                <p className={styles.tagline}>{SITE_SLOGAN}</p>
                 <h1 className={styles.mainTitle}>
                   Your next Postgres outage is already in your logs
                 </h1>
                 <p className={styles.subtitle}>
-                  PostgresAI scans your database automatically and delivers fixes.<br />
-                  Before problems take your Postgres down
+                  PostgresAI finds Postgres problems and delivers fixes automatically — so your team can focus on the roadmap.
                 </p>
                 
                 {/* Video Container */}
