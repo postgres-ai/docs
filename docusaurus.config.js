@@ -387,6 +387,21 @@ module.exports = {
   clientModules: [],
   
   plugins: [
+    // Fix cytoscape module resolution for mermaid
+    function () {
+      return {
+        name: 'webpack-cytoscape-fix',
+        configureWebpack() {
+          return {
+            resolve: {
+              alias: {
+                'cytoscape/dist/cytoscape.umd.js': require.resolve('cytoscape'),
+              },
+            },
+          };
+        },
+      };
+    },
     [
       '@docusaurus/plugin-ideal-image',
       {
