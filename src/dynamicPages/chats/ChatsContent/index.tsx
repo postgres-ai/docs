@@ -105,17 +105,17 @@ const getEmojiUnicode = (name: string): string => {
 interface ChatProps {
   id: string
   created_at: string
-  modified_at: any
+  modified_at: string | null
   parent_id: string
   is_ai: boolean
   content: string
-  user_id: any
-  summary: any
+  user_id: string | null
+  summary: string | null
   is_public: boolean
   via_app: string
-  display_name: any
+  display_name: string | null
   first_name: string
-  last_name: any
+  last_name: string | null
   children_ids: string[]
 }
 
