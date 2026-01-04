@@ -914,7 +914,7 @@ html[data-theme="dark"] .sign-in-button {
 
   .start-free-button, .sign-in-button {
     display: flex;
-    width: 120px;
+    width: 162px;
     justify-content: center;
     white-space: nowrap;
   }
