@@ -3,13 +3,13 @@ import React from 'react'
 
 import { GatewayLink } from '../../../../components/GatewayLink'
 import { Author } from '../../../../data/authors'
-import { Post } from '../../../../data/collections'
+import { Post, Collection } from '../../../../data/collections'
 import { Comment } from '../Comment'
 
 import styles from '../../styles.module.css'
 
 type OwnProps = {
-  post: Post & { collection?: any }
+  post: Post & { collection?: Pick<Collection, 'title' | 'url'> }
   commentAuthor?: Author
 }
 
