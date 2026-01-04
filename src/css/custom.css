@@ -913,7 +913,8 @@ html[data-theme="dark"] .sign-in-button {
   }
 
   .start-free-button, .sign-in-button {
-    display: inline-flex;
+    display: flex;
+    width: 120px;
     justify-content: center;
     white-space: nowrap;
   }
