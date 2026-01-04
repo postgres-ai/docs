@@ -1177,10 +1177,15 @@ html body > div:first-child {
   }
   
   /* Improve mobile navbar - make logo bigger */
+  .navbar__logo {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
   .navbar .navbar__title,
   .navbar__brand .navbar__title,
   .navbar__inner .navbar__brand .navbar__title {
-    font-size: 1rem !important;
+    font-size: 1.1rem !important;
     line-height: 1.4rem !important;
   }
   
