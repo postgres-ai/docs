@@ -914,9 +914,16 @@ html[data-theme="dark"] .sign-in-button {
 
   .start-free-button, .sign-in-button {
     display: flex;
-    width: 162px;
+    width: 200px;
     justify-content: center;
     white-space: nowrap;
+    padding: 0.5rem 1.5rem;
+  }
+
+  /* Ensure buttons fill available width in mobile sidebar */
+  .navbar-sidebar__item .start-free-button,
+  .navbar-sidebar__item .sign-in-button {
+    width: 200px;
   }
 }
 /* Start - Card styling for resources and careers page */
