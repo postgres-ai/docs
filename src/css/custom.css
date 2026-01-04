@@ -1193,8 +1193,8 @@ html body > div:first-child {
   .navbar .navbar__title,
   .navbar__brand .navbar__title,
   .navbar__inner .navbar__brand .navbar__title {
-    font-size: 1.25rem !important;
-    line-height: 1.5rem !important;
+    font-size: 1.5rem !important;
+    line-height: 1.75rem !important;
   }
   
   /* Better mobile bot interface */
@@ -1274,10 +1274,10 @@ html body > div:first-child {
   .navbar .navbar__title,
   .navbar__brand .navbar__title,
   .navbar__inner .navbar__brand .navbar__title {
-    font-size: 1rem !important;
-    line-height: 1.4rem !important;
+    font-size: 1.35rem !important;
+    line-height: 1.5rem !important;
   }
-  
+
   /* Compact bot interface for very small screens */
   .bot-input {
     font-size: 13px !important;
