@@ -897,8 +897,8 @@ html[data-theme="dark"] .sign-in-button {
     display: none;
   }
 
-  .github-sm .github-btn, 
-  .github-sm .github-star-placeholder {    
+  .github-sm .github-btn,
+  .github-sm .github-star-placeholder {
     font-size: 1rem;
   }
 
@@ -913,9 +913,9 @@ html[data-theme="dark"] .sign-in-button {
   }
 
   .start-free-button, .sign-in-button {
-    display: flex;
-    width: 100px;
+    display: inline-flex;
     justify-content: center;
+    white-space: nowrap;
   }
 }
 /* Start - Card styling for resources and careers page */
