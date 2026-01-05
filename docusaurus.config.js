@@ -155,10 +155,6 @@ module.exports = {
               to: '/products/dblab_engine'
             },
             {
-              label: 'DBLab pricing',
-              to: '/pricing'
-            },
-            {
               label: 'Zero-downtime upgrades',
               to: '/products/postgres-ai-zdu'
             },
