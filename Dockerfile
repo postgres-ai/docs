@@ -1,4 +1,4 @@
-FROM oven/bun:1.1
+FROM oven/bun:1.1.43-debian
 
 ARG ARG_REACT_APP_API_SERVER
 ENV REACT_APP_API_SERVER=$ARG_REACT_APP_API_SERVER
@@ -26,14 +26,10 @@ ENV UMAMI_SCRIPT_URL=$ARG_UMAMI_SCRIPT_URL
 
 WORKDIR /docs
 
-COPY package.json ./
-COPY bun.lock ./
+COPY package.json bun.lock ./
 RUN bun install --frozen-lockfile
 
 COPY . .
-# Make cache folder if not exists.
-RUN mkdir -p .cache
-RUN mv .cache node_modules
 RUN bun run build
 
 EXPOSE 3000
