@@ -150,7 +150,7 @@ time pgbackrest \
 # Start with --process-max=8 for a balance of speed and resource usage
 # Increase to 16-32 for maximum speed on fast networks (10+ Gbps)
 # Network compression (--compress-level-network=1) provides minimal benefit 
-# on fast networks (<6% improvement) but is useful for slower networks (&lt;10 Gbps)
+# on fast networks (&lt;6% improvement) but is useful for slower networks (&lt;10 Gbps)
 ```
 
 If CPU resources are constrained on the source server, reduce priority for pgBackRest processes on the primary:
