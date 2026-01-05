@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import classNames from 'clsx'
 import Layout from '@theme/Layout'
 
@@ -37,24 +36,6 @@ const ConsultingLandingPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    try {
-      // Prefer GA4 gtag if present; fall back to GTM dataLayer
-      const eventParams = {
-        event_category: 'lead',
-        event_label: 'consulting-landing',
-        // Do not send PII (no name, email, phone)
-      }
-      if (typeof (window as any).gtag === 'function') {
-        ;(window as any).gtag('event', 'consulting_form_submit', eventParams)
-      }
-      if (Array.isArray((window as any).dataLayer)) {
-        ;(window as any).dataLayer.push({ event: 'consulting_form_submit', ...eventParams })
-      }
-      // Meta Pixel 'Lead' event (no PII)
-      if (typeof (window as any).fbq === 'function') {
-        ;(window as any).fbq('track', 'Lead', { content_name: 'consulting-landing' })
-      }
-    } catch {}
 
     // If Google Apps Script URL provided, send to Google Sheets first
     const webhookUrl = GOOGLE_APPS_SCRIPT_URL
@@ -80,28 +61,10 @@ const ConsultingLandingPage: React.FC = () => {
         })
         setSubmitted(true)
         setSubmitting(false)
-        try {
-          const successParams = { event_category: 'lead', event_label: 'consulting-landing' }
-          if (typeof (window as any).gtag === 'function') {
-            ;(window as any).gtag('event', 'consulting_form_submit_success', successParams)
-          }
-          if (Array.isArray((window as any).dataLayer)) {
-            ;(window as any).dataLayer.push({ event: 'consulting_form_submit_success', ...successParams })
-          }
-        } catch {}
         return
       } catch (err) {
         setSubmitting(false)
         setSubmitError('Submit failed. Falling back to email…')
-        try {
-          const errorParams = { event_category: 'lead', event_label: 'consulting-landing' }
-          if (typeof (window as any).gtag === 'function') {
-            ;(window as any).gtag('event', 'consulting_form_submit_error', errorParams)
-          }
-          if (Array.isArray((window as any).dataLayer)) {
-            ;(window as any).dataLayer.push({ event: 'consulting_form_submit_error', ...errorParams })
-          }
-        } catch {}
       }
     }
 
@@ -138,17 +101,6 @@ const ConsultingLandingPage: React.FC = () => {
               <a
                 className={classNames('consulting-button', styles.primaryCta)}
                 href="#get-help"
-                onClick={() => {
-                  try {
-                    const eventParams = { event_category: 'engagement', event_label: 'consulting-landing' }
-                    if (typeof (window as any).gtag === 'function') {
-                      ;(window as any).gtag('event', 'cta_click_get_help', eventParams)
-                    }
-                    if (Array.isArray((window as any).dataLayer)) {
-                      ;(window as any).dataLayer.push({ event: 'cta_click_get_help', ...eventParams })
-                    }
-                  } catch {}
-                }}
               >
                 Get help now
               </a>
