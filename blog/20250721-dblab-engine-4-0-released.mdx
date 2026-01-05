@@ -226,7 +226,7 @@ When creating a branch or a clone takes a second and costs nothing extra, teams 
 ## Performance at scale
 
 Testing with production workloads demonstrates:
-- **Clone creation**: <2 seconds for any database, regardless of size (even if it's 50 TiB!)
+- **Clone creation**: &lt;2 seconds for any database, regardless of size (even if it's 50 TiB!)
 - **Snapshot creation**: O(1) operation regardless of database size
 - **Branch switching**: Instant (pointer update only)
 - **Concurrent users**: 15 users on 10 TiB database with 30-second clone creation under load

@@ -56,8 +56,8 @@ Replacement rules are applied to all log fields of the incoming PostgreSQL CSV l
 ## Regular expressions
 The syntax of the regular expressions accepted is the same general syntax used by Perl, Python, and other languages.  You can find syntax details here: https://github.com/google/re2/wiki/Syntax.
 
-In a template, a variable is denoted by a substring of the form $name or ${name}, where name is a non-empty sequence of letters, digits, and underscores. 
-A purely numeric name like `$1` refers to a submatch with the corresponding index; other names refer to capturing parentheses named with the `(?P<name>...)` syntax. 
+In a template, a variable is denoted by a substring of the form `$name` or `${name}`, where name is a non-empty sequence of letters, digits, and underscores.
+A purely numeric name like `$1` refers to a submatch with the corresponding index; other names refer to capturing parentheses named with the `(?P<name>...)` syntax.
 A reference to an out-of-range or unmatched index or a name that is not present in the regular expression is replaced by an empty string.
 
 To insert a literal `$` in the output, use `$$` in the template.
