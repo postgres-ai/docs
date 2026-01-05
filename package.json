@@ -5,9 +5,9 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
-    "build:copy-md": "bun scripts/copy-md-files.js",
-    "build:copy-rules": "bun scripts/copy-rules-to-static.js",
-    "build": "bun run build:copy-md && bun run build:copy-rules && docusaurus build",
+    "build:copy-md": "node scripts/copy-md-files.js",
+    "build:copy-rules": "node scripts/copy-rules-to-static.js",
+    "build": "npm run build:copy-md && npm run build:copy-rules && docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "serve": "docusaurus serve"

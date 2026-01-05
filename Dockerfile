@@ -24,22 +24,17 @@ ENV UMAMI_WEBSITE_ID=$ARG_UMAMI_WEBSITE_ID
 ARG ARG_UMAMI_SCRIPT_URL
 ENV UMAMI_SCRIPT_URL=$ARG_UMAMI_SCRIPT_URL
 
-# Install bun
-RUN curl -fsSL https://bun.sh/install | bash
-ENV BUN_INSTALL="/root/.bun"
-ENV PATH="$BUN_INSTALL/bin:$PATH"
-
 WORKDIR /docs
 
 COPY package.json ./
-COPY bun.lock ./
-RUN bun install --frozen-lockfile
+COPY package-lock.json ./
+RUN npm ci
 
 COPY . .
 # Make cache folder if not exists.
 RUN mkdir -p .cache
 RUN mv .cache node_modules
-RUN bun run build
+RUN npm run build
 
 EXPOSE 3000
-CMD ["bun", "run", "serve"]
+CMD ["npm", "run", "serve"]
