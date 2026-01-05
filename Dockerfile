@@ -1,5 +1,8 @@
 FROM oven/bun:1.3-debian
 
+# Install libvips for sharp (image processing)
+RUN apt-get update && apt-get install -y libvips-dev && rm -rf /var/lib/apt/lists/*
+
 ARG ARG_REACT_APP_API_SERVER
 ENV REACT_APP_API_SERVER=$ARG_REACT_APP_API_SERVER
 
