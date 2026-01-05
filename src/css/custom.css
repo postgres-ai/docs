@@ -914,7 +914,7 @@ html[data-theme="dark"] .sign-in-button {
 
   .start-free-button, .sign-in-button {
     display: flex;
-    width: 162px;
+    width: 100%;
     justify-content: center;
   }
 }
@@ -1180,6 +1180,15 @@ html body > div:first-child {
    * Exception to the 13px base font: on mobile, controls are larger
    * so we increase the logo/title to maintain visual balance
    */
+  .navbar__inner {
+    align-items: center !important;
+  }
+
+  .navbar__toggle {
+    display: flex !important;
+    align-items: center !important;
+  }
+
   .navbar__logo {
     width: 40px !important;
     height: 40px !important;
@@ -1187,7 +1196,9 @@ html body > div:first-child {
   }
 
   .navbar__brand {
-    margin-left: 0.5rem !important;
+    margin-left: 1rem !important;
+    display: flex !important;
+    align-items: center !important;
   }
 
   .navbar .navbar__title,
