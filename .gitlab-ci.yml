@@ -24,7 +24,7 @@ variables:
 # Validate RSS/Atom feeds before building and deploying
 validate_feeds:
   stage: validate
-  image: node:18
+  image: node:18-bookworm
   variables:
     BUN_INSTALL: "$HOME/.bun"
     PATH: "$HOME/.bun/bin:$PATH"
