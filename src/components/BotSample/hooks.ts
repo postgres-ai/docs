@@ -82,10 +82,11 @@ export enum ConnectionStatus {
 
 type UseBotMessagesProps = {
   saveData?: boolean,
+  maxMessages?: number,
 }
 
 export const useBotMessages = (props: UseBotMessagesProps = {}): UseBotMessages => {
-  const { saveData = true } = props;
+  const { saveData = true, maxMessages = 2 } = props;
   const { siteConfig } = useDocusaurusContext();
   const botWSUrl = siteConfig.customFields.botWSUrl;
 
@@ -200,7 +201,7 @@ export const useBotMessages = (props: UseBotMessagesProps = {}): UseBotMessages 
     if (error && (error as ErrorType).errorType === 'ratelimit') {
       setError(null)
     }
-    if (messages.length < 2 && websocketRef.current) {
+    if (messages.length < maxMessages && websocketRef.current) {
       try {
         const message = {
           content,
