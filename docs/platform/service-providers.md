@@ -17,7 +17,6 @@ Postgres.ai uses the following data subprocessors:
 | [Google Cloud Platform (GCP)](https://cloud.google.com/) | USA | Primary data hosting. Customer Data (including backups) are stored here |
 | [Google Workspace](https://workspace.google.com/) | USA | Email and cloud office apps used by the PostgresAI Team for business |
 | [Hetzner](https://hetzner.com/) | USA, Germany | Cloud and dedicated hosting provider (currently not used for Customer Data) |
-| [Intercom](https://www.intercom.com/) | USA | Customer support system |
 | [Microsoft Azure](https://azure.microsoft.com/) | USA | Azure AI – access to LLM such as DeepSeek (deployed in US locations only) |
 | [OpenAI](https://openai.com/) | USA | AI models provided via API (such as Whisper, GPT). *Customer Data is not used in OpenAI API calls, unless explicitly approved by Customer*
 | [pgMustard](https://www.pgmustard.com/) | UK, Finland | SQL plan analysis provider (used only when enabled by Customer; query plans may be sent for analysis) |
