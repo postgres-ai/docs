@@ -30,10 +30,10 @@ pre, pre code, .prism-code {
   line-height: 1.5 !important;
 }
 
-/* ASCII diagrams: tighter line height */
+/* ASCII diagrams: no line gaps for proper character alignment */
 pre[class*="language-diagram"],
 pre[class*="language-diagram"] code {
-  line-height: 1.2 !important;
+  line-height: 1.0 !important;
 }
 
 .docusaurus-highlight-code-line {
