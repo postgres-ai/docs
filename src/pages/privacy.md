@@ -6,7 +6,7 @@ Terms of Service: https://postgres.ai/tos/
 
 # Privacy policy
 
-*Last Updated: June 19, 2025*
+*Last Updated: January 14, 2026*
 
 This Privacy Policy (this "Policy") is adopted by Nombox LLC d.b.a. PostgresAI located at 15076 Eastvale Rd, Poway, CA 92064, USA ("PostgresAI" or "we").
 
@@ -21,7 +21,7 @@ This Policy applies to our customers and users who have visited our website and 
 ## INFORMATION WE COLLECT
 - **Your personal details** – name, address, phone number, email address when you submit web forms on our website, including opportunities to sign up for and agree to receive email communications from us. We also may ask you to submit such personal information if you choose to use interactive features of our website, including participation in surveys, contests, promotions, sweepstakes, requesting customer support, registration for attendance at an event sponsored by PostgresAI or otherwise communicating with us.
 - **Log Files** – certain information including but is not limited to Internet Protocol (IP) addresses, system configuration information, URLs of referring pages, and locale and language preferences when you visit and interact with most websites and services delivered via the Internet, when you visit our website and interactive areas offered by it.
-- **Cookies and Other Tracking Technologies** – we may use cookies to provide you with a user-friendly interface, features and general access to our website. You can control how our website use cookies by configuring your browser's privacy settings (please refer to your browser's help function to learn more about cookie controls). Note that if you disable cookies entirely, our website may not function properly. Third parties may use the data collected by the cookies. The purpose of the use of cookies on our website is site improvement, as well as the analysis of our customer-provider relationships and marketing intentions. For more information about the cookies PostgresAI uses, please see our Cookie Policy.
+- **Cookies and Other Tracking Technologies** – we may use cookies to provide you with a user-friendly interface, features and general access to our website. You can control how our website use cookies by configuring your browser's privacy settings (please refer to your browser's help function to learn more about cookie controls). Note that if you disable cookies entirely, our website may not function properly. The purpose of the use of cookies on our website is site improvement, as well as the analysis of our customer-provider relationships and marketing intentions. We do not use third-party marketing or analytics services (such as Google Analytics or Facebook Pixel). Our analytics are self-hosted, and any tracking cookies we use (such as for marketing attribution) remain first-party and are not shared with external advertising platforms. For more information about the cookies PostgresAI uses, please see our Cookie Policy.
 - **Interactive Areas** – publicly accessible blogs, chats, community forums, comments sections, discussion forums, or other interactive features (“Interactive Areas”). If you choose to participate in any of these Interactive Areas, please be aware that that any information that you post in an Interactive Area might be read, collected, and used by others who access it. If you wish to remove your personal information from any of our Interactive Areas, please contact us at: privacy@postgres.ai.
 
 ## HOW WE USE INFORMATION WE COLLECT

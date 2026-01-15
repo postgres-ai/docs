@@ -14,6 +14,7 @@ const IS_PROD = process.env.NODE_ENV === 'production'
 
 const scripts = [
   BASE_URL + 'js/githubButton.js',
+  BASE_URL + 'js/trackingCapture.js',
 ]
 
 if (IS_PROD && UMAMI_WEBSITE_ID && UMAMI_SCRIPT_URL) {
