@@ -25,11 +25,11 @@ variables:
 # Validate RSS/Atom feeds before building and deploying
 validate_feeds:
   stage: validate
-  image: node:18
+  image: oven/bun:1.3-debian
   before_script:
     # Install xmllint for XML validation
     - apt-get update && apt-get install -y libxml2-utils jq
-    - npm ci
+    - bun install --frozen-lockfile
   script:
     - bash .ci/validate-feeds.sh
   artifacts:
@@ -39,8 +39,7 @@ validate_feeds:
       - build/blog/*.json
     expire_in: 1 week
   only:
-    - merge_requests
-    - master
+    - branches
 
 # Stages templates.
 .job_template: &build_and_push_definition

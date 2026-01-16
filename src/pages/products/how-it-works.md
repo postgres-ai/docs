@@ -62,12 +62,7 @@ Here's what you can expect when setting up the DBLab Engine:
   <a className="btn btn2" href='/products/database-migration-testing'>Next: Database Migration Testing</a>
 </div>
 
-<ul class='footnotes'>
-  <li><sup>1</sup> If desired, alternate copy-on-write systems may be used. See the &nbsp;
-    <a href="/docs/dblab-howtos/administration/install-dle-manually"
-       target="_blank">
-      documentation
-    </a>
-  </li>
+<ul className='footnotes'>
+  <li><sup>1</sup> If desired, alternate copy-on-write systems may be used. See the <a href="/docs/dblab-howtos/administration/install-dle-manually" target="_blank">documentation</a></li>
   <li><sup>2</sup> The DBLab Engine has been tested on Ubuntu and RHEL/CentOS.</li>
 </ul>

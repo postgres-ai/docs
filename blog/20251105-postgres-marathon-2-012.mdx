@@ -150,7 +150,7 @@ time pgbackrest \
 # Start with --process-max=8 for a balance of speed and resource usage
 # Increase to 16-32 for maximum speed on fast networks (10+ Gbps)
 # Network compression (--compress-level-network=1) provides minimal benefit 
-# on fast networks (<6% improvement) but is useful for slower networks (<10 Gbps)
+# on fast networks (&lt;6% improvement) but is useful for slower networks (&lt;10 Gbps)
 ```
 
 If CPU resources are constrained on the source server, reduce priority for pgBackRest processes on the primary:
@@ -297,7 +297,7 @@ For production deployments:
 
 1. Start with `--process-max=$(($(nproc)/2))` to balance performance with system load
 2. Monitor CPU usage on both source and destination during backup
-3. Network compression (`--compress-level-network=1`) doesn't seem to be providing a significant improvement on fast networks (10+ Gbps). Use it for slower networks (<10 Gbps) where it can be more beneficial
+3. Network compression (`--compress-level-network=1`) doesn't seem to be providing a significant improvement on fast networks (10+ Gbps). Use it for slower networks (&lt;10 Gbps) where it can be more beneficial
 4. Consider using `renice` on the source server if CPU contention affects production workload
 5. Ensure sufficient I/O capacity on the destination to handle parallel writes
 6. For high parallelism (64+), increase SSH limits: `MaxStartups=200:30:300` and `MaxSessions=200` in `/etc/ssh/sshd_config`. Alternatively, SSH ControlMaster creates a single persistent connection that all subsequent SSH sessions multiplex through — we haven't tested this approach yet, but it's worth exploring for reducing connection overhead at high parallelism levels
