@@ -4,7 +4,7 @@
 set -e
 
 echo "Building site to generate feeds..."
-npm run build
+bun run build
 
 echo ""
 echo "Validating RSS/Atom feeds..."

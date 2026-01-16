@@ -1,4 +1,8 @@
-FROM node:18.20
+FROM oven/bun:1.3-debian
+
+# Install only libvips runtime (not -dev) so sharp uses prebuilt binaries
+# This is much faster than compiling from source (~2 min saved)
+RUN apt-get update && apt-get install -y --no-install-recommends libvips42 && rm -rf /var/lib/apt/lists/*
 
 ARG ARG_REACT_APP_API_SERVER
 ENV REACT_APP_API_SERVER=$ARG_REACT_APP_API_SERVER
@@ -26,15 +30,11 @@ ENV UMAMI_SCRIPT_URL=$ARG_UMAMI_SCRIPT_URL
 
 WORKDIR /docs
 
-COPY package.json ./
-COPY package-lock.json ./
-RUN npm ci
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
 
 COPY . .
-# Make cache folder if not exists.
-RUN mkdir -p .cache
-RUN mv .cache node_modules
-RUN npm run build
+RUN bun run build
 
 EXPOSE 3000
-CMD ["npm", "run", "serve"]
+CMD ["bun", "run", "serve"]

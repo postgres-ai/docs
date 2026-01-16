@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { ShareLinks } from '@site/src/components/ShareLinks'
 import {
   AuthorBanner,
   Props as AuthorBannerProps,

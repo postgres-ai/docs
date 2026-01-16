@@ -40,6 +40,11 @@ module.exports = {
   organizationName: 'postgres-ai',
   projectName: 'docs',
 
+  // Use CommonMark for .md files to avoid MDX parsing issues
+  markdown: {
+    format: 'detect',
+  },
+
   customFields: {
     signInUrl: SIGN_IN_URL,
     apiUrlPrefix: API_URL_PREFIX,
@@ -376,14 +381,29 @@ module.exports = {
     },
 
     prism: {
-      theme: require('prism-react-renderer/themes/nightOwlLight'),
-      darkTheme: require('prism-react-renderer/themes/nightOwl'),
+      theme: require('prism-react-renderer').themes.nightOwlLight,
+      darkTheme: require('prism-react-renderer').themes.nightOwl,
     },
   },
 
   clientModules: [],
   
   plugins: [
+    // Fix cytoscape module resolution for mermaid
+    function () {
+      return {
+        name: 'webpack-cytoscape-fix',
+        configureWebpack() {
+          return {
+            resolve: {
+              alias: {
+                'cytoscape/dist/cytoscape.umd.js': require.resolve('cytoscape'),
+              },
+            },
+          };
+        },
+      };
+    },
     [
       '@docusaurus/plugin-ideal-image',
       {
@@ -587,6 +607,7 @@ module.exports = {
           showReadingTime: true,
           editUrl: 'https://gitlab.com/postgres-ai/docs/-/edit/master/',
           path: 'blog',
+          onInlineTags: 'ignore',
           routeBasePath: 'blog',
           postsPerPage: 10,
           blogSidebarTitle: 'Categories',

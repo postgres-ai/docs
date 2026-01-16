@@ -29,7 +29,7 @@ The clone's container name is associated with its port number, such as `dblab_cl
 
 #### Container labels 
 - `dblab_clone`
-- <pool_name>
+- `<pool_name>`
 
 #### Responsibility
 - Provides a thin clone: an independent PostgreSQL database server with thinly cloned / branched data directory
