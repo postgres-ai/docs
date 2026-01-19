@@ -60,7 +60,7 @@ function IndexPage() {
                 {/* Hero CTA Buttons */}
                 <div className={styles.heroCtaButtons}>
                   <a href={signInUrl} className={styles.ctaPrimary}>
-                    Start free
+                    Start now
                   </a>
                   <a href="/contact" className={styles.ctaSecondary}>
                     Talk to us
@@ -239,7 +239,7 @@ function IndexPage() {
                 </h2>
                 <div className={styles.ctaButtons}>
                   <a href={signInUrl} className={styles.ctaPrimary}>
-                    Start free
+                    Start now
                   </a>
                   <a href="/contact" className={styles.ctaSecondary}>
                     Talk to us
