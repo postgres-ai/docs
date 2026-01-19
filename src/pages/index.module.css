@@ -389,25 +389,23 @@ html[data-theme="dark"] .signupSectionFullWidth {
 }
 
 .ctaPrimary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 24px;
-  background: var(--ifm-color-primary);
+  display: inline-block;
+  padding: 16px 32px;
+  background: #ff6112;
   color: #fff;
-  font-size: 13px;
+  font-size: 1rem;
   font-family: "JetBrains Mono Variable", "JetBrains Mono", "Fira Code", "Source Code Pro", monospace;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
-  border-radius: 4px;
-  transition: background 0.2s;
-  line-height: 1;
+  border-radius: 8px;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .ctaPrimary:hover {
-  background: var(--ifm-color-primary-dark);
+  background: #e55510;
   color: #fff;
   text-decoration: none;
+  transform: translateY(-1px);
 }
 
 .ctaSecondary {

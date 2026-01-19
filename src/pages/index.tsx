@@ -60,10 +60,7 @@ function IndexPage() {
                 {/* Hero CTA Buttons */}
                 <div className={styles.heroCtaButtons}>
                   <a href={signInUrl} className={styles.ctaPrimary}>
-                    Start free
-                  </a>
-                  <a href="/contact" className={styles.ctaSecondary}>
-                    Talk to us
+                    Check my database now
                   </a>
                 </div>
 
@@ -235,14 +232,11 @@ function IndexPage() {
             <div className="row justify-content-center">
               <div className="col-lg-10 text-center">
                 <h2 className={styles.ctaTitle}>
-                  <span className={styles.ctaTitleLight}>Start free,</span> scale with confidence
+                  <span className={styles.ctaTitleLight}>Check my database now,</span> scale with confidence
                 </h2>
                 <div className={styles.ctaButtons}>
                   <a href={signInUrl} className={styles.ctaPrimary}>
-                    Start free
-                  </a>
-                  <a href="/contact" className={styles.ctaSecondary}>
-                    Talk to us
+                    Check my database now
                   </a>
                 </div>
               </div>
