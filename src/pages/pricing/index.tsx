@@ -92,6 +92,49 @@ export const SupabaseLogo: React.FC<React.SVGProps<SVGSVGElement>> = (props) => 
   </svg>
 )
 
+// Supabase "mark" (icon only, no wordmark) — useful for compact badges.
+export const SupabaseMark: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 113 113" role="img" {...props}>
+    <path
+      fill="url(#supabase-mark-a)"
+      d="M63.7076 110.284c-2.8595 3.601-8.6574 1.628-8.7263-2.97l-1.0075-67.2513h45.2197c8.1905 0 12.7585 9.4601 7.6655 15.8747z"
+    />
+    <path
+      fill="url(#supabase-mark-b)"
+      fillOpacity=".2"
+      d="M63.7076 110.284c-2.8595 3.601-8.6574 1.628-8.7263-2.97l-1.0075-67.2513h45.2197c8.1905 0 12.7585 9.4601 7.6655 15.8747z"
+    />
+    <path
+      fill="#3ecf8e"
+      d="M45.317 2.07103c2.8595-3.6014 8.6575-1.628093 8.7264 2.96997l.4415 67.2512H9.83113c-8.19075 0-12.75888-9.4601-7.66563-15.8747z"
+    />
+    <defs>
+      <linearGradient
+        id="supabase-mark-a"
+        x1="53.9738"
+        x2="94.1635"
+        y1="54.974"
+        y2="71.8295"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#249361" />
+        <stop offset="1" stopColor="#3ecf8e" />
+      </linearGradient>
+      <linearGradient
+        id="supabase-mark-b"
+        x1="36.1558"
+        x2="54.4844"
+        y1="30.578"
+        y2="65.0806"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="currentColor" />
+        <stop offset="1" stopOpacity="0" />
+      </linearGradient>
+    </defs>
+  </svg>
+)
+
 export const PhotoroomLogo: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 292 54" role="img" {...props}>
     <path
