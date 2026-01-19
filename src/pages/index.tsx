@@ -56,7 +56,17 @@ function IndexPage() {
 */}
                 <h1 className={styles.tagline}>{SITE_SLOGAN}</h1>
                 <p className={styles.subtitle}>{SITE_SUBTITLE}</p>
-                
+
+                {/* Hero CTA Buttons */}
+                <div className={styles.heroCtaButtons}>
+                  <a href={signInUrl} className={styles.ctaPrimary}>
+                    Start free
+                  </a>
+                  <a href="/contact" className={styles.ctaSecondary}>
+                    Talk to us
+                  </a>
+                </div>
+
                 {/* Video Container */}
                 <div className={styles.videoContainer}>
                   <div className={styles.videoEmbed}>

@@ -24,6 +24,14 @@
   margin: 0 0 20px 0 !important;
 }
 
+/* Hero CTA Buttons */
+.heroCtaButtons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 32px 0 0 0;
+}
+
 .videoContainer {
   max-width: 100%;
   margin: 48px auto 32px auto;
