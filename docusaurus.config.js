@@ -153,7 +153,7 @@ module.exports = {
           activeBaseRegex: '^/products',
           items: [
             {
-              label: 'postgres_ai (monitoring)',
+              label: 'postgres_ai monitoring',
               to: '/docs/monitoring'
             },
             {
@@ -289,7 +289,7 @@ module.exports = {
               href: SIGN_IN_URL,
             },
             {
-              label: 'postgres_ai (monitoring)',
+              label: 'postgres_ai monitoring',
               to: '/docs/monitoring',
             },
             {
