@@ -40,9 +40,10 @@ module.exports = {
   organizationName: 'postgres-ai',
   projectName: 'docs',
 
-  // Use CommonMark for .md files to avoid MDX parsing issues
+  // Treat all .md files as MDX for easier reviewing
+  // Files with <placeholder> text need HTML entities: &lt;placeholder&gt;
   markdown: {
-    format: 'detect',
+    format: 'mdx',
   },
 
   customFields: {

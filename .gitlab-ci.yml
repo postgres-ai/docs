@@ -29,6 +29,8 @@ validate_feeds:
   before_script:
     # Install xmllint for XML validation
     - apt-get update && apt-get install -y libxml2-utils jq
+    # Use sharp's prebuilt binaries (faster than compiling from source)
+    - export SHARP_IGNORE_GLOBAL_LIBVIPS=1
     - bun install --frozen-lockfile
   script:
     - bash .ci/validate-feeds.sh

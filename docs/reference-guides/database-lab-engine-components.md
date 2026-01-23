@@ -29,7 +29,7 @@ The clone's container name is associated with its port number, such as `dblab_cl
 
 #### Container labels 
 - `dblab_clone`
-- `<pool_name>`
+- `pool_name`
 
 #### Responsibility
 - Provides a thin clone: an independent PostgreSQL database server with thinly cloned / branched data directory
@@ -49,8 +49,8 @@ Container names include a DLE RuntimeID, such as `dblab_sync_bt48bvi9c0h0`.
 
 #### Container labels 
 - `dblab_control`: `dblab_sync`
-- `dblab_instance_id`: <dle_instance_id>
-- `dblab_engine_name`: <dle_container_name>
+- `dblab_instance_id`: `<dle_instance_id>`
+- `dblab_engine_name`: `<dle_container_name>`
 
 #### Responsibility
 - Sets up a replica fetching WALs from either archives or source database to maintain continuously updated state of the original data directory
@@ -70,8 +70,8 @@ Container names include a DLE RuntimeID, such as `dblab_phr_bt48bvi9c0h0`.
 
 #### Container labels 
 - `dblab_control`: `dblab_restore`
-- `dblab_instance_id`: <dle_instance_id>
-- `dblab_engine_name`: <dle_container_name>
+- `dblab_instance_id`: `<dle_instance_id>`
+- `dblab_engine_name`: `<dle_container_name>`
 
 #### Responsibility
 - Restores a physical copy of the initial database
@@ -91,8 +91,8 @@ Container names include a DLE RuntimeID, such as  `dblab_promote_bt48bvi9c0h0`.
 
 #### Container labels 
 - `dblab_control`: `dblab_promote`
-- `dblab_instance_id`: <dle_instance_id>
-- `dblab_engine_name`: <dle_container_name>
+- `dblab_instance_id`: `<dle_instance_id>`
+- `dblab_engine_name`: `<dle_container_name>`
 
 #### Responsibility
 - Promotes a database after fetching of physically-restored data
@@ -112,8 +112,8 @@ Container names include a Database Lab RuntimeID, such as `dblab_ld_bt48bvi9c0h0
 
 #### Container labels 
 - `dblab_control`: `dblab_dump`
-- `dblab_instance_id`: <dle_instance_id>
-- `dblab_engine_name`: <dle_container_name>
+- `dblab_instance_id`: `<dle_instance_id>`
+- `dblab_engine_name`: `<dle_container_name>`
 
 #### Responsibility
 - Creates a logical copy (dump) of the source database
@@ -133,8 +133,8 @@ The container names will contain a DLE RuntimeID. For example, `dblab_lr_bt48bvi
 
 #### Container labels 
 - `dblab_control`: `dblab_restore`
-- `dblab_instance_id`: <dle_instance_id>
-- `dblab_engine_name`: <dle_container_name>
+- `dblab_instance_id`: `<dle_instance_id>`
+- `dblab_engine_name`: `<dle_container_name>`
 
 #### Responsibility
 - Restores a database from a logical copy (dump) of the source database
@@ -154,8 +154,8 @@ Container names include a DLE RuntimeID, such as `dblab_patch_bt48bvi9c0h0`.
 
 #### Container labels
 - `dblab_control`: `dblab_patch`
-- `dblab_instance_id`: <dle_instance_id>
-- `dblab_engine_name`: <dle_container_name>
+- `dblab_instance_id`: `<dle_instance_id>`
+- `dblab_engine_name`: `<dle_container_name>`
 
 #### Responsibility
 - Executes preprocessing queries before capturing a logical snapshot
@@ -175,8 +175,8 @@ Container names include a DLE RuntimeID, such as `dblab_embedded_ui_bt48bvi9c0h0
 
 #### Container labels
 - `dblab_satellite`: `dblab_embedded_ui`
-- `dblab_instance_id`: <dle_instance_id>
-- `dblab_engine_name`: <dle_container_name>
+- `dblab_instance_id`: `<dle_instance_id>`
+- `dblab_engine_name`: `<dle_container_name>`
 
 #### Responsibility
 - provides a visual user interface (UI) for interacting with the DLE.

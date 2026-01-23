@@ -113,7 +113,7 @@ So – TBD. Meanwhile, check out these interesting resources:
 
 TBD:
 - new feature in pg16's EXPLAIN
-- tricks for versions <16
+- tricks for versions &lt;16
 
 ## Summary
 - In PG14+, use `compute_query_id` to have query_id values both in Postgres logs and `pg_stat_activity`

@@ -102,7 +102,7 @@ bytes. For every row, alignment padding adds zeroes, so we'll always have 8 byte
 1. A single 24-byte page header (`PageHeaderData`).
 2. N pointers to each tuple – 4 bytes each (`ItemIdData`).
 3. N tuple headers – 23 bytes each, padded to 24 (`HeapTupleHeaderData`).
-4. N tuple values – if <= 8 bytes, then it's padded to 8 bytes.
+4. N tuple values – if &lt;= 8 bytes, then it's padded to 8 bytes.
 
 Source code defining the
 structures (for [PG16](https://github.com/postgres/postgres/blob/REL_16_STABLE/src/include/storage/bufpage.h)).
