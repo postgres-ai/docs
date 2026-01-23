@@ -40,9 +40,10 @@ module.exports = {
   organizationName: 'postgres-ai',
   projectName: 'docs',
 
-  // Treat all .md files as MDX to support imports and JSX
+  // Use 'detect' - .md files use CommonMark, .mdx files use MDX
+  // Files needing MDX features (imports, JSX) must use .mdx extension
   markdown: {
-    format: 'mdx',
+    format: 'detect',
   },
 
   customFields: {
