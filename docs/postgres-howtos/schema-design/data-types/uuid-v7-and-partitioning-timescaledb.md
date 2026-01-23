@@ -49,7 +49,7 @@ select encode(
 $$ language SQL volatile;
 ```
 
-## Helper functions, UUIDv7 <-> timestamptz
+## Helper functions, UUIDv7 &lt;-&gt; timestamptz
 
 Next, we'll create two functions:
 
