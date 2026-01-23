@@ -81,5 +81,5 @@ requires optimization.
   well), and use low `lock_timeout` and retries to avoid blocking chains.
 - Do not allow long-running transactions. Make sure the xmin horizon is progressing and autovacuum can remove dead
   tuples promptly – do not allow transactions that last too long (>1-2h).
-- Optimize even fast (<100ms) queries if the corresponding `pg_stat_statements.calls` and
+- Optimize even fast (&lt;100ms) queries if the corresponding `pg_stat_statements.calls` and
   `pg_stat_statements.total_exec_time` are high.

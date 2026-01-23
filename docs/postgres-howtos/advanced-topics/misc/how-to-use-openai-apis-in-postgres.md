@@ -231,7 +231,7 @@ limit 5 \gx
 ```
 
 If index is created, the second query should be very fast. You can check the plan and details of execution using
-`EXPLAIN (ANALYZE, BUFFERS)`. Our dataset is tiny (<100k), so the search speed should be ~1ms, and the buffer hit/read
+`EXPLAIN (ANALYZE, BUFFERS)`. Our dataset is tiny (&lt;100k), so the search speed should be ~1ms, and the buffer hit/read
 numbers ~1000 or less. There are a few tuning options for indexes `pgvector` offers, check out its
 [README](https://github.com/pgvector/pgvector/blob/master/README.md).
 
