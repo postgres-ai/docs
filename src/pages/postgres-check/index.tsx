@@ -1,9 +1,129 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Layout from '@theme/Layout'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 
 import styles from './styles.module.css'
 import { SupabaseLogo, SupabaseMark, GitLabLogo, SunoLogo, MiroLogo } from '../pricing'
+
+// ============================================================================
+// Dynamic Variant Types and API (for long-tail ads)
+// ============================================================================
+//
+// Dynamic content variants are loaded via `?problem=key` URL parameter.
+// Falls back to static content if API fetch fails or returns invalid data.
+// Used for long-tail ad campaign landing pages to show targeted messaging.
+// ============================================================================
+
+interface VariantContent {
+  headline_suffix?: string
+  hero_subhead: string
+  bridge_title: string
+  bridge_bullets: string[]
+  example_finding: string
+  social_proof?: string
+  cta_hint: string
+}
+
+interface VariantData {
+  content: VariantContent
+  version: number
+}
+
+interface VariantResponse {
+  problem_key: string
+  content: VariantContent
+  version: number
+}
+
+/**
+ * Validates that the API response content matches the expected VariantContent structure.
+ * Required fields: hero_subhead, bridge_title, bridge_bullets, example_finding, cta_hint.
+ * Optional fields: headline_suffix, social_proof.
+ */
+function isValidVariantContent(content: unknown): content is VariantContent {
+  if (!content || typeof content !== 'object') return false
+  const c = content as Record<string, unknown>
+  return (
+    typeof c.hero_subhead === 'string' &&
+    typeof c.bridge_title === 'string' &&
+    Array.isArray(c.bridge_bullets) &&
+    c.bridge_bullets.every((b) => typeof b === 'string') &&
+    typeof c.example_finding === 'string' &&
+    typeof c.cta_hint === 'string'
+  )
+}
+
+/**
+ * Fetches landing page variant content from the API.
+ * @param apiUrl - The base API URL (e.g., from docusaurus config)
+ * @param problemKey - The problem variant key to fetch (from URL param)
+ * @param signal - Optional AbortSignal for request cancellation/timeout
+ * @returns VariantData object if found and valid, null on error/not found
+ */
+async function getLandingVariant(
+  apiUrl: string,
+  problemKey: string,
+  signal?: AbortSignal
+): Promise<VariantData | null> {
+  try {
+    const response = await fetch(
+      `${apiUrl}/landing_page_variants?problem_key=eq.${encodeURIComponent(problemKey)}`,
+      {
+        method: 'GET',
+        headers: { Accept: 'application/json' },
+        signal,
+      }
+    )
+    if (!response.ok) return null
+    const data: VariantResponse[] = await response.json()
+    if (data.length === 0) return null
+    const variant = data[0]
+    if (!isValidVariantContent(variant.content)) {
+      console.warn(`[getLandingVariant] Invalid content for: ${problemKey}`)
+      return null
+    }
+    return { content: variant.content, version: variant.version }
+  } catch (error) {
+    // Don't log abort errors (expected on timeout)
+    if (error instanceof Error && error.name !== 'AbortError') {
+      console.error('[getLandingVariant] Fetch error:', error)
+    }
+    return null
+  }
+}
+
+// Analytics helpers (safe to call even if umami not loaded)
+declare global {
+  interface Window {
+    umami?: {
+      track: (eventName: string, eventData?: Record<string, string | number | boolean>) => void
+    }
+  }
+}
+
+/**
+ * Tracks analytics events via Umami. Safe to call even if Umami is not loaded.
+ * @param eventName - The analytics event name
+ * @param eventData - Optional event properties (values are sanitized)
+ */
+function trackEvent(eventName: string, eventData?: Record<string, string | number | boolean>) {
+  try {
+    if (typeof window !== 'undefined' && window.umami?.track) {
+      // Sanitize string values to prevent analytics data pollution
+      const sanitizedData = eventData
+        ? Object.fromEntries(
+            Object.entries(eventData).map(([k, v]) => [
+              k,
+              typeof v === 'string' ? v.slice(0, 100).replace(/[<>]/g, '') : v,
+            ])
+          )
+        : undefined
+      window.umami.track(eventName, sanitizedData)
+    }
+  } catch {
+    // Silently fail - analytics should never break the page
+  }
+}
 
 // Platform logo components (from simple-icons - official brand SVGs)
 const AwsLogo: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
@@ -192,10 +312,80 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer }) => {
   )
 }
 
+// Default static content
+const STATIC_CONTENT = {
+  heroTitle: "Your Postgres database has hidden problems. Let's find them.",
+  heroSubtitle: 'Free health check in 60 seconds. No setup. No credit card. Just answers.',
+  bridgeTitle: 'We scan for the issues that kill Postgres databases at scale',
+  exampleFinding: 'Missing index on "users.created_at" (causing 3s queries)',
+  ctaHint: 'Check my database now',
+}
+
 function PostgresCheckPage() {
   const { siteConfig } = useDocusaurusContext()
   const { customFields } = siteConfig
-  const { signInUrl } = customFields
+  const { signInUrl, apiUrlPrefix } = customFields
+
+  // State for dynamic variants
+  const [variantData, setVariantData] = useState<VariantData | null>(null)
+  // Start visible by default for static content (better UX for users without JS or slow connections)
+  const [isReady, setIsReady] = useState(true)
+  const fetchAttempted = useRef(false)
+  const isMounted = useRef(true)
+
+  // Get problem key from URL on mount (client-side only)
+  // Empty deps array since we only want this to run once on mount
+  useEffect(() => {
+    // Reset mounted flag on mount (needed for React StrictMode and remounts)
+    isMounted.current = true
+
+    // Only run once
+    if (fetchAttempted.current) return
+    fetchAttempted.current = true
+
+    const params = new URLSearchParams(window.location.search)
+    const problemKey = params.get('problem')
+
+    if (!problemKey) {
+      // No variant requested, already showing static content
+      trackEvent('landing_page_view', { variant: 'static' })
+      return
+    }
+
+    // Hide content briefly while fetching variant for fade-in effect
+    setIsReady(false)
+
+    // Fetch variant with 5s timeout to prevent infinite loading
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 5000)
+
+    const fetchVariant = async () => {
+      const baseUrl = typeof apiUrlPrefix === 'string' ? apiUrlPrefix : ''
+      const data = await getLandingVariant(baseUrl, problemKey, controller.signal)
+      clearTimeout(timeoutId)
+
+      // Prevent state updates if component unmounted during fetch
+      if (!isMounted.current) return
+
+      if (data) {
+        setVariantData(data)
+        trackEvent('landing_page_view', { variant: problemKey, version: data.version })
+      } else {
+        // Fallback to static on error/timeout/not found
+        trackEvent('landing_page_view', { variant: 'static', fallback_from: problemKey })
+      }
+      setIsReady(true)
+    }
+
+    fetchVariant()
+
+    // Cleanup: cancel pending request and timeout on unmount
+    return () => {
+      isMounted.current = false
+      clearTimeout(timeoutId)
+      controller.abort()
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (typeof signInUrl !== 'string') {
     console.error('signInUrl customField is not configured in docusaurus.config.js')
@@ -208,23 +398,35 @@ function PostgresCheckPage() {
     )
   }
 
+  // Compute display content - variant overrides static (use || to handle empty strings)
+  const content = variantData?.content
+  const heroTitle = content?.headline_suffix
+    ? `Want ${content.headline_suffix}? Let's find out.`
+    : STATIC_CONTENT.heroTitle
+  const heroSubtitle = content?.hero_subhead || STATIC_CONTENT.heroSubtitle
+  const bridgeTitle = content?.bridge_title || STATIC_CONTENT.bridgeTitle
+  const exampleFinding = content?.example_finding || STATIC_CONTENT.exampleFinding
+  const ctaHint = content?.cta_hint || STATIC_CONTENT.ctaHint
+
+  // Fade-in style
+  const fadeStyle: React.CSSProperties = {
+    opacity: isReady ? 1 : 0,
+    transition: 'opacity 0.3s ease-in-out',
+  }
+
   return (
     <Layout
       title="Free Postgres database health check"
       description="Find hidden issues in your Postgres database. Free health check in 60 seconds. No setup. No credit card. Just answers."
     >
-      <main className={styles.mainContainer}>
+      <main className={styles.mainContainer} style={fadeStyle}>
         {/* Hero Section */}
         <section className={styles.heroSection}>
           <div className={styles.heroContent}>
-            <h1 className={styles.heroTitle}>
-              Your Postgres database has hidden problems. Let's find them.
-            </h1>
-            <p className={styles.heroSubtitle}>
-              Free health check in 60 seconds. No setup. No credit card. Just answers.
-            </p>
+            <h1 className={styles.heroTitle}>{heroTitle}</h1>
+            <p className={styles.heroSubtitle}>{heroSubtitle}</p>
             <a href={signInUrl} className={styles.heroCta}>
-              Check my database now
+              {ctaHint}
             </a>
             <p className={styles.heroTrust}>
               Works with any Postgres: RDS, Cloud SQL, Supabase, self-managed, and more. Read-only access.
@@ -234,9 +436,7 @@ function PostgresCheckPage() {
 
         {/* What We Check Section */}
         <section className={styles.checksSection}>
-          <h2 className={styles.sectionTitle}>
-            We scan for the issues that kill Postgres databases at scale
-          </h2>
+          <h2 className={styles.sectionTitle}>{bridgeTitle}</h2>
           <div className={styles.checksGrid}>
             {checkItems.map((item) => (
               <div key={item.title} className={styles.checkCard}>
@@ -265,7 +465,7 @@ function PostgresCheckPage() {
           </div>
           <div className={styles.stepsCta}>
             <a href={signInUrl} className={styles.ctaButton}>
-              Start free check
+              {ctaHint}
             </a>
           </div>
         </section>
@@ -279,7 +479,7 @@ function PostgresCheckPage() {
 
 CRITICAL (2)
 |-- Table "events" is 340% bloated (2.1 GiB wasted)
-|-- Missing index on "users.created_at" (causing 3s queries)
+|-- ${exampleFinding}
 
 WARNING (4)
 |-- 12 unused indexes consuming 890 MiB
