@@ -63,8 +63,6 @@ PostgresAI's services are not designed for users who are under the age of 16. He
 ## CHANGES TO THIS PRIVACY POLICY
 We recognize that transparency is an ongoing responsibility so we will keep this Policy under regular review.
 
-This Policy was last updated on May 26, 2021.
-
 ## DATA CONTROLLER AND CONTACT INFORMATION
 If you have any questions about this Policy or how and why we process personal data, please contact us at:
 
