@@ -1,26 +1,41 @@
 ---
-title: postgres_ai monitoring overview
+title: PostgresAI monitoring overview
 sidebar_label: Overview
 slug: /monitoring
+keywords:
+  - "PostgreSQL monitoring"
+  - "Postgres observability"
+  - "PostgresAI monitoring"
+  - "Grafana dashboards for PostgreSQL"
+  - "PostgreSQL performance monitoring"
+  - "database monitoring"
 ---
 
-# postgres_ai – enterprise-grade Postgres observability tool
+# PostgresAI – enterprise-grade Postgres observability tool
 
-<img src="/assets/thumbnails/postgres-ai-monitoring-main-upd.png" alt="postgres_ai monitoring" width="800" />
+<img src="https://gitlab.com/postgres-ai/postgresai/-/raw/main/assets/postgresai.png" alt="PostgresAI monitoring" width="800" />
 
 Expert-level Postgres monitoring tool designed for humans and AI systems
 
 Built for senior DBAs, SREs, and AI systems who need rapid root cause analysis and deep performance insights. This isn't a tool for beginners — it's designed for Postgres experts who need to understand complex performance issues in minutes, not hours.
 
-Part of [Self-Driving Postgres](/blog/20250725-self-driving-postgres) - postgres_ai monitoring is a foundational component of PostgresAI's open-source Self-Driving Postgres (SDP) initiative, providing the advanced monitoring and intelligent root cause analysis capabilities essential for achieving higher levels of database automation.
+Part of [Self-Driving Postgres](/blog/20250725-self-driving-postgres) - PostgresAI monitoring is a foundational component of PostgresAI's open-source Self-Driving Postgres (SDP) initiative, providing the advanced monitoring and intelligent root cause analysis capabilities essential for achieving higher levels of database automation.
 
 ## Live demo
 Experience the full monitoring solution: https://demo.postgres.ai (login: demo / password: demo)
 
 
-## Key Features
+## Console.Postgres.ai integration
 
-- **Open source foundation** – postgres_ai core components are Apache 2.0 licensed, ensuring transparency and community-driven development
+PostgresAI monitoring integrates with [Console.Postgres.ai](https://console.postgres.ai), enabling:
+
+- **Automated health checks (checkups)** — Comprehensive database health assessments with actionable recommendations, running automatically on schedule
+- **PostgresAI consulting support** — Consulting customers benefit from shared monitoring access, allowing the PostgresAI team to work more efficiently on performance optimization and troubleshooting
+
+## Key features
+
+- **Open source foundation** – PostgresAI core components are Apache 2.0 licensed, ensuring transparency and community-driven development
+- **Metadata only** — Only database metadata is collected (statistics, query patterns, wait events). No actual data or query parameters are accessed. [See data privacy details](#data-privacy-metadata-only)
 - **Expert-focused design**: Assumes deep Postgres knowledge and performance troubleshooting experience
 
 - **Universal integration** – Works with any type of Postgres, including:
@@ -41,14 +56,56 @@ Experience the full monitoring solution: https://demo.postgres.ai (login: demo /
 
 - **AI-powered insights backed by human expertise** – From diagnostics to mitigation strategies, combining artificial intelligence with seasoned Postgres expert knowledge for actionable recommendations
 
-## Currently in Preview
+## Documentation
 
-postgres_ai monitoring is currently in preview. We're working with select customers to refine the platform and ensure it meets the highest standards for production use.
+- **[Getting started](/docs/monitoring/getting-started/)** — Installation guides for CLI, Docker, Helm, and cloud platforms
+- **[Dashboards](/docs/monitoring/dashboards/)** — Complete reference for all 14 Grafana dashboards
+- **[Metrics reference](/docs/monitoring/metrics/)** — Detailed metrics documentation
+- **[Configuration](/docs/monitoring/configuration/)** — Customization and alerting setup
+- **[Troubleshooting](/docs/monitoring/troubleshooting/)** — Common issues and solutions
+- **[Advanced topics](/docs/monitoring/advanced/)** — Multi-cluster, custom metrics, API integration
 
-Interested in early access? Contact us to learn more about the preview program.
+## Data privacy — metadata only
 
-<div className="row justify-content-center align-items-center">
-  <a className="btn btn1 cta-button" href="mailto:contact@postgres.ai" target="_blank">
-    Contact us about postgres_ai monitoring
-  </a>
-</div> 
+PostgresAI monitoring collects **only database metadata** — no actual data or query parameters are ever accessed or stored.
+
+### What is collected
+
+- **Database statistics** from system views (`pg_stat_*`)
+- **Normalized query texts** from `pg_stat_statements` (with parameter values replaced by `$1`, `$2`, etc.)
+- **Wait event information** from `pg_stat_activity`
+- **Table and index statistics** (sizes, access patterns, bloat estimates)
+
+### What is NOT collected
+
+- Actual table data
+- Query parameter values
+- Connection credentials
+- Application data
+
+### Verify collected metrics
+
+Review exactly what metrics are collected by examining the metric definitions:
+
+- **Prometheus sink metrics**: [metrics.yml (pgwatch-prometheus)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.14.0/config/pgwatch-prometheus/metrics.yml)
+- **PostgreSQL sink metrics** (including normalized queries): [metrics.yml (pgwatch-postgres)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.14.0/config/pgwatch-postgres/metrics.yml)
+
+### Verify database permissions
+
+The monitoring user has read-only access to metadata only. To review the exact SQL statements used to create the monitoring role:
+
+```bash
+npx postgresai@latest prepare-db --print-sql
+```
+
+This shows all `GRANT` statements and confirms the minimal, read-only nature of the permissions.
+
+## Get started with Console.Postgres.ai
+
+The easiest way to set up PostgresAI monitoring is through [Console.Postgres.ai](https://console.postgres.ai):
+
+1. Navigate to **Checkup → Monitoring instances** in the left menu
+2. Click **Choose plan**
+3. Select **Starter** or **Scale** plan
+
+See [pricing](/pricing) for plan details and features. 
