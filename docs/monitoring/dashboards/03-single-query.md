@@ -1,0 +1,175 @@
+---
+title: "03. Single queryid analysis"
+sidebar_label: "03. Single queryid"
+sidebar_position: 4
+---
+
+# 03. Single query deep-dive
+
+Detailed analysis of a specific query identified by its `queryid`.
+
+![03. Single query dashboard](/img/monitoring/dashboards/03-single-query.png)
+
+## Purpose
+
+When you've identified a problematic query in [02. Query analysis](/docs/monitoring/dashboards/query-analysis), use this dashboard to:
+- Track query performance over time
+- Identify regression patterns
+- Analyze execution characteristics
+- Compare before/after optimization
+
+## When to use
+
+- After identifying a slow query in Dashboard 02
+- Monitoring a specific query after adding an index
+- Investigating intermittent query slowness
+- Validating query optimization results
+
+## Key panels
+
+### Query text
+
+Displays the full, non-truncated query text for the selected `queryid`.
+
+:::tip
+The query shown uses parameter placeholders (`$1`, `$2`). For actual parameter values, check application logs.
+:::
+
+### Calls per second
+
+**What it shows:**
+- Execution frequency over time
+- Trend and variability
+
+**Interpretation:**
+- Stable line = consistent application behavior
+- Spikes = batch jobs or traffic bursts
+- Drops = potential application issues
+
+### Execution time per call
+
+**What it shows:**
+- Average latency per execution
+- Trend over selected time range
+
+**Healthy pattern:**
+- Consistent, low variance
+- No upward trend
+
+**Warning signs:**
+- Upward trend = query regression (data growth, plan changes)
+- High variance = parameter-dependent performance
+- Step change = potential index drop or plan flip
+
+### Total execution time per second
+
+**What it shows:**
+- Combined load impact: calls × latency
+- "Cost" to the database
+
+**Use for:**
+- Prioritizing optimization efforts
+- Measuring optimization impact
+
+### Planning time
+
+**What it shows:**
+- Query planning overhead
+- Relevant for frequently executed queries
+
+**When planning time matters:**
+- Queries with < 10ms execution time
+- High-frequency OLTP queries
+- Complex JOINs that benefit from plan caching
+
+### Rows per call
+
+**What it shows:**
+- Average rows processed per execution
+- Rows returned vs rows fetched
+
+**Interpretation:**
+- High rows fetched, low rows returned = inefficient filtering
+- Growing over time = data growth impact
+
+### Shared buffer usage
+
+**What it shows:**
+- Buffer hits vs physical reads
+- Cache efficiency for this query
+
+**Healthy state:**
+- Hit ratio > 99% for frequently accessed data
+- Low physical reads
+
+## Variables
+
+| Variable | Purpose | How to Get |
+|----------|---------|------------|
+| `queryid` | Query identifier | From Dashboard 02 or pg_stat_statements |
+| `cluster_name` | Cluster filter | Your cluster |
+| `node_name` | Node filter | Primary or replica |
+
+### Finding the queryid
+
+From [02. Query analysis](/docs/monitoring/dashboards/query-analysis):
+1. Hover over a query in any chart
+2. Note the queryid from the legend
+
+From PostgreSQL directly:
+```sql
+select queryid, query, calls, mean_exec_time
+from pg_stat_statements
+where query like '%your_table%'
+order by total_exec_time desc;
+```
+
+## Example workflow
+
+### Investigating a slow query
+
+1. **Identify**: In Dashboard 02, find a query with high execution time per call
+2. **Navigate**: Copy the queryid, go to Dashboard 03
+3. **Analyze timeline**: Check if slowness is recent (regression) or historical
+4. **Check rows**: Compare rows fetched vs returned for indexing opportunities
+5. **Monitor**: After changes, verify improvement in this dashboard
+
+### Before/after optimization
+
+1. Note current metrics (mean time, rows)
+2. Add index or rewrite query
+3. Use time range selector to compare periods
+4. Verify improvement sustained over time
+
+## Related dashboards
+
+- **Find the query first** — [02. Query analysis](/docs/monitoring/dashboards/query-analysis)
+- **Check table statistics** — [08. Table stats](/docs/monitoring/dashboards/table-stats)
+- **Verify index usage** — [10. Index health](/docs/monitoring/dashboards/index-health)
+
+## Troubleshooting
+
+### queryid not found
+
+Possible causes:
+1. Query hasn't been executed recently
+2. `pg_stat_statements` was reset
+3. Query text changed (different queryid)
+
+Check if queryid exists:
+```sql
+select * from pg_stat_statements where queryid = YOUR_QUERYID;
+```
+
+### Metrics show zero after index change
+
+Adding an index may generate a new query plan with different characteristics. The queryid remains the same, but metrics reset if `pg_stat_statements` was cleared.
+
+### Inconsistent data
+
+Some metrics are cumulative counters. Rate calculations depend on regular scraping. Gaps may occur if:
+- Monitoring was temporarily stopped
+- Network issues during scrape
+- PostgreSQL was restarted
+
+Use longer time ranges to smooth out anomalies.
