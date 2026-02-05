@@ -117,14 +117,30 @@ async function main() {
     console.log('  Saved 03-single-query.png');
   }
 
-  // 7. 04-wait-events
+  // 7. 04-wait-events (3 panels with scrolling)
   {
-    console.log('\n7. Taking 04-wait-events');
-    const url = `${BASE_URL}/d/a222b233-acef-4bac-a451-1591023e4d4f/04-wait-event-analysis-active-session-history?orgId=1&${TIME_RANGE}&${VARS}&theme=light&kiosk`;
-    await page.goto(url, { waitUntil: 'networkidle' });
-    await page.waitForTimeout(5000);
-    await page.screenshot({ path: `${OUTPUT_DIR}/04-wait-events.png`, type: 'png' });
-    console.log('  Saved 04-wait-events.png');
+    console.log('\n7. Taking 04-wait-events panels');
+    // Use specific time range with good data
+    const waitEventsTime = 'from=2026-02-04T20:08:37.920Z&to=2026-02-04T21:58:13.410Z&timezone=browser';
+    const url = `${BASE_URL}/d/a222b233-acef-4bac-a451-1591023e4d4f/04-wait-event-analysis-active-session-history?orgId=1&${waitEventsTime}&${VARS}&theme=light&kiosk`;
+    await tallPage.goto(url, { waitUntil: 'networkidle' });
+    await tallPage.waitForTimeout(5000);
+
+    // Panel 1: ASH by type (at top)
+    await tallPage.screenshot({ path: `${OUTPUT_DIR}/04-wait-events-ash-by-type.png`, type: 'png' });
+    console.log('  Saved 04-wait-events-ash-by-type.png');
+
+    // Panel 2: ASH by event (scroll down)
+    await tallPage.evaluate(() => window.scrollBy(0, 700));
+    await tallPage.waitForTimeout(1000);
+    await tallPage.screenshot({ path: `${OUTPUT_DIR}/04-wait-events-ash-by-event.png`, type: 'png' });
+    console.log('  Saved 04-wait-events-ash-by-event.png');
+
+    // Panel 3: ASH by query (scroll more)
+    await tallPage.evaluate(() => window.scrollBy(0, 700));
+    await tallPage.waitForTimeout(1000);
+    await tallPage.screenshot({ path: `${OUTPUT_DIR}/04-wait-events-ash-by-query.png`, type: 'png' });
+    console.log('  Saved 04-wait-events-ash-by-query.png');
   }
 
   // 8. 08-table-stats
