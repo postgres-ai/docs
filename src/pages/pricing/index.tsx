@@ -331,7 +331,7 @@ const plans: Plan[] = [
     description: 'For pet projects and learning',
     keyFeature: 'Weekly AI-friendly checkup reports',
     cta: 'Start free',
-    ctaLink: 'https://console.postgres.ai/',
+    ctaLink: 'https://console.postgres.ai/get-started?plan=hobby',
   },
   {
     name: 'Express',
@@ -340,7 +340,7 @@ const plans: Plan[] = [
     description: 'For AI builders shipping fast',
     keyFeature: 'Issues with detailed action plans, daily checkups',
     cta: 'Get started',
-    ctaLink: 'https://console.postgres.ai/',
+    ctaLink: 'https://console.postgres.ai/get-started?plan=express',
   },
   {
     name: 'Starter',
@@ -349,7 +349,7 @@ const plans: Plan[] = [
     description: 'For small production databases',
     keyFeature: 'Full monitoring with 7-days history',
     cta: 'Get started',
-    ctaLink: 'https://console.postgres.ai/',
+    ctaLink: 'https://console.postgres.ai/get-started?plan=starter',
   },
   {
     name: 'Scale',
@@ -358,7 +358,7 @@ const plans: Plan[] = [
     description: 'For growing teams with critical workloads',
     keyFeature: '6-months history + 1 business day SLA',
     cta: 'Get started',
-    ctaLink: 'https://console.postgres.ai/',
+    ctaLink: 'https://console.postgres.ai/get-started?plan=scale',
     highlight: true,
     tag: 'Recommended',
   },
