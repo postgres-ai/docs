@@ -65,7 +65,7 @@ PostgresAI monitoring integrates with [Console.Postgres.ai](https://console.post
 - **[Troubleshooting](/docs/monitoring/troubleshooting/)** — Common issues and solutions
 - **[Advanced topics](/docs/monitoring/advanced/)** — Multi-cluster, custom metrics, API integration
 
-## Data privacy — metadata only
+## Data privacy: metadata only
 
 PostgresAI monitoring collects **only database metadata** — no actual data or query parameters are ever accessed or stored.
 
