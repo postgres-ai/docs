@@ -19,6 +19,7 @@ module.exports = {
           "monitoring/getting-started/installation-docker",
           "monitoring/getting-started/installation-helm",
           "monitoring/getting-started/installation-cloud",
+          "monitoring/getting-started/quickstart-supabase",
         ],
       },
       {

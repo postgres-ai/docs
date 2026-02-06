@@ -74,6 +74,17 @@ Once deployed, you'll receive:
 
 Start with **01. Node overview** for a high-level health check.
 
+## Verify database permissions
+
+The monitoring user has read-only access to metadata only. To review the exact SQL statements used
+to create the monitoring role:
+
+```bash
+npx postgresai@latest prepare-db --print-sql
+```
+
+This shows all `grant` statements and confirms the minimal, read-only nature of the permissions.
+
 ## What data is collected?
 
 Only database metadata is collected — no actual data or query parameters:
@@ -81,6 +92,13 @@ Only database metadata is collected — no actual data or query parameters:
 - Wait events and session information
 - Table and index statistics
 - Replication status
+
+To review exactly what metrics are collected, examine the metric definitions:
+
+- **Prometheus sink metrics**:
+  [metrics.yml (pgwatch-prometheus)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.14.0/config/pgwatch-prometheus/metrics.yml)
+- **PostgreSQL sink metrics** (including normalized queries):
+  [metrics.yml (pgwatch-postgres)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.14.0/config/pgwatch-postgres/metrics.yml)
 
 See [data privacy details](/docs/monitoring/#data-privacy-metadata-only).
 
