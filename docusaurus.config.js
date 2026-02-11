@@ -130,9 +130,9 @@ module.exports = {
     ],
 
     announcementBar: {
-      id: 'postgres_marathon_banner', // Any value that will identify this message to save the hidden status.
+      id: 'monitoring_supabase_launch',
       content:
-        "<a href='/blog/tags/postgres-marathon'>#PostgresMarathon is live: deep-dive technical insights</a>",
+        "🚀 New PostgresAI: <a href='/docs/monitoring'>monitoring, health checks, issue detection</a> — now with <a href='/docs/monitoring/getting-started/quickstart-supabase'>Supabase integration</a>",
       backgroundColor: '#D7EEF2',
       textColor: '#013A44',
       isCloseable: true,
