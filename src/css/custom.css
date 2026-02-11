@@ -1363,3 +1363,34 @@ html body > div:first-child {
 header .avatar {
   display: flex;
 }
+/* Legal pages: uniform 14px font size */
+.legal-page,
+.legal-page p,
+.legal-page li,
+.legal-page td,
+.legal-page th,
+.legal-page span,
+.legal-page a,
+.legal-page strong,
+.legal-page em,
+.legal-page blockquote,
+.legal-page code {
+  font-size: 14px !important;
+  line-height: 1.7 !important;
+}
+
+.legal-page h1,
+.legal-page h2,
+.legal-page h3,
+.legal-page h4,
+.legal-page h5,
+.legal-page h6 {
+  font-size: 14px !important;
+  line-height: 1.7 !important;
+  font-weight: bold !important;
+}
+
+.legal-page h1 {
+  margin-top: 1.5em !important;
+  margin-bottom: 0.5em !important;
+}

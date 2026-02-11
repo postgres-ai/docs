@@ -2,13 +2,15 @@
 title: Privacy policy
 ---
 
+<div className="legal-page">
+
 Terms of Service: https://postgres.ai/tos/
 
 # Privacy policy
 
-*Last Updated: January 14, 2026*
+*Last Updated: February 10, 2026*
 
-This Privacy Policy (this "Policy") is adopted by Nombox LLC d.b.a. PostgresAI located at 15076 Eastvale Rd, Poway, CA 92064, USA ("PostgresAI" or "we").
+This Privacy Policy (this "Policy") is adopted by Nombox LLC d.b.a. PostgresAI ("PostgresAI," "we," or "us"), located at 421 Broadway #5120, San Diego, CA 92101, US.
 
 PostgresAI has the utmost respect for your privacy, and thus, we want to give you the best possible experience while you are using our website. Hence, please take your time to review this Policy. Your continued use of our website and our services will constitute your representation that you have read, understood and agreed to this Policy.
 
@@ -21,7 +23,7 @@ This Policy applies to our customers and users who have visited our website and 
 ## INFORMATION WE COLLECT
 - **Your personal details** – name, address, phone number, email address when you submit web forms on our website, including opportunities to sign up for and agree to receive email communications from us. We also may ask you to submit such personal information if you choose to use interactive features of our website, including participation in surveys, contests, promotions, sweepstakes, requesting customer support, registration for attendance at an event sponsored by PostgresAI or otherwise communicating with us.
 - **Log Files** – certain information including but is not limited to Internet Protocol (IP) addresses, system configuration information, URLs of referring pages, and locale and language preferences when you visit and interact with most websites and services delivered via the Internet, when you visit our website and interactive areas offered by it.
-- **Cookies and Other Tracking Technologies** – we may use cookies to provide you with a user-friendly interface, features and general access to our website. You can control how our website use cookies by configuring your browser's privacy settings (please refer to your browser's help function to learn more about cookie controls). Note that if you disable cookies entirely, our website may not function properly. The purpose of the use of cookies on our website is site improvement, as well as the analysis of our customer-provider relationships and marketing intentions. We do not use third-party marketing or analytics services (such as Google Analytics or Facebook Pixel). Our analytics are self-hosted, and any tracking cookies we use (such as for marketing attribution) remain first-party and are not shared with external advertising platforms. For more information about the cookies PostgresAI uses, please see our Cookie Policy.
+- **Cookies and Other Tracking Technologies** – we may use cookies to provide you with a user-friendly interface, features and general access to our website. You can control how our website use cookies by configuring your browser's privacy settings (please refer to your browser's help function to learn more about cookie controls). Note that if you disable cookies entirely, our website may not function properly. The purpose of the use of cookies on our website is site improvement, as well as the analysis of our customer-provider relationships and marketing intentions. We do not use third-party marketing or analytics services (such as Google Analytics or Facebook Pixel). Our analytics are self-hosted, and any tracking cookies we use (such as for marketing attribution) remain first-party and are not shared with external advertising platforms. Because we use only strictly necessary first-party cookies and do not employ third-party tracking, no cookie consent banner is required under current EU guidance. If our cookie practices change, we will update this section and implement appropriate consent mechanisms. For more information about the cookies PostgresAI uses, please see our Cookie Policy.
 - **Interactive Areas** – publicly accessible blogs, chats, community forums, comments sections, discussion forums, or other interactive features (“Interactive Areas”). If you choose to participate in any of these Interactive Areas, please be aware that that any information that you post in an Interactive Area might be read, collected, and used by others who access it. If you wish to remove your personal information from any of our Interactive Areas, please contact us at: privacy@postgres.ai.
 
 ## HOW WE USE INFORMATION WE COLLECT
@@ -36,6 +38,54 @@ PostgresAI only processes personal information in a way that is compatible with 
 - comply with legal obligations as well as to investigate and prevent fraudulent transactions, unauthorized access to the Services, and other illegal activities;
 - personalize our website and Services, including by providing features or content that match your interests and preferences; and
 - process for other purposes for which we obtain your consent.
+
+## ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING
+
+PostgresAI offers AI-powered features through **PostgresAI Assistant** (also referred to as **AI Assistant**). These features use third-party Large Language Models (LLMs) to assist with database analysis, query optimization, and other tasks.
+
+### Data Processing by AI Features
+
+When you use AI-powered features, certain data may be sent to our AI subprocessors (Anthropic, Google, OpenAI). The specific data depends on the feature:
+
+| Feature | Data Sent to LLM | Your Control |
+|---------|-----------------|--------------|
+| **AI Assistant chat** | Your natural language questions only | You choose which LLM provider to use; organization administrators can disable specific vendors |
+| **Joe Bot (query optimization)** | SQL query text and query execution plans (with explicit confirmation); natural language questions (on demand) | Explicit confirmation required for query data; chat is user-initiated |
+| **Index Advisor** (future) | Query text, plans, table schemas, index lists, table sizes, and vacuum statistics | Explicit confirmation required; you choose which LLM provider to use |
+
+### Legal Basis
+
+The legal basis for processing data through AI features is your explicit consent (GDPR Article 6(1)(a)), which you provide when you confirm data sharing with AI features.
+
+### Important Protections
+
+- **No customer database content** (table data, row values) is ever sent to LLM providers
+- **Explicit consent**: AI features require your explicit approval before sending any data
+- **Your choice**: You control which LLM provider is used (when multiple options are available)
+- **Administrative controls**: Organization administrators can disable AI features or specific LLM vendors entirely
+
+### AI Subprocessors
+
+AI features utilize the following subprocessors:
+
+- **Anthropic** (USA) — Claude AI models
+- **Google Cloud Platform** (USA) — Gemini AI models  
+- **OpenAI** (USA) — GPT models, Whisper (for voice features if enabled)
+
+See our [Subprocessor List](https://postgres.ai/docs/platform/service-providers) for complete details.
+
+### Organization Controls
+
+Organization administrators can control AI features through the **AI Assistant settings** in the PostgresAI Console:
+
+- **Master toggle**: Enable or disable all AI features for the organization
+- **Model selection**: Choose which LLM providers are available (OpenAI GPT, Anthropic Claude, Google Gemini)
+- **pgMustard integration**: Opt-in to allow SQL execution plan analysis
+- **Chat visibility**: Set default visibility for AI chats (public or private to organization)
+
+### Opting Out
+
+Organization administrators can disable AI features or specific LLM vendors through the AI Assistant settings in the console. When disabled, no data will be sent to that provider.
 
 ## INFORMATION SECURITY AND ACCURACY
 We intend to protect your personal information and to maintain its accuracy. PostgresAI implements reasonable physical, administrative and technical safeguards to help us protect your personal information from unauthorized access, use and disclosure. For example, we encrypt passwords when stored and encrypt all and personal information when we transmit such information over the Internet. We also require that our suppliers protect information from unauthorized access, use and disclosure.
@@ -68,7 +118,7 @@ If you have any questions about this Policy or how and why we process personal d
 
 ```
 NOMBOX LLC d.b.a. PostgresAI
-15076 Eastvale Rd, Poway, CA 92064, USA
+421 Broadway #5120, San Diego, CA 92101, US
 Email: privacy@postgres.ai
 ```
 
@@ -142,3 +192,5 @@ You also have the right to lodge a complaint with the supervisory authority in y
 ---
 
 ***If you have any questions or comments about this Privacy Policy, please contact us at privacy@postgres.ai.***
+
+</div>
