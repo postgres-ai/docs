@@ -2,7 +2,7 @@
 title: 3rd-party data subprocessors and service providers
 sidebar_label: Postgres.ai data subprocessors
 ---
-Effective date: 2025-02-05
+Effective date: 2026-02-10
 
 Postgres.ai aims to be fully transparent regarding how your data is used, how it is collected, and with whom it can be shared.
 
@@ -10,22 +10,24 @@ Postgres.ai uses the following data subprocessors:
 
 | Name of Subprocessor (with URL) | Location of Processing | Description |
 | ------ | ------ | ------ |
-| [Amazon Web Services (AWS)](https://aws.amazon.com/) | USA | Secondary data hosting (currently not used for Customer Data) |
-| [GitLab](https://gitlab.com/) | USA | Development and project management tools (Git, CI/CD, issue tracker, etc.) |
-| [GitHub](https://github.com/) | USA | Development and project management tools (Git, CI/CD, issue tracker, etc.) |
-| [Google Analytics (GA)](https://analytics.google.com/analytics/web/) | USA | User behavior analytics |
-| [Google Cloud Platform (GCP)](https://cloud.google.com/) | USA | Primary data hosting. Customer Data (including backups) are stored here |
-| [Google Workspace](https://workspace.google.com/) | USA | Email and cloud office apps used by the PostgresAI Team for business |
-| [Hetzner](https://hetzner.com/) | USA, Germany | Cloud and dedicated hosting provider (currently not used for Customer Data) |
-| [Microsoft Azure](https://azure.microsoft.com/) | USA | Azure AI – access to LLM such as DeepSeek (deployed in US locations only) |
-| [OpenAI](https://openai.com/) | USA | AI models provided via API (such as Whisper, GPT). *Customer Data is not used in OpenAI API calls, unless explicitly approved by Customer*
-| [pgMustard](https://www.pgmustard.com/) | UK, Finland | SQL plan analysis provider (used only when enabled by Customer; query plans may be sent for analysis) |
-| [SendGrid](https://www.sendgrid.com/) | USA | Transactional mail services provider |
-| [Slack](https://slack.com) | USA | Business communication platform |
-| [Stripe](https://stripe.com) | USA | Payment provider |
-| [Zoom](https://zoom.us/) | USA | Video Communications |
+| [Amazon Web Services, Inc.](https://aws.amazon.com/) | USA | Managed monitoring data hosting (customer-selected region) |
+| [Anthropic PBC](https://anthropic.com/) | USA | AI models provided via API. **Customer Data is not used in Anthropic API calls, unless explicitly approved by Customer** |
+| [Calendly, LLC](https://calendly.com/) | USA | Support calls scheduling service |
+| [Cloudflare, Inc.](https://cloudflare.com/) | USA | Provision of hosting services (DNS, TLS certificates, CDN) |
+| [DocuSign, Inc.](https://docusign.com/) | USA | Contract signing and document management |
+| [GitHub, Inc.](https://github.com/) | USA | Authorized user account authentication (OAuth) |
+| [GitLab B.V.](https://gitlab.com/) | USA | Authorized user account authentication (OAuth) |
+| [Google LLC](https://cloud.google.com/) | USA | Primary data hosting (Google Cloud Platform). Customer Data (including backups) are stored here; AI models (Gemini) provided via API. **Customer Data is not used in Gemini API calls, unless explicitly approved by Customer** |
+| [Hetzner Online GmbH](https://hetzner.com/) | Germany, Finland, USA | Managed monitoring data hosting (customer-selected region) |
+| [LinkedIn Corporation](https://linkedin.com/) | USA | Authorized user account authentication (OAuth) |
+| [OpenAI, LLC](https://openai.com/) | USA | AI models provided via API (GPT, Whisper). **Customer Data is not used in OpenAI API calls, unless explicitly approved by Customer** |
+| [pgMustard Ltd](https://www.pgmustard.com/) | UK, Finland | SQL plan analysis provider (used only when enabled by Customer; query plans may be sent for analysis) |
+| [SendGrid, Inc.](https://www.sendgrid.com/) | USA | Transactional mail services provider |
+| [Slack Technologies, LLC](https://slack.com) | USA | Support communication platform |
+| [Stripe, Inc.](https://stripe.com) | USA | Payment processing services |
+| [Zoom Video Communications, Inc.](https://zoom.us/) | USA | Support video communications |
 
-This list is well-maintained (should be there are any changes, the list will be edited).
+This list is kept up to date. We will update it whenever changes occur and notify affected customers as required by our Data Processing Addendum.
 
 User data can be shared with some of the Platform's service providers. These are companies who provide services on Postgres.ai's behalf, such as hosting our Services, marketing, advertising, social, analytics, support ticketing, credit card processing, security, and other similar services. These companies are subject to contractual requirements that govern the security and confidentiality of user data.
 

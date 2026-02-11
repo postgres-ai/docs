@@ -2,13 +2,15 @@
 title: Terms of service
 ---
 
+<div className="legal-page">
+
 Privacy Policy: https://postgres.ai/privacy/
 
 # Terms of Service
 
-*Last Updated: June 19, 2025*
+*Last Updated: February 10, 2026*
 
-These Terms of Service (these "Terms" or this "Agreement") are entered into by and between the customer (“Customer" or "you")  and Nombox LLC d.b.a. PostgresAI ("PostgresAI" or "we" or "us").
+These Terms of Service (these "Terms" or this "Agreement") are entered into by and between the customer ("Customer" or "you")  and Nombox LLC d.b.a. PostgresAI ("PostgresAI" or "we" or "us").
 
 This Agreement governs all use of the Services located at https://postgres.ai and any Services located at sub-domains of the `postgres.ai` domain, and any other websites and Services owned and operated by PostgresAI that incorporate this Agreement, and any Services provided by PostgresAI to you pursuant to any other written agreement that incorporates this Agreement by reference and any updates, modifications or enhancements to any of the foregoing (collectively, the "Service").
 
@@ -17,7 +19,7 @@ If you and PostgresAI have entered into a written Enterprise agreement or other 
 By accepting this Agreement, by completing the registration process or by accessing the Service, you agree that you have read and understood these Terms and you agree to be bound by them. We may periodically update these Terms. Your continued use of the Service will constitute your acceptance of any new or amended Terms.
 
 ### 1. LICENSE
-### 1.1. Grant of License    
+### 1.1. Grant of License
 Subject to these Terms, PostgresAI grants you a limited non-exclusive and non-transferable right and license during the Term to access the features and functions of the applicable Service and to install and run on your network (or on computers you own or have a right to use) any client-side software provided by PostgresAI in connection with the service (as applicable, the "Client Software") in each case for your internal business purposes, solely in accordance with PostgresAI' user documentation (or other written instructions that may be provided by PostgresAI, collectively, the "Documentation"). To the extent PostgresAI makes any updates or upgrades to the Service, such updates and upgrades will be deemed to constitute part of the Service and will be subject to all terms and provisions set forth in this Agreement, including, without limitation, terms and provisions related to licenses, use restrictions and ownership of the Service.
 
 ### 1.2. Access; Limitations
@@ -29,7 +31,7 @@ Unless otherwise agreed in writing by us, you will not: (a) assign, sublicense, 
 ### 1.4. Open Source Software
 The Service and the Client Software may contain or utilize certain components that are subject to "open source" or "free software" licenses ("Open Source Software"). Some of the Open Source Software is owned by third parties. The Open Source Software is not subject to the terms and conditions of Section 1.1. Instead, each item of Open Source Software is licensed under the terms of the end-user license that accompanies such Open Source Software. Nothing in this Agreement limits your rights under, or grants you rights that supersede, the terms and conditions of any applicable end user license for the Open Source Software.
 
-### 1.5. Retained Rights; Professional the Service
+### 1.5. Retained Rights
 Except for the rights granted you in this Agreement, PostgresAI retains all right, title and interest in and to the Service, the Client Software and all components, and you acknowledge that you neither own nor acquire any additional rights in and to the Service not expressly granted by this Agreement.
 
 ## 2. INTELLECTUAL PROPERTY
@@ -50,48 +52,75 @@ We refuse to conduct trials with, conduct sales with or export the Service to in
 By entering into this Agreement You represent and warrant that neither You, nor any officer, director or other person in control of You, is: (i) listed on the Denied Persons List maintained by the U.S. Department of Commerce; (ii) listed on the Unverified List maintained by the U.S. Department of Commerce Bureau of Industry and Security; (iii) listed on the Specially Designated Nationals List maintained by the U.S. Treasury Department Office of Foreign Asset Control, or (iv) listed on the Debarred List maintained by the U.S. Department of State and are barred from receiving exports of certain goods from the U.S. under the International Traffic in Arms Regulations (ITAR) 22 C.F.R. §127.7.
 
 ### 3.4. Regulated Data
-You agree that: (i) PostgresAI is not acting on your behalf as a Business Associate or subcontractor; (ii) the Service may not be used to store, maintain, process or transmit protected health information ("PHI") and (iii) the  Service will not be used in any manner that would require PostgresAI or the  Service to be compliant with the Health Insurance Portability and Accountability Act of 1996, as amended and supplemented ("HIPAA"), payment card industry data security standards (d to children under 13 years of age and PostgresAI does not knowingly collect data from individuals under the age of 13.
+You agree that: (i) PostgresAI is not acting on your behalf as a Business Associate or subcontractor; (ii) the Service may not be used to store, maintain, process or transmit protected health information ("PHI"); (iii) the Service will not be used in any manner that would require PostgresAI or the Service to be compliant with the Health Insurance Portability and Accountability Act of 1996, as amended and supplemented ("HIPAA") or payment card industry data security standards (PCI DSS); and (iv) the Service is not designed for children under 16 years of age and PostgresAI does not knowingly collect data from individuals under the age of 16.
 
 ### 3.5. Security
-PostgresAI will maintain reasonable administrative, physical, and technical measures designed to maintain the security, confidentiality, and integrity of the Usage Data stored in the Service. PostgresAI will comply with all laws and regulations applicable to PostgresAI and the Service, and will promptly notify You in the event PostgresAI becomes aware of unauthorized third party access to your user accounts, and will take necessary measures to determine the scope and cause of the breach in order to restore the security of the Usage Data.
+PostgresAI will maintain reasonable administrative, physical, and technical measures designed to maintain the security, confidentiality, and integrity of the Usage Data stored in the Service. PostgresAI will comply with all laws and regulations applicable to PostgresAI and the Service, and will notify You within twenty-four (24) hours of becoming aware of unauthorized third party access to your user accounts, and will take necessary measures to determine the scope and cause of the breach in order to restore the security of the Usage Data.
 
 ## 4. DISCLAIMERS; EXCLUSION OF LIABILITIES
 ### 4.1. General Disclaimer
-PostgresAI represents and warrants that during the term of use the Service and the Client Software will perform substantially in accordance with the Documentation, provided that your exclusive remedy for a breach of such warranty shall be, in PostgresAI's discretion, to either correct the nonconformity or terminate this Agreement. YOU AGREE THAT THE SERVICE AND THE CLIENT SOFTWARE ARE OTHERWISE PROVIDED "AS IS," "AS AVAILABLE," AND "WITH ALL DEFECTS."  POSTGRESAI DISCLAIMS ANY AND ALL PROMISES, REPRESENTATIONS AND WARRANTIES, EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, DATA ACCURACY, TITLE, NON-INFRINGEMENT, NON-INTERFERENCE AND/OR QUIET ENJOYMENT. THE SERVICE MAY BE SUBJECT TO LIMITATIONS, DELAYS, AND OTHER PROBLEMS INHERENT IN THE USE OF THE INTERNET AND ELECTRONIC COMMUNICATIONS. POSTGRESAI IS NOT RESPONSIBLE FOR ANY DELAYS, DELIVERY FAILURES, OR OTHER DAMAGE RESULTING FROM SUCH PROBLEMS. We may use, and you hereby consent to our use of, third party vendors and hosting partners to provide the necessary hardware, software, networking, and related technology required to run the the Service provided that the use of a third party will in no way mitigate our obligations herein.
+PostgresAI represents and warrants that during the term of use the Service and the Client Software will perform substantially in accordance with the Documentation, provided that your exclusive remedy for a breach of such warranty shall be, in PostgresAI's discretion, to either correct the nonconformity or terminate this Agreement. YOU AGREE THAT THE SERVICE AND THE CLIENT SOFTWARE ARE OTHERWISE PROVIDED "AS IS," "AS AVAILABLE," AND "WITH ALL DEFECTS."  POSTGRESAI DISCLAIMS ANY AND ALL PROMISES, REPRESENTATIONS AND WARRANTIES, EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, DATA ACCURACY, TITLE, NON-INFRINGEMENT, NON-INTERFERENCE AND/OR QUIET ENJOYMENT. THE SERVICE MAY BE SUBJECT TO LIMITATIONS, DELAYS, AND OTHER PROBLEMS INHERENT IN THE USE OF THE INTERNET AND ELECTRONIC COMMUNICATIONS. POSTGRESAI IS NOT RESPONSIBLE FOR ANY DELAYS, DELIVERY FAILURES, OR OTHER DAMAGE RESULTING FROM SUCH PROBLEMS. We may use, and you hereby consent to our use of, third party vendors and hosting partners to provide the necessary hardware, software, networking, and related technology required to run the Service provided that the use of a third party will in no way mitigate our obligations herein.
 
 ### 4.2. Exclusions of Remedies; Limitation of Liability
-EXCEPT FOR LIABILITY ARISING FROM SECTION 5 (CONFIDENTIALITY), OR YOUR BREACH OF SECTION 1.4, IN NO EVENT WILL EITHER PARTY BE LIABLE TO THE OTHER FOR ANY INCIDENTAL, INDIRECT, SPECIAL, CONSEQUENTIAL OR PUNITIVE DAMAGES, REGARDLESS OF THE NATURE OF THE CLAIM, INCLUDING, WITHOUT LIMITATION, LOST PROFITS, COSTS OF DELAY, ANY FAILURE OF DELIVERY, BUSINESS INTERRUPTION, COSTS OF LOST OR DAMAGED DATA OR DOCUMENTATION OR LIABILITIES TO THIRD PARTIES ARISING FROM ANY SOURCE, EVEN IF THE PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.  IN NO EVENT WILL POSTGRESAI BE LIABLE FOR THE LOSS OF DATA OR THE PROCUREMENT OF SUBSTITUTE THE SERVICE. EXCEPT FOR LIABILITY ARISING FROM SECTION 6 (CONFIDENTIALITY), OR YOUR BREACH OF SECTION 1.4, THE CUMULATIVE LIABILITY OF EITHER PARTY FOR ALL CLAIMS ARISING FROM OR RELATING TO THIS AGREEMENT, INCLUDING, WITHOUT LIMITATION, ANY CAUSE OF ACTION SOUNDING IN CONTRACT, TORT, OR STRICT LIABILITY, WILL NOT EXCEED THE GREATER OF: (A) FIFTY DOLLARS ($50.00) AND (B) THE FEES PAID TO POSTGRESAI BY YOU UNDER THIS AGREEMENT IN THE SIX (6) MONTHS PRECEDING THE DATE ON WHICH THE CLAIM AROSE.
+EXCEPT FOR YOUR BREACH OF SECTION 1.4 (OPEN SOURCE SOFTWARE), IN NO EVENT WILL EITHER PARTY BE LIABLE TO THE OTHER FOR ANY INCIDENTAL, INDIRECT, SPECIAL, CONSEQUENTIAL OR PUNITIVE DAMAGES, REGARDLESS OF THE NATURE OF THE CLAIM, INCLUDING, WITHOUT LIMITATION, LOST PROFITS, COSTS OF DELAY, ANY FAILURE OF DELIVERY, BUSINESS INTERRUPTION, COSTS OF LOST OR DAMAGED DATA OR DOCUMENTATION OR LIABILITIES TO THIRD PARTIES ARISING FROM ANY SOURCE, EVEN IF THE PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.  IN NO EVENT WILL POSTGRESAI BE LIABLE FOR THE LOSS OF DATA OR THE PROCUREMENT OF SUBSTITUTE SERVICES. THE CUMULATIVE LIABILITY OF EITHER PARTY FOR ALL CLAIMS ARISING FROM OR RELATING TO THIS AGREEMENT, INCLUDING, WITHOUT LIMITATION, ANY CAUSE OF ACTION SOUNDING IN CONTRACT, TORT, OR STRICT LIABILITY, WILL NOT EXCEED THE TOTAL AMOUNTS PAID AND/OR PAYABLE BY CUSTOMER TO POSTGRESAI UNDER THIS AGREEMENT IN THE TWELVE (12) MONTHS IMMEDIATELY PRECEDING THE CLAIM.
 
 ### 4.3. No Professional Advice
 All information, materials, content and/or advice in the Service or associated Documentation, as well as any professional services or support provided by PostgresAI, is for informational purposes only and is not intended to replace or substitute for any professional advice. PostgresAI expressly disclaims, and you expressly release PostgresAI from, any and all liability concerning any diagnosis, treatment, or action arising or learned from the information offered or provided within or through the Service.
 
 ### 4.4. Essential Basis of Agreement
-You acknowledge and agree that the disclaimers, exclusions and limitations of liability set forth in this Section 3 form an essential basis of this Agreement, and that, absent any of such disclaimers, exclusions or limitations of liability, the terms of this Agreement, including, without limitation, the economic terms, would be substantially different.    
+You acknowledge and agree that the disclaimers, exclusions and limitations of liability set forth in this Section 4 form an essential basis of this Agreement, and that, absent any of such disclaimers, exclusions or limitations of liability, the terms of this Agreement, including, without limitation, the economic terms, would be substantially different.
 
-## 5. TERMINATION
-PostgresAI may terminate your access to all or any part of the website or the Service or the Client Software at any time, with or without cause, with or without notice, effective immediately. If you wish to terminate this Agreement or your PostgresAI account, you may simply discontinue using the Service. All provisions of this Agreement that by their nature should survive termination shall survive termination, including, without limitation, warranty disclaimers, indemnity and limitations of liability.  
+## 5. SERVICE LEVEL AGREEMENT
+### 5.1. Uptime Commitment
+PostgresAI will use commercially reasonable efforts to make the Service available with a Monthly Uptime Percentage of at least 99.99% for customers on paid plans of $128/month or above ("Uptime Commitment"). "Monthly Uptime Percentage" means the total number of minutes in a calendar month minus the number of minutes of Downtime in that month, divided by the total number of minutes in that month. "Downtime" means a period of more than five (5) consecutive minutes during which the Service is materially unavailable, excluding scheduled maintenance windows communicated at least 48 hours in advance.
 
-## 6. CONFIDENTIALITY
+### 5.2. Service Credits
+If PostgresAI fails to meet the Uptime Commitment in any calendar month, Customer may request a service credit as follows:
+
+- Monthly Uptime Percentage below 99.99% but at or above 99.9%: 10% credit of that month's fees
+- Monthly Uptime Percentage below 99.9% but at or above 99.0%: 20% credit of that month's fees
+- Monthly Uptime Percentage below 99.0%: 50% credit of that month's fees
+
+Service credits must be requested within thirty (30) days of the end of the affected month. Credits are applied to future invoices and do not entitle Customer to a refund. Service credits are Customer's sole and exclusive remedy for any failure to meet the Uptime Commitment.
+
+### 5.3. Exclusions
+The Uptime Commitment does not apply to: (a) features labeled as alpha, beta, or preview; (b) downtime caused by factors outside PostgresAI's reasonable control, including third-party provider outages (AWS, LLM providers); (c) downtime resulting from Customer's equipment, software, or infrastructure issues; or (d) customers on free-tier or paid plans below $128/month.
+
+## 6. TERMINATION
+Either party may terminate this Agreement for convenience upon thirty (30) days' prior written notice to the other party. PostgresAI may terminate or suspend your access immediately if you materially breach this Agreement and fail to cure such breach within fifteen (15) days of written notice.
+
+Upon termination, Customer may request export of their data within thirty (30) days. PostgresAI will make data available for export in a standard format. After such 30-day period, PostgresAI will delete all Customer data unless retention is required by applicable law.
+
+All provisions of this Agreement that by their nature should survive termination shall survive termination, including, without limitation, warranty disclaimers, indemnity and limitations of liability.
+
+## 7. CONFIDENTIALITY
 We and you acknowledge that, in the course of performance of this Agreement, either party may obtain information from the other party that it knows or has reason to know is of a confidential and/or proprietary nature ("Confidential Information").  Without limiting the above, the Service, the Client Software, the Documentation, the Feedback and any product roadmap is our Confidential Information and Usage Data is your Confidential Information. Except as expressly stated in this Agreement, during the Term and at all times thereafter, neither party may disclose any such Confidential Information to any third party, nor may either party use such Confidential Information of the other party for any purpose, other than as permitted herein. Confidential Information will not include any information which: (i) are or become readily available to the trade or public through no fault of the recipient of the Confidential Information; (ii) is subsequently lawfully and in good faith obtained by a party from an independent third party without breach of this Agreement; (iii) the recipient can establish that the information was in its possession prior to the date of disclosure of such Confidential Information; or (iv) is developed independently by the recipient without reference to any Confidential Information of the other party. Notwithstanding the foregoing, each party may disclose Confidential Information to the limited extent such disclosure is required by applicable law, a court of competent jurisdiction, or a governmental agency.
 
-## 7. INDEMNIFICATION
-### 7.1. By Customer
+## 8. INDEMNIFICATION
+### 8.1. By Customer
 You will defend PostgresAI, its officers, directors, employees and agents (the "PostgresAI Indemnified Parties") from and against any allegation or claim by any third party arising from i) our use of Usage Data as permitted herein and ii) a breach by you of your obligations under this Agreement, and shall indemnify and hold the PostgresAI Indemnified Parties harmless from any damages, judgments, liabilities, fines, penalties, assessments, costs, and expenses including reasonable attorneys' fees and court costs (collectively, "Losses"), awarded against the PostgresAI Indemnified Parties either in judgment or settlement.
 
-### 7.2. By PostgresAI
-PostgresAI will defend Customer from any claim brought by a third party that any alleges that the Service violates or infringes any third party copyright, and shall indemnify and hold the Customer harmless from any Losses awarded against the Customer, either in judgment or settlement, agreed to by PostgresAI in writing. Notwithstanding the foregoing, PostgresAI will have no obligation or liability to the extent that the alleged infringement or misappropriation arises from (a) use of the Service in violation of this Agreement (b) your use of the Service with any product or service not developed and supplied by PostgresAI, or (c) Open Source Software. Upon the occurrence of any claim for which indemnification is or may be due under this Section, or in the event that PostgresAI believes that such a claim is likely, PostgresAI may, at its option (i) modify the Service so that it becomes non-infringing but functionally similar, or substitute a functionally similar alternative; or (ii) obtain a license to the applicable third-party intellectual property at no cost to Customer
+### 8.2. By PostgresAI
+PostgresAI will defend Customer from any claim brought by a third party that any alleges that the Service violates or infringes any third party copyright, and shall indemnify and hold the Customer harmless from any Losses awarded against the Customer, either in judgment or settlement, agreed to by PostgresAI in writing. Notwithstanding the foregoing, PostgresAI will have no obligation or liability to the extent that the alleged infringement or misappropriation arises from (a) use of the Service in violation of this Agreement (b) your use of the Service with any product or service not developed and supplied by PostgresAI, or (c) Open Source Software. Upon the occurrence of any claim for which indemnification is or may be due under this Section, or in the event that PostgresAI believes that such a claim is likely, PostgresAI may, at its option (i) modify the Service so that it becomes non-infringing but functionally similar, or substitute a functionally similar alternative; or (ii) obtain a license to the applicable third-party intellectual property at no cost to Customer.
 
-### 7.3. Procedures
+PostgresAI will also defend and indemnify Customer from claims arising from a Security Incident (as defined in the DPA) caused by PostgresAI's material failure to comply with its security obligations under this Agreement or the DPA, provided that Customer notifies PostgresAI promptly and cooperates in the defense.
+
+### 8.3. Procedures
 The indemnified party must notify the indemnifying party promptly in writing of any claim for indemnification hereunder, and provide, at the indemnifying party's expense (to the extent of out-of-pocket expenses only), all reasonably necessary assistance, information and authority to allow the indemnifying party to control the defense and settlement of such claim; provided that the failure of the indemnified party to promptly inform the indemnifying party of any claim will not excuse the indemnifying party of its obligations hereunder except to the extent such failure materially prejudices the indemnifying party. The indemnified party may participate at its expense in the defense and/or settlement of any such action with counsel of its choosing and at its sole expense.
 
-## 8. FORCE MAJEURE
+## 9. FORCE MAJEURE
 Neither party will be liable for any delays or failures in performance of this Agreement to the extent such delays or failures are caused by labor strikes, war, civil unrest, natural disasters, or other similar circumstances beyond the reasonable control of such party.
- 
-## 9. GENERAL TERMS
-9.1. PostgresAI maintains the Service in California, U.S.A. and you agree that this Agreement and any legal action or proceeding relating to the Service will be governed by the laws of the State of California without reference to its choice of law rules. Each party hereby submits to the personal jurisdiction of the state and federal courts sitting in the State of California and agrees that venue in any such court will not be inconvenient to either party.
 
-9.2. You grant PostgresAI the right to add Your name and company logo to the PostgresAI customer list and website.
+## 10. GOVERNING LAW AND DISPUTE RESOLUTION
+This Agreement shall be governed by and construed in accordance with the laws of the State of California, without regard to its conflict of laws principles. Any dispute arising out of or relating to this Agreement shall be subject to the exclusive jurisdiction of the state and federal courts located in California.
+
+## 11. GENERAL TERMS
+11.1. You grant PostgresAI the right to add Your name and company logo to the PostgresAI customer list and website. You may opt out of this at any time by sending a written request to legal@postgres.ai.
+
+11.2. PostgreSQL® and Postgres® are registered trademarks of the PostgreSQL Community Association of Canada. PostgresAI is not affiliated with or endorsed by the PostgreSQL Community Association of Canada.
 
 ---
 
 ***If you have any questions or comments about these Terms of Service, please contact us at support@postgres.ai.***
+
+</div>
