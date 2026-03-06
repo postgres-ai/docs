@@ -28,3 +28,12 @@ bun start
 ```
 
 This command starts a local development server and opens a browser window. Most changes are reflected live without having to restart the server.
+
+### Preview environments
+
+Every merge request automatically gets a live preview deployment:
+
+- **Preview URL**: `https://docs-{branch-slug}.pgai.green` (find it via the "View app" button on the MR page)
+- **Permanent staging**: `https://docs-main.pgai.green` (updated on every push to `master`)
+- **Auto-cleanup**: Preview environments stop automatically after 1 week, or can be stopped manually via the CI job
+- **Access**: Public (open-source repo)

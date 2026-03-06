@@ -1,4 +1,4 @@
-# 2019 © PostgresAI
+# 2019-2026 © PostgresAI
 #
 # SAST customization: https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
 
@@ -142,3 +142,173 @@ deploy_staging:
   when: manual
   except:
     - master
+
+# --- Green: Preview environments (per-MR) ---
+
+.environment_template: &env_review
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    url: https://docs-$CI_COMMIT_REF_SLUG.pgai.green
+    on_stop: stop_review
+    auto_stop_in: 1 week
+  variables:
+    ENV: review
+    BRANCH_SLUG: $CI_COMMIT_REF_SLUG
+
+# SSH setup for preview VM deployments (anchored to avoid duplication)
+.preview_ssh_setup:
+  before_script: &preview_ssh_steps
+    - apk add --no-cache openssh-client
+    - eval $(ssh-agent -s)
+    - echo "$PREVIEW_SSH_KEY" | base64 -d | ssh-add -
+    - mkdir -p ~/.ssh && echo "${PREVIEW_VM_HOST} ${PREVIEW_VM_HOST_KEY}" >> ~/.ssh/known_hosts
+
+build_and_push_review:
+  stage: prepare_image
+  image: docker:27
+  services:
+    - docker:27-dind
+  <<: *env_review
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  cache:
+    - key: review-$CI_COMMIT_REF_SLUG
+      paths:
+        - .cache
+  script:
+    - export BRANCH_SLUG="${CI_COMMIT_REF_SLUG}"
+    - source "./deploy/configs/review.sh"
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+    - docker pull "${CI_REGISTRY_IMAGE}:review-latest" || true
+    - docker build
+      --cache-from "${CI_REGISTRY_IMAGE}:review-latest"
+      --tag "${CI_REGISTRY_IMAGE}:review-${BRANCH_SLUG}"
+      --tag "${CI_REGISTRY_IMAGE}:review-latest"
+      --build-arg ARG_URL="${URL}"
+      --build-arg ARG_BASE_URL="${BASE_URL}"
+      --build-arg ARG_SIGN_IN_URL="${SIGN_IN_URL}"
+      --build-arg ARG_BOT_WS_URL="${BOT_WS_URL}"
+      --build-arg ARG_API_URL_PREFIX="${API_URL_PREFIX}"
+      --build-arg ARG_UMAMI_WEBSITE_ID="${UMAMI_WEBSITE_ID}"
+      --build-arg ARG_UMAMI_SCRIPT_URL="${UMAMI_SCRIPT_URL}"
+      .
+    - docker push "${CI_REGISTRY_IMAGE}:review-${BRANCH_SLUG}"
+    - docker push "${CI_REGISTRY_IMAGE}:review-latest"
+
+deploy_review:
+  stage: deploy
+  image: alpine:3.20
+  <<: *env_review
+  resource_group: preview-docs-${CI_COMMIT_REF_SLUG}
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  needs:
+    - build_and_push_review
+  before_script: *preview_ssh_steps
+  script:
+    - export BRANCH_SLUG="${CI_COMMIT_REF_SLUG}"
+    # Guard against slug collision with permanent staging
+    - if [ "${BRANCH_SLUG}" = "main" ]; then echo "ERROR - slug 'main' conflicts with permanent staging"; exit 1; fi
+    - export IMAGE="${CI_REGISTRY_IMAGE}:review-${BRANCH_SLUG}"
+    # Pipe credential via stdin so it never appears in process arguments
+    - echo "${CI_REGISTRY_PASSWORD}" | ssh deploy@${PREVIEW_VM_HOST} "docker login -u gitlab-ci-token --password-stdin ${CI_REGISTRY}"
+    - |
+      ssh deploy@${PREVIEW_VM_HOST} "\
+        docker rm -f docs-${BRANCH_SLUG} 2>/dev/null; \
+        docker pull ${IMAGE} && \
+        docker run -d \
+          --name docs-${BRANCH_SLUG} \
+          --restart unless-stopped \
+          --memory=512m --cpus=0.5 \
+          --network traefik \
+          --label traefik.enable=true \
+          --label 'traefik.http.routers.docs-${BRANCH_SLUG}.rule=Host(\`docs-${BRANCH_SLUG}.pgai.green\`)' \
+          --label traefik.http.routers.docs-${BRANCH_SLUG}.entrypoints=websecure \
+          --label traefik.http.routers.docs-${BRANCH_SLUG}.tls=true \
+          --label traefik.http.routers.docs-${BRANCH_SLUG}.tls.certresolver=letsencrypt \
+          --label traefik.http.services.docs-${BRANCH_SLUG}.loadbalancer.server.port=3000 \
+          ${IMAGE}"
+    # Preview URL is shown via GitLab environment "View app" button on the MR page
+    - echo "Preview deployed at https://docs-${BRANCH_SLUG}.pgai.green"
+
+stop_review:
+  stage: deploy
+  image: alpine:3.20
+  resource_group: preview-docs-${CI_COMMIT_REF_SLUG}
+  allow_failure: true
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: manual
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    action: stop
+  variables:
+    GIT_STRATEGY: none
+    BRANCH_SLUG: $CI_COMMIT_REF_SLUG
+  before_script: *preview_ssh_steps
+  script:
+    - |
+      ssh deploy@${PREVIEW_VM_HOST} "\
+        docker rm -f docs-${BRANCH_SLUG} 2>/dev/null || true && \
+        docker rmi ${CI_REGISTRY_IMAGE}:review-${BRANCH_SLUG} 2>/dev/null || true"
+
+# --- Green: Permanent staging at docs-main.pgai.green (on master push) ---
+
+build_and_push_main_staging:
+  stage: prepare_image
+  image: docker:27
+  services:
+    - docker:27-dind
+  environment:
+    name: main-staging
+    url: https://docs-main.pgai.green
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+  script:
+    - source "./deploy/configs/main-staging.sh"
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+    - docker pull "${CI_REGISTRY_IMAGE}:main-latest" || true
+    - docker build
+      --cache-from "${CI_REGISTRY_IMAGE}:main-latest"
+      --tag "${CI_REGISTRY_IMAGE}:main-latest"
+      --build-arg ARG_URL="${URL}"
+      --build-arg ARG_BASE_URL="${BASE_URL}"
+      --build-arg ARG_SIGN_IN_URL="${SIGN_IN_URL}"
+      --build-arg ARG_BOT_WS_URL="${BOT_WS_URL}"
+      --build-arg ARG_API_URL_PREFIX="${API_URL_PREFIX}"
+      --build-arg ARG_UMAMI_WEBSITE_ID="${UMAMI_WEBSITE_ID}"
+      --build-arg ARG_UMAMI_SCRIPT_URL="${UMAMI_SCRIPT_URL}"
+      .
+    - docker push "${CI_REGISTRY_IMAGE}:main-latest"
+
+deploy_main_staging:
+  stage: deploy
+  image: alpine:3.20
+  environment:
+    name: main-staging
+    url: https://docs-main.pgai.green
+  resource_group: preview-docs-main
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+  needs:
+    - build_and_push_main_staging
+  before_script: *preview_ssh_steps
+  script:
+    # Pipe credential via stdin so it never appears in process arguments
+    - echo "${CI_REGISTRY_PASSWORD}" | ssh deploy@${PREVIEW_VM_HOST} "docker login -u gitlab-ci-token --password-stdin ${CI_REGISTRY}"
+    - |
+      ssh deploy@${PREVIEW_VM_HOST} "\
+        docker rm -f docs-main 2>/dev/null; \
+        docker pull ${CI_REGISTRY_IMAGE}:main-latest && \
+        docker run -d \
+          --name docs-main \
+          --restart unless-stopped \
+          --memory=512m --cpus=0.5 \
+          --network traefik \
+          --label traefik.enable=true \
+          --label 'traefik.http.routers.docs-main.rule=Host(\`docs-main.pgai.green\`)' \
+          --label traefik.http.routers.docs-main.entrypoints=websecure \
+          --label traefik.http.routers.docs-main.tls=true \
+          --label traefik.http.routers.docs-main.tls.certresolver=letsencrypt \
+          --label traefik.http.services.docs-main.loadbalancer.server.port=3000 \
+          ${CI_REGISTRY_IMAGE}:main-latest"
