@@ -15,7 +15,7 @@ One of these queries is 32x faster than the other. Which one, and why?
 
 **Query 1:**
 <pre style={{background:'#1e1e2e', padding:'1rem', borderRadius:'6px', fontSize:'14px', lineHeight:'1.5', overflowX:'auto'}}>
-<code>{`select pt.*
+<code style={{color:'#cdd6f4', background:'transparent'}}>{`select pt.*
 from post_tags pt
 where pt.tag_id = any($1)
   and exists (
@@ -31,7 +31,7 @@ where pt.tag_id = any($1)
 
 **Query 2:**
 <pre style={{background:'#1e1e2e', padding:'1rem', borderRadius:'6px', fontSize:'14px', lineHeight:'1.5', overflowX:'auto'}}>
-<code>{`select pt.*
+<code style={{color:'#cdd6f4', background:'transparent'}}>{`select pt.*
 from post_tags pt
 where pt.tag_id = any($1)
   and `}<span style={{color:'#ff6b6b', fontWeight:'bold'}}>not</span>{` exists (
