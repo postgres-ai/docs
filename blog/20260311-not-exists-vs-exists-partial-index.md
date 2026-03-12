@@ -45,7 +45,9 @@ where pt.tag_id = any($1)
 </div>
 </div>
 
-Read on to find out. This pattern was first spotted by Maxim Boguk on a 400 GiB production table, where the speedup was approximately 50x.
+These two queries are logically equivalent here because `posts.post_id` is a primary key — the subquery matches at most one row, so `AND NOT deleted` vs. `AND deleted` simply flips a boolean. A foreign key on `post_tags.post_id` guarantees no orphans.
+
+Read on to find out why the performance difference is so dramatic. This pattern was first spotted by Maxim Boguk on a 400 GiB production table, where the speedup was approximately 50x.
 
 <!--truncate-->
 
