@@ -35,7 +35,7 @@ module.exports = {
   tagline: SITE_SLOGAN,
   url: URL, // Your website URL.
   baseUrl: BASE_URL, // Base URL for your project.
-  onBrokenLinks: 'warn', //'throw',
+  onBrokenLinks: 'warn', //'throw' — tracked in #189 (fix pre-existing broken links first)
   favicon: '/favicon.svg',
   organizationName: 'postgres-ai',
   projectName: 'docs',

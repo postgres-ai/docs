@@ -143,7 +143,7 @@ sudo zpool create -f \
 ```
 
 ### 3. Define a refresh timetable
-Set up a desirable timetable in the `retrieval` section of [your configuration](/docs/dblab-howtos/administration/engine-manage#configure-and-start-a-database-lab-engine-instance) to perform a full refresh automatically
+Set up a desirable timetable in the `retrieval` section of [your configuration](/docs/dblab-howtos/administration/engine-manage#configure-and-start-a-dblab-engine-instance) to perform a full refresh automatically
 ```yaml
 retrieval:
   refresh:
