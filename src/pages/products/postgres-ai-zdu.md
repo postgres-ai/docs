@@ -57,7 +57,8 @@ This solution is **fully developed and battle-tested**. We're offering preview a
       textDecoration: 'none',
       padding: '12px 24px',
       borderRadius: '6px',
-      display: 'inline-block',
+      display: 'inline-flex',
+      alignItems: 'center',
       fontWeight: '500'
     }}
   >
