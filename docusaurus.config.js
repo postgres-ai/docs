@@ -621,6 +621,22 @@ module.exports = {
             description: '', // default to  `${siteConfig.title} Blog`
             copyright: SITE_NAME,
             language: undefined, // possible values: http://www.w3.org/TR/REC-html40/struct/dirlang.html#langcodes
+            createFeedItems: async ({
+              blogPosts,
+              siteConfig,
+              outDir,
+              defaultCreateFeedItems,
+            }) => {
+              const items = await defaultCreateFeedItems({
+                blogPosts: blogPosts.slice(0, 20),
+                siteConfig,
+                outDir,
+              });
+              return items.map((item) => ({
+                ...item,
+                content: undefined,
+              }));
+            },
           },
         },
         theme: {
