@@ -129,6 +129,7 @@ module.exports = {
           "dblab-howtos/administration/logical-full-refresh",
           "dblab-howtos/administration/ci-observer-postgres-log-masking",
           "dblab-howtos/administration/add-disk-space-to-zfs-pool",
+          "dblab-howtos/administration/teleport-integration",
           {
             "Data sources": [
               "dblab-howtos/administration/data/index",

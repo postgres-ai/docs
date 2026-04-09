@@ -16,4 +16,5 @@ description: How to administer DBLab Engine
 - [How to refresh data when working in the "logical" mode](/docs/dblab-howtos/administration/logical-full-refresh)
 - [Masking sensitive data in PostgreSQL logs when using CI Observer](/docs/dblab-howtos/administration/ci-observer-postgres-log-masking)
 - [Add disk space to ZFS pool without downtime](/docs/dblab-howtos/administration/add-disk-space-to-zfs-pool)
+- [Teleport Integration](/docs/dblab-howtos/administration/teleport-integration)
 
