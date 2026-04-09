@@ -1,11 +1,11 @@
 ---
-authors: [nik, bogdan]
+authors: nik
 date: 2026-04-08 00:00:00
 publishDate: 2026-04-08 00:00:00
 linktitle: "DBLab 4.1: protection leases, Teleport, Prometheus, and more"
 title: "DBLab 4.1: protection leases, Teleport, Prometheus, and more"
 weight: 0
-image: /assets/thumbnails/dblab-4.0-blog.png
+image: /assets/thumbnails/dblab-4.1-blog.png
 tags:
   - Product announcements
   - DBLab Engine
