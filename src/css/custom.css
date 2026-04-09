@@ -28,8 +28,9 @@
 pre, pre code, .prism-code {
   font-size: 14px !important;
   line-height: 1.5 !important;
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
+  -webkit-text-size-adjust: none !important;
+  -moz-text-size-adjust: none !important;
+  text-size-adjust: none !important;
 }
 
 /* Smaller code blocks on mobile for better readability */
