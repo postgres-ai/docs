@@ -10,7 +10,7 @@ DBLab Engine behavior can be controlled using the main configuration file that h
 DBLab Engine supports [YAML 1.2](https://yaml.org/spec/1.2/spec.html) including anchors, aliases, tags, map merging.
 :::
 
-Example config files can be found here: https://gitlab.com/postgres-ai/database-lab/-/tree/v4.0.4/engine/configs.
+Example config files can be found here: https://gitlab.com/postgres-ai/database-lab/-/tree/v4.1.0/engine/configs.
 
 You may store configuration files in any suitable location. The recommended location of configuration files for DBLab Engine is `~/.dblab/engine/configs`.
 
@@ -279,6 +279,12 @@ Options:
 Prepares a snapshot for logical restored PostgreSQL database.
 
 Options:
+- `databaseRename` (key-value, optional) - rename databases before finalizing the snapshot. Runs after `preprocessingScript`. Each entry maps the original database name to the new name. This is useful when you want clones to use different database names than production (e.g., renaming `mydb_prod` to `mydb_dev`). Supported since DBLab Engine 4.1.
+  ```yaml
+  databaseRename:
+    mydb_prod: mydb_dev
+    analytics_production: analytics_dblab
+  ```
 - `dataPatching` (key-value, optional) - defines SQL queries for data patching. This allows you to run custom SQL queries against the restored database before creating the snapshot, useful for data masking, test data setup, or schema modifications
   - `dockerImage` (string, optional) - specifies the Docker image to run a data patching container. Can be inherited using YAML anchors (see `databaseContainer` pattern above)
   - `containerConfig` (key-value, optional) - options to pass custom parameters to data patching container. Supports standard Docker options like memory/CPU limits
@@ -336,6 +342,12 @@ Options:
    - `configs` (key-value, optional) - applies PostgreSQL configuration parameters to the promotion instance
 - `sysctls` (key-value, optional) - allows configuring namespaced kernel parameters (sysctls) of Docker container for a promotion stage of taking a snapshot. See supported parameters: https://docs.docker.com/reference/cli/docker/container/run/#sysctl
 - `preprocessingScript` (string, optional) - path on the host machine to a pre-processing script
+- `databaseRename` (key-value, optional) - rename databases before finalizing the snapshot. Runs after `preprocessingScript`. Each entry maps the original database name to the new name. Supported since DBLab Engine 4.1.
+  ```yaml
+  databaseRename:
+    example_production: example_dblab
+    analytics_prod: analytics_dblab
+  ```
 - `configs` (key-value, optional) - applies PostgreSQL configuration parameters to snapshot. These parameters are inherited by all clones. See also: [How to configure PostgreSQL used by DBLab Engine](/docs/dblab-howtos/administration/postgresql-configuration)
 - `envs` (key-value, optional) - passes custom environment variables to the promotion Docker container
 - `scheduler` (key-value, required) - contains tasks which run on a schedule:
@@ -348,6 +360,9 @@ Options:
 ## Section `cloning`: thin cloning policies
 - `accessHost` (string, required) - the host that will be specified in the database connection string to inform users about how to connect to database clones. This should match one of the addresses specified in `provision.cloneAccessAddresses` or be a hostname that resolves to one of those addresses. Use public IP address if database connections are allowed from outside, or "localhost"/private IP for local-only access.
 - `maxIdleMinutes` (integer, optional, default: 120) - automatically delete clones after the specified minutes of inactivity, 0 is being used to disable this feature. Inactivity means no active sessions (queries being processed) and no recently logged queries in the query log.
+- `protectionLeaseDurationMinutes` (integer, optional, default: 1440) - default protection lease duration in minutes when a clone is marked as protected. When a clone is protected with a lease, it will automatically become unprotected after this duration elapses. Use `0` for infinite protection (no automatic expiration). Supported since DBLab Engine 4.1.
+- `protectionMaxDurationMinutes` (integer, optional, default: 10080) - maximum allowed protection duration in minutes. Users cannot request a protection duration longer than this value. Use `0` to remove the limit. Supported since DBLab Engine 4.1.
+- `protectionExpiryWarningMinutes` (integer, optional, default: 1440) - send a warning webhook notification the specified number of minutes before a protection lease expires. Supported since DBLab Engine 4.1.
 
 ## Section `platform`: PostgresAI Platform integration
 - `url` (string, optional, default: "https://postgres.ai/api/general") - Platform API URL
@@ -429,6 +444,9 @@ Webhooks provide a way to notify external systems about clone lifecycle events. 
   - `trigger` (list of strings, required) - specifies which clone events should trigger this webhook. Available trigger types:
     - `clone_create` - triggered when a new clone is created
     - `clone_reset` - triggered when an existing clone is reset to a different snapshot
+    - `clone_delete` - triggered when a clone is deleted. Supported since DBLab Engine 4.1.
+    - `clone_protection_expiring` - triggered when a clone's protection lease is about to expire (based on `protectionExpiryWarningMinutes`). Supported since DBLab Engine 4.1.
+    - `clone_protection_expired` - triggered when a clone's protection lease has expired and protection has been automatically removed. Supported since DBLab Engine 4.1.
 
 ### Webhook payload format
 Webhook requests are sent as HTTP POST with JSON payload containing:

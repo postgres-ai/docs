@@ -90,6 +90,7 @@ module.exports = {
       "database-lab/index",
       "database-lab/supported-databases",
       "database-lab/user-interface",
+      "database-lab/prometheus-monitoring",
       "database-lab/masking",
       "database-lab/db-migration-checker",
       "database-lab/telemetry",
@@ -126,6 +127,7 @@ module.exports = {
           "dblab-howtos/administration/engine-manage",
           "dblab-howtos/administration/joe-manage",
           "dblab-howtos/administration/engine-secure",
+          "dblab-howtos/administration/teleport-integration",
           "dblab-howtos/administration/logical-full-refresh",
           "dblab-howtos/administration/ci-observer-postgres-log-masking",
           "dblab-howtos/administration/add-disk-space-to-zfs-pool",
@@ -134,6 +136,7 @@ module.exports = {
             "Data sources": [
               "dblab-howtos/administration/data/index",
               "dblab-howtos/administration/data/rds",
+              "dblab-howtos/administration/data/rds-refresh",
               "dblab-howtos/administration/data/dump",
               "dblab-howtos/administration/data/wal-g",
               "dblab-howtos/administration/data/pgbackrest",

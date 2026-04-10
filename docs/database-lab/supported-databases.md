@@ -4,7 +4,6 @@ title: PostgreSQL versions and extensions supported in DBLab Engine
 
 ## PostgreSQL versions
 Currently, DBLab Engine fully supports the following [PostgreSQL major versions](https://www.postgresql.org/support/versioning/):
-- 9.6 (released: 2016-09-29; EOL: 2021-11-11)
 - 10 (released: 2017-10-05; EOL: 2022-11-10)
 - 11 (released: 2018-10-18; EOL: 2023-11-09)
 - 12 (released: 2019-10-03; EOL: 2024-11-14)
