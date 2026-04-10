@@ -94,22 +94,46 @@ $ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --sna
 }
 ```
 
-### Protected status
-You can make clone protected during the creation or later (if needed). Please be careful: abandoned protected clones may cause out-of-disk-space events. Read the details [here](/docs/dblab-howtos/cloning/clone-protection).
+### Create a clone from a branch
+:::note
+Requires DBLab 4.0 or higher
+:::
+
+Create a clone from a specific branch:
 ```bash
-$ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --protected
+$ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --branch main
+```
+
+### Protected status
+You can make a clone protected during creation or later. Please be careful: abandoned protected clones may cause out-of-disk-space events. Read the details [here](/docs/dblab-howtos/cloning/clone-protection).
+
+Protect with default lease duration:
+```bash
+$ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --protected true
+```
+
+Protect for a specific duration (e.g., 8 hours = 480 minutes):
+```bash
+$ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --protected 480
 ```
 
 ```json
 {
     "id": "democlone",
     "protected": true,
+    "protectedTill": "2026-04-11T06:00:00Z",
     "status": {
         "code": "OK",
         "message": "Clone is ready to accept Postgres connections."
     },
     ...
 }
+```
+
+### Extra PostgreSQL configuration
+You can set additional PostgreSQL configuration parameters for a clone:
+```bash
+$ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --extra-config statement_timeout='30s'
 ```
 
 ## Related

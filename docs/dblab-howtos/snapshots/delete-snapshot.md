@@ -33,5 +33,12 @@ Delete a snapshot with `dblab snapshot` command, using subcommand `delete`.
 $ dblab snapshot delete SNAPSHOT_ID
 ```
 
+### Force-delete a snapshot with dependent clones
+If the snapshot has dependent clones or datasets, use `--force`:
+
+```bash
+$ dblab snapshot delete --force SNAPSHOT_ID
+```
+
 ## Related
 - Guide: [Create a snapshot](/docs/dblab-howtos/snapshots/create-snapshot)

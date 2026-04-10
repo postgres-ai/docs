@@ -76,12 +76,24 @@ docker run --rm \
 | `source.dbName` | Yes | Database name |
 | `source.username` | Yes | Database user |
 | `source.password` | Yes | Password (supports `${ENV_VAR}` syntax) |
+| `source.snapshotIdentifier` | No | Specific snapshot ID to use; if empty, uses latest automated snapshot |
 | `clone.instanceClass` | Yes | RDS clone instance type (e.g., `db.t3.medium`) |
 | `clone.securityGroups` | No | Security groups allowing DBLab access |
 | `clone.subnetGroup` | No | DB subnet group |
+| `clone.parameterGroup` | No | RDS parameter group name |
+| `clone.optionGroup` | No | RDS option group name (RDS instances only) |
+| `clone.clusterParameterGroup` | No | Cluster parameter group (Aurora only) |
+| `clone.publiclyAccessible` | No | Make clone publicly accessible (default: `false`) |
+| `clone.enableIAMAuth` | No | Enable IAM database authentication (default: `false`) |
+| `clone.storageType` | No | Storage type: `gp2`, `gp3`, `io1`, `io2` |
+| `clone.deletionProtection` | No | Enable deletion protection on clone (default: `false`) |
+| `clone.port` | No | Custom port for the clone (default: RDS default) |
+| `clone.tags` | No | Additional tags (key-value map) for the RDS clone |
 | `clone.maxAge` | No | Max age before clone is considered stale (default: `48h`) |
 | `dblab.apiEndpoint` | Yes | DBLab API URL |
 | `dblab.token` | Yes | DBLab verification token |
+| `dblab.insecure` | No | Skip TLS certificate verification (default: `false`) |
+| `dblab.pollInterval` | No | Status polling interval (default: `30s`) |
 | `dblab.timeout` | No | Max refresh wait (default: `4h`) |
 | `aws.region` | Yes | AWS region |
 

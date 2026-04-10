@@ -90,7 +90,24 @@ db_service:
       dblab: "true"
 ```
 
-### 4. SSL/TLS for Postgres clones
+### 4. User role for database access
+
+Teleport users who need to connect to DBLab clones need a role granting database access:
+
+```yaml
+kind: role
+version: v7
+metadata:
+  name: dblab-user
+spec:
+  allow:
+    db_labels:
+      dblab: "true"
+    db_names: ['*']
+    db_users: ['*']
+```
+
+### 5. SSL/TLS for Postgres clones
 
 Teleport always initiates TLS to backend databases. DBLab clones must have SSL enabled.
 
@@ -111,7 +128,7 @@ tctl auth export --type=db-client > /etc/dblab/certs/teleport-ca.crt
 chown 999:999 /etc/dblab/certs/teleport-ca.crt
 ```
 
-### 5. pg_hba.conf — certificate authentication
+### 6. pg_hba.conf — certificate authentication
 
 Starting with DBLab Engine 4.1, the default `pg_hba.conf` includes a `hostssl ... cert` rule that enables Teleport certificate authentication out of the box:
 
@@ -122,6 +139,29 @@ host all all 0.0.0.0/0 md5
 ```
 
 No custom `pg_hba.conf` or volume mount is required for Teleport.
+
+### 7. Volume mounting for certs
+
+Clone containers only inherit DBLab Engine container volumes whose source is under `poolManager.mountDir`. For SSL certs stored outside the pool, use `containerConfig`:
+
+```yaml
+databaseContainer: &db_container
+  dockerImage: "postgresai/extended-postgres:16"
+  containerConfig:
+    "shm-size": 1gb
+    volume: "/etc/dblab/certs:/var/lib/postgresql/cert:ro"
+```
+
+Cert files on the host must have uid 999 ownership before DBLab Engine starts, because the postgres user inside the container runs as uid 999.
+
+### 8. Webhook URL — Docker networking
+
+DBLab Engine runs inside Docker, so `localhost:9876` from within the Engine container resolves to the container itself, not the host.
+
+Options:
+- Use `host.docker.internal:9876` (Docker Desktop / Docker 20.10+)
+- Use the Docker bridge IP (typically `172.17.0.1:9876`)
+- Run the sidecar in the same Docker network as DBLab Engine
 
 ## Configuration
 

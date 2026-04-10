@@ -11,7 +11,29 @@ Note, that the process described here requires a maintenance window (brief perio
 
 If you are using the "physical" provisioning mode, read [how to configure the "sync" instance](/docs/dblab-howtos/administration/postgresql-configuration#the-sync-instance) instead.
 
-## Refresh data from source
+## Triggering a full refresh via CLI or API (DBLab Engine 4.0+)
+
+If you have multiple pools (disks) configured, you can trigger a full refresh without downtime using the CLI or API. DBLab Engine will refresh data on an inactive pool while clones continue to run on the active pool.
+
+**CLI:**
+```bash
+dblab instance full-refresh
+```
+
+**API:**
+```bash
+curl -X POST -H "Verification-Token: YOUR_TOKEN" http://localhost:2345/full-refresh
+```
+
+:::tip
+A scheduled full refresh can also be configured using the `retrieval.refresh.timetable` option in `server.yml` (crontab format).
+:::
+
+## Manual refresh (single disk)
+
+The process described below requires a maintenance window and deletes existing clones.
+
+### Refresh data from source
 ### 1. Cleanup
 Stop and remove the existing containers, then clean up the data directory and destroy the pool:
 ```bash

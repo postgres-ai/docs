@@ -49,3 +49,7 @@ PGPASSWORD=secret_password psql \
 ```
 
 Adjust the port numbers accordingly for other clones, following the pattern `original_port+3000` (e.g., `6001->9001`, `6002->9002`, etc.).
+
+## Alternative: Teleport integration
+
+For zero-trust access control with audit logging, certificate-based authentication, and role-based access, consider using [Teleport integration](/docs/dblab-howtos/administration/teleport-integration) (DBLab Engine 4.1+).
