@@ -445,6 +445,8 @@ Webhooks provide a way to notify external systems about clone lifecycle events. 
     - `clone_create` - triggered when a new clone is created
     - `clone_reset` - triggered when an existing clone is reset to a different snapshot
     - `clone_delete` - triggered when a clone is deleted. Supported since DBLab Engine 4.1.
+    - `clone_protection_expiring` - triggered when a clone's protection lease is about to expire (based on `protectionExpiryWarningMinutes`). Supported since DBLab Engine 4.1.
+    - `clone_protection_expired` - triggered when a clone's protection lease has expired and protection has been automatically removed. Supported since DBLab Engine 4.1.
 
 ### Webhook payload format
 Webhook requests are sent as HTTP POST with JSON payload containing:
