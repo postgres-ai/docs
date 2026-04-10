@@ -89,7 +89,10 @@ curl -H "Verification-Token: YOUR_TOKEN" http://localhost:2345/status
 | POST | `/admin/config` | Set config |
 | GET | `/admin/config.yaml` | Get full config (YAML) |
 | POST | `/admin/test-db-source` | Test source database connection |
-| POST | `/admin/ws-auth` | WebSocket authentication |
+| GET | `/admin/ws-auth` | WebSocket authentication token |
+| GET | `/admin/billing-status` | Billing status |
+| POST | `/admin/activate` | Activate billing |
+| GET | `/instance/logs` | Instance logs (WebSocket) |
 
 ## New in DBLab Engine 4.1
 
