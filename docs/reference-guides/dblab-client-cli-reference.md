@@ -93,6 +93,7 @@ COMMANDS:
    clone         create, update, delete, reset, or retrieve clone
    instance      display instance info
    snapshot      create, retrieve, or delete snapshot
+   teleport      Teleport integration commands (DLE 4.1+)
    config        configure CLI environments
    help, h       shows a list of commands or help for one command
 ```
@@ -303,7 +304,7 @@ dblab clone create [command options]
 - `--id` (string, optional) - clone ID
 - `--snapshot-id` (string, optional; DLE 4.0+) - snapshot ID
 - `--branch` (string, optional; DLE 4.0+) - branch name
-- `--protected` , `-p` (boolean, default: false) - mark instance as protected from deletion
+- `--protected` , `-p` (string, optional) - enable deletion protection. Accepts: `true` for default lease duration, a number of minutes for custom duration, or `0` for infinite protection (no expiry). When omitted, clone is not protected. DLE 4.1+ supports time-limited protection leases — see [Protection leases](/docs/dblab-howtos/cloning/clone-protection).
 - `--async` , `-a` (boolean, default: false) - run the command asynchronously
 - `--extra-config` (string, optional)  set an extra database configuration for the clone. An example: statement_timeout='1s'
 - `--help` , `-h` (boolean, default: false) - show help
@@ -311,6 +312,11 @@ dblab clone create [command options]
 **Example**
 ```bash
 dblab clone create --username someuser --password SomePassword --branch main --id test  
+```
+
+Create a clone with protection for 8 hours (480 minutes):
+```bash
+dblab clone create --username someuser --password SomePassword --branch main --id test --protected 480
 ```
 
 ---
@@ -325,12 +331,19 @@ dblab clone update [command options] CLONE_ID
 - `CLONE_ID` (string, required) - an ID of the Database Lab clone to update parameters
 
 **Options**
-- `--protected` , `-p` (boolean, optional) - mark instance as protected from deletion
+- `--protected` , `-p` (string, optional) - enable deletion protection. Accepts: `true` for default lease duration, a number of minutes for custom duration, or `0` for infinite protection (no expiry). DLE 4.1+ supports time-limited protection leases — see [Protection leases](/docs/dblab-howtos/cloning/clone-protection).
 - `--help` , `-h` (boolean, default: false) - show help
 
 **Example**
+
+Protect a clone with default lease duration:
 ```bash
-dblab clone update --protected TestCloneID
+dblab clone update --protected true TestCloneID
+```
+
+Protect a clone for 24 hours (1440 minutes):
+```bash
+dblab clone update --protected 1440 TestCloneID
 ```
 
 ---
@@ -631,13 +644,21 @@ Delete a snapshot.
 
 **Usage**
 ```bash
-dblab snapshot delete SNAPSHOT_ID
+dblab snapshot delete [command options] SNAPSHOT_ID
 ```
+
+**Options**
+- `--force` (boolean, default: false) - force deletion even if dependent clones or datasets exist
 
 **Example**
 
 ```bash
 dblab snapshot delete "dblab_pool/dataset_1@snapshot_20241028174127"
+```
+
+Force delete a snapshot with dependent clones:
+```bash
+dblab snapshot delete --force "dblab_pool/dataset_1@snapshot_20241028174127"
 ```
 
 ---
@@ -649,6 +670,54 @@ Show help for the command.
 dblab snapshot help
 ```
 
+
+## Command: `teleport`
+:::note
+Requires DBLab 4.1 or higher
+:::
+Teleport integration commands. The `teleport serve` subcommand runs a sidecar process that automatically registers and deregisters DBLab clones as Teleport database resources, enabling secure access to clones through Teleport's access control.
+
+For a full setup guide, see the [Teleport integration howto](/docs/dblab-howtos/administration/teleport-integration).
+
+**Usage**
+```bash
+dblab teleport command [command options] [arguments...]
+```
+
+**Subcommands**
+- `serve` - start the Teleport sidecar
+
+---
+### Subcommand `serve`
+Start the Teleport integration sidecar. This process listens for clone lifecycle webhooks from DBLab Engine and automatically registers/deregisters clones as Teleport database resources.
+
+**Usage**
+```bash
+dblab teleport serve [command options]
+```
+
+**Options**
+- `--environment-id` (string, required) - environment identifier used in Teleport resource names
+- `--teleport-proxy` (string, required) - Teleport Auth Server or Proxy address (e.g., `teleport.example.com:3025`)
+- `--teleport-identity` (string, required) - path to the Teleport bot identity file for authentication
+- `--listen-addr` (string, optional, default: "0.0.0.0:9876") - address and port to listen for incoming webhooks
+- `--dblab-url` (string, required) - DBLab API URL (e.g., `http://localhost:2345`)
+- `--dblab-token` (string, required) - DBLab verification token
+- `--webhook-secret` (string, optional) - webhook secret for verifying incoming webhook payloads
+
+**Example**
+```bash
+dblab teleport serve \
+  --environment-id production \
+  --teleport-proxy teleport.example.com:3025 \
+  --teleport-identity /etc/teleport/dblab-identity \
+  --listen-addr 0.0.0.0:9876 \
+  --dblab-url http://localhost:2345 \
+  --dblab-token "$DBLAB_TOKEN" \
+  --webhook-secret "$WEBHOOK_SECRET"
+```
+
+---
 
 ## Command: `config`
 Configure CLI environments.

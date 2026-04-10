@@ -14,6 +14,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 - [DBLab tutorial for Amazon RDS Postgres](/docs/tutorials/database-lab-tutorial-amazon-rds)
 - [Supported databases](/docs/database-lab/supported-databases)
 - [DBLab UI](/docs/database-lab/user-interface)
+- [Prometheus monitoring](/docs/database-lab/prometheus-monitoring)
 - [Data masking](/docs/database-lab/masking)
 - [DB Migration Checker](/docs/database-lab/db-migration-checker)
 - [Telemetry](/docs/database-lab/telemetry)
@@ -69,7 +70,7 @@ Some problems that can be solved by using DBLab:
 - Works well both on-premise and in clouds.
 - Thin provisioning in seconds thanks to copy-on-write (CoW) provided by [ZFS](https://en.wikipedia.org/wiki/ZFS) and a special methodology for preparing PostgreSQL database snapshots. There is also an option to use [LVM](https://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)) instead of ZFS.
 - Unlimited size of databases (Postgres database size [is unlimited](https://www.postgresql.org/docs/current/limits.html), ZFS volume can be up to 21^28 bytes, or [256 trillion yobibytes](https://en.wikipedia.org/wiki/ZFS)).
-- Supports PostgreSQL from version 9.6 up to the most recently released version.
+- Supports PostgreSQL from version 10 up to the most recently released version.
 - Thin cloning takes only a few seconds, regardless of the database size.
 - REST API.
 - Client CLI included.
