@@ -13,7 +13,6 @@ A protected clone cannot be deleted automatically or manually. To delete it, fir
 
 ## GUI
 1. On the **Database Lab clone** page click the **Destroy** button.
-  ![DBLab Engine page / Create clone](/assets/guides/create-clone-1.png)
 1. Accept confirmation dialog and wait for it. You will be redirected to the **Database Lab instance** page.
 
 ## CLI
