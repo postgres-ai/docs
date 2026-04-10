@@ -8,6 +8,7 @@ slug: /dblab-howtos/administration/data
 ### Logical
 - [Dump](/docs/dblab-howtos/administration/data/dump)
 - [RDS](/docs/dblab-howtos/administration/data/rds)
+- [RDS/Aurora refresh](/docs/dblab-howtos/administration/data/rds-refresh) — refreshes from temporary RDS clone instead of production
 - [Full refresh](/docs/dblab-howtos/administration/logical-full-refresh)
 
 ### Physical
