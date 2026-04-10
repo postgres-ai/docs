@@ -202,6 +202,32 @@ dblab_sync_wal_lag_seconds
     description: "DBLab sync instance WAL replay is {{ $value | humanizeDuration }} behind"
 ```
 
+### Metrics collection stale alert
+
+```yaml
+- alert: DBLabMetricsStale
+  expr: time() - dblab_scrape_success_timestamp > 300
+  for: 5m
+  labels:
+    severity: warning
+  annotations:
+    summary: "DBLab metrics collection is stale"
+    description: "DBLab metrics have not been updated for more than 5 minutes"
+```
+
+### Sync instance down alert (physical mode)
+
+```yaml
+- alert: DBLabSyncDown
+  expr: dblab_sync_status{status="down"} == 1 or dblab_sync_status{status="error"} == 1
+  for: 5m
+  labels:
+    severity: critical
+  annotations:
+    summary: "DBLab sync instance is down"
+    description: "DBLab sync instance is not healthy"
+```
+
 ## OpenTelemetry integration
 
 DBLab metrics can be exported to OpenTelemetry-compatible backends using the OpenTelemetry Collector. This allows you to send metrics to Grafana Cloud, Datadog, New Relic, and other observability platforms.
