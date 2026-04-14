@@ -44,6 +44,7 @@ module.exports = {
   // Files with <placeholder> text need HTML entities: &lt;placeholder&gt;
   markdown: {
     format: 'mdx',
+    mermaid: true,
   },
 
   customFields: {
