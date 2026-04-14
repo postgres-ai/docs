@@ -44,9 +44,9 @@ export const bogdan = {
 }
 
 export const denis = {
-  avatarUrl: '/assets/author/denis.jpeg',
+  avatarUrl: '/assets/author/denis.png',
   name: 'Denis Morozov',
-  role: 'Lead Engineer at',
+  role: 'Staff Engineer at',
   gitlabUrl: 'https://gitlab.com/Sarumyan9999'
 }
 

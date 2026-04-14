@@ -15,7 +15,7 @@ export const DbLabBanner = () => {
         height="170px"
       />
       <div className={styles.content}>
-        <h6 className={styles.title}>DBLab Engine 4.0</h6>
+        <h6 className={styles.title}>DBLab Engine</h6>
         <p className={styles.desc}>
           Instant database branching with O(1) economics.
         </p>

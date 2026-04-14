@@ -1,6 +1,13 @@
 // Duplicates data from the blog.
 const blog = [
   {
+    link: 'blog/20260408-dblab-engine-4-1-released',
+    date: '2026-04-08 00:00:00',
+    title: 'DBLab 4.1: protection leases, Teleport, Prometheus, and more',
+    description: 'DBLab Engine 4.1 brings protection leases for safe clone management, Teleport integration, RDS/Aurora-safe refresh, Prometheus metrics, ARM64 support, and database rename.',
+    image: '/assets/thumbnails/dblab-4.1-blog.png',
+  },
+  {
     link: 'blog/20241003-how-does-planning-time-depend-on-number-of-partitions',
     date: '2024-10-03 21:45:12',
     title: 'AI-assisted benchmark: number of partitions vs. planning time',
