@@ -58,6 +58,25 @@ validate_feeds:
   only:
     - branches
 
+docs_sql_snippets:
+  stage: validate
+  image: docker:27
+  services:
+    - docker:27-dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+    POSTGRES_VERSIONS: "12 13 14 15 16 17 18"
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - .ci/test-sql-snippets.sh
+        - docs/postgres-howtos/performance-optimization/monitoring/how-to-monitor-xmin-horizon.md
+    - if: $CI_COMMIT_BRANCH == "master"
+  script:
+    - apk add --no-cache bash
+    - bash .ci/test-sql-snippets.sh
+
 # Stages templates.
 .job_template: &build_and_push_definition
   stage: prepare_image

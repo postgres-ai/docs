@@ -131,49 +131,80 @@ past. To understand what it is, we need to check several system views.
 
 An example query:
 
+<!-- sql-snippet-test: xmin-horizon begin -->
 ```sql
 with bits as (
   select
+    txid_snapshot_xmin(txid_current_snapshot()) as snapshot_xmin,
+    -- Primary client backend snapshots can hold back cleanup of user table tuples.
     (
       select backend_xmin
       from pg_stat_activity
-      order by age(backend_xmin) desc nulls last
+      where backend_xmin is not null
+      order by age(backend_xmin) desc
       limit 1
-    ) as xmin_pg_stat_activity,
+    ) as data_xmin_pg_stat_activity,
+    -- Replication slot xmin can hold back cleanup of user table tuples.
     (
       select xmin
       from pg_replication_slots
-      order by age(xmin) desc nulls last
+      where xmin is not null
+      order by age(xmin) desc
       limit 1
-    ) as xmin_pg_replication_slots,
+    ) as data_xmin_pg_replication_slots,
+    -- Logical replication slot catalog_xmin can hold back cleanup of system catalog tuples.
+    (
+      select catalog_xmin
+      from pg_replication_slots
+      where catalog_xmin is not null
+      order by age(catalog_xmin) desc
+      limit 1
+    ) as catalog_xmin_pg_replication_slots,
+    -- Standby feedback can propagate standby snapshots to the primary.
     (
       select backend_xmin
       from pg_stat_replication
-      order by age(backend_xmin) desc nulls last
+      where backend_xmin is not null
+      order by age(backend_xmin) desc
       limit 1
-    ) as xmin_pg_stat_replication,
+    ) as data_xmin_pg_stat_replication,
+    -- Prepared transactions keep their transaction ID until COMMIT/ROLLBACK PREPARED.
     (
       select transaction
       from pg_prepared_xacts
-      order by age(transaction) desc nulls last
+      order by age(transaction) desc
       limit 1
-    ) as xmin_pg_prepared_xacts
+    ) as data_xmin_pg_prepared_xacts
 )
 select
   *,
-  age(xmin_pg_stat_activity) as xmin_pgsa_age,
-  age(xmin_pg_replication_slots) as xmin_pgrs_age,
-  age(xmin_pg_stat_replication) as xmin_pgsr_age,
-  age(xmin_pg_prepared_xacts) as xmin_pgpx_age,
+  age(data_xmin_pg_stat_activity) as data_xmin_pg_stat_activity_age,
+  age(data_xmin_pg_replication_slots) as data_xmin_pg_replication_slots_age,
+  age(catalog_xmin_pg_replication_slots) as catalog_xmin_pg_replication_slots_age,
+  age(data_xmin_pg_stat_replication) as data_xmin_pg_stat_replication_age,
+  age(data_xmin_pg_prepared_xacts) as data_xmin_pg_prepared_xacts_age,
   greatest(
-    age(xmin_pg_stat_activity),
-    age(xmin_pg_replication_slots),
-    age(xmin_pg_stat_replication),
-    age(xmin_pg_prepared_xacts)
-  ) as xmin_horizon_age
+    age(data_xmin_pg_stat_activity),
+    age(data_xmin_pg_replication_slots),
+    age(data_xmin_pg_stat_replication),
+    age(data_xmin_pg_prepared_xacts)
+  ) as data_horizon_age,
+  greatest(
+    age(data_xmin_pg_stat_activity),
+    age(data_xmin_pg_replication_slots),
+    age(data_xmin_pg_stat_replication),
+    age(data_xmin_pg_prepared_xacts),
+    age(catalog_xmin_pg_replication_slots)
+  ) as catalog_horizon_age
 from bits;
 ```
+<!-- sql-snippet-test: xmin-horizon end -->
 
 Note that the `min(...)` function cannot be applied to XID values directly, because of their nature (32-bit
-and `rotation`) – casting XID to `int` doesn't exist for good reason. But the` age(XID)` function is helpful here. So
-instead of considering `xmin_horizon` values, we need to deal with `xmin_horizon_age` instead.
+and `rotation`) – casting XID to `int` doesn't exist for good reason. But the `age(XID)` function is helpful here. So
+instead of considering raw `xmin` values alone, we need to deal with horizon ages.
+
+The query separates `data_horizon_age` from `catalog_horizon_age`. `pg_replication_slots.xmin` can hold back cleanup of
+user table tuples, while `pg_replication_slots.catalog_xmin` can hold back cleanup of system catalog tuples for logical
+replication. Keeping these as separate metrics avoids conflating different failure modes and remediation steps. The raw
+`snapshot_xmin` column is included as a cross-version anchor for checking what a fresh transaction can currently see.
