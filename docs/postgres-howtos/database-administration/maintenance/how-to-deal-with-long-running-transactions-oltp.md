@@ -126,7 +126,7 @@ long-running transaction, to understand what queries it consists of. Without suc
 of data (queries are fast, they are usually below `log_min_duration_statement`), so we don't see them in logs.
 
 In this case, we can apply the method described in #PostgresMarathon
-[Ad-hoc monitoring](/docs/postgres-howtos/performance-optimization/statistics/ad-hoc-monitoring) and sample long (> 1min) transactions every 1
+[Ad-hoc monitoring](/docs/postgres-howtos/performance-optimization/monitoring/ad-hoc-monitoring) and sample long (> 1min) transactions every 1
 second (might be worth increasing the frequency here):
 
 ```sql

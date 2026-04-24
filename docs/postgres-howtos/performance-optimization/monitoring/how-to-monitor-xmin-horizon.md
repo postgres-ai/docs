@@ -26,7 +26,7 @@ estimated_time: 6 min
 
 
 Previously, we discussed
-[how to implement monitoring for the risks of XID (transaction ID) and MultiXID wraparound](/docs/postgres-howtos/performance-optimization/statistics/how-to-monitor-transaction-id-wraparound-risks).
+[how to implement monitoring for the risks of XID (transaction ID) and MultiXID wraparound](/docs/postgres-howtos/performance-optimization/monitoring/how-to-monitor-transaction-id-wraparound-risks).
 That type of check is critical and a must-have in any monitoring.
 
 However, while it helps you understand the risk level, it doesn't reveal the root cause – something that you'll
