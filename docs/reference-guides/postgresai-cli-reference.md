@@ -3,10 +3,13 @@ title: PostgresAI CLI reference
 sidebar_label: PostgresAI CLI
 keywords:
   - "postgresai cli"
+  - "pgai cli"
   - "postgres_ai cli"
   - "postgres_ai monitoring cli"
   - "mcp"
   - "issues"
+  - "checkup"
+  - "prepare-db"
 ---
 
 import Tabs from '@theme/Tabs';
@@ -14,11 +17,20 @@ import TabItem from '@theme/TabItem';
 
 ## Description
 
-PostgresAI Command Line Interface (`postgresai`) is a tool for working with postgres_ai monitoring, including authentication, MCP integration, and issue management.
+PostgresAI Command Line Interface is a tool for working with PostgresAI:
+preparing databases for monitoring, running local monitoring stacks,
+generating health-check reports, browsing and managing issues in the
+PostgresAI Console, and exposing PostgresAI tools to AI coding clients
+over MCP.
+
+The CLI is published as the `postgresai` npm package and ships two
+equivalent binaries: `postgresai` (canonical) and `pgai` (short alias).
+Both names accept exactly the same commands and options; this page uses
+`postgresai` throughout.
 
 ## Getting started
 
-To install and authenticate, see [PostgresAI CLI](/docs/postgresai-howtos/postgresai-cli).
+To install and authenticate, see the [PostgresAI CLI how-to](/docs/postgresai-howtos/postgresai-cli).
 
 ## Synopsis
 
@@ -27,6 +39,8 @@ To install and authenticate, see [PostgresAI CLI](/docs/postgresai-howtos/postgr
 
 ```bash
 postgresai [global options] <command> [command options] [arguments...]
+# or, equivalently:
+pgai [global options] <command> [command options] [arguments...]
 ```
 
 </TabItem>
@@ -46,25 +60,43 @@ bunx postgresai [global options] <command> [command options] [arguments...]
 </TabItem>
 </Tabs>
 
-Run `postgresai --help` to list available commands and global options. For command-specific help, run `postgresai <command> --help`.
+Run `postgresai --help` to list available commands and global options.
+For command-specific help, run `postgresai <command> --help` (works for
+nested subcommands too, e.g. `postgresai mon targets --help`).
+
+## Global options
+
+These options apply to every command and override the corresponding
+environment variables and configuration file values:
+
+- `--api-key <key>` — API key (overrides `PGAI_API_KEY`).
+- `--api-base-url <url>` — API base URL for backend RPC (overrides `PGAI_API_BASE_URL`; default `https://postgres.ai/api/general/`).
+- `--ui-base-url <url>` — UI base URL for browser routes (overrides `PGAI_UI_BASE_URL`; default `https://console.postgres.ai`).
+- `--storage-base-url <url>` — Storage base URL for file uploads (overrides `PGAI_STORAGE_BASE_URL`).
+
+Configuration is stored in `~/.config/postgresai/config.json`.
 
 ## Command overview
 
 ```
 COMMANDS:
-  auth        authenticate via browser and store API key locally
-  init        create a monitoring role, required view(s), and grant permissions
-  mon         manage monitoring services
-  issues      manage issue reports in PostgresAI Console
-  mcp         MCP server integration for AI coding tools
-  add-key     store API key locally
-  show-key    show the current API key (masked)
-  remove-key  remove the stored API key
+  prepare-db            prepare a database for monitoring (idempotent)
+  unprepare-db          remove monitoring setup from a database
+  checkup               generate health-check reports directly from PostgreSQL
+  mon                   manage the local monitoring stack
+  auth                  authenticate and manage the local API key
+  issues                manage issues, comments, and action items in PostgresAI Console
+  reports               list and download checkup reports stored in PostgresAI Console
+  mcp                   MCP server integration for AI coding tools
+  set-default-project   store the default project for checkup uploads
+  set-storage-url       store the storage base URL for file uploads
+  help                  show help
 ```
 
-## Command: `auth`
+## Command: `prepare-db`
 
-Authenticate via browser and store the API key locally.
+Prepare a database for monitoring: create the monitoring user, the
+required view(s), and grant permissions. The command is idempotent.
 
 **Usage**
 
@@ -72,405 +104,695 @@ Authenticate via browser and store the API key locally.
 <TabItem value="cli" label="Installed CLI" default>
 
 ```bash
-postgresai auth
+postgresai prepare-db [conn] [options]
 ```
 
 </TabItem>
 <TabItem value="npx" label="npx">
 
 ```bash
-npx postgresai auth
+npx postgresai prepare-db [conn] [options]
 ```
 
 </TabItem>
 <TabItem value="bunx" label="bunx">
 
 ```bash
-bunx postgresai auth
+bunx postgresai prepare-db [conn] [options]
 ```
 
 </TabItem>
 </Tabs>
 
-**Notes**
-
-- Configuration is stored in `~/.config/postgresai/config.json`.
-
-## Command: `init`
-
-Create or update the monitoring role, required view(s), and grant required permissions (idempotent).
-
-**Usage**
-
-<Tabs groupId="cli-runner" queryString>
-<TabItem value="cli" label="Installed CLI" default>
-
-```bash
-postgresai init <conn>
-```
-
-</TabItem>
-<TabItem value="npx" label="npx">
-
-```bash
-npx postgresai init <conn>
-```
-
-</TabItem>
-<TabItem value="bunx" label="bunx">
-
-```bash
-bunx postgresai init <conn>
-```
-
-</TabItem>
-</Tabs>
+`[conn]` is an optional positional admin connection string. Both URL
+form (`postgresql://admin@host:5432/dbname`) and libpq key/value form
+(`"dbname=dbname host=host user=admin"`) are accepted; psql-like
+options (`-h`, `-p`, `-U`, `-d`) are also supported.
 
 **Examples**
 
-<Tabs groupId="cli-runner" queryString>
-<TabItem value="cli" label="Installed CLI" default>
-
 ```bash
-postgresai init postgresql://admin@host:5432/dbname
-postgresai init "dbname=dbname host=host user=admin"
-postgresai init -h host -p 5432 -U admin -d dbname
+postgresai prepare-db postgresql://admin@host:5432/dbname
+postgresai prepare-db "dbname=dbname host=host user=admin"
+postgresai prepare-db -h host -p 5432 -U admin -d dbname
+
+# Verify only (no changes)
+postgresai prepare-db postgresql://admin@host:5432/dbname --verify
+
+# Dry run: print SQL plan
+postgresai prepare-db postgresql://admin@host:5432/dbname --print-sql
+
+# Reset only the monitoring role password
+postgresai prepare-db postgresql://admin@host:5432/dbname \
+  --reset-password --password 'new_password'
+
+# Supabase mode (uses Management API instead of direct connection)
+SUPABASE_ACCESS_TOKEN=... SUPABASE_PROJECT_REF=... \
+  postgresai prepare-db --supabase
 ```
 
-</TabItem>
-<TabItem value="npx" label="npx">
+**Connection options**
 
-```bash
-npx postgresai init postgresql://admin@host:5432/dbname
-npx postgresai init "dbname=dbname host=host user=admin"
-npx postgresai init -h host -p 5432 -U admin -d dbname
-```
+- `-h, --host <host>` — PostgreSQL host (psql-like).
+- `-p, --port <port>` — PostgreSQL port (psql-like).
+- `-U, --username <username>` — PostgreSQL admin user (psql-like).
+- `-d, --dbname <dbname>` — PostgreSQL database name (psql-like).
+- `--admin-password <password>` — admin password (otherwise uses `PGPASSWORD` if set).
+- `--db-url <url>` — admin connection URL (deprecated; pass it as the positional `[conn]` argument).
 
-</TabItem>
-<TabItem value="bunx" label="bunx">
+**Monitoring role options**
 
-```bash
-bunx postgresai init postgresql://admin@host:5432/dbname
-bunx postgresai init "dbname=dbname host=host user=admin"
-bunx postgresai init -h host -p 5432 -U admin -d dbname
-```
+- `--monitoring-user <name>` — monitoring role name to create or update (default: `postgres_ai_monitoring`).
+- `--password <password>` — monitoring role password (overrides `PGAI_MON_PASSWORD`). If neither is provided, a strong password is generated.
+- `--print-password` — print the generated monitoring password (dangerous in CI logs).
+- `--skip-optional-permissions` — skip optional permissions (RDS / self-managed extras).
+- `--provider <provider>` — database provider (e.g. `supabase`); affects which steps run.
 
-</TabItem>
-</Tabs>
+**Modes**
 
-**Common options**
+- `--verify` — verify that the monitoring role and permissions are in place; make no changes.
+- `--reset-password` — reset only the monitoring role password.
+- `--print-sql` — print the SQL plan and exit; apply no changes.
+- `--json` — output the result as machine-readable JSON.
 
-- `--verify`: verify that monitoring role/permissions are in place (no changes).
-- `--reset-password`: reset monitoring role password only.
-- `--print-sql`: print SQL plan and exit (no changes applied).
-- `--skip-optional-permissions`: skip optional permissions (managed and self-managed extras).
+**Supabase mode**
 
-## Command: `mon`
+- `--supabase` — use the Supabase Management API instead of a direct PostgreSQL connection.
+- `--supabase-access-token <token>` — Supabase Management API token (or `SUPABASE_ACCESS_TOKEN` env var). Tokens can be created at <https://supabase.com/dashboard/account/tokens>.
+- `--supabase-project-ref <ref>` — Supabase project reference (or `SUPABASE_PROJECT_REF` env var). Auto-detected from a Supabase database URL when one is supplied as `[conn]`.
 
-Manage monitoring services.
+## Command: `unprepare-db`
+
+Reverse `prepare-db`: drop the monitoring user, views, schema, and
+revoke permissions.
 
 **Usage**
 
-<Tabs groupId="cli-runner" queryString>
-<TabItem value="cli" label="Installed CLI" default>
+```bash
+postgresai unprepare-db [conn] [options]
+```
+
+**Options**
+
+- `-h, --host`, `-p, --port`, `-U, --username`, `-d, --dbname`,
+  `--admin-password`, `--db-url <url>` (deprecated) — admin connection
+  parameters, same as `prepare-db`.
+- `--monitoring-user <name>` — monitoring role to remove (default: `postgres_ai_monitoring`).
+- `--keep-role` — keep the monitoring role; only revoke permissions and drop objects.
+- `--provider <provider>` — database provider (affects which steps run).
+- `--print-sql` — print the SQL plan and exit; apply no changes.
+- `--force` — skip the confirmation prompt.
+- `--json` — output the result as machine-readable JSON.
+
+## Command: `checkup`
+
+Generate health-check reports directly from PostgreSQL ("express mode")
+and optionally upload them to the PostgresAI Console.
+
+**Usage**
+
+```bash
+# Run all checks
+postgresai checkup <conn>
+
+# Run a specific check (CHECK_ID matches /^[A-Z]\d{3}$/, e.g. H002)
+postgresai checkup <CHECK_ID> <conn>
+```
+
+`<conn>` accepts the same URL / libpq / psql-like forms as
+`prepare-db`.
+
+**Options**
+
+- `--check-id <id>` — specific check to run (or `ALL`). Equivalent to passing the check ID as the first positional argument.
+- `--node-name <name>` — node name embedded in reports (default: `node-01`).
+- `--output <path>` — write JSON results to this directory.
+- `--upload` / `--no-upload` — upload JSON results to PostgresAI Console (requires API key). Default depends on whether an API key is configured.
+- `--project <project>` — project name or ID for the upload (used with `--upload`). Defaults to the value stored by [`set-default-project`](#command-set-default-project); a project is auto-generated on first run if needed.
+- `--json` — print JSON to stdout.
+- `--markdown` — print Markdown to stdout.
+
+Run `postgresai checkup --help` to see the list of available check IDs
+and titles bundled with your CLI version.
+
+## Command: `mon`
+
+Manage the local monitoring stack (Docker Compose-based: collectors,
+VictoriaMetrics, Grafana, …).
+
+**Usage**
 
 ```bash
 postgresai mon <subcommand> [options]
 ```
 
-</TabItem>
-<TabItem value="npx" label="npx">
-
-```bash
-npx postgresai mon <subcommand> [options]
-```
-
-</TabItem>
-<TabItem value="bunx" label="bunx">
-
-```bash
-bunx postgresai mon <subcommand> [options]
-```
-
-</TabItem>
-</Tabs>
-
 **Subcommands**
 
-- `quickstart`: complete setup (generate config and start services).
-- `start`: start monitoring services.
-- `stop`: stop monitoring services.
-- `restart [service]`: restart all services or a specific service.
-- `status`: show services status.
-- `health`: check that services are up and healthy.
-- `targets`: manage databases to monitor.
-- `logs [service]`: show logs for all or a specific service.
-- `config`: show monitoring configuration.
-- `update-config`: apply configuration changes (generate sources).
-- `update`: update monitoring stack.
-- `reset [service]`: reset all or a specific service data.
-- `clean`: cleanup artifacts.
-- `check`: system readiness check.
-- `shell <service>`: open a shell in a monitoring service container.
-- `generate-grafana-password`: generate a new Grafana password.
-- `show-grafana-credentials`: show Grafana credentials.
+- `local-install` — install the local monitoring stack: generate `.env`, configure services, and start them.
+- `start` — start monitoring services.
+- `stop` — stop monitoring services.
+- `restart [service]` — restart all services or a specific one.
+- `status` — show services status.
+- `health` — check that services are up and healthy.
+- `logs [service]` — show logs for all services or a specific one.
+- `config` — show monitoring configuration.
+- `update-config` — apply configuration changes (regenerate datasources, …).
+- `update` — update the monitoring stack.
+- `reset [service]` — reset all services or a specific one (removes data).
+- `clean` — clean up monitoring artifacts (stops services and removes volumes).
+- `check` — system readiness check.
+- `shell <service>` — open an interactive shell in a monitoring service container.
+- `targets` — manage databases to monitor (see below).
+- `generate-grafana-password` — generate a new Grafana password.
+- `show-grafana-credentials` — show Grafana credentials.
 
-### Subcommand: `quickstart`
+### Subcommand: `mon local-install`
 
-Complete setup (generate config and start monitoring services).
-
-**Usage**
-
-<Tabs groupId="cli-runner" queryString>
-<TabItem value="cli" label="Installed CLI" default>
+Install (or re-install) the local monitoring stack. Replaces the older
+`mon quickstart` name.
 
 ```bash
-postgresai mon quickstart [--demo] [--api-key <key>] [--db-url <url>] [-y]
+postgresai mon local-install [options]
 ```
 
-</TabItem>
-<TabItem value="npx" label="npx">
+**Options**
+
+- `--demo` — demo mode with a sample database (for testing; cannot be combined with `--api-key`).
+- `--api-key <key>` — PostgresAI API key for automated report uploads.
+- `--db-url <url>` — PostgreSQL connection URL to monitor (form: `postgresql://user:pass@host:port/db`).
+- `--tag <tag>` — Docker image tag to use (e.g. `0.14.0`, `0.14.0-dev.33`).
+- `--project <name>` — Docker Compose project name (default: `postgres_ai`).
+- `-y, --yes` — accept all defaults and skip interactive prompts.
+
+`local-install` writes `.env` in the monitoring directory, preserving
+existing `REPLICATOR_PASSWORD` and `VM_AUTH_*` values or generating new
+random ones when missing. `VM_AUTH_USERNAME` defaults to `vmauth` when
+absent. The replication password is used by the demo PostgreSQL standby,
+and the VM auth credentials are required before Docker Compose can
+provision Grafana datasources. To rotate VM auth credentials manually,
+run `VM_AUTH_PASSWORD="$(openssl rand -base64 18)" ./scripts/rotate-vm-auth.sh`
+from the monitoring directory.
+
+### Subcommand: `mon health`
 
 ```bash
-npx postgresai mon quickstart [--demo] [--api-key <key>] [--db-url <url>] [-y]
+postgresai mon health [--wait <seconds>]
 ```
 
-</TabItem>
-<TabItem value="bunx" label="bunx">
+- `--wait <seconds>` — wait up to `<seconds>` for services to become healthy (default: `0`, i.e. check once and return).
+
+### Subcommand: `mon logs`
 
 ```bash
-bunx postgresai mon quickstart [--demo] [--api-key <key>] [--db-url <url>] [-y]
+postgresai mon logs [service] [options]
 ```
 
-</TabItem>
-</Tabs>
+- `-f, --follow` — follow logs.
+- `--tail <lines>` — number of trailing lines (default: `all`).
 
-### Subcommand group: `targets`
+### Subcommand: `mon clean`
 
-Manage databases to monitor.
+```bash
+postgresai mon clean [--keep-volumes]
+```
 
-**Usage**
+- `--keep-volumes` — keep data volumes (only stop and remove containers).
 
-<Tabs groupId="cli-runner" queryString>
-<TabItem value="cli" label="Installed CLI" default>
+### Subcommand group: `mon targets`
+
+Manage databases monitored by the local stack.
 
 ```bash
 postgresai mon targets <subcommand> [args]
 ```
 
-</TabItem>
-<TabItem value="npx" label="npx">
-
-```bash
-npx postgresai mon targets <subcommand> [args]
-```
-
-</TabItem>
-<TabItem value="bunx" label="bunx">
-
-```bash
-bunx postgresai mon targets <subcommand> [args]
-```
-
-</TabItem>
-</Tabs>
-
 **Subcommands**
 
-- `list`: list configured monitoring targets.
-- `add <conn-string> [name]`: add a Postgres instance to monitor.
-- `remove <name>`: remove a monitoring target.
-- `test <name>`: test connectivity to a configured target.
+- `list` — list configured monitoring targets.
+- `add [conn-string] [name]` — add a Postgres instance to monitor. Both arguments are optional; missing values are prompted for interactively.
+- `remove <name>` — remove a monitoring target.
+- `test <name>` — test connectivity to a configured target.
 
-## Command: `issues`
+## Command: `auth`
 
-Manage issue reports in PostgresAI Console.
+Authentication and API-key management. `auth` is a command group; the
+default subcommand is `login`, so plain `postgresai auth` triggers an
+OAuth flow.
 
 **Usage**
 
-<Tabs groupId="cli-runner" queryString>
-<TabItem value="cli" label="Installed CLI" default>
+```bash
+postgresai auth [subcommand] [options]
+```
+
+**Subcommands**
+
+- `login` (default) — authenticate via browser (OAuth) or store an API key directly.
+- `show-key` — show the current API key, masked.
+- `remove-key` — remove the stored API key.
+
+### Subcommand: `auth login`
+
+```bash
+postgresai auth                              # OAuth via browser
+postgresai auth --set-key <key>              # store an API key directly
+postgresai auth login --port 7777 --debug    # explicit form
+```
+
+**Options**
+
+- `--set-key <key>` — store an API key directly without going through the OAuth flow.
+- `--port <port>` — local callback server port (default: random).
+- `--debug` — enable debug output.
+
+The browser flow opens your default browser, prompts for organization
+selection, and writes the resulting API key to
+`~/.config/postgresai/config.json`.
+
+## Command: `issues`
+
+Manage issues, comments, and action items in the PostgresAI Console.
+
+**Usage**
 
 ```bash
 postgresai issues <subcommand> [options]
 ```
 
-</TabItem>
-<TabItem value="npx" label="npx">
-
-```bash
-npx postgresai issues <subcommand> [options]
-```
-
-</TabItem>
-<TabItem value="bunx" label="bunx">
-
-```bash
-bunx postgresai issues <subcommand> [options]
-```
-
-</TabItem>
-</Tabs>
+All `issues` subcommands accept `--debug` (enable debug output) and
+`--json` (force raw JSON output instead of the default human-friendly
+YAML). When stdout is not a TTY (e.g. piped or redirected), JSON is
+selected automatically.
 
 **Subcommands**
 
-- `list`: list issues.
-- `view <issue_id>`: view issue details (and comments).
-- `post_comment <issue_id> <content>`: post a comment to an issue.
+- `list` — list issues.
+- `view <issueId>` — view issue details and comments.
+- `create <title> [options]` — create a new issue.
+- `update <issueId> [options]` — update an existing issue.
+- `post-comment <issueId> <content> [options]` — post a comment.
+- `update-comment <commentId> <content> [options]` — update an existing comment.
+- `files upload <path>` — upload a file to storage and print a markdown link.
+- `files download <url> [-o <path>]` — download a file from storage.
+- `action-items <issueId>` — list action items for an issue.
+- `view-action-item <id> [<id> ...]` — view one or more action items in detail.
+- `create-action-item <issueId> <title> [options]` — create an action item.
+- `update-action-item <actionItemId> [options]` — update an action item.
 
-**Examples**
-
-<Tabs groupId="cli-runner" queryString>
-<TabItem value="cli" label="Installed CLI" default>
-
-```bash
-postgresai issues list
-postgresai issues view <issue_id>
-postgresai issues post_comment <issue_id> "comment"
-```
-
-</TabItem>
-<TabItem value="npx" label="npx">
+### `issues list`
 
 ```bash
-npx postgresai issues list
-npx postgresai issues view <issue_id>
-npx postgresai issues post_comment <issue_id> "comment"
+postgresai issues list [--status <status>] [--limit <n>] [--offset <n>]
 ```
 
-</TabItem>
-<TabItem value="bunx" label="bunx">
+- `--status <status>` — filter by status: `open`, `closed`, or `all` (default: `all`).
+- `--limit <n>` — maximum number of issues to return (default: `20`).
+- `--offset <n>` — number of issues to skip (default: `0`).
+
+### `issues view`
 
 ```bash
-bunx postgresai issues list
-bunx postgresai issues view <issue_id>
-bunx postgresai issues post_comment <issue_id> "comment"
+postgresai issues view <issueId>
 ```
 
-</TabItem>
-</Tabs>
+### `issues create`
 
-## Command: `mcp`
+```bash
+postgresai issues create <title> [options]
+```
 
-MCP server integration for AI coding tools.
+- `--org-id <id>` — organization ID (defaults to the configured `orgId`).
+- `--project-id <id>` — project ID.
+- `--description <text>` — issue description (use `\n` for newlines).
+- `--label <label>` — issue label; repeat to add multiple.
+- `--attach <path>` — attach a local file (uploads to storage and appends a markdown link to the description); repeatable.
+
+### `issues update`
+
+```bash
+postgresai issues update <issueId> [options]
+```
+
+- `--title <text>` — new title (use `\n` for newlines).
+- `--description <text>` — new description (use `\n` for newlines).
+- `--status <value>` — `open`, `closed`, `0`, or `1`.
+- `--label <label>` — set labels; repeatable. If provided, replaces existing labels.
+- `--clear-labels` — set labels to an empty list.
+- `--attach <path>` — attach a file; appends a markdown link to `--description`. If `--description` is omitted, the existing description is fetched and the link appended to it.
+
+### `issues post-comment`
+
+```bash
+postgresai issues post-comment <issueId> <content> [options]
+```
+
+- `--parent <uuid>` — parent comment ID (for threaded replies).
+- `--attach <path>` — attach a file; appends a markdown link to the comment body. Repeatable.
+
+### `issues update-comment`
+
+```bash
+postgresai issues update-comment <commentId> <content> [options]
+```
+
+- `--attach <path>` — attach a file; appends a markdown link to `<content>`. Repeatable.
+
+### `issues files`
+
+```bash
+# Upload a local file; prints the storage URL and a ready-to-paste markdown link.
+postgresai issues files upload <path>
+
+# Download a file from storage; without -o, derives the filename from the URL.
+postgresai issues files download <url> [-o <output_path>]
+```
+
+#### Attaching files to issues and comments (`--attach`)
+
+`create`, `update`, `post-comment`, and `update-comment` accept a
+repeatable `--attach <path>` flag. Each file is uploaded to PostgresAI
+storage and a markdown link is appended to the comment body or issue
+description. Image extensions (`.png`, `.jpg`, `.jpeg`, `.gif`,
+`.webp`, `.svg`, `.bmp`, `.ico`) render inline as `![](url)`; other
+files render as `[](url)`. Multiple `--attach` flags preserve order;
+each link goes on its own line.
+
+```bash
+# Attach a screenshot to a new comment
+postgresai issues post-comment <issueId> "Saw this in prod" --attach screenshot.png
+
+# Attach multiple files to a new issue
+postgresai issues create "Slow query" --org-id 4 \
+  --description "Plan attached" --attach plan.txt --attach flame.svg
+
+# Attach a file to an existing issue without changing the description
+postgresai issues update <issueId> --attach trace.log
+```
+
+### `issues action-items`
+
+```bash
+postgresai issues action-items <issueId>
+postgresai issues view-action-item <actionItemId> [<actionItemId> ...]
+```
+
+### `issues create-action-item`
+
+```bash
+postgresai issues create-action-item <issueId> <title> [options]
+```
+
+- `--description <text>` — detailed description (use `\n` for newlines).
+- `--sql-action <sql>` — SQL command to execute.
+- `--config <json>` — config change as JSON, e.g. `'{"parameter":"work_mem","value":"64MB"}'`. Repeatable.
+
+### `issues update-action-item`
+
+```bash
+postgresai issues update-action-item <actionItemId> [options]
+```
+
+- `--title <text>`, `--description <text>` — update title or description.
+- `--done` / `--not-done` — mark as done or not done.
+- `--status <value>` — `waiting_for_approval`, `approved`, or `rejected`.
+- `--status-reason <text>` — reason for the status change.
+- `--sql-action <sql>` — update the SQL command (use `""` to clear).
+- `--config <json>` — replace config changes; repeatable.
+- `--clear-configs` — remove all config changes.
+
+### Output format for `issues` commands
+
+By default, `issues` commands print human-friendly YAML to a terminal.
+For scripting:
+
+- Pass `--json` to force JSON output:
+
+  ```bash
+  postgresai issues list --json | jq '.[] | {id, title}'
+  ```
+
+- Or rely on auto-detection: when stdout is not a TTY, output is JSON
+  automatically:
+
+  ```bash
+  postgresai issues view <issueId> > issue.json
+  ```
+
+## Command: `reports`
+
+List and download checkup reports stored in the PostgresAI Console.
 
 **Usage**
 
-<Tabs groupId="cli-runner" queryString>
-<TabItem value="cli" label="Installed CLI" default>
+```bash
+postgresai reports <subcommand> [options]
+```
+
+**Subcommands**
+
+- `list [options]` — list checkup reports.
+- `files [reportId] [options]` — list files (metadata only) of a checkup report.
+- `data [reportId] [options]` — fetch report file contents (markdown / JSON).
+
+### `reports list`
+
+```bash
+postgresai reports list [options]
+```
+
+- `--project-id <id>` — filter by project ID.
+- `--limit <n>` — maximum number of reports to return (default: `20`, max: `100`).
+- `--before <date>` — show reports created before this date (`YYYY-MM-DD`, `DD.MM.YYYY`, etc.).
+- `--all` — fetch all reports (paginated automatically). Mutually exclusive with `--before`.
+- `--json` — output raw JSON.
+
+### `reports files`
+
+```bash
+postgresai reports files [reportId] [options]
+```
+
+Either `reportId` or `--check-id` is required.
+
+- `--type <type>` — filter by file type: `json` or `md`.
+- `--check-id <id>` — filter by check ID (e.g. `H002`).
+- `--json` — output raw JSON.
+
+### `reports data`
+
+```bash
+postgresai reports data [reportId] [options]
+```
+
+- `--type <type>` — filter by file type: `json` or `md`.
+- `--check-id <id>` — filter by check ID (e.g. `H002`).
+- `--formatted` — render markdown with ANSI styling (experimental).
+- `-o, --output <dir>` — save files to a directory (using their original filenames).
+- `--json` — output raw JSON.
+
+## Command: `mcp`
+
+MCP (Model Context Protocol) server integration for AI coding tools.
+
+**Usage**
 
 ```bash
 postgresai mcp <subcommand> [options]
 ```
 
-</TabItem>
-<TabItem value="npx" label="npx">
-
-```bash
-npx postgresai mcp <subcommand> [options]
-```
-
-</TabItem>
-<TabItem value="bunx" label="bunx">
-
-```bash
-bunx postgresai mcp <subcommand> [options]
-```
-
-</TabItem>
-</Tabs>
-
 **Subcommands**
 
-- `start`: start the MCP server in stdio mode.
-- `install [client]`: install MCP client configuration for a supported tool.
+- `start` — start the MCP stdio server, exposing PostgresAI tools.
+- `install [client]` — install MCP client configuration for a supported AI coding tool.
 
-## Command: `add-key`
-
-Store an API key locally.
-
-**Usage**
-
-<Tabs groupId="cli-runner" queryString>
-<TabItem value="cli" label="Installed CLI" default>
+### `mcp start`
 
 ```bash
-postgresai add-key <key>
+postgresai mcp start [--debug]
 ```
 
-</TabItem>
-<TabItem value="npx" label="npx">
+Starts an MCP server over stdio. Intended to be launched by an MCP
+client (e.g. Cursor, Claude Code) rather than invoked directly.
+
+### `mcp install`
 
 ```bash
-npx postgresai add-key <key>
+postgresai mcp install [client]
 ```
 
-</TabItem>
-<TabItem value="bunx" label="bunx">
+Installs an `mcpServers.postgresai` entry pointing at the current
+`postgresai` binary, with `mcp start` as its arguments.
+
+`client` may be one of:
+
+- `cursor` — writes to `~/.cursor/mcp.json`.
+- `claude-code` — runs `claude mcp add -s user postgresai <pgai> mcp start`.
+- `windsurf` — writes to `~/.windsurf/mcp.json`.
+- `codex` — writes to `~/.codex/mcp.json`.
+
+If `client` is omitted, you are prompted to choose interactively
+(1=Cursor, 2=Claude Code, 3=Windsurf, 4=Codex).
+
+A typical Cursor entry looks like:
+
+```json
+{
+  "mcpServers": {
+    "postgresai": {
+      "command": "postgresai",
+      "args": ["mcp", "start"],
+      "env": {
+        "PGAI_API_BASE_URL": "https://postgres.ai/api/general/"
+      }
+    }
+  }
+}
+```
+
+**MCP tools exposed**
+
+- `list_issues` — same JSON as `postgresai issues list`.
+- `view_issue` — view a single issue with its comments.
+- `create_issue` — create a new issue.
+- `update_issue` — update title / description / status / labels.
+- `post_issue_comment` — post a comment.
+- `update_issue_comment` — update an existing comment.
+- `upload_file` — upload a local file and return the storage URL plus a ready-to-paste markdown link.
+- `download_file` — download a file from storage.
+
+The issue / comment tools accept an optional `attachments: string[]` of
+local file paths. Each file is uploaded to PostgresAI storage and the
+resulting markdown link is appended to the comment body or issue
+description, using the same image-extension rules as the `--attach`
+CLI flag.
+
+For `post_issue_comment` and `update_issue_comment`, either `content` or
+`attachments` must be non-empty (attachments alone are allowed). For
+`update_issue` with `attachments` but no `description`, the existing
+description is fetched first and the new links are appended to it.
+
+#### MCP threat model
+
+The MCP server runs in your local user account with your PostgresAI API
+key. It treats the connected MCP client (the LLM agent) as **trusted** —
+the same way the CLI treats you when you type a command. In particular:
+
+- `upload_file` and the `attachments: string[]` parameter on the issue /
+  comment tools read **any local file the CLI process can read**,
+  including secrets like `~/.ssh/id_rsa`, `~/.aws/credentials`, or
+  `~/.config/postgresai/config.json` (which contains your own API
+  key). The file's bytes are uploaded to PostgresAI storage and the
+  resulting URL becomes visible to anyone with read access to the
+  issue or comment it ends up in.
+- `download_file` writes to **any path the CLI process can write to**
+  when `output_path` is supplied (`~/.ssh/authorized_keys`,
+  `~/.bashrc`, etc. are all fair game). When `output_path` is omitted,
+  downloads are restricted to the current working directory.
+
+This is fine when the agent and the upstream context the agent is
+reading are trusted. It is **not** safe to run this MCP server against
+an agent that is processing untrusted text (issue bodies, comments, web
+pages, third-party docs) without additional sandboxing — a
+prompt-injection in any input the agent reads could be used to
+exfiltrate local secrets or write arbitrary files. If you need to
+expose this MCP server to such an agent, run the agent (and this
+server) in a container or restricted user account that has no access
+to anything sensitive.
+
+## Command: `set-default-project`
+
+Store the default project used for `checkup` uploads and other
+project-scoped operations.
 
 ```bash
-bunx postgresai add-key <key>
+postgresai set-default-project <project>
 ```
 
-</TabItem>
-</Tabs>
+## Command: `set-storage-url`
 
-## Command: `show-key`
-
-Show the currently configured API key (masked).
-
-**Usage**
-
-<Tabs groupId="cli-runner" queryString>
-<TabItem value="cli" label="Installed CLI" default>
+Store the storage base URL used for file uploads. Equivalent to setting
+`PGAI_STORAGE_BASE_URL` permanently in the configuration file.
 
 ```bash
-postgresai show-key
+postgresai set-storage-url <url>
 ```
 
-</TabItem>
-<TabItem value="npx" label="npx">
+## Configuration
+
+The CLI stores configuration in `~/.config/postgresai/config.json`,
+including:
+
+- API key
+- API / UI / storage base URLs
+- Organization ID
+- Default project
+
+### Configuration priority
+
+API key resolution order:
+
+1. Command-line option (`--api-key`).
+2. Environment variable (`PGAI_API_KEY`).
+3. User config file (`~/.config/postgresai/config.json`).
+4. Legacy project config (`.pgwatch-config`).
+
+Base URL resolution order:
+
+- API base URL (`apiBaseUrl`):
+  1. Command-line option (`--api-base-url`).
+  2. Environment variable (`PGAI_API_BASE_URL`).
+  3. User config file (`baseUrl` in `~/.config/postgresai/config.json`).
+  4. Default: `https://postgres.ai/api/general/`.
+- UI base URL (`uiBaseUrl`):
+  1. Command-line option (`--ui-base-url`).
+  2. Environment variable (`PGAI_UI_BASE_URL`).
+  3. Default: `https://console.postgres.ai`.
+- Storage base URL (`storageBaseUrl`):
+  1. Command-line option (`--storage-base-url`).
+  2. Environment variable (`PGAI_STORAGE_BASE_URL`).
+  3. Value stored by `postgresai set-storage-url`.
+
+A single trailing `/` is stripped from URL values to ensure consistent
+path joining.
+
+### Environment variables
+
+- `PGAI_API_KEY` — API key for PostgresAI services.
+- `PGAI_API_BASE_URL` — API endpoint for backend RPC (default: `https://postgres.ai/api/general/`).
+- `PGAI_UI_BASE_URL` — UI endpoint for browser routes (default: `https://console.postgres.ai`).
+- `PGAI_STORAGE_BASE_URL` — storage endpoint for file uploads.
+- `PGAI_MON_PASSWORD` — default password for the monitoring role created by `prepare-db`.
+- `PGPASSWORD` — admin password used by `prepare-db` / `unprepare-db` when `--admin-password` is not given.
+- `SUPABASE_ACCESS_TOKEN`, `SUPABASE_PROJECT_REF` — credentials for `prepare-db --supabase`.
+
+### Examples
+
+For production (uses default URLs):
 
 ```bash
-npx postgresai show-key
+postgresai auth --debug
 ```
 
-</TabItem>
-<TabItem value="bunx" label="bunx">
+For staging / development environments:
 
 ```bash
-bunx postgresai show-key
+# Linux / macOS (bash, zsh)
+export PGAI_API_BASE_URL=https://v2.postgres.ai/api/general/
+export PGAI_UI_BASE_URL=https://console-dev.postgres.ai
+postgresai auth --debug
 ```
 
-</TabItem>
-</Tabs>
+```powershell
+# Windows PowerShell
+$env:PGAI_API_BASE_URL = "https://v2.postgres.ai/api/general/"
+$env:PGAI_UI_BASE_URL = "https://console-dev.postgres.ai"
+postgresai auth --debug
+```
 
-## Command: `remove-key`
-
-Remove the stored API key.
-
-**Usage**
-
-<Tabs groupId="cli-runner" queryString>
-<TabItem value="cli" label="Installed CLI" default>
+Via CLI options (overrides environment variables):
 
 ```bash
-postgresai remove-key
+postgresai auth --debug \
+  --api-base-url https://v2.postgres.ai/api/general/ \
+  --ui-base-url https://console-dev.postgres.ai
 ```
-
-</TabItem>
-<TabItem value="npx" label="npx">
-
-```bash
-npx postgresai remove-key
-```
-
-</TabItem>
-<TabItem value="bunx" label="bunx">
-
-```bash
-bunx postgresai remove-key
-```
-
-</TabItem>
-</Tabs>
