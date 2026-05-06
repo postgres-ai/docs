@@ -160,11 +160,19 @@ build_and_push_production:
   only:
     - master
 
+# DEPRECATED — old v2 staging (k8s ns `staging`, v2.postgres.ai docs path)
+# is being sunset. The `build_and_push_staging` and `deploy_staging` jobs
+# below are gated off with `when: never` and kept for git history; full
+# deletion is Phase 2.
+# New staging is preview-based, deployed from `master` — see
+# `build_and_push_main_staging` / `deploy_main_staging`
+# (https://docs-main.pgai.green).
+# Tracking: https://gitlab.com/postgres-ai/infra/-/work_items/50
 build_and_push_staging:
   <<: *build_and_push_definition
   <<: *env_staging
   rules:
-    - if: $CI_COMMIT_BRANCH == "master"
+    - when: never
 
 deploy_production:
   <<: *deploy_definition
@@ -175,9 +183,8 @@ deploy_production:
 deploy_staging:
   <<: *deploy_definition
   <<: *env_staging
-  when: manual
-  except:
-    - master
+  rules:
+    - when: never
 
 # --- Green: Preview environments (per-MR) ---
 
