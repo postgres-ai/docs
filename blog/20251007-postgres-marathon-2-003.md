@@ -33,7 +33,7 @@ Because of this, fast, high-frequency queries (e.g. PK lookups) on multi-core sy
 
 In 2011, Robert Haas implemented an additional optimization called fast-path locking, specifically designed for such cases ([commit](https://github.com/postgres/postgres/commit/3cba8999b343648c4c528432ab3d51400194e93b), it was released in 9.2 (2012). Fast-path locks are stored separately, individually for each backend, and protected by per-backend LWLocks, so contention doesn't happen. Before Postgres 18, no more than 16 ([`FP_LOCK_SLOTS_PER_BACKEND`](https://github.com/postgres/postgres/blob/1c4671f7b7c378cc26d1953785a3aa249152958b/src/include/storage/proc.h#L80-L86)) locks could be stored in this way. This mechanism can be applied only for AccessShareLock, RowShareLock, and RowExclusiveLock. The locks that are processed in this way can be observed in `pg_locks` (`fastpath=true`).
 
-This helped a lot to improve performance of SELECTs that deal with no more than 16 relations (e.g., a PK lookup on a table with no more than 15 indexes), but in recent years, especially because of partitioning, it was once again not enough, so in Postgres 18 (2025) one more optimization was implemented.
+This helped a lot to improve performance of SELECTs that deal with no more than 16 relations (e.g., a PK lookup on a table with no more than 15 indexes), but in recent years, especially because of partitioning, it was once again not enough, so in Postgres 18 (2025) one more optimization was implemented ([commit `c4d5cb71d`](https://github.com/postgres/postgres/commit/c4d5cb71d)).
 
 // to be continued: we'll discuss PG18 and then entertaining benchmarks
 
