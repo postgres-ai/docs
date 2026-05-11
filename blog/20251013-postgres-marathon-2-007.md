@@ -2,7 +2,7 @@
 title: "#PostgresMarathon 2-007: Should we worry about pg_blocking_pids()'s observer effect?"
 date: 2025-10-13
 authors: nik
-tags: [Postgres insights, PostgresMarathon, internals, locks, monitoring]
+tags: [Postgres insights, PostgresMarathon, internals, locks, lockmanager, monitoring]
 image: /assets/blog/20251013-postgres-marathon-2-007-cover.jpg
 ---
 

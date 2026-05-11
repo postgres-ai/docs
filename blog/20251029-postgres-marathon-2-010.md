@@ -2,7 +2,7 @@
 title: "#PostgresMarathon 2-010: Prepared statements and partitioned table lock explosion, part 2"
 date: 2025-10-29 23:59:59
 authors: nik
-tags: [Postgres insights, PostgresMarathon, internals, locks, prepared statements, partitioning]
+tags: [Postgres insights, PostgresMarathon, internals, locks, lockmanager, prepared statements, partitioning]
 ---
 
 In [#PostgresMarathon 2-009](https://postgres.ai/blog/20251028-postgres-marathon-2-009), we focused on Lock Manager's behavior when dealing with prepared statements and partitioned tables. 

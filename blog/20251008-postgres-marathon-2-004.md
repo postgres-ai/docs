@@ -2,7 +2,7 @@
 title: "#PostgresMarathon 2-004: Fast-path locking explained"
 date: 2025-10-08
 authors: nik
-tags: [Postgres insights, PostgresMarathon, internals, locks]
+tags: [Postgres insights, PostgresMarathon, internals, locks, lockmanager]
 image: /assets/blog/20251008-postgres-marathon-2-004-cover.png
 ---
 

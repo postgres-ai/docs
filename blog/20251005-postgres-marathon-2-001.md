@@ -2,7 +2,7 @@
 title: "#PostgresMarathon 2-001: Lightweight and heavyweight locks"
 date: 2025-10-05
 authors: nik
-tags: [Postgres insights, PostgresMarathon, internals, locks]
+tags: [Postgres insights, PostgresMarathon, internals, locks, lockmanager]
 ---
 
 To warm up, let's talk about lightweight and heavyweight locks (or "regular locks" or just "locks").

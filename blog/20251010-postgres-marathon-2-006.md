@@ -2,7 +2,7 @@
 title: "#PostgresMarathon 2-006: Mysterious max_locks_per_transaction"
 date: 2025-10-10
 authors: nik
-tags: [Postgres insights, PostgresMarathon, internals, locks]
+tags: [Postgres insights, PostgresMarathon, internals, locks, lockmanager]
 image: /assets/blog/20251010-postgres-marathon-2-006-cover.png
 ---
 

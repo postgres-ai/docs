@@ -2,7 +2,7 @@
 title: "#PostgresMarathon 2-005: More LWLock:LockManager benchmarks for Postgres 18"
 date: 2025-10-09
 authors: nik
-tags: [Postgres insights, PostgresMarathon, internals, locks]
+tags: [Postgres insights, PostgresMarathon, internals, locks, lockmanager]
 image: /assets/blog/20251009-postgres-marathon-2-005-cover.jpeg
 ---
 

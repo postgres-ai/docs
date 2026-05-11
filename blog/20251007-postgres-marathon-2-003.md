@@ -2,7 +2,7 @@
 title: "#PostgresMarathon 2-003: The roots of LWLock:LockManager"
 date: 2025-10-07
 authors: nik
-tags: [Postgres insights, PostgresMarathon, internals, locks]
+tags: [Postgres insights, PostgresMarathon, internals, locks, lockmanager]
 image: /assets/blog/20251007-postgres-marathon-2-003.png
 ---
 
