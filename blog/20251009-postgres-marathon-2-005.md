@@ -2,7 +2,7 @@
 title: "#PostgresMarathon 2-005: More LWLock:LockManager benchmarks for Postgres 18"
 date: 2025-10-09
 authors: nik
-tags: [Postgres insights, PostgresMarathon, internals, locks]
+tags: [Postgres insights, PostgresMarathon, internals, locks, lockmanager]
 image: /assets/blog/20251009-postgres-marathon-2-005-cover.jpeg
 ---
 
@@ -10,7 +10,7 @@ In 2023-2024, after incidents that multiple customers of PostgresAI experienced,
 
 At that time, we managed to reproduce the issue only on large machines – ~100 or more vCPUs.
 
-With PG18 release, this question started to bother me again: can we experience LWLock:LockManager on smaller machines?
+With PG18 release (and its fast-path locking improvement, [commit `c4d5cb71d`](https://github.com/postgres/postgres/commit/c4d5cb71d)), this question started to bother me again: can we experience LWLock:LockManager on smaller machines?
 
 [Denis Morozov](https://www.linkedin.com/in/denis-morozov-5b92691/) just published [results of benchmarks that successfully reproduce LWLock:LockManager contention in PG18 on 16-vCPU VMs](https://gitlab.com/postgres-ai/postgresql-consulting/tests-and-benchmarks/-/issues/69).
 

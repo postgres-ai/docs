@@ -2,7 +2,7 @@
 title: "#PostgresMarathon 2-002: Relation-level locks"
 date: 2025-10-06
 authors: nik
-tags: [Postgres insights, PostgresMarathon, internals, locks]
+tags: [Postgres insights, PostgresMarathon, internals, locks, lockmanager]
 ---
 
 Let's talk about relation-level locks and various confusions, surprises and what is worth to remember in practice.
