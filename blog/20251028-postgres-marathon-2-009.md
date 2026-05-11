@@ -2,7 +2,7 @@
 title: "#PostgresMarathon 2-009: Prepared statements and partitioned table lock explosion, part 1"
 date: 2025-10-28 12:00:00
 authors: nik
-tags: [Postgres insights, PostgresMarathon, internals, locks, prepared statements, partitioning]
+tags: [Postgres insights, PostgresMarathon, internals, locks, lockmanager, prepared statements, partitioning]
 ---
 
 In [#PostgresMarathon 2-008](https://postgres.ai/blog/20251014-postgres-marathon-2-008), we discovered that prepared statements can dramatically reduce `LWLock:LockManager` contention by switching from planner locks (which lock everything) to executor locks (which lock only what's actually used). Starting with execution 7, we saw locks drop from 6 (table + 5 indexes) to just 1 (table only).

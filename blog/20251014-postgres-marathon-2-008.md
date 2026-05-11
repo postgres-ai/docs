@@ -2,7 +2,7 @@
 title: "#PostgresMarathon 2-008: LWLock:LockManager and prepared statements"
 date: 2025-10-14 23:59:59
 authors: nik
-tags: [Postgres insights, PostgresMarathon, internals, locks, prepared statements]
+tags: [Postgres insights, PostgresMarathon, internals, locks, lockmanager, prepared statements]
 image: /assets/blog/20251014-postgres-marathon-2-008-cover.jpg
 ---
 

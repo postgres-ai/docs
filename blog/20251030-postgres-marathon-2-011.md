@@ -2,7 +2,7 @@
 title: "#PostgresMarathon 2-011: Prepared statements and partitioned tables — the paradox, part 3"
 date: 2025-10-30 23:59:59
 authors: nik
-tags: [Postgres insights, PostgresMarathon, internals, locks, prepared statements, partitioning]
+tags: [Postgres insights, PostgresMarathon, internals, locks, lockmanager, prepared statements, partitioning]
 ---
 
 In [#PostgresMarathon 2-009](https://postgres.ai/blog/20251028-postgres-marathon-2-009) and [#PostgresMarathon 2-010](https://postgres.ai/blog/20251029-postgres-marathon-2-010), we explored why execution 6 causes a lock explosion when building a generic plan for partitioned tables — the planner must lock all 52 relations because it can't prune without parameter values.
