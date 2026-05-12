@@ -32,7 +32,8 @@ Practical implications when using Claude Code here:
   GitLab (a corresponding MR is opened on the GitLab side).
 - Do **not** push to `master` from any branch — `master` only updates
   via the GitLab → GitHub mirror after a GitLab MR is merged.
-- Preview environments (`https://<branch-slug>.preview-docs.postgres.ai`)
-  are provisioned by GitLab CI on every push to a non-`master` branch.
-  See `.gitlab-ci.yml` (`build_and_push_review` / `deploy_review` /
-  `stop_review`).
+- Preview environments (`https://docs-<branch-slug>.pgai.green`) are
+  provisioned by GitLab CI on every push to a non-`master` /
+  non-`staging` branch. See `build_and_push_review` and `deploy_review`
+  in `.gitlab-ci.yml`. The cluster ingress + Cloudflare wildcard for
+  `*.pgai.green` already route to the per-branch Service.

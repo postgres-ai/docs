@@ -1,13 +1,14 @@
 export REPLICAS=1
 
 # Per-branch preview environment.
-# URL is derived from the GitLab branch slug + PREVIEW_BASE_DOMAIN
-# (see `.environment_template: &env_review` in .gitlab-ci.yml).
-export URL="https://${CI_COMMIT_REF_SLUG}.${PREVIEW_BASE_DOMAIN}"
+# DOCS_NAME / CI_COMMIT_REF_SLUG come from .gitlab-ci.yml's &env_review.
+# The cluster's existing Cloudflare + ingress route docs-<slug>.pgai.green
+# to the Service named ${DOCS_NAME} in the `review` namespace.
+export URL="https://${DOCS_NAME}.pgai.green"
 export BASE_URL="/"
 
-# Previews share the staging API / auth / bot backends — there is no separate
-# per-branch backend, only the docs frontend is built per branch.
+# Previews share the staging API / auth / bot backends — only the docs
+# frontend is built per branch.
 export SIGN_IN_URL="https://console-v2.postgres.ai/signin"
 export BOT_WS_URL="wss://v2.postgres.ai/ai-bot-ws/"
 export API_URL_PREFIX="https://v2.postgres.ai/api/general"
