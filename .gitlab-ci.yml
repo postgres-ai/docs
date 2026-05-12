@@ -117,6 +117,23 @@ validate_feeds:
     ENV: staging
     NAMESPACE: staging
 
+# Per-branch preview environment.
+# Restores the review-apps pattern that existed before commit 43d434c
+# ("fix: remove review CI", Oct 2020). The cluster's existing ingress +
+# Cloudflare wildcard *.pgai.green route to the per-branch Service named
+# `docs-<slug>` in the `review` namespace — no extra ingress object needed.
+.environment_template: &env_review
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    url: https://docs-${CI_COMMIT_REF_SLUG}.pgai.green
+  variables:
+    ENV: review
+    NAMESPACE: review
+    # Branch-scoped tags so concurrent previews don't fight over the same one.
+    TAG_VERSION: "${REGISTRY}:review-${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_IID}"
+    TAG_LATEST: "${REGISTRY}:review-${CI_COMMIT_REF_SLUG}-latest"
+    DOCS_NAME: "docs-${CI_COMMIT_REF_SLUG}"
+
 # Stages with branch policies.
 build_and_push_production:
   <<: *build_and_push_definition
@@ -124,11 +141,20 @@ build_and_push_production:
   only:
     - master
 
+# Static staging env (v2.postgres.ai). Only the `staging` branch deploys here;
+# other dev branches get their own preview env below so they don't trample it.
 build_and_push_staging:
   <<: *build_and_push_definition
   <<: *env_staging
+  only:
+    - staging
+
+build_and_push_review:
+  <<: *build_and_push_definition
+  <<: *env_review
   except:
     - master
+    - staging
 
 deploy_production:
   <<: *deploy_definition
@@ -140,5 +166,12 @@ deploy_staging:
   <<: *deploy_definition
   <<: *env_staging
   when: manual
+  only:
+    - staging
+
+deploy_review:
+  <<: *deploy_definition
+  <<: *env_review
   except:
     - master
+    - staging
