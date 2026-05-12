@@ -21,6 +21,9 @@ variables:
   TAG_VERSION: "${REGISTRY}:${NAMESPACE}-${CI_PIPELINE_IID}"
   TAG_LATEST: "${REGISTRY}:${NAMESPACE}-latest"
   DOCS_NAME: "docs"
+  # Base domain for per-branch preview environments.
+  # Override via project CI/CD variable if your infrastructure uses a different host.
+  PREVIEW_BASE_DOMAIN: "preview-docs.postgres.ai"
 
 # Validate RSS/Atom feeds before building and deploying
 validate_feeds:
@@ -117,6 +120,23 @@ validate_feeds:
     ENV: staging
     NAMESPACE: staging
 
+# Per-branch preview environment.
+# Each non-master branch gets its own isolated deployment in the `review`
+# namespace, named after the branch slug, exposed at
+# https://${CI_COMMIT_REF_SLUG}.${PREVIEW_BASE_DOMAIN}.
+# The environment is automatically torn down when the branch is deleted
+# (via `stop_review`, wired up through `environment.on_stop`).
+.environment_template: &env_review
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    url: https://$CI_COMMIT_REF_SLUG.$PREVIEW_BASE_DOMAIN
+    on_stop: stop_review
+    auto_stop_in: 1 week
+  variables:
+    ENV: review
+    NAMESPACE: review
+    DOCS_NAME: "docs-$CI_COMMIT_REF_SLUG"
+
 # Stages with branch policies.
 build_and_push_production:
   <<: *build_and_push_definition
@@ -124,11 +144,22 @@ build_and_push_production:
   only:
     - master
 
+# Static staging environment (v2.postgres.ai). Only the `staging` branch
+# deploys here; other development branches get their own preview env below.
 build_and_push_staging:
   <<: *build_and_push_definition
   <<: *env_staging
+  only:
+    - staging
+
+# Per-branch preview environments — automatic build on every push to a
+# development branch.
+build_and_push_review:
+  <<: *build_and_push_definition
+  <<: *env_review
   except:
     - master
+    - staging
 
 deploy_production:
   <<: *deploy_definition
@@ -140,5 +171,36 @@ deploy_staging:
   <<: *deploy_definition
   <<: *env_staging
   when: manual
+  only:
+    - staging
+
+deploy_review:
+  <<: *deploy_definition
+  <<: *env_review
   except:
     - master
+    - staging
+
+# Triggered automatically when the branch is deleted (or manually from the
+# Environments page). Tears down the per-branch Deployment and Service so
+# stale previews do not pile up.
+stop_review:
+  stage: deploy
+  image: dtzar/helm-kubectl:2.14.1
+  variables:
+    ENV: review
+    NAMESPACE: review
+    DOCS_NAME: "docs-$CI_COMMIT_REF_SLUG"
+    GIT_STRATEGY: none
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    action: stop
+  when: manual
+  script:
+    - kubectl config get-contexts
+    - kubectl config use-context postgres-ai/docs:k8s-cluster-docs
+    - kubectl delete deployment "$DOCS_NAME" -n "$NAMESPACE" --ignore-not-found
+    - kubectl delete service "$DOCS_NAME" -n "$NAMESPACE" --ignore-not-found
+  except:
+    - master
+    - staging
