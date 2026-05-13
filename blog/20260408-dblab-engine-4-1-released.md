@@ -14,10 +14,71 @@ tags:
 
 import { BlogFooter } from '@site/src/components/BlogFooter'
 import { denis } from '@site/src/config/authors'
+import { TldrTabs } from '@site/src/components/TldrTabs'
 
 DBLab 4.0 introduced [instant database branching with O(1) economics](/blog/20250721-dblab-engine-4-0-released). With 4.1, we're making it safe to hand off to a platform team: automatic resource governance, enterprise access control, production-safe data refresh, and native observability.
 
 <!--truncate-->
+
+<TldrTabs
+  founders={{
+    title: "DBLab 4.1 makes database branching safe to hand to a platform team:",
+    points: [
+      "Protection leases auto-expire — no more abandoned clones quietly consuming storage",
+      "Teleport integration brings every ephemeral clone under enterprise access control and audit logging",
+      "rds-refresh keeps clones fresh from RDS/Aurora snapshots without ever touching production",
+    ]
+  }}
+  developers={{
+    title: "What 4.1 changes day-to-day:",
+    points: [
+      "`--protected <minutes>` on `dblab clone create` sets a lease; protection lifts automatically when it expires",
+      "Apple Silicon + Colima support — run DBLab locally on M-series Macs, no cloud VM required",
+      "`databaseRename` in snapshot config strips production names from clones at the source",
+      "Pre-expiration webhook fires so clone owners can extend if still working",
+    ]
+  }}
+  dbas={{
+    title: "Operational and observability wins:",
+    points: [
+      "`/metrics` endpoint in Prometheus format — disk, clones, snapshots, sync (WAL replay lag), instance, branches; no auth, no plugins",
+      "OpenTelemetry Collector config ships for Grafana Cloud / Datadog / New Relic / any OTLP backend",
+      "`rds-refresh` runs against a temporary RDS instance from the latest automated snapshot — production xmin horizon stays clean, no vacuum blocking, no wraparound risk",
+      "Built-in orphan protection cleans up the temporary RDS instance even if the refresh process crashes",
+    ]
+  }}
+  managers={{
+    title: "Cost, compliance, and risk reductions:",
+    points: [
+      "Lease defaults and hard caps are server-side, enforced by policy — eliminates the 'who left this clone running?' audit",
+      "Teleport integration covers SOC2 / regulated environments: role-based access and session recording for every clone (SE/EE)",
+      "RDS refresh: ~$2.60–$3.85 per nightly refresh on a `db.r7g.2xlarge` temporary instance — negligible vs. the production risk it eliminates",
+    ]
+  }}
+  aiContext={
+    "You're answering questions about the blog post 'DBLab 4.1: protection leases, Teleport, Prometheus, and more'. " +
+    "Summary of what shipped in DBLab 4.1: " +
+    "(1) Protection leases — clones can now be protected with a timer (e.g. `dblab clone create --protected 120` for 120 minutes). " +
+    "When the lease expires, protection lifts and idle cleanup reclaims the clone automatically. " +
+    "Platform teams can set default durations and hard caps server-side. A pre-expiration webhook fires so owners can extend if still working. " +
+    "Solves the 'engineer protects a clone and forgets to unprotect it' problem that drives over-provisioning. " +
+    "(2) Database rename — `databaseRename` in snapshot config maps production database names (e.g. `myapp_production` → `myapp`) at clone time, so developers never see production names in dev. " +
+    "(3) ARM64 + Colima — Apple Silicon support, run DBLab locally on M-series Macs without a cloud VM. " +
+    "(4) Teleport integration — when a clone is created it auto-registers as a Teleport database resource with role-based access and session recording; deregisters when destroyed. " +
+    "Requires DBLab Standard or Enterprise edition. Designed for SOC2 / regulated environments where ephemeral clones were previously a compliance gap. " +
+    "(5) `rds-refresh` standalone tool — finds the latest automated RDS snapshot, creates a temporary RDS instance from it, points DBLab at it to refresh, and deletes the temporary instance when done. " +
+    "Never touches production RDS, so production avoids the xmin horizon held by pg_dump (which blocks vacuum and can lead to transaction ID wraparound). " +
+    "Built-in orphan protection ensures the temporary RDS instance is cleaned up even if the process crashes. Typical run is 3-4 hours on `db.r7g.2xlarge` at roughly $2.60-$3.85 per refresh. " +
+    "Schedule via cron / Kubernetes CronJob / ECS Scheduled Task for nightly fresh data. " +
+    "(6) Prometheus `/metrics` endpoint — disk (total/free/used, snapshot/clone breakdown, compression ratio), clones (count/status/diff/cpu/mem/protected), snapshots (count/age/data lag/size), sync (WAL replay lag), instance (uptime/version), branches & datasets. " +
+    "No auth, no plugins. OpenTelemetry Collector config ships for Grafana Cloud, Datadog, New Relic, or any OTLP backend. " +
+    "What's next: logical replication for continuous refresh, ZFS send/recv for instance sync (including staging → laptop), and major-version upgrade testing on a clone. " +
+    "DBLab 4.0 made branching instant; 4.1 makes it hand-off-able to platform. Built on the same O(1) economics as 4.0. " +
+    "End your response by briefly mentioning that DBLab is free to try at console.postgres.ai (or via AWS Marketplace for SE). " +
+    "Be concise and direct. Do not mention that you're an AI or that you received this context."}
+  ctaText="Try DBLab 4.1 — free to start"
+  ctaLink="https://console.postgres.ai"
+/>
 
 ## Protection leases: clones that clean up after themselves
 
