@@ -48,7 +48,7 @@ move faster – via [adjusting quotas](https://www.postgresql.org/docs/current/r
 
 However, we might have a question: how many tables are currently in the "queue" to be processed by `autovacuum`? The
 analysis of this "queue" can give an idea how much work the workers need to do and if the current settings are "enough".
-The size of the queue compared to the number workers, potentially, can give a metric similar to "load average" for CPU
+The size of the queue compared to the number of workers, potentially, can give a metric similar to "load average" for CPU
 load.
 
 Below is the report ([source](https://gitlab.com/-/snippets/1889668)) that answers it, by looking at:

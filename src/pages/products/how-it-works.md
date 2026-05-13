@@ -48,7 +48,7 @@ If you run your infrastructure on AWS, you can follow our
 [Getting Started Guide for RDS](/docs/tutorials/database-lab-tutorial-amazon-rds).
 
 Here's what you can expect when setting up the DBLab Engine:
-* Experienced engineers can setup the DBLab Engine in less than 1 hour
+* Experienced engineers can set up the DBLab Engine in less than 1 hour
 * The DBLab Engine host instance should have a disk 30% larger than the production DB
 * [Sensitive data masking](/products/data-masking) can be achieved with a set of declarative rules
 

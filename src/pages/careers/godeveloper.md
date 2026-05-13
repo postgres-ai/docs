@@ -11,7 +11,7 @@ requirements:
 
 As a Senior Go Developer, you will be building components of the [PostgresAI Platform](https://postgres.ai/docs/).
 
-## Job Details
+## Job details
 
 - Employment type: full-time, remote.
 - Company: PostgresAI, headquartered in the San Francisco Bay Area.

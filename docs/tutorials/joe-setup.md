@@ -14,7 +14,7 @@ keywords:
 description: Learn how to use Joe bot to build a swift workflow of PostgreSQL query optimization running EXPLAIN commands on ultra-fast thin clones.
 ---
 
-[↵ Back to Guides](/docs/guides/)
+[↵ Back to DBLab how-to guides](/docs/dblab-howtos)
 
 ## Step 1. Requirements
 - Set up [DBLab Engine](/docs/tutorials/database-lab-tutorial) (e.g., running on address https://dblab.domain.com) before configuring Joe Bot
@@ -28,7 +28,7 @@ There are two available types of communication with Joe:
 - Web UI powered by [PostgresAI Console](https://postgres.ai/console/)
 - Slack
 
-You can use both of them in parallel. If you can develop in Go language, feel free to implement more types of communication: see [communication channels issues](https://gitlab.com/postgres-ai/joe/-/issues?label_name%5B%5D=Communication+channel).
+You can use both of them in parallel. If you can develop in Go language, feel free to implement more types of communication: see the [Joe Bot issue tracker](https://github.com/postgres-ai/joe/issues).
 
 We need to define where to store the configuration file. We will use `~/.dblab/joe/configs/joe.yml`.
 

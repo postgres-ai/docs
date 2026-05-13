@@ -30,7 +30,7 @@ All these extended images include the following extensions:
 - [bg_mon](https://github.com/CyberDem0n/bg_mon)
 - [pg_auth_mon](https://github.com/RafiaSabih/pg_auth_mon)
 - [PoWA](https://github.com/powa-team/powa)
-- [pg_hint_plan](https://pghintplan.osdn.jp/pg_hint_plan.html)
+- [pg_hint_plan](https://github.com/ossc-db/pg_hint_plan)
 - [Timescale](https://github.com/timescale/timescaledb) (only for Postgres 12+)
 - [Citus](https://github.com/citusdata/citus) (only for Postgres 11+)
 - [HypoPG](https://github.com/HypoPG/hypopg)
@@ -44,7 +44,7 @@ All these extended images include the following extensions:
 - [pgextwlist](https://github.com/dimitri/pgextwlist)
 - [hll](https://github.com/citusdata/postgresql-hll)
 - [topn](https://github.com/citusdata/postgresql-topn) (only for Postgres 10+)
-- [postgresql_anonymizer](https://github.com/webysther/postgresql_anonymizer)
+- [postgresql_anonymizer](https://gitlab.com/dalibo/postgresql_anonymizer)
 - [pgaudit](https://github.com/pgaudit/pgaudit)
 - [set_user](https://github.com/pgaudit/set_user) (only for Postgres 10+)
 

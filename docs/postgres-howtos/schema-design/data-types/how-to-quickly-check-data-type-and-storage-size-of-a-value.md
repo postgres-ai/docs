@@ -89,7 +89,7 @@ nik=# select pg_column_size(true), pg_column_size(false);
 (1 row)
 ```
 
-Remembering the previous howto, [Column Tetris](/docs/postgres-howtos/advanced-topics/internals/how-to-find-the-best-order-of-columns-to-save-on-storage), here we
+Remembering the previous howto, [Column Tetris](/docs/postgres-howtos/advanced-topics/misc/how-to-find-the-best-order-of-columns-to-save-on-storage), here we
 can conclude that not only we need 1 byte to store a bit (8x space), it becomes 8 bytes if we create a table
 (`c1 boolean`, `c2 int8`), due to alignment padding – meaning that it's already 64 bits! So, in such "unfortunate" case, those
 who store 'true' as text, don't lose anything at all:

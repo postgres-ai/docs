@@ -121,5 +121,5 @@ Yes. PostgresAI works with:
 ## Where can I learn more?
 
 - [Vision & roadmap](/docs/roadmap) — The Self-Driving Postgres journey
-- [Monitoring areas](/docs/howtos/monitoring-areas) — What PostgresAI monitors
+- [postgres_ai monitoring](/docs/monitoring) — Observability and monitoring
 - [Postgres how-tos](/docs/postgres-howtos) — 100+ practical guides

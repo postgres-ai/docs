@@ -97,7 +97,7 @@ Your feedback is highly appreciated!
 
 - Twitter: [@Database_Lab](https://twitter.com/Database_Lab)
 - [Community Slack with Joe Bot live demo](https://slack.postgres.ai) (English), and [Telegram group](https://t.me/databaselabru) (Russian)
-- [Database Lab Engine repository](https://gitlab.com/postgres-ai/database-lab), with the [issue tracker](https://gitlab.com/postgres-ai/database-lab/-/issues)
-- [SQL Optimization Chatbot repository](https://gitlab.com/postgres-ai/joe), with the [issue tracker](https://gitlab.com/postgres-ai/joe/-/issues)
+- [Database Lab Engine repository](https://gitlab.com/postgres-ai/database-lab), with the [issue tracker](https://github.com/postgres-ai/database-lab-engine/issues)
+- [SQL Optimization Chatbot repository](https://gitlab.com/postgres-ai/joe), with the [issue tracker](https://github.com/postgres-ai/joe/issues)
 
 <BlogFooter author={nik} />

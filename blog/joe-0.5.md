@@ -59,7 +59,7 @@ Version 0.5.0 adds support of Slack API signed secrets, automated notifications 
 - Tutorial: https://postgres.ai/docs/tutorials/joe-setup
 - Open-source repository: https://gitlab.com/postgres-ai/joe/
 - Changelog: https://gitlab.com/postgres-ai/joe/-/releases
-- Bug reports, ideas, and merge requests are welcome: https://gitlab.com/postgres-ai/joe/issues/
+- Bug reports, ideas, and pull/merge requests are welcome: https://github.com/postgres-ai/joe/issues
 - Community Slack (English): https://slack.postgres.ai/. After joining, the live demo of Joe is available in the #joe-bot-demo channel: https://database-lab-team.slack.com/archives/CTL5BB30R
 
 <!--truncate-->

@@ -105,7 +105,7 @@ First, it makes sense to switch over the read-only (RO) traffic. If the applicat
 redirect only part of the RO traffic to new replicas. This would require an advanced replication lag detection in the
 load balancing code
 (see:
-[How to determine the replication lag - Hybrid case: logical & physical](/docs/postgres-howtos/monitoring-troubleshooting/system-monitoring/how-to-determine-the-replication-lag#hybrid-case-logical-physical).
+[How to determine the replication lag - Hybrid case: logical & physical](/docs/postgres-howtos/monitoring-troubleshooting/system-monitoring/how-to-determine-the-replication-lag#hybrid-case-logical--physical).
 
 When it is time to redirect the RW traffic, to achieve zero downtime, one can use PgBouncer's PAUSE/RESUME. If there are
 multiple PgBouncer nodes (running on separate hosts/ports, or involving `SO_REUSEPORT`), it is important to implement a

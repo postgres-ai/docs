@@ -31,7 +31,7 @@ In DLE 3.2:
 Community news:
 - 🌠 DLE repository on GitHub reached 1,4k stars; many thanks to everyone who supports the project in any way
 - 📈 The Twitter account has reached 800 followers – please follow [@Database_Lab](https://twitter.com/Database_Lab)
-- 🎉 DLE now has 19 contributors. More contributions are welcome! See ["good first issues"](https://gitlab.com/postgres-ai/database-lab/-/issues?sort=created_date&state=opened&label_name%5B%5D=good+first+issue)
+- 🎉 DLE now has 19 contributors. More contributions are welcome! See ["good first issues"](https://github.com/postgres-ai/database-lab-engine/issues?q=is%3Aopen+label%3A%22good+first+issue%22)
 - 🥇 Please consider various ways to contribute – read [CONTRIBUTING.md](https://github.com/postgres-ai/database-lab-engine/blob/master/CONTRIBUTING.md)
 
 <BlogFooter author={nik} />

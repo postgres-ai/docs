@@ -1,9 +1,5 @@
 # Claude Code Instructions
 
-Read and follow all rules in `.cursor/rules/` directory.
-
-@.cursor/rules
-
 ## GitLab is the source of truth; GitHub is a mirror
 
 - `master` flows **GitLab → GitHub** — GitLab is authoritative; never push `master` to GitHub.

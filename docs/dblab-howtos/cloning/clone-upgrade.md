@@ -19,7 +19,6 @@ Create a clone [as usual](/docs/dblab-howtos/cloning/create-clone).
 It is recommended to mark the clone [protected](/docs/dblab-howtos/cloning/clone-protection), so that DBLab Engine does not delete it during database maintenance.
 
 Once the clone is created, remember its port.
-:::
 
 ## 2. Connect to DBLab server using SSH and perform Postgres major upgrade
 Perform the following steps to upgrade PostgreSQL inside your clone.

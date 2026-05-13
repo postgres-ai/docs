@@ -16,7 +16,7 @@ DBLab API (DLE API) is a REST API. It can be used in multiple ways:
 - indirectly, in browser: [DBLab UI](https://postgres.ai/docs/database-lab/user-interface), being a React application, speaks to the DLE API as well
 
 DBLab API reference documentation is available at the following locations:
-- [DBLab 4.1.x API Reference](https://dblab.readme.io/v4.1.0/)
+- [DBLab API Reference (latest)](https://dblab.readme.io/)
 - [DBLab 4.0.x API Reference](https://dblab.readme.io/v4.0.0/)
 - [DLE 3.5.x API Reference](https://dblab.readme.io/v3.5.0/)
 

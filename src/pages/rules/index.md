@@ -15,7 +15,7 @@ These rules are designed to be used as instructions for AI coding assistants:
 
 1. **Cursor**: use slash commands to create rules ([docs](https://docs.cursor.com/context/rules))
 2. **Claude Code**: use `CLAUDE.md` ([docs](https://docs.anthropic.com/en/docs/claude-code/memory))
-3. **GitHub Copilot**: configure coding guidelines ([docs](https://docs.github.com/en/copilot/how-tos/agents/copilot-code-review/configuring-coding-guidelines))
+3. **GitHub Copilot**: configure coding guidelines ([docs](https://docs.github.com/en/copilot/concepts/code-review/coding-guidelines))
 4. **Other AI tools**: see your tool docs, looking for "rules", "guidelines", "memory" or similar instructions.
 
 Each rule page includes "Copy for LLM" and "View raw" buttons for easy copying.

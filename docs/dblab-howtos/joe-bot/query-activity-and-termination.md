@@ -50,7 +50,7 @@ import TabItem from '@theme/TabItem';
 </TabItem>
 </Tabs>
 
-3. If you want to stop the execution of a long-running query, run the [`terminate`](/docs/reference-guides/joe-bot-commands-reference#terminate) command with query's `PID` from the [`activity`](/docs/reference-guides/joe-bot-commands-reference#activity) list.
+3. If you want to stop the execution of a long-running query, run the [`terminate`](/docs/reference-guides/joe-bot-commands-reference#terminate-pid) command with query's `PID` from the [`activity`](/docs/reference-guides/joe-bot-commands-reference#activity) list.
 
 <Tabs
   groupId="joe-mode"

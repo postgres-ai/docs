@@ -219,7 +219,7 @@ Starting with execution 7 and further, we use cached generic plan, and executor 
         plan = plansource->gplan;  // Use cached plan
     }
     ```
-4. Inside [`CheckCachedPlan`](CheckCachedPlan) executor locks are acquired:
+4. Inside `CheckCachedPlan` executor locks are acquired:
     ```c
     AcquireExecutorLocks(plan->stmt_list, true);
     ```

@@ -63,7 +63,7 @@ For other PostgreSQL databases (RDS, CloudSQL, self-hosted):
 4. Deploy the monitoring stack
 
 :::tip Database preparation
-For automatic setup, provide superuser credentials (used once, never stored). For manual setup, follow the [database preparation guide](/docs/monitoring/getting-started/requirements#database-preparation).
+For automatic setup, provide superuser credentials (used once, never stored). For manual setup, follow the [database preparation guide](/docs/monitoring/getting-started/requirements#permissions).
 :::
 
 ## Step 4: Access your dashboards

@@ -195,7 +195,7 @@ In your browser, open [http://127.0.0.1:2346](http://127.0.0.1:2346).
 
 You'll see a **"refreshing"** state while the engine initializes.  This may take some time; please wait until the refresh is complete. Once it's done, you will be able to create snapshots, branches, and clones.
 
-To learn how to work with DBLab UI, see [DBLab Guides](/docs/how-to-guides).
+To learn how to work with DBLab UI, see [DBLab how-to guides](/docs/dblab-howtos).
 
 ### Install and configure DBLab CLI
 ```bash

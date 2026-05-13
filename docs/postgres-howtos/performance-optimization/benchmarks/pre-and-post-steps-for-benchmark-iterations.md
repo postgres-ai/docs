@@ -21,7 +21,7 @@ estimated_time: 5 min
 ---
 
 
-When conducting a Postgres benchmark (see [How to benchmark](/docs/postgres-howtos/performance-optimization/indexing/how-to-benchmark)), quite often we need to
+When conducting a Postgres benchmark (see [How to benchmark](/docs/postgres-howtos/performance-optimization/benchmarks/how-to-benchmark)), quite often we need to
 run multiple benchmark iterations on the same setup. It may be reasonable to perform the same series of unified steps
 before and after each iteration:
 

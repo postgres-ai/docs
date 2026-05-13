@@ -50,7 +50,7 @@ organizations. But again: don't trust blindly - study all the details, and test 
 
 ## 2) Corruption control
 
-1. Enable [data checksums](/docs/postgres-howtos/database-administration/backup-recovery/how-to-enable-data-checksums-without-downtime)
+1. Enable [data checksums](/docs/postgres-howtos/database-administration/maintenance/how-to-enable-data-checksums-without-downtime)
 
 2. Be careful with OS / `glibc` upgrades – avoid index corruption.
 

@@ -68,7 +68,7 @@ Let's open this job and see the details:
 
 ---
 
-What happened here? Behind the schenes, a pre-installed DLE server (in AWS) quickly provisioned a thin clone of the Demo database. <!--The size of that database is ~37 GiB and cloning took just TODO: add details and sreenshot here -->Next, the DB change was applied in this clone, and DB Migration Checker collected telemetry, and it becomes clear that such change is going to hold an `AccessExclusiveLockё` blocking other queries for a significant time (according to the settings, longer than for 10 seconds). Therefore, this change marked as failed in CI/CD. This is exactly what we need to be protected to avoid deploying such changes to production.
+What happened here? Behind the scenes, a pre-installed DLE server (in AWS) quickly provisioned a thin clone of the Demo database. <!--The size of that database is ~37 GiB and cloning took just TODO: add details and screenshot here -->Next, the DB change was applied in this clone, and DB Migration Checker collected telemetry, and it becomes clear that such change is going to hold an `AccessExclusiveLock` blocking other queries for a significant time (according to the settings, longer than for 10 seconds). Therefore, this change is marked as failed in CI/CD. This is exactly what we need to be protected to avoid deploying such changes to production.
 
 Of course, if we get the word `CONCURRENTLY` back (as I did in [commit 6059bf4](https://github.com/postgres-ai/green-zone/commit/6059bf4b80a1930bcb531ecd5ae607d623f2a64d)), we'll have our "green light":
 
@@ -100,7 +100,7 @@ Currently, full automation is supported for the DB migrations tracked in GitHub 
 - [Ruby on Rails: Active Record Migrations](https://guides.rubyonrails.org/active_record_migrations.html) (using [`rake db:migrate`](https://ruby.github.io/rake/))
 - [Django migrations](https://docs.djangoproject.com/en/3.2/topics/migrations/)
 
-It is also supposed that the automated testing is done using [GitHub Actions](https://github.com/marketplace/actions/database-lab-realistic-db-testing-in-ci). However, the list of supported Git platforms, CI/CD tools, and DB migration version control systems is quite easy to extend – you can do it (please publish an MR if you do!) or open an issue to ask about it in the [DLE & DB Migration Checker issue tracker](https://gitlab.com/postgres-ai/database-lab/-/issues).
+It is also supposed that the automated testing is done using [GitHub Actions](https://github.com/marketplace/actions/database-lab-realistic-db-testing-in-ci). However, the list of supported Git platforms, CI/CD tools, and DB migration version control systems is quite easy to extend – you can do it (please publish an MR if you do!) or open an issue to ask about it in the [DLE & DB Migration Checker issue tracker](https://github.com/postgres-ai/database-lab-engine/issues).
 
 ## :large_blue_diamond: Terraform module to deploy DLE and its components in AWS
 
@@ -128,7 +128,7 @@ Feedback and contributions are very welcome.
 Feedback and contributions would be greatly appreciated:
 
 - Database Lab Community Slack: https://slack.postgres.ai/
-- DLE & DB Migration Checker issue tracker: https://gitlab.com/postgres-ai/database-lab/-/issues
+- DLE & DB Migration Checker issue tracker: https://github.com/postgres-ai/database-lab-engine/issues
 - Issue tracker of the Terraform module for Database Lab: https://gitlab.com/postgres-ai/database-lab-infrastructure/-/issues
 
 <BlogFooter author={nik} />

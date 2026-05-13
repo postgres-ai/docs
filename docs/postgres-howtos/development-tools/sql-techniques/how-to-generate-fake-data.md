@@ -236,7 +236,7 @@ There are several options to use Faker for Python:
 - PL/Python functions.
 
 Here, we'll demonstrate the use of the latter approach, with the "untrusted" version of PL/Python,
-([Day 47: How to install Postgres 16 with plpython3u](/docs/postgres-howtos/advanced-topics/extensions/how-to-install-postgres-16-with-plpython3u); N/A for
+([Day 47: How to install Postgres 16 with plpython3u](/docs/postgres-howtos/advanced-topics/misc/how-to-install-postgres-16-with-plpython3u); N/A for
 managed Postgres services such as RDS; note that in this case, the "trusted" version should suit too).
 
 ```sql

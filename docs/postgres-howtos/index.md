@@ -15,7 +15,7 @@ A comprehensive collection of practical PostgreSQL how-to guides covering databa
 
 Each how-to page includes "Copy for LLM" and "View raw" buttons for easy copying.
 
-## 📚 Guide Categories
+## 📚 Guide categories
 
 ### [Performance & query optimization](/docs/postgres-howtos/performance-optimization)
 Master query optimization, indexing strategies, and performance tuning techniques to make your PostgreSQL database blazing fast.
@@ -67,7 +67,7 @@ The source files are available at: https://gitlab.com/postgres-ai/docs/-/tree/ma
 
 Feel free to submit merge requests!
 
-## Related Resources
+## Related resources
 
 - [DBLab how-to guides](/docs/dblab-howtos) - Guides for using DBLab Engine
 - [Reference guides](/docs/reference-guides) - Technical reference documentation

@@ -33,7 +33,7 @@ Speeding up options discussed here:
 3. Parallelized `pg_dump`
 4. Advanced custom parallelization
 
-## Monitoring Dump Progress
+## Monitoring dump progress
 - **Verbose Output**: Use `pg_dump --verbose` to get detailed information during the dump process.
 - **Progress Estimation**: While `pg_dump` doesn't provide a progress bar, you can estimate progress by monitoring the size of the output file or, in the case of plain-format dumps, using tools like `pv`.
 - **System Monitoring**: Monitor system resources (CPU, I/O) to infer activity levels during the dump.
@@ -44,7 +44,7 @@ In the cases of weak disks or network, it makes sense to apply compression. Note
 - **Custom (`-Fc`) and Directory (`-Fd`) Formats:** These formats apply compression by default. The default method is gzip at level 6, unless specified otherwise.
 - **Plain Format:** No compression is applied by default. To compress, pipe the output through a compression utility, e.g., `pg_dump ... | gzip`.
 
-### Choosing Compression Methods and Levels
+### Choosing compression methods and levels
 PostgreSQL supports multiple compression methods:
 - `zstd`: Offers the best balance between speed and compression ratio. Levels 1–5 are optimal for most datasets.
 - `lz4`: Fastest compression, but results in larger dump sizes.

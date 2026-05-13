@@ -87,7 +87,7 @@ const ContactPage: React.FC = () => {
                   </a>
                   {' '}or{' '}
                   <a
-                    href="https://gitlab.com/postgres-ai/database-lab/-/issues"
+                    href="https://github.com/postgres-ai/database-lab-engine/issues"
                     target="_blank"
                     className={styles.link}
                   >

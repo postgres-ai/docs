@@ -35,7 +35,7 @@ Any severe incident with any risk to affect customer data triggers a customer al
 ## Architecture and data availability
 ## Customer data management
 ### Self-managed installations
-In the case of a Self-managed setup, all the components are installed and operate inside your infrastructure, in clouds, or on-premise. It is strongly recommended to treat Database Lab instances that work with production clones as production-like machines, therefore protecting them correspondingly, using firewalls, secure connections.
+In the case of a Self-managed setup, all the components are installed and operate inside your infrastructure, in clouds, or on-premises. It is strongly recommended to treat Database Lab instances that work with production clones as production-like machines, therefore protecting them correspondingly, using firewalls, secure connections.
 
 ### Key security principles of communication between Postgres.ai SaaS and your infrastructure
 In [Postgres.ai SaaS](https://postgres.ai/console), all the components that can communicate directly to database clones are installed inside your infrastructure. The Platform works "outside". This means that both Postgres.ai components and Postgres.ai engineers cannot reach your infrastructure:
@@ -60,7 +60,7 @@ Please contact Postgres.ai support to obtain your registration key and detailed 
 Further, we discuss all Postgres.ai components that are to be installed in your infrastructure and what kind of information can be transferred to Postgres.ai.
 
 #### Database Lab
-When integrated, the Database Lab component may receive only control signals such as "create clone", "destroy clone", "refresh clone", "list snapshots". The full list of capabilities you may find in [Database Lab CLI Reference](/docs/database-lab/cli-reference). By no means is data from your databases available to the Platform.
+When integrated, the Database Lab component may receive only control signals such as "create clone", "destroy clone", "refresh clone", "list snapshots". The full list of capabilities you may find in [DBLab CLI Reference](/docs/reference-guides/dblab-client-cli-reference). By no means is data from your databases available to the Platform.
 
 To be able to connect to a clone, users need to work inside your infrastructure, where connections to Database Lab clones (by default, ports 6000..6100) are possible, using the username and the password defined at clone creation time. Postgres.ai never stores passwords for clones, and it is the users' responsibility to remember them.
 

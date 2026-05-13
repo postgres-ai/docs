@@ -8,7 +8,7 @@ description: Essential guides for PostgreSQL database administrators covering ma
 
 Essential guides for PostgreSQL database administrators covering maintenance, backups, and configuration.
 
-## Guides by Category
+## Guides by category
 
 ### Backups, data export/import
 

@@ -35,7 +35,7 @@ dblab init --environment-id=ENV_ID --url=URL --token=TOKEN
 - `--url` - URL of Database Lab instance's API
 - `--token` - verification token of the Database Lab instance to send API requests
 
-> You can also run [`dblab config`](#command-config) at any time to change your settings or create a new configuration.
+> You can also run [`dblab config`](/docs/reference-guides/dblab-client-cli-reference#command-config) at any time to change your settings or create a new configuration.
 
 4. Test your configuration with instance status request `dblab instance status`:
 ```json
