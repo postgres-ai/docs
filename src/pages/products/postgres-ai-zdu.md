@@ -25,7 +25,7 @@ Traditional Postgres major version upgrades require:
 - **Hard to test and verify** procedures for various issues like incompatibilities
 - **Risks of plan flips** and performance regressions after upgrade
 
-## Our solution: Four-component approach
+## Our solution: four-component approach
 
 A complete system:
 

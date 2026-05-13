@@ -21,7 +21,7 @@ estimated_time: 8 min
 
 <img src="/img/postgres-howtos/0003_cover.png" width="600" />
 
-#PostgresMarathon day 3. In [the previous how-to](/docs/postgres-howtos/database-administration/configuration/how-to-troubleshoot-and-speedup-postgres-restarts), we discussed how to quickly stop or restart PostgreSQL. Now it's time to discuss what to do if you are trying to start your server but see this:
+#PostgresMarathon day 3. In [the previous how-to](/docs/postgres-howtos/database-administration/maintenance/how-to-troubleshoot-and-speedup-postgres-restarts), we discussed how to quickly stop or restart PostgreSQL. Now it's time to discuss what to do if you are trying to start your server but see this:
 ```
 FATAL:  the database system is not yet accepting connections
 DETAIL:  Consistent recovery state has not been yet reached.

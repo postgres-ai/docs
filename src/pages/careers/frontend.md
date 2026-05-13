@@ -10,7 +10,7 @@ requirements:
 
 As a Senior Frontend Developer, you will be building components of the [PostgresAI Platform](https://postgres.ai/docs).
 
-## Job Details
+## Job details
 
 - Employment type: full-time/ part-time remote
 - Company: PostgresAI, headquartered in California

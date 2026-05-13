@@ -23,7 +23,7 @@ estimated_time: 5 min
 
 
 Here are general recommendations for basic tuning of Linux to run Postgres under heavy OLTP (web/mobile apps) workloads.
-Most of them are default settings used in [postgresql_cluster](https://github.com/vitabaks/postgresql_cluster).
+Most of them are default settings used in [Autobase](https://github.com/vitabaks/autobase) (formerly postgresql_cluster).
 
 Consider the parameters below as entry points for further study, and values provided as just rough tuning that is worth
 reviewing for a particular situation.
@@ -88,7 +88,7 @@ echo 1 | sudo tee /proc/sys/vm/swappiness
     also: [PgCookbook - a PostgreSQL documentation project](https://github.com/grayhemp/pgcookbook/blob/master/database_server_configuration.md) by
     [@grayhemp](https://twitter.com/grayhemp).
 
-## Network Configuration
+## Network configuration
 
 > 📝 note that below ipv4 settings are provided; 
 > 🎯 **TODO:** ipv6 options
@@ -127,7 +127,7 @@ echo 1 | sudo tee /proc/sys/vm/swappiness
 
     Improves process scheduling latency for Postgres.
 
-## Filesystem and File Handling
+## Filesystem and file handling
 
 15) `fs.file-max = 262144`
 

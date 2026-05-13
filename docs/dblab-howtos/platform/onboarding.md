@@ -71,7 +71,7 @@ dblab init --environment-id ENV_ID --url URL --token YOUR_PERSONAL_TOKEN
 ```bash
 dblab clone create --username USERNAME --password PASSWORD
 ```
-- [ ] Create an SSH tunnel to the machine, allowing to work with remote Postgres clone using -h localhost -p 6XXX – pay attention to the port:
+- [ ] Create an SSH tunnel to the machine, allowing you to work with remote Postgres clone using -h localhost -p 6XXX – pay attention to the port:
 ```bash
 ssh -L localhost:6XXX:URL:6XXX URL
 ```

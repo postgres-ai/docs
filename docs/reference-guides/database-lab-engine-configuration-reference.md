@@ -34,18 +34,18 @@ docker logs --since 1m dblab_server
 ``` 
 :::
 
-## YAML Anchors and Configuration Patterns
+## YAML anchors and configuration patterns
 
 DBLab Engine configuration extensively uses YAML anchors and aliases to reduce repetition and maintain consistency across different configuration sections. This approach allows you to define common configuration patterns once and reuse them throughout the configuration file.
 
-### Basic YAML Anchors Syntax
+### Basic YAML anchors syntax
 - `&anchor_name` - defines an anchor (creates a reusable reference)
 - `*anchor_name` - uses an anchor (references the defined anchor)
 - `<<: *anchor_name` - merges an anchor into the current mapping (inheritance)
 
-### Common Configuration Patterns
+### Common configuration patterns
 
-#### Database Container Configuration (`databaseContainer`)
+#### Database container configuration (`databaseContainer`)
 This pattern defines common Docker container settings used across multiple jobs:
 
 ```yaml
@@ -70,7 +70,7 @@ retrieval:
         dumpLocation: "/var/lib/dblab/dblab_pool/dump"
 ```
 
-#### Database Configuration Parameters (`databaseConfigs`)
+#### Database configuration parameters (`databaseConfigs`)
 This pattern defines PostgreSQL configuration parameters that should be consistent across jobs:
 
 ```yaml
@@ -96,14 +96,14 @@ retrieval:
         preprocessingScript: ""
 ```
 
-### Best Practices for YAML Anchors
+### Best practices for YAML anchors
 
 1. **Define anchors at the top level** of your configuration file for better readability
 2. **Use descriptive names** that clearly indicate the purpose (e.g., `&db_container`, `&db_configs`)
 3. **Combine anchors when needed** - you can use multiple `<<:` merge operators in the same section
 4. **Override specific values** - anchor merging allows you to override individual values while keeping the rest
 
-### Example: Combining Multiple Anchors
+### Example: combining multiple anchors
 ```yaml
 # Define multiple anchors
 databaseContainer: &db_container
@@ -377,12 +377,12 @@ CI Observer helps verify database schema changes (database migrations) automatic
 
 - `replacementRules` (key-value, optional) - set up rules based on regular expressions (a pair of values `"regexp":"replace"`; to check syntax, use [this document](https://github.com/google/re2/wiki/Syntax )) for Postgres logs that will be sent to the Platform when running Observed Sessions; this helps ensure that sensitive data is masked properly and it doesn't leave the origin
 
-### Log Fields Affected
+### Log fields affected
 Replacement rules apply to the following PostgreSQL log fields: `message`, `detail`, `hint`, `internal_query`, `query`
 
-### Common Replacement Patterns
+### Common replacement patterns
 
-#### Masking Numeric Values
+#### Masking numeric values
 ```yaml
 observer:
   replacementRules:
@@ -391,7 +391,7 @@ observer:
     "\\b\\d{3,}\\b": "***"                # Numbers with 3+ digits
 ```
 
-#### Masking Email Addresses
+#### Masking email addresses
 ```yaml
 observer:
   replacementRules:
@@ -401,7 +401,7 @@ observer:
     "[a-z0-9._%+\\-]+@[a-z0-9.\\-]+\\.[a-z]{2,4}": "user@example.com"
 ```
 
-#### Masking SQL Values
+#### Masking SQL values
 ```yaml
 observer:
   replacementRules:
@@ -413,7 +413,7 @@ observer:
     "\\b(?:\\d{1,3}\\.){3}\\d{1,3}\\b": "XXX.XXX.XXX.XXX"
 ```
 
-#### Complete Example
+#### Complete example
 ```yaml
 observer:
   replacementRules:
@@ -429,7 +429,7 @@ observer:
     "\\b\\d{3}[.-]?\\d{3}[.-]?\\d{4}\\b": "XXX-XXX-XXXX"
 ```
 
-### Security Considerations
+### Security considerations
 - **Test regex patterns** carefully to ensure they match the intended data
 - **Use capture groups** (like `$1`) to preserve necessary parts of matched text
 - **Order matters** - more specific patterns should come before general ones
@@ -486,46 +486,46 @@ The section has been removed in DBLab Engine 3.4.0
 - `profilingInterval` (string, optional, default: 10ms) - time interval of samples taken by the profiler
 - `sampleThreshold` - (integer, optional, default: 20) - the minimum number of samples sufficient to display the estimation results
 
-## Environment Variables
+## Environment variables
 DBLab Engine supports several environment variables that can override configuration file settings or provide sensitive data like passwords. Environment variables have higher priority than configuration file values.
 
-### Supported Environment Variables
+### Supported environment variables
 
-#### Database Connection
+#### Database connection
 - `PGPASSWORD` - PostgreSQL password for source database connections. Overrides `password` in job configurations
 - `PGUSER` - PostgreSQL username. Can override `username` in job configurations  
 - `PGHOST` - PostgreSQL hostname. Can override `host` in job configurations
 - `PGPORT` - PostgreSQL port. Can override `port` in job configurations
 - `PGDATABASE` - PostgreSQL database name. Can override `dbname` in job configurations
 
-#### AWS/Cloud Integration  
+#### AWS/cloud integration  
 - `AWS_ACCESS_KEY_ID` - AWS access key for S3/RDS access
 - `AWS_SECRET_ACCESS_KEY` - AWS secret key
 - `AWS_SESSION_TOKEN` - AWS session token (for temporary credentials)
 - `AWS_REGION` - AWS region (can override `awsRegion` in RDS IAM configuration)
 
-#### WAL-G Configuration
+#### WAL-G configuration
 - `WALG_S3_PREFIX` - S3 prefix for WAL-G backups
 - `WALG_COMPRESSION_METHOD` - compression method for WAL-G
 - `WALG_S3_STORAGE_CLASS` - S3 storage class
 
-#### Platform Integration
+#### Platform integration
 - `DLE_PLATFORM_ACCESS_TOKEN` - Platform access token (overrides `platform.accessToken`)
 - `DLE_VERIFICATION_TOKEN` - API verification token (overrides `server.verificationToken`)
 
-### Priority Order
+### Priority order
 When the same parameter is defined in multiple places, DBLab Engine uses this priority order:
 1. **Environment variables** (highest priority)
 2. **Configuration file values**
 3. **Default values** (lowest priority)
 
-### Security Best Practices
+### Security best practices
 - **Use environment variables for sensitive data** like passwords and tokens
 - **Avoid putting credentials in configuration files** in production
 - **Use Docker secrets or Kubernetes secrets** to manage environment variables securely
 - **Rotate credentials regularly** and update environment variables accordingly
 
-### Example Usage
+### Example usage
 ```yaml
 # Configuration file - no sensitive data
 retrieval:

@@ -114,6 +114,6 @@ Interested in giving back to the project? Here's how you can make an impact:
 - Give a star to our [GitHub repository](https://github.com/postgres-ai/database-lab-engine)
 - Help us reach more enthusiasts. Share about Database Lab on Twitter (don't forget to tag [@Database_Lab](https://twitter.com/Database_Lab)) or any other platform you fancy
 - Multilingual? Consider [translating our README.md](https://gitlab.com/postgres-ai/database-lab/-/blob/master/CONTRIBUTING.md#translation) to share the knowledge in your language
-- Are you a developer? Dive in and enhance the Database Lab Engine (DLE) experience; check out our [CONTRIBUTING guidelines](https://gitlab.com/postgres-ai/database-lab/-/blob/master/CONTRIBUTING.md) and explore [the "good first issues" list](https://gitlab.com/postgres-ai/database-lab/-/issues?sort=created_date&state=opened&label_name[]=good+first+issue) on GitLab
+- Are you a developer? Dive in and enhance the Database Lab Engine (DLE) experience; check out our [CONTRIBUTING guidelines](https://gitlab.com/postgres-ai/database-lab/-/blob/master/CONTRIBUTING.md) and explore [the "good first issues" list](https://github.com/postgres-ai/database-lab-engine/issues?q=is%3Aopen+label%3A%22good+first+issue%22) on GitHub
 
 <BlogFooter author={nik} />

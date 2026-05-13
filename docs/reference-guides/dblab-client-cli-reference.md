@@ -81,7 +81,7 @@ DBLAB_INSTANCE_URL="http://127.0.0.1:2345" DBLAB_VERIFICATION_TOKEN="SECRET_TOKE
 If you register a Database Lab instance on the Postgres.ai Platform through the Platform server tunnel, it means that to use Database Lab API and CLI, your users need to be able to reach your infrastructure somehow. Consider use of VPN or custom SSH [port forwarding](https://en.wikipedia.org/wiki/Port_forwarding).
 :::
 
-## Command Overview
+## Command overview
 ```
 COMMANDS:
    init          initialize Database Lab CLI
@@ -396,7 +396,7 @@ dblab clone destroy TestCloneID
 ### Subcommand `start-observation`
 
 :::note 🚧 Experimental
-This is an experimental feature (its working title: "CI Observer"). If you have questions, suggestions, or bug reports, please open an issue in the [DBLab Engine issue tracker](https://gitlab.com/postgres-ai/database-lab/-/issues) and/or raise a discussion in one of [the Database Lab Community channels](https://postgres.ai/docs/database-lab#more).
+This is an experimental feature (its working title: "CI Observer"). If you have questions, suggestions, or bug reports, please open an issue in the [DBLab Engine issue tracker](https://github.com/postgres-ai/database-lab-engine/issues) and/or raise a discussion in one of [the Database Lab Community channels](https://postgres.ai/docs/database-lab#more).
 :::
 
 Start clone state monitoring.

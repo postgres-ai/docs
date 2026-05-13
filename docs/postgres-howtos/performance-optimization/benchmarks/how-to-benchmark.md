@@ -64,7 +64,7 @@ recommendations that can help you avoid mistakes and improve the general quality
 
 Of course, some of the things can be omitted, if needed. But in general case, it is recommended to automate
 documentation and artifact collection for all experiments, so it would be easy to study the details later. You can
-find [here](https://gitlab.com/postgres-ai/postgresql-consulting/tests-and-benchmarks/-/issues)
+find [here](https://gitlab.com/postgres-ai/postgresql-consulting/tests-and-benchmarks)
 some good examples of benchmarks performed for specific purposes (e.g., to study pathological subtransaction behavior or
 to measure the benefits of enabling `wal_compression`).
 

@@ -41,7 +41,7 @@ Good resources:
 
 - [PGTune](https://pgtune.leopard.in.ua)
 - [postgresql.conf configurations](https://postgresqlco.nf)
-- [postgresql_cluster's defaults](https://github.com/vitabaks/postgresql_cluster/blob/master/vars/main.yml)
+- [Autobase defaults](https://github.com/vitabaks/autobase/blob/master/automation/roles/common/defaults/main.yml) (formerly postgresql_cluster)
 
 1) `max_connections = 200`
 

@@ -8,7 +8,7 @@ As the first step, you need to set up a machine for DBLab Engine instance. See t
 :::
 
 :::tip See also
-To get started using DBLab Engine for Amazon RDS databses, see the [Database Lab tutorial for Amazon RDS](/docs/tutorials/database-lab-tutorial-amazon-rds).
+To get started using DBLab Engine for Amazon RDS databases, see the [Database Lab tutorial for Amazon RDS](/docs/tutorials/database-lab-tutorial-amazon-rds).
 :::
 
 We have two options to connect to the RDS database, you need to consider the **Database authentication** method that is assigned to your RDS database.

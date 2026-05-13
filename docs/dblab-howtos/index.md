@@ -54,7 +54,7 @@ slug: /dblab-howtos
 ### Physical retrieval
 - [pg_basebackup](/docs/dblab-howtos/administration/data/pg_basebackup)
 - [WAL-G](/docs/dblab-howtos/administration/data/wal-g)
-- [pgBackRest](/docs/dblab-howtos/administration/data/pgBackRest)
+- [pgBackRest](/docs/dblab-howtos/administration/data/pgbackrest)
 - [Custom](/docs/dblab-howtos/administration/data/custom)
 
 ## DBLab (PostgresAI) Platform

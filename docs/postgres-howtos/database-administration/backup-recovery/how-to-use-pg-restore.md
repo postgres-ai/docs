@@ -42,7 +42,7 @@ dealing with Postgres. And this also might lead to situations when database rest
 unnoticed. To switch to the `strict` mode, use `-e` (`--exit-on-error`). It can be also helpful to wrap the restoration
 process into a single transaction, using option `-1` (`--single-transaction`).
 
-## Tracking Restore Progress
+## Tracking restore progress
 
 - **Verbose Mode**: Use `pg_restore --verbose` to see detailed progress messages.
 - **TOC List**: Generate a Table of Contents (TOC) with `pg_restore -l backup.dump > toc.list` to view the sequence of objects.
@@ -146,7 +146,7 @@ filler   | character(84) |           |          |
 Partition of: pgbench_accounts FOR VALUES FROM (MINVALUE) TO (625001)
 ```
 
-## Handling Errors During Restore
+## Handling errors during restore
 
 - **Exit on Error**: If `--exit-on-error` is set, the restore stops upon encountering an error. You'll then need to manually restore all subsequent objects using a customized TOC list (`pg_restore -l` and `-L`).
 

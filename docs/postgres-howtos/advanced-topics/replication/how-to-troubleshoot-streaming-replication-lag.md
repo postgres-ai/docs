@@ -24,8 +24,8 @@ Streaming replication in Postgres allows for continuous data replication from a 
 ## Identifying the lag
 To start investigation we need to understand where we actually have lag, on which stage of replication:
 - sending WAL stream to replica via network by `walsender`
-- receiving WAL stream on replica from network by `walreciever`
-- writing WAL on disk on replica by `walreciever`
+- receiving WAL stream on replica from network by `walreceiver`
+- writing WAL on disk on replica by `walreceiver`
 - applying (replaying) WAL as a recovery process
 
  Thus, streaming replication lag can be categorized into three types:

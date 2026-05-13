@@ -30,7 +30,7 @@ One of the possible approaches is explained here.
 ## Rough tuning and "safe" values of work_mem
 
 First, apply rough optimization as described in
-[Rough configuration tuning (80/20 rule; OLTP)](/docs/postgres-howtos/performance-optimization/query-tuning/rough-oltp-configuration-tuning).
+[Rough configuration tuning (80/20 rule; OLTP)](/docs/postgres-howtos/database-administration/configuration/rough-oltp-configuration-tuning).
 
 A query can "spend" `work_mem` multiple times (for multiple operations). But it is not allocated fully for
 each operation – an operation can need a lower amount of memory.

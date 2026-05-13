@@ -127,5 +127,5 @@ Read [common db schema change mistakes](https://postgres.ai/blog/20220525-common
 ## Other "Don't do" articles
 
 - [Depesz: Don’t do these things in PostgreSQL](https://depesz.com/2020/01/28/dont-do-these-things-in-postgresql/)
-- [PostgreSQL Wiki: Don't Do This](https://wiki.postgresql.org/wiki/Don't_Do_This)
+- [PostgreSQL Wiki: Don't Do This](https://wiki.postgresql.org/wiki/Don%27t_Do_This)
 - [JOOQ: Don't do this](https://jooq.org/doc/latest/manual/reference/dont-do-this/)

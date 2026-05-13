@@ -110,9 +110,9 @@ Or just redirect everything to a single file:
 command  &>>everything.log
 ```
 
-If you want to both see everything and log it, use `tee` – or, with append mode, `tee -a` (here, `2>&1` redirects `STDERR` to `STDOUT` first, an then `tee` gets everything from `STDOUT`):
+If you want to both see everything and log it, use `tee` – or, with append mode, `tee -a` (here, `2>&1` redirects `STDERR` to `STDOUT` first, and then `tee` gets everything from `STDOUT`):
 ```shell
-commend 2>&1 | tee -a everything.log
+command 2>&1 | tee -a everything.log
 ```
 
 If the output you have lacks timestamps (not the case with the psql snippet we used above though), then use `ts` to prepend each line with a timestamp:
@@ -126,7 +126,7 @@ Finally, it is usually wise to name the file with result with some details and c
 ```shell
 command 2>&1 \
   | ts \
-  | tee -a observing_our_comand_$(date +%Y%m%d).log
+  | tee -a observing_our_command_$(date +%Y%m%d).log
 ```
 
 One downside of using `tee` is that, in some cases, you might accidentally stop it (e.g., pressing `Ctrl-C` in a wrong `tmux` window/pane). Due to this, some people prefer using `nohup ... &` to run observability actions in background and observing the result using `tail -f`.

@@ -61,7 +61,7 @@ If your monitoring doesn't have it, you can understand how much of WAL data was 
 Both methods should help you to get two LSN values corresponding to two distant points of time.
 
 For further details,
-see [How to understand the LSN values and WAL file name](/docs/postgres-howtos/advanced-topics/internals/lsn-values-and-wal-filenames).
+see [How to understand the LSN values and WAL file name](/docs/postgres-howtos/advanced-topics/misc/lsn-values-and-wal-filenames).
 
 ## WAL metrics in query analysis
 

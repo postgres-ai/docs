@@ -39,6 +39,6 @@ Achieving the lowest entry barrier for the new DLE users remains to be one of ou
 1. Physical mode (for those who manage Postgres themselves)
 2. Many advanced DLE configuration options are not available in AWS Marketplace / CloudFormation interface; however, they can still be adjusted once the instance is created
 
-To start, please read the documentation: ["How to install DLE from the AWS Marketplace"](/docs/how-to-guides/administration/install-dle-from-aws-marketplace).
+To start, please read the documentation: ["How to install DLE from the AWS Marketplace"](/docs/dblab-howtos/administration/install-dle-from-aws-marketplace).
 
 <BlogFooter author={nik} />

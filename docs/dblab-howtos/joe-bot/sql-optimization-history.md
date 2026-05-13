@@ -4,7 +4,7 @@ sidebar_label: Work with SQL optimization history
 ---
 
 :::tip
-Enable History functionality with [HISTORY_ENABLED](/docs/reference-guides/joe-bot-configuration-reference#history_enabled) and [PLATFORM_URL](/docs/reference-guides/joe-bot-configuration-reference#platform_url) configuration options.
+Enable History functionality with [HISTORY_ENABLED](/docs/reference-guides/joe-bot-configuration-reference#joe_platform_history_enabled) and [PLATFORM_URL](/docs/reference-guides/joe-bot-configuration-reference#joe_platform_url) configuration options.
 :::
 
 ## Open the Command page from the Joe chat

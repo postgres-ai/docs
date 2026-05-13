@@ -22,7 +22,7 @@ export const anatoly = {
   avatarUrl: '/assets/author/anatoly.jpg',
   name: 'Anatoly Stansler',
   gitlabUrl: 'https://gitlab.com/anatolystansler',
-  githubUrl: 'https://github.com/anatolystansler',
+  githubUrl: 'https://github.com/astansler',
   linkedinUrl: 'https://www.linkedin.com/in/anatoly-stansler-37265514a',
 }
 

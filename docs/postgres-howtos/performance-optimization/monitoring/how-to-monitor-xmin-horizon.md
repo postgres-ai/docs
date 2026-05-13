@@ -26,12 +26,12 @@ estimated_time: 6 min
 
 
 Previously, we discussed
-[how to implement monitoring for the risks of XID (transaction ID) and MultiXID wraparound](/docs/postgres-howtos/performance-optimization/statistics/how-to-monitor-transaction-id-wraparound-risks).
+[how to implement monitoring for the risks of XID (transaction ID) and MultiXID wraparound](/docs/postgres-howtos/performance-optimization/monitoring/how-to-monitor-transaction-id-wraparound-risks).
 That type of check is critical and a must-have in any monitoring.
 
 However, while it helps you understand the risk level, it doesn't reveal the root cause – something that you'll
 definitely need for your XID wraparound postmortem, when applying the "Five Whys" method (just kidding, we're going to
-improve our monitoring and have autovacuum behavior control, so none of us will ever experience a XID wraparound in
+improve our monitoring and have autovacuum behavior control, so none of us will ever experience an XID wraparound in
 production).
 
 This problem can be solved with the `xmin` horizon monitoring. And this very check is also helpful in understanding

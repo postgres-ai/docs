@@ -71,7 +71,7 @@ Two types of database experiments:
    those that aim to study macro-level query analysis: `pgss`, wait event analysis (aka active session history or
    performance/query insights), `auto_explain`, `pgBadger`, etc.
 
-   More about this type of experiments: [Day 13: How to benchmark](/docs/postgres-howtos/performance-optimization/indexing/how-to-benchmark).
+   More about this type of experiments: [Day 13: How to benchmark](/docs/postgres-howtos/performance-optimization/benchmarks/how-to-benchmark).
 
 2. Single-session experiments – testing one or a sequence of SQL queries using a single session (sometimes, two), to
    check query syntax, study individual query behavior, optimize particular query, etc.

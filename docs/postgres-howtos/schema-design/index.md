@@ -8,9 +8,9 @@ description: Best practices for designing efficient PostgreSQL schemas and manag
 
 Best practices for designing efficient PostgreSQL schemas and managing database objects.
 
-## Guides by Category
+## Guides by category
 
-### DDL Operations
+### DDL operations
 
 Safely perform schema changes with minimal downtime.
 
@@ -19,7 +19,7 @@ Safely perform schema changes with minimal downtime.
 - [How to add a column](/docs/postgres-howtos/schema-design/ddl-operations/how-to-add-a-column) - 5 min *(advanced)*
 - [How to add a CHECK constraint without downtime](/docs/postgres-howtos/schema-design/ddl-operations/how-to-add-a-check-constraint-without-downtime) - 5 min *(intermediate)*
 
-### Data Types
+### Data types
 
 Choose the right data types and understand their performance implications.
 

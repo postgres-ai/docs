@@ -7,7 +7,7 @@ description: Give your developers and QA team realistic environments
 
 A single instance of the DBLab Engine can generate many
 fully isolated database clones.  These clones can replace the need
-to setup, maintain, and pay for standalone development and staging databases.
+to set up, maintain, and pay for standalone development and staging databases.
 [Learn how the DBLab Engine works](/products/how-it-works).
 
 ## Your staging server doesn't give you the full picture

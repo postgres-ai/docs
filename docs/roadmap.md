@@ -347,7 +347,7 @@ Logical provisioning: native support of DB provisioning for managed Postgres dat
 - [x] Basic support for masking and obfuscation
     - [x] custom scripts
     - [x] parallel execution of custom scripts
-    - [x] [postgres_anonymizer](https://postgresql-anonymizer.readthedocs.io/en/stable/masking_functions.html)
+    - [x] [postgres_anonymizer](https://postgresql-anonymizer.readthedocs.io/en/stable/masking_functions/)
     - [x] [kitchen-sync](https://github.com/willbryant/kitchen_sync)
     - [ ] [pgsync](https://github.com/ankane/pgsync)
 - [ ] Hybrid setup: raw and obfuscated/masked clones on the same DBLab instance

@@ -207,7 +207,7 @@ channelMapping:
 # Enterprise Edition options – only to use with active Postgres.ai Platform EE
 # subscription. Changing these options you confirm that you have active
 # subscription to Postgres.ai Platform Enterprise Edition.
-# See more: https://postgres.ai/docs/platform/postgres-ai-platform-overview
+# See more: https://postgres.ai/docs/platform/
 enterprise:
   quota:
     # Limit request rates. Works in pair with "interval" value. Default: 10.

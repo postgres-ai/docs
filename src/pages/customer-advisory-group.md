@@ -30,7 +30,7 @@ Companies who are accepted into the Customer Advisory Group will make the follow
   Free for 6 months.
 * Shape our product roadmap to the needs of your organization.
 * _Added Bonus:_ We will run a free PostgreSQL Query Optimization Training course for your whole team based
-  on the #1 voted talk from this year's [PGConf.Online](https://pgconf.ru/en/2021).
+  on the #1 voted talk from this year's [PGConf.Online](https://pgconf.ru/2021/en).
 
 ## Who is qualified?
 

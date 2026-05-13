@@ -38,7 +38,7 @@ Python, a widely-used, high-level, and versatile programming language.
 file I/O, network communication, and other actions that could potentially affect the server's behavior or security.
 
 We used `plpython3u` in
-[How to use OpenAI APIs right from Postgres to implement semantic search and GPT chat](/docs/postgres-howtos/advanced-topics/extensions/how-to-use-openai-apis-in-postgres),
+[How to use OpenAI APIs right from Postgres to implement semantic search and GPT chat](/docs/postgres-howtos/advanced-topics/misc/how-to-use-openai-apis-in-postgres),
 let's now discuss how to install it.
 
 And something tells me that we'll be using it more in the future, for various tasks.

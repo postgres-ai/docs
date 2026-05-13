@@ -68,7 +68,7 @@ Deep-dive into PostgresAI monitoring system components and data flow.
 | pg_stat_database | Database-level stats |
 | pg_stat_bgwriter | Checkpoint behavior |
 
-### VictoriaMetrics — Time-series database
+### VictoriaMetrics — time-series database
 
 **Purpose:** Store and query metrics
 
