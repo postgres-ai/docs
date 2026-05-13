@@ -23,7 +23,7 @@ This process is fully automated and takes only a few seconds, even for multi-ter
 
 ## Features
 - "Serverless EXPLAIN": engineers do not need to worry about the provisioning of independent database clones. The process is fully automated, so all the work looks like requests to analyze some query execution plan or modify database schema – and Joe takes care of it, ensuring that delivered results are identical to production.
-- PostgreSQL versions 9.6, 10, 11, and 12 are currently supported.
+- PostgreSQL versions 10 through 18 are supported.
 - Currently, Joe is provided in the form of Slack chatbot.
 - The provisioning of a new clone takes only a few seconds, regardless of the database size.
 - Each database clone is fully independent, so developers do not interfere with each other and do not need to wait.

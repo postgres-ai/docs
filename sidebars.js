@@ -131,12 +131,12 @@ module.exports = {
           "dblab-howtos/administration/logical-full-refresh",
           "dblab-howtos/administration/ci-observer-postgres-log-masking",
           "dblab-howtos/administration/add-disk-space-to-zfs-pool",
-          "dblab-howtos/administration/teleport-integration",
           {
             "Data sources": [
               "dblab-howtos/administration/data/index",
               "dblab-howtos/administration/data/rds",
               "dblab-howtos/administration/data/rds-refresh",
+              "dblab-howtos/administration/data/database-rename",
               "dblab-howtos/administration/data/dump",
               "dblab-howtos/administration/data/wal-g",
               "dblab-howtos/administration/data/pgbackrest",

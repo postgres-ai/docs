@@ -44,5 +44,10 @@ dblab clone reset --snapshot-id SNAPSHOT_ID CLONE_ID
 The parameters `--latest` and `--snapshot-id` must not be specified at the same time.
 :::
 
+For long-running operations, use the `--async` flag:
+```bash
+dblab clone reset --async --latest CLONE_ID
+```
+
 ## Related
 - Guide: [Destroy a clone](/docs/dblab-howtos/cloning/destroy-clone)

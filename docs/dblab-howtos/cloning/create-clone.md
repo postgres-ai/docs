@@ -26,6 +26,8 @@ Before you run any commands, install DBLab CLI and initialize configuration. For
 ### Basic clone creation
 Create a clone using `dblab clone create` command. You need to specify the username and password that will be used to connect to the clone. Remember the password, it will not be available later, but you will need to use it to connect to the clone.
 
+Starting with DBLab Engine 4.1, if you do not specify `--branch`, the clone is created from the default branch `main`.
+
 ```bash
 $ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID
 ```
@@ -94,22 +96,48 @@ $ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --sna
 }
 ```
 
-### Protected status
-You can make clone protected during the creation or later (if needed). Please be careful: abandoned protected clones may cause out-of-disk-space events. Read the details [here](/docs/dblab-howtos/cloning/clone-protection).
+### Create a clone from a branch
+:::note
+Requires DBLab 4.0 or higher
+:::
+
+DBLab uses `main` as the default branch. Specify `--branch` only when you want a different branch.
+
+Create a clone from a specific branch:
 ```bash
-$ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --protected
+$ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --branch main
+```
+
+### Protected status
+You can make a clone protected during creation or later. Please be careful: abandoned protected clones may cause out-of-disk-space events. Read the details [here](/docs/dblab-howtos/cloning/clone-protection).
+
+Protect with default lease duration:
+```bash
+$ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --protected true
+```
+
+Protect for a specific duration (e.g., 8 hours = 480 minutes):
+```bash
+$ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --protected 480
 ```
 
 ```json
 {
     "id": "democlone",
     "protected": true,
+    "protectedTill": "2027-01-15T06:00:00Z",
     "status": {
         "code": "OK",
         "message": "Clone is ready to accept Postgres connections."
     },
     ...
 }
+```
+
+### Extra PostgreSQL configuration
+You can set additional PostgreSQL configuration parameters for a clone:
+```bash
+$ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID --extra-config statement_timeout='30s'
 ```
 
 ## Related

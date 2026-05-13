@@ -8,7 +8,11 @@ slug: /dblab-howtos/administration/data
 ### Logical
 - [Dump](/docs/dblab-howtos/administration/data/dump)
 - [RDS](/docs/dblab-howtos/administration/data/rds)
+- [RDS/Aurora refresh](/docs/dblab-howtos/administration/data/rds-refresh) — refreshes from temporary RDS clone instead of production
 - [Full refresh](/docs/dblab-howtos/administration/logical-full-refresh)
+
+### Shared
+- [Rename databases during snapshot creation](/docs/dblab-howtos/administration/data/database-rename)
 
 ### Physical
 - [WAL-G](/docs/dblab-howtos/administration/data/wal-g)

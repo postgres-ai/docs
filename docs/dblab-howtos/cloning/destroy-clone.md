@@ -8,12 +8,11 @@ DBLab Engine automatically deletes idle unprotected clones after the idle interv
 :::
 
 :::info
-The protected clone could not be deleted automatically or manually. In order to delete the clone, you would need to [unprotect it](/docs/dblab-howtos/cloning/clone-protection).
+A protected clone cannot be deleted automatically or manually. To delete it, first [remove protection](/docs/dblab-howtos/cloning/clone-protection). With protection leases (DBLab Engine 4.1+), protection expires automatically after the configured duration.
 :::
 
 ## GUI
 1. On the **Database Lab clone** page click the **Destroy** button.
-  ![DBLab Engine page / Create clone](/assets/guides/create-clone-1.png)
 1. Accept confirmation dialog and wait for it. You will be redirected to the **Database Lab instance** page.
 
 ## CLI
@@ -29,6 +28,12 @@ dblab clone destroy CLONE_ID
 
 ```
 The clone has been successfully destroyed: CLONE_ID
+```
+
+### Destroy a clone asynchronously
+For long-running operations, use the `--async` flag:
+```bash
+dblab clone destroy --async CLONE_ID
 ```
 
 ## Related

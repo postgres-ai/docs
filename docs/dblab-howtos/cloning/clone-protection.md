@@ -113,7 +113,7 @@ The response includes `protectedTill` showing when protection expires:
 {
     "id": "my-clone",
     "protected": true,
-    "protectedTill": "2026-04-11T14:00:00Z",
+    "protectedTill": "2027-01-15T14:00:00Z",
     "metadata": {
         "protectionLeaseDurationMinutes": 1440,
         "protectionMaxDurationMinutes": 10080

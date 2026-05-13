@@ -14,7 +14,7 @@ Currently, DBLab Engine fully supports the following [PostgreSQL major versions]
 - 17 (released: 2024-09-26; EOL: 2029-11-08)
 - 18 (released: 2025-09-25; EOL: 2030-11-13)
 
-By default, version 17 is used: `postgresai/extended-postgres:17`.
+By default, version 18 is used in the example configurations: `postgresai/extended-postgres:18`.
 
 The images are published in [Docker Hub](https://hub.docker.com/r/postgresai/extended-postgres).
 
