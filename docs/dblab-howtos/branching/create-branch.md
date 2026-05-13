@@ -33,7 +33,7 @@ $ dblab branch test
 ```
 
 ### Create a database branch with a different parent
-By default, the created branch will be a child of the current branch. You can specify a different parent branch using `--parent-branch`:
+By default, the created branch will be a child of the current branch. If no current branch is set in the local CLI context, DBLab uses `main` as the base branch. You can specify a different parent branch using `--parent-branch`:
 ```bash
 $ dblab branch --parent-branch dev test
 ```

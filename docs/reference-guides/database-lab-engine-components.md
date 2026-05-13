@@ -14,10 +14,12 @@ User-defined.
 - Manages all other containers
 - Handles data retrieval and snapshot creation
 - Offers an HTTP API to manage snapshots and clones
+- Exposes operational endpoints such as `/healthz` and `/metrics`
 - Generates an internal DLE RuntimeID on each start to mark related components
 
 #### How to manage
 Operates as a Docker container. See the [guide](/docs/dblab-howtos/administration/engine-manage) for administering DLE.
+For API and metrics details, see [DBLab API reference](/docs/reference-guides/database-lab-engine-api-reference) and [Prometheus monitoring](/docs/database-lab/prometheus-monitoring).
 
 ---
 

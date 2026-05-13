@@ -12,6 +12,10 @@ All ZFS operations happen **inside the Colima VM**, so you don't need to install
 This guide provides an experimental way to run DBLab Engine on macOS.
 :::
 
+:::info
+This guide applies to both Intel and Apple Silicon Macs. DBLab Engine 4.1 includes the ARM64 / Colima compatibility work needed for this setup, so use DLE 4.1+ and a current Colima release.
+:::
+
 ## Prerequisites: Docker, Colima, Go
 First, install Homebrew, if you don't have it yet:
 ```bash
@@ -47,6 +51,8 @@ colima start --cpu 4 --memory 6 --disk 20 --mount $HOME:w
 ```
 
 The `--mount $HOME:w` flag makes your home directory accessible inside Colima at `/mnt/host/Users/yourname/...`.
+
+On Apple Silicon, Colima typically uses an ARM64 Linux VM by default. On Intel Macs, it uses AMD64.
 
 ## 3. Initialize ZFS in Colima VM
 You can either use the provided setup script or run all steps manually if you prefer better control.
@@ -136,7 +142,14 @@ exit
 </Tabs>
 
 ## 4. Build engine
-Compile DBLab for Linux:
+Compile DBLab for Linux using the same architecture as your Colima VM:
+
+Apple Silicon / ARM64:
+```bash
+GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -o bin/dblab-server ./cmd/database-lab/main.go
+```
+
+Intel / AMD64:
 ```bash
 GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o bin/dblab-server ./cmd/database-lab/main.go
 ```

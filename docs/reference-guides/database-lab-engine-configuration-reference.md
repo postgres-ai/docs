@@ -230,7 +230,7 @@ Options:
       - `password` (string, optional, default: "") - defines username password to connect to the database; the environment variable PGPASSWORD can be used instead of this option; the environment variable has a higher priority
    - `rdsIam` (key-value, optional) - contains options specific for RDS IAM source type
       - `awsRegion` (string, required) - AWS Region where RDS is located
-      - `dbInstanceIdentifier` (string, required) - RDS instance Identifier
+      - `dbInstanceIdentifier` (string, required) - RDS instance Identifier. This value is also exposed through the `/admin/config` projection as `RDSIAMDBInstance`.
       - `sslRootCert` (string, required) - path on the host machine to the SSL root certificate. You can download it from https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem 
 - `parallelJobs` (integer, optional, default: 1) - defines the number of concurrent jobs using the `pg_dump` option `jobs`. This option can dramatically reduce the time to dump a large database
 - `databases` (key-value, optional) - defines options for specifying the database list that must be copied. By default, DBLab Engine dumps and restores all available databases. Do not specify the databases section to take all databases. Available options for each database: `tables`
@@ -279,7 +279,7 @@ Options:
 Prepares a snapshot for logical restored PostgreSQL database.
 
 Options:
-- `databaseRename` (key-value, optional) - rename databases before finalizing the snapshot. Runs after `preprocessingScript`. Each entry maps the original database name to the new name. This is useful when you want clones to use different database names than production (e.g., renaming `mydb_prod` to `mydb_dev`). Supported since DBLab Engine 4.1.
+- `databaseRename` (key-value, optional) - rename databases before finalizing the snapshot. Runs after `preprocessingScript`. Each entry maps the original database name to the new name. This is useful when you want clones to use different database names than production (e.g., renaming `mydb_prod` to `mydb_dev`). Supported since DBLab Engine 4.1. See [Rename databases during snapshot creation](/docs/dblab-howtos/administration/data/database-rename).
   ```yaml
   databaseRename:
     mydb_prod: mydb_dev
@@ -342,7 +342,7 @@ Options:
    - `configs` (key-value, optional) - applies PostgreSQL configuration parameters to the promotion instance
 - `sysctls` (key-value, optional) - allows configuring namespaced kernel parameters (sysctls) of Docker container for a promotion stage of taking a snapshot. See supported parameters: https://docs.docker.com/reference/cli/docker/container/run/#sysctl
 - `preprocessingScript` (string, optional) - path on the host machine to a pre-processing script
-- `databaseRename` (key-value, optional) - rename databases before finalizing the snapshot. Runs after `preprocessingScript`. Each entry maps the original database name to the new name. Supported since DBLab Engine 4.1.
+- `databaseRename` (key-value, optional) - rename databases before finalizing the snapshot. Runs after `preprocessingScript`. Each entry maps the original database name to the new name. Supported since DBLab Engine 4.1. See [Rename databases during snapshot creation](/docs/dblab-howtos/administration/data/database-rename).
   ```yaml
   databaseRename:
     example_production: example_dblab
@@ -447,13 +447,57 @@ Webhooks provide a way to notify external systems about clone lifecycle events. 
     - `clone_delete` - triggered when a clone is deleted. Supported since DBLab Engine 4.1.
     - `clone_protection_expiring` - triggered when a clone's protection lease is about to expire (based on `protectionExpiryWarningMinutes`). Supported since DBLab Engine 4.1.
     - `clone_protection_expired` - triggered when a clone's protection lease has expired and protection has been automatically removed. Supported since DBLab Engine 4.1.
+    - `snapshot_create` - triggered when a new snapshot is created. Supported since DBLab Engine 4.1.
+    - `snapshot_delete` - triggered when a snapshot is deleted. Supported since DBLab Engine 4.1.
+    - `branch_create` - triggered when a new branch is created. Supported since DBLab Engine 4.1.
+    - `branch_delete` - triggered when a branch is deleted. Supported since DBLab Engine 4.1.
 
 ### Webhook payload format
-Webhook requests are sent as HTTP POST with JSON payload containing:
-- Event type (matching the trigger)
-- Clone information (ID, port, connection details)
-- Timestamp of the event
-- Instance information
+Webhook requests are sent as HTTP `POST` with a JSON body. If `secret` is configured, DBLab Engine also sends the `DBLab-Webhook-Token` HTTP header.
+
+Payload shape depends on the event type:
+- Basic events (`snapshot_create`, `snapshot_delete`, `branch_create`, `branch_delete`) include:
+  - `event_type`
+  - `entity_id`
+- Clone lifecycle events (`clone_create`, `clone_reset`, `clone_delete`) include:
+  - `event_type`
+  - `entity_id`
+  - `host`
+  - `port`
+  - `username`
+  - `dbname`
+  - `container_name`
+- Clone protection events (`clone_protection_expiring`, `clone_protection_expired`) include all clone lifecycle fields plus:
+  - `protected_till`
+  - `expires_in_hours`
+
+### Example payload: `clone_create`
+```json
+{
+  "event_type": "clone_create",
+  "entity_id": "clone-1",
+  "host": "localhost",
+  "port": 5432,
+  "username": "user1",
+  "dbname": "postgres",
+  "container_name": "dblab_clone_5432"
+}
+```
+
+### Example payload: `clone_protection_expiring`
+```json
+{
+  "event_type": "clone_protection_expiring",
+  "entity_id": "clone-1",
+  "host": "localhost",
+  "port": 5432,
+  "username": "user1",
+  "dbname": "postgres",
+  "container_name": "dblab_clone_5432",
+  "protected_till": "2027-01-15T14:00:00Z",
+  "expires_in_hours": 24
+}
+```
 
 ### Example configuration
 ```yaml

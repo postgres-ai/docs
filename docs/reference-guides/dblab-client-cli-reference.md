@@ -111,12 +111,12 @@ dblab init [command options] [arguments...]
 **Options**
    - `--environment-id` (string, required) - an arbitrary environment ID of Database Lab instance's API
    - `--url` (string, required) - URL of Database Lab instance's API
-   - `--token` (string, required) - verification token of Database Lab instance
+   - `--token` (string, optional) - verification token of Database Lab instance
    - `--insecure` (boolean, optional, default: false) - allow insecure server connections when using SSL
    - `--request-timeout` (string, optional, default: "") - change requests timeout
    - `--forwarding-server-url` (string, optional) - forwarding server URL of Database Lab instance. For example: `ssh://user@remote.host:22`
    - `--forwarding-local-port` (string, optional) - local port for forwarding to the Database Lab instance
-   - `--identity-file` (string, optional) - select a file from which the identity (private key) for public key authentication is read"
+   - `--identity-file` (string, optional) - select a file from which the identity (private key) for public key authentication is read
 
 **Example**
 ```bash
@@ -303,7 +303,7 @@ dblab clone create [command options]
 - `--db-name` (string, optional) - database available to the user with restricted permissions
 - `--id` (string, optional) - clone ID
 - `--snapshot-id` (string, optional; DLE 4.0+) - snapshot ID
-- `--branch` (string, optional; DLE 4.0+) - branch name
+- `--branch` (string, optional; DLE 4.0+) - branch name. If omitted, DBLab uses the default branch `main`.
 - `--protected` , `-p` (string, optional) - enable deletion protection. Accepts: `true` for default lease duration, a number of minutes for custom duration, or `0` for infinite protection (no expiry). When omitted, clone is not protected. DLE 4.1+ supports time-limited protection leases — see [Protection leases](/docs/dblab-howtos/cloning/clone-protection).
 - `--async` , `-a` (boolean, default: false) - run the command asynchronously
 - `--extra-config` (string, optional)  set an extra database configuration for the clone. An example: statement_timeout='1s'
@@ -647,19 +647,15 @@ Delete a snapshot.
 dblab snapshot delete [command options] SNAPSHOT_ID
 ```
 
-**Options**
-- `--force` (boolean, default: false) - force deletion even if dependent clones or datasets exist
-
 **Example**
 
 ```bash
 dblab snapshot delete "dblab_pool/dataset_1@snapshot_20241028174127"
 ```
 
-Force delete a snapshot with dependent clones:
-```bash
-dblab snapshot delete --force "dblab_pool/dataset_1@snapshot_20241028174127"
-```
+:::tip
+Force deletion of snapshots with dependent clones is available through the API (`DELETE /snapshot/{id}?force=true`) or the UI, but is not currently supported via the CLI.
+:::
 
 ---
 ### Subcommand `help` , `h`
@@ -700,10 +696,10 @@ dblab teleport serve [command options]
 - `--environment-id` (string, required) - environment identifier used in Teleport resource names
 - `--teleport-proxy` (string, required) - Teleport Auth Server or Proxy address (e.g., `teleport.example.com:3025`)
 - `--teleport-identity` (string, required) - path to the Teleport bot identity file for authentication
-- `--listen-addr` (string, optional, default: "0.0.0.0:9876") - address and port to listen for incoming webhooks
-- `--dblab-url` (string, required) - DBLab API URL (e.g., `http://localhost:2345`)
+- `--listen-addr` (string, optional, default: "localhost:9876") - address and port to listen for incoming webhooks. Use `0.0.0.0:9876` if the sidecar needs to be reachable from Docker containers.
+- `--dblab-url` (string, optional, default: "http://localhost:2345") - DBLab API URL
 - `--dblab-token` (string, required) - DBLab verification token
-- `--webhook-secret` (string, optional) - webhook secret for verifying incoming webhook payloads
+- `--webhook-secret` (string, required) - shared secret that DBLab Engine sends in the `DBLab-Webhook-Token` header for webhook payload verification
 
 **Example**
 ```bash

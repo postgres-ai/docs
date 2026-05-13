@@ -143,3 +143,7 @@ sudo rm -rf /var/lib/dblab/dblab_pool/data/*
 sudo umount /var/lib/dblab/dblab_pool/dump
 sudo rm -rf /var/lib/dblab/dblab_pool/dump
 ```
+
+## Alternative: RDS/Aurora refresh tool
+
+For large production databases, running `pg_dump` directly against production can hold xmin horizon for hours and create significant load. The [RDS/Aurora refresh tool](/docs/dblab-howtos/administration/data/rds-refresh) provides an alternative approach that dumps from a temporary RDS clone instead, leaving production untouched.
