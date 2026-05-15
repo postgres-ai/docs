@@ -162,7 +162,7 @@ SUPABASE_ACCESS_TOKEN=... SUPABASE_PROJECT_REF=... \
 
 **Monitoring role options**
 
-- `--monitoring-user <name>` — monitoring role name to create or update (default: `postgres_ai_monitoring`).
+- `--monitoring-user <name>` — monitoring role name to create or update (default: `postgres_ai_mon`).
 - `--password <password>` — monitoring role password (overrides `PGAI_MON_PASSWORD`). If neither is provided, a strong password is generated.
 - `--print-password` — print the generated monitoring password (dangerous in CI logs).
 - `--skip-optional-permissions` — skip optional permissions (RDS / self-managed extras).
@@ -197,7 +197,7 @@ postgresai unprepare-db [conn] [options]
 - `-h, --host`, `-p, --port`, `-U, --username`, `-d, --dbname`,
   `--admin-password`, `--db-url <url>` (deprecated) — admin connection
   parameters, same as `prepare-db`.
-- `--monitoring-user <name>` — monitoring role to remove (default: `postgres_ai_monitoring`).
+- `--monitoring-user <name>` — monitoring role to remove (default: `postgres_ai_mon`).
 - `--keep-role` — keep the monitoring role; only revoke permissions and drop objects.
 - `--provider <provider>` — database provider (affects which steps run).
 - `--print-sql` — print the SQL plan and exit; apply no changes.
