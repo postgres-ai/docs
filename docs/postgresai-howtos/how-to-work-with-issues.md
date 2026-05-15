@@ -50,7 +50,7 @@ postgresai issues list
 postgresai issues view <issue_id>
 
 # Post a comment
-postgresai issues post_comment <issue_id> "comment"
+postgresai issues post-comment <issue_id> "comment"
 ```
 
 </TabItem>
@@ -64,7 +64,7 @@ npx postgresai issues list
 npx postgresai issues view <issue_id>
 
 # Post a comment
-npx postgresai issues post_comment <issue_id> "comment"
+npx postgresai issues post-comment <issue_id> "comment"
 ```
 
 </TabItem>
@@ -78,13 +78,19 @@ bunx postgresai issues list
 bunx postgresai issues view <issue_id>
 
 # Post a comment
-bunx postgresai issues post_comment <issue_id> "comment"
+bunx postgresai issues post-comment <issue_id> "comment"
 ```
 
 </TabItem>
 </Tabs>
 
-See [PostgresAI CLI reference](/docs/reference-guides/postgresai-cli-reference) for all available commands.
+By default, `issues` commands print human-friendly YAML when stdout is a terminal, and switch to JSON when piped or redirected. Force JSON explicitly with `--json` for scripting:
+
+```bash
+postgresai issues list --json | jq '.[] | {id, title}'
+```
+
+See the [PostgresAI CLI reference](/docs/reference-guides/postgresai-cli-reference#command-issues) for the full `issues` command set (including `create`, `update`, action items, and file attachments).
 
 ## Integrate with AI coding tools
 
