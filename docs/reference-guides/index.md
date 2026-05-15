@@ -1,5 +1,5 @@
 ---
-title: Database Lab reference guides
+title: PostgresAI reference guides
 sidebar_label: Overview
 slug: /reference-guides
 ---
