@@ -620,8 +620,9 @@ client (e.g. Cursor, Claude Code) rather than invoked directly.
 postgresai mcp install [client]
 ```
 
-Installs an `mcpServers.postgresai` entry pointing at the current
-`postgresai` binary, with `mcp start` as its arguments.
+Installs an `mcpServers.postgresai` entry pointing at the **absolute
+path of the `pgai` binary that invoked `mcp install`**, with `mcp
+start` as its arguments.
 
 `client` may be one of:
 
@@ -633,19 +634,45 @@ Installs an `mcpServers.postgresai` entry pointing at the current
 If `client` is omitted, you are prompted to choose interactively
 (1=Cursor, 2=Claude Code, 3=Windsurf, 4=Codex).
 
-A typical Cursor entry looks like:
+:::note
+
+The pinned `command` path is the absolute path resolved at install
+time. When `mcp install` is run via `npx` or `bunx`, that path points
+into the package cache and may be garbage-collected. For a stable
+install, run `mcp install` from a globally installed CLI
+(`npm install -g postgresai` or `brew install postgresai`), or re-run
+`mcp install` after each CLI upgrade.
+
+:::
+
+A typical Cursor entry written by `mcp install` looks like:
 
 ```json
 {
   "mcpServers": {
     "postgresai": {
-      "command": "postgresai",
-      "args": ["mcp", "start"],
-      "env": {
-        "PGAI_API_BASE_URL": "https://postgres.ai/api/general/"
-      }
+      "command": "<absolute-path-to-pgai>",
+      "args": ["mcp", "start"]
     }
   }
+}
+```
+
+The `command` value is the absolute path resolved by `mcp install` at
+install time. Typical values:
+
+- `/opt/homebrew/bin/pgai` — Homebrew on Apple Silicon macOS
+- `/usr/local/bin/pgai` — Homebrew on Intel macOS or `npm install -g` on Linux/macOS
+- `~/.nvm/versions/node/<version>/bin/pgai` — `npm install -g` under nvm
+- `~/.npm/_npx/<hash>/node_modules/.bin/pgai` — invoked via `npx` (ephemeral; see the note above)
+
+To point the server at a non-production endpoint, add an `env` block
+manually:
+
+```json
+"env": {
+  "PGAI_API_BASE_URL": "https://v2.postgres.ai/api/general/",
+  "PGAI_UI_BASE_URL": "https://console-dev.postgres.ai"
 }
 ```
 
