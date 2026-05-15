@@ -60,7 +60,7 @@ Container names include a DLE RuntimeID, such as `dblab_sync_bt48bvi9c0h0`.
 #### How to manage
 Automatically starts and stops.
 
-To activate a sync instance, use the `syncInstance` option for a physical restore job in the DLE configuration file.
+To activate a sync instance, set `sync.enabled: true` for the `physicalRestore` job in the DBLab Engine configuration file. See [Job `physicalRestore`](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalrestore) for the full set of `sync` options.
 
 ---
 
