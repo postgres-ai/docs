@@ -154,21 +154,21 @@ Post a comment:
 <TabItem value="cli" label="Installed CLI" default>
 
 ```bash
-postgresai issues post_comment <issue_id> "<comment>"
+postgresai issues post-comment <issue_id> "<comment>"
 ```
 
 </TabItem>
 <TabItem value="npx" label="npx">
 
 ```bash
-npx postgresai issues post_comment <issue_id> "<comment>"
+npx postgresai issues post-comment <issue_id> "<comment>"
 ```
 
 </TabItem>
 <TabItem value="bunx" label="bunx">
 
 ```bash
-bunx postgresai issues post_comment <issue_id> "<comment>"
+bunx postgresai issues post-comment <issue_id> "<comment>"
 ```
 
 </TabItem>
