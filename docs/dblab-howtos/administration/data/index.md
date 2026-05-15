@@ -18,6 +18,7 @@ slug: /dblab-howtos/administration/data
 - [WAL-G](/docs/dblab-howtos/administration/data/wal-g)
 - [pgBackRest](/docs/dblab-howtos/administration/data/pgbackrest)
 - [pg_basebackup](/docs/dblab-howtos/administration/data/pg_basebackup)
+- [rsync](/docs/dblab-howtos/administration/data/rsync)
 - [Custom](/docs/dblab-howtos/administration/data/custom)
 
 ## Overview
