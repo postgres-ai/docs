@@ -3,7 +3,6 @@ title: How to install and initialize DBLab CLI
 sidebar_label: Install and initialize DBLab CLI
 ---
 
-<!-- TODO proofread this (and all the HowTos (guides) -->
 ## Reference
 - Command [`dblab init`](/docs/reference-guides/dblab-client-cli-reference#command-init)
 - Command [`dblab instance status`](/docs/reference-guides/dblab-client-cli-reference#subcommand-status-1)
