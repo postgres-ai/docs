@@ -58,10 +58,12 @@ curl -H "Verification-Token: YOUR_TOKEN" http://localhost:2345/status
 | Method | Path | Description |
 |--------|------|-------------|
 | GET | `/snapshots` | List all snapshots |
+| GET | `/snapshot/{id}` | Retrieve a snapshot (DLE 4.0+) |
 | POST | `/snapshot` | Create a snapshot (DLE 4.0+) |
+| POST | `/snapshot/clone` | Create a snapshot from a clone (DLE 4.0+) |
 | DELETE | `/snapshot/{id}` | Delete a snapshot (DLE 4.0+) |
-| GET | `/branch/snapshot/{id}` | Retrieve a snapshot (DLE 4.0+) |
-| POST | `/branch/snapshot` | Create a snapshot from clone (DLE 4.0+) |
+| GET | `/branch/snapshot/{id}` | Retrieve a branch snapshot (DLE 4.0+) |
+| POST | `/branch/snapshot` | Create a branch snapshot from clone (DLE 4.0+) |
 
 ### Branches (DLE 4.0+)
 
@@ -85,11 +87,11 @@ curl -H "Verification-Token: YOUR_TOKEN" http://localhost:2345/status
 
 | Method | Path | Description |
 |--------|------|-------------|
-| GET | `/admin/config` | Get config (JSON) |
+| GET | `/admin/config` | Get config (JSON projection) |
 | POST | `/admin/config` | Set config |
 | GET | `/admin/config.yaml` | Get full config (YAML) |
 | POST | `/admin/test-db-source` | Test source database connection |
-| POST | `/admin/ws-auth` | WebSocket authentication |
+| GET | `/admin/ws-auth` | WebSocket authentication |
 
 ## New in DBLab Engine 4.1
 
