@@ -43,7 +43,7 @@ curl -fsSL https://gitlab.com/postgres-ai/joe/-/raw/0.10.0/configs/config.exampl
 Then, configure ways of communication with Joe.
 
 ### Step 2a. Set up Joe in PostgresAI Console ("Web UI")
-If you don't need Web UI and prefer working with Joe only in messengers (such as Slack), comment out `channelMapping: communicationTypes: webui` subsection in Jog config, and proceed to the next step.
+If you don't need Web UI and prefer working with Joe only in messengers (such as Slack), comment out `channelMapping: communicationTypes: webui` subsection in Joe config, and proceed to the next step.
 
 Before configuring Web UI make sure you have a PostgresAI account.
 
@@ -76,7 +76,7 @@ _metadata:
   minor_version: 1
 display_information:
   name: Joe Bot
-  description: PostgreSQL query optimization assistent
+  description: PostgreSQL query optimization assistant
   background_color: "#2b2c30"
 features:
   app_home:
@@ -148,7 +148,7 @@ and we are ready to run Joe Bot.
     sudo docker logs -f joe_bot
     ```
 
-    Need you to reconfigure or upgrade, you can stop and remove the container any time using `sudo docker stop joe_bot` and `sudo docker rm joe_bot` and then launching it again as described above.
+    If you need to reconfigure or upgrade, you can stop and remove the container any time using `sudo docker stop joe_bot` and `sudo docker rm joe_bot`, and then launch it again as described above.
 
 1. Make a publicly accessible HTTP(S) server port specified in the configuration to receive requests from communication channels Request URL (e.g., http://35.200.200.200:2400, https://joe.dev.domain.com).
 
