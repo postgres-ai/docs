@@ -215,7 +215,7 @@ dblab commit [command options] [arguments...]
 
 **Options**
 - `--clone-id` (string, required) - clone ID
-- `--message` (string, optional) - use the given message as the commit message
+- `--message`, `-m` (string, optional) - use the given message as the commit message
 
 **Arguments**
 - `CLONE_ID` (string, required) - an ID of the Database Lab clone
@@ -304,7 +304,7 @@ dblab clone create [command options]
 - `--id` (string, optional) - clone ID
 - `--snapshot-id` (string, optional; DLE 4.0+) - snapshot ID
 - `--branch` (string, optional; DLE 4.0+) - branch name. If omitted, DBLab uses the default branch `main`.
-- `--protected` , `-p` (string, optional) - enable deletion protection. Accepts: `true` for default lease duration, a number of minutes for custom duration, or `0` for infinite protection (no expiry). When omitted, clone is not protected. DLE 4.1+ supports time-limited protection leases — see [Protection leases](/docs/dblab-howtos/cloning/clone-protection).
+- `--protected` , `-p` (string, optional) - enable deletion protection. Accepts: `true` for default lease duration; a number of minutes (e.g. `480`) or a Go-style duration string (`30m`, `2h`, `7d`) for a custom lease; or `0` for infinite protection (no expiry). When omitted, the clone is not protected. DLE 4.1+ supports time-limited protection leases — see [Protection leases](/docs/dblab-howtos/cloning/clone-protection).
 - `--async` , `-a` (boolean, default: false) - run the command asynchronously
 - `--extra-config` (string, optional)  set an extra database configuration for the clone. An example: statement_timeout='1s'
 - `--help` , `-h` (boolean, default: false) - show help
@@ -314,7 +314,12 @@ dblab clone create [command options]
 dblab clone create --username someuser --password SomePassword --branch main --id test  
 ```
 
-Create a clone with protection for 8 hours (480 minutes):
+Create a clone with protection for 8 hours (using a duration suffix):
+```bash
+dblab clone create --username someuser --password SomePassword --branch main --id test --protected 8h
+```
+
+Or equivalently, in minutes:
 ```bash
 dblab clone create --username someuser --password SomePassword --branch main --id test --protected 480
 ```
@@ -331,7 +336,7 @@ dblab clone update [command options] CLONE_ID
 - `CLONE_ID` (string, required) - an ID of the Database Lab clone to update parameters
 
 **Options**
-- `--protected` , `-p` (string, optional) - enable deletion protection. Accepts: `true` for default lease duration, a number of minutes for custom duration, or `0` for infinite protection (no expiry). DLE 4.1+ supports time-limited protection leases — see [Protection leases](/docs/dblab-howtos/cloning/clone-protection).
+- `--protected` , `-p` (string, optional) - manage deletion protection. Accepts: `true` for default lease duration; a number of minutes (e.g. `1440`) or a Go-style duration string (`30m`, `24h`, `7d`) for a custom lease; `0` for infinite protection; or `false` to remove protection. DLE 4.1+ supports time-limited protection leases — see [Protection leases](/docs/dblab-howtos/cloning/clone-protection).
 - `--help` , `-h` (boolean, default: false) - show help
 
 **Example**
@@ -341,9 +346,14 @@ Protect a clone with default lease duration:
 dblab clone update --protected true TestCloneID
 ```
 
-Protect a clone for 24 hours (1440 minutes):
+Protect a clone for 24 hours (using a duration suffix):
 ```bash
-dblab clone update --protected 1440 TestCloneID
+dblab clone update --protected 24h TestCloneID
+```
+
+Remove protection from a clone:
+```bash
+dblab clone update --protected false TestCloneID
 ```
 
 ---
@@ -698,8 +708,9 @@ dblab teleport serve [command options]
 - `--teleport-identity` (string, required) - path to the Teleport bot identity file for authentication
 - `--listen-addr` (string, optional, default: "localhost:9876") - address and port to listen for incoming webhooks. Use `0.0.0.0:9876` if the sidecar needs to be reachable from Docker containers.
 - `--dblab-url` (string, optional, default: "http://localhost:2345") - DBLab API URL
-- `--dblab-token` (string, required) - DBLab verification token
-- `--webhook-secret` (string, required) - shared secret that DBLab Engine sends in the `DBLab-Webhook-Token` header for webhook payload verification
+- `--dblab-token` (string, required) - DBLab verification token (or via env var `DBLAB_TOKEN`)
+- `--webhook-secret` (string, required) - shared secret that DBLab Engine sends in the `DBLab-Webhook-Token` header for webhook payload verification (or via env var `WEBHOOK_SECRET`)
+- `--tctl-path` (string, optional, default: `tctl`) - path to the `tctl` binary if it is not on `$PATH`
 
 **Example**
 ```bash
