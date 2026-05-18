@@ -2,13 +2,19 @@
 title: postgres_ai monitoring reference documentation
 sidebar_label: postgres_ai monitoring
 keywords:
-  - "postgres_ai monitoringreference"
+  - "postgres_ai monitoring reference"
   - "Monitoring reference"
 ---
 
 # postgres_ai monitoring reference documentation
 
 ## Metrics
+
+:::note
+
+This page lists the user-facing metric groups. The pgwatch collector ships with additional groups that are emitted but not yet documented here (for example, `pg_stat_io`, `pg_stat_slru`, `pg_statio_all_tables`, `pg_statio_all_indexes`, `lock_waits`, `xmin_horizon`, `xmin_horizon_blockers`, `multixact_size`, `pg_wal_size`, `pg_index_pilot`, `stats_reset`, `table_size_detailed`). To see the full set of metrics emitted by your monitoring instance, query the Prometheus / VictoriaMetrics endpoint directly (e.g. `/api/v1/label/__name__/values`).
+
+:::
 
 ### Common labels
 
@@ -26,8 +32,8 @@ Most metrics include these standard labels:
 
 Additional labels are available for specific metric types:
 - **Query metrics** (`pg_stat_statements`): `queryid`, `user`
-- **Table metrics** (`table_stats`, `pg_stat_user_tables`): `schema`, `table_name`, `table_full_name`, `table_size_cardinality_mb`
-- **Index metrics** (`pg_stat_user_indexes`): `schemaname`, `relname`, `indexrelname`
+- **Table metrics** (`table_stats`, `pg_stat_all_tables`): `schema`, `table_name`, `table_full_name`, `table_size_cardinality_mb`
+- **Index metrics** (`pg_stat_all_indexes`): `schemaname`, `relname`, `indexrelname`
 - **Lock metrics** (`locks_mode`): `lockmode`
 - **Wait events** (`wait_events`): `wait_event`, `wait_event_type`
 - **Replication metrics**: `application_name`, `client_info`, `usename`
@@ -95,8 +101,8 @@ Collected every 15-30 seconds
 | `db_stats_sessions_killed` | Sessions killed | - |
 | `db_size_size_b` | Database size in bytes | Bytes |
 | `db_size_catalog_size_b` | Catalog schema size in bytes | Bytes |
-| `pg_stat_activity_count` | Count of sessions by state | - |
-| `pg_stat_activity_max_tx_duration` | Maximum transaction duration | Seconds |
+| `pg_stat_activity_count` | Count of sessions by state (additional labels: `state`, `application_name`) | - |
+| `pg_stat_activity_max_tx_duration` | Maximum transaction duration (additional labels: `state`, `application_name`) | Seconds |
 
 ### Query performance (`pg_stat_statements`)
 Collected every 30 seconds
@@ -131,13 +137,13 @@ Collected every 30 seconds
 
 ### Wait events (`wait_events`)
 Collected every 15 seconds
-**Additional Labels:** `wait_event` (specific wait event), `wait_event_type` (wait category), `query_id` (associated query)
+**Additional Labels:** `wait_event` (specific wait event), `wait_event_type` (wait category), and on PostgreSQL 14+ `query_id` (associated query)
 
 | Metric | Description | Units |
 |--------|-------------|-------|
 | `wait_events_total` | Count of processes experiencing wait event | - |
 
-### Table statistics (`table_stats`, `pg_stat_user_tables`)
+### Table statistics (`table_stats`, `pg_stat_all_tables`)
 Collected every 30 seconds
 **Additional Labels:** `schema` (table schema), `table_name` (table name), `table_full_name` (schema.table), `table_size_cardinality_mb` (size category)
 
@@ -167,15 +173,15 @@ Collected every 30 seconds
 | `table_stats_seconds_since_last_analyze` | Seconds since last analyze | Seconds |
 | `table_stats_seconds_since_last_vacuum` | Seconds since last vacuum | Seconds |
 
-### Index statistics (`pg_stat_user_indexes`)
+### Index statistics (`pg_stat_all_indexes`)
 Collected every 30 seconds
 **Additional Labels:** `schemaname` (schema name), `relname` (table name), `indexrelname` (index name)
 
 | Metric | Description | Units |
 |--------|-------------|-------|
-| `pg_stat_user_indexes_idx_scan` | Index scans performed | - |
-| `pg_stat_user_indexes_idx_tup_read` | Index entries returned | - |
-| `pg_stat_user_indexes_idx_tup_fetch` | Table rows fetched via index | - |
+| `pg_stat_all_indexes_idx_scan` | Index scans performed | - |
+| `pg_stat_all_indexes_idx_tup_read` | Index entries returned | - |
+| `pg_stat_all_indexes_idx_tup_fetch` | Table rows fetched via index | - |
 
 ### WAL and replication metrics (`wal`, `replication`, `replication_slots`, `pg_stat_replication`, `pg_stat_wal_receiver`, `pg_archiver`, `archive_lag`, `pg_xlog_position`)
 Collected every 15-30 seconds
