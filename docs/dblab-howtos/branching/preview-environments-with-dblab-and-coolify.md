@@ -19,7 +19,7 @@ By the end of this guide, you'll have:
 
 Before starting, ensure you have:
 
-- **DBLab 4.0+** - for database cloning and branching ([installation guide](https://postgres.ai/docs/how-to-guides/administration/install-dle-from-postgres-ai))
+- **DBLab 4.0+** - for database cloning and branching ([installation guide](/docs/dblab-howtos/administration/install-dle-from-postgres-ai))
 - **Coolify latest version** - self-hosted deployment platform ([installation guide](https://coolify.io/docs/get-started/installation))
 - **GitHub repository** - for code storage and CI/CD
 - **Virtual machine with Docker** - to run DBLab and Coolify
