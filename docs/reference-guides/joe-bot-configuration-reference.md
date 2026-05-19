@@ -221,8 +221,8 @@ enterprise:
     enabled: false
 
   dblab:
-    # Limit the number of available Database Lab instances. Default: 1.
-    instanceLimit: 1
+    # Limit the number of available Database Lab instances. Default: 2.
+    instanceLimit: 2
 
 ```
 
@@ -248,7 +248,7 @@ enterprise:
 ### `JOE_PLATFORM_HISTORY_ENABLED`
 - (boolean, default: `true`), enable sending command history to Postgres.ai Platform for collaboration and visualization. Requires setting proper `JOE_PLATFORM_TOKEN`. See the [Joe Bot Tutorial](/docs/tutorials/joe-setup#step-2a-set-up-joe-in-postgresai-console-web-ui) for the token.
 
-### `JOE_DEBUG` 
+### `JOE_APP_DEBUG`
 - (boolean, default: `false`), enable debug mode; WARNING: in this mode, sensitive data (such as passwords) can be printed to logs
 
 --- 
@@ -265,5 +265,5 @@ Changing these options you confirm that you have active subscription to [Postgre
 ### `EE_AUDIT_ENABLED` 
 - (boolean, default: `false`), enable command logging for audit purposes
 
-### `EE_DBLAB_INSTANCE_LIMIT` 
-- (integer, default: `1`), limit the number of Database Lab instances. Joe Bot CE supports working with only 1 Database Lab instance
+### `EE_DBLAB_INSTANCE_LIMIT`
+- (integer, default: `2`), limit the number of Database Lab instances. Joe Bot CE supports working with only 1 Database Lab instance
