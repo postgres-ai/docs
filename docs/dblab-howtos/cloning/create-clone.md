@@ -53,11 +53,11 @@ $ dblab clone create --username USERNAME --password PASSWORD --id CLONE_ID
 ### Create a clone with a non-default snapshot
 By default latest data snapshot (closest to production state) will be used to provision a clone. You can select any other available snapshot.
 
-1. List available snapshots.
-<!-- TODO proper indentation -->
-```bash
-$ dblab snapshot list
-```
+1. List available snapshots:
+
+    ```bash
+    $ dblab snapshot list
+    ```
 
 ```json
 [

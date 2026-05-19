@@ -11,7 +11,7 @@ By default DBLab Engine uses a single [verification token](/docs/reference-guide
 - **Verification tokens** - used for basic authorization of requests to DBLab Engine API. Can be used for initial setup, but it's not recommended to use in the daily practice
 
 ### Access tokens
-Access tokens can be used to interact both with DBLab Engine and DBLab Platform. To work with the Database Lab CLI/API, generate a new token and use it in the `Verification-Token` header of each individual API request. Alternatively, you can if it with the `--token` flag during CLI initialization; in this case, `Verification-Token` is not needed.
+Access tokens can be used to interact both with DBLab Engine and DBLab Platform. To work with the Database Lab CLI/API, generate a new token and use it in the `Verification-Token` header of each individual API request. Alternatively, you can use it with the `--token` flag during CLI initialization; in this case, `Verification-Token` is not needed.
 
 Access tokens allow calling the following functions on the Platform: `checkup_report_create`, `checkup_report_file_post`, `dblab_token_check`, `joe_message_artifact_post`, `joe_message_post`, `joe_session_command_post`, `joe_session_create`.
 

@@ -3,7 +3,6 @@ title: How to connect to a DBLab clone
 sidebar_label: Connect to a clone
 ---
 
-<!-- TODO proofread this (and all the HowTos (guides) -->
 ## Direct connection (psql)
 ### GUI
 1. From the **DBLab clone** page under section **Connection info** copy **psql connection string** field contents by clicking the **Copy** button.

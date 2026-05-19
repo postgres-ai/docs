@@ -71,7 +71,7 @@ dblab clone update --protected 0 CLONE_ID
 
 ### Unprotect a clone
 ```bash
-dblab clone update CLONE_ID
+dblab clone update --protected false CLONE_ID
 ```
 
 ### Protect at creation time
