@@ -36,7 +36,7 @@ After upgrading, all user sessions are restored and should keep working (but Pos
 To enable the debugging mode you can use one of the following approaches:
 
 - Set the option `app: debug` to `true` in the [configuration file](/docs/reference-guides/joe-bot-configuration-reference#joe-bot-configuration-file). [Reconfigure the container](#reconfigure-joe-bot-container) if the option has been changed.
-- Alternatively, use the environment variable [`JOE_DEBUG`](/docs/reference-guides/joe-bot-configuration-reference#joe_debug) when starting the container (`docker run ... --env JOE_DEBUG=true ...`).
+- Alternatively, use the environment variable [`JOE_APP_DEBUG`](/docs/reference-guides/joe-bot-configuration-reference#joe_app_debug) when starting the container (`docker run ... --env JOE_APP_DEBUG=true ...`).
 
 To observe the container logs, run:
 ```bash
