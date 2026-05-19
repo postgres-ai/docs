@@ -26,13 +26,13 @@ Here is how the configuration file is structured:
 | `runner` | How execution of DB migrations is organized  |
 
 ## Section `app`: DB Migration Checker API server
-- `host` (string, optional, default: `""`) - the host to which the DB Migration Checker server accepts HTTP connections
-- `port` (string, required) - HTTP server port
+- `host` (string, optional, default: `""`) - the host on which the DB Migration Checker server accepts HTTP connections; the empty string means "all available addresses"
+- `port` (integer, optional, default: 2500) - HTTP server port
 - `verificationToken` (string, required) - token that is used to work with DB Migration Checker API
-- `debug` - allows seeing more in the DBLab Engine logs; WARNING: in this mode, sensitive data (such as passwords) can be printed to logs
+- `debug` (boolean, optional, default: false) - allows seeing more in the DB Migration Checker logs; WARNING: in this mode, sensitive data (such as passwords) can be printed to logs
 
 ## Section `dle`: DBLab Engine API integration
-- `url` (string, required) - the URL to which the Database Lab server receives HTTP requests
+- `url` (string, required) - URL of the DBLab Engine API server to which DB Migration Checker sends requests (for example, `https://dblab.domain.com`)
 - `verificationToken` (string, required) - the token that is used to work with Database Lab API
 
 ## Section `platform`: Postgres.ai Platform integration
