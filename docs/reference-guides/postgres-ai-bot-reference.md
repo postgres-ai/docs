@@ -53,7 +53,7 @@ Visualize some data such as benchmark results. This function uses QuickChart; se
 | **data**  | `array`   | Array of numbers representing the data points. | N/A | `[10, 20, 30, 40]` |
 
 ## Tool `fetch_whole_web_page`
-Fetch the content of a web page. As of July 2024, this feature is limited to these domains:
+Fetch the content of a web page. The feature is limited to these domains:
 - `github.com`
 - `gitlab.com`
 - `postgresql.org`
@@ -71,7 +71,7 @@ Fetch the content of a web page. As of July 2024, this feature is limited to the
 Database experiment in dedicated environment: creates a PostgreSQL cluster in Hetzner Cloud and executes a series of 
 experiment runs on it using a GitLab CI pipeline.
 
-When started, provides pipeline URL. Once experiment is finished, either succesfully or with errors, 
+When started, provides pipeline URL. Once experiment is finished, either successfully or with errors, 
 the user is informed of the results.
 
 JSON configuration example:
