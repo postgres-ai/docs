@@ -53,8 +53,8 @@ The wait events dashboard uses `pg_stat_activity`, which is built into PostgreSQ
 
 | Component | Minimum | Recommended |
 |-----------|---------|-------------|
-| CPU | 2 cores | 4 cores |
-| RAM | 2 GiB | 4 GiB |
+| CPU | 4 cores | 6 cores |
+| RAM | 8 GiB | 12 GiB |
 | Disk | 10 GiB | 50 GiB |
 | Docker | 20.10+ | Latest |
 
@@ -102,16 +102,16 @@ For self-managed deployments, you need connectivity between the monitoring node 
 ### Metrics retention
 
 Default retention periods:
-- **VictoriaMetrics**: 90 days
-- **Prometheus**: 15 days (if using instead of VM)
+- **VictoriaMetrics**: 14 days (`336h`)
+- **Prometheus**: not used by the default local-install stack
 
 ### Disk usage estimates
 
-| Monitored databases | Daily growth | 90-day storage |
+| Monitored databases | Daily growth | 14-day storage |
 |--------------------|--------------|----------------|
-| 1 | ~50 MiB | ~4.5 GiB |
-| 5 | ~200 MiB | ~18 GiB |
-| 20 | ~800 MiB | ~72 GiB |
+| 1 | ~50 MiB | ~700 MiB |
+| 5 | ~200 MiB | ~2.8 GiB |
+| 20 | ~800 MiB | ~11.2 GiB |
 
 :::tip Compression
 VictoriaMetrics typically achieves 10-15x compression on time-series data.
@@ -131,7 +131,7 @@ grant pg_read_all_stats to postgres_ai_mon;
 :::tip Review exact permissions
 To see the complete SQL used to create the monitoring role:
 ```bash
-npx postgresai@latest prepare-db --print-sql
+npx postgresai@0.15.0 prepare-db --print-sql
 ```
 This transparency lets you verify the minimal, read-only nature of the permissions before running.
 :::
@@ -151,8 +151,8 @@ For managed databases, use the master/admin user to run `prepare-db`:
 
 ```bash
 # RDS
-npx postgresai@latest prepare-db postgresql://master_user:pass@instance.region.rds.amazonaws.com:5432/postgres
+npx postgresai@0.15.0 prepare-db postgresql://master_user:pass@instance.region.rds.amazonaws.com:5432/postgres
 
 # CloudSQL
-npx postgresai@latest prepare-db postgresql://postgres:pass@/dbname?host=/cloudsql/project:region:instance
+npx postgresai@0.15.0 prepare-db postgresql://postgres:pass@/dbname?host=/cloudsql/project:region:instance
 ```

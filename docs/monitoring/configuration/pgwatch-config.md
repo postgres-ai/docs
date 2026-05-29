@@ -15,11 +15,11 @@ Configuration options for the pgwatch metrics collector.
 Default collection interval for all metrics:
 
 ```bash
-# CLI
-postgresai mon local-install --scrape-interval 15s
-
-# Environment variable
+# Set in the monitoring stack .env file when overriding defaults
 PW_SCRAPE_INTERVAL=15s
+
+# Apply generated configuration after editing .env
+postgresai mon update-config
 ```
 
 | Interval | Use case |
