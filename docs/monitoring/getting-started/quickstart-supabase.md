@@ -178,7 +178,7 @@ The monitoring user is created automatically during Supabase setup with read-onl
 only. To review the exact SQL statements used to create the monitoring role:
 
 ```bash
-npx postgresai@latest prepare-db --print-sql
+npx postgresai@0.15.0 prepare-db --print-sql
 ```
 
 This shows all `grant` statements and confirms the minimal, read-only nature of the permissions.
@@ -189,8 +189,8 @@ PostgresAI monitoring collects only database metadata — no actual data or quer
 review exactly what metrics are collected, examine the metric definitions:
 
 - **Prometheus sink metrics**:
-  [metrics.yml (pgwatch-prometheus)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.14.0/config/pgwatch-prometheus/metrics.yml)
+  [metrics.yml (pgwatch-prometheus)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.15.0/config/pgwatch-prometheus/metrics.yml)
 - **PostgreSQL sink metrics** (including normalized queries):
-  [metrics.yml (pgwatch-postgres)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.14.0/config/pgwatch-postgres/metrics.yml)
+  [metrics.yml (pgwatch-postgres)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.15.0/config/pgwatch-postgres/metrics.yml)
 
 See also: [data privacy details](/docs/monitoring/#data-privacy-metadata-only).

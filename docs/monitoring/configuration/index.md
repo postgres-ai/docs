@@ -21,25 +21,26 @@ Configuration guides for customizing PostgresAI monitoring components.
 
 ### CLI installation
 
-Configuration via environment variables and command-line flags:
+Configuration is stored in the monitoring directory `.env` file and can be applied with `update-config`:
 
 ```bash
-postgresai mon local-install \
-  --retention 30d \
-  --scrape-interval 15s \
-  postgresql://user@host:5432/db
+# Example .env overrides (default VM_RETENTION_PERIOD is 336h ≡ 14 days)
+VM_RETENTION_PERIOD=30d
+VM_QUERY_DURATION=30s
+VM_MAX_CONCURRENT_REQUESTS=16
+
+postgresai mon update-config
 ```
 
 ### Docker Compose
 
-Configuration via `docker-compose.yml` and environment files:
+Configuration is passed through `docker-compose.yml` and the generated `.env` file:
 
-```yaml
-services:
-  pgwatch:
-    environment:
-      PW_SCRAPE_INTERVAL: 15s
-      PW_RETENTION: 720h
+```bash
+# Example overrides (default VM_RETENTION_PERIOD is 336h ≡ 14 days)
+VM_RETENTION_PERIOD=30d
+VM_QUERY_DURATION=30s
+VM_MAX_CONCURRENT_REQUESTS=16
 ```
 
 ### Helm
@@ -57,7 +58,7 @@ monitoring:
 | Setting | Default | Description |
 |---------|---------|-------------|
 | Scrape interval | 15s | How often to collect metrics |
-| Retention | 14d | How long to keep metrics |
+| Retention | 14 days (`336h`) | How long to keep metrics |
 | Max connections | 3 | Connections per monitored database |
 
 ## Sections

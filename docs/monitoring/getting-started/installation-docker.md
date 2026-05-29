@@ -37,25 +37,28 @@ Create a `.env` file or set these environment variables:
 
 ```bash
 # Required
-TARGET_DB_HOST=your-postgres-host
-TARGET_DB_PORT=5432
-TARGET_DB_NAME=your_database
-TARGET_DB_USER=pgwatch
-TARGET_DB_PASSWORD=your_password
+PGAI_TAG=0.15.0
+REPLICATOR_PASSWORD=<generated-secret>
+VM_AUTH_USERNAME=vmauth
+VM_AUTH_PASSWORD=<generated-secret>
 
-# Optional - Cluster identification
-CLUSTER_NAME=production
-NODE_NAME=primary
+# Target databases are defined in instances.yml
+# Use postgres_ai_mon by default after running prepare-db.
 
 # Optional - Grafana admin password (REQUIRED for production!)
 # Default is 'demo' - always change this in production
 GF_SECURITY_ADMIN_PASSWORD=your_secure_password
 
 # Optional - Retention
-VM_RETENTION_PERIOD=90d
+VM_RETENTION_PERIOD=336h
 ```
 
-### docker-compose.yml Overview
+### docker-compose.yml excerpt
+
+This excerpt omits the `config-init` and `sources-generator` helper services that
+the pgwatch collectors depend on (see `depends_on` below); both are defined in the
+full `docker-compose.yml` in the repository. `sources-generator` renders the pgwatch
+source files from `instances.yml`.
 
 ```yaml
 services:
@@ -70,28 +73,54 @@ services:
       - GF_SECURITY_ADMIN_USER=monitor
       - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD:-demo}
 
-  victoriametrics:
-    image: victoriametrics/victoria-metrics:latest
+  sink-postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+
+  sink-prometheus:
+    image: victoriametrics/victoria-metrics:v1.140.0
     ports:
-      - "${VICTORIAMETRICS_PORT:-8428}:8428"
+      - "${BIND_HOST:-}59090:9090"
     volumes:
       - vm-data:/victoria-metrics-data
-    command:
-      - "-retentionPeriod=${VM_RETENTION_PERIOD:-90d}"
-
-  pgwatch:
-    image: cybertec/pgwatch:latest
     environment:
-      - PW_SOURCES=postgresql://${TARGET_DB_USER}:${TARGET_DB_PASSWORD}@${TARGET_DB_HOST}:${TARGET_DB_PORT}/${TARGET_DB_NAME}
+      - VM_AUTH_USERNAME=${VM_AUTH_USERNAME:-}
+      - VM_AUTH_PASSWORD=${VM_AUTH_PASSWORD:-}
+      - VM_RETENTION_PERIOD=${VM_RETENTION_PERIOD:-336h}
+
+  pgwatch-postgres:
+    image: postgresai/pgwatch:${PGAI_TAG}
+    command:
+      - "--sources=/postgres_ai_configs/pgwatch/sources.yml"
+      - "--metrics=/postgres_ai_configs/pgwatch/metrics.yml"
+      - "--sink=postgresql://pgwatch@sink-postgres:5432/measurements?sslmode=disable"
+      - "--web-addr=:8080"
     depends_on:
-      - victoriametrics
+      - sources-generator
+      - sink-postgres
+
+  pgwatch-prometheus:
+    image: postgresai/pgwatch:${PGAI_TAG}
+    command:
+      - "--sources=/postgres_ai_configs/pgwatch-prometheus/sources.yml"
+      - "--metrics=/postgres_ai_configs/pgwatch-prometheus/metrics.yml"
+      - "--sink=prometheus://0.0.0.0:9091/pgwatch"
+      - "--web-addr=:8089"
+    depends_on:
+      - sources-generator
+      - sink-prometheus
 
   monitoring_flask_backend:
-    build: ./monitoring_flask_backend
+    image: postgresai/monitoring-flask-backend:${PGAI_TAG}
     ports:
       - "8000:8000"
     environment:
-      - POSTGRES_URI=postgresql://${TARGET_DB_USER}:${TARGET_DB_PASSWORD}@${TARGET_DB_HOST}:${TARGET_DB_PORT}/${TARGET_DB_NAME}
+      - PROMETHEUS_URL=http://sink-prometheus:9090
+      - POSTGRES_SINK_URL=postgresql://pgwatch@sink-postgres:5432/measurements
 
 volumes:
   grafana-data:
@@ -134,23 +163,26 @@ Single-node time-series database optimized for Prometheus metrics.
 
 **Performance tuning:**
 ```yaml
-victoriametrics:
-  command:
-    - "-retentionPeriod=90d"
-    - "-memory.allowedPercent=60"
-    - "-search.maxConcurrentRequests=16"
+sink-prometheus:
+  environment:
+    - VM_RETENTION_PERIOD=336h
+    - VM_QUERY_DURATION=30s
+    - VM_MAX_CONCURRENT_REQUESTS=16
 ```
 
 ### pgwatch
 
-Metrics collector for PostgreSQL. Scrapes your database every 60 seconds by default.
+Metrics collectors for PostgreSQL. The 0.15 stack runs separate `postgresai/pgwatch` services for PostgreSQL and Prometheus-compatible sinks.
 
-**Custom metrics interval:**
+**Prometheus sink options:**
 ```yaml
-pgwatch:
-  environment:
-    - PW_INTERNAL_STATS_PORT=8081
-    - PW_MIN_DB_SIZE_MB=0
+pgwatch-prometheus:
+  command:
+    - "--sources=/postgres_ai_configs/pgwatch-prometheus/sources.yml"
+    - "--metrics=/postgres_ai_configs/pgwatch-prometheus/metrics.yml"
+    - "--sink=prometheus://0.0.0.0:9091/pgwatch"
+    - "--web-addr=:8089"
+    - "--log-level=error"
 ```
 
 ### Flask backend
@@ -203,8 +235,8 @@ docker compose down
 # All services
 docker compose logs -f
 
-# Specific service
-docker compose logs -f pgwatch
+# Specific services
+docker compose logs -f pgwatch-postgres pgwatch-prometheus
 ```
 
 ### Restart service
@@ -222,24 +254,31 @@ docker compose up -d
 
 ## Adding multiple databases
 
-To monitor multiple PostgreSQL instances, add additional pgwatch services:
+To monitor multiple PostgreSQL instances, add them to `instances.yml`; `sources-generator` renders both pgwatch source files from that list:
 
 ```yaml
-services:
-  pgwatch-prod:
-    image: cybertec/pgwatch:latest
-    environment:
-      - PW_SOURCES=postgresql://postgres_ai_mon:pass@prod-db:5432/app
-      - PW_SOURCE_NAME=prod-primary
+- name: prod-primary
+  conn_str: postgresql://postgres_ai_mon:pass@prod-db:5432/app
+  preset_metrics: full
+  is_enabled: true
+  group: production
+  custom_tags:
+    env: production
+    cluster: prod
+    node_name: primary
 
-  pgwatch-staging:
-    image: cybertec/pgwatch:latest
-    environment:
-      - PW_SOURCES=postgresql://postgres_ai_mon:pass@staging-db:5432/app
-      - PW_SOURCE_NAME=staging-primary
+- name: staging-primary
+  conn_str: postgresql://postgres_ai_mon:pass@staging-db:5432/app
+  preset_metrics: full
+  is_enabled: true
+  group: staging
+  custom_tags:
+    env: staging
+    cluster: staging
+    node_name: primary
 ```
 
-Use the `cluster_name` variable in Grafana to switch between environments.
+Use the `cluster` and `node_name` custom tags in Grafana to switch between environments.
 
 ## Troubleshooting
 
@@ -247,12 +286,12 @@ Use the `cluster_name` variable in Grafana to switch between environments.
 
 1. Check pgwatch is collecting metrics:
    ```bash
-   docker compose logs pgwatch | grep -i error
+   docker compose logs pgwatch-postgres pgwatch-prometheus | grep -i error
    ```
 
 2. Verify VictoriaMetrics has data:
    ```bash
-   curl 'http://localhost:8428/api/v1/query?query=pg_stat_user_tables_n_tup_ins'
+   curl 'http://localhost:59090/api/v1/query?query=pg_stat_user_tables_n_tup_ins'
    ```
 
 3. Check Grafana datasource:
@@ -261,22 +300,27 @@ Use the `cluster_name` variable in Grafana to switch between environments.
 
 ### High memory usage
 
-VictoriaMetrics memory is proportional to active time series:
+VictoriaMetrics memory is proportional to active time series. It sizes its caches
+from the container memory limit, so cap memory by lowering that limit (or set
+`SINK_PROMETHEUS_MEM` in `.env`) rather than overriding the service `command`:
 
 ```yaml
-victoriametrics:
-  command:
-    - "-memory.allowedPercent=40"  # Reduce from default 60%
+sink-prometheus:
+  mem_limit: 1073741824  # 1 GiB (default is 1.5 GiB / SINK_PROMETHEUS_MEM)
 ```
 
 ### Container networking issues
 
-If pgwatch can't reach your database:
+If the pgwatch collectors can't reach your database, add the host mapping to both collector services:
 
 ```yaml
-pgwatch:
+pgwatch-postgres:
   extra_hosts:
     - "host.docker.internal:host-gateway"  # For host machine access
+
+pgwatch-prometheus:
+  extra_hosts:
+    - "host.docker.internal:host-gateway"
 ```
 
 ## Next steps

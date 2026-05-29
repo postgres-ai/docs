@@ -288,14 +288,14 @@ PostgresAI monitoring collects **only database metadata** — no actual data or 
 
 Review exactly what is collected:
 
-- **Prometheus metrics**: [pgwatch-prometheus/metrics.yml](https://gitlab.com/postgres-ai/postgresai/-/blob/0.14.0/config/pgwatch-prometheus/metrics.yml)
-- **PostgreSQL metrics** (with query texts): [pgwatch-postgres/metrics.yml](https://gitlab.com/postgres-ai/postgresai/-/blob/0.14.0/config/pgwatch-postgres/metrics.yml)
+- **Prometheus metrics**: [pgwatch-prometheus/metrics.yml](https://gitlab.com/postgres-ai/postgresai/-/blob/0.15.0/config/pgwatch-prometheus/metrics.yml)
+- **PostgreSQL metrics** (with query texts): [pgwatch-postgres/metrics.yml](https://gitlab.com/postgres-ai/postgresai/-/blob/0.15.0/config/pgwatch-postgres/metrics.yml)
 
 ### Verify monitoring database role and its permissions
 
 ```bash
 # See exact SQL for creating monitoring role
-npx postgresai@latest prepare-db --print-sql
+npx postgresai@0.15.0 prepare-db --print-sql
 ```
 
 ## Security architecture

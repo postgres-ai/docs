@@ -15,11 +15,12 @@ PostgresAI uses VictoriaMetrics by default — a Prometheus-compatible TSDB with
 ### Setting retention period
 
 ```bash
-# CLI
-postgresai mon local-install --retention 30d
-
-# Environment variable
+# Set in the monitoring stack .env file.
+# Default is 336h (14 days); the value below overrides it to 30 days.
 VM_RETENTION_PERIOD=30d
+
+# Apply generated configuration after editing .env
+postgresai mon update-config
 ```
 
 | Retention | Disk usage (approx) | Use case |

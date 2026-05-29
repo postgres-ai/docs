@@ -84,32 +84,33 @@ Ensure the monitoring infrastructure is functioning correctly:
 
 | Variable | Purpose |
 |----------|---------|
-| `cluster_name` | Filter by monitored cluster |
+| `cluster` | Filter by monitored cluster (from the `custom_tags.cluster` instance tag) |
+| `node_name` | Filter by node (from the `custom_tags.node_name` instance tag) |
 
 ## Health check commands
 
 ### Check VictoriaMetrics status
 
 ```bash
-curl http://localhost:8428/api/v1/status/tsdb
+curl http://localhost:59090/api/v1/status/tsdb
 ```
 
 ### Check pgwatch status
 
 ```bash
-docker compose logs pgwatch --tail=50
+docker compose logs pgwatch-postgres pgwatch-prometheus --tail=50
 ```
 
 ### Check Prometheus/VM targets
 
 ```bash
-curl http://localhost:8428/api/v1/targets
+curl http://localhost:59090/api/v1/targets
 ```
 
 ### Verify metrics collection
 
 ```bash
-curl 'http://localhost:8428/api/v1/query?query=up'
+curl 'http://localhost:59090/api/v1/query?query=up'
 ```
 
 ## Common issues
@@ -118,12 +119,12 @@ curl 'http://localhost:8428/api/v1/query?query=up'
 
 1. Check scrape targets are up:
    ```bash
-   curl http://localhost:8428/api/v1/targets | jq '.data.activeTargets[] | {job: .labels.job, health: .health}'
+   curl http://localhost:59090/api/v1/targets | jq '.data.activeTargets[] | {job: .labels.job, health: .health}'
    ```
 
 2. Verify metric exists:
    ```bash
-   curl 'http://localhost:8428/api/v1/label/__name__/values' | jq '.data[]' | grep pg_
+   curl 'http://localhost:59090/api/v1/label/__name__/values' | jq '.data[]' | grep pg_
    ```
 
 3. Check time range alignment
@@ -132,20 +133,20 @@ curl 'http://localhost:8428/api/v1/query?query=up'
 
 1. Check for cardinality explosion:
    ```bash
-   curl 'http://localhost:8428/api/v1/status/tsdb' | jq '.data.totalSeries'
+   curl 'http://localhost:59090/api/v1/status/tsdb' | jq '.data.totalSeries'
    ```
 
 2. Review high-cardinality metrics:
    ```bash
-   curl 'http://localhost:8428/api/v1/status/tsdb' | jq '.data.seriesCountByMetricName | to_entries | sort_by(-.value) | .[0:10]'
+   curl 'http://localhost:59090/api/v1/status/tsdb' | jq '.data.seriesCountByMetricName | to_entries | sort_by(-.value) | .[0:10]'
    ```
 
-3. Adjust retention if needed:
+3. Adjust retention if needed (default is `336h` ≡ 14 days):
    ```yaml
    # docker-compose.yml
-   victoriametrics:
-     command:
-       - "-retentionPeriod=30d"  # Reduce from 90d
+   sink-prometheus:
+     environment:
+       - VM_RETENTION_PERIOD=30d  # Adjust retention if needed
    ```
 
 ### Scrape timeouts

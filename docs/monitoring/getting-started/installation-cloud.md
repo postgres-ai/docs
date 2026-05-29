@@ -67,10 +67,15 @@ Allow inbound traffic from your monitoring stack:
 ### Step 4: Start monitoring
 
 ```bash
-npx postgresai@latest mon local-install \
-  --target-db "postgresql://postgres_ai_mon:password@your-instance.region.rds.amazonaws.com:5432/your_db" \
-  --cluster-name "rds-production"
+npx postgresai@0.15.0 mon local-install \
+  --db-url "postgresql://postgres_ai_mon:password@your-instance.region.rds.amazonaws.com:5432/your_db"
 ```
+
+:::note Labeling clusters and nodes
+The 0.15 `local-install` command does not accept `--cluster-name`/`--node-name`. To
+tag metrics by cluster or node, set `custom_tags.cluster` and `custom_tags.node_name`
+in `instances.yml` (see [Docker Compose → Adding multiple databases](/docs/monitoring/getting-started/installation-docker#adding-multiple-databases)).
+:::
 
 ### RDS-specific considerations
 
@@ -133,9 +138,8 @@ Add your monitoring stack's IP to authorized networks:
 
 For private IP:
 ```bash
-npx postgresai@latest mon local-install \
-  --target-db "postgresql://postgres_ai_mon:password@10.x.x.x:5432/your_db" \
-  --cluster-name "cloudsql-production"
+npx postgresai@0.15.0 mon local-install \
+  --db-url "postgresql://postgres_ai_mon:password@10.x.x.x:5432/your_db"
 ```
 
 For Cloud SQL Auth Proxy:
@@ -144,10 +148,15 @@ For Cloud SQL Auth Proxy:
 cloud_sql_proxy -instances=PROJECT:REGION:INSTANCE=tcp:5432
 
 # Connect
-npx postgresai@latest mon local-install \
-  --target-db "postgresql://postgres_ai_mon:password@localhost:5432/your_db" \
-  --cluster-name "cloudsql-production"
+npx postgresai@0.15.0 mon local-install \
+  --db-url "postgresql://postgres_ai_mon:password@localhost:5432/your_db"
 ```
+
+:::note Labeling clusters and nodes
+The 0.15 `local-install` command does not accept `--cluster-name`/`--node-name`. To
+tag metrics by cluster or node, set `custom_tags.cluster` and `custom_tags.node_name`
+in `instances.yml` (see [Docker Compose → Adding multiple databases](/docs/monitoring/getting-started/installation-docker#adding-multiple-databases)).
+:::
 
 ### Cloud SQL-specific considerations
 
@@ -199,10 +208,15 @@ grant select on all tables in schema public to postgres_ai_mon;
 ### Step 4: Start monitoring
 
 ```bash
-npx postgresai@latest mon local-install \
-  --target-db "postgresql://postgres_ai_mon:password@db.xxxx.supabase.co:5432/postgres?sslmode=require" \
-  --cluster-name "supabase-production"
+npx postgresai@0.15.0 mon local-install \
+  --db-url "postgresql://postgres_ai_mon:password@db.xxxx.supabase.co:5432/postgres?sslmode=require"
 ```
+
+:::note Labeling clusters and nodes
+The 0.15 `local-install` command does not accept `--cluster-name`/`--node-name`. To
+tag metrics by cluster or node, set `custom_tags.cluster` and `custom_tags.node_name`
+in `instances.yml` (see [Docker Compose → Adding multiple databases](/docs/monitoring/getting-started/installation-docker#adding-multiple-databases)).
+:::
 
 :::note Connection pooling
 Use the "Direct connection" string, not the pooled connection (port 6543). Monitoring requires direct PostgreSQL protocol access.
@@ -216,10 +230,10 @@ Most cloud providers require SSL:
 
 ```bash
 # Require SSL
---target-db "postgresql://...?sslmode=require"
+--db-url "postgresql://...?sslmode=require"
 
 # Verify certificate (recommended for production)
---target-db "postgresql://...?sslmode=verify-full&sslrootcert=/path/to/ca.crt"
+--db-url "postgresql://...?sslmode=verify-full&sslrootcert=/path/to/ca.crt"
 ```
 
 ### Permission limitations
