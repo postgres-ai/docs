@@ -14,7 +14,7 @@ Get PostgresAI monitoring running in minutes with PostgresAI Cloud.
 
 ## Step 1: Choose your plan
 
-Go to [console.postgres.ai](https://console.postgres.ai) and navigate to **Checkup → Monitoring instances → Choose plan**.
+Go to [console.postgres.ai](https://console.postgres.ai), open **Monitoring** in the left sidebar to reach the **Monitoring instances** page, then click **Start setup** (under **Hosted by PostgresAI**) and choose a plan.
 
 ![Plans page](/img/monitoring/cloud-setup/01-plans-page.png)
 
@@ -72,7 +72,7 @@ Once deployed, you'll receive:
 - Grafana URL with your dashboards
 - Login credentials
 
-Start with **01. Node overview** for a high-level health check.
+Start with **01. Single node performance overview (high-level)** for a high-level health check.
 
 ## Verify database permissions
 
@@ -104,7 +104,7 @@ See [data privacy details](/docs/monitoring/#data-privacy-metadata-only).
 
 ## First dashboard walkthrough
 
-Key panels to check in **01. Node overview**:
+Key panels to check in **01. Single node performance overview (high-level)**:
 1. **Active session history (ASH)** — Wait events over time (similar to RDS Performance Insights)
 2. **Sessions** — Active, idle, and idle in transaction connections
 3. **TPS** — Transactions per second
@@ -114,16 +114,16 @@ Key panels to check in **01. Node overview**:
 
 ```
 Is there an ongoing incident?
-├─ Yes — Start with "01. Node Overview" for quick triage
-│        └─ High wait events? — "04. Wait Events" for deep-dive
-│        └─ Slow queries? — "02. Query Analysis" then "03. Single Query"
-│        └─ Lock contention? — "13. Lock Contention"
+├─ Yes — Start with "01. Single node performance overview (high-level)" for quick triage
+│        └─ High wait events? — "04. Wait event analysis (Active Session History)" for deep-dive
+│        └─ Slow queries? — "02. Query performance analysis (top-N)" then "03. Single queryid analysis"
+│        └─ Lock contention? — "13. Lock contention"
 │
 ├─ No, routine monitoring
-│   ├─ Query performance review — "02. Query Analysis"
-│   ├─ Index health check — "10. Index Health"
-│   ├─ Table bloat check — "07. Autovacuum" or "08. Table Stats"
-│   └─ Replication lag — "06. Replication"
+│   ├─ Query performance review — "02. Query performance analysis (top-N)"
+│   ├─ Index health check — "10. Aggregated index analysis"
+│   ├─ Table bloat check — "07. Autovacuum and xmin horizon" or "08. Aggregated table analysis"
+│   └─ Replication lag — "06. Replication and HA"
 ```
 
 ## Self-hosted alternative

@@ -104,11 +104,13 @@ To skip the prompt, pass the client name as an argument: `postgresai mcp install
 
 ## Verify installation
 
-After installation, restart your AI coding tool. The PostgresAI MCP server exposes the following tools (see the [`mcp` section of the CLI reference](/docs/reference-guides/postgresai-cli-reference#command-mcp) for full details):
+After installation, restart your AI coding tool. The PostgresAI MCP server exposes 15 tools (see the [`mcp` section of the CLI reference](/docs/reference-guides/postgresai-cli-reference#command-mcp) for full details):
 
-- `list_issues`, `view_issue`, `create_issue`, `update_issue` — browse and manage issues in the PostgresAI Console.
-- `post_issue_comment`, `update_issue_comment` — comment on issues.
-- `upload_file`, `download_file` — upload local files to PostgresAI storage and download them back.
+- **Issues:** `list_issues`, `view_issue`, `create_issue`, `update_issue` — browse and manage issues in the PostgresAI Console.
+- **Issue comments:** `post_issue_comment`, `update_issue_comment` — comment on issues.
+- **Action items:** `list_action_items`, `view_action_item`, `create_action_item`, `update_action_item` — manage action items on an issue (including the approval workflow).
+- **Reports:** `list_reports`, `list_report_files`, `get_report_data` — list and read checkup reports stored in the Console.
+- **Files:** `upload_file`, `download_file` — upload local files to PostgresAI storage and download them back.
 
 To check the install landed, inspect the client config file. For Cursor:
 

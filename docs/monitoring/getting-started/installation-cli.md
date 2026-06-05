@@ -12,7 +12,7 @@ The fastest way to get PostgresAI monitoring running locally.
 
 - Node.js 18+ or Bun 1.0+
 - Docker 20.10+
-- PostgreSQL 14+ with `pg_stat_statements`
+- PostgreSQL 13+ (14+ recommended) with `pg_stat_statements`
 
 :::tip Bun support
 All commands work with both `npx` and `bunx`. The CLI is written in TypeScript and runs natively on Bun.
@@ -65,7 +65,8 @@ postgresql://postgres_ai_mon:auto_generated_pass@localhost:5432/mydb
 npx postgresai@0.15.0 mon local-install --demo
 ```
 
-Starts a complete stack with a sample PostgreSQL database pre-loaded with pgbench data.
+Starts a complete stack with a sample PostgreSQL database seeded with a small demo dataset (a
+`sample_data` table plus the monitoring schema objects).
 
 ### Production mode
 
@@ -83,7 +84,7 @@ Options:
   --demo            demo mode with sample database (default: false)
   --api-key <key>   Postgres AI API key for automated report uploads
   --db-url <url>    PostgreSQL connection URL to monitor
-  --tag <tag>       Docker image tag to use (e.g., 0.15.0, 0.15.0-dev.33)
+  --tag <tag>       Docker image tag to use (e.g., 0.14.0, 0.14.0-dev.33)
   --project <name>  Docker Compose project name (default: postgres_ai)
   -y, --yes         accept all defaults and skip interactive prompts (default: false)
   -h, --help        display help for command
@@ -99,8 +100,11 @@ Credentials:
 
 To retrieve the password later:
 ```bash
-grep grafana_password ~/.postgresai/.pgwatch-config
+grep grafana_password ~/.config/postgresai/monitoring/.pgwatch-config
 ```
+
+(The monitoring project lives in `~/.config/postgresai/monitoring` by default, or in
+`$PGAI_PROJECT_DIR` if set.)
 
 Navigate to **Dashboards — Browse — postgres_ai** to see your monitoring dashboards.
 
@@ -124,10 +128,10 @@ npx postgresai@0.15.0 mon stop
 
 ```bash
 # All containers
-docker compose -f ~/.postgresai/docker-compose.yml logs -f
+docker compose -f ~/.config/postgresai/monitoring/docker-compose.yml logs -f
 
 # Specific service
-docker compose -f ~/.postgresai/docker-compose.yml logs -f pgwatch-postgres pgwatch-prometheus
+docker compose -f ~/.config/postgresai/monitoring/docker-compose.yml logs -f pgwatch-postgres pgwatch-prometheus
 ```
 
 ## Troubleshooting
@@ -157,10 +161,12 @@ Restart PostgreSQL after this change.
 
 ### "Permission denied"
 
-The monitoring user needs these minimum privileges:
+The monitoring user needs the built-in `pg_monitor` role (this is what `prepare-db` grants and
+what the install/verify step checks for; `pg_read_all_stats` alone is a strict subset and is not
+sufficient):
 
 ```sql
-grant pg_read_all_stats to postgres_ai_mon;
+grant pg_monitor to postgres_ai_mon;
 ```
 
 For RDS/CloudSQL, ensure you're using the master user for `prepare-db`.

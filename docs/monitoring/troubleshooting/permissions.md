@@ -184,8 +184,12 @@ grant execute on function public.monitoring_stats_reset() to monitoring_user;
 3. Network connectivity exists
 
 ```bash
-# Test from Grafana container
-docker compose exec grafana curl http://victoriametrics:8428/api/v1/query?query=up
+# Test from the Grafana container. The datasource points at sink-prometheus:9090
+# (there is no host named "victoriametrics", and the container port is 9090, not
+# 8428). The endpoint requires VM basic auth.
+docker compose exec grafana curl \
+  -u "$VM_AUTH_USERNAME:$VM_AUTH_PASSWORD" \
+  'http://sink-prometheus:9090/api/v1/query?query=up'
 ```
 
 ### Dashboard access
@@ -259,15 +263,32 @@ host    all    monitoring_user    10.0.0.5/32    scram-sha-256
 hostssl    all    monitoring_user    10.0.0.0/24    scram-sha-256
 ```
 
-### Rotate credentials
+### Rotate monitoring database credentials
 
-Update connection string in pgwatch configuration and restart:
+This rotates the **monitored database** role's password. To rotate the VictoriaMetrics
+basic-auth credentials instead, see
+[Rotating VictoriaMetrics credentials](/docs/monitoring/configuration/prometheus-config#rotating-victoriametrics-credentials).
+
+The monitored-database connection (including its password) lives in `instances.yml`, which is
+rendered into pgwatch's `sources.yml` by `config/scripts/generate-pgwatch-sources.sh` — **not** in
+`docker-compose.yml` or `.env` (the `.env` file holds stack secrets such as `REPLICATOR_PASSWORD`
+and `VM_AUTH_*`). Update the target's `conn_str` in `instances.yml`, then regenerate sources and
+recreate the pgwatch collectors:
 
 ```bash
-docker compose down
-# Update credentials in docker-compose.yml or .env
-docker compose up -d
+# Edit the target's conn_str in instances.yml, then regenerate sources.yml from it:
+postgresai mon update-config
+# Apply the new connection by restarting the collectors. `mon restart` takes at most one
+# service argument, so restart each collector separately:
+postgresai mon restart pgwatch-postgres
+postgresai mon restart pgwatch-prometheus
 ```
+
+`postgresai mon restart` alone is **not** enough: it only runs `docker compose restart` and never
+re-renders `sources.yml` from `instances.yml`, so the new `conn_str` would never reach the
+collectors. `mon update-config` runs the `sources-generator` service that regenerates the sources.
+(`mon restart` with no service argument restarts the whole stack; it accepts at most one service,
+so the two collectors must be restarted with two separate commands.)
 
 ## Troubleshooting checklist
 

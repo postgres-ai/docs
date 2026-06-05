@@ -26,64 +26,17 @@ Ensure replication health for:
 - Validating HA setup
 - Capacity planning for replicas
 
-## Key panels
+## Dashboard status
 
-### Replication lag (Bytes)
-
-**What it shows:**
-- Bytes of WAL not yet replayed on replica
-- Per-replica breakdown
-
-**Healthy range:**
-- < 1 MB for synchronous replication
-- < 100 MB for async (depends on workload)
-
-**Warning signs:**
-- Growing lag = replica can't keep up
-- Sudden spikes = network issues or replica overload
-
-### Replication lag (Time)
-
-**What it shows:**
-- Estimated time behind primary
-- More intuitive than bytes for SLA monitoring
-
-**Calculation:**
-Based on WAL generation rate and byte lag.
-
-### Replication slot status
-
-**What it shows:**
-- Active slots and their consumers
-- Slot lag (retained WAL)
-
-**Warning signs:**
-- Inactive slots with growing lag = WAL retention risk
-- Slots without active connections
+In 0.15.0 this dashboard ships as a single placeholder panel ("Coming soon...") and has no data
+panels or template variables yet. Replication metrics are still collected by the stack (for
+example `replication`, `replication_slots`, and `pg_stat_replication` in the `full` preset), so
+until the visualizations land you can inspect replication health directly via SQL using the
+queries below.
 
 :::warning WAL retention
 Unused replication slots prevent WAL cleanup and can fill disk.
 :::
-
-### Sent vs replayed
-
-**What it shows:**
-- WAL sent to replica
-- WAL replayed (applied) on replica
-- Gap indicates apply lag
-
-### Replica connections
-
-**What it shows:**
-- Connected replicas
-- Connection state (streaming, catchup)
-
-## Variables
-
-| Variable | Purpose |
-|----------|---------|
-| `cluster_name` | Cluster filter |
-| `node_name` | Primary or replica |
 
 ## Replication modes
 

@@ -22,21 +22,24 @@ Diagnosing and fixing "No data" issues in PostgresAI dashboards.
 ### 1. Check pgwatch status
 
 ```bash
-docker compose ps pgwatch
+docker compose ps pgwatch-postgres pgwatch-prometheus
 ```
 
 Expected: `Up` status
 
 If not running:
 ```bash
-docker compose logs pgwatch --tail 50
+docker compose logs pgwatch-postgres pgwatch-prometheus --tail 50
 ```
 
 ### 2. Verify PostgreSQL connectivity
 
+The `pgwatch-postgres` container has no `psql` (it is a minimal Alpine image with only the pgwatch
+binary). Run the check from `sink-postgres` (image `postgres:17`), which has a client:
+
 ```bash
 # Use PGPASSWORD environment variable for authentication
-docker compose exec -e PGPASSWORD="$PGPASSWORD" pgwatch psql \
+docker compose exec -e PGPASSWORD="$PGPASSWORD" sink-postgres psql \
   "postgresql://user@host:5432/dbname" \
   -c "select 1"
 ```
@@ -74,22 +77,21 @@ Adding to shared_preload_libraries requires PostgreSQL restart.
 
 ### 4. Verify metrics collection
 
-```bash
-# Check pgwatch is scraping
-curl http://localhost:8080/metrics | head -20
-```
-
-Expected: Prometheus-format metrics
+The pgwatch-prometheus sink serves metrics at `pgwatch-prometheus:9091/pgwatch` on the internal
+network; it is not published to the host. The simplest check is to query VictoriaMetrics (which
+scrapes it) for a `pgwatch_`-prefixed series:
 
 ```bash
-# Check specific metrics
-curl http://localhost:8080/metrics | grep pg_stat_statements_calls
+# Confirm pgwatch metrics have been ingested (host port 59090, VM basic auth)
+curl -u "$VM_AUTH_USERNAME:$VM_AUTH_PASSWORD" \
+  'http://localhost:59090/api/v1/query?query=pgwatch_pg_stat_statements_calls'
 ```
 
 ### 5. Check VictoriaMetrics ingestion
 
 ```bash
-curl 'http://localhost:8428/api/v1/query?query=up'
+curl -u "$VM_AUTH_USERNAME:$VM_AUTH_PASSWORD" \
+  'http://localhost:59090/api/v1/query?query=up'
 ```
 
 Expected:
@@ -97,18 +99,20 @@ Expected:
 {"status":"success","data":{"result":[...]}}
 ```
 
-Check data for specific metric:
+Check data for a specific metric (all pgwatch series are `pgwatch_`-prefixed; the transaction
+commit counter is `pgwatch_db_stats_xact_commit`):
 ```bash
-curl 'http://localhost:8428/api/v1/query?query=pg_stat_database_xact_commit_total'
+curl -u "$VM_AUTH_USERNAME:$VM_AUTH_PASSWORD" \
+  'http://localhost:59090/api/v1/query?query=pgwatch_db_stats_xact_commit'
 ```
 
 ### 6. Verify Grafana data source
 
 ```bash
-curl http://monitor:YOUR_PASSWORD@localhost:3000/api/datasources
+curl 'http://monitor:demo@localhost:3000/api/datasources'
 ```
 
-Check data source URL points to VictoriaMetrics.
+Check the `PGWatch-Prometheus` data source URL points to `http://sink-prometheus:9090`.
 
 ## Specific scenarios
 
@@ -158,8 +162,10 @@ Check data source URL points to VictoriaMetrics.
    create extension pg_stat_statements;
    ```
 
-2. **Database excluded from collection:**
-   Check pgwatch configuration for `PW_EXCLUDE_DATABASES`.
+2. **Database not included in collection:**
+   pgwatch monitors the databases listed in `instances.yml` (rendered into `sources.yml`). There
+   is no `PW_EXCLUDE_DATABASES` (or any `PW_*`) environment variable. Verify the target's
+   `conn_str` and that `is_enabled: true` in `instances.yml`.
 
 ### No data for specific cluster
 
@@ -169,14 +175,15 @@ Check data source URL points to VictoriaMetrics.
 
 **Causes and solutions:**
 
-1. **Check connectivity for that specific connection:**
+1. **Check connectivity for that specific connection** (run `psql` from `sink-postgres`, since the
+   `pgwatch-postgres` image has no client):
    ```bash
-   docker compose exec pgwatch psql "connection_string" -c "select 1"
+   docker compose exec sink-postgres psql "connection_string" -c "select 1"
    ```
 
 2. **Check pgwatch logs for errors:**
    ```bash
-   docker compose logs pgwatch | grep "cluster_name"
+   docker compose logs pgwatch-postgres pgwatch-prometheus | grep -i cluster
    ```
 
 ### Data stops after some time
@@ -189,7 +196,7 @@ Check data source URL points to VictoriaMetrics.
 
 1. **pgwatch crashed:**
    ```bash
-   docker compose restart pgwatch
+   docker compose restart pgwatch-postgres pgwatch-prometheus
    ```
 
 2. **Target PostgreSQL connection dropped:**
@@ -212,14 +219,15 @@ Grafana time range may not include collected data:
 
 Dashboard variables filter displayed data:
 - Check `cluster_name` variable
-- Check `datname` variable
+- Check `db_name` variable (the standard database-selection variable; only
+  [11. Single index](/docs/monitoring/dashboards/single-index) names it `datname`)
 - Try "All" option if available
 
 ### Query timeout
 
 Complex dashboards may timeout:
 - Check Grafana query inspector for errors
-- Increase `VM_SEARCH_QUERY_TIMEOUT`
+- Increase `VM_QUERY_DURATION` (default `30s`; maps to VictoriaMetrics' `-search.maxQueryDuration`)
 
 ## Permission issues
 
@@ -229,10 +237,10 @@ If pgwatch can connect but gets no data:
 -- Check monitoring user permissions
 \du monitoring_user
 
--- Grant required permissions
+-- Grant the required role (pg_monitor; this is what prepare-db grants and what
+-- the install/verify step checks for). pg_read_all_stats is a strict subset and
+-- is not sufficient on its own.
 grant pg_monitor to monitoring_user;
--- or for older PostgreSQL versions:
-grant pg_read_all_stats to monitoring_user;
 ```
 
 See [Permission errors](/docs/monitoring/troubleshooting/permissions) for details.
@@ -243,9 +251,10 @@ See [Permission errors](/docs/monitoring/troubleshooting/permissions) for detail
    ```bash
    docker compose logs > monitoring-logs.txt
    docker compose ps >> monitoring-logs.txt
-   curl http://localhost:8080/metrics >> monitoring-logs.txt 2>&1
+   curl -u "$VM_AUTH_USERNAME:$VM_AUTH_PASSWORD" \
+     'http://localhost:59090/api/v1/query?query=up' >> monitoring-logs.txt 2>&1
    ```
 
-2. Check GitHub Issues for similar problems
+2. Check [GitLab Issues](https://gitlab.com/postgres-ai/postgresai/-/issues) for similar problems
 
 3. Open a new issue with the diagnostic output

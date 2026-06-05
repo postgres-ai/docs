@@ -46,17 +46,17 @@ Similar to AWS RDS Performance Insights, this panel shows wait event distributio
 |----------|-------|-----------|
 | CPU* | Green | On-CPU activity (query execution) |
 | IO | Blue | Disk I/O waits |
-| LWLock | Red | Lightweight lock contention |
-| Lock | Orange | Row/table lock waits |
-| Timeout | Gray | Sleep/timeout events |
+| Lock | Red | Row/table lock waits |
+| LWLock | Dark red | Lightweight lock contention |
+| Timeout | Brown (`#6f450c`) | Sleep/timeout events |
 
 **Healthy state:**
 - Mostly green (CPU) with occasional blue (IO)
 - Total height below `max_connections * 0.5`
 
 **Warning signs:**
-- Sustained red (LWLock) — Internal contention
-- Sustained orange (Lock) — Application-level locking issues
+- Sustained dark red (LWLock) — Internal contention
+- Sustained red (Lock) — Application-level locking issues
 - Spikes above normal baseline — Sudden load increase
 
 ### Sessions
@@ -83,17 +83,17 @@ Focused view of sessions doing actual work.
 - Stable pattern matching application load
 - No sudden spikes without corresponding application events
 
-### TPS (transactions per second)
+### TPS
 
 **What it shows:**
-- Commit rate
+- Transactions per second: commit rate
 - Rollback rate (if significant)
 
 **Use for:**
 - Capacity baseline
 - Detecting throughput drops
 
-### QPS (queries per second)
+### QPS (pg_stat_statements)
 
 From `pg_stat_statements`, showing actual query execution rate.
 
@@ -119,12 +119,13 @@ From `pg_stat_statements`, showing actual query execution rate.
 
 1. Verify pgwatch is collecting metrics:
    ```bash
-   docker compose logs pgwatch | grep -i "wait\|session"
+   docker compose logs pgwatch-postgres pgwatch-prometheus | grep -i "wait\|session"
    ```
 
-2. Check VictoriaMetrics has data:
+2. Check VictoriaMetrics has wait-event data backing the ASH panel (host port `59090`, VM basic auth):
    ```bash
-   curl 'http://localhost:8428/api/v1/query?query=pg_stat_activity_count'
+   curl -u "$VM_AUTH_USERNAME:$VM_AUTH_PASSWORD" \
+     'http://localhost:59090/api/v1/query?query=pgwatch_wait_events_total'
    ```
 
 ### Sessions count doesn't match pg_stat_activity

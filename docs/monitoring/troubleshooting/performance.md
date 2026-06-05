@@ -33,30 +33,30 @@ docker stats
 
 ### Reducing collection overhead
 
-**1. Increase collection interval:**
+There are no `PW_*` environment variables in this stack. Collection is controlled per metric group
+in the pgwatch `metrics.yml` files, and the set of metrics is fixed by the `full` preset that the
+generated `sources.yml` uses.
 
-```bash
-# Default: 15s, increase for less load
-PW_SCRAPE_INTERVAL=30s
-```
+**1. Increase a metric group's collection interval:**
 
-**2. Use appropriate preset:**
+Each group lists an interval (seconds) under `presets:` in
+`config/pgwatch-prometheus/metrics.yml`. For example, most groups collect every `30s` while
+`pg_stat_activity` and `wait_events` collect every `15s`. Raise these values for the groups you
+care less about to reduce load. There is no `PW_SCRAPE_INTERVAL` variable.
 
-| Preset | Load | Coverage |
-|--------|------|----------|
-| basic | Low | Essential metrics only |
-| standard | Medium | Most use cases |
-| full | Higher | Complete visibility |
+**2. Preset selection:**
 
-```bash
-postgresai mon local-install --preset basic
-```
+The generated source hardcodes `preset_metrics: full` (see
+`config/scripts/generate-pgwatch-sources.sh` and `cli/lib/instances.ts`). `mon local-install` has
+**no** `--preset` flag — its options are `--demo`, `--api-key`, `--db-url`, `--tag`, `--project`,
+and `-y/--yes`. There are no `basic`/`standard` preset tiers. To trim collection, edit the `full`
+preset (or define a custom preset) in `metrics.yml`.
 
 **3. Disable expensive metrics:**
 
-```bash
-PW_DISABLED_METRICS="bloat_tables,bloat_indexes"
-```
+Remove or lengthen the interval of expensive groups (for example the bloat groups
+`pg_table_bloat`, `pg_btree_bloat` — already at `7200s`) directly in the `full` preset in
+`metrics.yml`. There is no `PW_DISABLED_METRICS` variable.
 
 ### Monitoring query overhead
 
@@ -76,41 +76,23 @@ limit 10;
 
 ## VictoriaMetrics tuning
 
-### Memory optimization
-
-**Reduce active time series:**
-
-```bash
-# Limit cardinality
-VM_STORAGE_MAX_UNIQUE_SERIES=1000000
-```
-
-**Adjust cache sizes:**
-
-```bash
-# Reduce if memory constrained
-VM_STORAGE_CACHE_SIZE_STORAGE_TSID=128MB
-VM_STORAGE_CACHE_SIZE_INDEX_DB=64MB
-```
+The compose stack reads only these VictoriaMetrics (`sink-prometheus`) environment variables:
+`VM_AUTH_USERNAME`, `VM_AUTH_PASSWORD`, `VM_RETENTION_PERIOD`, `VM_QUERY_DURATION`, and
+`VM_MAX_CONCURRENT_REQUESTS`. Variables such as `VM_STORAGE_*`, `VM_SEARCH_*`, and a per-query
+memory limit do not exist here.
 
 ### Query performance
 
-**Increase query timeout:**
+**Increase query duration limit:**
 
 ```bash
-VM_SEARCH_QUERY_TIMEOUT=60s
+VM_QUERY_DURATION=60s   # default 30s; maps to -search.maxQueryDuration
 ```
 
 **Limit concurrent queries:**
 
 ```bash
-VM_SEARCH_MAX_CONCURRENT_REQUESTS=8
-```
-
-**Reduce query memory:**
-
-```bash
-VM_SEARCH_MAX_MEMORY_PER_QUERY=256MB
+VM_MAX_CONCURRENT_REQUESTS=8   # default 16; maps to -search.maxConcurrentRequests
 ```
 
 ### Storage optimization
@@ -118,15 +100,20 @@ VM_SEARCH_MAX_MEMORY_PER_QUERY=256MB
 **Shorter retention:**
 
 ```bash
-VM_RETENTION_PERIOD=7d  # Down from 14d
+VM_RETENTION_PERIOD=168h   # 7 days, down from the default 336h (14 days)
 ```
+
+`VM_RETENTION_PERIOD` accepts VictoriaMetrics durations with hour/day/week/year suffixes — for
+example `168h` or `7d`, `336h` or `14d`, `30d`, `4380h` (a bare integer is interpreted as months).
+The bundled `.env.example` lists `30d` as a valid example.
 
 **Enable compression:**
 
-VictoriaMetrics compresses by default. Check compression ratio:
+VictoriaMetrics compresses by default. Check TSDB status (host port `59090`, VM basic auth):
 
 ```bash
-curl http://localhost:8428/api/v1/status/tsdb
+curl -u "$VM_AUTH_USERNAME:$VM_AUTH_PASSWORD" \
+  http://localhost:59090/api/v1/status/tsdb
 ```
 
 ## Grafana optimization
@@ -140,12 +127,12 @@ curl http://localhost:8428/api/v1/status/tsdb
 **Optimize panel queries:**
 - Use `rate()` instead of raw counters
 - Limit time series with `topk()` or `bottomk()`
-- Add `{cluster_name="production"}` filters
+- Add `{cluster="production"}` filters (the metric label is `cluster`, not `cluster_name`)
 
 **Example — limit to top 10:**
 
 ```promql
-topk(10, rate(pg_stat_statements_calls_total[5m]))
+topk(10, rate(pgwatch_pg_stat_statements_calls[5m]))
 ```
 
 ### Query caching
@@ -171,36 +158,14 @@ row_limit = 10000
 
 ## pgwatch tuning
 
-### Connection pooling
+### Connection and collection settings
 
-**Limit connections per database:**
-
-```bash
-PW_MAX_PARALLEL_CONNECTIONS_PER_DB=2  # Down from 3
-```
-
-**Increase connection timeout:**
-
-```bash
-PW_CONNECT_TIMEOUT=15s
-```
-
-### Collection scheduling
-
-**Stagger collection times:**
-
-For multiple databases, avoid simultaneous collection:
-
-```yaml
-# Configure different scrape offsets
-databases:
-  - name: db1
-    scrape_offset: 0s
-  - name: db2
-    scrape_offset: 5s
-  - name: db3
-    scrape_offset: 10s
-```
+pgwatch in this stack is configured through its `sources.yml` / `metrics.yml` files (generated
+from `instances.yml`), not through `PW_*` environment variables. Variables such as
+`PW_MAX_PARALLEL_CONNECTIONS_PER_DB` and `PW_CONNECT_TIMEOUT` do not exist here. To reduce load,
+adjust per-metric collection intervals in `metrics.yml` (see
+[Reducing collection overhead](#reducing-collection-overhead) above) or disable targets in
+`instances.yml`.
 
 ## Resource allocation
 
@@ -226,29 +191,31 @@ VictoriaMetrics Disk: 10 × 4 weeks × 5 GiB = 200 GiB
 
 ## Docker resource limits
 
+Each service in `docker-compose.yml` sets top-level `cpus:` and `mem_limit:` keys whose defaults
+come from environment variables — there is no `deploy.resources.limits` block. Override them in
+`.env` rather than editing the compose file. These limits apply only when a container is
+recreated, so after editing `.env` run `docker compose up -d --force-recreate <service>` to apply
+them (`postgresai mon update-config` migrates `.env` but does not recreate services). CPUs are
+floats (Docker Compose `cpus:` semantics); memory is in **bytes**.
+
+```bash
+# .env — override the per-service defaults
+PGWATCH_PROMETHEUS_CPUS=1.0
+PGWATCH_PROMETHEUS_MEM=536870912     # 512 MiB (default)
+
+SINK_PROMETHEUS_CPUS=2.0             # VictoriaMetrics (sink-prometheus)
+SINK_PROMETHEUS_MEM=4294967296       # 4 GiB
+
+GRAFANA_CPUS=1.0
+GRAFANA_MEM=1073741824               # 1 GiB
+```
+
+The matching `cpus:`/`mem_limit:` lines in `docker-compose.yml` read these variables, for example:
+
 ```yaml
-# docker-compose.yml
-services:
-  pgwatch:
-    deploy:
-      resources:
-        limits:
-          memory: 512M
-          cpus: '1.0'
-
-  victoriametrics:
-    deploy:
-      resources:
-        limits:
-          memory: 4G
-          cpus: '2.0'
-
-  grafana:
-    deploy:
-      resources:
-        limits:
-          memory: 1G
-          cpus: '1.0'
+  pgwatch-prometheus:
+    cpus: ${PGWATCH_PROMETHEUS_CPUS:-0.5}
+    mem_limit: ${PGWATCH_PROMETHEUS_MEM:-536870912}
 ```
 
 ## High cardinality issues
@@ -256,7 +223,8 @@ services:
 ### Identify high cardinality
 
 ```bash
-curl http://localhost:8428/api/v1/status/tsdb | jq '.data.totalSeries'
+curl -u "$VM_AUTH_USERNAME:$VM_AUTH_PASSWORD" \
+  http://localhost:59090/api/v1/status/tsdb | jq '.data.totalSeries'
 ```
 
 ### Common cardinality sources
@@ -270,20 +238,19 @@ curl http://localhost:8428/api/v1/status/tsdb | jq '.data.totalSeries'
 
 ### Reduce cardinality
 
-**Drop high-cardinality labels:**
+**Reduce query-identity cardinality:**
 
-```yaml
-# VictoriaMetrics relabel config
-relabel_configs:
-  - action: labeldrop
-    regex: query  # Drop full query text
-```
+Query-level series are keyed by the `queryid` label (used throughout the dashboards via
+`pgwatch_query_info`). There is no `query` label carrying full query text on the Prometheus
+metrics to drop. The primary cardinality control is the per-metric `LIMIT 100` in the pgwatch
+`metrics.yml` (and the `sample_limit` safety nets in `prometheus.yml`); lower these to cap the
+number of distinct `queryid`s retained.
 
 **Aggregate metrics:**
 
 ```promql
-# Instead of per-table
-sum by (datname) (pg_stat_user_tables_seq_scan_total)
+# Instead of per-table, aggregate across tables
+sum by (datname) (pgwatch_pg_stat_all_tables_seq_tup_read)
 ```
 
 ## Monitoring the monitoring
@@ -295,15 +262,11 @@ Use the Self-Monitoring dashboard to track:
 - Memory usage
 - Disk usage
 
-Set up alerts for monitoring health:
-
-```yaml
-- alert: MonitoringCollectionSlow
-  expr: pgwatch_collection_duration_seconds > 30
-  for: 5m
-  labels:
-    severity: warning
-```
+The stack does not ship alert rules (there is no Alertmanager or `vmalert`; see
+[Alerting configuration](/docs/monitoring/configuration/alerting)). If you add your own alerting,
+note that there is no `pgwatch_collection_duration_seconds` metric in this stack — base health
+alerts on series that actually exist (for example `up{job="pgwatch-prometheus"}` for the pgwatch
+scrape job, or VM's own self-monitoring metrics).
 
 ## Troubleshooting slow dashboards
 
@@ -324,8 +287,8 @@ Look for:
 
 ```promql
 # Before (slow)
-sum(rate(pg_stat_statements_calls_total[5m]))
+sum(rate(pgwatch_pg_stat_statements_calls[5m]))
 
-# After (faster - add filter)
-sum(rate(pg_stat_statements_calls_total{cluster_name="$cluster"}[5m]))
+# After (faster - add filter; the label is `cluster`)
+sum(rate(pgwatch_pg_stat_statements_calls{cluster="$cluster_name"}[5m]))
 ```
