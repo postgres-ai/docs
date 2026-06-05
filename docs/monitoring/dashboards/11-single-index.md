@@ -31,11 +31,8 @@ When investigating a specific index from [10. Index Health](/docs/monitoring/das
 
 ## Key panels
 
-### Index scans over time
-
-**What it shows:**
-- Scan frequency trend
-- Helps identify usage patterns (batch jobs, peak hours)
+The dashboard is organized into four rows: **Size stats**, **Index usage stats**, **IO stats**,
+and **Estimated bloat stats**.
 
 ### Index size
 
@@ -43,7 +40,13 @@ When investigating a specific index from [10. Index Health](/docs/monitoring/das
 - Current index size
 - Size trend over time
 
-### Tuples read vs fetched
+### Index scans
+
+**What it shows:**
+- Scan frequency trend
+- Helps identify usage patterns (batch jobs, peak hours)
+
+### Tuples read and fetched
 
 **What it shows:**
 - `idx_tup_read` — tuples returned by index
@@ -53,11 +56,22 @@ When investigating a specific index from [10. Index Health](/docs/monitoring/das
 - Large gap may indicate index-only scans (good)
 - Or visibility map issues requiring heap fetches
 
-### Index bloat estimate
+### Shared block reads and hits
 
 **What it shows:**
-- Estimated wasted space
-- Bloat percentage
+- Buffer reads and hits for this index over time
+
+**Healthy state:**
+- Hits dominate reads for a frequently used index
+
+### Boguk ratio (index size / reltuples)
+
+**What it shows:**
+- The Boguk ratio — index size divided by the table's estimated row count (`reltuples`) — a
+  bloat proxy in this dashboard's **Estimated bloat stats** row
+
+**Interpretation:**
+- A rising ratio over time suggests the index is bloating relative to the rows it covers
 
 ## Variables
 
@@ -65,7 +79,8 @@ When investigating a specific index from [10. Index Health](/docs/monitoring/das
 |----------|---------|
 | `cluster_name` | Cluster filter |
 | `node_name` | Node filter |
-| `db_name` | Database filter |
+| `datname` | Database filter (label "DB name") |
+| `schema_name` | Schema filter |
 | `index_name` | Specific index to analyze |
 
 ## Index information queries

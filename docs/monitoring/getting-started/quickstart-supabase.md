@@ -1,7 +1,7 @@
 ---
 title: Quick start for Supabase
 sidebar_label: Quick start for Supabase
-sidebar_position: 7
+sidebar_position: 8
 keywords:
   - "PostgresAI for Supabase"
   - "Postgres monitoring for Supabase"
@@ -137,8 +137,8 @@ Open the Grafana URL from the deployment page. You can sign in using one of the 
 
 [![Grafana login page with Sign in with PostgresAI button](/assets/supabase-monitoring/supabase-monitoring-7.png)](/assets/supabase-monitoring/supabase-monitoring-7.png)
 
-Start with **01. Node overview** for a high-level health check of your Supabase database. Key panels
-to check first:
+Start with **01. Single node performance overview (high-level)** for a high-level health check of
+your Supabase database. Key panels to check first:
 
 1. **Active session history (ASH)** — wait events over time
 2. **Sessions** — active, idle, and idle in transaction connections

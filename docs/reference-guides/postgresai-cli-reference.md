@@ -28,6 +28,11 @@ equivalent binaries: `postgresai` (canonical) and `pgai` (short alias).
 Both names accept exactly the same commands and options; this page uses
 `postgresai` throughout.
 
+## Requirements
+
+The CLI requires **Node.js 18+ (or Bun 1.0+)**. Older Node versions fail fast with a clear
+error rather than breaking partway through a command.
+
 ## Getting started
 
 To install and authenticate, see the [PostgresAI CLI how-to](/docs/postgresai-howtos/postgresai-cli).
@@ -215,7 +220,7 @@ and optionally upload them to the PostgresAI Console.
 # Run all checks
 postgresai checkup <conn>
 
-# Run a specific check (CHECK_ID matches /^[A-Z]\d{3}$/, e.g. H002)
+# Run a specific check (CHECK_ID matches /^[A-Z]\d{3}$/i — case-insensitive, e.g. H002 or h002)
 postgresai checkup <CHECK_ID> <conn>
 ```
 
@@ -226,14 +231,50 @@ postgresai checkup <CHECK_ID> <conn>
 
 - `--check-id <id>` — specific check to run (or `ALL`). Equivalent to passing the check ID as the first positional argument.
 - `--node-name <name>` — node name embedded in reports (default: `node-01`).
-- `--output <path>` — write JSON results to this directory.
+- `--output <path>` — write per-check JSON results to this directory. Only the report payload is written; progress and error messages go to stderr, so the output files stay clean.
 - `--upload` / `--no-upload` — upload JSON results to PostgresAI Console (requires API key). Default depends on whether an API key is configured.
 - `--project <project>` — project name or ID for the upload (used with `--upload`). Defaults to the value stored by [`set-default-project`](#command-set-default-project); a project is auto-generated on first run if needed.
 - `--json` — print JSON to stdout.
 - `--markdown` — print Markdown to stdout.
 
-Run `postgresai checkup --help` to see the list of available check IDs
-and titles bundled with your CLI version.
+:::tip stdout vs stderr
+Progress and error messages are written to **stderr**; **stdout** carries only the report
+payload. This means `--json` / `--markdown` can be piped safely, for example:
+
+```bash
+postgresai checkup <conn> --json | jq '.checks[] | select(.id == "H002")'
+```
+:::
+
+**Available checks**
+
+Run `postgresai checkup --help` to see the full list of check IDs and titles bundled with your
+CLI version. The express-mode checks span the A (general / version / cluster), D (logging and
+`pg_stat_statements` settings), F (autovacuum / bloat), G (memory and timeouts), H (index), and I
+(I/O) groups — there are no K (query) checks in the express-mode CLI. In addition to the index
+(`H00x`) checks, 0.15 ships the estimated bloat checks:
+
+| Check | Finds |
+|-------|-------|
+| `F004` | Autovacuum: heap bloat (estimated) |
+| `F005` | Autovacuum: index bloat (estimated) |
+
+```bash
+# Run a single bloat check
+postgresai checkup F004 <conn>
+```
+
+:::note Bloat checks need the monitoring role
+The bloat estimation checks read catalog-level statistics that require the monitoring role
+created by [`prepare-db`](#command-prepare-db). When the connection lacks the required
+privileges, the check prints a hint:
+
+```
+Hint: Run "postgresai prepare-db <connection>" to create required objects.
+```
+
+Run `prepare-db` (or connect with a sufficiently privileged role) and re-run the check.
+:::
 
 ## Command: `mon`
 
@@ -249,15 +290,15 @@ postgresai mon <subcommand> [options]
 **Subcommands**
 
 - `local-install` — install the local monitoring stack: generate `.env`, configure services, and start them.
-- `start` — start monitoring services.
+- `start` — start monitoring services. Runs `docker compose up -d` **only when the stack is not already running**: if any Grafana/pgwatch container is already up, it prints `Monitoring services are already running` and exits **without** running `up -d` (suggesting `mon restart`). When it does run, `up -d` creates or recreates containers as needed, so it applies a newly pulled image and triggers a `config-init` reseed when the image version no longer matches the config-volume marker. It uses plain `docker compose up -d` (not `--force-recreate`). A full-stack `up -d --force-recreate` is used by `mon local-install`; `mon targets add`/`remove` also force-recreate, but only the two pgwatch collector containers (`pgwatch-prometheus`, `pgwatch-postgres`). On an **already-running** stack a bare `mon start` is therefore a no-op — to apply a pulled image or recreate `config-init` on a live stack, run `docker compose up -d` directly, or `mon stop` then `mon start`.
 - `stop` — stop monitoring services.
-- `restart [service]` — restart all services or a specific one.
+- `restart [service]` — restart all services or a specific one (`docker compose restart [service]`). Restarts the **existing** containers in place: it does **not** recreate them, does **not** apply a newly pulled image, and does **not** trigger a `config-init` reseed. To apply a new image or changed container env vars on a running stack, recreate the containers with `docker compose up -d` (a bare `mon start` no-ops while the stack is running, since it short-circuits with `Monitoring services are already running`).
 - `status` — show services status.
 - `health` — check that services are up and healthy.
 - `logs [service]` — show logs for all services or a specific one.
 - `config` — show monitoring configuration.
-- `update-config` — apply configuration changes (regenerate datasources, …).
-- `update` — update the monitoring stack.
+- `update-config` — apply configuration changes after editing `.env`: migrates `.env` additively (preserving existing values), refreshes the CLI-owned `docker-compose.yml` for non-git installs, and regenerates the pgwatch `sources.yml` (`docker compose run --rm sources-generator`). It does **not** regenerate the Grafana datasources, reseed the config volume, or restart any service.
+- `update` — update the monitoring stack: migrates `.env` additively (preserving existing values), refreshes the repo/compose, and pulls the pinned images for the current tag (`docker compose pull`). It does **not** restart, recreate, or `up` any service — afterward you must recreate the containers to apply the new images. On a running stack do this with `docker compose up -d` directly (or `mon stop` then `mon start`, or re-run `mon local-install`, which uses `up -d --force-recreate`). The command prints a hint to run `mon restart`, but `docker compose restart` restarts containers in place on the old image and does not apply a pulled image; and a bare `mon start` is a **no-op** while the stack is running (it short-circuits with `Monitoring services are already running`), so it will not apply the new image on its own either. See [Upgrading the monitoring stack](/docs/monitoring/getting-started/upgrade) for the full upgrade flow (including the required `VM_AUTH_*` keys in 0.15).
 - `reset [service]` — reset all services or a specific one (removes data).
 - `clean` — clean up monitoring artifacts (stops services and removes volumes).
 - `check` — system readiness check.
@@ -280,8 +321,8 @@ postgresai mon local-install [options]
 - `--demo` — demo mode with a sample database (for testing; cannot be combined with `--api-key`).
 - `--api-key <key>` — PostgresAI API key for automated report uploads.
 - `--db-url <url>` — PostgreSQL connection URL to monitor (form: `postgresql://user:pass@host:port/db`).
-- `--tag <tag>` — Docker image tag to use (e.g. `0.14.0`, `0.14.0-dev.33`).
-- `--project <name>` — Docker Compose project name (default: `postgres_ai`).
+- `--tag <tag>` — Docker image tag to use (e.g. `0.15.0`, `0.15.0-dev.33`).
+- `--project <name>` — project name. Used as the Docker Compose project name (default: `postgres_ai`). When an `--api-key` is supplied (non-demo install), it is **also** used as the project name when registering this monitoring instance with the PostgresAI Console; the registration default is `postgres-ai-monitoring`.
 - `-y, --yes` — accept all defaults and skip interactive prompts.
 
 `local-install` writes `.env` in the monitoring directory, preserving
@@ -678,12 +719,32 @@ manually:
 
 **MCP tools exposed**
 
+The 0.15 MCP server registers 15 tools in four groups.
+
+*Issues:*
+
 - `list_issues` — same JSON as `postgresai issues list`.
 - `view_issue` — view a single issue with its comments.
 - `create_issue` — create a new issue.
 - `update_issue` — update title / description / status / labels.
 - `post_issue_comment` — post a comment.
 - `update_issue_comment` — update an existing comment.
+
+*Action items:*
+
+- `list_action_items` — list action items for an issue.
+- `view_action_item` — view one or more action items with full detail.
+- `create_action_item` — create an action item (title, description, optional `sql_action` and config changes) for an issue.
+- `update_action_item` — mark done / not done, approve / reject, or edit an action item.
+
+*Reports:* (new in 0.15 — the only place the reports capability is exposed to AI agents)
+
+- `list_reports` — list checkup reports (metadata: id, project, status, timestamps; supports `before_date` filtering).
+- `list_report_files` — list files in a report (per-check `json` / `md` files; filter by `report_id`, `type`, or `check_id`).
+- `get_report_data` — fetch report file content (`type=md` for analysis, `type=json` for raw check data).
+
+*Files:*
+
 - `upload_file` — upload a local file and return the storage URL plus a ready-to-paste markdown link.
 - `download_file` — download a file from storage.
 
@@ -778,6 +839,7 @@ Base URL resolution order:
   1. Command-line option (`--storage-base-url`).
   2. Environment variable (`PGAI_STORAGE_BASE_URL`).
   3. Value stored by `postgresai set-storage-url`.
+  4. Default: `https://postgres.ai/storage`.
 
 A single trailing `/` is stripped from URL values to ensure consistent
 path joining.

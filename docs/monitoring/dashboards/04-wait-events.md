@@ -47,17 +47,22 @@ This dashboard uses wait event data collected from `pg_stat_activity` by pgwatch
 
 ## Key panels
 
-### Wait event distribution
+The dashboard has three panels, each an Active Session History view at a different level of detail:
+**Active session history** (grouped by wait event type), **Active session history by event type**
+(adds the specific wait event), and **Active session history by event type and event** (further
+broken down per `query_id`).
+
+### Active session history
 
 **What it shows:**
-- Stacked area chart of wait events over time
+- Stacked bar chart of active sessions by wait event type over time
 - Each color represents a wait event type
 
 **Wait event categories:**
 
 | Category | Description | Common events |
 |----------|-------------|---------------|
-| **CPU** | On-CPU processing | `CPU` |
+| **CPU** | On-CPU processing | `CPU*` |
 | **IO** | Disk I/O operations | `DataFileRead`, `WALWrite` |
 | **LWLock** | Internal PostgreSQL locks | `BufferContent`, `LockManager` |
 | **Lock** | Row/table locks | `tuple`, `transactionid` |
@@ -65,17 +70,11 @@ This dashboard uses wait event data collected from `pg_stat_activity` by pgwatch
 | **Activity** | Background processes | `LogicalLauncherMain` |
 | **IPC** | Inter-process communication | `BgWorkerStartup` |
 
-### Top wait events
-
-**What it shows:**
-- Ranked list of most common wait events
-- Percentage of total wait time
-
-**Interpretation guide:**
+**Interpretation guide** for the most common wait events you will see in these panels:
 
 | Wait event | Meaning | Action |
 |------------|---------|--------|
-| `CPU` | Query processing | Normal if workload-appropriate |
+| `CPU*` | Query processing | Normal if workload-appropriate |
 | `DataFileRead` | Reading from disk | Check shared_buffers, add memory |
 | `DataFileWrite` | Writing to disk | Normal for writes |
 | `WALWrite` | WAL I/O | Check storage speed |
@@ -83,13 +82,17 @@ This dashboard uses wait event data collected from `pg_stat_activity` by pgwatch
 | `Lock:tuple` | Row lock wait | Check for lock conflicts |
 | `Lock:transactionid` | Transaction wait | Long transactions blocking |
 
-### Wait events by database
+### Active session history by event type
 
-Breakdown showing which databases contribute most to waits.
+**What it shows:**
+- The same ASH view, additionally split out by the specific wait event (`wait_event`) within each
+  type, so you can see exactly which event dominates a wait type
 
-### Wait events by query
+### Active session history by event type and event
 
-Links wait events to specific queries (when available).
+**What it shows:**
+- The ASH view further attributed to the `query_id` responsible, linking waits to specific queries
+  (when captured during sampling)
 
 **Limitations:**
 - Only captures queries active during sampling
@@ -138,10 +141,11 @@ Lightweight locks are internal to PostgreSQL:
 
 | Variable | Purpose |
 |----------|---------|
+| `wait_event_type` | Filter by wait event type |
+| `wait_event` | Filter by specific wait event |
 | `cluster_name` | Cluster filter |
 | `node_name` | Node filter |
 | `db_name` | Database filter |
-| `wait_event_type` | Filter by event type |
 
 ## Related dashboards
 
@@ -155,23 +159,27 @@ Lightweight locks are internal to PostgreSQL:
 
 1. Verify pgwatch is collecting metrics:
    ```bash
-   docker compose logs pgwatch | grep -i wait
+   docker compose logs pgwatch-postgres pgwatch-prometheus | grep -i wait
    ```
 
-2. Check VictoriaMetrics has wait event data:
+2. Check VictoriaMetrics has wait event data (host port `59090`, VM basic auth):
    ```bash
-   curl 'http://localhost:8428/api/v1/query?query=pg_stat_activity_count'
+   curl -u "$VM_AUTH_USERNAME:$VM_AUTH_PASSWORD" \
+     'http://localhost:59090/api/v1/query?query=pgwatch_wait_events_total'
    ```
 
 3. Ensure `pg_stat_activity` is accessible to the monitoring user
 
 ### Wait events don't match RDS Performance Insights
 
-Different sampling rates and methodologies may cause variations. PostgresAI monitoring uses:
-- Default: 10ms sampling interval
-- Aggregation into time buckets for visualization
+Different collection mechanisms and methodologies may cause variations. PostgresAI monitoring does
+not use a sub-second sampler. Instead, the `wait_events` metric is a snapshot `count(*)` of active
+sessions in `pg_stat_activity` (`WHERE state = 'active'`), grouped by `wait_event_type` /
+`wait_event`. This snapshot is collected on the metric interval — every 15 seconds in the `full`
+preset — and then aggregated into time buckets for visualization.
 
-RDS Performance Insights may use different intervals.
+RDS Performance Insights samples at a higher frequency (roughly once per second), so absolute counts
+and short-lived waits can differ.
 
 ### "Other" category too large
 

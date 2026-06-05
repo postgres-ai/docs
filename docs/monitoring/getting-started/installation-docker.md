@@ -12,7 +12,7 @@ For custom deployments and development environments.
 
 - Docker 20.10+
 - Docker Compose v2
-- PostgreSQL 14+ target database
+- PostgreSQL 13+ (14+ recommended) target database
 
 ## Quick start
 
@@ -21,13 +21,33 @@ For custom deployments and development environments.
 git clone https://gitlab.com/postgres-ai/postgresai.git
 cd postgresai
 
-# Configure target database
+# Configure stack secrets
 cp .env.example .env
-# Edit .env with your database connection
+# Edit .env and set (at minimum):
+#   PGAI_TAG=0.15.0          # .env.example ships 0.14.0 — bump it to this release
+#   VM_AUTH_PASSWORD=...     # required (non-empty) — Grafana datasource won't provision without it
+#   REPLICATOR_PASSWORD=...  # required if you keep the demo target-db/target-standby services
+
+# Create instances.yml (the list of databases to monitor).
+# This file MUST exist as a FILE before `docker compose up`: docker-compose.yml
+# bind-mounts ./instances.yml, so if it is missing Docker creates a *directory*
+# of that name and sources-generator produces zero targets.
+cp instances.demo.yml instances.yml
+# Edit instances.yml: set is_enabled: true and a real conn_str for each target
+# (the connection string lives here, NOT in .env).
+
+# Render the pgwatch source files from instances.yml
+docker compose run --rm sources-generator
 
 # Start the stack
 docker compose up -d
 ```
+
+:::tip Prefer the CLI
+`postgresai mon local-install` automates the steps above (copies the demo files, prompts for a
+target, generates sources, and starts the stack). Use the manual flow here only for custom
+deployments.
+:::
 
 ## Configuration
 
@@ -39,6 +59,10 @@ Create a `.env` file or set these environment variables:
 # Required
 PGAI_TAG=0.15.0
 REPLICATOR_PASSWORD=<generated-secret>
+
+# Required in 0.15: VictoriaMetrics basic auth. VM_AUTH_PASSWORD must be non-empty.
+# Grafana datasource provisioning depends on these — without them, dashboards show no data.
+# See: Authentication and security in the Prometheus/VictoriaMetrics config guide.
 VM_AUTH_USERNAME=vmauth
 VM_AUTH_PASSWORD=<generated-secret>
 
@@ -63,18 +87,25 @@ source files from `instances.yml`.
 ```yaml
 services:
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:12.3.2
+    container_name: grafana-with-datasources
     ports:
       - "${GRAFANA_BIND_HOST:-}3000:3000"
     volumes:
-      - grafana-data:/var/lib/grafana
-      - ./config/grafana/provisioning:/etc/grafana/provisioning
+      - grafana_data:/var/lib/grafana
+      - postgres_ai_configs:/postgres_ai_configs:ro
     environment:
-      - GF_SECURITY_ADMIN_USER=monitor
-      - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD:-demo}
+      GF_SECURITY_ADMIN_USER: monitor
+      GF_SECURITY_ADMIN_PASSWORD: ${GF_SECURITY_ADMIN_PASSWORD:-demo}
+      GF_PATHS_PROVISIONING: /postgres_ai_configs/grafana/provisioning
+      GF_PATHS_CONFIG: /postgres_ai_configs/grafana/provisioning/grafana.ini
+      VM_AUTH_USERNAME: ${VM_AUTH_USERNAME:?VM_AUTH_USERNAME is required for Grafana datasource provisioning}
+      VM_AUTH_PASSWORD: ${VM_AUTH_PASSWORD:?VM_AUTH_PASSWORD is required for Grafana datasource provisioning}
+    restart: unless-stopped
 
   sink-postgres:
     image: postgres:17
+    container_name: sink-postgres
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
@@ -83,10 +114,11 @@ services:
 
   sink-prometheus:
     image: victoriametrics/victoria-metrics:v1.140.0
+    container_name: sink-prometheus
     ports:
       - "${BIND_HOST:-}59090:9090"
     volumes:
-      - vm-data:/victoria-metrics-data
+      - victoria_metrics_data:/victoria-metrics-data
     environment:
       - VM_AUTH_USERNAME=${VM_AUTH_USERNAME:-}
       - VM_AUTH_PASSWORD=${VM_AUTH_PASSWORD:-}
@@ -94,38 +126,60 @@ services:
 
   pgwatch-postgres:
     image: postgresai/pgwatch:${PGAI_TAG}
+    container_name: pgwatch-postgres
     command:
       - "--sources=/postgres_ai_configs/pgwatch/sources.yml"
       - "--metrics=/postgres_ai_configs/pgwatch/metrics.yml"
       - "--sink=postgresql://pgwatch@sink-postgres:5432/measurements?sslmode=disable"
       - "--web-addr=:8080"
+      - "--log-level=error"
     depends_on:
       - sources-generator
       - sink-postgres
 
   pgwatch-prometheus:
     image: postgresai/pgwatch:${PGAI_TAG}
+    container_name: pgwatch-prometheus
     command:
       - "--sources=/postgres_ai_configs/pgwatch-prometheus/sources.yml"
       - "--metrics=/postgres_ai_configs/pgwatch-prometheus/metrics.yml"
       - "--sink=prometheus://0.0.0.0:9091/pgwatch"
       - "--web-addr=:8089"
+      - "--log-level=error"
     depends_on:
       - sources-generator
       - sink-prometheus
 
+  # Flask backend is internal-only (no published host port); other services
+  # reach it over the Docker network.
   monitoring_flask_backend:
     image: postgresai/monitoring-flask-backend:${PGAI_TAG}
-    ports:
-      - "8000:8000"
+    container_name: flask-pgss-api
     environment:
       - PROMETHEUS_URL=http://sink-prometheus:9090
       - POSTGRES_SINK_URL=postgresql://pgwatch@sink-postgres:5432/measurements
+      - QUERYID_RETENTION_HOURS=${QUERYID_RETENTION_HOURS:-720}
 
 volumes:
-  grafana-data:
-  vm-data:
+  grafana_data:
+  victoria_metrics_data:
 ```
+
+## Image tags and supply chain
+
+All stack images are **version-pinned** in 0.15 — none use `:latest`. PostgresAI images
+(`pgwatch`, `monitoring-flask-backend`, `reporter`, configs) are pinned to `PGAI_TAG`, and the
+third-party images are pinned to specific releases (for example `grafana/grafana:12.3.2`,
+`victoriametrics/victoria-metrics:v1.140.0`, `postgres:17`). Pinning makes deployments
+reproducible and auditable and avoids silent, unreviewed upgrades — set `PGAI_TAG=0.15.0` to
+deploy this release.
+
+## Reliability and restart behavior
+
+Critical services ship with `restart: unless-stopped` so the monitoring stack comes back
+automatically after a Docker daemon restart or host reboot — no manual systemd unit is needed.
+The excerpt above shows the `restart:` key on the Grafana service; the full
+`docker-compose.yml` sets it on the other long-running services as well.
 
 ## Access Grafana
 
@@ -188,10 +242,17 @@ pgwatch-prometheus:
 ### Flask backend
 
 Provides query text lookup for Grafana dashboards (joining pg_stat_statements queryid with actual SQL).
+The backend listens on port 8000 inside the Docker network and is **not published to the host**, so
+reach its health endpoint from within the network:
 
 **Health check:**
+
+The backend image is `python:3.11-slim` and does not include `curl`, so hit the endpoint with the
+Python interpreter that ships in the image:
+
 ```bash
-curl http://localhost:8000/health
+docker compose exec monitoring_flask_backend \
+  python -c "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/health').status==200 else 1)"
 ```
 
 ## Directory structure
@@ -200,20 +261,26 @@ curl http://localhost:8000/health
 postgresai/
 ├── docker-compose.yml
 ├── .env
+├── instances.yml                         # Databases to monitor
 ├── config/
 │   ├── grafana/
-│   │   ├── provisioning/
-│   │   │   ├── dashboards/
-│   │   │   │   └── postgres_ai/      # Dashboard JSON files
-│   │   │   └── datasources/
-│   │   │       └── default.yaml      # VictoriaMetrics datasource
-│   │   └── grafana.ini
+│   │   ├── dashboards/                    # Dashboard JSON files (14 dashboards + self-monitoring)
+│   │   └── provisioning/
+│   │       ├── dashboards/
+│   │       │   └── dashboards.yml         # Dashboard provider
+│   │       ├── datasources/
+│   │       │   └── datasources.yml        # PGWatch-PostgreSQL / PGWatch-Prometheus / Infinity datasources
+│   │       └── grafana.ini
 │   └── prometheus/
-│       └── prometheus.yml            # Scrape configuration
+│       └── prometheus.yml                 # Scrape configuration
 └── monitoring_flask_backend/
     ├── app.py
     └── Dockerfile
 ```
+
+At runtime these configs are copied into the `postgres_ai_configs` Docker volume by the
+`config-init` service and mounted into the containers at `/postgres_ai_configs` (Grafana reads
+its provisioning from `GF_PATHS_PROVISIONING=/postgres_ai_configs/grafana/provisioning`).
 
 ## Operations
 
@@ -278,6 +345,14 @@ To monitor multiple PostgreSQL instances, add them to `instances.yml`; `sources-
     node_name: primary
 ```
 
+After editing `instances.yml`, re-render both `sources.yml` files and restart the collectors so
+they reload the new list (the running pgwatch collectors read `sources.yml` only at startup):
+
+```bash
+docker compose run --rm sources-generator                 # re-render pgwatch/*/sources.yml
+docker compose restart pgwatch-postgres pgwatch-prometheus  # reload the regenerated sources
+```
+
 Use the `cluster` and `node_name` custom tags in Grafana to switch between environments.
 
 ## Troubleshooting
@@ -289,9 +364,11 @@ Use the `cluster` and `node_name` custom tags in Grafana to switch between envir
    docker compose logs pgwatch-postgres pgwatch-prometheus | grep -i error
    ```
 
-2. Verify VictoriaMetrics has data:
+2. Verify VictoriaMetrics has data (host port `59090`, VM basic auth; all pgwatch series are
+   `pgwatch_`-prefixed):
    ```bash
-   curl 'http://localhost:59090/api/v1/query?query=pg_stat_user_tables_n_tup_ins'
+   curl -u "$VM_AUTH_USERNAME:$VM_AUTH_PASSWORD" \
+     'http://localhost:59090/api/v1/query?query=pgwatch_pg_stat_all_tables_n_tup_ins'
    ```
 
 3. Check Grafana datasource:

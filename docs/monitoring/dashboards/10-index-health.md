@@ -31,58 +31,57 @@ Identify indexes that need attention:
 
 ## Key panels
 
-### Unused indexes
+The dashboard opens with a **Detailed index view** table and is then organized into four rows of
+top-N panels: **Size stats**, **Estimated bloat stats**, **Index usage stats**, and **IO stats**.
+
+### Size stats
 
 **What it shows:**
-- Indexes with zero or very low scan count
-- Size of unused indexes
+- **Top $top_n indexes by size** — the largest indexes
 
-**Warning signs:**
-- Large indexes with zero scans — candidates for removal
-- Indexes unused since last stats reset
+**Use for:**
+- Spotting oversized indexes that dominate storage
 
 :::warning Before dropping
-Verify index isn't used for:
-- Unique constraints
-- Foreign key references
-- Periodic batch jobs (check longer time range)
+The aggregated panels here show size, bloat, usage, and I/O — use them together with the
+**Detailed index view** table and a longer time range to find genuinely unused indexes. Before
+dropping any index, verify it isn't backing a unique constraint, a foreign key, or a periodic
+batch job, and drill into [11. Single index](/docs/monitoring/dashboards/single-index).
 :::
 
-### Index size by table
+### Estimated bloat stats
 
 **What it shows:**
-- Total index size per table
-- Index to table size ratio
+- **Top $top_n indexes by estimated bloat %** and **by estimated bloat size**
 
-**Healthy range:**
-- Index size typically 20-100% of table size
-- Ratio > 200% may indicate over-indexing
-
-### Index scan rate
+### Index usage stats
 
 **What it shows:**
-- Index usage frequency
-- Trends in index utilization
+- **Top $top_n indexes by tuples read** and **by tuples fetched**
 
-### Redundant indexes
+**Interpretation:**
+- Indexes with persistently zero tuples read over a long range are candidates for removal
 
-**What it shows:**
-- Indexes that are subsets of other indexes
-- Example: `(a)` is redundant if `(a, b)` exists
-
-### Index bloat estimates
+### IO stats
 
 **What it shows:**
-- Estimated wasted space in indexes
-- Based on statistical analysis
+- **Top $top_n indexes by block reads** and **by block hits**
 
 ## Variables
 
 | Variable | Purpose |
 |----------|---------|
+| `top_n` | Number of indexes to show in top-N panels (10, 15, 20, 50, 100) |
 | `cluster_name` | Cluster filter |
 | `node_name` | Node filter |
 | `db_name` | Database filter |
+
+:::note Top-N filtering
+Per-index panels use `topk($top_n, ...)` to show only the highest-ranked indexes and drop the
+long tail — they do not aggregate the remainder into a separate series. If the index you need is
+not shown, raise `top_n` (or use [11. Single index](/docs/monitoring/dashboards/single-index)).
+See [Top-N filtering](/docs/monitoring/dashboards/#top-n-filtering).
+:::
 
 ## Index analysis queries
 

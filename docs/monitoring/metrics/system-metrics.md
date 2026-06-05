@@ -6,17 +6,19 @@ sidebar_position: 6
 
 # Database- and cluster-level metrics
 
-PostgreSQL system-level metrics from various `pg_stat_*` views.
+PostgreSQL system-level metrics. In this stack they are exported by the `db_stats`, `bgwriter`,
+`archive_lag` / `pg_archiver`, `pg_stat_replication`, and `settings` metric groups, with the
+`pgwatch_` prefix and the source column name (no `_total`/`_seconds` suffix convention).
 
 ## Data sources
 
-| View | Description |
-|------|-------------|
-| `pg_stat_database` | Database-level aggregates |
-| `pg_stat_bgwriter` | Background writer statistics |
-| `pg_stat_archiver` | WAL archiver status |
-| `pg_stat_replication` | Replication status |
-| `pg_settings` | Configuration parameters |
+| Metric group | Underlying view | Description |
+|--------------|-----------------|-------------|
+| `db_stats` | `pg_stat_database` | Database-level aggregates (`pgwatch_db_stats_*`) |
+| `bgwriter` | `pg_stat_bgwriter` | Background writer statistics (`pgwatch_bgwriter_*`) |
+| `archive_lag` / `pg_archiver` | `pg_stat_archiver` | WAL archiver status |
+| `pg_stat_replication` | `pg_stat_replication` | Replication status |
+| `settings` | `pg_settings` | Configuration parameters (`pgwatch_settings_*`) |
 
 ## Database metrics
 
@@ -24,70 +26,96 @@ PostgreSQL system-level metrics from various `pg_stat_*` views.
 
 | Metric | Type | Description |
 |--------|------|-------------|
-| `pg_stat_database_xact_commit_total` | Counter | Transactions committed |
-| `pg_stat_database_xact_rollback_total` | Counter | Transactions rolled back |
-| `pg_stat_database_deadlocks_total` | Counter | Deadlocks detected |
-| `pg_stat_database_conflicts_total` | Counter | Recovery conflicts (replicas) |
+| `pgwatch_db_stats_xact_commit` | Gauge | Transactions committed |
+| `pgwatch_db_stats_xact_rollback` | Gauge | Transactions rolled back |
+| `pgwatch_db_stats_deadlocks` | Gauge | Deadlocks detected |
+| `pgwatch_db_stats_conflicts` | Gauge | Recovery conflicts (replicas) |
 
 ### Connection metrics
 
 | Metric | Type | Description |
 |--------|------|-------------|
-| `pg_stat_database_numbackends` | Gauge | Active connections |
-| `pg_settings_max_connections` | Gauge | Maximum allowed connections |
+| `pgwatch_db_stats_numbackends` | Gauge | Active connections |
+| `pgwatch_settings_numeric_value{setting_name="max_connections"}` | Gauge | Maximum allowed connections (from the `settings` metric; there is no `pgwatch_settings_max_connections` series) |
 
 ### Buffer metrics
 
 | Metric | Type | Description |
 |--------|------|-------------|
-| `pg_stat_database_blks_read_total` | Counter | Blocks read from disk |
-| `pg_stat_database_blks_hit_total` | Counter | Blocks found in buffer cache |
+| `pgwatch_db_stats_blks_read` | Gauge | Blocks read from disk |
+| `pgwatch_db_stats_blks_hit` | Gauge | Blocks found in buffer cache |
 
 ### Temporary file metrics
 
 | Metric | Type | Description |
 |--------|------|-------------|
-| `pg_stat_database_temp_files_total` | Counter | Temporary files created |
-| `pg_stat_database_temp_bytes_total` | Counter | Temporary file bytes written |
+| `pgwatch_db_stats_temp_files` | Gauge | Temporary files created |
+| `pgwatch_db_stats_temp_bytes` | Gauge | Temporary file bytes written |
 
 ## Background writer metrics
 
 | Metric | Type | Description |
 |--------|------|-------------|
-| `pg_stat_bgwriter_checkpoints_timed_total` | Counter | Scheduled checkpoints |
-| `pg_stat_bgwriter_checkpoints_req_total` | Counter | Requested checkpoints |
-| `pg_stat_bgwriter_checkpoint_write_time_seconds_total` | Counter | Checkpoint write time |
-| `pg_stat_bgwriter_checkpoint_sync_time_seconds_total` | Counter | Checkpoint sync time |
-| `pg_stat_bgwriter_buffers_checkpoint_total` | Counter | Buffers written during checkpoints |
-| `pg_stat_bgwriter_buffers_clean_total` | Counter | Buffers written by background writer |
-| `pg_stat_bgwriter_buffers_backend_total` | Counter | Buffers written by backends |
-| `pg_stat_bgwriter_buffers_alloc_total` | Counter | Buffers allocated |
+| `pgwatch_bgwriter_checkpoints_timed` | Counter | Scheduled checkpoints |
+| `pgwatch_bgwriter_checkpoints_req` | Counter | Requested checkpoints |
+| `pgwatch_bgwriter_checkpoint_write_time` | Counter | Checkpoint write time (ms) |
+| `pgwatch_bgwriter_checkpoint_sync_time` | Counter | Checkpoint sync time (ms) |
+| `pgwatch_bgwriter_buffers_checkpoint` | Counter | Buffers written during checkpoints |
+| `pgwatch_bgwriter_buffers_clean` | Counter | Buffers written by background writer |
+| `pgwatch_bgwriter_buffers_backend` | Counter | Buffers written by backends |
+| `pgwatch_bgwriter_buffers_alloc` | Counter | Buffers allocated |
 
 ## WAL archiver metrics
 
 | Metric | Type | Description |
 |--------|------|-------------|
-| `pg_stat_archiver_archived_count_total` | Counter | WAL files archived |
-| `pg_stat_archiver_failed_count_total` | Counter | Failed archive attempts |
-| `pg_stat_archiver_last_archived_time` | Gauge | Last successful archive timestamp |
+| `pgwatch_archive_lag_archived_count` | Gauge | WAL files archived |
+| `pgwatch_archive_lag_failed_count` | Gauge | Failed archive attempts |
+| `pgwatch_archive_lag_seconds_since_archive` | Gauge | Seconds since last successful archive |
+| `pgwatch_archive_lag_wal_files_behind` | Gauge | WAL files behind the latest segment |
 
-## Replication metrics
+## WAL directory size
+
+New in 0.15, the collector reports the total size of the `pg_wal` directory using
+`pg_ls_waldir()`. This is the on-disk WAL size, which complements the archiver and replication
+metrics for diagnosing disk-fill risk.
 
 | Metric | Type | Description |
 |--------|------|-------------|
-| `pg_stat_replication_sent_lsn` | Gauge | WAL sent to replica |
-| `pg_stat_replication_write_lsn` | Gauge | WAL written on replica |
-| `pg_stat_replication_flush_lsn` | Gauge | WAL flushed on replica |
-| `pg_stat_replication_replay_lsn` | Gauge | WAL replayed on replica |
-| `pg_replication_lag_bytes` | Gauge | Replication lag in bytes |
-| `pg_replication_lag_seconds` | Gauge | Estimated replication lag |
+| `pgwatch_pg_wal_size_bytes` | Gauge | Total size of regular files in `pg_wal` (excludes subdirectories like `pg_wal/archive_status`) |
+| `pgwatch_pg_wal_size_status_code` | Gauge | Collection status: `0` = success, `1` = `pg_ls_waldir()` unavailable, `2` = monitoring role lacks EXECUTE privilege |
+
+`pg_wal` growth that is **not** matched by archive or replica progress is a disk-fill warning —
+typically a stuck WAL archiver, an inactive replication slot retaining WAL, or sustained high
+WAL generation. Correlate `pgwatch_pg_wal_size_bytes` with the `pgwatch_archive_lag_*` and
+replication-slot metrics, and see
+[How to troubleshoot a growing pg_wal directory](/docs/postgres-howtos/database-administration/maintenance/how-to-troubleshoot-a-growing-pg-wal-directory).
+
+```promql
+# Alert when pg_wal exceeds, e.g., 20 GiB while archiving is failing
+pgwatch_pg_wal_size_bytes > 20 * 1024 * 1024 * 1024
+```
+
+## Replication metrics
+
+LSN positions come from the `pg_stat_replication` group; lag is reported in `replication_*_lag_ms`
+/ `_lag_b` fields. There is no `pg_replication_lag_seconds` series.
+
+| Metric | Type | Description |
+|--------|------|-------------|
+| `pgwatch_pg_stat_replication_sent_lsn` | Gauge | WAL sent to replica |
+| `pgwatch_pg_stat_replication_write_lsn` | Gauge | WAL written on replica |
+| `pgwatch_pg_stat_replication_flush_lsn` | Gauge | WAL flushed on replica |
+| `pgwatch_pg_stat_replication_replay_lsn` | Gauge | WAL replayed on replica |
 
 ## Labels
+
+The cluster label is `cluster` (not `cluster_name`).
 
 | Label | Description | Example |
 |-------|-------------|---------|
 | `datname` | Database name | `myapp` |
-| `cluster_name` | Cluster identifier | `production` |
+| `cluster` | Cluster identifier (from `custom_tags.cluster`) | `production` |
 | `node_name` | Node identifier | `primary` |
 
 ## Common queries
@@ -95,39 +123,39 @@ PostgreSQL system-level metrics from various `pg_stat_*` views.
 ### Transactions per second
 
 ```promql
-sum(rate(pg_stat_database_xact_commit_total[5m]))
+sum(rate(pgwatch_db_stats_xact_commit[5m]))
 ```
 
 ### Rollback ratio
 
 ```promql
-rate(pg_stat_database_xact_rollback_total[5m])
+rate(pgwatch_db_stats_xact_rollback[5m])
 /
-(rate(pg_stat_database_xact_commit_total[5m]) + rate(pg_stat_database_xact_rollback_total[5m]))
+(rate(pgwatch_db_stats_xact_commit[5m]) + rate(pgwatch_db_stats_xact_rollback[5m]))
 ```
 
 ### Buffer cache hit ratio
 
 ```promql
-sum(rate(pg_stat_database_blks_hit_total[5m]))
+sum(rate(pgwatch_db_stats_blks_hit[5m]))
 /
-(sum(rate(pg_stat_database_blks_hit_total[5m])) + sum(rate(pg_stat_database_blks_read_total[5m])))
+(sum(rate(pgwatch_db_stats_blks_hit[5m])) + sum(rate(pgwatch_db_stats_blks_read[5m])))
 ```
 
 ### Connection utilization
 
 ```promql
-sum(pg_stat_database_numbackends)
+sum(pgwatch_db_stats_numbackends)
 /
-pg_settings_max_connections
+scalar(max(pgwatch_settings_numeric_value{setting_name="max_connections"}))
 ```
 
 ### Checkpoint frequency
 
 ```promql
-rate(pg_stat_bgwriter_checkpoints_timed_total[5m])
+rate(pgwatch_bgwriter_checkpoints_timed[5m])
 +
-rate(pg_stat_bgwriter_checkpoints_req_total[5m])
+rate(pgwatch_bgwriter_checkpoints_req[5m])
 ```
 
 ### Backend buffer writes (problematic)
@@ -135,27 +163,21 @@ rate(pg_stat_bgwriter_checkpoints_req_total[5m])
 High values indicate checkpoint tuning needed:
 
 ```promql
-rate(pg_stat_bgwriter_buffers_backend_total[5m])
+rate(pgwatch_bgwriter_buffers_backend[5m])
 /
 (
-  rate(pg_stat_bgwriter_buffers_checkpoint_total[5m])
+  rate(pgwatch_bgwriter_buffers_checkpoint[5m])
   +
-  rate(pg_stat_bgwriter_buffers_clean_total[5m])
+  rate(pgwatch_bgwriter_buffers_clean[5m])
   +
-  rate(pg_stat_bgwriter_buffers_backend_total[5m])
+  rate(pgwatch_bgwriter_buffers_backend[5m])
 )
-```
-
-### Replication lag
-
-```promql
-pg_replication_lag_seconds
 ```
 
 ### WAL archive status
 
 ```promql
-time() - pg_stat_archiver_last_archived_time
+pgwatch_archive_lag_seconds_since_archive
 ```
 
 ## Dashboard usage

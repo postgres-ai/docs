@@ -31,31 +31,27 @@ Diagnose lock-related performance issues:
 
 ## Key panels
 
-### Lock waits over time
+The dashboard has a **Blocking overview** row (five timeseries panels) and a **Blocking tree**
+row (one table).
+
+### Lock conflicts
 
 **What it shows:**
-- Number of sessions waiting for locks
-- Lock wait duration distribution
+- Number of lock-wait conflicts over time
 
 **Warning signs:**
-- Sustained lock waits
-- Increasing wait times
+- Sustained conflicts
 - Correlation with specific operations
 
-### Blocking chains
+### Wait duration
 
 **What it shows:**
-- Which sessions are blocking others
-- Depth of blocking chains
+- How long blocked backends have been waiting for locks (in ms)
 
-**Interpretation:**
-- Single blocker affecting many — address that query
-- Deep chains — potential design issue
-
-### Locks by type
+### By lock type
 
 **What it shows:**
-- Distribution of lock types
+- Distribution of lock-wait conflicts by lock type
 - Most common contention points
 
 | Lock type | Description | Common cause |
@@ -65,11 +61,50 @@ Diagnose lock-related performance issues:
 | `AccessExclusiveLock` | DDL operations | ALTER TABLE, DROP |
 | `ShareLock` | Index creation | CREATE INDEX |
 
-### Lock wait duration
+### Blocker age
 
 **What it shows:**
-- How long queries wait for locks
-- Percentile distribution
+- Age of the blocking transaction (in ms) — how long the blocker has held its lock
+
+### By table
+
+**What it shows:**
+- Lock-wait conflicts broken down by the table being contended
+
+### Blocking tree
+
+**What it shows:**
+- A table view of the blocked/blocker relationships (the blocking chain), including the
+  blocked and blocking PIDs
+
+**Interpretation:**
+- A single blocker affecting many rows — address that query
+- Deep chains — potential design issue
+
+## Lock-wait metrics carry session PIDs
+
+New in 0.15. The collected lock-wait metrics (the `lock_waits` metric group) now expose the
+blocked and blocking backend PIDs as **labels**, so you can identify the blocker directly in
+Grafana / PromQL without running the manual `pg_locks` join below.
+
+Available labels include `blocked_pid` and `blocker_pid`, plus `blocked_user` / `blocker_user`,
+`blocked_appname` / `blocker_appname`, `blocked_table` / `blocker_table`, and `blocked_query_id` /
+`blocker_query_id` (plus `datname`). The two gauges are `pgwatch_lock_waits_blocked_ms` (how long
+the blocked backend has waited) and `pgwatch_lock_waits_blocker_tx_ms` (age of the blocking
+transaction). See the
+[monitoring reference](/docs/reference-guides/postgres-ai-monitoring-reference#lock-waits-lock_waits).
+
+```promql
+# Longest current lock waits, labeled with blocker/blocked PIDs
+topk(10, pgwatch_lock_waits_blocked_ms)
+```
+
+Because the `blocker_pid` is on the metric itself, you can read it straight off the panel and
+terminate the blocker without any blocking-chain SQL:
+
+```sql
+select pg_terminate_backend(<blocker_pid>);
+```
 
 ## Variables
 
@@ -80,6 +115,12 @@ Diagnose lock-related performance issues:
 | `db_name` | Database filter |
 
 ## Lock analysis queries
+
+:::tip
+The queries below remain useful for ad-hoc investigation, but in 0.15 you no longer need them
+just to find the blocking PID — it is available as the `blocker_pid` label on the lock-wait
+metrics (see [above](#lock-wait-metrics-carry-session-pids)).
+:::
 
 ### Current lock waits
 
@@ -148,9 +189,10 @@ where deadlocks > 0;
    where pid in (select pid from pg_locks where not granted);
    ```
 
-2. **Terminate if necessary:**
+2. **Terminate if necessary** (use the `blocker_pid` label from the lock-wait metric, or the
+   `blocking_pid` from the query above):
    ```sql
-   select pg_terminate_backend(blocking_pid);
+   select pg_terminate_backend(<blocker_pid>);
    ```
 
 ### Preventive measures

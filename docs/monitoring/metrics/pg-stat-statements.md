@@ -30,39 +30,40 @@ pg_stat_statements.max = 10000
 
 ## Core metrics
 
+All series are exported as `pgwatch_pg_stat_statements_<column>`. Times are in **milliseconds**
+(not seconds), buffer usage is reported in **bytes** (not blocks), and counters do **not** carry a
+`_total` suffix unless the column name itself ends in `_total`. There are no `mean_*` series.
+
 ### Execution metrics
 
 | Metric | Type | Description |
 |--------|------|-------------|
-| `pg_stat_statements_calls_total` | Counter | Total number of query executions |
-| `pg_stat_statements_total_exec_time_seconds` | Counter | Total execution time |
-| `pg_stat_statements_mean_exec_time_seconds` | Gauge | Average execution time per call |
-| `pg_stat_statements_rows_total` | Counter | Total rows returned or affected |
+| `pgwatch_pg_stat_statements_calls` | Gauge | Number of query executions |
+| `pgwatch_pg_stat_statements_exec_time_total` | Gauge | Total execution time (ms) |
+| `pgwatch_pg_stat_statements_rows` | Gauge | Rows returned or affected |
 
 ### Planning metrics
 
 | Metric | Type | Description |
 |--------|------|-------------|
-| `pg_stat_statements_total_plan_time_seconds` | Counter | Total planning time |
-| `pg_stat_statements_mean_plan_time_seconds` | Gauge | Average planning time per call |
+| `pgwatch_pg_stat_statements_plans_total` | Gauge | Number of times the statement was planned |
+| `pgwatch_pg_stat_statements_plan_time_total` | Gauge | Total planning time (ms) |
 
-### Buffer metrics
-
-| Metric | Type | Description |
-|--------|------|-------------|
-| `pg_stat_statements_shared_blks_hit_total` | Counter | Shared buffer hits |
-| `pg_stat_statements_shared_blks_read_total` | Counter | Shared blocks read from disk |
-| `pg_stat_statements_shared_blks_written_total` | Counter | Shared blocks written |
-| `pg_stat_statements_shared_blks_dirtied_total` | Counter | Shared blocks dirtied |
-
-### I/O timing metrics
-
-Available when `track_io_timing = on`:
+### Buffer metrics (bytes)
 
 | Metric | Type | Description |
 |--------|------|-------------|
-| `pg_stat_statements_blk_read_time_seconds` | Counter | Time spent reading blocks |
-| `pg_stat_statements_blk_write_time_seconds` | Counter | Time spent writing blocks |
+| `pgwatch_pg_stat_statements_shared_bytes_hit_total` | Gauge | Shared buffer hits (bytes) |
+| `pgwatch_pg_stat_statements_shared_bytes_read_total` | Gauge | Shared bytes read from disk |
+| `pgwatch_pg_stat_statements_shared_bytes_written_total` | Gauge | Shared bytes written |
+| `pgwatch_pg_stat_statements_shared_bytes_dirtied_total` | Gauge | Shared bytes dirtied |
+
+### Block I/O timing metrics
+
+| Metric | Type | Description |
+|--------|------|-------------|
+| `pgwatch_pg_stat_statements_block_read_total` | Gauge | Block read time (ms) |
+| `pgwatch_pg_stat_statements_block_write_total` | Gauge | Block write time (ms) |
 
 ### WAL metrics
 
@@ -70,20 +71,31 @@ PostgreSQL 13+:
 
 | Metric | Type | Description |
 |--------|------|-------------|
-| `pg_stat_statements_wal_records_total` | Counter | WAL records generated |
-| `pg_stat_statements_wal_bytes_total` | Counter | WAL bytes generated |
+| `pgwatch_pg_stat_statements_wal_records` | Gauge | WAL records generated |
+| `pgwatch_pg_stat_statements_wal_fpi` | Gauge | WAL full-page images |
+| `pgwatch_pg_stat_statements_wal_bytes` | Gauge | WAL bytes generated |
+
+### Temp I/O metrics
+
+| Metric | Type | Description |
+|--------|------|-------------|
+| `pgwatch_pg_stat_statements_temp_bytes_read` | Gauge | Temp bytes read |
+| `pgwatch_pg_stat_statements_temp_bytes_written` | Gauge | Temp bytes written |
 
 ## Labels
 
-All pg_stat_statements metrics include these labels:
+The `pg_stat_statements` metric is grouped only by database and query id, so it carries these
+labels (plus the instance labels):
 
 | Label | Description | Example |
 |-------|-------------|---------|
 | `queryid` | Unique query identifier | `-4021163671685...` |
 | `datname` | Database name | `myapp` |
-| `usename` | User name | `app_user` |
-| `cluster_name` | Cluster identifier | `production` |
+| `cluster` | Cluster identifier (from `custom_tags.cluster`) | `production` |
 | `node_name` | Node identifier | `primary` |
+
+There is no `usename` label on `pg_stat_statements` metrics, and the cluster label is `cluster`
+(not `cluster_name`).
 
 ## Common queries
 
@@ -92,7 +104,7 @@ All pg_stat_statements metrics include these labels:
 ```promql
 topk(10,
   sum by (queryid, datname) (
-    rate(pg_stat_statements_total_exec_time_seconds[5m])
+    rate(pgwatch_pg_stat_statements_exec_time_total[5m])
   )
 )
 ```
@@ -101,34 +113,38 @@ topk(10,
 
 ```promql
 sum by (queryid) (
-  rate(pg_stat_statements_calls_total[5m])
+  rate(pgwatch_pg_stat_statements_calls[5m])
 )
 ```
 
-### Average query latency
+### Average query latency (ms per call)
+
+There is no mean series; derive it from the cumulative `exec_time_total` (ms) and `calls`:
 
 ```promql
-pg_stat_statements_mean_exec_time_seconds
+sum by (queryid) (rate(pgwatch_pg_stat_statements_exec_time_total[5m]))
+/
+sum by (queryid) (rate(pgwatch_pg_stat_statements_calls[5m]))
 ```
 
-### Buffer hit ratio per query
+### Buffer hit ratio per query (bytes)
 
 ```promql
-sum by (queryid) (rate(pg_stat_statements_shared_blks_hit_total[5m]))
+sum by (queryid) (rate(pgwatch_pg_stat_statements_shared_bytes_hit_total[5m]))
 /
 (
-  sum by (queryid) (rate(pg_stat_statements_shared_blks_hit_total[5m]))
+  sum by (queryid) (rate(pgwatch_pg_stat_statements_shared_bytes_hit_total[5m]))
   +
-  sum by (queryid) (rate(pg_stat_statements_shared_blks_read_total[5m]))
+  sum by (queryid) (rate(pgwatch_pg_stat_statements_shared_bytes_read_total[5m]))
 )
 ```
 
 ### Queries with high planning time ratio
 
 ```promql
-pg_stat_statements_mean_plan_time_seconds
+rate(pgwatch_pg_stat_statements_plan_time_total[5m])
 /
-(pg_stat_statements_mean_plan_time_seconds + pg_stat_statements_mean_exec_time_seconds)
+(rate(pgwatch_pg_stat_statements_plan_time_total[5m]) + rate(pgwatch_pg_stat_statements_exec_time_total[5m]))
 > 0.1
 ```
 
@@ -153,9 +169,10 @@ These metrics are used in:
    show pg_stat_statements.track;
    ```
 
-3. Ensure monitoring user has access:
+3. Ensure the monitoring user has access (the product grants the built-in `pg_monitor` role, not
+   `pg_read_all_stats`):
    ```sql
-   grant pg_read_all_stats to postgres_ai_mon;
+   grant pg_monitor to postgres_ai_mon;
    ```
 
 ### queryid changes after PostgreSQL upgrade

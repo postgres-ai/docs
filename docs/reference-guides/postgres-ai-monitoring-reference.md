@@ -12,7 +12,7 @@ keywords:
 
 :::note
 
-This page lists the user-facing metric groups. The pgwatch collector ships with additional groups that are emitted but not yet documented here (for example, `pg_stat_io`, `pg_stat_slru`, `pg_statio_all_tables`, `pg_statio_all_indexes`, `lock_waits`, `xmin_horizon`, `xmin_horizon_blockers`, `multixact_size`, `pg_wal_size`, `pg_index_pilot`, `stats_reset`, `table_size_detailed`). To see the full set of metrics emitted by your monitoring instance, query the Prometheus / VictoriaMetrics endpoint directly (e.g. `/api/v1/label/__name__/values`).
+This page lists the user-facing metric groups. The pgwatch collector ships with additional groups that are emitted but not yet documented here (for example, `pg_stat_slru`, `pg_statio_all_tables`, `pg_statio_all_indexes`, `multixact_size`, `pg_index_pilot`, `stats_reset`, `table_size_detailed`). To see the full set of metrics emitted by your monitoring instance, query the Prometheus / VictoriaMetrics endpoint directly (e.g. `/api/v1/label/__name__/values`).
 
 :::
 
@@ -31,7 +31,7 @@ Most metrics include these standard labels:
 ### Metric-specific labels
 
 Additional labels are available for specific metric types:
-- **Query metrics** (`pg_stat_statements`): `queryid`, `user`
+- **Query metrics** (`pg_stat_statements`): `queryid`, `datname`
 - **Table metrics** (`table_stats`, `pg_stat_all_tables`): `schema`, `table_name`, `table_full_name`, `table_size_cardinality_mb`
 - **Index metrics** (`pg_stat_all_indexes`): `schemaname`, `relname`, `indexrelname`
 - **Lock metrics** (`locks_mode`): `lockmode`
@@ -106,7 +106,7 @@ Collected every 15-30 seconds
 
 ### Query performance (`pg_stat_statements`)
 Collected every 30 seconds
-**Additional Labels:** `queryid` (query identifier), `user` (database user)
+**Additional Labels:** `queryid` (query identifier), `datname` (database name)
 
 | Metric | Description | Units |
 |--------|-------------|-------|
@@ -134,6 +134,31 @@ Collected every 30 seconds
 | Metric | Description | Units |
 |--------|-------------|-------|
 | `locks_mode_count` | Number of locks held by mode type | - |
+
+### Lock waits (`lock_waits`)
+Collected every 30 seconds
+
+Detailed blocked / blocking pairs for lock-contention root cause analysis. New in 0.15:
+the lock-wait metrics carry session PIDs as labels, so the blocker can be identified directly
+in Grafana / PromQL without running the manual `pg_locks` join. Used by
+[Dashboard 13 — Lock contention](/docs/monitoring/dashboards/lock-contention).
+
+**Additional Labels:** `blocked_pid` (PID of the waiting backend), `blocker_pid` (PID of the
+blocking backend), `blocked_user` / `blocker_user`, `blocked_appname` / `blocker_appname`,
+`blocked_table` / `blocker_table` (affected relation), `blocked_query_id` / `blocker_query_id`,
+and `datname`. Note: `blocked_mode` / `blocker_mode` and `blocked_locktype` / `blocker_locktype`
+are emitted as plain (non-`tag_`) value columns in the metric definition, so they are **not**
+Prometheus labels.
+
+| Metric | Description | Units |
+|--------|-------------|-------|
+| `pgwatch_lock_waits_blocked_ms` | Time the blocked backend has been waiting | Milliseconds |
+| `pgwatch_lock_waits_blocker_tx_ms` | Age of the blocking backend's transaction | Milliseconds |
+
+:::tip Terminating a blocker
+Use the `blocker_pid` label directly: `select pg_terminate_backend(<blocker_pid>);`. No manual
+blocking-chain query is required to find the PID.
+:::
 
 ### Wait events (`wait_events`)
 Collected every 15 seconds
@@ -207,6 +232,93 @@ Collected every 15-30 seconds
 | `archive_lag_archived_count` | Total archived WAL files | - |
 | `archive_lag_failed_count` | Failed archive attempts | - |
 | `pg_archiver_pending_wal_count` | Number of WAL files pending archive | - |
+| `pg_wal_size_bytes` | Total size of regular files in the `pg_wal` directory (via `pg_ls_waldir()`; excludes subdirectories such as `pg_wal/archive_status`). New in 0.15. Not emitted when `pg_wal_size_status_code` > 0. | Bytes |
+| `pg_wal_size_status_code` | `pg_wal` size collection status: `0` = success, `1` = `pg_ls_waldir()` not available, `2` = monitoring role lacks EXECUTE privilege. New in 0.15. | - |
+
+:::note Interpreting `pg_wal_size`
+`pg_wal` growth that is not matched by archive or replica progress points to disk-fill risk —
+typically a stuck WAL archiver, an inactive replication slot retaining WAL, or sustained high
+WAL generation. Cross-reference with the archiver and replication-slot metrics above, and see
+[How to troubleshoot a growing pg_wal directory](/docs/postgres-howtos/database-administration/maintenance/how-to-troubleshoot-a-growing-pg-wal-directory).
+:::
+
+### xmin horizon (`xmin_horizon`)
+Collected every 30 seconds. Instance-level, primary only. New in 0.15.
+
+Tracks the current xmin horizon age split by blocker class and horizon type. Component
+`*_age_tx` / `*_count` columns emit `0` (never NULL) when that component has no active blocker.
+Used by [Dashboard 07 — Autovacuum and xmin horizon](/docs/monitoring/dashboards/autovacuum).
+
+| Metric | Description | Units |
+|--------|-------------|-------|
+| `xmin_horizon_data_horizon_age_tx` | Age of the data horizon (worst of client-backend, slot, standby, prepared-xact blockers) | Transactions |
+| `xmin_horizon_catalog_horizon_age_tx` | Age of the catalog horizon (data horizon plus catalog `catalog_xmin` blockers) | Transactions |
+| `xmin_horizon_snapshot_xmin` | Raw snapshot xmin anchor (`txid_snapshot_xmin(txid_current_snapshot())`) | - |
+| `xmin_horizon_pg_stat_activity_age_tx` | Oldest client-backend `backend_xmin` age | Transactions |
+| `xmin_horizon_pg_stat_activity_count` | Number of client backends holding a horizon | - |
+| `xmin_horizon_pg_replication_slots_age_tx` | Oldest replication-slot `xmin` age | Transactions |
+| `xmin_horizon_pg_replication_slots_count` | Number of slots holding the data horizon | - |
+| `xmin_horizon_pg_replication_slots_catalog_age_tx` | Oldest replication-slot `catalog_xmin` age | Transactions |
+| `xmin_horizon_pg_replication_slots_catalog_count` | Number of slots holding the catalog horizon | - |
+| `xmin_horizon_pg_stat_replication_age_tx` | Oldest standby-feedback `backend_xmin` age | Transactions |
+| `xmin_horizon_pg_stat_replication_count` | Number of standbys holding a horizon | - |
+| `xmin_horizon_pg_prepared_xacts_age_tx` | Oldest prepared-transaction age | Transactions |
+| `xmin_horizon_pg_prepared_xacts_count` | Number of prepared transactions holding a horizon | - |
+
+### xmin horizon blockers (`xmin_horizon_blockers`)
+Collected every 30 seconds. Instance-level, primary only. New in 0.15.
+
+Captures the single oldest (top) blocker for each currently active component as a separate
+labeled series, with that blocker's xmin age in transactions. Emits one series per active
+component and no series for an empty component, so cardinality varies between 0 and 5 per
+scrape. The monitoring role's own sessions are excluded.
+
+**Additional Labels:** `component` (`pg_stat_activity`, `pg_replication_slots`,
+`pg_replication_slots_catalog`, `pg_stat_replication`, `pg_prepared_xacts`), `horizon_type`
+(`data` / `catalog`), `blocker_database`, `blocker_user`, `blocker_appname`, `blocker_state`,
+`queryid` (for activity blockers), `slot_name` / `slot_type` / `slot_plugin` /
+`slot_xmin_source` / `slot_status` / `slot_wal_status` (for slot blockers), `standby_name`
+(for replication blockers), `prepared_gid` / `owner` (for prepared-transaction blockers).
+
+| Metric | Description | Units |
+|--------|-------------|-------|
+| `xmin_horizon_blockers_age_tx` | xmin age of the top blocker for the labeled component | Transactions |
+
+:::note Query text is not a label
+Query text is intentionally not emitted as a Prometheus label. Use the `queryid` label to look
+up the query text in pgwatch query storage.
+:::
+
+### I/O statistics (`pg_stat_io`, PostgreSQL 16+) {#io-statistics-pg_stat_io-postgresql-16}
+Collected every 30 seconds. Instance-level. New in 0.15.
+
+Collects I/O statistics from the PostgreSQL `pg_stat_io` view (PostgreSQL 16+). On PostgreSQL
+15 and earlier this group emits nothing. Values are aggregated by backend type with a `total`
+row added via `ROLLUP`. Used by
+[Dashboard 14 — I/O statistics](/docs/monitoring/dashboards/io-statistics).
+
+**Additional Labels:** `backend_type` (e.g. `client backend`, `autovacuum worker`,
+`background writer`, `checkpointer`, `walwriter`, or `total` for the rollup row).
+
+| Metric | Description | Units |
+|--------|-------------|-------|
+| `pg_stat_io_reads` | Read operations | - |
+| `pg_stat_io_read_bytes_mb` | Data read | MiB |
+| `pg_stat_io_read_time_ms` | Time spent reading | Milliseconds |
+| `pg_stat_io_writes` | Write operations | - |
+| `pg_stat_io_write_bytes_mb` | Data written | MiB |
+| `pg_stat_io_write_time_ms` | Time spent writing | Milliseconds |
+| `pg_stat_io_writebacks` | Writeback operations | - |
+| `pg_stat_io_writeback_bytes_mb` | Data written back | MiB |
+| `pg_stat_io_writeback_time_ms` | Time spent on writebacks | Milliseconds |
+| `pg_stat_io_fsyncs` | fsync operations | - |
+| `pg_stat_io_fsync_time_ms` | Time spent on fsyncs | Milliseconds |
+| `pg_stat_io_extends` | Relation extend operations | - |
+| `pg_stat_io_extend_bytes_mb` | Data added by extends | MiB |
+| `pg_stat_io_hits` | Blocks found in shared buffers | - |
+| `pg_stat_io_evictions` | Buffers evicted to make room | - |
+| `pg_stat_io_reuses` | Buffers reused directly (e.g. ring buffers) | - |
+| `pg_stat_io_stats_reset_s` | Seconds since `pg_stat_reset_shared('io')` | Seconds |
 
 ### Bloat analysis metrics (`pg_table_bloat`, `pg_btree_bloat`, `unused_indexes`, `rarely_used_indexes`, `redundant_indexes`, `pg_invalid_indexes`)
 Collected every 2-3 hours

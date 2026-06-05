@@ -1,7 +1,7 @@
 ---
 title: "Self-monitoring"
 sidebar_label: "Self-monitoring"
-sidebar_position: 15
+sidebar_position: 16
 ---
 
 # Self-monitoring dashboard
@@ -31,68 +31,59 @@ Ensure the monitoring infrastructure is functioning correctly:
 
 ## Key panels
 
-### Scrape success rate
+The dashboard is organized into six rows: **Overview**, **Host stats**, **Disk I/O metrics**,
+**Container resource usage**, **Victoria Metrics metrics**, and **Sink Postgres database**.
+
+### Overview
+
+**What it shows (single-stat tiles):**
+- **Active monitoring services** and **Running containers**
+- **Application memory usage** and **System CPU usage**
+- **Victoria Metrics storage size** and **Victoria Metrics time series**
+
+### Host stats and Disk I/O metrics
 
 **What it shows:**
-- Percentage of successful metric scrapes
-- Per-target breakdown
+- System CPU / memory / network / disk usage breakdowns
+- Disk I/O operations (IOPS), throughput, utilization, and average latency
 
-**Healthy state:**
-- 100% success rate
-- Consistent scrape intervals
-
-**Warning signs:**
-- Scrape failures — check target availability
-- Timeouts — target may be overloaded
-
-### Metrics ingestion rate
+### Container resource usage
 
 **What it shows:**
-- Samples ingested per second
-- Trend over time
+- Per-container CPU, memory, network I/O, and disk I/O
 
-**Use for:**
-- Capacity planning
-- Detecting metric explosion
-
-### Storage usage
+### Victoria Metrics metrics
 
 **What it shows:**
-- VictoriaMetrics disk usage
-- Projected capacity based on retention
+- **Victoria Metrics ingestion rate** — samples ingested per second
+- **Scrape duration by target** — how long each scrape takes (rising durations = a target is slow)
+- **Victoria Metrics storage size** — disk usage; project capacity against your retention
+- **Victoria Metrics rows count** — number of stored rows; watch for cardinality explosion
 
-**Warning threshold:**
-- Alert when > 80% capacity
-
-### Active time series
-
-**What it shows:**
-- Number of unique metric series
-- Growth trend
-
-**Monitoring series growth:**
-- Sudden spikes may indicate cardinality explosion
-- Gradual growth expected as you add targets
-
-### Query performance
+### Sink Postgres database
 
 **What it shows:**
-- Grafana query latency
-- Slow queries
+- Sink Postgres connections, transactions, database size, and block I/O
 
 ## Variables
 
-| Variable | Purpose |
-|----------|---------|
-| `cluster` | Filter by monitored cluster (from the `custom_tags.cluster` instance tag) |
-| `node_name` | Filter by node (from the `custom_tags.node_name` instance tag) |
+This dashboard has no template variables — it reports on the monitoring stack itself (Grafana,
+VictoriaMetrics, the sink Postgres, cAdvisor, and node-exporter), which is a single instance, so
+there is nothing to filter by cluster or node.
 
 ## Health check commands
+
+:::note VictoriaMetrics basic auth
+The VictoriaMetrics API on host port `59090` requires basic auth in 0.15. Every `curl` below passes
+`-u "$VM_AUTH_USERNAME:$VM_AUTH_PASSWORD"`; export those from your stack's `.env` first (or substitute
+the values). Without credentials these endpoints return `401 Unauthorized`.
+:::
 
 ### Check VictoriaMetrics status
 
 ```bash
-curl http://localhost:59090/api/v1/status/tsdb
+curl -u "$VM_AUTH_USERNAME:$VM_AUTH_PASSWORD" \
+  http://localhost:59090/api/v1/status/tsdb
 ```
 
 ### Check pgwatch status
@@ -104,13 +95,15 @@ docker compose logs pgwatch-postgres pgwatch-prometheus --tail=50
 ### Check Prometheus/VM targets
 
 ```bash
-curl http://localhost:59090/api/v1/targets
+curl -u "$VM_AUTH_USERNAME:$VM_AUTH_PASSWORD" \
+  http://localhost:59090/api/v1/targets
 ```
 
 ### Verify metrics collection
 
 ```bash
-curl 'http://localhost:59090/api/v1/query?query=up'
+curl -u "$VM_AUTH_USERNAME:$VM_AUTH_PASSWORD" \
+  'http://localhost:59090/api/v1/query?query=up'
 ```
 
 ## Common issues
@@ -119,12 +112,14 @@ curl 'http://localhost:59090/api/v1/query?query=up'
 
 1. Check scrape targets are up:
    ```bash
-   curl http://localhost:59090/api/v1/targets | jq '.data.activeTargets[] | {job: .labels.job, health: .health}'
+   curl -u "$VM_AUTH_USERNAME:$VM_AUTH_PASSWORD" \
+     http://localhost:59090/api/v1/targets | jq '.data.activeTargets[] | {job: .labels.job, health: .health}'
    ```
 
 2. Verify metric exists:
    ```bash
-   curl 'http://localhost:59090/api/v1/label/__name__/values' | jq '.data[]' | grep pg_
+   curl -u "$VM_AUTH_USERNAME:$VM_AUTH_PASSWORD" \
+     'http://localhost:59090/api/v1/label/__name__/values' | jq '.data[]' | grep pg_
    ```
 
 3. Check time range alignment
@@ -133,12 +128,14 @@ curl 'http://localhost:59090/api/v1/query?query=up'
 
 1. Check for cardinality explosion:
    ```bash
-   curl 'http://localhost:59090/api/v1/status/tsdb' | jq '.data.totalSeries'
+   curl -u "$VM_AUTH_USERNAME:$VM_AUTH_PASSWORD" \
+     'http://localhost:59090/api/v1/status/tsdb' | jq '.data.totalSeries'
    ```
 
 2. Review high-cardinality metrics:
    ```bash
-   curl 'http://localhost:59090/api/v1/status/tsdb' | jq '.data.seriesCountByMetricName | to_entries | sort_by(-.value) | .[0:10]'
+   curl -u "$VM_AUTH_USERNAME:$VM_AUTH_PASSWORD" \
+     'http://localhost:59090/api/v1/status/tsdb' | jq '.data.seriesCountByMetricName | to_entries | sort_by(-.value) | .[0:10]'
    ```
 
 3. Adjust retention if needed (default is `336h` ≡ 14 days):
@@ -155,7 +152,7 @@ curl 'http://localhost:59090/api/v1/query?query=up'
    ```yaml
    # prometheus.yml
    scrape_configs:
-     - job_name: 'pgwatch'
+     - job_name: 'pgwatch-prometheus'
        scrape_timeout: 30s
    ```
 
@@ -182,7 +179,8 @@ Daily storage ≈ (series_count × samples_per_day × bytes_per_sample) / compre
 Typical values:
 - Bytes per sample: ~2-4 (compressed)
 - Compression ratio: 10-15x
-- Samples per day at 60s interval: 1,440
+- Samples per day at the default 30s interval: ~2,880 (most metric groups collect every 30s;
+  `pg_stat_activity` and `wait_events` every 15s)
 
 ### Scaling recommendations
 

@@ -8,11 +8,12 @@ sidebar_position: 2
 
 Centralized monitoring for multiple PostgreSQL clusters from a single Grafana instance.
 
-## Architecture options
+## Architecture
 
-### Option 1: Single pgwatch, multiple targets
-
-Best for: 5-20 clusters in the same network
+The stack runs one pair of pgwatch collectors (`pgwatch-postgres` and `pgwatch-prometheus`) that
+read a list of monitored databases from a generated `sources.yml`, write metrics to
+VictoriaMetrics (the `sink-prometheus` service, internal port `9090`, host port `59090`), and
+expose them in Grafana.
 
 ```
 ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
@@ -21,78 +22,97 @@ Best for: 5-20 clusters in the same network
        │                   │                   │
        └───────────────────┼───────────────────┘
                            │
-                    ┌──────▼──────┐
-                    │   pgwatch   │
-                    └──────┬──────┘
-                           │
-                    ┌──────▼────────┐
-                    │VictoriaMetrics│
-                    └──────┬────────┘
-                           │
-                    ┌──────▼──────┐
-                    │   Grafana   │
-                    └─────────────┘
-```
-
-### Option 2: Distributed pgwatch, central storage
-
-Best for: Clusters in different networks/regions
-
-```
-┌─────────────┐     ┌─────────────┐     ┌─────────────┐
-│  Cluster A  │     │  Cluster B  │     │  Cluster C  │
-│  + pgwatch  │     │  + pgwatch  │     │  + pgwatch  │
-└──────┬──────┘     └──────┬──────┘     └──────┬──────┘
-       │                   │                   │
-       └───────────────────┼───────────────────┘
-                           │ remote_write
-                    ┌──────▼────────┐
-                    │VictoriaMetrics│
-                    │  (central)    │
-                    └──────┬────────┘
+                ┌──────────▼───────────┐
+                │ pgwatch-prometheus   │  (reads sources.yml,
+                │ pgwatch-postgres     │   generated from instances.yml)
+                └──────────┬───────────┘
+                           │  prometheus sink :9091/pgwatch
+                ┌──────────▼───────────┐
+                │ VictoriaMetrics      │  sink-prometheus :9090 (host 59090)
+                └──────────┬───────────┘
                            │
                     ┌──────▼──────┐
-                    │   Grafana   │
+                    │   Grafana   │  :3000
                     └─────────────┘
 ```
 
 ## Configuration
 
-### Adding multiple clusters
+Monitored databases are defined in `instances.yml` (a YAML list). The
+`config/scripts/generate-pgwatch-sources.sh` script renders this at runtime into the two
+`sources.yml` files that pgwatch reads — `pgwatch/sources.yml` and `pgwatch-prometheus/sources.yml`
+under the `/postgres_ai_configs` volume (i.e. `/postgres_ai_configs/pgwatch/sources.yml` and
+`/postgres_ai_configs/pgwatch-prometheus/sources.yml`). These generated files are **not** committed
+to the repository. There is **no** `PW_TARGETS` (or any `PW_*`) environment variable.
 
-**docker-compose.yml approach:**
+### Adding clusters
 
-```yaml
-services:
-  pgwatch:
-    environment:
-      # Use environment variable substitution for credentials
-      PW_TARGETS: |
-        postgresql://${PGWATCH_USER}:${PGWATCH_PASSWORD}@cluster-a:5432/postgres?cluster_name=cluster-a
-        postgresql://${PGWATCH_USER}:${PGWATCH_PASSWORD}@cluster-b:5432/postgres?cluster_name=cluster-b
-        postgresql://${PGWATCH_USER}:${PGWATCH_PASSWORD}@cluster-c:5432/postgres?cluster_name=cluster-c
-```
-
-:::tip Security
-Define `PGWATCH_USER` and `PGWATCH_PASSWORD` in your `.env` file or use Docker secrets for production deployments.
-:::
-
-**CLI approach:**
+**CLI approach (recommended):**
 
 ```bash
-# Add clusters one at a time
-postgresai mon add-target \
-  --cluster-name "production-us" \
-  postgresql://user@prod-us:5432/postgres
-
-postgresai mon add-target \
-  --cluster-name "production-eu" \
-  postgresql://user@prod-eu:5432/postgres
+# Add a target. The second positional argument is the instance name (optional).
+postgresai mon targets add postgresql://user:pass@prod-us:5432/postgres production-us
+postgresai mon targets add postgresql://user:pass@prod-eu:5432/postgres production-eu
 ```
+
+`mon targets add` takes `[connStr]` and an optional positional `[name]` — there is no
+`--cluster-name` flag. The connection string is parsed for user/password/host/port/database only;
+cluster identity is **not** read from a `?cluster_name=...` query parameter. After adding a target,
+the CLI regenerates `sources.yml` and applies it.
+
+**instances.yml approach:**
+
+Each entry is a YAML object. Cluster identity is set through the `cluster` key under
+`custom_tags:` (the default is `cluster: local` in demo mode, `cluster: default` for
+CLI-added targets):
+
+```yaml
+- name: production-us
+  conn_str: postgresql://user:pass@prod-us:5432/postgres
+  preset_metrics: full
+  custom_metrics:
+  is_enabled: true
+  group: default
+  custom_tags:
+    env: production
+    cluster: production-us       # <-- this becomes the `cluster` metric label
+    node_name: prod-us-primary
+
+- name: production-eu
+  conn_str: postgresql://user:pass@prod-eu:5432/postgres
+  preset_metrics: full
+  custom_metrics:
+  is_enabled: true
+  group: default
+  custom_tags:
+    env: production
+    cluster: production-eu
+    node_name: prod-eu-primary
+```
+
+When you edit `instances.yml` by hand, the change does not take effect until you re-render the
+generated `sources.yml` files and restart the collectors so they reload them:
+
+```bash
+postgresai mon update-config                 # runs sources-generator to re-render sources.yml
+postgresai mon restart pgwatch-postgres
+postgresai mon restart pgwatch-prometheus
+```
+
+`mon update-config` only re-renders the files (it does **not** restart the collectors), and
+`mon restart` only restarts the collectors (it does **not** re-render the files) — you need both.
+(The CLI `mon targets add` / `mon targets remove` path does this for you automatically: it
+re-renders the sources and recreates the collectors.)
+
+:::tip Security
+Keep credentials in `instances.yml` out of version control. The stack's `.env` file holds stack
+secrets (such as `REPLICATOR_PASSWORD` and `VM_AUTH_USERNAME` / `VM_AUTH_PASSWORD`), not the
+monitored-database role passwords.
+:::
 
 ### Cluster naming conventions
 
-Use consistent, descriptive names:
+Use consistent, descriptive values for the `cluster` custom tag:
 
 | Pattern | Example | Use case |
 |---------|---------|----------|
@@ -100,84 +120,32 @@ Use consistent, descriptive names:
 | app-env | orders-prod | Per-application |
 | team-purpose | platform-analytics | Per-team |
 
-```bash
-# Good
---cluster-name="production-us-east-1"
-
-# Avoid - too generic
---cluster-name="db1"
-```
-
-## Distributed collection
-
-### Remote write configuration
-
-Each pgwatch instance writes to central VictoriaMetrics:
-
-```yaml
-# pgwatch config at each site
-remote_write:
-  url: https://central-vm.example.com/api/v1/write
-  basic_auth:
-    username: pgwatch
-    password: ${REMOTE_WRITE_PASSWORD}  # Use environment variable
-  tls_config:
-    insecure_skip_verify: false
-```
-
-:::warning Security
-Never commit plaintext passwords. Use environment variables or a secrets manager.
-:::
-
-### Authentication
-
-Use unique credentials per pgwatch instance:
-
-```yaml
-# Central VictoriaMetrics
-basic_auth_users:
-  - username: pgwatch-us-east
-    password: <BCRYPT_HASH>  # Generate with: htpasswd -nbB pgwatch-us-east <password>
-  - username: pgwatch-eu-west
-    password: <BCRYPT_HASH>
-```
-
-### Network considerations
-
-| Requirement | Configuration |
-|-------------|---------------|
-| Firewall | Allow outbound 8428 from pgwatch |
-| TLS | Use HTTPS for remote write |
-| Compression | Enable gzip (`remote_write.compress: true`) |
-| Buffering | Configure local queue for network failures |
-
 ## Label strategy
 
 ### Required labels
 
-Every metric should include:
+Every metric carries (via pgwatch and `custom_tags`):
 
 | Label | Purpose | Example |
 |-------|---------|---------|
-| cluster_name | Primary identifier | `production-us` |
-| node_name | Primary/replica distinction | `primary`, `replica-1` |
-| datname | Database name | `orders` |
+| `cluster` | Primary cluster identifier (from `custom_tags.cluster`) | `production-us` |
+| `node_name` | Primary/replica distinction (from `custom_tags.node_name`) | `prod-us-primary` |
+| `datname` | Database name | `orders` |
 
-### Optional labels
+Note: the metric **label** is `cluster`. `cluster_name` is only the name of the Grafana template
+variable; dashboard filters select with `cluster="$cluster_name"`.
 
-| Label | Purpose | Example |
-|-------|---------|---------|
-| region | Geographic region | `us-east-1` |
-| environment | env classification | `production`, `staging` |
-| team | Ownership | `platform` |
+### Extra labels
 
-### Adding external labels
+Add any extra labels per instance via additional keys under `custom_tags:` (for example `env`,
+`region`, or `team`). There is no `external_labels:` configuration key in this stack.
 
 ```yaml
-# pgwatch config
-external_labels:
+custom_tags:
+  cluster: production-us
+  node_name: prod-us-primary
   region: us-east-1
-  environment: production
+  env: production
   team: platform
 ```
 
@@ -185,97 +153,36 @@ external_labels:
 
 ### Cluster selector variable
 
-All dashboards include a `cluster_name` variable:
+Dashboards include a `cluster_name` template variable populated from the `cluster` label:
 
-```yaml
-# Variable definition
+```text
+# Grafana template variable
 name: cluster_name
-query: label_values(pg_stat_database_xact_commit_total, cluster_name)
-multi: true
-include_all: true
+query: label_values(pgwatch_db_size_size_b, cluster)
 ```
 
 ### Cross-cluster queries
 
-**Compare metrics across clusters:**
+**Compare TPS across clusters** (the metric is `pgwatch_db_stats_xact_commit`; there is no
+`_total`-suffixed pg_stat_database series):
 
 ```promql
-# TPS comparison
-sum by (cluster_name) (
-  rate(pg_stat_database_xact_commit_total[5m])
+sum by (cluster) (
+  rate(pgwatch_db_stats_xact_commit[5m])
 )
 ```
 
-**Alert on any cluster:**
+**Connection saturation per cluster** (current backends come from
+`pgwatch_db_stats_numbackends`; `max_connections` from the `settings` metric as
+`pgwatch_settings_numeric_value{setting_name="max_connections"}` — there is no
+`pgwatch_settings_max_connections` series):
 
 ```promql
-# Alert if any cluster has high connection usage
-max by (cluster_name) (
-  pg_stat_database_numbackends / pg_settings_max_connections
+max by (cluster) (
+  sum by (cluster) (pgwatch_db_stats_numbackends)
+  /
+  scalar(max(pgwatch_settings_numeric_value{setting_name="max_connections"}))
 ) > 0.8
-```
-
-### Cluster overview dashboard
-
-Create a dashboard showing all clusters:
-
-```promql
-# Cluster health summary
-# Status: 1 = healthy, 0 = issues
-
-(
-  # Connection health
-  (pg_stat_database_numbackends / pg_settings_max_connections < 0.8)
-  and
-  # Recent activity
-  (time() - pg_stat_database_stats_reset < 3600)
-)
-# Note: For replication health, create a separate alert:
-# pg_replication_lag_seconds > 60
-```
-
-## High availability
-
-### Redundant pgwatch
-
-Run multiple pgwatch instances for HA:
-
-```yaml
-services:
-  pgwatch-1:
-    environment:
-      PW_INSTANCE_ID: pgwatch-1
-      PW_HA_MODE: active-passive
-      PW_HA_PEERS: pgwatch-1:8080,pgwatch-2:8080
-
-  pgwatch-2:
-    environment:
-      PW_INSTANCE_ID: pgwatch-2
-      PW_HA_MODE: active-passive
-      PW_HA_PEERS: pgwatch-1:8080,pgwatch-2:8080
-```
-
-### VictoriaMetrics cluster
-
-For large deployments, use VictoriaMetrics cluster mode:
-
-```yaml
-services:
-  vmstorage-1:
-    image: victoriametrics/vmstorage
-  vmstorage-2:
-    image: victoriametrics/vmstorage
-
-  vminsert:
-    image: victoriametrics/vminsert
-    command:
-      - -storageNode=vmstorage-1:8400,vmstorage-2:8400
-      - -replicationFactor=2
-
-  vmselect:
-    image: victoriametrics/vmselect
-    command:
-      - -storageNode=vmstorage-1:8401,vmstorage-2:8401
 ```
 
 ## Scaling considerations
@@ -292,48 +199,40 @@ services:
 ### Storage planning
 
 ```
-Storage per cluster = (metrics/sec) × 4 bytes × retention_seconds  # VictoriaMetrics compressed
+Storage per cluster = (metrics/sec) × ~4 bytes × retention_seconds   # VictoriaMetrics, compressed
 
 Example: 10 clusters, 30-day retention
-= 10 × 100 × 100 × 30 × 86400
-= ~260 GiB
+= 10 × 100 × 4 × 30 × 86400
+= 10,368,000,000 bytes
+≈ 10 GiB
 ```
+
+Retention is controlled by `VM_RETENTION_PERIOD` (default `336h` = 14 days).
 
 ## Troubleshooting
 
 ### Cluster not appearing
 
-1. Check pgwatch logs for connection errors
-2. Verify cluster_name is set in connection string
-3. Check VictoriaMetrics is receiving data:
+1. Check pgwatch logs for connection errors:
    ```bash
-   curl 'http://localhost:8428/api/v1/query?query=up{cluster_name="missing-cluster"}'
+   docker compose logs pgwatch-postgres pgwatch-prometheus
+   ```
+2. Verify the `cluster` custom tag is set for the target in `instances.yml`.
+3. Check VictoriaMetrics is receiving data (host port `59090`, VM basic auth required):
+   ```bash
+   curl -u "$VM_AUTH_USERNAME:$VM_AUTH_PASSWORD" \
+     'http://localhost:59090/api/v1/query?query=pgwatch_db_size_size_b{cluster="missing-cluster"}'
    ```
 
 ### Mixed-up metrics
 
-Symptoms: Metrics from one cluster appearing under another
+Symptoms: metrics from one cluster appearing under another.
 
-Cause: Duplicate cluster_name labels
+Cause: duplicate `cluster` custom-tag values across targets.
 
-Solution: Ensure unique cluster_name per connection:
-```bash
-grep -r "cluster_name" /etc/pgwatch/
-```
-
-### High latency for remote clusters
-
-1. Enable compression:
-   ```yaml
-   remote_write:
-     compress: true
-   ```
-
-2. Increase batch size:
-   ```yaml
-   remote_write:
-     queue_config:
-       max_samples_per_send: 5000
-   ```
-
-3. Consider regional VictoriaMetrics instances with federation
+Solution: ensure a unique `cluster` value per target in `instances.yml`, then regenerate sources
+with `postgresai mon update-config` (which runs `sources-generator` to re-render `sources.yml`) and
+restart the collectors so they reload the file: `postgresai mon restart pgwatch-postgres` and
+`postgresai mon restart pgwatch-prometheus`. (`mon restart` alone only runs `docker compose restart`
+and does **not** re-render `sources.yml`; `update-config` re-renders the file but does **not**
+restart the collectors — you need both.)

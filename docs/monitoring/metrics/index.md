@@ -12,37 +12,46 @@ Reference documentation for all metrics collected by PostgresAI monitoring.
 
 PostgresAI monitoring collects metrics from multiple PostgreSQL sources:
 
-| Source | Description | Dashboard usage |
-|--------|-------------|-----------------|
-| `pg_stat_statements` | Query-level performance metrics | 02, 03 |
-| `pg_stat_activity` | Session and wait event data | 01, 04 |
-| `pg_stat_user_tables` | Table-level statistics | 07, 08, 09 |
-| `pg_stat_user_indexes` | Index usage statistics | 10, 11 |
-| `pg_stat_replication` | Replication metrics | 06 |
-| `pg_stat_bgwriter` | Background writer stats | 01 |
-| `pg_stat_database` | Database-level aggregates | 01 |
+| pgwatch metric group | Underlying view(s) | Dashboard usage |
+|----------------------|--------------------|-----------------|
+| `pg_stat_statements` | `pg_stat_statements` | 02, 03 |
+| `pg_stat_activity` / `wait_events` | `pg_stat_activity` | 01, 04 |
+| `table_stats` / `pg_stat_all_tables` | `pg_stat_all_tables` | 07, 08, 09 |
+| `pg_stat_all_indexes` / `pg_statio_all_indexes` | `pg_stat_all_indexes`, `pg_statio_all_indexes` | 10, 11 |
+| `pg_stat_replication` / `replication` | `pg_stat_replication` | 06 |
+| `bgwriter` | `pg_stat_bgwriter` | 01 |
+| `db_stats` | `pg_stat_database` | 01 |
 
 ## Metric naming convention
 
-All metrics follow the pattern:
+pgwatch exports each series as:
 
 ```
-pg_{source}_{metric_name}
+pgwatch_{metric-group}_{column}
 ```
 
-Examples:
-- `pg_stat_statements_calls_total` — Total query calls
-- `pg_stat_activity_count` — Active session count
-- `pg_stat_user_tables_seq_scan_total` — Sequential scans
+Examples (these are the names you query in VictoriaMetrics/Grafana):
+- `pgwatch_pg_stat_statements_calls` — query calls (no `_total` suffix)
+- `pgwatch_pg_stat_activity_count` — session count
+- `pgwatch_pg_stat_all_tables_seq_tup_read` — tuples read by sequential scans
+- `pgwatch_db_stats_xact_commit` — transactions committed
+
+There is no `pg_{source}_{metric_name}` naming in this stack; all series carry the `pgwatch_`
+prefix and use the column name (not a `_total`/`_seconds` suffix convention).
 
 ## Collection intervals
 
-| Metric type | Default interval | Configurable |
-|-------------|------------------|--------------|
-| Session metrics | 10s | Yes |
-| Query metrics | 60s | Yes |
-| Table/index metrics | 60s | Yes |
-| Replication metrics | 10s | Yes |
+Intervals are set per metric group in `config/pgwatch-prometheus/metrics.yml` (the `full` preset).
+Representative defaults:
+
+| Metric group | Default interval |
+|--------------|------------------|
+| `pg_stat_activity`, `wait_events` | 15s |
+| `pg_stat_statements` | 30s |
+| `table_stats`, `pg_stat_all_tables`, `pg_stat_all_indexes` | 30s |
+| `db_stats`, `bgwriter`, `replication` | 30s |
+| `settings` | 300s |
+| Bloat groups (`pg_table_bloat`, `pg_btree_bloat`) | 7200s |
 
 ## Metric categories
 
@@ -93,20 +102,23 @@ All metrics are stored in VictoriaMetrics (Prometheus-compatible). Example queri
 
 ```promql
 # Queries per second
-rate(pg_stat_statements_calls_total[5m])
+rate(pgwatch_pg_stat_statements_calls[5m])
 
 # Transactions per second
-rate(pg_stat_database_xact_commit_total[5m])
+rate(pgwatch_db_stats_xact_commit[5m])
 ```
 
 ### Aggregations
 
 ```promql
-# Total active sessions across all databases
-sum(pg_stat_activity_count{state="active"})
+# Active sessions across all databases (the activity metric carries a `state` label)
+sum(pgwatch_pg_stat_activity_count{state="active"})
 
-# Average query time by database
-avg by (datname) (pg_stat_statements_mean_exec_time_seconds)
+# Average exec time per call by database. There is no mean_exec_time series;
+# derive it from the cumulative exec_time_total (ms) and calls counters.
+sum by (datname) (rate(pgwatch_pg_stat_statements_exec_time_total[5m]))
+/
+sum by (datname) (rate(pgwatch_pg_stat_statements_calls[5m]))
 ```
 
 ## Related documentation

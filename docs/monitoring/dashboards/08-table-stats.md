@@ -27,60 +27,43 @@ Identify tables that need attention:
 
 ## Key panels
 
-### Tables by sequential scans
+The dashboard opens with a **Detailed table view** table and is then organized into four rows of
+top-N panels: **Size stats**, **Activity stats**, **IO stats**, and **Estimated bloat stats**.
+
+### Size stats
 
 **What it shows:**
-- Tables with highest sequential scan counts
-- Rate of seq scans over time
-
-**Warning signs:**
-- Large tables with high seq scan rate — may need indexes
-- Growing seq scan trend on tables that should use indexes
-
-### Tables by size
-
-**What it shows:**
-- Largest tables by total size (data + indexes + toast)
-- Growth trend over time
+- Top-N tables by total size, heap size (excl. TOAST), TOAST size, and indexes size
+- A matching growth-per-second panel for each (total, heap, TOAST, indexes)
 
 **Use for:**
 - Capacity planning
 - Identifying candidates for partitioning
 - Storage optimization
 
-### Tables by dead tuples
+### Activity stats
 
 **What it shows:**
-- Tables with most dead tuples
-- Dead tuple accumulation rate
+- Top-N tables by tuple inserts, deletes, HOT updates, and non-HOT updates per second
+- Top-N tables by sequential reads of live tuples and by index fetches of live tuples
+
+**Interpretation:**
+- High HOT updates vs non-HOT updates is good (HOT avoids index updates)
+- Large tables high in sequential reads of live tuples may be missing indexes
+
+### IO stats
+
+**What it shows:**
+- Top-N tables by total/heap/TOAST/index shared block hits and reads
+- Total shared block hit ratio and read ratio per table
 
 **Healthy state:**
-- Dead tuples cleared regularly by autovacuum
-- No single table dominating
+- High hit ratio for hot tables, minimal reads
 
-**Warning signs:**
-- Continuously growing dead tuples — autovacuum not keeping up
-- High ratio of dead to live tuples
-
-### Tables by insert/update/delete rate
+### Estimated bloat stats
 
 **What it shows:**
-- Write activity by table
-- Helps identify hot tables
-
-### HOT update ratio
-
-**What it shows:**
-- Percentage of updates using Heap-Only Tuples
-- Higher is better (avoids index updates)
-
-**Healthy range:**
-- HOT ratio > 90% for frequently updated tables
-
-**Low HOT ratio causes:**
-- Updates to indexed columns
-- `fillfactor` not set appropriately
-- Index bloat
+- Top-N tables by estimated heap bloat % and by estimated heap bloat size
 
 ## Variables
 
@@ -89,6 +72,15 @@ Identify tables that need attention:
 | `cluster_name` | Cluster filter |
 | `node_name` | Node filter |
 | `db_name` | Database filter |
+| `schema_name` | Schema filter |
+| `top_n` | Number of tables to show in top-N panels (5, 10, 15, 20, 50, 100) |
+
+:::note Top-N filtering
+Per-relation panels use `topk($top_n, ...)` to show only the highest-ranked tables and drop the
+long tail — they do not aggregate the remainder into a separate series. If the table you need is
+not shown, raise `top_n` (or use [09. Single table](/docs/monitoring/dashboards/single-table)).
+See [Top-N filtering](/docs/monitoring/dashboards/#top-n-filtering).
+:::
 
 ## Interpreting table metrics
 

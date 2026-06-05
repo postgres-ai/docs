@@ -111,31 +111,31 @@ Identify the most resource-intensive queries across multiple dimensions:
 | `cluster_name` | Cluster filter | Your clusters |
 | `node_name` | Node filter | Specific nodes |
 | `db_name` | Database filter | Filter by database |
-| `top_n` | Number of queries | 5, 10, 20, 50 |
+| `top_n` | Number of queries | 5, 10, 15, 20, 50, 100, 500 |
 | `legend_label` | Query display format | See below |
 
 ### Legend label options
 
-| Value | Shows | Example |
-|-------|-------|---------|
-| `queryid` | Numeric ID | `-4021163671685...` |
-| `displayname` | Smart truncation | `update pgbench_ac...` |
-| `displayname_long` | Full context | `update pgbench_accounts set abalance = abalance + $1 where aid = $2` |
+The `legend_label` variable (**Query texts**) has two options:
+
+| Option | Value | Shows |
+|--------|-------|-------|
+| Smart truncation (default) | `displayname_long` | Query text with smart truncation |
+| Raw texts | `displayname_raw_long` | Full raw query text |
 
 :::tip
-Use `displayname_long` during debugging to see complete query context.
+Switch to **Raw texts** (`displayname_raw_long`) when you need the complete, untruncated query text.
 :::
 
 ## Detailed table view
 
 Expand the **Detailed table view** section for a tabular breakdown including:
-- queryid
+- Query ID
 - Query text
 - Calls
-- Total time
-- Mean time
+- Exec time (ms)
+- Exec time/call (ms)
 - Rows
-- Hit ratio
 
 ![Detailed table view](/img/monitoring/dashboards/02-query-analysis-table-view.png)
 
@@ -158,9 +158,12 @@ The dashboard shows actual query text (not just queryid) by:
 
 ### Query texts show as "unknown" or queryid only
 
-1. Check Flask backend is running:
+1. Check the Flask backend is running. It is not published to the host, so check from inside the
+   container. The backend image is `python:3.11-slim` and has no `curl`, so hit the endpoint with
+   the bundled Python interpreter:
    ```bash
-   curl http://localhost:8000/health
+   docker compose exec monitoring_flask_backend \
+     python -c "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/health').status==200 else 1)"
    ```
 
 2. Verify pg_stat_statements has data:
@@ -190,4 +193,5 @@ limit 10;
 select pg_stat_statements_reset();  -- caution: resets all stats
 ```
 
-Or wait for the next scrape interval (default: 60s).
+Or wait for the next collection interval. `pg_stat_statements` is collected every 30s by default
+in the `full` preset (activity metrics such as `pg_stat_activity` and `wait_events` every 15s).

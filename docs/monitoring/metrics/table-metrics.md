@@ -6,80 +6,87 @@ sidebar_position: 4
 
 # Table metrics
 
-Table-level statistics from `pg_stat_user_tables` and related views.
+Table-level statistics. In this stack they come from the `table_stats` metric group, whose query
+reads **`pg_stat_all_tables`** (not `pg_stat_user_tables`). Series are exported as
+`pgwatch_table_stats_<column>`.
 
 ## Data sources
 
-| View | Description |
-|------|-------------|
-| `pg_stat_user_tables` | Table access statistics |
-| `pg_statio_user_tables` | Table I/O statistics |
-| `pg_class` | Table sizes and properties |
+| Metric group | Underlying view | Description |
+|--------------|-----------------|-------------|
+| `table_stats` | `pg_stat_all_tables` | Table access, modification, tuple, vacuum, and size stats |
+| `pg_class` | `pg_class` | Table sizes (`pgwatch_pg_class_*`) |
+| `db_size` | – | Database size (`pgwatch_db_size_size_b`) |
 
 ## Core metrics
+
+All series are `pgwatch_table_stats_<column>`. There are no `_total` suffixes and no
+`pg_statio_user_tables_*` / `pg_table_size_bytes` series.
 
 ### Access metrics
 
 | Metric | Type | Description |
 |--------|------|-------------|
-| `pg_stat_user_tables_seq_scan_total` | Counter | Sequential scans initiated |
-| `pg_stat_user_tables_seq_tup_read_total` | Counter | Rows fetched by sequential scans |
-| `pg_stat_user_tables_idx_scan_total` | Counter | Index scans initiated |
-| `pg_stat_user_tables_idx_tup_fetch_total` | Counter | Rows fetched by index scans |
+| `pgwatch_table_stats_seq_scan` | Counter | Sequential scans initiated |
+| `pgwatch_table_stats_seq_tup_read` | Counter | Rows fetched by sequential scans |
+| `pgwatch_table_stats_idx_scan` | Counter | Index scans initiated |
+| `pgwatch_table_stats_idx_tup_fetch` | Counter | Rows fetched by index scans |
 
 ### Modification metrics
 
 | Metric | Type | Description |
 |--------|------|-------------|
-| `pg_stat_user_tables_n_tup_ins_total` | Counter | Rows inserted |
-| `pg_stat_user_tables_n_tup_upd_total` | Counter | Rows updated |
-| `pg_stat_user_tables_n_tup_del_total` | Counter | Rows deleted |
-| `pg_stat_user_tables_n_tup_hot_upd_total` | Counter | HOT updates (heap-only tuple) |
+| `pgwatch_table_stats_n_tup_ins` | Counter | Rows inserted |
+| `pgwatch_table_stats_n_tup_upd` | Counter | Rows updated |
+| `pgwatch_table_stats_n_tup_del` | Counter | Rows deleted |
+| `pgwatch_table_stats_n_tup_hot_upd` | Counter | HOT updates (heap-only tuple) |
 
 ### Tuple metrics
 
 | Metric | Type | Description |
 |--------|------|-------------|
-| `pg_stat_user_tables_n_live_tup` | Gauge | Estimated live rows |
-| `pg_stat_user_tables_n_dead_tup` | Gauge | Estimated dead rows |
-| `pg_stat_user_tables_n_mod_since_analyze` | Gauge | Rows modified since last analyze |
+| `pgwatch_table_stats_n_live_tup` | Gauge | Estimated live rows |
+| `pgwatch_table_stats_n_dead_tup` | Gauge | Estimated dead rows |
 
 ### Vacuum metrics
 
 | Metric | Type | Description |
 |--------|------|-------------|
-| `pg_stat_user_tables_last_vacuum` | Gauge | Timestamp of last manual vacuum |
-| `pg_stat_user_tables_last_autovacuum` | Gauge | Timestamp of last autovacuum |
-| `pg_stat_user_tables_last_analyze` | Gauge | Timestamp of last manual analyze |
-| `pg_stat_user_tables_last_autoanalyze` | Gauge | Timestamp of last autoanalyze |
-| `pg_stat_user_tables_vacuum_count_total` | Counter | Manual vacuum count |
-| `pg_stat_user_tables_autovacuum_count_total` | Counter | Autovacuum count |
+| `pgwatch_table_stats_seconds_since_last_vacuum` | Gauge | Seconds since last (auto)vacuum |
+| `pgwatch_table_stats_seconds_since_last_analyze` | Gauge | Seconds since last (auto)analyze |
+| `pgwatch_table_stats_vacuum_count` | Counter | Manual vacuum count |
+| `pgwatch_table_stats_autovacuum_count` | Counter | Autovacuum count |
+| `pgwatch_table_stats_analyze_count` | Counter | Manual analyze count |
+| `pgwatch_table_stats_autoanalyze_count` | Counter | Autoanalyze count |
 
 ### Size metrics
 
 | Metric | Type | Description |
 |--------|------|-------------|
-| `pg_table_size_bytes` | Gauge | Table size (excluding indexes) |
-| `pg_total_relation_size_bytes` | Gauge | Total size (table + indexes + toast) |
-| `pg_indexes_size_bytes` | Gauge | Total index size for table |
+| `pgwatch_table_stats_table_size_b` | Gauge | Table size in bytes (excluding indexes) |
+| `pgwatch_table_stats_total_relation_size_b` | Gauge | Total size (table + indexes + toast) |
+| `pgwatch_table_stats_toast_size_b` | Gauge | TOAST size in bytes |
 
-### I/O metrics
+### Freeze-age metrics
 
 | Metric | Type | Description |
 |--------|------|-------------|
-| `pg_statio_user_tables_heap_blks_read_total` | Counter | Heap blocks read from disk |
-| `pg_statio_user_tables_heap_blks_hit_total` | Counter | Heap blocks hit in buffer cache |
-| `pg_statio_user_tables_idx_blks_read_total` | Counter | Index blocks read from disk |
-| `pg_statio_user_tables_idx_blks_hit_total` | Counter | Index blocks hit in buffer cache |
+| `pgwatch_table_stats_tx_freeze_age` | Counter | Transaction-id freeze age |
+| `pgwatch_table_stats_mxid_freeze_age` | Counter | Multixact-id freeze age |
 
 ## Labels
 
+The `table_stats` metric is grouped by schema and table, so it carries these labels (plus the
+instance labels). Note the names are `schema` / `table_name` / `table_full_name` (not
+`schemaname` / `relname`), and the cluster label is `cluster` (not `cluster_name`).
+
 | Label | Description | Example |
 |-------|-------------|---------|
-| `relname` | Table name | `users` |
-| `schemaname` | Schema name | `public` |
+| `table_name` | Table name | `users` |
+| `table_full_name` | Schema-qualified table name | `public.users` |
+| `schema` | Schema name | `public` |
 | `datname` | Database name | `myapp` |
-| `cluster_name` | Cluster identifier | `production` |
+| `cluster` | Cluster identifier (from `custom_tags.cluster`) | `production` |
 | `node_name` | Node identifier | `primary` |
 
 ## Common queries
@@ -87,65 +94,53 @@ Table-level statistics from `pg_stat_user_tables` and related views.
 ### Sequential scan ratio
 
 ```promql
-rate(pg_stat_user_tables_seq_scan_total[5m])
+rate(pgwatch_table_stats_seq_scan[5m])
 /
 (
-  rate(pg_stat_user_tables_seq_scan_total[5m])
+  rate(pgwatch_table_stats_seq_scan[5m])
   +
-  rate(pg_stat_user_tables_idx_scan_total[5m])
+  rate(pgwatch_table_stats_idx_scan[5m])
 )
 ```
 
 ### Tables with high dead tuple ratio
 
 ```promql
-pg_stat_user_tables_n_dead_tup
+pgwatch_table_stats_n_dead_tup
 /
-(pg_stat_user_tables_n_live_tup + pg_stat_user_tables_n_dead_tup)
+(pgwatch_table_stats_n_live_tup + pgwatch_table_stats_n_dead_tup)
 > 0.1
 ```
 
 ### HOT update ratio
 
 ```promql
-rate(pg_stat_user_tables_n_tup_hot_upd_total[5m])
+rate(pgwatch_table_stats_n_tup_hot_upd[5m])
 /
-rate(pg_stat_user_tables_n_tup_upd_total[5m])
+rate(pgwatch_table_stats_n_tup_upd[5m])
 ```
 
 ### Tables not vacuumed recently
 
 ```promql
-time() - pg_stat_user_tables_last_autovacuum > 86400
-```
-
-### Buffer hit ratio per table
-
-```promql
-rate(pg_statio_user_tables_heap_blks_hit_total[5m])
-/
-(
-  rate(pg_statio_user_tables_heap_blks_hit_total[5m])
-  +
-  rate(pg_statio_user_tables_heap_blks_read_total[5m])
-)
+pgwatch_table_stats_seconds_since_last_vacuum > 86400
 ```
 
 ### Largest tables
 
 ```promql
-topk(10, pg_total_relation_size_bytes)
+topk(10, pgwatch_table_stats_total_relation_size_b)
 ```
 
 ### Write-heavy tables
 
 ```promql
 topk(10,
-  rate(pg_stat_user_tables_n_tup_ins_total[5m])
+  rate(pgwatch_table_stats_n_tup_ins[5m])
   +
-  rate(pg_stat_user_tables_n_tup_upd_total[5m])
+  rate(pgwatch_table_stats_n_tup_upd[5m])
   +
-  rate(pg_stat_user_tables_n_tup_del_total[5m])
+  rate(pgwatch_table_stats_n_tup_del[5m])
 )
 ```
 
