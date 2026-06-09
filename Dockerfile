@@ -1,4 +1,6 @@
-FROM oven/bun:1.3-debian
+# Pin Bun to a patch release. The floating 1.3 tag moved under us and forced
+# fresh dependency installs in CI.
+FROM oven/bun:1.3.13-debian@sha256:e95356cb8e1de62ad69ab3bd3584ba947013d27650a226804d2fc0af4e17dac2
 
 # Install only libvips runtime (not -dev) so sharp uses prebuilt binaries
 # This is much faster than compiling from source (~2 min saved)
