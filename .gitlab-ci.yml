@@ -102,7 +102,10 @@ docs_sql_snippets:
     # Build the image.
     # `--cache-from` arg in `docker build` doesn't have any troubles if
     # passed image tag is unavailable - it will simply ignore it.
+    # --network=host: the inner bridge network in dind stalls on outbound
+    # TLS (bun install hangs forever, #226); host = the dind service netns.
     - docker build
+      --network=host
       --cache-from $TAG_LATEST
       --tag $TAG_VERSION
       --tag $TAG_LATEST
@@ -157,6 +160,16 @@ docs_sql_snippets:
 build_and_push_production:
   <<: *build_and_push_definition
   <<: *env_production
+  # bun install occasionally hangs forever inside dind on shared runners
+  # (#226); a healthy build takes ~10 min — fail fast and retry instead of
+  # burning the 1h default timeout.
+  timeout: 30m
+  retry:
+    max: 2
+    when:
+      - job_execution_timeout
+      - stuck_or_timeout_failure
+      - runner_system_failure
   only:
     - master
 
@@ -177,6 +190,11 @@ build_and_push_staging:
 deploy_production:
   <<: *deploy_definition
   <<: *env_production
+  # DAG: deploy as soon as the production image is ready — don't let a flaky
+  # build_and_push_main_staging (bun install hangs in dind, see #226) skip
+  # the whole deploy stage and block production.
+  needs:
+    - build_and_push_production
   only:
     - master
 
@@ -227,7 +245,9 @@ build_and_push_review:
     - source "./deploy/configs/review.sh"
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
     - docker pull "${CI_REGISTRY_IMAGE}:review-cache" || true
+    # --network=host: see build_and_push_definition (#226)
     - docker build
+      --network=host
       --cache-from "${CI_REGISTRY_IMAGE}:review-cache"
       --tag "${CI_REGISTRY_IMAGE}:review-${BRANCH_SLUG}"
       --tag "${CI_REGISTRY_IMAGE}:review-latest"
@@ -313,11 +333,21 @@ build_and_push_main_staging:
     url: https://docs-main.pgai.green
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
+  # Same flaky bun-install hang as build_and_push_production (#226)
+  timeout: 30m
+  retry:
+    max: 2
+    when:
+      - job_execution_timeout
+      - stuck_or_timeout_failure
+      - runner_system_failure
   script:
     - source "./deploy/configs/main-staging.sh"
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
     - docker pull "${CI_REGISTRY_IMAGE}:main-latest" || true
+    # --network=host: see build_and_push_definition (#226)
     - docker build
+      --network=host
       --cache-from "${CI_REGISTRY_IMAGE}:main-latest"
       --tag "${CI_REGISTRY_IMAGE}:main-latest"
       --build-arg ARG_URL="${URL}"
