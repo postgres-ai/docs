@@ -12,7 +12,7 @@ sidebar_position: 2
 
 | PostgreSQL version | Support status |
 |--------------------|----------------|
-| 18 (beta) | Supported |
+| 18 | Fully supported |
 | 17 | Fully supported |
 | 16 | Fully supported |
 | 15 | Fully supported |
