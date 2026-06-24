@@ -20,6 +20,7 @@ module.exports = {
           "monitoring/getting-started/installation-helm",
           "monitoring/getting-started/installation-cloud",
           "monitoring/getting-started/quickstart-supabase",
+          "monitoring/getting-started/quickstart-rds-privatelink",
           "monitoring/getting-started/upgrade",
         ],
       },
