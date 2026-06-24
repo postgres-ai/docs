@@ -304,7 +304,7 @@ Review exactly what is collected:
 
 ```bash
 # See exact SQL for creating monitoring role
-npx postgresai@0.15.0 prepare-db --print-sql
+npx postgresai@latest prepare-db --print-sql
 ```
 
 ## Security architecture

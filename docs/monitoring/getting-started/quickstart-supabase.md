@@ -178,7 +178,7 @@ The monitoring user is created automatically during Supabase setup with read-onl
 only. To review the exact SQL statements used to create the monitoring role:
 
 ```bash
-npx postgresai@0.15.0 prepare-db --print-sql
+npx postgresai@latest prepare-db --print-sql
 ```
 
 This shows all `grant` statements and confirms the minimal, read-only nature of the permissions.

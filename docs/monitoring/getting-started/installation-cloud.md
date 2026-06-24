@@ -60,7 +60,7 @@ grant connect on database your_database to postgres_ai_mon;
 ```
 
 :::tip Use prepare-db for the exact grants
-Instead of granting by hand, run `npx postgresai@0.15.0 prepare-db --print-sql` (or run
+Instead of granting by hand, run `npx postgresai@latest prepare-db --print-sql` (or run
 `prepare-db` against the master/admin user) to apply the exact, minimal read-only grants the
 product uses. See [Permissions](/docs/monitoring/getting-started/requirements#permissions).
 :::
@@ -76,7 +76,7 @@ Allow inbound traffic from your monitoring stack:
 ### Step 4: Start monitoring
 
 ```bash
-npx postgresai@0.15.0 mon local-install \
+npx postgresai@latest mon local-install \
   --db-url "postgresql://postgres_ai_mon:password@your-instance.region.rds.amazonaws.com:5432/your_db"
 ```
 
@@ -149,7 +149,7 @@ Add your monitoring stack's IP to authorized networks:
 
 For private IP:
 ```bash
-npx postgresai@0.15.0 mon local-install \
+npx postgresai@latest mon local-install \
   --db-url "postgresql://postgres_ai_mon:password@10.x.x.x:5432/your_db"
 ```
 
@@ -159,7 +159,7 @@ For Cloud SQL Auth Proxy:
 cloud_sql_proxy -instances=PROJECT:REGION:INSTANCE=tcp:5432
 
 # Connect
-npx postgresai@0.15.0 mon local-install \
+npx postgresai@latest mon local-install \
   --db-url "postgresql://postgres_ai_mon:password@localhost:5432/your_db"
 ```
 
@@ -220,7 +220,7 @@ grant connect on database postgres to postgres_ai_mon;
 ### Step 4: Start monitoring
 
 ```bash
-npx postgresai@0.15.0 mon local-install \
+npx postgresai@latest mon local-install \
   --db-url "postgresql://postgres_ai_mon:password@db.xxxx.supabase.co:5432/postgres?sslmode=require"
 ```
 

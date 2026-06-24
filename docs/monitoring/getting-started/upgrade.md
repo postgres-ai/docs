@@ -271,7 +271,7 @@ docker exec sink-postgres psql -U postgres -d measurements -c \
 Then open Grafana and confirm dashboards render data, and run the stack health check:
 
 ```bash
-npx postgresai@0.15.0 mon health
+npx postgresai@latest mon health
 ```
 
 ### Post-migration: restore query-text collection on the fresh `sink-postgres`
@@ -424,12 +424,12 @@ performs `up -d`.
 ```bash
 # From the monitoring directory (~/.config/postgresai/monitoring by default for npx/global installs)
 $EDITOR .env                              # set PGAI_TAG=0.15.0 FIRST — see note below
-npx postgresai@0.15.0 mon update          # migrate .env + pull new images (does NOT restart)
-npx postgresai@0.15.0 mon update-config   # regenerate pgwatch sources.yml
+npx postgresai@latest mon update          # migrate .env + pull new images (does NOT restart)
+npx postgresai@latest mon update-config   # regenerate pgwatch sources.yml
 # ⚠️ 0.15.0 only: complete the PostgreSQL 15 → 17 migration BEFORE this bring-up.
 #    See "PostgreSQL 15 → 17 major-version migration" above.
 docker compose up -d                      # recreate containers to apply the pulled images
-# (CLI alternative: `npx postgresai@0.15.0 mon stop && npx postgresai@0.15.0 mon start`)
+# (CLI alternative: `npx postgresai@latest mon stop && npx postgresai@latest mon start`)
 ```
 
 > **Set `PGAI_TAG=0.15.0` in `.env` first.** All stack images are pinned to `${PGAI_TAG}`, and
@@ -478,7 +478,7 @@ See [System requirements](/docs/monitoring/getting-started/requirements#cli-runt
 
 ### Bundled `docker-compose.yml` refresh for non-git (npx) installs
 
-If you installed via `npx postgresai` or a global npm install, your project directory is **not**
+If you installed via `npx postgresai@latest` or a global npm install, your project directory is **not**
 a git checkout, so `git pull` cannot bring in the new compose file. `docker-compose.yml` is a
 version-coupled asset — for example, 0.15 wires `VM_AUTH_*` into the VictoriaMetrics service and
 the Grafana datasource — and a stale compose would leave that wiring missing and blank all
@@ -574,8 +574,8 @@ All stack images are version-pinned (no `:latest`) for reproducible upgrades —
 ## Verify the upgrade
 
 ```bash
-npx postgresai@0.15.0 mon health
-npx postgresai@0.15.0 mon status
+npx postgresai@latest mon health
+npx postgresai@latest mon status
 ```
 
 Then open Grafana and confirm dashboards render data. If panels are empty after the upgrade,

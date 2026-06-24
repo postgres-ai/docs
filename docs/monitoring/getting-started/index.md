@@ -80,7 +80,7 @@ The monitoring user has read-only access to metadata only. To review the exact S
 to create the monitoring role:
 
 ```bash
-npx postgresai@0.15.0 prepare-db --print-sql
+npx postgresai@latest prepare-db --print-sql
 ```
 
 This shows all `grant` statements and confirms the minimal, read-only nature of the permissions.

@@ -42,14 +42,14 @@ postgresai auth
 <TabItem value="npx" label="npx">
 
 ```bash
-npx postgresai auth
+npx postgresai@latest auth
 ```
 
 </TabItem>
 <TabItem value="bunx" label="bunx">
 
 ```bash
-bunx postgresai auth
+bunx postgresai@latest auth
 ```
 
 </TabItem>
@@ -70,14 +70,14 @@ postgresai mcp install
 <TabItem value="npx" label="npx">
 
 ```bash
-npx postgresai mcp install
+npx postgresai@latest mcp install
 ```
 
 </TabItem>
 <TabItem value="bunx" label="bunx">
 
 ```bash
-bunx postgresai mcp install
+bunx postgresai@latest mcp install
 ```
 
 </TabItem>

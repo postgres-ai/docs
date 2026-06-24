@@ -82,8 +82,7 @@ See [Pricing](/pricing) for the full list of options with feature comparison.
 The **Set up RDS monitoring over AWS PrivateLink** wizard opens. In **Step 1**, click **Generate
 database-preparation SQL**. PostgresAI shows a one-time script that creates the least-privilege,
 **read-only, metadata-only** `postgres_ai_mon` role, grants `pg_monitor`, and creates the
-`postgres_ai` schema with a few read-only helper views. The role's password is shown **once** — copy
-it now; you will need it at the deploy step.
+`postgres_ai` schema with a few read-only helper views.
 
 [![Set up RDS monitoring over AWS PrivateLink: the four-step in-console wizard](/assets/rds-privatelink-monitoring/rds-privatelink-monitoring-3.png)](/assets/rds-privatelink-monitoring/rds-privatelink-monitoring-3.png)
 
@@ -93,7 +92,7 @@ Run it once as the **master user**, for example:
 psql "host=<your-rds-endpoint> port=5432 dbname=<your-database> sslmode=require"
 ```
 
-Then paste the SQL shown in the console (Console also offers a **Copy SQL** button).
+Then paste the SQL shown in the console.
 
 :::tip Review the SQL and run it against the right database
 Read through the generated SQL before you run it — it is short, and only creates a read-only role,
@@ -103,16 +102,10 @@ Make sure you connect to the **correct logical database** — the one you actual
 objects are created in whichever database you run the script against.
 :::
 
-:::note On RDS, some optional grants are skipped
-PostgresAI generates this role with `include_optional = false` on the RDS / AWS PrivateLink path. A
-few optional grants (for example, `pg_stat_file` and `pg_ls_dir`) require superuser, which the RDS
-master user does not have. They are not needed for monitoring, and the role is created without them.
-:::
-
 To review the exact statements at any time, run:
 
 ```bash
-npx postgresai@0.15.0 prepare-db --print-sql
+npx postgresai@latest prepare-db --print-sql
 ```
 
 This confirms the minimal, read-only nature of the permissions.
@@ -255,7 +248,7 @@ The `postgres_ai_mon` role is created with read-only, metadata-only access (`pg_
 (`include_optional = false`). To review the exact SQL statements at any time:
 
 ```bash
-npx postgresai@0.15.0 prepare-db --print-sql
+npx postgresai@latest prepare-db --print-sql
 ```
 
 ### What data is collected from my database?
