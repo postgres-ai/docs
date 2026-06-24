@@ -168,7 +168,7 @@ subset of `pg_monitor` and would not be sufficient — the install/verify step c
 :::tip Review exact permissions
 To see the complete SQL used to create the monitoring role:
 ```bash
-npx postgresai@0.15.0 prepare-db --print-sql
+npx postgresai@latest prepare-db --print-sql
 ```
 This transparency lets you verify the minimal, read-only nature of the permissions before running.
 :::
@@ -188,8 +188,8 @@ For managed databases, use the master/admin user to run `prepare-db`:
 
 ```bash
 # RDS
-npx postgresai@0.15.0 prepare-db postgresql://master_user:pass@instance.region.rds.amazonaws.com:5432/postgres
+npx postgresai@latest prepare-db postgresql://master_user:pass@instance.region.rds.amazonaws.com:5432/postgres
 
 # CloudSQL
-npx postgresai@0.15.0 prepare-db postgresql://postgres:pass@/dbname?host=/cloudsql/project:region:instance
+npx postgresai@latest prepare-db postgresql://postgres:pass@/dbname?host=/cloudsql/project:region:instance
 ```

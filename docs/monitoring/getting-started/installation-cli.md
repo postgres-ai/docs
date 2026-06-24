@@ -23,7 +23,7 @@ All commands work with both `npx` and `bunx`. The CLI is written in TypeScript a
 Before starting the monitoring stack, configure your PostgreSQL instance:
 
 ```bash
-PGPASSWORD=your_password npx postgresai@0.15.0 prepare-db "postgresql://postgres@localhost:5432/mydb"
+PGPASSWORD=your_password npx postgresai@latest prepare-db "postgresql://postgres@localhost:5432/mydb"
 ```
 
 ### What prepare-db does
@@ -35,7 +35,7 @@ PGPASSWORD=your_password npx postgresai@0.15.0 prepare-db "postgresql://postgres
 ### prepare-db options
 
 ```bash
-npx postgresai@0.15.0 prepare-db [connection] [options]
+npx postgresai@latest prepare-db [connection] [options]
 
 Options:
   --monitoring-user <name>       Monitoring username (default: postgres_ai_mon)
@@ -62,7 +62,7 @@ postgresql://postgres_ai_mon:auto_generated_pass@localhost:5432/mydb
 ### Demo mode (no target database)
 
 ```bash
-npx postgresai@0.15.0 mon local-install --demo
+npx postgresai@latest mon local-install --demo
 ```
 
 Starts a complete stack with a sample PostgreSQL database seeded with a small demo dataset (a
@@ -71,14 +71,14 @@ Starts a complete stack with a sample PostgreSQL database seeded with a small de
 ### Production mode
 
 ```bash
-npx postgresai@0.15.0 mon local-install \
+npx postgresai@latest mon local-install \
   --db-url postgresql://postgres_ai_mon:pass@host:5432/mydb
 ```
 
 ### local-install options
 
 ```bash
-npx postgresai@0.15.0 mon local-install [options]
+npx postgresai@latest mon local-install [options]
 
 Options:
   --demo            demo mode with sample database (default: false)
@@ -113,7 +113,7 @@ Navigate to **Dashboards — Browse — postgres_ai** to see your monitoring das
 ### Check status
 
 ```bash
-npx postgresai@0.15.0 mon status
+npx postgresai@latest mon status
 ```
 
 Output is the Docker Compose service table for the monitoring stack, including `grafana-with-datasources`, `sink-postgres`, `sink-prometheus`, `pgwatch-postgres`, `pgwatch-prometheus`, and `flask-pgss-api`.
@@ -121,7 +121,7 @@ Output is the Docker Compose service table for the monitoring stack, including `
 ### Stop stack
 
 ```bash
-npx postgresai@0.15.0 mon stop
+npx postgresai@latest mon stop
 ```
 
 ### View logs

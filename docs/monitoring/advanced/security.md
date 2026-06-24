@@ -21,7 +21,7 @@ statistics, normalized query text, and object sizes. It never reads table data o
 parameter values. To review the exact SQL before running it:
 
 ```bash
-npx postgresai@0.15.0 prepare-db --print-sql
+npx postgresai@latest prepare-db --print-sql
 ```
 
 See [Permissions](/docs/monitoring/troubleshooting/permissions) and

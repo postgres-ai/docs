@@ -95,7 +95,7 @@ Review exactly what metrics are collected by examining the metric definitions:
 The monitoring user has read-only access to metadata only. To review the exact SQL statements used to create the monitoring role:
 
 ```bash
-npx postgresai@0.15.0 prepare-db --print-sql
+npx postgresai@latest prepare-db --print-sql
 ```
 
 This shows all `GRANT` statements and confirms the minimal, read-only nature of the permissions.

@@ -52,14 +52,14 @@ pgai [global options] <command> [command options] [arguments...]
 <TabItem value="npx" label="npx">
 
 ```bash
-npx postgresai [global options] <command> [command options] [arguments...]
+npx postgresai@latest [global options] <command> [command options] [arguments...]
 ```
 
 </TabItem>
 <TabItem value="bunx" label="bunx">
 
 ```bash
-bunx postgresai [global options] <command> [command options] [arguments...]
+bunx postgresai@latest [global options] <command> [command options] [arguments...]
 ```
 
 </TabItem>
@@ -116,14 +116,14 @@ postgresai prepare-db [conn] [options]
 <TabItem value="npx" label="npx">
 
 ```bash
-npx postgresai prepare-db [conn] [options]
+npx postgresai@latest prepare-db [conn] [options]
 ```
 
 </TabItem>
 <TabItem value="bunx" label="bunx">
 
 ```bash
-bunx postgresai prepare-db [conn] [options]
+bunx postgresai@latest prepare-db [conn] [options]
 ```
 
 </TabItem>
