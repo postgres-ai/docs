@@ -387,6 +387,7 @@ const features: FeatureRow[] = [
   
   { category: 'Monitoring', feature: '', values: [] },
   { feature: 'Full monitoring stack', values: [false, false, true, true, true] },
+  { feature: 'Private RDS monitoring over AWS PrivateLink', values: [false, false, false, true, true] },
   { feature: 'Monitoring retention', values: ['—', '—', '7 days', '6 months', 'Custom'] },
   { feature: 'Monitoring data for the past, ready for RCAs', values: [false, false, true, true, true] },
   { feature: 'Trend analysis and risk detection', values: [false, false, false, true, true] },
