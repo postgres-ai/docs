@@ -64,7 +64,7 @@ returning *
 But this leads to performing an `UPDATE` where we need just a `SELECT`, and this is a huge overhead that we definitely
 should avoid.
 
-Another overhead that both queries have: each time a `ON CONFLICT` collision happens, we have a wasted sequence
+Another overhead that both queries have: each time an `ON CONFLICT` collision happens, we have a wasted sequence
 increment (and this would be the same if we used `GENERATED ALWAYS AS IDENTITY`, because it uses sequences under the
 hood).
 
@@ -72,7 +72,7 @@ hood).
 
 ## Approach 2: Naive CTE with UPDATE-or-SELECT
 
-One might think this using CTE can help here:
+One might think that using a CTE can help here:
 
 ```sql
 with val(ts) as (
@@ -121,9 +121,9 @@ pgbench: error: client 0 script 0 aborted in command 0 query 0: ERROR:  duplicat
 DETAIL:  Key (ts)=(2023-11-01 01:00:28-07) already exists.
 ```
 
-Why errors can happen here? Because between checking the row with sub-`SELECT` and attempting to run an `INSERT` some
+Why can errors happen here? Because between checking the row with sub-`SELECT` and attempting to run an `INSERT` some
 very brief time always exists, during which another session might perform the `INSERT`. So this approach is not working
-well in general case. But we can improve it.
+well in the general case. But we can improve it.
 
 ## Approach 3: improved CTE
 
@@ -191,7 +191,7 @@ query with `now()::timestamptz(0)` and `\watch .2`).
    from the table. This is a problem. Replacing it with another read attempt won't help.
 
    **Solution**: Use `ON CONFLICT DO UPDATE`, which here is acceptable since it comes after a `SELECT` attempt, and the
-   overhead discussed above hits us only rarely (at same frequency as query failures in the case of "naive CTE").
+   overhead discussed above hits us only rarely (at the same frequency as query failures in the case of "naive CTE").
 
    Testing it:
 

@@ -9,7 +9,7 @@ It is important to properly configure all PostgreSQL instances managed by DBLab 
 ### The "sync" instance
 The "sync" instance, which is an asynchronous replica by nature, is currently supported only for the physical mode of data directory initialization, see option `syncInstance` in job [physicalRestore](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalsnapshot). The only purpose of this PostgreSQL is fetching and replaying [WAL segments](https://www.postgresql.org/docs/current/wal-intro.html), maintaining the data directory in sync.
 
-Normally, there is no need in configuring this PostgreSQL instance, as DBLab Engine controls it fully, using a small value for `shared_buffers`, and very reliable values for all the configuration options. The only option that can be controlled by the DBLab Engine administrator is `restore_command` (see [physicalRestore](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalsnapshot)). 
+Normally, there is no need to configure this PostgreSQL instance, as DBLab Engine controls it fully, using a small value for `shared_buffers`, and very reliable values for all the configuration options. The only option that can be controlled by the DBLab Engine administrator is `restore_command` (see [physicalRestore](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalsnapshot)). 
 
 ### PostgreSQL configuration in clones
 :::info
@@ -23,10 +23,10 @@ It is possible and in many cases necessary to configure various PostgreSQL optio
 Technically, the specified PostgreSQL parameters are applied to `postgresql.conf` located in the data directory when preparing a working snapshot used for thin cloning. All thin clones automatically inherit these values.
 
 When configuring DBLab Engine, review and set up if needed the following parameters:
-- **`shared_buffers`**: one of the most important parameters. The use of the same value that is used on the source is not recommended because it might lead to out-of-memory errors and the inability to create more than a few clones. Instead, use some moderate value such as `1GB`; with this value, if your server has, say, 64 GiB of RAM, then theoretical maximum number of clones is ~63 (some RAM is already used by OS and other apps)
-- **`shared_preload_libraries`**: use the same value as on the source, to allow the same extensions that is used there
+- **`shared_buffers`**: one of the most important parameters. The use of the same value that is used on the source is not recommended because it might lead to out-of-memory errors and the inability to create more than a few clones. Instead, use some moderate value such as `1GB`; with this value, if your server has, say, 64 GiB of RAM, then the theoretical maximum number of clones is ~63 (some RAM is already used by OS and other apps)
+- **`shared_preload_libraries`**: use the same value as on the source, to allow the same extensions that are used there
 - **`work_mem`**: set the same value as used on the source database unless your DBLab Engine server lacks memory and there are significant risks of out-of-memory errors
-- **[Query Planning](https://www.postgresql.org/docs/current/runtime-config-query.html)** parameters (all of them). This is essential to ensure that cloned PostgreSQL most likely generates the same plans as on the source (specifically, it is crutial for query performance troubleshooting and optimization, including working with EXPLAIN plans)
+- **[Query Planning](https://www.postgresql.org/docs/current/runtime-config-query.html)** parameters (all of them). This is essential to ensure that cloned PostgreSQL most likely generates the same plans as on the source (specifically, it is crucial for query performance troubleshooting and optimization, including working with EXPLAIN plans)
 
 Use the following SQL on the source database to get all non-default values of the parameters affecting the planner's behavior:
 ```sql
@@ -44,7 +44,7 @@ where
 ```
 
 Additionally, ensure that `shared_preload_libraries` has all extensions that you use (or might start using in the future), plus the following:
-- `pg_stat_kcache` and `logerrors` – required for some observability tasks DBLab may need to performance
+- `pg_stat_kcache` and `logerrors` – required for some observability tasks DBLab may need to perform
 - `anon` – required for PII removal, in some cases
 
 The mentioned extensions above may not be available in the source – still, it makes sense to have them loaded in DBLab clones.

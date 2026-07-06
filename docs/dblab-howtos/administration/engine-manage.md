@@ -57,7 +57,7 @@ DBLab Engine supports reconfiguration without a restart (therefore, without any 
     sudo docker exec -it dblab_server kill -SIGHUP 1
     ```
 
-- Ensure that configuration was reloaded, it should be seen in the logs (message `Configuration has been reloaded`):
+- Ensure that the configuration was reloaded — it should be seen in the logs (message `Configuration has been reloaded`):
     ```bash
     sudo docker logs --since 5m dblab_server
     ```
@@ -75,10 +75,10 @@ echo 'set backupcopy=yes' >> ~/.vimrc
 :::
 
 ## Upgrade DBLab Engine
-Stop and remove the container using `sudo docker stop dblab_server` and `sudo docker rm dblab_server` After that, [launch](#configure-and-start-a-dblab-engine-instance) a new container.
+Stop and remove the container using `sudo docker stop dblab_server` and `sudo docker rm dblab_server`. After that, [launch](#configure-and-start-a-dblab-engine-instance) a new container.
 
 :::caution
-Prior to version 3.0.0, upgrading or restarting DLE meant losing all the running clones. In DLE 3.0.0, clones became persistent: after any restart – including VM restart - existing Postgres containers are restarted as well. The same should apply to future upgrades unless a specific upgrade breaks backward compatibility (consulting release notes is advised).
+Prior to version 3.0.0, upgrading or restarting DLE meant losing all the running clones. In DLE 3.0.0, clones became persistent: after any restart — including VM restart — existing Postgres containers are restarted as well. The same should apply to future upgrades unless a specific upgrade breaks backward compatibility (consulting release notes is advised).
 :::
 
 :::caution
@@ -105,7 +105,7 @@ If you need to save the logs in a file:
 sudo docker logs dblab_server 2>&1 | gzip > dblab_server.log.gz
 ```
 
-If you want to see more details, enable debug mode setting option `debug` to `true` (see [example](https://gitlab.com/postgres-ai/database-lab/-/tree/v4.1.3/engine/configs)). Next, follow  [the reconfiguration guidelines](#reconfigure-dblab-engine) to apply the change.
+If you want to see more details, enable debug mode by setting the option `debug` to `true` (see [example](https://gitlab.com/postgres-ai/database-lab/-/tree/v4.1.3/engine/configs)). Next, follow [the reconfiguration guidelines](#reconfigure-dblab-engine) to apply the change.
 
 :::caution
 When debug mode is turned on, logs may contain sensitive data such as API secret keys for the backup system.

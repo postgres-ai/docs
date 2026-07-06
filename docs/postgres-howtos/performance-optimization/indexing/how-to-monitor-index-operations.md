@@ -92,7 +92,7 @@ How this query works:
    presented in the column "phase" of the output.
 
 3. Index name (a temporary one in case of CIC/RC), table name are presented (using the useful trick to convert OIDs to
-   names – note, e.g., `index_relid::regclass as index_name`). Additionally, the table size which is essential to form
+   names – note, e.g., `index_relid::regclass as index_name`). Additionally, the table size is presented, which is essential to form
    expectations of overall duration – the bigger the table is, the longer the index creation is going to take.
 
 4. `pg_stat_activity` (`pgsa`) provides a lot of additional useful information:
@@ -101,7 +101,7 @@ How this query works:
     - the moment when the work has started (`query_start`), allowing us to understand the elapsed
       time (`query_duration`)
     - `wait_event_type` & `wait_event` to understand what the process is currently waiting on
-    - it also used (in a separate sub-query) to get the information of the session that blocks our process, when such an
+    - it is also used (in a separate sub-query) to get the information of the session that blocks our process, when such an
       event occurs (`current_locker_pid`, `current_locker_query`)
 
 5. Function `format(...)` is very useful to consolidate data in convenient form without having to worry about `NULL`s,

@@ -27,7 +27,7 @@ estimated_time: 5 min
 
 Some very popular reasons affecting the duration of the shutdown attempt:
 1. There are long-running transactions.
-2. A lot of buffers are dirty (changes are applied in memory but not yet synced to disk, waiting for another checkpoint), causing long shutdown checkpoint.
+2. A lot of buffers are dirty (changes are applied in memory but not yet synced to disk, waiting for another checkpoint), causing a long shutdown checkpoint.
 3. WAL archiving (`archive_command`) is lagging.
 
 Below, we discuss each one of these reasons and how to mitigate them.
@@ -62,7 +62,7 @@ from pg_buffercache
 where isdirty;
 ```
 
-If the value is large (say, several GiB), at shutdown attempt, Postgres is going to perform so-called "shutdown checkpoint", flushing dirty buffers to disk ([source code](https://gitlab.com/postgres/postgres/blob/ebf76f2753a91615d45f113f1535a8443fa8d076/src/backend/access/transam/xlog.c#L6229)). During this, it won't be processing queries, which affects downtime. Mitigation is simple – an explicit CHECKPOINT right before shutdown/restart attempt:
+If the value is large (say, several GiB), at a shutdown attempt, Postgres is going to perform a so-called "shutdown checkpoint", flushing dirty buffers to disk ([source code](https://gitlab.com/postgres/postgres/blob/ebf76f2753a91615d45f113f1535a8443fa8d076/src/backend/access/transam/xlog.c#L6229)). During this, it won't be processing queries, which affects downtime. Mitigation is simple – an explicit CHECKPOINT right before shutdown/restart attempt:
 ```sql
 checkpoint;
 ```
@@ -71,7 +71,7 @@ This is going to help us keep shutdown checkpoint very light, decreasing downtim
 
 In some cases, it may make sense to issue 2 explicit CHECKPOINTs in a row, right before the shutdown attempt: if the first CHECKPOINT is heavy, it also takes time, during which new dirty buffers are accumulated due to ongoing writes – and this we mitigate with the second CHECKPOINT, keeping the shutdown checkpoint very light and fast.
 
-To simulate situation described here:
+To simulate the situation described here:
 - make sure `shared_buffers` is large (many GiB; changing it requires a restart)
 - increase `max_wal_size` and `checkpoint_timeout` (change doesn't require restart): say, `'10GB'` and `'60min'` (make sure there is enough disk space in the `pg_wal` subdirectory)
 - on a large table t1, perform: `set statement_timeout = '60s'; begin; delete from t1;` (it will be canceled, but lots of dirty buffers will be produced)

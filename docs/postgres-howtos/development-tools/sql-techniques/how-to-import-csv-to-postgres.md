@@ -106,12 +106,12 @@ psql -c "copy slow_tx_from_csv_2 from '$(pwd)/long_tx_$(date +%Y%m%d).csv' delim
 
 Note that here we use SQL command COPY that works on the server side and requires the full path to the CSV file located
 on the server where Postgres is running. There is also psql's command `\copy` that allows importing CSV file located on
-the client's side (if these sides are different, in our case they are not, so we could use the either command). Docs:
+the client's side (if these sides are different, in our case they are not, so we could use either command). Docs:
 
 - [server-side COPY](https://postgresql.org/docs/current/sql-copy.html)
 - [psql's \copy](https://postgresql.org/docs/current/app-psql.html#APP-PSQL-META-COMMANDS-COPY)
 
-Note that when working with the "flexible" table format (text-only columns) – `slow_tx_from_csv_2` here – we need not
+Note that when working with the "flexible" table format (text-only columns) – `slow_tx_from_csv_2` here – we must not
 forget about type conversion. For example:
 
 ```
@@ -142,7 +142,7 @@ this, we'll be using [file_fdw](https://postgresql.org/docs/current/file-fdw.htm
 Having a great advantage (live data!), this method has its obvious disadvantages:
 
 - It's read-only (although, you can easily create a snapshot using `create table as select from ...`).
-- The data is not protected by backup system you (hopefully) have, the storage is not reliable (a file).
+- The data is not protected by the backup system you (hopefully) have, the storage is not reliable (a file).
 - Performance limitations: you cannot create indexes to speed up the queries, so it doesn't work really well for huge
   data volumes (although, again, you can create a snapshot or a materialized view, and have indexes there).
 - Some `COPY` options are not supported by `file_fdw`, such as the `FORCE_QUOTE` option.

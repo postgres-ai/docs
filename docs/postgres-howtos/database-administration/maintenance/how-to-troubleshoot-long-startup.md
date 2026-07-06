@@ -65,11 +65,11 @@ One of the biggest causes of frustration can be a lack of understanding of what'
 ## 2. Understand your settings and workload
 
 ### 2a. Check max_wal_size and checkpoint_timeout
-The settings that matter the most here are related to checkpoint tuning. If `max_wal_size` and `checkpoint_timeout` are tuned so checkpoints happen less often, Postgres needs more time to reach a consistency point, if shutdown was not clean, without successful shutdown checkpoint (e.g., VM restarted) or if you're restoring from backups. To learn more about this:
+The settings that matter the most here are related to checkpoint tuning. If `max_wal_size` and `checkpoint_timeout` are tuned so checkpoints happen less often, Postgres needs more time to reach a consistency point, if shutdown was not clean, without a successful shutdown checkpoint (e.g., VM restarted) or if you're restoring from backups. To learn more about this:
 - [official docs](https://postgresql.org/docs/current/sql-checkpoint.html) (official docs)
 - [WAL and checkpoint tuning](https://postgres.fm/episodes/wal-and-checkpoint-tuning) (Postgres.fm podcast)
 
-In other words, if you observe longer startup time, it's probably because the server was tuned to write less to WAL and sync buffers less often during heavy loads at normal times – that tuning comes for the price of longer startup time, and this is exactly what you're dealing with.
+In other words, if you observe longer startup time, it's probably because the server was tuned to write less to WAL and sync buffers less often during heavy loads at normal times – that tuning comes at the price of longer startup time, and this is exactly what you're dealing with.
 
 ### 2b. Understand the actual checkpoint behavior
 It is definitely recommended to have `log_checkpoint = on`. Its default is `'off'` in Postgres 14 and older, and `'on'` in PG15+.
@@ -166,9 +166,9 @@ nik=# select pg_size_pretty(pg_lsn '45/58000000' - '45/1772EA98');
 (1 row)
 ```
 
-– the first value is what's left, the second value is what's already done. Here, we see that we've already replayed ~1 GiB, and ~22 GiB are left. Analyzing timestamps in Postgres logs and current time and assuming that REDO is performed at constant speed (this assumption is rough but it's ok for rough estimate, especially if we re-estimating multiple times while observing the process), we can have an estimate of how much left to wait till consistency point and ability for Postgres to accept connections.
+– the first value is what's left, the second value is what's already done. Here, we see that we've already replayed ~1 GiB, and ~22 GiB are left. Analyzing timestamps in Postgres logs and current time and assuming that REDO is performed at constant speed (this assumption is rough but it's ok for a rough estimate, especially if we re-estimate multiple times while observing the process), we can have an estimate of how much is left to wait till the consistency point and Postgres is able to accept connections.
 
-If we're dealing with a crashed Postgres, then normally `pg_controldata` doesn't provide `Minimum recovery ending location` (showing `0/0`). In this case, we can check `$PGDATA/pg_wal` to understand how much left to replay, ordering files by creation time. This works under assumption that when crashed, Postgres has WALs that need to be replayed in pg_wal, and the "tail" of those WALs is all we need. For example:
+If we're dealing with a crashed Postgres, then normally `pg_controldata` doesn't provide `Minimum recovery ending location` (showing `0/0`). In this case, we can check `$PGDATA/pg_wal` to understand how much is left to replay, ordering files by creation time. This works under the assumption that when crashed, Postgres has WALs that need to be replayed in pg_wal, and the "tail" of those WALs is all we need. For example:
 
 ```
 ❯ ls -la /opt/homebrew/var/postgresql@15/pg_wal | grep 0000 | tail  -3
@@ -177,13 +177,13 @@ If we're dealing with a crashed Postgres, then normally `pg_controldata` doesn't
 -rw-------     1 nik  admin  16777216 Sep 28 11:03 000000010000004A000000E1
 ```
 
-– the latest file is `000000010000004A000000E1`, hence we can take `4A/E100000` as a rough estimate where we'll finish with the REDO process.
+– the latest file is `000000010000004A000000E1`, hence we can take `4A/E100000` as a rough estimate of where we'll finish with the REDO process.
 
 ---
 Bonus: how to simulate long startup / REDO time:
 1. Increase the distance between checkpoints raising `max_wal_size` and `checkpoint_timeout` (say, `'100GB'` and `'60min'`)
 2. Create a large table `t1` (say, 10-100M rows): `create table t1 as select i, random() from generate_series(1, 100000000) i;`
-3. Execute a long transaction to data from `t1` (not necessary to finish it): `begin; delete from t1;`
+3. Execute a long transaction to delete data from `t1` (not necessary to finish it): `begin; delete from t1;`
 4. Observe the amount of dirty buffers with extension `pg_buffercache`:
    -  create extension `pg_buffercache`;
    - `select isdirty, count(*), pg_size_pretty(count(*) * 8 * 1024) from pg_buffercache  group by 1 \watch`

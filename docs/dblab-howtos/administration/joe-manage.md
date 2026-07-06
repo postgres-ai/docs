@@ -1,10 +1,10 @@
 ---
-title: How to manage Joe bot
-sidebar_label: Manage Joe bot
+title: How to manage Joe Bot
+sidebar_label: Manage Joe Bot
 ---
 
 ## Start Joe Bot container
-Define the config file `~/.dblab/joe/configs/joe.yml` according the [configuration options page](/docs/reference-guides/joe-bot-configuration-reference) and run the command:
+Define the config file `~/.dblab/joe/configs/joe.yml` according to the [configuration options page](/docs/reference-guides/joe-bot-configuration-reference) and run the command:
 ```bash
 sudo docker run \
     --name joe_bot \
@@ -16,7 +16,7 @@ sudo docker run \
 postgresai/joe:latest
 ``` 
 
-Ensure that apps folder is writable by Joe inside docker container.
+Ensure that the apps folder is writable by Joe inside the Docker container.
 ## Reconfigure Joe Bot container
 Update the configuration file `~/.dblab/joe/configs/joe.yml`.
 
@@ -28,7 +28,7 @@ sudo docker restart joe_bot
 After restart, all user sessions are restored and should keep working (but PostgreSQL connections are re-established so if users set some session variables, they are lost). This feature works only in Joe versions 0.10 and newer. If you need to reset user sessions, stop the container, remove the file `sessions.json` located in `~/.dblab/joe/meta`, and start the container.
 
 ## Upgrade Joe Bot 
-Stop and remove the container using `sudo docker stop joe_bot` and `sudo docker rm joe_bot` and then [launching](#start-joe-bot-container) it again.
+Stop and remove the container using `sudo docker stop joe_bot` and `sudo docker rm joe_bot`, and then [launch](#start-joe-bot-container) it again.
 
 After upgrading, all user sessions are restored and should keep working (but PostgreSQL connections are re-established so if users set some session variables, they are lost). This feature works only in Joe versions 0.10 and newer. If you need to reset user sessions, stop the container, remove the file `sessions.json` located in `~/.dblab/joe/meta`, and start the container.
 

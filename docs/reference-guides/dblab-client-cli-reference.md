@@ -52,7 +52,7 @@ To list available commands, either run `dblab` with no parameters or with flag `
 
     The environment variable `DBLAB_CLI_FORWARDING_LOCAL_PORT` can be used as well. The flag `--forwarding-local-port` overrides config/env settings.
 
-- `--identity-file` (string, default: "") - select a file from which the identity (private key) for public key authentication is read".
+- `--identity-file` (string, default: "") - select a file from which the identity (private key) for public key authentication is read.
 
     The environment variable `DBLAB_CLI_IDENTITY_FILE` can be used as well. The flag `--identity-file` overrides config/env settings.
 
@@ -240,7 +240,7 @@ dblab log BRANCH_NAME
 
 **Example**
 
-Display snapshot logs logs of branch `test`.
+Display snapshot logs of branch `test`.
 ```bash
 dblab log test
 ```

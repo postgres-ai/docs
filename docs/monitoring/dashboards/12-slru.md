@@ -48,7 +48,7 @@ cache type (name).
 ### SLRU blocks exist
 
 **What it shows:**
-- `blks_exists` — checks for whether a block already exists in the cache
+- `blks_exists` — checks whether a block already exists in the cache
 
 ### SLRU blocks read
 

@@ -63,7 +63,7 @@ Approaches to determine the bloat levels more precisely:
 - checking DB object sizes on a clone, running `VACUUM FULL` (heavy and blocks queries, thus not for production), and
   then checking sizes again and comparing before/after
 
-Periodical checks are definitely recommended to control bloat levels and react, when needed.
+Periodic checks are definitely recommended to control bloat levels and react, when needed.
 
 ## Index bloat mitigation (reactive)
 

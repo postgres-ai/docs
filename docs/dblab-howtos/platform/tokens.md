@@ -3,7 +3,7 @@ title: Create and use DBLab Platform access tokens
 sidebar_label: Create and use tokens
 ---
 
-By default DBLab Engine uses a single [verification token](/docs/reference-guides/database-lab-engine-configuration-reference#section-global-global-parameters) for authorization of request to its API. For security purposes and more granular control, we recommend enabling access tokens support in DBLab Engine configuration. In this case, all Database Lab users will have personal tokens which can be revoked individually not affecting others.
+By default DBLab Engine uses a single [verification token](/docs/reference-guides/database-lab-engine-configuration-reference#section-global-global-parameters) for authorization of requests to its API. For security purposes and more granular control, we recommend enabling access tokens support in DBLab Engine configuration. In this case, all Database Lab users will have personal tokens which can be revoked individually without affecting others.
 
 # Token types
 

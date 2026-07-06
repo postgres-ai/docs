@@ -56,7 +56,7 @@ Reference doc: [The view pg_replication_slots](https://postgresql.org/docs/curre
 
 If `archive_mode` and `archive_command` are configured to archive WALs (e.g., for backup purposes), but
 `archive_command` is failing (returns non-zero exit code) or lagging (WAL generation rates are higher than the speed of
-archiving), then this can be another reason of `pg_wal` growth.
+archiving), then this can be another reason for `pg_wal` growth.
 
 How to monitor and troubleshoot it:
 
@@ -65,11 +65,11 @@ How to monitor and troubleshoot it:
 
 Once the problem is identified, the `archive_command` needs to be either fixed or sped up (e.g., `wal_compression = on`,
 `max_wal_size` increased to have less WAL data generated; and, at the same time, use lighter compression in the archiver
-tool -- this depends on the tool used in `archive_command`; e.g., WAL-G support many options for compression, more or
+tool -- this depends on the tool used in `archive_command`; e.g., WAL-G supports many options for compression, more or
 less CPU intensive).
 
 The next two steps are to be considered as additional, since their effects on the `pg_wal` size growth are limited –
-they can cause only certain amount of extra WALs being kept in `pg_wal`
+they can cause only a certain amount of extra WALs being kept in `pg_wal`
 (unlike the first two reasons we just discussed).
 
 ## Step 3: check `wal_keep_size`
@@ -84,7 +84,7 @@ When a successful checkpoint happens, Postgres can delete old WALs. In some case
 favor of less frequent checkpoints, this can cause more WALs to be stored in `pg_wal` than one could expect. In this
 case, if it's a problem for disk space (specifically important on smaller servers), reconsider `max_wal_size` and
 `checkpoint_timeout` to lower values. In some cases, it also can make sense to run an explicit manual `CHECKPOINT`, to
-allow Postgres clean up some old files right away.
+allow Postgres to clean up some old files right away.
 
 ## Summary
 

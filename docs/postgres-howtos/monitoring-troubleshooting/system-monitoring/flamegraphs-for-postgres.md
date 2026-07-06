@@ -121,7 +121,7 @@ You may need more packages, for postgres-related software – for example:
 apt search postgres | grep dbgsym
 ```
 
-Note, though, that not every postgres-related package has `postgres` in its name, though – e.g., for pgBouncer, you need `pgbouncer-dbgsym`.
+Note, though, that not every postgres-related package has `postgres` in its name – e.g., for pgBouncer, you need `pgbouncer-dbgsym`.
 
 Once packages with debug symbols are installed, it is important not to forget to restart Postgres (and our infinite loop with `EXPLAIN .. \watch` in `psql`).
 
@@ -183,7 +183,7 @@ Here is the result for our process running an infinite EXPLAIN loop:
   <img src="/img/postgres-howtos/0010_flamegraph.png" width="700"/>
 </a>
 
-It's very interesting that ~35% of CPU time is spent to analyzing if `Merge Join` is worth using, while eventually the planner picks a `Nested Loop`:
+It's very interesting that ~35% of CPU time is spent analyzing if `Merge Join` is worth using, while eventually the planner picks a `Nested Loop`:
 ```
 postgres=# explain (costs off) select
 from t1 join t2 using (i)
@@ -198,9 +198,9 @@ where i between 1000 and 2000;
 (5 rows)
 ```
 
-In this case, the planning time is really low, sub-millisecond – but I encountered with cases, when planning happened to be extremely slow, many seconds or even dozens of seconds. And it turned out (thanks to flamegraphs!) that analyzing the Merge Join paths was the reason, so with "set enable_mergejoin = off" the planning time dropped to very low, sane values. But this is another story.
+In this case, the planning time is really low, sub-millisecond – but I encountered cases when planning happened to be extremely slow, many seconds or even dozens of seconds. And it turned out (thanks to flamegraphs!) that analyzing the Merge Join paths was the reason, so with "set enable_mergejoin = off" the planning time dropped to very low, sane values. But this is another story.
 
-## Some good mate
+## Some good materials
 - Brendan Gregg's books: "Systems Performance" and "BPF Performance Tools"
 - Brendan Gregg's talks – for example, ["eBPF: Fueling New Flame Graphs & more • Brendan Gregg"](https://youtube.com/watch?v=HKQR7wVapgk) (video, 67 min)
 - [Profiling with perf](https://wiki.postgresql.org/wiki/Profiling_with_perf) (Postgres wiki)

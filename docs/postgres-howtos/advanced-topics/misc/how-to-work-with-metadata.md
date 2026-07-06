@@ -40,14 +40,14 @@ your work more efficient. We'll cover these topics:
 
 In Postgres terminology, tables, indexes, views, materialized views are all called "relations". The metadata about them
 can be seen in various ways, but the "central" place is the
-[pg_class system catalog](https://postgresql.org/docs/current/catalog-pg-class.html). In other words, this is a tables
+[pg_class system catalog](https://postgresql.org/docs/current/catalog-pg-class.html). In other words, this is a table
 that stores
 information about all tables, indexes, and so on. It has two keys:
 
 - PK: `oid` - a number ([OID, object identifier](https://postgresql.org/docs/current/datatype-oid.html))
 - UK: a pair of columns `(relname, relnamespace)`, relation name and OID of the schema.
 
-A trick to remember: OID can be quickly converted to relation name, vice versa, using type conversion to `oid` and
+A trick to remember: OID can be quickly converted to relation name, and vice versa, using type conversion to `oid` and
 `regclass` datatypes.
 
 Simple examples for a table named `t1`:
@@ -76,7 +76,7 @@ So, there is no need to do `select oid from pg_class where relname = ...` – ju
 
 ## \? and ECHO_HIDDEN
 
-`psql`'s `\?` command is crucial – this is how you can find description for all commands. For example:
+`psql`'s `\?` command is crucial – this is how you can find descriptions for all commands. For example:
 
 ```
 \d[S+]                 list tables, views, and sequences
@@ -131,7 +131,7 @@ standard: [Docs](https://postgresql.org/docs/current/information-schema.html). W
 
 ## pg_stat_activity is not a table
 
-It's essential to remember that when querying metadata, you might deal with something that doesn't behave as normal
+It's essential to remember that when querying metadata, you might deal with something that doesn't behave as a normal
 table even if it looks so.
 
 For instance, when you read records from `pg_stat_activity`, you're not dealing with a consistent snapshot of table

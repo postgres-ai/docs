@@ -11,18 +11,18 @@ As the first step, you need to set up a machine for DBLab Engine instance. See t
 With this data source type you can use any PostgreSQL backup tool (e.g. pg_basebackup, Barman, pgBackRest) to transfer the data to the DBLab Engine instance.
 
 ### Jobs
-To set up it you need to use following jobs:
+To set it up, you need to use the following jobs:
 - [physicalRestore](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalrestore)
 - [physicalSnapshot](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalsnapshot)
 
 ### Options
-Copy the example configuration file [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.1.3/engine/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`. For demo purposes we've used `pg_basebackup` tool, but you can use any tool suitable for the task. Check and update the following options:
-- Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine
+Copy the example configuration file [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.1.3/engine/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`. For demo purposes we've used the `pg_basebackup` tool, but you can use any tool suitable for the task. Check and update the following options:
+- Set a secure `server:verificationToken` — it will be used to authorize API requests to the Engine
 - Set connection options in `physicalRestore:options:envs`, based on your tool
 - Set PostgreSQL commands in `physicalRestore:options:customTool`:
     - `command`: defines the command to restore data using a custom tool
     - `restore_command`: defines the PostgreSQL `restore_command` configuration option to refresh data
-- Set a proper version in Postgres Docker image tag (change the images itself only if you know what are you doing):
+- Set a proper version in Postgres Docker image tag (change the image itself only if you know what you are doing):
     - `databaseContainer:dockerImage`
 
 ## Run DBLab Engine

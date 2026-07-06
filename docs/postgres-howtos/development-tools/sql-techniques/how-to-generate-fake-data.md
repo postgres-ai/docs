@@ -54,7 +54,7 @@ Note that per the [docs](https://postgresql.org/docs/current/functions-math.html
 
 > uses a deterministic pseudo-random number generator. It is fast but not suitable for cryptographic applications...
 
-We shouldn't use it for tasks as token or password generation (for that, use the library called `pgcrypto`).
+We shouldn't use it for tasks such as token or password generation (for that, use the library called `pgcrypto`).
 But it is okay to use it for pure random data generation (not for obfuscation).
 
 Starting with Postgres 16, there is also

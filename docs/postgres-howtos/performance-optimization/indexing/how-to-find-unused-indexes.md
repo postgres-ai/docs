@@ -61,7 +61,7 @@ Thus, having a routine procedure for periodic analysis and cleanup of unused ind
    1-3 above.
 
 5. As a result, build a list of indexes that can be reliably named as "unused" – we know that we didn't use them during
-   significant time, neither on the primary nor replicas, on all production systems we can observe.
+   a significant time, neither on the primary nor on replicas, on all production systems we can observe.
 
 6. For each index in the list drop it using `DROP INDEX CONCURRENTLY`.
 

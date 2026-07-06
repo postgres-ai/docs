@@ -23,13 +23,13 @@ estimated_time: 5 min
 
 This post describes how to quickly compile Postgres on Ubuntu 22.04.
 
-The [official docs](https://postgresql.org/docs/current/installation.html). It is very detailed, and it's great to be
+See the [official docs](https://postgresql.org/docs/current/installation.html). They are very detailed, and they're great to be
 used as a reference, but you won't find a concrete list of steps for a particular OS version, e.g., Ubuntu.
 
 This howto is enough to build Postgres from the `master` branch and start using it. Extend this basic set of steps if
 needed.
 
-A couple of more notes:
+A couple more notes:
 
 - The current (as of 2023, PG16) docs mention a new approach to building Postgres – [Meson](https://mesonbuild.com/) –
   but it is still considered experimental, we won't use it here.

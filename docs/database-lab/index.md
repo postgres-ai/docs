@@ -83,7 +83,7 @@ Some problems that can be solved by using DBLab:
 
 ### Paid versions: DBLab SE and EE
 DBLab Engine is also packaged in two paid offerings:
-- **DBLab SE (Standard Edition)** – standalone DBLab Engine, installed via [PostgresAI Console](https://postgres.ai/docs/dblab-howtos/administration/install-dle-from-postgres-ai) or [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec), ideal for small to mid-size teams. It extends the free open-source option with commercial support and compatibility with various Postgres flavours such as AWS RDS and RDS Aurora, GCP CloudSQL, Heroku, Supabase, Timescale Cloud, PostGIS.
+- **DBLab SE (Standard Edition)** – standalone DBLab Engine, installed via [PostgresAI Console](https://postgres.ai/docs/dblab-howtos/administration/install-dle-from-postgres-ai) or [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec), ideal for small to mid-size teams. It extends the free open-source option with commercial support and compatibility with various Postgres flavors such as AWS RDS and RDS Aurora, GCP CloudSQL, Heroku, Supabase, Timescale Cloud, PostGIS.
 - **DBLab EE (Enterprise Edition)** – full-fledged solution that includes enterprise features like unified control plane, user management, comprehensive audit capabilities, SSO, holistic query optimization workflows, and more.
 
 Version comparison and pricing info – see the [DBLab pricing](https://postgres.ai/pricing) page.

@@ -2,7 +2,7 @@
 title: How to reset Database Lab clone's state
 sidebar_label: Reset clone's state
 ---
-With Database Lab clones, you can verify any changes and without any risks for the source database (such as production).
+With Database Lab clones, you can verify any changes without any risks for the source database (such as production).
 
 ## GUI
 1. Connect to your clone and execute DDL or DML query – for example, drop some table:

@@ -15,7 +15,7 @@ Backup strategies, recovery procedures, and data migration techniques
 *Difficulty: advanced • Time: 8 min*
 
 ### [How to use pg_restore](/docs/postgres-howtos/database-administration/backup-recovery/how-to-use-pg-restore)
-Today – a few tips on using `pgrestore` to restore databases (or only parts of them) from dumps.
+Today – a few tips on using `pg_restore` to restore databases (or only parts of them) from dumps.
 
 *Difficulty: intermediate • Time: 6 min*
 

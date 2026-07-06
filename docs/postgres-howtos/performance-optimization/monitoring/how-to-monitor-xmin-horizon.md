@@ -77,10 +77,10 @@ The "`xmin` horizon" represents the XID of the oldest snapshot of data that must
 
 ## What about bloat?
 
-If `xmin` horizon doesn't progress for short period of time, blocking `autovacuum`, it is not a problem – this normally
+If `xmin` horizon doesn't progress for a short period of time, blocking `autovacuum`, it is not a problem – this normally
 happens often.
 
-But if this happens for long period of time, and `xmin` horizon is far in the past, it can cause two big problems:
+But if this happens for a long period of time, and `xmin` horizon is far in the past, it can cause two big problems:
 
 - XID/MultiXID wraparound, as discussed;
 - higher bloat growth: inability to delete dead tuples now leads to massive deletes of them later, when `xmin` horizon
@@ -122,7 +122,7 @@ Here, the indicators of a problem are:
   horizon)
 - `removable cutoff: 784, which was 112449 XIDs old when operation ended` – this tells us that the XID horizon is 784
   and its age is 112449 – so, the `xmin` horizon (the data version that is still considered needed) is more than 112k
-  transaction behind in the past, at the moment when `autovacuum` finished this processing attempt.
+  transactions behind in the past, at the moment when `autovacuum` finished this processing attempt.
 
 This indicates that the `xmin` horizon is far behind the current moment, and something is holding it in the distant
 past. To understand what it is, we need to check several system views.

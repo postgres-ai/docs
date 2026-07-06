@@ -27,7 +27,7 @@ Then install Docker, Colima, and Go:
 brew install docker colima go
 ```
 
-To build the DLE binary locally, **Go 1.23 or higher** is required, so let's check Go version:
+To build the DLE binary locally, **Go 1.23 or higher** is required, so let's check the Go version:
 ```bash
 go version
 ```
@@ -234,7 +234,7 @@ docker stop dblab_server
 docker rm -f dblab_server
 ```
 
-Ensure no extra containers (UI, Postgres) that were launched by `dblab_server`, are present (if there are, delete them using `docker rm`):
+Ensure no extra containers (UI, Postgres) that were launched by `dblab_server` are present (if there are, delete them using `docker rm`):
 ```
 docker ps -a \
   --format "ID: {{.ID}}\tName: {{.Names}}\tImage: {{.Image}}\tLabels: {{.Labels}}" \

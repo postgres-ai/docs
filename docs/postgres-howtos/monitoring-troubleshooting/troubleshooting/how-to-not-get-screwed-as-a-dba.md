@@ -35,7 +35,7 @@ useful for DBAs/DBREs in large companies.
 3. TEST backups. This is the most critical part. An untested backup is a _Schrödinger's Backup_ – the condition of any
    backup is unknown until a restore is attempted. Automate testing.
 
-4. Partial restore automation and speedup: in some cases, it is necessary to be able to recover a manually deleted data,
+4. Partial restore automation and speedup: in some cases, it is necessary to be able to recover manually deleted data,
    not a whole database. In this case, to speed up recovery, consider options: (a) special delayed replica; (b) frequent
    cloud snapshots + PITR; (c) DBLab with hourly snapshots and PITR on a clone.
 
@@ -45,8 +45,8 @@ useful for DBAs/DBREs in large companies.
 Without doubt, backups are the most important topic in database administration. Getting screwed in this area is the
 worst nightmare of any DBA. Pay maximum attention to backups, learn from other people's mistakes, not yours.
 
-Reliable backup system is, perhaps, one of the biggest reasons why managed Postgres services are preferred in some
-organizations. But again: don't trust blindly - study all the details, and test them yourself.
+A reliable backup system is, perhaps, one of the biggest reasons why managed Postgres services are preferred in some
+organizations. But again: don't trust blindly – study all the details, and test them yourself.
 
 ## 2) Corruption control
 

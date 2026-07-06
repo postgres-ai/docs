@@ -17,12 +17,12 @@ If you found a possible vulnerability or have an urgent security-related concern
 
 ## Security incidents and incident management
 ### Security incident
-Security incident – any violation or reasonable risk (or threat) to violate of:
+Security incident – any violation or reasonable risk (or threat) to violate:
 - DBLab Platform (PostgresAI) integral security (including but not limited to: databases, backups, application code, infrastructure components, customer data)
 - Internal Postgres.ai Information Security Policies
 
 ### How incidents are processed
-Once the information about an incident becomes known to the Engineer on Call, it is analyzed, the incident registration performed, severity level is assigned, and then it is determined if customer notification is needed.
+Once the information about an incident becomes known to the Engineer on Call, it is analyzed, the incident registration is performed, severity level is assigned, and then it is determined if customer notification is needed.
 
 ### Communication with customers
 Any severe incident with any risk to affect customer data triggers a customer alert. The corresponding customers are alerted using an appropriate channel (email, phone, messaging system) within 24 hours. This communication includes the following information:
@@ -64,7 +64,7 @@ When integrated, the Database Lab component may receive only control signals suc
 
 To be able to connect to a clone, users need to work inside your infrastructure, where connections to Database Lab clones (by default, ports 6000..6100) are possible, using the username and the password defined at clone creation time. Postgres.ai never stores passwords for clones, and it is the users' responsibility to remember them.
 
-If CI observability is enabled (Database migration verification, "Observed sessions"), then partial PostgreSQL logs corresponding to activity observed on Database Lab clones is sent to Postgres.ai and stored there. Such logs may contain sensitive data. Customers can configure rules to automatically mask the sensitive data in these logs prior to sending to Postgres.ai.
+If CI observability is enabled (Database migration verification, "Observed sessions"), then partial PostgreSQL logs corresponding to activity observed on Database Lab clones are sent to Postgres.ai and stored there. Such logs may contain sensitive data. Customers can configure rules to automatically mask the sensitive data in these logs prior to sending to Postgres.ai.
 
 #### Joe Bot
 

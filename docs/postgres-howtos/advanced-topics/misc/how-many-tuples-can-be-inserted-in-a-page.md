@@ -21,7 +21,7 @@ estimated_time: 5 min
 ---
 
 
-In Postgres, all tables have hidden, system columns; `ctid` being one of them. Reading it, we can see physical
+In Postgres, all tables have hidden, system columns; `ctid` being one of them. Reading it, we can see the physical
 location of the tuple (tuple = row physical version), the page number and offset inside it:
 
 ```sql

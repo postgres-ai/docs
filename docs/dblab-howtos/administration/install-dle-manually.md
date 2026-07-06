@@ -19,9 +19,9 @@ This describes how to manually install the DBLab Engine Community Edition (DBLab
 
 ## Step 1. Prepare a machine with disk, Docker, and ZFS
 ### Prepare a machine
-Create a virtual machine with Ubuntu 22.04, and add a disk to store the data. You can use any cloud provider (e.q, AWS, Google Cloud, etc) or run your Database Lab on a hypervisor (e.q, VMware), or on bare metal.
+Create a virtual machine with Ubuntu 22.04, and add a disk to store the data. You can use any cloud provider (e.g., AWS, Google Cloud, etc.) or run your Database Lab on a hypervisor (e.g., VMware), or on bare metal.
 
-### (optional) Ports need to be open
+### (Optional) Ports need to be open
 You will need to open the following ports:
 - `22`: to connect to the instance using SSH
 - `2346`: to work with DBLab Engine UI and API (can be changed in the DBLab Engine configuration file)
@@ -210,7 +210,7 @@ Next, we need to get the data to the DBLab Engine server. For our testing needs,
 }>
 <TabItem value="generated-database">
 
-If you don't have an existing database for testing, then let's just generate some synthetic database in the data directory ("PGDATA") located at `/var/lib/dblab/dblab_pool/data`. A simple way of doing this is to use PostgreSQL standard benchmarking tool, `pgbench`. With scale factor `-s 100`, the database size will be ~1.4 GiB; feel free to adjust the scale factor value according to your needs.
+If you don't have an existing database for testing, then let's just generate some synthetic database in the data directory ("PGDATA") located at `/var/lib/dblab/dblab_pool/data`. A simple way of doing this is to use the PostgreSQL standard benchmarking tool, `pgbench`. With scale factor `-s 100`, the database size will be ~1.4 GiB; feel free to adjust the scale factor value according to your needs.
 
 To generate PGDATA with `pgbench`, we are going to run a regular Docker container with Postgres temporarily. We will use `POSTGRES_HOST_AUTH_METHOD=trust` to allow a connection without authentication (not suitable for real-life use).
 
@@ -251,7 +251,7 @@ curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/v4.1.3/engine/confi
 ```
 
 Open `~/.dblab/engine/configs/server.yml` and edit the following options:
-- Set secure `server:verificationToken`, it will be used to authorize API requests to the DBLab Engine
+- Set a secure `server:verificationToken` — it will be used to authorize API requests to the DBLab Engine
 - Remove `logicalDump` section completely
 - Remove `logicalRestore` section completely
 - Leave `logicalSnapshot` as is
@@ -272,7 +272,7 @@ curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/v4.1.3/engine/confi
 ```
 
 Next, open `~/.dblab/engine/configs/server.yml` and edit the following options:
-- Set secure `server:verificationToken`, it will be used to authorize API requests to the DBLab Engine
+- Set a secure `server:verificationToken` — it will be used to authorize API requests to the DBLab Engine
 - In `retrieval:spec:physicalRestore:options:envs`, specify how to reach the source Postgres database to run `pg_basebackup`: `PGUSER`, `PGPASSWORD`, `PGHOST`, and `PGPORT`
 - If your Postgres major version is not 17 (default), set the proper version in Postgres Docker image tag:
     - `databaseContainer:dockerImage`
@@ -297,7 +297,7 @@ curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/v4.1.3/engine/confi
 ```
 
 Now open `~/.dblab/engine/configs/server.yml` and edit the following options:
-- Set secure `server:verificationToken`, it will be used to authorize API requests to the DBLab Engine
+- Set a secure `server:verificationToken` — it will be used to authorize API requests to the DBLab Engine
 - Set connection options in `retrieval:spec:logicalDump:options:source:connection`:
     - `dbname`: database name to connect to
     - `host`: database server host

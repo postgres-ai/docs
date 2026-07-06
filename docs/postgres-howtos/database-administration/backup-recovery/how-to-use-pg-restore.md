@@ -2,7 +2,7 @@
 title: How to use pg_restore
 sidebar_label: use pg_restore
 description: >-
-  Today – a few tips on using `pgrestore` to restore databases (or only parts of
+  Today – a few tips on using `pg_restore` to restore databases (or only parts of
   them) from dumps.
 keywords:
   - postgresql
@@ -38,7 +38,7 @@ restore steps.
 ## Atomic restore
 
 By default, pg_restore won't stop on errors. This might be surprising since we got used to more `strict` behavior when
-dealing with Postgres. And this also might lead to situations when database restored only partially, but this remained
+dealing with Postgres. And this also might lead to situations when the database is restored only partially, but this remained
 unnoticed. To switch to the `strict` mode, use `-e` (`--exit-on-error`). It can be also helpful to wrap the restoration
 process into a single transaction, using option `-1` (`--single-transaction`).
 
@@ -51,7 +51,7 @@ process into a single transaction, using option `-1` (`--single-transaction`).
 
 ## Schema vs. data split
 
-You can look at your dumps at two different angles, both offering a way to structure the dump at high level.
+You can look at your dumps from two different angles, both offering a way to structure the dump at a high level.
 
 First, you can distinguish schema and data – and use options:
 
@@ -60,7 +60,7 @@ First, you can distinguish schema and data – and use options:
 
 Interestingly, for a dump, this split – "schema + data" – is not the most efficient in terms of restoration time and the
 quality of result: indexes are a part of the schema, but if you create them first, and only then load data, the loading
-will take longer, and indexes will end up having worse shape than if build after the data load.
+will take longer, and indexes will end up having worse shape than if built after the data load.
 
 Therefore, there is a second way to look at the dump structure that corresponds to the regular order of the full restore
 process:
@@ -198,7 +198,7 @@ pg_restore \
 
 ## Postscript
 
-Completely forgot (what many people forgot all the time too – it should be default behavior of `pg_restore`, but it's
+Completely forgot (what many people forget all the time too – it should be default behavior of `pg_restore`, but it's
 not):
 
 After running `pg_restore`, don't forget:

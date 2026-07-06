@@ -111,7 +111,7 @@ Bloat shown in this dashboard is estimated based on:
 - Free space map
 - Statistical sampling
 
-For accurate bloat measurement, use `pgstattuple` extension.
+For accurate bloat measurement, use the `pgstattuple` extension.
 
 ## Related dashboards
 

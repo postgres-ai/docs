@@ -11,19 +11,19 @@ As the first step, you need to set up a machine. See the [guide](/docs/dblab-how
 
 ## Configuration
 ### Jobs
-In order to configure DLE to automatically restore the database using the [pgBackRest](https://github.com/pgbackrest/pgbackrest) archival restoration tool you need to use following jobs:
+In order to configure DLE to automatically restore the database using the [pgBackRest](https://github.com/pgbackrest/pgbackrest) archival restoration tool you need to use the following jobs:
 - [physicalRestore](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalrestore)
 - [physicalSnapshot](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalsnapshot)
 
 ### Options
 Copy the example configuration file [`config.example.physical_pgbackrest.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.1.3/engine/configs/config.example.physical_pgbackrest.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml` and update the following options:
-- Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine
+- Set a secure `server:verificationToken` — it will be used to authorize API requests to the Engine
 - Set repository options in `physicalRestore:options:envs`:
     - pgBackRest allows using environment variables instead of command-line options (see [pgBackRest docs](https://pgbackrest.org/command.html#introduction)):
       Any option may be set in an environment variable using the `PGBACKREST_` prefix and the option name in all caps replacing `-` with `_`, e.g. `pg1-path` becomes `PGBACKREST_PG1_PATH`. Boolean options are represented as they would be in a configuration file, e.g. `PGBACKREST_COMPRESS="n"`, and `reset-*` variants are not allowed. Options that can be specified multiple times in the command line or in a config file can be represented by separating the values with colons, e.g. PGBACKREST_DB_INCLUDE="db1:db2". 
 - Set pgBackRest settings in `physicalRestore:options:pgbackrest`:
     - `stanza` - defines the stanza name to restore ([pgBackRest docs](https://pgbackrest.org/user-guide.html#quickstart/configure-stanza))
-    - `delta` - defines usage the `--delta` option for restore using checksums ([pgBackRest docs](https://pgbackrest.org/user-guide.html#restore/option-delta); this will override `PGBACKREST_DELTA` if it is specified in `physicalRestore:options:envs`))
+    - `delta` - defines usage of the `--delta` option for restore using checksums ([pgBackRest docs](https://pgbackrest.org/user-guide.html#restore/option-delta); this will override `PGBACKREST_DELTA` if it is specified in `physicalRestore:options:envs`))
 - Set a proper version of Postgres Docker image (change the tag only leaving the image name itself as is, unless you need to use some custom built Postgres image and know what you are doing):
     - `databaseContainer:dockerImage`
 

@@ -39,7 +39,7 @@ Two consequences of it:
 Regarding the latter, it's analyzed in detail in
 [Zero-downtime Postgres schema migrations need this: lock_timeout and retries](https://postgres.ai/blog/20210923-zero-downtime-postgres-schema-migrations-lock-timeout-and-retries).
 
-An example of graceful approach, with low `lock_timeout` and retries:
+An example of a graceful approach, with low `lock_timeout` and retries:
 
 ```sql
 do $do$
@@ -71,10 +71,10 @@ end $do$;
 ```
 
 Note that in this particular example, subtransactions are implicitly used (the `BEGIN/EXCEPTION WHEN/END` block). Which
-can be a problem in case of very high XID growth rate (e.g., many writing transactions) and a long-running transaction –
+can be a problem in the case of a very high XID growth rate (e.g., many writing transactions) and a long-running transaction –
 this can trigger SubtransSLRU contention on standbys; see:
 [PostgreSQL Subtransactions Considered Harmful](https://postgres.ai/blog/20210831-postgresql-subtransactions-considered-harmful).
-In this case, implement the retry logic at transaction level.
+In this case, implement the retry logic at the transaction level.
 
 ## DEFAULT
 
@@ -116,13 +116,13 @@ use another default value for all future rows, we can:
 - use one `DEFAULT` value at column creation time,
 - change `DEFAULT` to a different value right after creation.
 
-If you use very old Postgres version (pre-11), consider to use backfilling to avoid long-lasting locking.
+If you use a very old Postgres version (pre-11), consider using backfilling to avoid long-lasting locking.
 
 ## NOT NULL
 
-Adding a NOT NULL constraint (that is required for a PK [re]definition), generally, requires a full-table scan there is
-no support of two-step addition to avoid long-lasting locking. However, when this constraint is needed for a new column,
-we can use this trick
+Adding a NOT NULL constraint (that is required for a PK [re]definition), generally, requires a full-table scan – there is
+no support for two-step addition to avoid long-lasting locking. However, when this constraint is needed for a new column,
+we can use this trick:
 
 1) Use some temporary DEFAULT combined with NOT NULL at column creation:
 
@@ -154,7 +154,7 @@ and we still need to backfill. This has to be done in batches, to avoid long-las
 1. As usual, for OLTP (web and mobile apps), it is recommended to find batch size so all `UPDATE`s do not exceed 1-2
    seconds.
 2. To be able to efficiently find the scope for the next batch, we can create an index on the new column and existing
-   PK (this index may be temporarily, to support efficient batching), and then drop at. This index can be partial. For
+   PK (this index may be temporary, to support efficient batching), and then drop it. This index can be partial. For
    example, if our new column is called `id_new` and the `DEFAULT` used at column creation time was `-1`:
 
 - Create supporting index:
@@ -173,7 +173,7 @@ and we still need to backfill. This has to be done in batches, to avoid long-las
    ```
 
 - Control the dead tuple counts and autovacuum behavior not to allow dead tuple count to be too high (leading to
-  bloat) – throttle the frequency `UPDATE`s if needed and/or issue manual `VACUUM` from time to time.
+  bloat) – throttle the frequency of `UPDATE`s if needed and/or issue manual `VACUUM` from time to time.
 - If the supporting index is not needed, drop it:
 
    ```sql
@@ -198,8 +198,8 @@ and we still need to backfill. This has to be done in batches, to avoid long-las
    (1 row)
    ```
 
-   And the value stored in `pg_attribute` in `attmissingval` is that one that is used for the rows that existed before
-   column was created:
+   And the value stored in `pg_attribute` in `attmissingval` is the one that is used for the rows that existed before
+   the column was created:
 
    ```sql
    nik=# select attmissingval from pg_attribute where attrelid = 't1'::regclass::oid and attname = 'c2';

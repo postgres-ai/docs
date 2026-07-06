@@ -26,11 +26,11 @@ create a new physical replica first, and then convert it to logical.
 
 This approach:
 
-- on the one hand, eliminates the need to execute initial data load step that can be fragile and quite stressful in case
-  of large, heavily-loaded DB, but
-- on another, the logical replica created in such way has everything that the source Postgres instance has.
+- on the one hand, eliminates the need to execute the initial data load step that can be fragile and quite stressful in case
+  of a large, heavily-loaded DB, but
+- on the other hand, the logical replica created in such a way has everything that the source Postgres instance has.
 
-So, this method suits better in case when you need all the data from the source be presented in the logical replica
+So, this method suits better in the case when you need all the data from the source to be present in the logical replica
 you're creating, and it is extremely useful if you work with very large, heavily-loaded clusters.
 
 The steps below are quite straightforward. In this case, we use a physical replica that replicates data immediately from
@@ -72,7 +72,7 @@ Additionally:
 
 ## Step 3: stop physical replica
 
-Shut down physical replica and keep it down during the next step. This is needed so its position is guaranteed to be in
+Shut down the physical replica and keep it down during the next step. This is needed so its position is guaranteed to be in
 the past compared to the logical slot we're going to create on the primary.
 
 ## Step 4: create publication, logical slot, and remember its LSN
@@ -115,12 +115,12 @@ auto-promotes. This can take some time. Once it's done, check it:
 select pg_is_in_recovery();
 ```
 
-- must return `f`, meaning that this node is now a primary itself (a clone) with position, corresponding to the position
+- must return `f`, meaning that this node is now a primary itself (a clone) with a position corresponding to the position
   of the replication slot on the source node.
 
 ## Step 6: create subscription and start logical replication
 
-Now, of the freshly created "clone", create logical subscription with `copy_data = false` and `create_slot = false`:
+Now, on the freshly created "clone", create a logical subscription with `copy_data = false` and `create_slot = false`:
 
 ```sql
 create subscription 'my_sub'
@@ -143,7 +143,7 @@ select * from pg_replication_slots;
 
 ## Finalize
 
-- Wait until the logical replication lags fully caught up (occasional acute spikes are OK).
+- Wait until the logical replication lag has fully caught up (occasional acute spikes are OK).
 - Return `wal_keep_size` (`wal_keep_segments`) to its original value on the primary.
 
 ## Additional notes

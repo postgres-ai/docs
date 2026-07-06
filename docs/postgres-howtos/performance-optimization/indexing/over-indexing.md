@@ -83,7 +83,7 @@ What to do:
 
 ## Indexes and fastpath=false (LWLock:LockManager contention)
 
-Have you noticed on the pictures above that when we reach index count 15, the nature of the curves changes, showing a
+Have you noticed in the pictures above that when we reach index count 15, the nature of the curves changes, showing a
 worse degradation than the linear trend that was observed before?
 
 Let's understand why this happens and how to deal with it.
@@ -109,7 +109,7 @@ How to check it – assuming we have a table `t1`:
 
 You will see that for N indexes on `t1`, N+1 `AccessShareLock` relation-level locks have been acquired.
 
-For first 16 locks, you'll see `true` in the `pg_locks.fastpath` column. For 17th and further, it is going to be
+For the first 16 locks, you'll see `true` in the `pg_locks.fastpath` column. For 17th and further, it is going to be
 `false`. This threshold is hard-coded in constant
 [FP_LOCK_SLOTS_PER_BACKEND](https://gitlab.com/postgres/postgres/blob/22655aa23132a0645fdcdce4b233a1fff0c0cf8f/src/include/storage/proc.h#L85).
 When `fastpath=false`, Postgres lock manager uses a slower, but more comprehensive method to acquire locks. Details can
@@ -117,10 +117,10 @@ be found
 [here](https://gitlab.com/postgres/postgres/blob/22655aa23132a0645fdcdce4b233a1fff0c0cf8f/src/backend/storage/lmgr/README#L70).
 
 In a highly concurrent environment, if we have `fastpath=false` locks, we might start observing `LWLock` contention,
-sometime a serious one – a lot of active sessions with `wait_event='LockManager'` (or `lock_manager` in PG13 or older)
+sometimes a serious one – a lot of active sessions with `wait_event='LockManager'` (or `lock_manager` in PG13 or older)
 in `pg_stat_activity`.
 
-This might happen both on the primary or on replicas, when two conditions are met:
+This might happen both on the primary and on replicas, when two conditions are met:
 
 1. High QPS – say 100 or more (depending on workload and hardware resources) for the observed query
 2. `fastpath=false` locks due to more than 16 relations involved (in Postgres, both tables and indexes are considered

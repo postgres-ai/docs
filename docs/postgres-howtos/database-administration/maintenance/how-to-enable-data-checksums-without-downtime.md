@@ -43,7 +43,7 @@ Per the [docs](https://postgresql.org/docs/current/app-initdb.html#APP-INITDB-DA
 However, I strongly recommend enabling data checksums for all clusters. If concerned about the overhead, test it.
 Example of a
 [synthetic benchmark](https://gitlab.com/postgres-ai/postgresql-consulting/tests-and-benchmarks/-/issues/44), which
-demonstrated a very low (~2%) of CPU load increased. In my opinion, even if this overhead was higher, it would still be
+demonstrated a very low (~2%) CPU load increase. In my opinion, even if this overhead was higher, it would still be
 worth having them, considering how important it is to promptly detect storage-level corruption.
 
 ## How to check if data checksums are enabled in an existing cluster

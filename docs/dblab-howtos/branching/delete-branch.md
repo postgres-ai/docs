@@ -25,7 +25,7 @@ Before you run any commands, install Database Lab CLI and initialize configurati
 - Command [`dblab branch`](/docs/reference-guides/dblab-client-cli-reference#command-branch)
 
 ### Delete branch
-Delete a database branch with `dblab branch` command, using `-d` or `--delete`:
+Delete a database branch with the `dblab branch` command, using `-d` or `--delete`:
 ```bash
 $ dblab branch -d test
 ```

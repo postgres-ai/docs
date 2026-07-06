@@ -27,7 +27,7 @@ estimated_time: 5 min
 "Slow" is a relative concept. In some cases, we might be happy with query latency 1 minute (or no?), while in other
 scenarios, even 1 ms might seem to be too slow.
 
-Decision when to apply optimization techniques is important for efficiency – as Donald Knuth famously stated in "The Art
+Deciding when to apply optimization techniques is important for efficiency – as Donald Knuth famously stated in "The Art
 of Computer Programming":
 
 > The real problem is that programmers have spent far too much time worrying about efficiency in the wrong places and at
@@ -48,7 +48,7 @@ requires optimization.
    depending on the case). Of course, non-user-facing queries such as those coming from background jobs, `pg_dump`, and so
    on, can last longer – assuming that the next principles are met.
 
-2. In the case of OLTP, the second question should be: is this query "read-only" or it changes the data (be it DDL or
+2. In the case of OLTP, the second question should be: is this query "read-only" or does it change the data (be it DDL or
    just writing DML – INSERT/UPDATE/DELETE)? In this case, in OLTP, we shouldn't allow it to run longer than a second or
    two, unless we are 100% sure that this query won't block other queries for long. For massive writes, consider
    splitting them in batches so each batch doesn't last longer than 1-2 seconds. For DDL, be careful with lock
@@ -64,7 +64,7 @@ requires optimization.
    progressing slowly, and do not run them often).
 
 4. Finally, even if a query is relatively fast – for instance, 10ms – it might still be considered too slow if its
-   frequency is high. For example, 10ms query running 1,000 times per second (you can check it via
+   frequency is high. For example, a 10ms query running 1,000 times per second (you can check it via
    `pg_stat_statements.calls`), then Postgres needs to spend 10 seconds *every* second to process this group of queries.
    In this case, if lowering down the frequency is hard, the query should be considered slow, and an optimization
    attempt needs to be performed, to reduce resource consumption (the goal here is to reduce
