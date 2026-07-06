@@ -19,7 +19,7 @@ Expert-level Postgres monitoring tool designed for humans and AI systems
 
 Built for senior DBAs, SREs, and AI systems who need rapid root cause analysis and deep performance insights. This isn't a tool for beginners — it's designed for Postgres experts who need to understand complex performance issues in minutes, not hours.
 
-Part of [Self-Driving Postgres](/blog/20250725-self-driving-postgres) - PostgresAI monitoring is a foundational component of PostgresAI's open-source Self-Driving Postgres (SDP) initiative, providing the advanced monitoring and intelligent root cause analysis capabilities essential for achieving higher levels of database automation.
+Part of [Self-Driving Postgres](/blog/20250725-self-driving-postgres) — PostgresAI monitoring is a foundational component of PostgresAI's open-source Self-Driving Postgres (SDP) initiative, providing the advanced monitoring and intelligent root cause analysis capabilities essential for achieving higher levels of database automation.
 
 ## Live demo
 Experience the full monitoring solution: https://demo.postgres.ai (login: demo / password: demo)

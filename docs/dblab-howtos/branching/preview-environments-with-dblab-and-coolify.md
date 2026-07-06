@@ -32,7 +32,7 @@ Before starting, ensure you have:
 
 ### 1.1 Create a new project
 
-Open the Coolify projects page and click `+ Add` button.
+Open the Coolify projects page and click the `+ Add` button.
 
 ![Coolify projects page](/assets/guides/preview-deployment-1.png)
 
@@ -385,7 +385,7 @@ jobs:
 ### 7.3 Test cleanup
 
 1. Close or merge the pull request
-2. Verify that cleanup workflow runs successfully
+2. Verify that the cleanup workflow runs successfully
 3. Check that DBLab resources are removed
 4. Verify that Coolify preview deployment is stopped
 

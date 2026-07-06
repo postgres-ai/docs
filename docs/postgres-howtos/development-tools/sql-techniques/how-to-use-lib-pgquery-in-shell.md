@@ -31,7 +31,7 @@ estimated_time: 5 min
 
 In [Day 12: How to find query examples for problematic pg_stat_statements records](/docs/postgres-howtos/performance-optimization/query-tuning/from-pgss-to-explain--how-to-find-query-examples)
 it was mentioned that query normalization can be done using [lib_pgquery](https://github.com/pganalyze/libpg_query). This
-library builds a tree representation of query text, and also computes so-called "fingerprint" – a hash of the normalized
+library builds a tree representation of query text, and also computes a so-called "fingerprint" – a hash of the normalized
 form of the query (query text where all parameters are removed).
 
 This is helpful in various cases, for example:
@@ -39,7 +39,7 @@ This is helpful in various cases, for example:
 - If you need to match normalized queries in `pg_stat_statements` with individual query texts from `pg_stat_activity` or
   Postgres logs, and you use Postgres version older than 14, where
   [compute_query_id](https://postgresqlco.nf/doc/en/param/compute_query_id/) was implemented to solve this problem.
-- If you use newer version of Postgres, but `compute_query_id` is `off`.
+- If you use a newer version of Postgres, but `compute_query_id` is `off`.
 - If you use query texts from different sources and/or are unsure that the standard `query_id` (aka "`queryid"` - the
   naming is not unified across tables) can be a reliable way of matching.
 

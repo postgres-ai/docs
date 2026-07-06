@@ -21,11 +21,11 @@ Check out the DBLab installation tutorial:
 ## Prerequisites
 - [AWS cloud account](https://aws.amazon.com)
 - SSH client (available by default on Linux and MacOS; Windows users: consider using [PuTTY](https://www.putty.org/))
-- A key pair already generated for the AWS region that we are going to use during the installation. Both RSA or ed25519 will work. If you're not familiar with the process of creation a key pair in AWS, read their documentation: ["Create key pairs"](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html).
+- A key pair already generated for the AWS region that we are going to use during the installation. Both RSA and ed25519 will work. If you're not familiar with the process of creating a key pair in AWS, read their documentation: ["Create key pairs"](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html).
 
 ## Steps to install DBLab Engine from AWS Marketplace
 The first steps are trivial:
-- Log in into AWS: https://console.aws.amazon.com/
+- Log in to AWS: https://console.aws.amazon.com/
 - Open [the DBLab on AWS Marketplace page](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec)
 
 And press the "View purchase options" button:
@@ -70,7 +70,7 @@ Now, it is time to fill the form that defines the AWS resources that we need:
 Next, on the same page:
 - define the size of EBS volume that will be created (you can find pricing calculator here: ["Amazon EBS pricing"](https://aws.amazon.com/ebs/pricing/)):
     - put as many GiB as roughly your database has (it is always possible to add more space without downtime),
-    - define how many snapshots you'll be needed (minimum 2);
+    - define how many snapshots you'll need (minimum 2);
 - define secret token (at least 9 characters are required!) – it will be used to communicate with DBLab API, CLI, and UI.
 
 Then, press "Next".
@@ -105,7 +105,7 @@ To troubleshoot:
 - Use SSH to connect to the EC2 instance
 - Check the containers that are running: `sudo docker ps`
 - Check the DBLab Engine container's logs: `sudo docker logs dblab_server`
-- If needed, check Postgres logs for the main branch. They are located in `/var/lib/dblab/dblab_pool/dataset_1/data/log` for the first snapshot of the database, in ``/var/lib/dblab/dblab_pool/dataset_2/data/log` for the second one (if it's already fetched); if you've configured DBLab to have more than 2 snapshots, check out the other directories too (`/var/lib/dblab/dblab_pool/dataset_$N/data/log`, where `$N` is the snapshot number, starting with `1`)
+- If needed, check Postgres logs for the main branch. They are located in `/var/lib/dblab/dblab_pool/dataset_1/data/log` for the first snapshot of the database, in `/var/lib/dblab/dblab_pool/dataset_2/data/log` for the second one (if it's already fetched); if you've configured DBLab to have more than 2 snapshots, check out the other directories too (`/var/lib/dblab/dblab_pool/dataset_$N/data/log`, where `$N` is the snapshot number, starting with `1`)
 
 ## Getting support
 With DBLab installed from AWS Marketplace, guaranteed vendor support is included – please use [one of the available ways to contact](https://postgres.ai/contact).

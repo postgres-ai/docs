@@ -38,8 +38,8 @@ Note that `(a)` is redundant to `(a, b)` but not to `(b, a)`. Accordingly, `(b)`
 
 Further, we'll also assume that:
 
-- unique indexes should not be considered in this kind of analysis because they have special purpose;
-- indexes on expression follow the same rules – we just consider each expression similarly as columns, and expression
+- unique indexes should not be considered in this kind of analysis because they have a special purpose;
+- indexes on expressions follow the same rules – we just consider each expression similarly as columns, and expression
   values should be fully matched;
 - in case of partial indexes, the conditions should be fully matched (this rule can be adjusted with certain
   assumptions, but we won't do that);
@@ -52,7 +52,7 @@ The same [6 reasons that we discussed for the unused indexes](/docs/postgres-how
 ## General algorithm of unused indexes cleanup
 
 1. Using the query provided below, identify the sets of redundant indexes. It is enough to analyze only one node in a
-   cluster – e.g. the primary. It doesn't matter when stats were reset because this analysis is based only the static
+   cluster – e.g. the primary. It doesn't matter when stats were reset because this analysis is based only on the static
    information (DB structure).
 
 2. For each index that is considered redundant, perform a manual analysis to avoid mistakes. If not fully sure, remove

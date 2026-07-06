@@ -11,7 +11,7 @@ You can use any PostgreSQL command with Joe's [`exec`](/docs/reference-guides/jo
 
 ## Basic
 1. Execute [`exec`](/docs/reference-guides/joe-bot-commands-reference#exec) command with your query, e.g. `exec create index on pgbench_accounts (bid)`.
-2. After a moment session to execute your query and experiment with the database will be created, if it didn't exist before.
+2. After a moment, a session to execute your query and experiment with the database will be created, if it didn't exist before.
 3. When the query is successfully executed you will see the ✅ **OK** status and the time it took to complete. The session is still present. You can [check new query plans](/docs/dblab-howtos/joe-bot/get-query-plan) or make other changes now. Also, you can reset the state of the session with the `reset` command, see the [How to reset the state of a Joe session](/docs/dblab-howtos/joe-bot/reset-session) guide.
 
 
@@ -24,9 +24,9 @@ In the case of big tables when index creation may take many hours you can experi
 :::info
 Joe bot uses a restricted database user that is not allowed to create extensions. Therefore, to use hypothetical indexes, you must configure DBLab Engine to install the HypoPG extension at snapshot preparation time. To do so:
 - Create a new SQL file with the query: `create extension if not exists hypopg;`
-- In the `queryPreprocessing` section, specify the option `queryPath ` to create HypoPG extension
+- In the `queryPreprocessing` section, specify the option `queryPath ` to create the HypoPG extension
 
-Fore more details, see [DBLab Engine configuration](/docs/reference-guides/database-lab-engine-configuration-reference).
+For more details, see [DBLab Engine configuration](/docs/reference-guides/database-lab-engine-configuration-reference).
 :::
 
 ## Related guides

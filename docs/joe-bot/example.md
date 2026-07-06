@@ -7,7 +7,7 @@ sidebar_label: Demo and example
 
 ![Demo](/assets/joe/demo.gif)
 
-If you have Slack app installed, try the live demonstration:
+If you have the Slack app installed, try the live demonstration:
 
 1. Add the Database Lab community to your Slack: https://slack.postgres.ai/
 1. Go to the [#joe-bot-demo](https://database-lab-team.slack.com/archives/CTL5BB30R) public channel
@@ -95,4 +95,4 @@ where likes > 10 and created > '2019-10-01';
 - Comparing to the previous analysis:
     - **Index Only Scan** instead of Index Scan
     - Execution Time: *~ 150 ms*  – **1000x faster**
-    - Shared buffers reads: 778 (~6.10 MiB) from the OS file cache, including disk I/O – **218x fewer data**
+    - Shared buffers reads: 778 (~6.10 MiB) from the OS file cache, including disk I/O – **218x less data**

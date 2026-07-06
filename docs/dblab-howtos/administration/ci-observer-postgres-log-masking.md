@@ -14,7 +14,7 @@ keywords:
 ## Configure masking for PostgreSQL log
 When Database Lab's CI Observer is used for automated testing of database migrations, it stores PostgreSQL log in DBLab Platform's centralized storage. You can optionally configure masking rules for sensitive data in the PostgreSQL log. Such rules will be continuously applied before sending any PostgreSQL log entries to the Platform's storage.
 
-You can define masking rules in the form of regular expressions. To do it, open the DBLab Engine configuration file (usually, `~/.dblab/engine/configs/server.yml`; see config file examples [here](https://gitlab.com/postgres-ai/database-lab/-/tree/v4.1.3/engine/configs)) and define subsection `replacementRules` in the section `replacementRules`. A basic example:
+You can define masking rules in the form of regular expressions. To do it, open the DBLab Engine configuration file (usually, `~/.dblab/engine/configs/server.yml`; see config file examples [here](https://gitlab.com/postgres-ai/database-lab/-/tree/v4.1.3/engine/configs)) and define subsection `replacementRules` in the section `observer`. A basic example:
 ```yaml
 observer:
   replacementRules:
@@ -33,13 +33,13 @@ ip: *.*.*.*, email: '***@example.com'
 ```
 
 
-You can specify as many masking rules as you need, in key-value format. In example above, two rules are specified: one is for masking all IP addresses, and another to mask all emails.
+You can specify as many masking rules as you need, in key-value format. In the example above, two rules are specified: one is for masking all IP addresses, and another to mask all emails.
 
 Each masking rule consists of a key and a value:
 - Keys are regular expressions (see details below)
-- Values is replacement templates, where substitution is supported (`$1`, `$2`, etc.)
+- Values are replacement templates, where substitution is supported (`$1`, `$2`, etc.)
 
-Use backslash(`\`) to escape special characters: https://yaml.org/spec/1.2/spec.html#id2788097.
+Use a backslash (`\`) to escape special characters: https://yaml.org/spec/1.2/spec.html#id2788097.
 
 :::caution
 When many sophisticated regular expressions are used, one might expect a slowdown of Postgres log processing. Try to define as few rules as possible, as simple as possible.

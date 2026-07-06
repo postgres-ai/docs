@@ -7,7 +7,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 ## GUI
-1. With Joe chatbot sessions (based Database Lab clones) you can perform any changes and not be afraid to damage the data. For example, connect to your clone and drop any table.
+1. With Joe chatbot sessions (based on Database Lab clones) you can perform any changes and not be afraid to damage the data. For example, connect to your clone and drop any table.
 
 <Tabs
   groupId="joe-mode"

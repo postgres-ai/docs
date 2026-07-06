@@ -19,7 +19,7 @@ curl -sSL dblab.sh | bash
 A Database Lab instance might be running behind firewalls and opening proper ports might be impossible or prohibited. In this case, SSH keys should be on the server with DBLab Engine in order to use this connection option.
 :::
 
-In a separate terminal tab launch SSH port forwarding. Use `http://localhost:2344` as URL in the step 3 below.
+In a separate terminal tab launch SSH port forwarding. Use `http://localhost:2344` as the URL in step 3 below.
 ```
 ssh -NTML 2344:localhost:2345 ssh://USERNAME@HOSTNAME:22 -i ~/.ssh/id_rsa
 ```

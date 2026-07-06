@@ -9,21 +9,21 @@ As the first step, you need to set up a machine for DBLab Engine instance. See t
 
 ## Configuration
 ### Jobs
-In order to set up DBLab Engine to automatically get the data from database using [dump/restore](https://www.postgresql.org/docs/current/app-pgdump.html) you need to use following jobs:
+In order to set up DBLab Engine to automatically get the data from a database using [dump/restore](https://www.postgresql.org/docs/current/app-pgdump.html) you need to use the following jobs:
 - [logicalDump](/docs/reference-guides/database-lab-engine-configuration-reference#job-logicaldump)
 - [logicalRestore](/docs/reference-guides/database-lab-engine-configuration-reference#job-logicalrestore)
 - [logicalSnapshot](/docs/reference-guides/database-lab-engine-configuration-reference#job-logicalsnapshot)
 
 ### Options
 Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.1.3/engine/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml` and update the following options:
-- Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine
+- Set a secure `server:verificationToken` — it will be used to authorize API requests to the Engine
 - Set connection options in `retrieval:spec:logicalDump:options:source:connection`:
     - `dbname`: database name to connect to
     - `host`: database server host
     - `port`: database server port
     - `username`: database user name
     - `password`: database master password (can be also set as `PGPASSWORD` environment variable of the Docker container)
-- Set proper version in Postgres Docker image tag (change the images itself only if you know what are you doing):
+- Set a proper version in Postgres Docker image tag (change the image itself only if you know what you are doing):
     - `databaseContainer:dockerImage`
 
 ## Run DBLab Engine
@@ -73,7 +73,7 @@ sudo rm -rf /var/lib/dblab/dblab_pool/dump
 ## Ways to prepare a snapshot
 
 ### How to dump and restore a database
-A basic way of restoring database from the source contains three steps:
+A basic way of restoring a database from the source contains three steps:
 - `logicalDump` where DLE dumps from the source into files
 - `logicalRestore` where downloaded dumps are restored into the DLE instance
 - `logicalSnapshot` where a snapshot is taken
@@ -121,7 +121,7 @@ For the `logicalRestore` job provide with the `dumpLocation` option a dump locat
 The `dumpLocation` option must provide a file or directory that contains dump files of various formats: plain, custom, directory.
 You can specify both a separate file and directory containing dumps to restore. Please note that DLE will skip dumps of unknown format.
 
-DLE supports consecutive (but single-threaded) restoring multiple dumps. You even can mix dumps of different formats in a `dumpLocation` directory.
+DLE supports consecutive (but single-threaded) restoring multiple dumps. You can even mix dumps of different formats in a `dumpLocation` directory.
 
 For example,
 ```yaml
@@ -183,13 +183,13 @@ This means that you can specify the `dumpLocation` parameters pointing not only 
 
 
 ### Direct restore to DBLab Engine instance
-DLE provides a way of restoring from the source on the fly. It's useful to dump and restore a database without saving an intermediate file - so called `immediateRestore`
+DLE provides a way of restoring from the source on the fly. It's useful to dump and restore a database without saving an intermediate file — the so-called `immediateRestore`.
 The advantage of this method is that no additional disk space is required to restore the database.
 
 Keep in mind that unlike a classic "logicalRestore", this option does not support parallelization (specify `parallelJobs: 1` for logicalDump job). 
 It is always a single-threaded (both for dumping on the source, and restoring on the destination end).
 
-To restore directly, you do not need to use "logicalRestore" job. Just define a `logicalDump` job and uncomment the `immediateRestore` section inside it.
+To restore directly, you do not need to use the "logicalRestore" job. Just define a `logicalDump` job and uncomment the `immediateRestore` section inside it.
 
 For example,
 ```yaml
@@ -219,7 +219,7 @@ retrieval:
 ```
 
 ## Logical dump and restore of multiple databases
-By default, DLE dumps and restores all available databases. To manage list of databases you may option (`databases`). Add this option to  `logicalDump` and `logicalRestore` jobs to specify a list of databases that must be copied.
+By default, DLE dumps and restores all available databases. To manage the list of databases you may use an option (`databases`). Add this option to `logicalDump` and `logicalRestore` jobs to specify a list of databases that must be copied.
 Do not specify this option to take all databases.
 
 
@@ -237,7 +237,7 @@ To dump multiple databases, add a `databases` section to the existing `logicalDu
           databaseN:
 ```
 
-You could dump database partially by providing the list of tables to be dumped:
+You could dump a database partially by providing the list of tables to be dumped:
 ```yaml
   spec:
     logicalDump:
@@ -253,7 +253,7 @@ You could dump database partially by providing the list of tables to be dumped:
           databaseN:
 ```
 
-Or do not add `tables` section to dump all tables
+Or do not add the `tables` section to dump all tables.
 
 ### Logical restore job
 To restore multiple databases, add a `databases` section to the existing `logicalRestore` job listing the databases to be restored. For instance:
@@ -268,7 +268,7 @@ To restore multiple databases, add a `databases` section to the existing `logica
           database2:
           databaseN:
 ```
-Or do not add `databases` section to restore all databases
+Or do not add the `databases` section to restore all databases.
 
 
 You could specify a non-default format of dumps (both: files and directories).
@@ -280,7 +280,7 @@ Supported [dump formats](https://www.postgresql.org/docs/current/app-pgdump.html
 
 By default, the logical restore job uses a `directory` dump format. The DBLab Engine will extract the database name from dump files.
 
-You could restore database partially by providing the list of tables to be restored:
+You could restore a database partially by providing the list of tables to be restored:
 ```yaml
   spec:
     logicalRestore:

@@ -43,7 +43,7 @@ roughly:
 
 And (important!) always provide the link to your sources; you get two benefits from this:
 
-- advertise good source and pay them back;
+- advertise good sources and pay them back;
 - share the responsibility to some extent (very helpful if you are not very experienced yet; everyone might make a
   mistake).
 
@@ -74,7 +74,7 @@ Two types of database experiments:
    More about this type of experiments: [Day 13: How to benchmark](/docs/postgres-howtos/performance-optimization/benchmarks/how-to-benchmark).
 
 2. Single-session experiments – testing one or a sequence of SQL queries using a single session (sometimes, two), to
-   check query syntax, study individual query behavior, optimize particular query, etc.
+   check query syntax, study individual query behavior, optimize a particular query, etc.
 
    These experiments can be conducted in shared environments, on weaker machines. However, to study query performance,
    you need to have the same PG version, same or similar database, and matching planner settings (how to do it:

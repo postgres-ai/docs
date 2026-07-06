@@ -24,14 +24,14 @@ In [day 60](/docs/postgres-howtos/schema-design/ddl-operations/how-to-add-a-colu
 low `lock_timeout` and retries (also
 see: [Zero-downtime Postgres schema migrations need this: lock_timeout and retries](https://postgres.ai/blog/20210923-zero-downtime-postgres-schema-migrations-lock-timeout-and-retries)).
 
-There we used `max_attempts` set to `1000` and this is probably too many, but interesting question is: how to understand
+There we used `max_attempts` set to `1000` and this is probably too many, but the interesting question is: how to understand
 what's blocking our DDL, if it doesn't succeed after many retries?
 
 The first thing to do is to enable `log_lock_waits`. In this case, after `deadlock_timeout` (`1s` by default; and this
 setting defines when deadlock detection happens), you'll see some information about our blocked session.
 
-But we don't want to start with `lock_timeout` more than `1s` – it would be too invasive. Solution is to set a lower
-`deadlock_timeout` right in session. Example (assuming that there is another session just read from table `t` and keeps
+But we don't want to start with `lock_timeout` more than `1s` – it would be too invasive. The solution is to set a lower
+`deadlock_timeout` right in the session. Example (assuming that there is another session that just read from table `t` and keeps the
 transaction open):
 
 ```sql
@@ -135,9 +135,9 @@ In this case, we can do this:
 
    This should be enough for troubleshooting of failing DDL attempts.
 
-A couple of more notes:
+A couple more notes:
 
-- Instead of anonymous DO block, it's probably better to wrap PL/pgSQL code into a function, so the `CONTEXT` and
+- Instead of an anonymous DO block, it's probably better to wrap PL/pgSQL code into a function, so the `CONTEXT` and
   `STATEMENT` parts of the log messages don't consume too much space.
 - Such a function then can be invoked by `pg_cron`, so you have a permanent observability tool. But it should be taken
   into account that it's a whole backend that runs this, so it might be not wise to have it constantly running –

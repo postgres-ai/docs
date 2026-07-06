@@ -57,10 +57,10 @@ To address this, we can use this approach:
 2. Assuming we want to use N reindexing sessions, build the full list of indexes, with the table names they belong to,
    and "assign" each table to a particular reindexing session. See the query below that does it.
 
-3. Using this "assignment", divide the whole list of indexes to N separate lists, so all the indexes for a particular
+3. Using this "assignment", divide the whole list of indexes into N separate lists, so all the indexes for a particular
    table are present only in a single list – and now we can just run N sessions using these N lists.
 
-For the step 2, here is a query that can help:
+For step 2, here is a query that can help:
 
 ```sql
 \set NUMBER_OF_SESSIONS 10

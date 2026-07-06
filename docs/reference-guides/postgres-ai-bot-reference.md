@@ -143,7 +143,7 @@ Access and analyze experiment's results, or get pipeline's job statuses if the e
 | **pipeline_id** (required) | `string` | Pipeline ID. | N/A         | `12345`   |
 
 ## Tool `sql_execute`
-Connects to Postgres database and executes SQL query. If database credentials are provided, they are used to establish Postgres connection. Otherwise, a new DBLab clone is created using `create_dblab_clone` and then clone's credentials are used.
+Connects to Postgres database and executes SQL query. If database credentials are provided, they are used to establish Postgres connection. Otherwise, a new DBLab clone is created using `create_dblab_clone` and then the clone's credentials are used.
 
 ### Input parameters
 
@@ -164,7 +164,7 @@ Connects to Postgres database and executes SQL query. If database credentials ar
 
 
 ## Tool `create_dblab_clone`
-Create a new DBLab clone for a specific Postgres major version (`16` by default). This function is called when user wants to execute a SQL query but hasn't provided DB connection information.
+Create a new DBLab clone for a specific Postgres major version (`16` by default). This function is called when a user wants to execute a SQL query but hasn't provided DB connection information.
 
 ### Input parameters
 

@@ -27,12 +27,12 @@ Don't use subtransactions, unless absolutely necessary.
 
 ## What are subtransactions?
 
-A subtransaction, also known as "nested transaction", is a transaction started by instruction within the scope of an
+A subtransaction, also known as "nested transaction", is a transaction started by an instruction within the scope of an
 already started transaction (src: [Wikipedia](https://en.wikipedia.org/wiki/Nested_transaction)). This feature allows
 users to partially roll back a transaction, which is helpful in many cases: fewer steps need to be repeated to retry the
 action if some error occurs.
 
-The SQL standard defines two basic instructions describing this mechanism: `SAVEPOINT` and extension to the `ROLLBACK`
+The SQL standard defines two basic instructions describing this mechanism: `SAVEPOINT` and an extension to the `ROLLBACK`
 statement – `ROLLBACK TO SAVEPOINT`. Postgres implements it, allowing slight deviations from the standard syntax – for
 example, allowing the omission of the word `SAVEPOINT` in the `RELEASE` and `ROLLBACK` statements.
 
@@ -56,7 +56,7 @@ An example:
 
 ## Recommendations
 
-The only actual recommendation I have for any project that aims to grow OLTP-like workload (web and mobile apps) is:
+The only actual recommendation I have for any project that aims to grow an OLTP-like workload (web and mobile apps) is:
 
 > wherever possible, avoid subtransactions
 

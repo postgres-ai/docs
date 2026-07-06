@@ -13,8 +13,8 @@ DBLab Engine must be version `4.0` or higher.
    ![Database Lab instance page / Create branch](/assets/guides/create-branch-1.png)
 3. Click the **Create branch** button.
    ![Database Lab instance page / Create branch](/assets/guides/create-branch-2.png)
-4. Fill the **Branch name** field with a meaningful name.
-5. (optional) Change the **Parent branch** and **Snapshot ID** if needed.
+4. Fill in the **Branch name** field with a meaningful name.
+5. (Optional) Change the **Parent branch** and **Snapshot ID** if needed.
 6. Click the **Create branch** button.   
    ![Database Lab instance page / Create branch](/assets/guides/create-branch-3.png)
 7. You will be redirected to the **Database Lab branch** page.

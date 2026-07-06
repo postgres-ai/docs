@@ -254,7 +254,7 @@ enterprise:
 --- 
 
 ## Enterprise environment variables
-Changing these options you confirm that you have active subscription to [Postgres.ai Platform](https://postgres.ai/console/) Enterprise Edition)
+Changing these options you confirm that you have an active subscription to [Postgres.ai Platform](https://postgres.ai/console/) Enterprise Edition.
 
 ### `EE_QUOTA_LIMIT`
 - (integer, default: `10`), limits request rates, works in pair with `EE_QUOTA_INTERVAL`

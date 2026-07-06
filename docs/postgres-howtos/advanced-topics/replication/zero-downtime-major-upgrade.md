@@ -39,7 +39,7 @@ on [zero downtime Postgres upgrades](https://news.ycombinator.com/item?id=386161
 [Alexander Sosna](https://twitter.com/xxorde) (GitLab)
 presented [a talk](https://postgresql.eu/events/pgconfeu2023/schedule/session/4791-how-we-execute-postgresql-major-upgrades-at-gitlab-with-zero-downtime/)
 explaining how GitLab's large clusters were upgraded under heavy load without any downtime – I highly recommend looking
-at that work
+at that work.
 
 There are many details behind the proper zero downtime upgrade, many challenges to solve, and here I present only a
 high-level plan. It works well for very large (dozens of TiB) clusters, with many replicas, and working under high TPS
@@ -50,7 +50,7 @@ The detailed material will require several separate howtos to be written.
 
 The process consists of 2 steps:
 
-1) **UPGRADE:** New cluster is created, running on new Postgres major version.
+1) **UPGRADE:** A new cluster is created, running on a new Postgres major version.
 
 2) **SWITCHOVER:** step by step switchover of the traffic.
 
@@ -88,15 +88,15 @@ Steps:
 
 8. Run `pg_upgrade --link` on the new cluster's leader.
 
-9. Use `rsync --hard-links --size-only` on the new cluster's replicas – this is disputable step (see
+9. Use `rsync --hard-links --size-only` on the new cluster's replicas – this is a disputable step (see
    details [here](https://postgresql.org/message-id/flat/CAM527d8heqkjG5VrvjU3Xjsqxg41ufUyabD9QZccdAxnpbRH-Q%40mail.gmail.com)),
    but this is what most people use for in-place (w/o logical replication) upgrades with `pg_upgrade --link`, and there
-   is no another fast alternative invented yet.
+   is no other fast alternative invented yet.
 
 10. Configure new cluster's leader (now primary already) to use logical replication – create subscription,
     with `copy_data = false` and let it catch up with the working old cluster.
 
-During all these steps the old cluster is up and running, and new cluster is invisible to users. This gives you a huge
+During all these steps the old cluster is up and running, and the new cluster is invisible to users. This gives you a huge
 benefit of testing the whole process right in production (after proper testing in lower environments).
 
 ## Step 2: SWITCHOVER
@@ -105,7 +105,7 @@ First, it makes sense to switch over the read-only (RO) traffic. If the applicat
 redirect only part of the RO traffic to new replicas. This would require an advanced replication lag detection in the
 load balancing code
 (see:
-[How to determine the replication lag - Hybrid case: logical & physical](/docs/postgres-howtos/monitoring-troubleshooting/system-monitoring/how-to-determine-the-replication-lag#hybrid-case-logical--physical).
+[How to determine the replication lag - Hybrid case: logical & physical](/docs/postgres-howtos/monitoring-troubleshooting/system-monitoring/how-to-determine-the-replication-lag#hybrid-case-logical--physical)).
 
 When it is time to redirect the RW traffic, to achieve zero downtime, one can use PgBouncer's PAUSE/RESUME. If there are
 multiple PgBouncer nodes (running on separate hosts/ports, or involving `SO_REUSEPORT`), it is important to implement a

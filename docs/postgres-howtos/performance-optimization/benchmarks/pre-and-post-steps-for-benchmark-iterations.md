@@ -27,7 +27,7 @@ before and after each iteration:
 
 1. Before: flush the caches (or, conversely, warm them up).
 2. Before: reset cumulative statistics.
-3. After: save statistics and other forms of benchmark artefacts.
+3. After: save statistics and other forms of benchmark artifacts.
 
 The approach described here allows conducting benchmarks in a unified way.
 

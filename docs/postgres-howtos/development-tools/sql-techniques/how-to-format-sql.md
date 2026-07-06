@@ -209,7 +209,7 @@ limit 10;
 ## 5) Code blocks
 
 Root keywords should be on their own line in all cases except when followed by only one dependent word. If there are
-more than one dependent words, they should form a column that is left-aligned and indented to the left of the root
+more than one dependent word, they should form a column that is left-aligned and indented to the left of the root
 keyword.
 
 ✅ Good:

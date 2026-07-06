@@ -181,7 +181,7 @@ Container names include a DLE RuntimeID, such as `dblab_embedded_ui_bt48bvi9c0h0
 - `dblab_engine_name`: `<dle_container_name>`
 
 #### Responsibility
-- provides a visual user interface (UI) for interacting with the DLE.
+- Provides a visual user interface (UI) for interacting with the DLE
 
 #### How to manage
 Automatically starts and stops based on configuration settings in the `embeddedUI` section.

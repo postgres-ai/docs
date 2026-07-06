@@ -66,10 +66,10 @@ Configure a new Slack App in order to use Joe in Slack and add the app to your t
 1. Create `#db-lab` channel in your Slack Workspace (You can use another channel name).
 
 1. [Create a new Slack App](https://api.slack.com/apps?new_app=1).
-   * Choose *From an app manifest* option in popup.
+   * Choose *From an app manifest* option in the popup.
      ![Slack App - create app from app manifest](/assets/joe/tutorial-slack-create-app.png)
 
-   * Paste next yaml.
+   * Paste the following YAML.
 ```yaml
 _metadata:
   major_version: 1
@@ -172,5 +172,5 @@ Instead of working using insecure HTTP, you can set up NGINX with SSL enabled an
 See available configuration options [here](/docs/reference-guides/joe-bot-configuration-reference).
 
 :::info Have questions?
-Reach out to our team [here](https://postgres.ai/contact/), we'll be happy to help!
+Reach out to our team [here](https://postgres.ai/contact/) — we'll be happy to help!
 :::

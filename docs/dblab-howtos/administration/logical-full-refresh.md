@@ -3,10 +3,10 @@ title: How to refresh data when working in the "logical" mode
 sidebar_label: Full refresh for "logical" mode
 ---
 
-For the "logical" provisioning mode, the "sync" instance is not yet supported (although, it is possible to implement based on logical replication) and the only option to get fresh data on DBLab Engine is to refresh it fully. Follow these instructions to automate this process. Note, that it is designed for ZFS; if you have a different setup, adjust the snippets accordingly. 
+For the "logical" provisioning mode, the "sync" instance is not yet supported (although, it is possible to implement based on logical replication) and the only option to get fresh data on DBLab Engine is to refresh it fully. Follow these instructions to automate this process. Note that it is designed for ZFS; if you have a different setup, adjust the snippets accordingly. 
 
 :::caution
-Note, that the process described here requires a maintenance window (brief period of downtime) for the DBLab Engine. Also, the existing clones are deleted and completely lost during the process. It means that the proper planning of the maintenance windows is needed. 
+Note that the process described here requires a maintenance window (brief period of downtime) for the DBLab Engine. Also, the existing clones are deleted and completely lost during the process. It means that the proper planning of the maintenance windows is needed. 
 :::
 
 If you are using the "physical" provisioning mode, read [how to configure the "sync" instance](/docs/dblab-howtos/administration/postgresql-configuration#the-sync-instance) instead.
@@ -45,7 +45,7 @@ sudo zpool destroy dblab_pool
 ```
 
 ### 2. Set $DBLAB_DISK
-Further, we will need `$DBLAB_DISK` environment variable. It must contain the device name corresponding to the disk where all the DBLab Engine data will be stored.
+Further, we will need the `$DBLAB_DISK` environment variable. It must contain the device name corresponding to the disk where all the DBLab Engine data will be stored.
 
 To understand what needs to be specified in `$DBLAB_DISK` in your particular case, check the output of `lsblk`:
 ```bash

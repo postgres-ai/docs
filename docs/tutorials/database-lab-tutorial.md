@@ -5,7 +5,7 @@ keywords:
   - "DBLab tutorial"
   - "Start using DBLab Engine"
   - "PostgresAI tutorial"
-description: In this tutorial, we are going set up a DBLab Engine in the Cloud. DBLab is used to boost software development and testing processes via enabling ultra-fast provisioning of databases of any size.
+description: In this tutorial, we are going to set up a DBLab Engine in the Cloud. DBLab is used to boost software development and testing processes via enabling ultra-fast provisioning of databases of any size.
 ---
 
 DBLab Engine is used to boost software development and testing processes by enabling ultra-fast provisioning of databases of any size.
@@ -43,7 +43,7 @@ If your cloud vendor is not supported by Option 1 or if you are using an on-prem
 In both scenarios, your data remains securely within your infrastructure.
 
 
-## Step 1. Deploying DBLab in Cloud
+## Step 1. Deploying DBLab in cloud
 ### Prerequisites
 - Sign up for an account at https://console.postgres.ai/, using one of four supported methods: Google, LinkedIn, GitHub, GitLab
 - [Create](https://console.postgres.ai/addorg) a new organization
@@ -113,7 +113,7 @@ Review the specifications of the virtual machine, and click "Create DBLab":
     <img src="/assets/dle-platform/Platform_DLE_step9.v2.png" alt="DBLab Engine in DBLab Platform: step 9" width="50%"/>
 </p>
 
-Select the installation method and follow the instructions to create server and install DBLab SE:
+Select the installation method and follow the instructions to create a server and install DBLab SE:
 <p align="center">
     <img src="/assets/dle-platform/Platform_DLE_step10.v3.png" alt="DBLab Engine in DBLab Platform: step 10" />
 </p>
@@ -122,7 +122,7 @@ Select the installation method and follow the instructions to create server and 
 To perform the initial deployment, a new temporary SSH key will be generated and added to the Cloud. After the deployment is completed, this key will be deleted and the SSH key that was specified in the "ssh_public_keys" variable will be added to the server.
 :::
 
-After running the deployment command, You need to wait a few minutes, while all resources are provisioned and DBLab setup is complete. Check out the "usage instructions" – once DBLab API and UI are ready, you'll see the ordered list of instructions on how to connect to UI and API.
+After running the deployment command, you need to wait a few minutes, while all resources are provisioned and DBLab setup is complete. Check out the "usage instructions" – once DBLab API and UI are ready, you'll see the ordered list of instructions on how to connect to UI and API.
 
 Example:
 
@@ -188,7 +188,7 @@ Now UI should be available at http://127.0.0.1:2346
 Currently, configuring DBLab in UI allows config changes only for the "logical" mode of data retrieval (dump/restore) – the only available method for managed PostgreSQL cloud services such as RDS Postgres, RDS Aurora Postgres, Azure Postgres, or Heroku. "Physical" mode is not yet supported in UI but is still possible (through SSH connection and [editing DBLab config file directly](/docs/dblab-howtos/administration/engine-manage)). More about [various data retrieval options for DBLab](/docs/dblab-howtos/administration/data).
 :::
 
-Enter the verification token, you have created earlier.
+Enter the verification token you have created earlier.
 
 <p align="center">
     <img src="/assets/dle-platform/DLE_config_step1.png" alt="DBLab Engine configuration: step 1" />
@@ -264,7 +264,7 @@ You also can click the "Enable deletion protection" box. When enabled no one can
 # Replace with your server IP and clone port
 ssh -N -L 6000:127.0.0.1:6000 ubuntu@35.183.123.243
 ```
-3. Here we assume that you have `psql` installed on your working machine. In the terminal, type `psql` and paste the **psql connection string** field contents. Change the database name `DBNAME` parameter, you can always use `postgres` for the initial connection.
+3. Here we assume that you have `psql` installed on your working machine. In the terminal, type `psql` and paste the **psql connection string** field contents. Change the database name `DBNAME` parameter — you can always use `postgres` for the initial connection.
 4. Run the command and type the password you've set during the clone creation.
 5. Test established connection by listing tables in the database using `\dt`.
 ```bash
@@ -495,7 +495,7 @@ To troubleshoot:
 - Use SSH to connect to the DBLab server
 - Check the containers that are running: `sudo docker ps`
 - Check the DBLab container's logs: `sudo docker logs dblab_server`
-- If needed, check Postgres logs for the main branch. They are located in `/var/lib/dblab/dblab_pool/dataset_1/data/log` for the first snapshot of the database, in ``/var/lib/dblab/dblab_pool/dataset_2/data/log` for the second one (if it's already fetched); if you've configured DBLab to have more than 2 snapshots, check out the other directories too (`/var/lib/dblab/dblab_pool/dataset_$N/data/log`, where `$N` is the snapshot number, starting with `1`)
+- If needed, check Postgres logs for the main branch. They are located in `/var/lib/dblab/dblab_pool/dataset_1/data/log` for the first snapshot of the database, in `/var/lib/dblab/dblab_pool/dataset_2/data/log` for the second one (if it's already fetched); if you've configured DBLab to have more than 2 snapshots, check out the other directories too (`/var/lib/dblab/dblab_pool/dataset_$N/data/log`, where `$N` is the snapshot number, starting with `1`)
 
 ## Getting support
 With DBLab installed from DBLab Platform, guaranteed vendor support is included – please use [one of the available ways to contact](https://postgres.ai/contact).

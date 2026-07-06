@@ -13,11 +13,11 @@ Joe is a Postgres query optimization assistant. Joe allows you to boost the deve
 - eliminating annoying waiting time needed to provision copies of large databases for development and testing purposes
 - helping engineers understand details of SQL query performance
 
-Joe works on top of [DBLab Engine](/docs/database-lab/). Every time when an engineer starts communicating with Joe, a new full-size copy of the database is provisioned.
+Joe works on top of [DBLab Engine](/docs/database-lab/). Every time an engineer starts communicating with Joe, a new full-size copy of the database is provisioned.
 
-This process is fully automated and takes only a few seconds, even for multi-terabyte databases. Such database copies are called "thin clones" because multiple clones share the same data blocks, so provisioning is super fast, and disk space consumption is very low. The clones are fully independent, so developers can modify databases. Finally, SQL execution plans are identical to production, which makes possible to troubleshoot and optimize queries reliably without involving production databases.
+This process is fully automated and takes only a few seconds, even for multi-terabyte databases. Such database copies are called "thin clones" because multiple clones share the same data blocks, so provisioning is super fast, and disk space consumption is very low. The clones are fully independent, so developers can modify databases. Finally, SQL execution plans are identical to production, which makes it possible to troubleshoot and optimize queries reliably without involving production databases.
 
-## Comparison of Database Lab to Other Options of Testing on Large Databases
+## Comparison of Database Lab to other options of testing on large databases
 
 ![Comparison of Database Lab to Other Options of Testing on Large Databases](/assets/joe/comparison-matrix.png)
 
@@ -28,7 +28,7 @@ This process is fully automated and takes only a few seconds, even for multi-ter
 - The provisioning of a new clone takes only a few seconds, regardless of the database size.
 - Each database clone is fully independent, so developers do not interfere with each other and do not need to wait.
 - Users do not have direct access to the data, working only with metadata (viewing schema, database sizes, query performance metrics, and execution plans),
-- When the `explain` command is used for some query, Joe immediately provides the plan without execution and start executing the query. Once the execution is complete, the detailed execution plan is also provided.
+- When the `explain` command is used for some query, Joe immediately provides the plan without execution and starts executing the query. Once the execution is complete, the detailed execution plan is also provided.
 - The actual timing values may differ from production because actual caches in the Database Lab are usually smaller. However, the structure of plans and the number of bytes and pages/buffers in plans are identical to production thanks to identical planner configuration.
 - The plans are provided both in JSON and textual forms.
 - For long-lasting queries, Joe uses @-notification to help understand when the results are ready.

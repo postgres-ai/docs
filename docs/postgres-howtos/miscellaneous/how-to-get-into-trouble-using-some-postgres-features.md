@@ -60,7 +60,7 @@ useful materials to educate yourself:
 
 A couple of tips – how to make your code NULL-safe:
 
-- Consider using expressions like `COALESCE(val, 0)` for replace `NULL`s with some value (usually `0` or `''`).
+- Consider using expressions like `COALESCE(val, 0)` to replace `NULL`s with some value (usually `0` or `''`).
 - For comparison, instead of `=` or `<>`: `IS [NOT] DISTINCT FROM` (check out the `EXPLAIN` plan though).
 - Instead of concatenation, use: `format('%s %s', var1, var2)`.
 - Don't use `WHERE NOT IN (SELECT ...)` – use `NOT EXISTS` instead (
@@ -78,7 +78,7 @@ Why you might want to get rid of subtransactions completely:
 ## int4 PK
 
 Zero-downtime conversion of `int4` (a.k.a. int a.k.a. integer) PK to `int8` when the table has 1B rows requires a lot of
-efforts. While table `(id int4, created_at timestamptz)` is going to take the same disk space as
+effort. While table `(id int4, created_at timestamptz)` is going to take the same disk space as
 `(id int8, created_at timestamptz)` due to [alignment padding](https://stackoverflow.com/a/7431468/459391).
 
 ## (Exotic) SELECT INTO is not you think it is

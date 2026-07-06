@@ -141,7 +141,7 @@ Here is how the configuration file is structured:
 | `embeddedUI` | Refers to the DBLab Engine UI.  |
 | `poolManager` | Manages filesystem pools or volume groups. |
 | `provision` | Describes how thin cloning and database branching are organized. |
-| `retrieval` | Defines the data flow: a series of "jobs" for initial retrieval of the data, and, optionally, continuous data synchronization with the source, snapshot creation and retention policies. The initial retrieval may be either "logical" (dump/restore) or "physical" (based on replication or restoration from a archive). |
+| `retrieval` | Defines the data flow: a series of "jobs" for initial retrieval of the data, and, optionally, continuous data synchronization with the source, snapshot creation and retention policies. The initial retrieval may be either "logical" (dump/restore) or "physical" (based on replication or restoration from an archive). |
 | `cloning` | Thin cloning policies.                                                                                                                                                                                                                                                                                                    |
 | `platform` | PostgresAI Platform integration (provides GUI, advanced features such as user management, logs).                                                                                                                                                                                                                         |
 | `observer` | CI Observer configuration. CI Observer helps verify database schema changes (database migrations) automatically, in CI/CD pipelines. Available on the PostgresAI Platform.                                                                                                                                               |
@@ -183,8 +183,8 @@ Here is how the configuration file is structured:
   - `from` (integer, required) - the lowest port value in the pool
   - `to` (integer, required) - the highest port value in the pool
 - `dockerImage` (string, required) - Postgres Docker image to be used for cloning. IMPORTANT: Postgres version of this image should match the source's Postgres version. For logical mode, it is a recommendation. For physical mode, it is a *requirement*.
-- `useSudo` (boolean, optional, default: false) - use sudo for ZFS/LVM and Docker commands if Database Lab server running outside a container
-- `keepUserPasswords` (bool, optional, default: "false") - By default, in addition to creating a new user with administrative privileges, DBLab Engine resets passwords for all existing users. This is done for security reasons. If this behavior is undesirable and you want to keep the ability authenticate for the existing users with their unchanged passwords, then set the value of the variable to `true`.
+- `useSudo` (boolean, optional, default: false) - use sudo for ZFS/LVM and Docker commands if Database Lab server is running outside a container
+- `keepUserPasswords` (bool, optional, default: "false") - By default, in addition to creating a new user with administrative privileges, DBLab Engine resets passwords for all existing users. This is done for security reasons. If this behavior is undesirable and you want to keep the ability to authenticate for the existing users with their unchanged passwords, then set the value of the variable to `true`.
 - `containerConfig` (key-value, optional) - options to pass custom parameters to clone containers
 - `cloneAccessAddresses` (string, optional, default: "127.0.0.1") - IP addresses that can be used to access clones. By default, use a loop-back to accept only local connections. The empty string means "all available addresses". The option supports multiple IPs (using comma-separated format) and IPv6 addresses (for example, `[::1]`)
 
@@ -216,7 +216,7 @@ Note, that all jobs are optional. For example, all the following approaches defi
 Dumps a PostgreSQL database from a provided source to an archive or to the DBLab Engine instance.
 
 Options:
-- `dumpLocation` (string, required) - specifies the location to store dump files (or directories, for directory-format archives), it will be automatically created on the host machine. DBLab Engine deletes all files and directories in this directory before creating new dumps.
+- `dumpLocation` (string, required) - specifies the location to store dump files (or directories, for directory-format archives) — it will be automatically created on the host machine. DBLab Engine deletes all files and directories in this directory before creating new dumps.
 - `dockerImage` (string, required) - specifies the Docker image containing the dump-required tool
 - `containerConfig` (key-value, optional) - options to pass custom parameters to logicalDump container. Supports standard Docker container configuration options such as memory limits, CPU limits, volumes, etc. Can be inherited using YAML anchors (see `databaseContainer` pattern above)
   - Example: `"memory": "2gb"`, `"cpus": "1.5"`, `"shm-size": "1gb"`
@@ -235,7 +235,7 @@ Options:
 - `parallelJobs` (integer, optional, default: 1) - defines the number of concurrent jobs using the `pg_dump` option `jobs`. This option can dramatically reduce the time to dump a large database
 - `databases` (key-value, optional) - defines options for specifying the database list that must be copied. By default, DBLab Engine dumps and restores all available databases. Do not specify the databases section to take all databases. Available options for each database: `tables`
    - `tables` (list of strings, optional) - dumps definition and/or data of only the listed tables. Do not specify the tables section to dump all available tables
-   - `excludeTables` (list of strings, optional) - excludes all tables matching any of the patterns from the dump. Accept specific schemas and tables or will allow for wildcards (*) for more flexibility.
+   - `excludeTables` (list of strings, optional) - excludes all tables matching any of the patterns from the dump. Accepts specific schemas and tables, or wildcards (*) for more flexibility.
 - `customOptions` (list of strings, optional) - defines one or multiple `pg_dump` options. See available options in [the official PostgreSQL documentation](https://www.postgresql.org/docs/current/app-pgdump.html). Common examples:
   - `"--no-publications"` - exclude publications (useful for replica databases)
   - `"--no-subscriptions"` - exclude subscriptions 

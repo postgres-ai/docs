@@ -12,7 +12,7 @@ Execute any [`explain`] query and click the **Details and visualization** at the
 
 ## Open the Command page from the Platform
 1. When in an organization, click the **History** menu item under **SQL optimization**.
-1. You will see the latest commands run with Joe in your organization. Click the **Your commands** button to filter commands made by you or type related text to the search field and press **Enter**, it could be PostgreSQL commands, tables names, etc.
+1. You will see the latest commands run with Joe in your organization. Click the **Your commands** button to filter commands made by you or type related text into the search field and press **Enter**, it could be PostgreSQL commands, table names, etc.
 1. Click on the command card to open the **Command** page.
 
 ## Search through optimization history
@@ -25,7 +25,7 @@ Execute any [`explain`] query and click the **Details and visualization** at the
 - The **search field** allows using part of a query for searching.
 
 ## Select similar queries
-You can easily select all queries from history that have the same structure, but different parameter values. All queries in Database Lab has a **fingerprint** assigned, it works like a hash for a query and doesn't take parameters values assigned. Click on the **find similar** button on a command card or use `fingerprint:` label in a **search field** if you already know the fingerprint.
+You can easily select all queries from history that have the same structure, but different parameter values. All queries in Database Lab have a **fingerprint** assigned, it works like a hash for a query and doesn't take parameter values assigned. Click on the **find similar** button on a command card or use `fingerprint:` label in a **search field** if you already know the fingerprint.
 
 ## Share query
 :::caution

@@ -9,18 +9,18 @@ As the first step, you need to set up a machine for DBLab Engine instance. See t
 
 ## Configuration
 ### Jobs
-In order to set up DBLab Engine to automatically get the data from database using [WAL-G](https://github.com/wal-g/wal-g) archival restoration tool you need to use following jobs:
+In order to set up DBLab Engine to automatically get the data from a database using the [WAL-G](https://github.com/wal-g/wal-g) archival restoration tool you need to use the following jobs:
 - [physicalRestore](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalrestore)
 - [physicalSnapshot](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalsnapshot)
 
 ### Options
 Copy the example configuration file [`config.example.physical_walg.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.1.3/engine/configs/config.example.physical_walg.yml) from the DBLab Engine repository to `~/.dblab/engine/configs/server.yml` and update the following options:
-- Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine
+- Set a secure `server:verificationToken` — it will be used to authorize API requests to the Engine
 - Set connection options in `physicalRestore:options:envs`:
     - Use WAL-G environment variables to configure the job, see the [WAL-G configuration reference](https://github.com/wal-g/wal-g#configuration)
 - Set WAL-G settings in `physicalRestore:options:walg`:
     - `backupName` - defines the backup name to restore
-- Set a proper version in Postgres Docker image tag (change the images itself only if you know what are you doing):
+- Set a proper version in Postgres Docker image tag (change the image itself only if you know what you are doing):
     - `databaseContainer:dockerImage`
 
 ## Run DBLab Engine

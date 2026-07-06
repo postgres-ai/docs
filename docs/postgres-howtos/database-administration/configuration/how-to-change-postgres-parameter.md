@@ -52,7 +52,7 @@ Two ways to quickly check if a restart is needed:
 Apply the change in Postgres config files (`postgresql.conf` or its dependencies, if `include` directive is used). It's
 advisable to `ALTER SYSTEM` unless necessary, because it might lead to confusion in the future (it writes
 to `postgresql.auto.conf` and later it can be easily overlooked; see also
-[this discussion](https://postgresql.org/message-id/flat/CA%2BVUV5rEKt2%2BCdC_KUaPoihMu%2Bi5ChT4WVNTr4CD5-xXZUfuQw%40mail.gmail.com))
+[this discussion](https://postgresql.org/message-id/flat/CA%2BVUV5rEKt2%2BCdC_KUaPoihMu%2Bi5ChT4WVNTr4CD5-xXZUfuQw%40mail.gmail.com)).
 
 ## 3) Apply the change
 

@@ -21,7 +21,7 @@ estimated_time: 5 min
 ---
 
 
-If you need to change ownership of *all* database objects in current database, use this anonymous `DO`
+If you need to change ownership of *all* database objects in the current database, use this anonymous `DO`
 block (or copy-paste from [here](https://gitlab.com/postgres-ai/database-lab/-/snippets/2075222)):
 
 ```sql

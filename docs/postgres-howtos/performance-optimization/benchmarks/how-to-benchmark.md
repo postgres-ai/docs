@@ -24,7 +24,7 @@ useful, and correct.
 
 In this article, we assume that the following principles are followed:
 
-1. **NOT A SHARED ENV:** The whole machine is under our solely use (nobody else is using it), we aim to study the
+1. **NOT A SHARED ENV:** The whole machine is under our sole use (nobody else is using it), we aim to study the
    behavior
    of Postgres as a whole, with all its components (vs. microbenchmarks such as studying a particular query via using
    `EXPLAIN` or focusing on underlying components such as disk and filesystem performance).
@@ -44,11 +44,11 @@ In this article, we assume that the following principles are followed:
 ## Benchmark structure
 
 Benchmark is a kind of database experiment, where, in general case, we use multiple sessions to DBMS and study the
-behavior of the system as a whole, and it's all or particular components (e.g., buffer pool, checkpointer, replication).
+behavior of the system as a whole, and its all or particular components (e.g., buffer pool, checkpointer, replication).
 
 Each benchmark run should have a well-defined structure. In general, it contains two big parts:
 
-1. **INPUT:** everything we have or define before conducting the database – where we run the benchmark, how the system
+1. **INPUT:** everything we have or define before conducting the database experiment – where we run the benchmark, how the system
    was
    configured, what DB and workload we use, what change we aim to study (to compare the behavior before and after the
    change).
@@ -108,12 +108,12 @@ some examples:
 - varying scale: different number of clients working with database or different table sizes
 - different filesystems
 
-It is not recommended to consider schema changes of changes in SQL queries as "delta" because:
+It is not recommended to consider schema changes or changes in SQL queries as "delta" because:
 
 - such workload changes usually happen at a very high pace
 - full-fledged benchmarking is very expensive
 - it is possible to study schema and query changes in shared environments, focusing on IO metrics (BUFFERS!), achieving
-  high level of time and cost efficiency (see [@Database_Lab](https://twitter.com/Database_Lab))
+  a high level of time and cost efficiency (see [@Database_Lab](https://twitter.com/Database_Lab))
 
 ## OUTPUT: collect artifacts
 
@@ -148,7 +148,7 @@ Some tips (far from being complete):
    our database system, but we actually observe the behavior of, say, cloud disk throttling or filesystem limitations
    instead. In such cases we need to think how to tune our input to avoid such bottlenecks, to perform useful
    experiments.
-3. In some cases, it is, vice versa, very desired to reach some kind saturation – for example, if we study the speed of
+3. In some cases, it is, vice versa, very desired to reach some kind of saturation – for example, if we study the speed of
    `pg_dump` or `pg_restore`, we may want to observe our disk system saturated, and we tune the input (e.g. how exactly
    we `pg_dump` – how many parallel workers we use, is compression involved, is network involved, etc.) so the desired
    saturation is indeed reached, and we can demonstrate it.

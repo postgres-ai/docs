@@ -46,7 +46,7 @@ Keep in mind that the clone you are working with might be, depending on the sett
 
 2. Open the **full execution plan**. You can get the rows number from the first line. For example, if you see `(actual ... rows=1000)`, it means that 1000 rows match the specified criteria.
 
-This recipe may be very useful for quite complex queries. You can benefit from one of the key features of DBLab Engine and Joe bot: your session is fully independent, your work doesn't affect the production performance of your colleague's work, even if the query your use is suboptimal and runs many hours.
+This recipe may be very useful for quite complex queries. You can benefit from one of the key features of DBLab Engine and Joe bot: your session is fully independent, your work doesn't affect the production performance of your colleague's work, even if the query you use is suboptimal and runs for many hours.
 
 <Tabs
   groupId="joe-mode"
