@@ -558,7 +558,6 @@ module.exports = {
           { from: '/docs/guides/platform', to: '/docs/dblab-howtos' },
           { from: '/docs/tutorials/onboarding', to: '/docs/dblab-howtos/platform/onboarding' },
           { from: '/support', to: '/contact/' },
-          { from: '/careers/dba', to: '/careers/dbe' },
           {
             from: '/docs/how-to-guides/administration/machine-setup',
             to: '/docs/dblab-howtos/administration/install-dle-manually' 
@@ -664,4 +663,3 @@ module.exports = {
     ],
   ],
 }
-
