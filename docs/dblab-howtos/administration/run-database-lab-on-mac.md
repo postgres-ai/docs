@@ -195,7 +195,6 @@ docker run \
   -v "$(pwd)/configs:/home/dblab/configs:rw" \
   -v "$(pwd)/configs/standard:/home/dblab/standard:ro" \
   -v "$(pwd)/meta:/home/dblab/meta" \
-  --env DOCKER_API_VERSION=1.39 \
   -p 2345:2345 \
   dblab_server:local
 ```
@@ -203,6 +202,10 @@ docker run \
 ## 8. Start working with DBLab UI and CLI
 ### Open DBLab UI
 When the main container (`dblab_server`) starts, it launches an additional container with UI, whose name looks like `dblab_embedded_ui_xxx`; it provides UI available at port `2346` by default (can be changed in `server.yml`).
+
+:::warning
+Because the UI runs in a *separate* container that binds host port `2346` itself, do **not** add `-p 2346:2346` to the `dblab_server` command above. Publishing `2346` on `dblab_server` makes the UI container fail to start with `Bind for 127.0.0.1:2346 failed: port is already allocated` (the engine then logs `failed to start embedded UI container` and continues without a UI).
+:::
 
 In your browser, open [http://127.0.0.1:2346](http://127.0.0.1:2346).
 

@@ -51,7 +51,6 @@ sudo docker run \
   --volume /sys/kernel/debug:/sys/kernel/debug:rw \
   --volume /lib/modules:/lib/modules:ro \
   --volume /proc:/host_proc:ro \
-  --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
   postgresai/dblab-server:4.1.3
@@ -117,7 +116,6 @@ sudo docker run \
   --volume ~/.dblab/rds-combined-ca-bundle.pem:/cert/rds-combined-ca-bundle.pem \
   --env AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY}" \
   --env AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
-  --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
   postgresai/dblab-server:4.1.3
