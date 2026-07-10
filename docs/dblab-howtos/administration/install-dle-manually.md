@@ -337,7 +337,6 @@ sudo docker run \
   --volume /sys/kernel/debug:/sys/kernel/debug:rw \
   --volume /lib/modules:/lib/modules:ro \
   --volume /proc:/host_proc:ro \
-  --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
   postgresai/dblab-server:4.1.3
@@ -360,7 +359,6 @@ sudo docker run \
   --volume /sys/kernel/debug:/sys/kernel/debug:rw \
   --volume /lib/modules:/lib/modules:ro \
   --volume /proc:/host_proc:ro \
-  --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
   postgresai/dblab-server:4.1.3
@@ -383,7 +381,6 @@ sudo docker run \
   --volume /sys/kernel/debug:/sys/kernel/debug:rw \
   --volume /lib/modules:/lib/modules:ro \
   --volume /proc:/host_proc:ro \
-  --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
   postgresai/dblab-server:4.1.3
@@ -397,6 +394,12 @@ Parameter `--publish 127.0.0.1:2345:2345` means that only local connections will
 
 To allow external connections, consider either using additional software such as NGINX or Envoy or changing this parameter. Removing the host/IP part (`--publish 2345:2345`) allows listening to all available network interfaces.
 See more details in the official [Docker command-line reference](https://docs.docker.com/engine/reference/commandline/run/#publish-or-expose-port--p---expose).
+:::
+
+:::warning
+Publish only `2345` (the API port) on the `dblab_server` container — **do not** also add `--publish 127.0.0.1:2346:2346`.
+
+In DBLab Engine 4.x, the web UI runs in a *separate* container that binds host port `2346` itself. If `dblab_server` also publishes `2346`, the UI container fails to start with `Bind for 127.0.0.1:2346 failed: port is already allocated`; the engine logs `failed to start embedded UI container` and keeps running without a UI. (Older 3.x-era commands published `2346` on the server container — drop it when upgrading.)
 :::
 
 
