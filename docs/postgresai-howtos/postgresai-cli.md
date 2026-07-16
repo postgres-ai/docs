@@ -46,21 +46,21 @@ Authenticate via browser and store the API key locally:
 <TabItem value="cli" label="Installed CLI" default>
 
 ```bash
-postgresai auth
+postgresai login
 ```
 
 </TabItem>
 <TabItem value="npx" label="npx">
 
 ```bash
-npx postgresai@latest auth
+npx postgresai@latest login
 ```
 
 </TabItem>
 <TabItem value="bunx" label="bunx">
 
 ```bash
-bunx postgresai@latest auth
+bunx postgresai@latest login
 ```
 
 </TabItem>
