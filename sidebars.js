@@ -3,6 +3,7 @@ module.exports = {
     Overview: ['get-started', 'questions-and-answers', 'roadmap'],
     "PostgresAI how-tos": [
       "postgresai-howtos/postgresai-cli",
+      "postgresai-howtos/joe-cli",
       "postgresai-howtos/how-to-install-mcp",
       "postgresai-howtos/how-to-work-with-issues",
       "postgresai-howtos/install-postgres-ai-monitoring-from-postgresai-console",
