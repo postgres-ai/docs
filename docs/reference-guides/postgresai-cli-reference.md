@@ -10,6 +10,8 @@ keywords:
   - "issues"
   - "checkup"
   - "prepare-db"
+  - "pgai joe"
+  - "joe bot"
 ---
 
 import Tabs from '@theme/Tabs';
@@ -20,8 +22,9 @@ import TabItem from '@theme/TabItem';
 PostgresAI Command Line Interface is a tool for working with PostgresAI:
 preparing databases for monitoring, running local monitoring stacks,
 generating health-check reports, browsing and managing issues in the
-PostgresAI Console, and exposing PostgresAI tools to AI coding clients
-over MCP.
+PostgresAI Console, running [Joe](/docs/joe-bot) SQL optimization commands
+on ephemeral DBLab clones, and exposing PostgresAI tools to AI coding
+clients over MCP.
 
 The CLI is published as the `postgresai` npm package and ships two
 equivalent binaries: `postgresai` (canonical) and `pgai` (short alias).
@@ -90,6 +93,9 @@ COMMANDS:
   checkup               generate health-check reports directly from PostgreSQL
   mon                   manage the local monitoring stack
   auth                  authenticate and manage the local API key
+  login                 top-level alias for `auth login`
+  joe                   Joe — plan/EXPLAIN/exec queries on ephemeral DBLab clones
+  projects              list the org's projects (shows which have Joe ready)
   issues                manage issues, comments, and action items in PostgresAI Console
   reports               list and download checkup reports stored in PostgresAI Console
   mcp                   MCP server integration for AI coding tools
@@ -406,9 +412,168 @@ postgresai auth login --port 7777 --debug    # explicit form
 - `--port <port>` — local callback server port (default: random).
 - `--debug` — enable debug output.
 
-The browser flow opens your default browser, prompts for organization
-selection, and writes the resulting API key to
+The browser flow opens your default browser (OAuth with PKCE), prompts
+for organization selection, and writes the resulting API key to
 `~/.config/postgresai/config.json`.
+
+`postgresai login` is also available as a top-level alias for
+`postgresai auth login` (same options).
+
+## Command: `joe`
+
+Run [Joe](/docs/joe-bot) SQL optimization commands on ephemeral
+[DBLab](/docs/database-lab) thin clones. See the
+[Joe from the CLI how-to](/docs/postgresai-howtos/joe-cli) for a
+task-oriented walkthrough.
+
+:::caution dev channel
+The `joe` and `projects` commands ship in CLI 0.16, currently published
+under the **`dev`** npm dist-tag: run them via `npx pgai@dev …` /
+`npx postgresai@dev …` (or install with `npm install -g postgresai@dev`)
+until 0.16 reaches `latest`.
+:::
+
+**Usage**
+
+```bash
+postgresai joe <subcommand> [arguments] [options]
+```
+
+**How it works**
+
+Every `joe` subcommand is synchronous: the CLI submits one raw Joe
+command (the same text you could type at Joe in the Console or in chat),
+then polls for the result until it is ready or the one-shot poll budget
+(default 25 seconds) is exhausted. On budget expiry the CLI exits `0` and
+prints a resume handle — fetch the result later with
+`postgresai joe result <commandId>`. Each invocation starts a fresh
+Joe command; the command and its full result (plans, statistics,
+recommendations) are stored in the Joe history in the PostgresAI
+Console.
+
+Running Joe commands requires the token owner to hold the
+**AllFeaturesUser** or **Admin** role in the organization; other roles
+receive `403 Forbidden`.
+
+**Targeting.** Every `joe` subcommand (except `result`) needs a target.
+Provide it in one of three ways: pass `--instance-id`, pass `--project`,
+or configure a default project once with
+[`set-default-project <project>`](#command-set-default-project) and omit
+both flags. Resolution order is `--instance-id`, then `--project`, then
+the stored default project — an explicit flag always wins. With no flag
+**and** no default project configured, the command errors and prompts you
+to supply `--instance-id` (or `--project`).
+
+**Shared options** (every subcommand except `result`)
+
+- `--instance-id <id>` — target the Joe instance id directly (skips `--project` resolution). Takes precedence over `--project` and the default project.
+- `--project <id|alias>` — target a project by numeric id OR alias/name (case-insensitive; resolved via the projects API — see [`projects`](#command-projects)). Requires the project to have a registered, active Joe instance. When omitted, falls back to the default project set by [`set-default-project`](#command-set-default-project).
+- `--budget <seconds>` — one-shot poll budget in seconds (default: `25`).
+- `--debug` — enable debug output.
+- `--json` — output the full result row as raw JSON (includes `plan_text`, structured `plan_json`, `plan_execution_text`, `plan_execution_json`, `stats`, `recommendations`, `queryid`).
+
+### `joe plan`
+
+`plan <sql>` — plan a query (`EXPLAIN`, plan-only — **no execution**; the fast/safe default).
+
+```bash
+postgresai joe plan "select * from users where email = 'x@y.com'" --project main-db
+```
+
+### `joe explain`
+
+`explain <sql>` — `EXPLAIN` + `EXPLAIN ANALYZE` a query (**executes** on the DBLab clone).
+
+```bash
+postgresai joe explain "select * from users where email = 'x@y.com'" --project 12
+```
+
+### `joe exec`
+
+`exec <sql>` — run arbitrary DDL/DML on the clone (e.g. `create index`, `analyze`, `set` planner parameters).
+
+```bash
+postgresai joe exec "create index i_users_email on users (email)" --instance-id 34
+```
+
+### `joe hypo`
+
+`hypo <args>` — [HypoPG](https://github.com/HYPOPG/hypopg) hypothetical indexes (e.g. `hypo "create index on users (email)"`, `hypo desc`, `hypo reset`).
+
+### `joe activity`
+
+`activity` — running-activity snapshot (`pg_stat_activity`) on the clone.
+
+### `joe terminate`
+
+`terminate <pid>` — `pg_terminate_backend(pid)` on the clone. The pid must be a bare positive integer; anything else is rejected client-side before any API call.
+
+### `joe reset`
+
+`reset` — reset/recreate the session's thin clone.
+
+### `joe describe`
+
+`describe <object>` — `\d`-family schema/relation/index metadata. Takes
+`--variant <variant>` to select the `\d`-family form (default `\d`).
+Supported variants: `\d`, `\d+`, `\dt`, `\dt+`, `\di`, `\di+`, `\l`,
+`\l+`, `\dv`, `\dv+`, `\dm`, `\dm+`.
+
+```bash
+postgresai joe describe users --variant '\d+' --project main-db
+```
+
+### `joe result`
+
+`result <commandId>` — fetch a Joe command's output by id (resume a
+budget-expired one-shot; accepts only `--debug` / `--json`).
+
+```bash
+postgresai joe result 3523
+```
+
+### Output and exit codes for `joe`
+
+Human-readable output prints `command <id> · ok` followed by whichever
+sections the result contains: the response text, `plan:`, client-side
+plan flags (`⚑ …`, e.g. flagging a Seq Scan), `execution plan (EXPLAIN
+ANALYZE):`, `stats:`, `recommendations:`, and the `queryid`.
+
+Exit codes:
+
+- `0` — terminal `ok` result, or budget expired (resume by id).
+- `1` — terminal `error` result, `result` on a still-pending command, or any other failure.
+
+## Command: `projects`
+
+List the organization's projects, showing which ones have Joe ready.
+This is org-level discovery (not a Joe endpoint): it powers
+`--project <id|alias>` resolution for [`joe`](#command-joe) commands.
+
+**Usage**
+
+```bash
+postgresai projects [--json] [--debug]
+```
+
+**Output columns**
+
+- `PROJECT_ID` — numeric project id (usable as `--project <id>`).
+- `ALIAS` — project alias (usable as `--project <alias>`; `-` if not set).
+- `PROJECT` — human-readable project name.
+- `JOE` — `ready` when the project has an active Joe instance targetable by `joe` commands; `no` otherwise.
+- `TUNNEL` — whether the project's DBLab tunnel is connected.
+
+With `--json`, each row also includes `instance_id` (the Joe instance id
+that `joe` commands target — usable as `--instance-id`) and
+`dblab_instance_id` (the project's active DBLab instance, not used by
+`joe` commands).
+
+```
+PROJECT_ID  ALIAS      PROJECT        JOE    TUNNEL
+12          main-db    Main DB        ready  yes
+15          analytics  Analytics      no     no
+```
 
 ## Command: `issues`
 
