@@ -24,6 +24,29 @@ Part of [Self-Driving Postgres](/blog/20250725-self-driving-postgres) — Postgr
 ## Live demo
 Experience the full monitoring solution: https://demo.postgres.ai (login: demo / password: demo)
 
+## Supported Postgres versions
+
+PostgresAI full monitoring, express-mode checkups, and PostgresAI Console
+checkup analysis support PostgreSQL 14 through PostgreSQL 19.
+
+PostgreSQL 19 is currently a pre-release (Beta 2). Use it for compatibility
+testing rather than production workloads until PostgreSQL 19 reaches general
+availability. PostgresAI preserves the beta version label in checkup reports,
+selects PostgreSQL 19-compatible metric SQL, and does not report a PostgreSQL
+19 beta server as being behind the latest stable major release.
+
+On PostgreSQL 19, the full monitoring collector uses the native
+[`pg_get_multixact_stats()`](https://www.postgresql.org/docs/19/functions-info.html)
+function instead of scanning `pg_multixact` files. The monitoring role needs
+`pg_read_all_stats` privileges (included by `pg_monitor`) for the function to
+return values; otherwise the metric is reported as unavailable without
+interrupting other collection.
+
+PostgresAI Console's separate PostgreSQL cluster-provisioning workflow depends
+on the PostgreSQL versions supported by its automation provider. Monitoring and
+checkup compatibility does not make a pre-release version available for
+provisioning automatically.
+
 
 ## Console.Postgres.ai integration
 
