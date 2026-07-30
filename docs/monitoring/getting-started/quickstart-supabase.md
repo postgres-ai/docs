@@ -24,7 +24,7 @@ Two monitoring levels are available:
 | Level | Includes | Plan |
 |-------|----------|------|
 | **Quick setup** | Auto-discovery, daily checkups, JSON reports | Free |
-| **Full monitoring** | Grafana dashboards, real-time metrics, advanced alerts, historical data | Scaling |
+| **Full monitoring** | Grafana dashboards, real-time metrics, advanced alerts, historical data | Scale |
 
 ## Prerequisites
 
@@ -33,7 +33,7 @@ Two monitoring levels are available:
    GitHub, or GitLab.
 3. An organization in PostgresAI Console.
    [Create one](https://console.postgres.ai/addorg) if you don't have one yet.
-4. A payment method on file (required for the Scaling plan). In your organization, open **Billing**,
+4. A payment method on file (required for the **Scale** plan). In your organization, open **Billing**,
    click **Edit payment methods**, and add a card in the Stripe portal.
 
 ## Step 1. Start the Supabase setup
@@ -48,7 +48,7 @@ In the **Supabase monitoring** dialog, choose the monitoring level:
 
 - **Quick setup** (Free) — one-click OAuth connection with auto-discovery, daily checkups, and JSON
   reports.
-- **Full monitoring** (Scaling) — dedicated monitoring infrastructure with Grafana dashboards,
+- **Full monitoring** (Scale) — dedicated monitoring infrastructure with Grafana dashboards,
   real-time metrics, advanced alerts, and historical data.
 
 See [Pricing](/pricing) for the full list of available options with feature comparison.

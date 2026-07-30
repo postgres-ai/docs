@@ -106,6 +106,6 @@ The easiest way to set up PostgresAI monitoring is through [Console.Postgres.ai]
 
 1. Navigate to **Checkup → Monitoring instances** in the left menu
 2. Click **Choose plan**
-3. Select **Starter** or **Scale** plan
+3. Select the **Scale** plan (or contact us about **Enterprise**)
 
 See [pricing](/pricing) for plan details and features. 
