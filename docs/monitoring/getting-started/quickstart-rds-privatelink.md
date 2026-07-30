@@ -19,9 +19,10 @@ your account: the connection is outbound-only, from your VPC to PostgresAI.
 
 :::info Available on the Scale plan and Enterprise only
 Private-RDS monitoring over **AWS PrivateLink** is available on the **Scale** plan and on
-**Enterprise**. Consulting clients get it packaged as part of their engagement. On lower plans
-(Hobby, Express, Starter), monitor RDS by exposing a publicly reachable database port to PostgresAI
-instead (see [Cloud installation](/docs/monitoring/getting-started/installation-cloud)). See
+**Enterprise**. Consulting clients get it packaged as part of their
+engagement. If you prefer not to use PrivateLink, you can instead monitor RDS by exposing a
+publicly reachable database port to PostgresAI
+(see [Cloud installation](/docs/monitoring/getting-started/installation-cloud)). See
 [Pricing](/pricing) for the full feature comparison.
 :::
 
@@ -76,6 +77,12 @@ Consulting clients already have it enabled and can skip this step.
 See [Pricing](/pricing) for the full list of options with feature comparison.
 
 [![Choose the PostgresAI plan: Scale includes private RDS via AWS PrivateLink](/assets/rds-privatelink-monitoring/rds-privatelink-monitoring-2.png)](/assets/rds-privatelink-monitoring/rds-privatelink-monitoring-2.png)
+
+:::note
+The console screenshot above still shows the retired **Starter** plan (the Scale card's "Everything
+included in Starter" bullet refers to it). Starter is no longer offered — click **Choose Scale**, or
+contact us about **Enterprise**.
+:::
 
 ## Step 3. Create the read-only monitoring role
 
@@ -264,10 +271,10 @@ collected, examine the metric definitions:
 
 See also: [data privacy details](/docs/monitoring/#data-privacy-metadata-only).
 
-### Why is private-RDS monitoring limited to the Scale plan?
+### Why is private-RDS monitoring available only on Scale and Enterprise?
 
 The **AWS PrivateLink** path provisions dedicated infrastructure (a monitoring VM and an interface
 endpoint) and is part of the full monitoring stack, available on the **Scale** plan and
-**Enterprise**. Consulting clients get it packaged with their engagement. On lower plans, monitor
-RDS by exposing a publicly reachable database port instead — see
+**Enterprise**. Consulting clients get it packaged with their engagement. If you prefer not to use
+PrivateLink, you can instead monitor RDS by exposing a publicly reachable database port — see
 [Cloud installation](/docs/monitoring/getting-started/installation-cloud).

@@ -18,8 +18,11 @@ Go to [console.postgres.ai](https://console.postgres.ai), open **Monitoring** in
 
 ![Plans page](/img/monitoring/cloud-setup/01-plans-page.png)
 
+:::note
+The console screenshot above still shows the retired **Starter** plan. Hobby and Express do not include the monitoring stack — this guide covers **Scale** and **Enterprise**.
+:::
+
 Select a plan based on your needs:
-- **Starter** ($128/mo) — Full monitoring stack for small production databases
 - **Scale** ($512/mo) — 6-month retention, trend analysis, 1 business day SLA
 - **Enterprise** — Dedicated support, Kubernetes & Terraform, custom workflows
 
