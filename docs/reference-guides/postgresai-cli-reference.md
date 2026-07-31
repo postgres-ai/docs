@@ -92,6 +92,7 @@ COMMANDS:
   unprepare-db          remove monitoring setup from a database
   checkup               generate health-check reports directly from PostgreSQL
   mon                   manage the local monitoring stack
+  login                 authenticate via browser or store an API key directly
   auth                  authenticate and manage the local API key
   login                 top-level alias for `auth login`
   joe                   Joe — plan/EXPLAIN/exec queries on ephemeral DBLab clones
@@ -386,6 +387,30 @@ postgresai mon targets <subcommand> [args]
 - `remove <name>` — remove a monitoring target.
 - `test <name>` — test connectivity to a configured target.
 
+## Command: `login`
+
+Authenticate via browser (OAuth) or store an API key directly. This is
+the shortest form of `postgresai auth login`; both commands use the same
+options and behavior.
+
+**Usage**
+
+```bash
+postgresai login                            # OAuth via browser
+postgresai login --set-key <key>            # store an API key directly
+postgresai login --port 7777 --debug        # use a fixed callback port with debug output
+```
+
+**Options**
+
+- `--set-key <key>` — store an API key directly without going through the OAuth flow.
+- `--port <port>` — local callback server port (default: random).
+- `--debug` — enable debug output.
+
+The browser flow opens your default browser, prompts for organization
+selection, and writes the resulting API key to
+`~/.config/postgresai/config.json`.
+
 ## Command: `auth`
 
 Authentication and API-key management. `auth` is a command group; the
@@ -411,6 +436,9 @@ postgresai auth                              # OAuth via browser
 postgresai auth --set-key <key>              # store an API key directly
 postgresai auth login --port 7777 --debug    # explicit form
 ```
+
+For a shorter equivalent, use the top-level [`login`](#command-login)
+command.
 
 **Options**
 
