@@ -347,7 +347,7 @@ const plans: Plan[] = [
     price: '$512',
     period: '/cluster/mo',
     description: 'For growing teams with critical workloads',
-    keyFeature: '6-months history + 1 business day SLA',
+    keyFeature: '6-month history + 1 business day SLA',
     cta: 'Get started',
     ctaLink: 'https://console.postgres.ai/get-started?plan=scale',
     highlight: true,
@@ -624,7 +624,7 @@ const Pricing = () => {
                 <li>One-time package delivering Enterprise-level support</li>
                 <li>Unlimited Slack communications</li>
                 <li>1 hour live training (Zoom)</li>
-                <li>Custom-built docker images upon request</li>
+                <li>Custom-built Docker images upon request</li>
                 <li>Max. response time: 1 business day</li>
               </ul>
               <div className={styles.addonPricing}>

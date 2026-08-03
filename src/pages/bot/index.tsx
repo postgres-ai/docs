@@ -14,7 +14,7 @@ const textSequence = [
   4000,
   "Source code interaction: \"talk to the source code\" to understand how exactly things are implemented, when the docs are not enough.",
   3000,
-  "Real database experiments conducted by bot: study Postgres behavior in action, run benchmarks, optimize query performance.",
+  "Real database experiments conducted by the bot: study Postgres behavior in action, run benchmarks, and optimize query performance.",
   3000,
 ]
 
