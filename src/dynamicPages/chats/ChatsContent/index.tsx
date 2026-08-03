@@ -237,7 +237,7 @@ export const Chatscontent = () => {
               <div className={styles.errorContainer}>
                 <h2>Chat not found</h2>
                 <p>
-                  No chat found with the id <strong>{id}</strong>
+                  No chat found with the ID <strong>{id}</strong>
                 </p>
                 <p>
                   <span onClick={handleFetchChat} className={styles.tryAgain}>

@@ -132,7 +132,7 @@ function LaunchWeekPreview() {
 
           <div className={styles.footer}>
             <Link to="/launch-week" className={styles.viewAllButton}>
-              View Full Schedule →
+              View full schedule →
             </Link>
           </div>
 

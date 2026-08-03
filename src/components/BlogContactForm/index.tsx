@@ -96,7 +96,7 @@ export const BlogContactForm = () => {
               required
               disabled={isSubmitting}
               className={styles.textarea}
-              placeholder="Tell us about your company and what you expect"
+              placeholder="Tell us about your company and what you're looking for"
               rows={4}
             />
           </div>
