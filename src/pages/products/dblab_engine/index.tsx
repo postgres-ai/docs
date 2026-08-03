@@ -9,7 +9,10 @@ const DBLAB_START_URL =
 
 const DBLabEngine = () => {
   return (
-    <Layout>
+    <Layout
+      title="DBLab Engine: instant database branching for Postgres"
+      description="DBLab Engine delivers instant, thin database branching and cloning for any Postgres database, with fixed storage and compute costs for development, testing, and CI/CD."
+    >
       <section className="banner position-relative text-center">
         <div className="container">
           <div className="row justify-content-center align-items-center">
@@ -208,7 +211,7 @@ const DBLabEngine = () => {
                 <br />
                 <br />
                 <a href="/products/joe">Joe Bot</a>, our virtual DBA, runs on
-                top of Database Lab to help you find and fix bottlenecks.
+                top of DBLab to help you find and fix bottlenecks.
                 <br />
                 <br />
                 Iterate as many times as you want to achieve the best results.

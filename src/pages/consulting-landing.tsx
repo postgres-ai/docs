@@ -110,7 +110,7 @@ const ConsultingLandingPage: React.FC = () => {
 
         {/* Why engage */}
         <section className={classNames('container', styles.section)}>
-          <h2 className={styles.sectionTitle}>Why engage Postgres AI?</h2>
+          <h2 className={styles.sectionTitle}>Why engage PostgresAI?</h2>
           <ul className={styles.bullets}> 
             <li>You're hitting database bottlenecks as usage accelerates.</li>
             <li>You’re growing fast but have limited in‑house database expertise.</li>
@@ -190,7 +190,7 @@ const ConsultingLandingPage: React.FC = () => {
               <footer className={styles.quoteFooter}><a className={styles.accent} href="https://www.linkedin.com/in/oliver-r-9a16b943/" target="_blank" rel="noreferrer">Oliver Rice, Ph.D</a> — Head of Engineering at <span className={styles.accent}>Supabase</span>, USA</footer>
             </blockquote>
             <blockquote className={styles.quote}>
-              “When you're powering thousands of developer apps, database downtime isn't an option—PostgresAI's expertise over the years culminated in a flawless zero-downtime Postgres upgrade that kept our platform running seamlessly while we scaled for the future.”
+              “When you're powering thousands of developer apps, database downtime isn't an option — PostgresAI's expertise over the years culminated in a flawless zero-downtime Postgres upgrade that kept our platform running seamlessly while we scaled for the future.”
               <footer className={styles.quoteFooter}><a className={styles.accent} href="https://www.linkedin.com/in/harrybrundage/" target="_blank" rel="noreferrer">Harry Brundage</a> — Co-founder & CTO at <span className={styles.accent}>Gadget</span>, Canada</footer>
             </blockquote>
             <blockquote className={styles.quote}>
