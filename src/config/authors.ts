@@ -60,11 +60,11 @@ export const tanya = {
 export const dmitry = {
   avatarUrl: '/assets/author/dmitry.jpeg',
   name: 'Dmitry Fomin',
-  role: 'Sr. Postgres engineer at',
+  role: 'Sr. Postgres Engineer at',
 }
 
 export const dementii = {
   avatarUrl: '/assets/author/dementii.png',
   name: 'Dementii Priadko',
-  role: 'Postgres engineer at',
+  role: 'Postgres Engineer at',
 }

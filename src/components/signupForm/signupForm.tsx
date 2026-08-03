@@ -71,7 +71,7 @@ export default function SignupForm() {
         <form onSubmit={onSubmit} className={styles.container}>
           <h3 className={styles.formTitle}>Get early access</h3>
           <p className={styles.formDescription}>
-            Currently in preview. Please use your work email address
+            Currently in preview. Please use your work email address.
           </p>
           <div className={styles.inputWrapper}>
             <input

@@ -1,7 +1,7 @@
 const resources = [
   {
     title: 'GitLab: How GitLab iterates on SQL performance optimization workflow to reduce downtime risks',
-    description: 'Learn how SaaS company can improve database management processes.',
+    description: 'Learn how a SaaS company can improve its database management processes.',
     preview: '/assets/thumbnails/case-study-gitlab.png',
     link: '/resources/case-studies/gitlab',
     internalLink: true,
