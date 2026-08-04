@@ -1,7 +1,8 @@
 ---
-title: Database Lab data sources
+title: DBLab data sources
 sidebar_label: Overview
 slug: /dblab-howtos/administration/data
+description: Overview of DBLab Engine data retrieval methods, comparing logical (dump/restore) and physical data sources for thin cloning of Postgres databases.
 ---
 
 ## Guides
@@ -22,7 +23,7 @@ slug: /dblab-howtos/administration/data
 - [Custom](/docs/dblab-howtos/administration/data/custom)
 
 ## Overview
-To start using cloning, you need to transfer the data to the DBLab Engine machine first. Data retrieval can be also considered as "thick" cloning. Once it's done, users can use "thin" cloning to get independent full-size clones of the database in seconds, for testing and development. Normally, retrieval (thick cloning) is a slow operation (1 TiB/h is a good speed). Optionally, the process of keeping the Database Lab data directory in sync with the source (being continuously updated) can be configured.
+To start using cloning, you first need to transfer the data to the DBLab Engine machine. Data retrieval can also be considered "thick" cloning. Once it is done, users can use "thin" cloning to get independent, full-size clones of the database in seconds, for testing and development. Retrieval (thick cloning) is normally a slow operation (1 TiB/h is a good speed). Optionally, you can configure the DBLab Engine data directory to stay in sync with the source as it is continuously updated.
 
 :::info
 Read how you can protect personal data: [Data masking](/docs/database-lab/masking).
@@ -30,13 +31,13 @@ Read how you can protect personal data: [Data masking](/docs/database-lab/maskin
 
 ## Data retrieval types
 ### Logical
-Use [dump/restore](https://www.postgresql.org/docs/current/app-pgdump.html) processes, obtaining a logical copy of the initial database (as a set of SQL commands), and then loading it to the target Database Lab data directory. This is the only option for managed cloud PostgreSQL services such as Amazon RDS.
+Use [dump/restore](https://www.postgresql.org/docs/current/app-pgdump.html) processes to obtain a logical copy of the initial database (as a set of SQL commands), then load it into the target DBLab Engine data directory. This is the only option for managed cloud Postgres services such as Amazon RDS.
 
-Physically, the copy of the database created using this method differs from the original one (data blocks are stored differently). However, row counts are the same, as well as internal database statistics, allowing you to do various kinds of development and testing, including running the EXPLAIN command to optimize SQL queries.
+Physically, the copy of the database created with this method differs from the original (data blocks are stored differently). However, the row counts are the same, as are the internal database statistics, so you can perform various kinds of development and testing, including running the EXPLAIN command to optimize SQL queries.
 
 ### Physical
 Physically copy the data directory from the source (or from the archive if a physical backup tool such as WAL-G, pgBackRest or Barman is used).
 
-This approach allows you to have a copy of the original database which is physically identical, including the existing bloat, data blocks location. Not supported for managed cloud Postgres services such as Amazon RDS.
+This approach gives you a copy of the original database that is physically identical, including the existing bloat and data block layout. It is not available for managed cloud Postgres services such as Amazon RDS.
 
 [↵ Back to Guides](/docs/dblab-howtos/)

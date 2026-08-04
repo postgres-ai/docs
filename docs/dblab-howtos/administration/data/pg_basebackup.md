@@ -1,6 +1,7 @@
 ---
 title: "Data source: pg_basebackup"
 sidebar_label: "pg_basebackup"
+description: Configure DBLab Engine to build a physical data directory from a Postgres source using pg_basebackup as a custom physical restore tool.
 ---
 
 :::info
@@ -9,12 +10,12 @@ As the first step, you need to set up a machine for DBLab Engine instance. See t
 
 ## Configuration
 ### Jobs
-In order to set up DBLab Engine to automatically get the data from a database using [pg_basebackup](https://www.postgresql.org/docs/current/app-pgbasebackup.html) you need to use the following jobs:
+To set up DBLab Engine to automatically get the data from a database using [pg_basebackup](https://www.postgresql.org/docs/current/app-pgbasebackup.html), use the following jobs:
 - [physicalRestore](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalrestore)
 - [physicalSnapshot](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalsnapshot)
 
 ### Options
-Copy the contents of configuration example [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.1.3/engine/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml` and update the following options:
+Copy the contents of configuration example [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.1.3/engine/configs/config.example.physical_generic.yml) from the DBLab Engine repository to `~/.dblab/engine/configs/server.yml` and update the following options:
 - Set a secure `server:verificationToken` — it will be used to authorize API requests to the Engine
 - Set connection options in `physicalRestore:options:envs`:
     - `PGUSER`: database user name

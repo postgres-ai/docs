@@ -2,6 +2,7 @@
 title: How to work with Joe chatbot
 sidebar_label: Overview
 slug: /dblab-howtos/joe-bot
+description: "How-to guides for Joe bot: get Postgres EXPLAIN plans, create indexes, reset sessions, manage long-running queries, and work with SQL optimization history."
 ---
 
 ## Guides

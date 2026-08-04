@@ -8,8 +8,10 @@ keywords:
   - "postgres.ai cloning management"
 ---
 
+This guide explains how to configure, start, reconfigure, upgrade, and monitor a DBLab Engine instance running in a Docker container.
+
 ## Configure and start a DBLab Engine instance
-Define config file `~/.dblab/engine/configs/server.yml`
+Define the config file `~/.dblab/engine/configs/server.yml`.
 
 :::tip
 All YAML features can be used, including anchors and aliases, to help you conveniently manage your configuration sections.
@@ -51,7 +53,7 @@ See more details in the official [Docker command-line reference](https://docs.do
 DBLab Engine supports reconfiguration without a restart (therefore, without any downtime):
 
 - Edit the configuration file (usually, `~/.dblab/engine/configs/server.yml`). 
-- Issue a [SIGHUP](https://en.wikipedia.org/wiki/SIGHUP) signal to the main process in the DLE container – if the container name is `dblab_server`, then run this (note that `kill` here is not killing the process, it just sends the SIGHUP signal to it):
+- Issue a [SIGHUP](https://en.wikipedia.org/wiki/SIGHUP) signal to the main process in the DBLab Engine container – if the container name is `dblab_server`, then run this (note that `kill` here is not killing the process, it just sends the SIGHUP signal to it):
     ```bash
     sudo docker exec -it dblab_server kill -SIGHUP 1
     ```
@@ -77,20 +79,20 @@ echo 'set backupcopy=yes' >> ~/.vimrc
 Stop and remove the container using `sudo docker stop dblab_server` and `sudo docker rm dblab_server`. After that, [launch](#configure-and-start-a-dblab-engine-instance) a new container.
 
 :::caution
-Prior to version 3.0.0, upgrading or restarting DLE meant losing all the running clones. In DLE 3.0.0, clones became persistent: after any restart — including VM restart — existing Postgres containers are restarted as well. The same should apply to future upgrades unless a specific upgrade breaks backward compatibility (consulting release notes is advised).
+Prior to version 3.0.0, upgrading or restarting DBLab Engine meant losing all running clones. In DBLab Engine 3.0.0, clones became persistent: after any restart — including a VM restart — existing Postgres containers are restarted as well. The same should apply to future upgrades unless a specific upgrade breaks backward compatibility (consulting the release notes is advised).
 :::
 
 :::caution
-Before version 3.1.0, DLE images (`postgresai/dblab-server`) were based on ZFS 0.8.x. Since 3.1.0, we switched to ZFS 2.1.x.
+Before version 3.1.0, DBLab Engine images (`postgresai/dblab-server`) were based on ZFS 0.8.x. Since 3.1.0, they use ZFS 2.1.x.
 An example of error:
 ```
 "RunnerError(cmd=\"zfs clone -o mountpoint=/var/lib/dblab/dblab_pool/clones/dblab_clone_6000 dblab_pool@snapshot_20220712153456 dblab_pool/dblab_clone_6000 \u0026\u0026 chown -R root /var/lib/dblab/dblab_pool/clones/dblab_clone_6000\", inerr=\"exit status 1\", stderr=\"chown: /var/lib/dblab/dblab_pool/clones/dblab_clone_6000: No such file or directory\n\" exit=\"1\")"
 ```
-If you need to upgrade an existing DLE setup that is running on ZFS 0.8.x, consider the following options:
+If you need to upgrade an existing DBLab Engine setup that is running on ZFS 0.8.x, consider the following options:
 
-Option 1: upgrade your system to use ZFS 2.1, optionally upgrade your pool (`zpool upgrade dblab_pool`), and then upgrade DLE to use the default image, `postgresai/dblab-server:3.5.0`
+Option 1: upgrade your system to use ZFS 2.1, optionally upgrade your pool (`zpool upgrade dblab_pool`), and then upgrade DBLab Engine to use the default image, `postgresai/dblab-server:3.5.0`
 
-Option 2: postpone the ZFS upgrade, stay on ZFS 0.8, and upgrade DLE to version 3.1 using a special image, `postgresai/dblab-server:3.5.0-zfs08`
+Option 2: postpone the ZFS upgrade, stay on ZFS 0.8, and upgrade DBLab Engine to version 3.1 using a special image, `postgresai/dblab-server:3.5.0-zfs08`
 :::
 
 ## Observe DBLab Engine logs

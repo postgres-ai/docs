@@ -1,6 +1,7 @@
 ---
 title: "Data source: pg_dump"
 sidebar_label: "pg_dump"
+description: Set up DBLab Engine to load data with pg_dump and pg_restore, including multi-database dumps, plain-text and compressed dumps, and direct restore.
 ---
 
 :::info
@@ -9,20 +10,20 @@ As the first step, you need to set up a machine for DBLab Engine instance. See t
 
 ## Configuration
 ### Jobs
-In order to set up DBLab Engine to automatically get the data from a database using [dump/restore](https://www.postgresql.org/docs/current/app-pgdump.html) you need to use the following jobs:
+To set up DBLab Engine to automatically get the data from a database using [dump/restore](https://www.postgresql.org/docs/current/app-pgdump.html), use the following jobs:
 - [logicalDump](/docs/reference-guides/database-lab-engine-configuration-reference#job-logicaldump)
 - [logicalRestore](/docs/reference-guides/database-lab-engine-configuration-reference#job-logicalrestore)
 - [logicalSnapshot](/docs/reference-guides/database-lab-engine-configuration-reference#job-logicalsnapshot)
 
 ### Options
-Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.1.3/engine/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml` and update the following options:
+Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.1.3/engine/configs/config.example.logical_generic.yml) from the DBLab Engine repository to `~/.dblab/engine/configs/server.yml` and update the following options:
 - Set a secure `server:verificationToken` — it will be used to authorize API requests to the Engine
 - Set connection options in `retrieval:spec:logicalDump:options:source:connection`:
     - `dbname`: database name to connect to
     - `host`: database server host
     - `port`: database server port
     - `username`: database user name
-    - `password`: database master password (can be also set as `PGPASSWORD` environment variable of the Docker container)
+    - `password`: database master password (can also be set as the `PGPASSWORD` environment variable of the Docker container)
 - Set a proper version in Postgres Docker image tag (change the image itself only if you know what you are doing):
     - `databaseContainer:dockerImage`
 
@@ -46,7 +47,7 @@ sudo docker run \
   postgresai/dblab-server:4.1.3
 ```
 
-You can use PGPASSWORD env to set the password.
+You can use the `PGPASSWORD` environment variable to set the password.
 
 :::info
 Parameter `--publish 127.0.0.1:2345:2345` means that only local connections will be allowed.
@@ -73,8 +74,8 @@ sudo rm -rf /var/lib/dblab/dblab_pool/dump
 
 ### How to dump and restore a database
 A basic way of restoring a database from the source contains three steps:
-- `logicalDump` where DLE dumps from the source into files
-- `logicalRestore` where downloaded dumps are restored into the DLE instance
+- `logicalDump` where DBLab Engine dumps from the source into files
+- `logicalRestore` where downloaded dumps are restored into the DBLab Engine instance
 - `logicalSnapshot` where a snapshot is taken
 
 Since dump files are stored in intermediate files, make sure there is enough disk space.
@@ -118,9 +119,9 @@ To restore from existing dumps, describe two jobs `logicalRestore` and `logicalS
 For the `logicalRestore` job provide with the `dumpLocation` option a dump location where files are stored.
 
 The `dumpLocation` option must provide a file or directory that contains dump files of various formats: plain, custom, directory.
-You can specify both a separate file and directory containing dumps to restore. Please note that DLE will skip dumps of unknown format.
+You can specify both a separate file and a directory containing dumps to restore. Note that DBLab Engine skips dumps of an unknown format.
 
-DLE supports consecutive (but single-threaded) restoring multiple dumps. You can even mix dumps of different formats in a `dumpLocation` directory.
+DBLab Engine supports consecutive (but single-threaded) restoring multiple dumps. You can even mix dumps of different formats in a `dumpLocation` directory.
 
 For example,
 ```yaml
@@ -139,7 +140,7 @@ retrieval:
 
     logicalSnapshot:
 ```
-Since DLE has to explore the `dumpLocation` directory and parse objects (files and directories) inside it, you must mount the directory from `dumpLocation` to the running DBLab Engine container.
+Since DBLab Engine has to explore the `dumpLocation` directory and parse objects (files and directories) inside it, you must mount the directory from `dumpLocation` to the running DBLab Engine container.
 
 #### Supported plain-text formats and naming
 DBLab Engine supports restoring from a plain-text file (using the `psql` utility).
@@ -150,15 +151,15 @@ There are a number of possible scenarios of how a dump might be created:
 -  via `dumpall`
 
 :::info
-DLE supports all derived dump files of the described types, such as those generated by `pg_dump_anon`
+DBLab Engine supports all derived dump files of the described types, such as those generated by `pg_dump_anon`
 :::
 
 DBLab Engine automatically detects plain-text dump files and their origin type.
 
-If DLE is working with a dump made by `dumpall` or `pg_dump` with the `--create` option, it doesn't need to know all database names from this file because psql runs queries and restores the dump to a correct database (even if the database already exists, even if the name is `postgres`)
+If DBLab Engine is working with a dump made by `dumpall` or `pg_dump` with the `--create` option, it doesn't need to know all database names from this file because psql runs queries and restores the dump to a correct database (even if the database already exists, even if the name is `postgres`)
 and extracts database names as well.
 
-If a provided dump has been made without the `--create` option (or there are no tables, or the original type cannot be detected because of compression), then DLE will use the filename as a database name, adjust it (if necessary, see a note about a fallback naming below), and will try to create a new database and restore the dump into it.
+If a provided dump has been made without the `--create` option (or there are no tables, or the original type cannot be detected because of compression), then DBLab Engine will use the filename as a database name, adjust it (if necessary, see a note about a fallback naming below), and will try to create a new database and restore the dump into it.
 
 :::info
 Fallback naming. All characters in the file name other than words (`[^0-9A-Za-z_]`) will be replaced with an underscore (`_`).
@@ -171,9 +172,9 @@ Fallback naming. All characters in the file name other than words (`[^0-9A-Za-z_
   So, the `parallelJobs` option is not supported.
 
 #### Process compressed dumps
-It is a great idea to compress dump files of large databases. DBLab Engine supports restoring  compressed plain-text dumps.
+Compressing dump files of large databases is recommended. DBLab Engine supports restoring compressed plain-text dumps.
 
-DLE supports several compression options for plain-text dumps:
+DBLab Engine supports several compression options for plain-text dumps:
 - [gzip](https://www.gnu.org/software/gzip/)
 - [bzip2](https://www.sourceware.org/bzip2/)
 - no compression
@@ -182,7 +183,7 @@ This means that you can specify the `dumpLocation` parameters pointing not only 
 
 
 ### Direct restore to DBLab Engine instance
-DLE provides a way of restoring from the source on the fly. It's useful to dump and restore a database without saving an intermediate file — the so-called `immediateRestore`.
+DBLab Engine provides a way of restoring from the source on the fly. It's useful to dump and restore a database without saving an intermediate file — the so-called `immediateRestore`.
 The advantage of this method is that no additional disk space is required to restore the database.
 
 Keep in mind that unlike a classic "logicalRestore", this option does not support parallelization (specify `parallelJobs: 1` for logicalDump job). 
@@ -218,7 +219,7 @@ retrieval:
 ```
 
 ## Logical dump and restore of multiple databases
-By default, DLE dumps and restores all available databases. To manage the list of databases you may use an option (`databases`). Add this option to `logicalDump` and `logicalRestore` jobs to specify a list of databases that must be copied.
+By default, DBLab Engine dumps and restores all available databases. To manage the list of databases you may use an option (`databases`). Add this option to `logicalDump` and `logicalRestore` jobs to specify a list of databases that must be copied.
 Do not specify this option to take all databases.
 
 

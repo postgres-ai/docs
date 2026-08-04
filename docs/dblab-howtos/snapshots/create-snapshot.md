@@ -1,6 +1,7 @@
 ---
 title: How to create a snapshot
 sidebar_label: Create a snapshot
+description: Create a DBLab Engine snapshot from an existing clone or from the current pool state using the GUI or the dblab CLI (dblab commit, dblab snapshot create).
 ---
 
 :::info

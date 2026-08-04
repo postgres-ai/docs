@@ -1,13 +1,14 @@
 ---
 title: Start using Database Lab (PostgresAI) Platform
 sidebar_label: Start using Platform
+description: "Sign in to the PostgresAI Platform, create or join an organization, and choose how to begin: the Database Lab tutorial or the postgres-checkup tool."
 ---
 
 [Enter PostgresAI](https://postgres.ai/signin/) using one of the following supported ways to authenticate: Google, LinkedIn, GitLab, GitHub.
 
 When you do it for the first time, make sure to read and comply with [PostgresAI Terms of Service](https://postgres.ai/tos/).
 
-Once you are in, you can create an organization (or use an automatically generated one). Alternatively, you can ask your colleague, who is already using PostgresAI, to invite you to an existing organization. In the latter case, you will receive an email with a link, clicking on which you will join that organization.
+Once you are in, you can create an organization (or use an automatically generated one). Alternatively, you can ask your colleague, who is already using PostgresAI, to invite you to an existing organization. In the latter case, you will receive an email with a link that lets you join that organization.
 
 Organizations on the PostgresAI platform can be considered as teams or companies. All activities happen in the context of an organization.
 

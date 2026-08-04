@@ -1,6 +1,7 @@
 ---
 title: "Data source: Custom"
 sidebar_label: "Custom"
+description: Configure DBLab Engine to load data with any Postgres backup tool, such as pg_basebackup, Barman, or pgBackRest, using a custom physical restore command.
 ---
 
 :::info
@@ -8,7 +9,7 @@ As the first step, you need to set up a machine for DBLab Engine instance. See t
 :::
 
 ## Configuration
-With this data source type you can use any PostgreSQL backup tool (e.g. pg_basebackup, Barman, pgBackRest) to transfer the data to the DBLab Engine instance.
+With this data source type, you can use any Postgres backup tool (such as pg_basebackup, Barman, or pgBackRest) to transfer the data to the DBLab Engine instance.
 
 ### Jobs
 To set it up, you need to use the following jobs:
@@ -16,7 +17,7 @@ To set it up, you need to use the following jobs:
 - [physicalSnapshot](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalsnapshot)
 
 ### Options
-Copy the example configuration file [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.1.3/engine/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`. For demo purposes we've used the `pg_basebackup` tool, but you can use any tool suitable for the task. Check and update the following options:
+Copy the example configuration file [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.1.3/engine/configs/config.example.physical_generic.yml) from the DBLab Engine repository to `~/.dblab/engine/configs/server.yml`. This example uses the `pg_basebackup` tool, but you can use any tool suitable for the task. Check and update the following options:
 - Set a secure `server:verificationToken` — it will be used to authorize API requests to the Engine
 - Set connection options in `physicalRestore:options:envs`, based on your tool
 - Set PostgreSQL commands in `physicalRestore:options:customTool`:

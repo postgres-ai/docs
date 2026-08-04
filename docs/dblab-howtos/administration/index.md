@@ -2,7 +2,7 @@
 title: DBLab Engine administration
 sidebar_label: Administration
 slug: /dblab-howtos/administration
-description: How to administer DBLab Engine
+description: Guides for installing, configuring, securing, and maintaining DBLab Engine, managing Joe Bot, and refreshing data for Postgres environments.
 ---
 
 ## Guides
@@ -16,5 +16,5 @@ description: How to administer DBLab Engine
 - [How to refresh data when working in the "logical" mode](/docs/dblab-howtos/administration/logical-full-refresh)
 - [Masking sensitive data in PostgreSQL logs when using CI Observer](/docs/dblab-howtos/administration/ci-observer-postgres-log-masking)
 - [Add disk space to ZFS pool without downtime](/docs/dblab-howtos/administration/add-disk-space-to-zfs-pool)
-- [Teleport Integration](/docs/dblab-howtos/administration/teleport-integration)
+- [Teleport integration](/docs/dblab-howtos/administration/teleport-integration)
 

@@ -2,6 +2,7 @@
 title: DBLab how-to guides
 sidebar_label: Overview
 slug: /dblab-howtos
+description: Step-by-step DBLab how-to guides for installing DBLab Engine, cloning and branching Postgres databases, managing snapshots, using Joe bot, and more.
 ---
 
 ## Administration

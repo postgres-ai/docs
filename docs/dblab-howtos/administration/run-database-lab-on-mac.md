@@ -1,12 +1,13 @@
 ---
 title: How to run DBLab Engine on macOS
 sidebar_label: Run DBLab on macOS
+description: Run DBLab Engine 4.1+ with full ZFS support on Intel or Apple Silicon macOS using Colima, a lightweight Linux VM with Docker.
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 This guide explains how to run the DBLab Engine with full ZFS support **on macOS**, using [**Colima**](https://github.com/abiosoft/colima), a lightweight Linux VM with Docker support.  
-All ZFS operations happen **inside the Colima VM**, so you don't need to install the ZFS module to your macOS.
+All ZFS operations happen **inside the Colima VM**, so you don't need to install the ZFS module on macOS.
 
 :::note
 This guide provides an experimental way to run DBLab Engine on macOS.
@@ -27,7 +28,7 @@ Then install Docker, Colima, and Go:
 brew install docker colima go
 ```
 
-To build the DLE binary locally, **Go 1.23 or higher** is required, so let's check the Go version:
+To build the DBLab Engine binary locally, **Go 1.23 or higher** is required, so let's check the Go version:
 ```bash
 go version
 ```

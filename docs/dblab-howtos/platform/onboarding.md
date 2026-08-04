@@ -4,7 +4,7 @@ sidebar_label: Platform onboarding checklist
 keywords:
   - "DBLab Platform onboarding"
   - "Start using DBLab Engine"
-description: In this document, we will cover tasks that you can start with to work with the DBLab Platform.
+description: "Onboarding checklist for the DBLab Platform: try Joe for SQL optimization, postgres-checkup reports, and DBLab Engine clones via the GUI, API, and CLI."
 ---
 
 :::note
@@ -39,7 +39,7 @@ First, try using the basic features:
     - Ensure that the table does not exist because the state of the database in your session has been reset: `explain select from t_example` should return an error saying that the table does not exist
         - // Note that sometimes, after performing `reset`, the very first command might fail with either `unexpected EOF` or "postmaster exit" error – this is a known minor issue; just repeat your command
 
-### Query Optimization History and Visualization
+### Query optimization history and visualization
 - [ ] Explore the SQL optimization knowledge base:
     - go to `SQL optimization / History`
     - choose one of your latest `explain` commands and click on it to see details

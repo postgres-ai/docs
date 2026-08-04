@@ -1,12 +1,13 @@
 ---
 title: How to get sizes of PostgreSQL databases, tables, and indexes with psql commands
 sidebar_label: Get sizes of PostgreSQL database objects
+description: Use Joe bot and psql meta-commands to get the size of Postgres databases, tables, indexes, views, and materialized views without direct database access.
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Joe supports a number of [psql](https://www.postgresql.org/docs/current/app-psql.html) meta-commands (slash or backslash commands, e.g. `\d`). Such commands could be used to get the size of database objects (tables, indexes, etc.).
+Joe supports a number of [psql](https://www.postgresql.org/docs/current/app-psql.html) meta-commands (backslash commands, such as `\d`). You can use these commands to get the size of database objects such as tables and indexes.
 
 You can use meta-commands to get the size:
 - `\dt+` – list tables;

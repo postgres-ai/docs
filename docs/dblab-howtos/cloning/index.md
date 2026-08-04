@@ -2,6 +2,7 @@
 title: How to work with DBLab clones
 sidebar_label: Overview
 slug: /dblab-howtos/cloning
+description: Guides for working with DBLab clones, including how to create, connect to, reset, destroy, protect, and run a Postgres major upgrade in a clone.
 ---
 
 ## Guides

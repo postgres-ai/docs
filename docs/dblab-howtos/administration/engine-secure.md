@@ -1,6 +1,7 @@
 ---
 title: Secure DBLab Engine
 sidebar_label: Secure DBLab Engine
+description: Secure the DBLab Engine UI, API, CLI, and database clones with an Envoy proxy and a Let's Encrypt SSL certificate for encrypted HTTPS access.
 ---
 
 To make your work with DBLab Engine UI / API / CLI and clones secure, install and configure [Envoy proxy](https://www.envoyproxy.io) with an SSL certificate.
