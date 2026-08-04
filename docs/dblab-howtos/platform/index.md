@@ -2,6 +2,7 @@
 title: DBLab Platform
 sidebar_label: Overview
 slug: /dblab-howtos/platform
+description: "Guides for the DBLab Platform: start using it, create and use access tokens, complete the onboarding checklist, and set up audit logs and SIEM."
 ---
 
 ## Guides

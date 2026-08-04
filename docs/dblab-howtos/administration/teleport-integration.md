@@ -1,6 +1,7 @@
 ---
 title: Teleport integration
 sidebar_label: Teleport integration
+description: Integrate DBLab Engine 4.1+ with Teleport for secure, audited, certificate-based access to Postgres database clones with role-based access control.
 ---
 
 DBLab Engine 4.1 includes built-in integration with [Teleport](https://goteleport.com/), enabling secure, audited access to database clones through Teleport's access control. The integration works as a sidecar process that automatically registers and deregisters DBLab clones as Teleport database resources.

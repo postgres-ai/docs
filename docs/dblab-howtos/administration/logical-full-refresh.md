@@ -1,9 +1,10 @@
 ---
 title: How to refresh data when working in the "logical" mode
 sidebar_label: Full refresh for "logical" mode
+description: How to fully refresh data in DBLab Engine when using the "logical" provisioning mode, both manually on a single disk and automatically without downtime.
 ---
 
-For the "logical" provisioning mode, the "sync" instance is not yet supported (although, it is possible to implement based on logical replication) and the only option to get fresh data on DBLab Engine is to refresh it fully. Follow these instructions to automate this process. Note that it is designed for ZFS; if you have a different setup, adjust the snippets accordingly. 
+For the "logical" provisioning mode, the "sync" instance is not yet supported (although it could be implemented based on logical replication), so the only way to get fresh data on DBLab Engine is to refresh it fully. Follow these instructions to automate this process. Note that it is designed for ZFS; if you have a different setup, adjust the snippets accordingly.
 
 :::caution
 Note that the process described here requires a maintenance window (brief period of downtime) for the DBLab Engine. Also, the existing clones are deleted and completely lost during the process. It means that the proper planning of the maintenance windows is needed. 

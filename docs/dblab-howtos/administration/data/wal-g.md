@@ -1,6 +1,7 @@
 ---
 title: "Data source: WAL-G"
 sidebar_label: "WAL-G"
+description: Configure DBLab Engine to restore a physical Postgres data directory from a WAL-G backup archive, using WAL-G environment variables and settings.
 ---
 
 :::info
@@ -9,7 +10,7 @@ As the first step, you need to set up a machine for DBLab Engine instance. See t
 
 ## Configuration
 ### Jobs
-In order to set up DBLab Engine to automatically get the data from a database using the [WAL-G](https://github.com/wal-g/wal-g) archival restoration tool you need to use the following jobs:
+To set up DBLab Engine to automatically get the data from a database using the [WAL-G](https://github.com/wal-g/wal-g) archival restoration tool, use the following jobs:
 - [physicalRestore](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalrestore)
 - [physicalSnapshot](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalsnapshot)
 
@@ -30,7 +31,7 @@ Use Docker volumes to make credential files available to WAL-G.
 
 For example: `--volume ~/.dblab/credentials.json:/home/dblab/credentials.json` or store them into a config directory.
 
-Note that credentials location inside the container matches the right part of the mount expression
+Note that the credentials location inside the container matches the right part of the mount expression.
 :::
 
 ```bash

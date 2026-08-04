@@ -1,6 +1,7 @@
 ---
 title: How to manage Joe Bot
 sidebar_label: Manage Joe Bot
+description: Start, reconfigure, upgrade, and monitor the Joe Bot container for SQL optimization on DBLab Engine clones, and check its status and logs.
 ---
 
 ## Start Joe Bot container
@@ -25,12 +26,12 @@ Restart the running Joe Bot container:
 sudo docker restart joe_bot
 ```
 
-After restart, all user sessions are restored and should keep working (but PostgreSQL connections are re-established so if users set some session variables, they are lost). This feature works only in Joe versions 0.10 and newer. If you need to reset user sessions, stop the container, remove the file `sessions.json` located in `~/.dblab/joe/meta`, and start the container.
+After restart, all user sessions are restored and should keep working (but Postgres connections are re-established, so if users set some session variables, they are lost). This feature works only in Joe versions 0.10 and newer. If you need to reset user sessions, stop the container, remove the file `sessions.json` located in `~/.dblab/joe/meta`, and start the container.
 
 ## Upgrade Joe Bot 
 Stop and remove the container using `sudo docker stop joe_bot` and `sudo docker rm joe_bot`, and then [launch](#start-joe-bot-container) it again.
 
-After upgrading, all user sessions are restored and should keep working (but PostgreSQL connections are re-established so if users set some session variables, they are lost). This feature works only in Joe versions 0.10 and newer. If you need to reset user sessions, stop the container, remove the file `sessions.json` located in `~/.dblab/joe/meta`, and start the container.
+After upgrading, all user sessions are restored and should keep working (but Postgres connections are re-established, so if users set some session variables, they are lost). This feature works only in Joe versions 0.10 and newer. If you need to reset user sessions, stop the container, remove the file `sessions.json` located in `~/.dblab/joe/meta`, and start the container.
 
 ## Observe Joe Bot logs
 To enable the debugging mode you can use one of the following approaches:

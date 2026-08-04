@@ -1,17 +1,18 @@
 ---
 title: How to set up full-stack preview environments with DBLab, Coolify and GitHub
-sidebar_label: How to set up full-stack preview environments with DBLab, Coolify and GitHub
+sidebar_label: Preview environments with Coolify
+description: Set up automated full-stack preview environments that provision an isolated Postgres clone with DBLab and deploy with Coolify for every GitHub pull request.
 ---
 
 # How to set up full-stack preview environments with DBLab, Coolify and GitHub
 
-This how-to guide walks you through setting up automated preview environments that create isolated PostgreSQL database clones for each pull request. Each environment runs independently with its own database, allowing safe testing of migrations and data changes.
+This how-to guide walks you through setting up automated preview environments that create isolated Postgres database clones for each pull request. Each environment runs independently with its own database, allowing safe testing of migrations and data changes.
 
 ## What you'll achieve
 
 By the end of this guide, you'll have:
 - Automatic preview environments for every pull request
-- Isolated PostgreSQL database clones using DBLab
+- Isolated Postgres database clones using DBLab
 - Automatic deployment via Coolify
 - Automatic cleanup when pull requests are closed
 
@@ -23,7 +24,7 @@ Before starting, ensure you have:
 - **Coolify latest version** - self-hosted deployment platform ([installation guide](https://coolify.io/docs/get-started/installation))
 - **GitHub repository** - for code storage and CI/CD
 - **Virtual machine with Docker** - to run DBLab and Coolify
-- **PostgreSQL database** - as source for cloning
+- **Postgres database** - as the source for cloning
 - **Admin access** - to both GitHub repository and Coolify instance
 
 ---
@@ -104,7 +105,7 @@ Before setting up preview environments, you need to configure DBLab with a data 
 ### 2.1 Set up a data source
 
 1. Follow the [DBLab configuration guide](https://postgres.ai/docs/how-to-guides/administration/install-dle-from-postgres-ai) to set up your data source
-2. Ensure your PostgreSQL database is accessible from the DBLab instance  
+2. Ensure your Postgres database is accessible from the DBLab instance  
 3. Configure the data source in your DBLab server configuration file or in the UI (recommended)
 
 ---

@@ -1,16 +1,17 @@
 ---
 title: How to install DBLab using the AWS Marketplace
 sidebar_label: Install DBLab from AWS Marketplace
+description: Install DBLab Engine from the AWS Marketplace to get instant database branching and thin clones for RDS, RDS Aurora, and any Postgres source.
 ---
 
 <p align="center">
     <img src="/assets/dle-for-aws-marketplace.png" alt="DBLab Engine and AWS Marketplace"/>
 </p>
 
-If you're using AWS, [installing DBLab from the AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec) is the fastest way to have powerful database branching for any database, including RDS and RDS Aurora. But not only RDS: any Postgres and Postgres-compatible source is supported as a source for DBLab.
+If you're using AWS, [installing DBLab from the AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec) is the fastest way to get database branching for any database, including RDS and RDS Aurora. It is not limited to RDS: any Postgres or Postgres-compatible database can serve as a source for DBLab.
 
 :::info
-Currently, only the "logical" mode of data retrieval (dump/restore) is supported – the only available method for managed PostgreSQL cloud services such as RDS Postgres, RDS Aurora Postgres, Azure Postgres, or Heroku. "Physical" mode is not yet supported by the module, but it will be in the future. More about [various data retrieval options for DBLab](/docs/dblab-howtos/administration/data).
+Currently, only the "logical" mode of data retrieval (dump/restore) is supported – the only available method for managed Postgres cloud services such as RDS Postgres, RDS Aurora Postgres, Azure Postgres, or Heroku. "Physical" mode is not yet supported by the module, but it will be in the future. More about [various data retrieval options for DBLab](/docs/dblab-howtos/administration/data).
 :::
 
 :::note
@@ -20,7 +21,7 @@ Check out the DBLab installation tutorial:
 
 ## Prerequisites
 - [AWS cloud account](https://aws.amazon.com)
-- SSH client (available by default on Linux and MacOS; Windows users: consider using [PuTTY](https://www.putty.org/))
+- SSH client (available by default on Linux and macOS; Windows users: consider using [PuTTY](https://www.putty.org/))
 - A key pair already generated for the AWS region that we are going to use during the installation. Both RSA and ed25519 will work. If you're not familiar with the process of creating a key pair in AWS, read their documentation: ["Create key pairs"](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html).
 
 ## Steps to install DBLab Engine from AWS Marketplace
@@ -93,7 +94,7 @@ Once you've pressed "Submit", the process begins.
 
 You need to wait a few minutes, while all resources are provisioned and DBLab setup is complete. Check out the "Outputs" section – once DBLab API and UI are ready, you'll see the ordered list of instructions on how to connect to UI and API.
 
-Note that the initial data retrieval can be long – it depends on the size of the source database(s). However, DBLab API, CLI, and UI are available for use while it's happening. And once the retrieval is finished, DBLab is ready for use. Happy cloning!
+Note that the initial data retrieval can be long – it depends on the size of the source database(s). However, DBLab API, CLI, and UI are available for use while it is happening. Once the retrieval is finished, DBLab is ready for use.
 
 ## Setup demonstration
 <div class="embed-responsive embed-responsive-4by3 mb-4">

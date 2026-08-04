@@ -1,6 +1,7 @@
 ---
 title: "Data source: RDS/Aurora refresh"
 sidebar_label: "RDS/Aurora refresh"
+description: Refresh DBLab Engine from Amazon RDS or Aurora by dumping a temporary RDS clone instead of production, avoiding xmin horizon holds, load, and bloat.
 ---
 
 :::note
@@ -12,7 +13,7 @@ The RDS/Aurora refresh tool provides an alternative approach to refreshing DBLab
 ## Why use this approach?
 
 Running `pg_dump` directly against a production database can be problematic:
-- **Holds xmin horizon for hours** leading to bloat accumulation
+- **Holds the xmin horizon for hours**, leading to bloat accumulation
 - **Creates load on production** for the duration of the dump
 - **Requires direct network access** to the production database
 

@@ -1,20 +1,21 @@
 ---
 title: How to get row counts for arbitrary SELECTs
 sidebar_label: Get row counts for arbitrary SELECTs
+description: Use Joe bot and EXPLAIN with actual execution to get exact row counts for any SELECT on production-like data, without direct access to the source database.
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-One of the good side-effects of using Joe bot is the ability that any EXPLAIN plan with actual execution provides: one can get row counts for any SELECT without having direct access to the data.
+A useful side effect of running an EXPLAIN plan with actual execution in Joe bot is that you can get exact row counts for any SELECT without direct access to the data.
 
-This can be useful when you develop or troubleshoot something and need to learn how many rows a query would return in real life (on production). Of course, it makes sense only if your DBLab Engine is set up to work with production-like data.
+This helps when you develop or troubleshoot a query and need to know how many rows it would return in real life (on production). This works only when your DBLab Engine is set up to work with production-like data.
 
-To get exact row counts, use the `Actual rows` parameter of the query execution plan which satisfies the specified condition.
+To get exact row counts, use the `Actual rows` value in the query execution plan for the node that satisfies your condition.
 
-In the following steps let's assume that we need to answer the question: "How many rows in the table `table1` have `col1 = 1`?" So, our SELECT would be `select * from table1 where col1`.
+In the following steps, let's assume we need to answer the question: "How many rows in the table `table1` have `col1 = 1`?" So our SELECT would be `select * from table1 where col1`.
 
-1. Execute `explain select * from table1 where col1 = 1` command to get the query execution plan. The session will start automatically, and a new clone will be created in a few seconds by the DBLab Engine. 
+1. Run the `explain select * from table1 where col1 = 1` command to get the query execution plan. The session starts automatically, and DBLab Engine creates a new clone within a few seconds.
 
 :::tip
 Notice that using `count(*)` is not really needed – `select * from table1` (or even `select from table1`) is absolutely enough.
@@ -44,9 +45,9 @@ Keep in mind that the clone you are working with might be, depending on the sett
 </TabItem>
 </Tabs>
 
-2. Open the **full execution plan**. You can get the rows number from the first line. For example, if you see `(actual ... rows=1000)`, it means that 1000 rows match the specified criteria.
+2. Open the **full execution plan**. You can read the number of rows from the first line. For example, if you see `(actual ... rows=1000)`, then 1000 rows match the specified criteria.
 
-This recipe may be very useful for quite complex queries. You can benefit from one of the key features of DBLab Engine and Joe bot: your session is fully independent, your work doesn't affect the production performance of your colleague's work, even if the query you use is suboptimal and runs for many hours.
+This approach is especially useful for complex queries. It relies on one of the key features of DBLab Engine and Joe bot: your session is fully independent, so your work does not affect production performance or your colleagues' work, even if the query is suboptimal and runs for many hours.
 
 <Tabs
   groupId="joe-mode"

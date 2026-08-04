@@ -1,6 +1,7 @@
 ---
 title: Rename databases during snapshot creation
 sidebar_label: Rename databases
+description: Use the databaseRename option in DBLab Engine to expose different database names in clones than in the source, for logical and physical snapshots.
 ---
 
 Use the `databaseRename` option when you want DBLab clones to expose different database names than the source system. This is useful when production database names include environment-specific suffixes such as `_prod`, but your development and CI tooling expects names like `_dev` or `_test`.

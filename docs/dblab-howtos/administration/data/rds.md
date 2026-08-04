@@ -1,6 +1,7 @@
 ---
 title: "Data source: AWS RDS"
 sidebar_label: "AWS RDS"
+description: Connect DBLab Engine to an Amazon RDS Postgres database using either master password authentication or IAM database authentication.
 ---
 
 :::info
@@ -11,7 +12,7 @@ As the first step, you need to set up a machine for DBLab Engine instance. See t
 To get started using DBLab Engine for Amazon RDS databases, see the [Database Lab tutorial for Amazon RDS](/docs/tutorials/database-lab-tutorial-amazon-rds).
 :::
 
-We have two options to connect to the RDS database — you need to consider the **Database authentication** method that is assigned to your RDS database.
+There are two options to connect to the RDS database. The right choice depends on the **Database authentication** method assigned to your RDS database.
 
 Options:
 - Using **password authentication (master password)**. This option can be used for all **Database authentication** methods enabled for your database and requires setting the master password of the database in the DBLab Engine configuration file
@@ -22,7 +23,7 @@ If you want to use **IAM database authentication**, read how to enable it [here]
 ## Option 1: Password authentication
 
 :::tip
-You need to know the **master password**. If you lost the password it can be reset. Read how to reset it [here](https://aws.amazon.com/premiumsupport/knowledge-center/reset-master-user-password-rds/).
+You need to know the **master password**. If you have lost the password, you can reset it. Read how to reset it [here](https://aws.amazon.com/premiumsupport/knowledge-center/reset-master-user-password-rds/).
 :::
 
 Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.1.3/engine/configs/config.example.logical_generic.yml) from the DBLab Engine repository to `~/.dblab/engine/configs/server.yml` and update the following options:
@@ -32,7 +33,7 @@ Copy the contents of configuration example [`config.example.logical_generic.yml`
     - `host`: database server host
     - `port`: database server port
     - `username`: database user name
-    - `password`: database master password (can be also set as `PGPASSWORD` environment variable of the Docker container)
+    - `password`: database master password (can also be set as the `PGPASSWORD` environment variable of the Docker container)
 - Set a proper version in Postgres Docker image tag (change the image itself only if you know what you are doing):
     - `databaseContainer:dockerImage`
 

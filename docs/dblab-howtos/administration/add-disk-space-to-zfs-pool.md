@@ -1,17 +1,18 @@
 ---
 title: How to add disk space to a ZFS pool without downtime
 sidebar_label: Increase ZFS pool size without downtime
+description: Expand a ZFS pool used by DBLab Engine online, with no downtime, by resizing the cloud disk and enabling ZFS autoexpand on Linux.
 ---
 
-For ZFS, performance degradation might occur when more than 80% of disk space is used. Therefore, it is recommended to monitor the used and free disk space and increase the size of the pool for the DBLab Engine (DLE) in a timely fashion.
+With ZFS, performance can degrade once more than 80% of disk space is used. Monitor the used and free disk space and increase the pool size for DBLab Engine before it fills up.
 
-ZFS on Linux does support online pool resizing, or "auto-expand". Thanks to this, we can increase the pool size without any downtime.
+ZFS on Linux supports online pool resizing, also known as "autoexpand". This lets you increase the pool size without any downtime.
 
 :::tip
-When we talk about resizing the ZFS pool without downtime, we assume that the DLE is hosted in the cloud, and the cloud provider allows you to change the disk size online without restarting the server.
+Resizing the ZFS pool without downtime assumes that DBLab Engine is hosted in the cloud and that the cloud provider lets you change the disk size online, without restarting the server.
 :::
 
-To add disk space to a ZFS pool without downtime, follow the below steps.
+To add disk space to a ZFS pool without downtime, follow the steps below.
 
 ## 1. Check the free space in the pool
 
@@ -92,9 +93,9 @@ nvme1n1     259:2    0  80G  0 disk
 └─nvme1n1p9 259:4    0   8M  0 part 
 ```
 
-## 5. Set your zpool with autoextend on 
+## 5. Enable autoexpand on the ZFS pool
 
-Check if autoexpand is enabled (it defaults to off):
+Check whether autoexpand is enabled (it defaults to off):
 
 ```bash
 sudo zpool get autoexpand dblab_pool
@@ -116,9 +117,9 @@ NAME        PROPERTY    VALUE   SOURCE
 dblab_pool  autoexpand  on      local
 ```
 
-## 6. Resize ZFS pool
+## 6. Resize the ZFS pool
 
-You can expand the pool online by running the following command:
+Expand the pool online by running the following command:
 
 ```bash
 sudo zpool online -e dblab_pool nvme1n1
