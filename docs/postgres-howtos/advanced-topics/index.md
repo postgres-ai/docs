@@ -8,7 +8,7 @@ description: Deep dives into PostgreSQL internals, extensions, and advanced feat
 
 Deep dives into PostgreSQL internals, extensions, and advanced features.
 
-## Guides by Category
+## Guides by category
 
 ### Misc
 

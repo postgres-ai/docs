@@ -343,20 +343,11 @@ const plans: Plan[] = [
     ctaLink: 'https://console.postgres.ai/get-started?plan=express',
   },
   {
-    name: 'Starter',
-    price: '$128',
-    period: '/cluster/mo',
-    description: 'For small production databases',
-    keyFeature: 'Full monitoring with 7-days history',
-    cta: 'Get started',
-    ctaLink: 'https://console.postgres.ai/get-started?plan=starter',
-  },
-  {
     name: 'Scale',
     price: '$512',
     period: '/cluster/mo',
     description: 'For growing teams with critical workloads',
-    keyFeature: '6-months history + 1 business day SLA',
+    keyFeature: '6-month history + 1 business day SLA',
     cta: 'Get started',
     ctaLink: 'https://console.postgres.ai/get-started?plan=scale',
     highlight: true,
@@ -380,32 +371,33 @@ interface FeatureRow {
 
 const features: FeatureRow[] = [
   { category: 'Checkup reports', feature: '', values: [] },
-  { feature: 'AI-friendly database checkup reports', values: [true, true, true, true, true] },
-  { feature: 'Nodes included', values: ['Primary only', 'Primary only', 'Primary + 2 replicas', 'Unlimited replicas', 'Unlimited replicas'] },
-  { feature: 'Issues with detailed action plans', values: [false, true, true, true, true] },
-  { feature: 'Full AI-driven workflow (MCP, Cursor, Claude Code)', values: [false, true, true, true, true] },
+  { feature: 'AI-friendly database checkup reports', values: [true, true, true, true] },
+  { feature: 'Nodes included', values: ['Primary only', 'Primary only', 'Unlimited replicas', 'Unlimited replicas'] },
+  { feature: 'Issues with detailed action plans', values: [false, true, true, true] },
+  { feature: 'Full AI-driven workflow (MCP, Cursor, Claude Code)', values: [false, true, true, true] },
   
   { category: 'Monitoring', feature: '', values: [] },
-  { feature: 'Full monitoring stack', values: [false, false, true, true, true] },
-  { feature: 'Monitoring retention', values: ['—', '—', '7 days', '6 months', 'Custom'] },
-  { feature: 'Monitoring data for the past, ready for RCAs', values: [false, false, true, true, true] },
-  { feature: 'Trend analysis and risk detection', values: [false, false, false, true, true] },
-  { feature: 'Advanced reports and workflows', values: [false, false, true, true, true] },
+  { feature: 'Full monitoring stack', values: [false, false, true, true] },
+  { feature: 'Private RDS monitoring over AWS PrivateLink', values: [false, false, true, true] },
+  { feature: 'Monitoring retention', values: ['—', '—', '6 months', 'Custom'] },
+  { feature: 'Monitoring data for the past, ready for RCAs', values: [false, false, true, true] },
+  { feature: 'Trend analysis and risk detection', values: [false, false, true, true] },
+  { feature: 'Advanced reports and workflows', values: [false, false, true, true] },
   
   { category: 'Alerts', feature: '', values: [] },
-  { feature: 'Email alerts', values: [false, false, true, true, true] },
-  { feature: 'Slack alerts', values: [false, false, true, true, true] },
+  { feature: 'Email alerts', values: [false, false, true, true] },
+  { feature: 'Slack alerts', values: [false, false, true, true] },
   
   { category: 'Support', feature: '', values: [] },
-  { feature: 'Community support', values: [true, true, true, true, true] },
-  { feature: 'Async support (email, Slack)', values: [false, false, true, true, true] },
-  { feature: 'Support SLA', values: ['—', '—', '—', '1 business day', 'Custom'] },
-  { feature: 'Dedicated support channel', values: [false, false, false, false, true] },
+  { feature: 'Community support', values: [true, true, true, true] },
+  { feature: 'Async support (email, Slack)', values: [false, false, true, true] },
+  { feature: 'Support SLA', values: ['—', '—', '1 business day', 'Custom'] },
+  { feature: 'Dedicated support channel', values: [false, false, false, true] },
   
   { category: 'Advanced', feature: '', values: [] },
-  { feature: 'Kubernetes & Terraform supported', values: [false, false, false, false, true] },
-  { feature: 'Custom workflows', values: [false, false, false, false, true] },
-  { feature: 'On-prem deployment', values: [false, false, false, false, true] },
+  { feature: 'Kubernetes & Terraform supported', values: [false, false, false, true] },
+  { feature: 'Custom workflows', values: [false, false, false, true] },
+  { feature: 'On-prem deployment', values: [false, false, false, true] },
 ]
 
 const Pricing = () => {
@@ -414,7 +406,7 @@ const Pricing = () => {
   const { apiUrlPrefix } = customFields
   const [isLoading, setIsLoading] = useState(true)
   const [tableData, setTableData] = useState([])
-  const [selectedPlanIndex, setSelectedPlanIndex] = useState(3) // Default to Scale
+  const [selectedPlanIndex, setSelectedPlanIndex] = useState(2) // Default to Scale
   const [isDblabPricingExpanded, setIsDblabPricingExpanded] = useState(false)
 
   useEffect(() => {
@@ -632,7 +624,7 @@ const Pricing = () => {
                 <li>One-time package delivering Enterprise-level support</li>
                 <li>Unlimited Slack communications</li>
                 <li>1 hour live training (Zoom)</li>
-                <li>Custom-built docker images upon request</li>
+                <li>Custom-built Docker images upon request</li>
                 <li>Max. response time: 1 business day</li>
               </ul>
               <div className={styles.addonPricing}>
@@ -763,7 +755,6 @@ const Pricing = () => {
                 <ul>
                   <li><strong>Hobby:</strong> You're learning Postgres or running a pet project with no real users yet.</li>
                   <li><strong>Express:</strong> You're shipping fast (solo or small team) and want to make sure your database survives the first users.</li>
-                  <li><strong>Starter:</strong> You're in production with a small database and need full visibility when things break.</li>
                   <li><strong>Scale:</strong> You have critical workloads, need longer history, and want faster support.</li>
                   <li><strong>Enterprise:</strong> You need stricter SLAs, dedicated support, or on-prem deployment.</li>
                 </ul>

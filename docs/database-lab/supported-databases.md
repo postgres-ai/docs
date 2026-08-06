@@ -4,7 +4,6 @@ title: PostgreSQL versions and extensions supported in DBLab Engine
 
 ## PostgreSQL versions
 Currently, DBLab Engine fully supports the following [PostgreSQL major versions](https://www.postgresql.org/support/versioning/):
-- 9.6 (released: 2016-09-29; EOL: 2021-11-11)
 - 10 (released: 2017-10-05; EOL: 2022-11-10)
 - 11 (released: 2018-10-18; EOL: 2023-11-09)
 - 12 (released: 2019-10-03; EOL: 2024-11-14)
@@ -15,7 +14,7 @@ Currently, DBLab Engine fully supports the following [PostgreSQL major versions]
 - 17 (released: 2024-09-26; EOL: 2029-11-08)
 - 18 (released: 2025-09-25; EOL: 2030-11-13)
 
-By default, version 17 is used: `postgresai/extended-postgres:17`.
+By default, version 18 is used in the example configurations: `postgresai/extended-postgres:18`.
 
 The images are published in [Docker Hub](https://hub.docker.com/r/postgresai/extended-postgres).
 
@@ -31,7 +30,7 @@ All these extended images include the following extensions:
 - [bg_mon](https://github.com/CyberDem0n/bg_mon)
 - [pg_auth_mon](https://github.com/RafiaSabih/pg_auth_mon)
 - [PoWA](https://github.com/powa-team/powa)
-- [pg_hint_plan](https://pghintplan.osdn.jp/pg_hint_plan.html)
+- [pg_hint_plan](https://github.com/ossc-db/pg_hint_plan)
 - [Timescale](https://github.com/timescale/timescaledb) (only for Postgres 12+)
 - [Citus](https://github.com/citusdata/citus) (only for Postgres 11+)
 - [HypoPG](https://github.com/HypoPG/hypopg)
@@ -45,7 +44,7 @@ All these extended images include the following extensions:
 - [pgextwlist](https://github.com/dimitri/pgextwlist)
 - [hll](https://github.com/citusdata/postgresql-hll)
 - [topn](https://github.com/citusdata/postgresql-topn) (only for Postgres 10+)
-- [postgresql_anonymizer](https://github.com/webysther/postgresql_anonymizer)
+- [postgresql_anonymizer](https://gitlab.com/dalibo/postgresql_anonymizer)
 - [pgaudit](https://github.com/pgaudit/pgaudit)
 - [set_user](https://github.com/pgaudit/set_user) (only for Postgres 10+)
 

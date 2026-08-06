@@ -14,6 +14,8 @@ Advanced configuration and integration guides for PostgresAI monitoring.
 |-------|-------------|
 | [Multi-cluster monitoring](/docs/monitoring/advanced/multi-cluster) | Centralized monitoring for multiple clusters |
 | [Architecture](/docs/monitoring/advanced/architecture) | Deep-dive into system components |
+| [Security](/docs/monitoring/advanced/security) | VictoriaMetrics auth, credential rotation, hardening |
+| [Telemetry](/docs/monitoring/advanced/telemetry) | What the monitoring telemetry reporter sends, and how to disable it |
 
 ## When to use advanced features
 

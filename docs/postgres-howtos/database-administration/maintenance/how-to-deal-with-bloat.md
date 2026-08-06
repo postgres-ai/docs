@@ -63,7 +63,7 @@ Approaches to determine the bloat levels more precisely:
 - checking DB object sizes on a clone, running `VACUUM FULL` (heavy and blocks queries, thus not for production), and
   then checking sizes again and comparing before/after
 
-Periodical checks are definitely recommended to control bloat levels and react, when needed.
+Periodic checks are definitely recommended to control bloat levels and react, when needed.
 
 ## Index bloat mitigation (reactive)
 
@@ -97,7 +97,7 @@ only when high table bloat is detected.
 
 * Tune `autovacuum`.
 * Monitor the `xmin` horizon and don't allow it to be too far in the past --
-  [Day 45: How to monitor xmin horizon to prevent XID/MultiXID wraparound and high bloat](/docs/postgres-howtos/performance-optimization/statistics/how-to-monitor-xmin-horizon).
+  [Day 45: How to monitor xmin horizon to prevent XID/MultiXID wraparound and high bloat](/docs/postgres-howtos/performance-optimization/monitoring/how-to-monitor-xmin-horizon).
 * Do not allow unnecessary long-running transactions (e.g., > 1h), neither on the primary, nor on standbys with
   `hot_standby_feedback` turned on.
 * If on Postgres 13 or older, consider upgrading to 14+ to benefit from btree index optimizations.

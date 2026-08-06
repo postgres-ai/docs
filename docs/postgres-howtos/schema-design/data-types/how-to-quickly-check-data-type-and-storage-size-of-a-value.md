@@ -24,7 +24,7 @@ estimated_time: 5 min
 ---
 
 
-Here is how you can quickly check data type and size of a value, not looking in documentation.
+Here is how you can quickly check data type and size of a value, without looking in the documentation.
 
 ## How to check data type for a value
 
@@ -89,9 +89,9 @@ nik=# select pg_column_size(true), pg_column_size(false);
 (1 row)
 ```
 
-Remembering the previous howto, [Column Tetris](/docs/postgres-howtos/advanced-topics/internals/how-to-find-the-best-order-of-columns-to-save-on-storage), here we
-can conclude that not only we need 1 byte to store a bit (8x space), it becomes 8 bytes if we create a table
-(`c1 boolean`, `c2 int8`), due to alignment padding – meaning that it's already 64 bits! So, in such "unfortunate" case, those
+Remembering the previous howto, [Column Tetris](/docs/postgres-howtos/advanced-topics/misc/how-to-find-the-best-order-of-columns-to-save-on-storage), here we
+can conclude that not only do we need 1 byte to store a bit (8x space), it becomes 8 bytes if we create a table
+(`c1 boolean`, `c2 int8`), due to alignment padding – meaning that it's already 64 bits! So, in such an "unfortunate" case, those
 who store 'true' as text, don't lose anything at all:
 
 ```sql
@@ -162,7 +162,7 @@ nik=# select pg_column_size(row(1, 2));
 
 ## No need to remember exact function names
 
-When working in psql, there is no need to remember function names – use `\df+` to search function name:
+When working in psql, there is no need to remember function names – use `\df+` to search for a function name:
 
 ```sql
 nik=# \df *pg_*type*

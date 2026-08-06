@@ -18,7 +18,7 @@ const testimonials = [
     location: "USA",
   },
   {
-    quote: "When you're powering thousands of developer apps, database downtime isn't an option—PostgresAI's expertise over the years culminated in a flawless zero-downtime Postgres upgrade that kept our platform running seamlessly while we scaled for the future.",
+    quote: "When you're powering thousands of developer apps, database downtime isn't an option — PostgresAI's expertise over the years culminated in a flawless zero-downtime Postgres upgrade that kept our platform running seamlessly while we scaled for the future.",
     name: "Harry Brundage",
     title: "Co-founder & CTO",
     company: "Gadget",

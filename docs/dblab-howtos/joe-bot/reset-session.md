@@ -1,13 +1,14 @@
 ---
-title: How to reset Joe session
+title: How to reset a Joe session
 sidebar_label: Reset a session
+description: Reset a Joe chatbot session to its initial state with the reset command, restoring the underlying DBLab clone and discarding all changes you made.
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 ## GUI
-1. With Joe chatbot sessions (based Database Lab clones) you can perform any changes and not be afraid to damage the data. For example, connect to your clone and drop any table.
+1. With Joe chatbot sessions (based on DBLab clones), you can make any changes without worrying about damaging the data. For example, connect to your clone and drop a table.
 
 <Tabs
   groupId="joe-mode"
@@ -29,7 +30,7 @@ import TabItem from '@theme/TabItem';
 </TabItem>
 </Tabs>
 
-2. Execute [reset](/docs/reference-guides/joe-bot-commands-reference#reset) command.
+2. Run the [reset](/docs/reference-guides/joe-bot-commands-reference#reset) command.
 
 <Tabs
   groupId="joe-mode"
@@ -51,7 +52,7 @@ import TabItem from '@theme/TabItem';
 </TabItem>
 </Tabs>
 
-3. Wait for ✅ **OK** status. The data will be recovered to the initial state.
+3. Wait for the ✅ **OK** status. The data is restored to its initial state.
 
 <Tabs
   groupId="joe-mode"

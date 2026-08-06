@@ -2,16 +2,20 @@
 title: DBLab how-to guides
 sidebar_label: Overview
 slug: /dblab-howtos
+description: Step-by-step DBLab how-to guides for installing DBLab Engine, cloning and branching Postgres databases, managing snapshots, using Joe bot, and more.
 ---
 
 ## Administration
 - [How to install DBLab Engine from PostgresAI Console](/docs/dblab-howtos/administration/install-dle-from-postgres-ai)
 - [How to install DBLab Engine from AWS Marketplace](/docs/dblab-howtos/administration/install-dle-from-aws-marketplace)
 - [How to install DBLab Engine manually (Community Edition)](/docs/dblab-howtos/administration/install-dle-manually)
+- [How to install Database Lab with Terraform on AWS](/docs/dblab-howtos/administration/install-database-lab-with-terraform)
+- [How to run DBLab Engine on macOS](/docs/dblab-howtos/administration/run-database-lab-on-mac)
 - [How to configure PostgreSQL used by DBLab Engine](/docs/dblab-howtos/administration/postgresql-configuration)
 - [How to manage DBLab Engine](/docs/dblab-howtos/administration/engine-manage)
 - [How to manage Joe Bot](/docs/dblab-howtos/administration/joe-manage)
 - [Secure DBLab Engine](/docs/dblab-howtos/administration/engine-secure)
+- [Teleport integration](/docs/dblab-howtos/administration/teleport-integration)
 - [How to refresh data when working in the "logical" mode](/docs/dblab-howtos/administration/logical-full-refresh)
 - [Masking sensitive data in PostgreSQL logs when using CI Observer](/docs/dblab-howtos/administration/ci-observer-postgres-log-masking)
 - [Add disk space to ZFS pool without downtime](/docs/dblab-howtos/administration/add-disk-space-to-zfs-pool)
@@ -27,6 +31,7 @@ slug: /dblab-howtos
 ## How to work with DBLab branches
 - [How to create a database branch](/docs/dblab-howtos/branching/create-branch)
 - [How to delete a database branch](/docs/dblab-howtos/branching/delete-branch)
+- [Preview environments with DBLab and Coolify](/docs/dblab-howtos/branching/preview-environments-with-dblab-and-coolify)
 
 ## How to work with DBLab snapshots
 - [How to create a snapshot](/docs/dblab-howtos/snapshots/create-snapshot)
@@ -48,16 +53,22 @@ slug: /dblab-howtos
 ## Obtaining data for DBLab
 ### Logical retrieval
 - [Amazon RDS](/docs/dblab-howtos/administration/data/rds)
+- [RDS/Aurora refresh from a temporary clone](/docs/dblab-howtos/administration/data/rds-refresh)
 - [Any database (dump/restore)](/docs/dblab-howtos/administration/data/dump)
 - [Full refresh](/docs/dblab-howtos/administration/logical-full-refresh)
 
 ### Physical retrieval
 - [pg_basebackup](/docs/dblab-howtos/administration/data/pg_basebackup)
 - [WAL-G](/docs/dblab-howtos/administration/data/wal-g)
-- [pgBackRest](/docs/dblab-howtos/administration/data/pgBackRest)
+- [pgBackRest](/docs/dblab-howtos/administration/data/pgbackrest)
+- [rsync](/docs/dblab-howtos/administration/data/rsync)
 - [Custom](/docs/dblab-howtos/administration/data/custom)
+
+### Shared (logical and physical)
+- [Rename databases during snapshot creation](/docs/dblab-howtos/administration/data/database-rename)
 
 ## DBLab (PostgresAI) Platform
 - [Start using PostgresAI Platform](/docs/dblab-howtos/platform/start-using-platform)
 - [Create and use DBLab Platform access tokens](/docs/dblab-howtos/platform/tokens)
 - [DBLab Platform onboarding checklist](/docs/dblab-howtos/platform/onboarding)
+- [Audit logs and SIEM integration](/docs/dblab-howtos/platform/audit-logs)

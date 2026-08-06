@@ -8,16 +8,16 @@ description: Tools and techniques for monitoring PostgreSQL and solving common p
 
 Tools and techniques for monitoring PostgreSQL and solving common problems.
 
-## Guides by Category
+## Guides by category
 
-### System Monitoring
+### System monitoring
 
 Track database health, performance metrics, and resource usage.
 
 - [How to troubleshoot Postgres performance using FlameGraphs and eBPF (or perf)](/docs/postgres-howtos/monitoring-troubleshooting/system-monitoring/flamegraphs-for-postgres) - 6 min *(beginner)*
 - [How to determine the replication lag](/docs/postgres-howtos/monitoring-troubleshooting/system-monitoring/how-to-determine-the-replication-lag) - 5 min *(intermediate)*
 
-### Lock Analysis
+### Lock analysis
 
 Understand and resolve locking issues and deadlocks.
 

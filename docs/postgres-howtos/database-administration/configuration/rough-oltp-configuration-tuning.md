@@ -26,7 +26,7 @@ estimated_time: 5 min
 The 80/20 rule (a.k.a. [Pareto principle](https://en.wikipedia.org/wiki/Pareto_principle)) is often enough to achieve a
 good level of performance for OLTP workloads – it is recommended, in most cases, to start with this approach and focus
 on query tuning. Especially if your system is rapidly changing – fighting for "the last 20%" just using configuration
-tuning, when an overlooked schema-level optimization (e.g., a missing index) can "kill" the performance, making little
+tuning, when an overlooked schema-level optimization (e.g., a missing index) can "kill" the performance, makes little
 sense. However, those 20% make a lot of sense (e.g., budget-wise) to fight for, if workload and DB don't change too
 fast, or if you have a lot (say, thousands) of Postgres nodes.
 
@@ -34,14 +34,14 @@ That's why simple empirical tuning services such as [PGTune](https://pgtune.leop
 we consider an example: a server of moderate size (64 vCPUs, 512 GiB RAM) serving moderate OLTP (web/mobile apps)
 workloads.
 
-The settings below should be considered as starting points and the values as only as rough guidelines – review for your
+The settings below should be considered as starting points and the values as only rough guidelines – review for your
 particular case, verify with experiments in non-production, and monitor all the changes closely.
 
 Good resources:
 
 - [PGTune](https://pgtune.leopard.in.ua)
 - [postgresql.conf configurations](https://postgresqlco.nf)
-- [postgresql_cluster's defaults](https://github.com/vitabaks/postgresql_cluster/blob/master/vars/main.yml)
+- [Autobase defaults](https://github.com/vitabaks/autobase/blob/master/automation/roles/common/defaults/main.yml) (formerly postgresql_cluster)
 
 1) `max_connections = 200`
 
@@ -93,7 +93,7 @@ Using huge pages can improve performance by reducing page management overhead.
 This is a part of checkpoint tuning. 10GB is quite a large value; however, some may prefer using even larger, which
 presents a trade-off:
 
-- larger value help handle heavy writes better (lower IO stress), but
+- larger values help handle heavy writes better (lower IO stress), but
 - larger values also lead to longer recovery time in case of crashes.
 
 > 🎯 **TODO:** a separate howto on checkpoint tuning.

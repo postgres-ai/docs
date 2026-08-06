@@ -44,7 +44,7 @@ Originally, only the Slack version of Joe Bot was publicly available. Today, we 
 
 The good news is that you can use both of them in parallel.
 
-Thanks to recent refactoring of Joe codebase, and the fact that this codebase is open-source, you can develop and add support for any messenger. Feel free to open issues to discuss the implementation and merge requests to include the code into the main Joe Bot repository. See also: [communication channels issues](https://gitlab.com/postgres-ai/joe/-/issues?label_name%5B%5D=Communication+channel), and discussions in our [Community Slack](https://slack.postgres.ai/).
+Thanks to recent refactoring of Joe codebase, and the fact that this codebase is open-source, you can develop and add support for any messenger. Feel free to open issues to discuss the implementation and merge requests to include the code into the main Joe Bot repository. See also: [the Joe Bot issue tracker](https://github.com/postgres-ai/joe/issues), and discussions in our [Community Slack](https://slack.postgres.ai/).
 
 Check [Platform Overview](https://postgres.ai/docs/platform) to discover all advantages of using Web UI working on Postgres.ai Platform.
 

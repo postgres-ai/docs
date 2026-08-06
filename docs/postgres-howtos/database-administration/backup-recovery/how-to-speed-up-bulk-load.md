@@ -30,9 +30,9 @@ Use `COPY` to load data, it's optimized for bulk load.
 
 Consider increasing `max_wal_size` and `checkpoint_timeout` temporarily.
 
-Changing them does not require restart.
+Changing them does not require a restart.
 
-Increased values lead to increased recovery time in case of failure, but benefit is that checkpoints occur less often,
+Increased values lead to increased recovery time in case of failure, but the benefit is that checkpoints occur less often,
 therefore:
 1. less stress on disk,
 2. less WAL data is written, thanks to decreased number of full page writes of the same pages (when load happens with
@@ -64,11 +64,11 @@ state should be done with care.
 If this is a new table, consider completely avoiding WAL writes during the data load. Two options (both have limitations
 and require understanding that data can be lost if a crash happens):
 
-- Use unlogged table: `CREATE UNLOGGED TABLE …`. Unlogged tables are not archived, not replicated, they are not persistent (though, they survive normal restarts). However, converting an unlogged table to a normal one takes time (likely, a lot – worth testing), because he data needs to be written to WAL. More about unlogged tables in [this post](https://crunchydata.com/blog/postgresl-unlogged-tables); also, see [this StackOverflow discussion](https://dba.stackexchange.com/questions/195780/set-postgresql-table-to-logged-after-data-loading/195829#195829).
+- Use unlogged table: `CREATE UNLOGGED TABLE …`. Unlogged tables are not archived, not replicated, they are not persistent (though, they survive normal restarts). However, converting an unlogged table to a normal one takes time (likely, a lot – worth testing), because the data needs to be written to WAL. More about unlogged tables in [this post](https://crunchydata.com/blog/postgresl-unlogged-tables); also, see [this StackOverflow discussion](https://dba.stackexchange.com/questions/195780/set-postgresql-table-to-logged-after-data-loading/195829#195829).
 
 - Use `COPY` with `wal_level ='minimal'`. `COPY` has to be executed inside the transaction that created the table.
   In this case, due to `wal_level ='minimal'`, `COPY` writes won't be written to WAL
-  (as of PG16, this is so only if table is unpartitioned).
+  (as of PG16, this is so only if the table is unpartitioned).
   Additionally, consider using `COPY (FREEZE)` – this approach also provides a benefit: all tuples
   are frozen after the data load. Setting `wal_level='minimal'`, unfortunately, requires a restart, and additional
   changes (`archive_mode = 'off'`, `max_wal_senders = 0`). Of course, this method doesn't work well in most of the
@@ -83,9 +83,9 @@ process (e.g., if single-threaded load saturates disk IO, parallelization won't 
 - Partitioned tables and loading into multiple partitions using multiple workers
   ([Day 20: pg_restore tips](/docs/postgres-howtos/database-administration/backup-recovery/how-to-use-pg-restore)).
 
-- Unpartitioned table and loading in big chunks. Such chunks require preparation of them – it can be CSV split into
+- Unpartitioned table and loading in big chunks. Such chunks require preparation – it can be CSV split into
   pieces, or exported ranges of table data using multiple synchronized `REPEATABLE READ` transactions (working with the
-  same snapshot via `SET TRANSACTION SNAPSHOT`; see [Day 8: How to speed up pg_dump](/docs/postgres-howtos/database-administration/backup-recovery/how-to-speed-up-pg-dump).
+  same snapshot via `SET TRANSACTION SNAPSHOT`; see [Day 8: How to speed up pg_dump](/docs/postgres-howtos/database-administration/backup-recovery/how-to-speed-up-pg-dump)).
 
 If you use TimescaleDB, consider [timescaledb-parallel-copy](https://github.com/timescale/timescaledb-parallel-copy).
 

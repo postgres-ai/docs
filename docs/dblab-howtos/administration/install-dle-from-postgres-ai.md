@@ -1,6 +1,7 @@
 ---
 title: How to install DBLab using the PostgresAI Console
 sidebar_label: Install DBLab from PostgresAI Console
+description: Install DBLab Standard Edition in your own cloud or on-premises infrastructure in minutes using the PostgresAI Console, with vendor support included.
 ---
 
 Use [the PostgresAI Console](https://console.postgres.ai/) for an easy and quick installation of DBLab. Following the steps below, in a few minutes, you will get:
@@ -38,7 +39,7 @@ In both scenarios, your data remains securely within your infrastructure.
 - [Create](https://console.postgres.ai/addorg) a new organization
 - Inside your organization, go to the "Billing" section and add a new payment method:
    - press the "Edit payment methods" button,
-   - you will see the Stripe portal – note it has the address `https://billing.stripe.com/...` (Postgres.ai partners with Stripe for simplified billing),
+   - you will see the Stripe portal – note it has the address `https://billing.stripe.com/...` (PostgresAI partners with Stripe for simplified billing),
    - add your payment methods there and close the page.
 
 ## DBLab installation
@@ -66,7 +67,7 @@ Choose the volume type and size:
 </p>
 
 :::note
-In this example the database size is 100 GiB, we want to create 3 datasets to be able to create 3 snapshots, so the volume with size 300 GiB will be created.
+In this example the database size is 100 GiB — we want to create 3 datasets to be able to create 3 snapshots, so the volume with size 300 GiB will be created.
 :::
 
 Provide a name for your DBLab instance:
@@ -94,7 +95,7 @@ Provide SSH public keys:
 </p>
 
 :::note
-These SSH public keys will be added to the DBLab server's  ~/.ssh/authorized_keys  file. Providing at least one public key is recommended to ensure access to the server after deployment.
+These SSH public keys will be added to the DBLab server's `~/.ssh/authorized_keys` file. Providing at least one public key is recommended to ensure access to the server after deployment.
 :::
 
 Review the specifications of the virtual machine, and click "Create":
@@ -102,7 +103,7 @@ Review the specifications of the virtual machine, and click "Create":
     <img src="/assets/dle-platform/Platform_DLE_step9.v2.png" alt="DBLab Engine in DBLab Platform: step 9" width="50%"/>
 </p>
 
-Select the installation method and follow the instructions to create server and install DLE SE:
+Select the installation method and follow the instructions to create a server and install DBLab SE:
 <p align="center">
     <img src="/assets/dle-platform/Platform_DLE_step10.v3.png" alt="DBLab Engine in DBLab Platform: step 10" />
 </p>
@@ -111,7 +112,7 @@ Select the installation method and follow the instructions to create server and 
 To perform the initial deployment, a new temporary SSH key will be generated and added to the Cloud. After the deployment is completed, this key will be deleted and the SSH key that was specified in the "ssh_public_keys" variable will be added to the server.
 :::
 
-After running the deployment command, You need to wait a few minutes, while all resources are provisioned and DBLab setup is complete. Check out the "usage instructions" – once DBLab API and UI are ready, you'll see the ordered list of instructions on how to connect to UI and API.
+After running the deployment command, you need to wait a few minutes, while all resources are provisioned and DBLab setup is complete. Check out the "usage instructions" – once DBLab API and UI are ready, you'll see the ordered list of instructions on how to connect to UI and API.
 
 Example:
 
@@ -170,7 +171,7 @@ Now UI should be available at http://127.0.0.1:2346
 </p>
 
 :::note
-Currently, configuring DBLab in UI allows config changes only for the "logical" mode of data retrieval (dump/restore) – the only available method for managed PostgreSQL cloud services such as RDS Postgres, RDS Aurora Postgres, Azure Postgres, or Heroku. "Physical" mode is not yet supported in UI but is still possible (through SSH connection and [editing DBLab config file directly](/docs/dblab-howtos/administration/engine-manage)). More about [various data retrieval options for DBLab](/docs/dblab-howtos/administration/data).
+Currently, configuring DBLab in UI allows config changes only for the "logical" mode of data retrieval (dump/restore) – the only available method for managed Postgres cloud services such as RDS Postgres, RDS Aurora Postgres, Azure Postgres, or Heroku. "Physical" mode is not yet supported in UI but is still possible (through SSH connection and [editing DBLab config file directly](/docs/dblab-howtos/administration/engine-manage)). More about [various data retrieval options for DBLab](/docs/dblab-howtos/administration/data).
 :::
 
 ## Configure DBLab and run the first data retrieval
@@ -182,7 +183,7 @@ To troubleshoot:
 - Use SSH to connect to the DBLab server
 - Check the containers that are running: `sudo docker ps`
 - Check the DBLab container's logs: `sudo docker logs dblab_server`
-- If needed, check Postgres logs for the main branch. They are located in `/var/lib/dblab/dblab_pool/dataset_1/data/log` for the first snapshot of the database, in ``/var/lib/dblab/dblab_pool/dataset_2/data/log` for the second one (if it's already fetched); if you've configured DBLab to have more than 2 snapshots, check out the other directories too (`/var/lib/dblab/dblab_pool/dataset_$N/data/log`, where `$N` is the snapshot number, starting with `1`)
+- If needed, check Postgres logs for the main branch. They are located in `/var/lib/dblab/dblab_pool/dataset_1/data/log` for the first snapshot of the database, in `/var/lib/dblab/dblab_pool/dataset_2/data/log` for the second one (if it's already fetched); if you've configured DBLab to have more than 2 snapshots, check out the other directories too (`/var/lib/dblab/dblab_pool/dataset_$N/data/log`, where `$N` is the snapshot number, starting with `1`)
 
 ## Getting support
-With DBLab installed from DBLab Platform, guaranteed vendor support is included – please use [one of the available ways to contact](https://postgres.ai/contact).
+With DBLab installed from the PostgresAI Console, guaranteed vendor support is included – please use [one of the available ways to contact](https://postgres.ai/contact).

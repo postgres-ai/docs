@@ -19,10 +19,33 @@ Expert-level Postgres monitoring tool designed for humans and AI systems
 
 Built for senior DBAs, SREs, and AI systems who need rapid root cause analysis and deep performance insights. This isn't a tool for beginners — it's designed for Postgres experts who need to understand complex performance issues in minutes, not hours.
 
-Part of [Self-Driving Postgres](/blog/20250725-self-driving-postgres) - PostgresAI monitoring is a foundational component of PostgresAI's open-source Self-Driving Postgres (SDP) initiative, providing the advanced monitoring and intelligent root cause analysis capabilities essential for achieving higher levels of database automation.
+Part of [Self-Driving Postgres](/blog/20250725-self-driving-postgres) — PostgresAI monitoring is a foundational component of PostgresAI's open-source Self-Driving Postgres (SDP) initiative, providing the advanced monitoring and intelligent root cause analysis capabilities essential for achieving higher levels of database automation.
 
 ## Live demo
 Experience the full monitoring solution: https://demo.postgres.ai (login: demo / password: demo)
+
+## Supported Postgres versions
+
+PostgresAI full monitoring, express-mode checkups, and PostgresAI Console
+checkup analysis support PostgreSQL 14 through PostgreSQL 19.
+
+PostgreSQL 19 is currently a pre-release (Beta 2). Use it for compatibility
+testing rather than production workloads until PostgreSQL 19 reaches general
+availability. PostgresAI preserves the beta version label in checkup reports,
+selects PostgreSQL 19-compatible metric SQL, and does not report a PostgreSQL
+19 beta server as being behind the latest stable major release.
+
+On PostgreSQL 19, the full monitoring collector uses the native
+[`pg_get_multixact_stats()`](https://www.postgresql.org/docs/19/functions-info.html)
+function instead of scanning `pg_multixact` files. The monitoring role needs
+`pg_read_all_stats` privileges (included by `pg_monitor`) for the function to
+return values; otherwise the metric is reported as unavailable without
+interrupting other collection.
+
+PostgresAI Console's separate PostgreSQL cluster-provisioning workflow depends
+on the PostgreSQL versions supported by its automation provider. Monitoring and
+checkup compatibility does not make a pre-release version available for
+provisioning automatically.
 
 
 ## Console.Postgres.ai integration
@@ -87,8 +110,8 @@ PostgresAI monitoring collects **only database metadata** — no actual data or 
 
 Review exactly what metrics are collected by examining the metric definitions:
 
-- **Prometheus sink metrics**: [metrics.yml (pgwatch-prometheus)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.14.0/config/pgwatch-prometheus/metrics.yml)
-- **PostgreSQL sink metrics** (including normalized queries): [metrics.yml (pgwatch-postgres)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.14.0/config/pgwatch-postgres/metrics.yml)
+- **Prometheus sink metrics**: [metrics.yml (pgwatch-prometheus)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.15.0/config/pgwatch-prometheus/metrics.yml)
+- **PostgreSQL sink metrics** (including normalized queries): [metrics.yml (pgwatch-postgres)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.15.0/config/pgwatch-postgres/metrics.yml)
 
 ### Verify database permissions
 
@@ -106,6 +129,6 @@ The easiest way to set up PostgresAI monitoring is through [Console.Postgres.ai]
 
 1. Navigate to **Checkup → Monitoring instances** in the left menu
 2. Click **Choose plan**
-3. Select **Starter** or **Scale** plan
+3. Select the **Scale** plan (or contact us about **Enterprise**)
 
 See [pricing](/pricing) for plan details and features. 

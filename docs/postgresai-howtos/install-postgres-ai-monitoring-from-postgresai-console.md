@@ -48,6 +48,11 @@ On the **Create PostgresAI monitoring managed instance** page:
 
 [![PostgresAI Console: Create PostgresAI monitoring managed instance page with billing, project setup, database preparation, and database connection sections](/assets/install-postgres-ai-monitoring-from-postgresai-console/install-postgres-ai-monitoring-from-postgresai-console-2.png)](/assets/install-postgres-ai-monitoring-from-postgresai-console/install-postgres-ai-monitoring-from-postgresai-console-2.png)
 
+:::note
+The console screenshot above still shows the retired **Startup** ($128/month) tier, which is no
+longer offered. See [Pricing](/pricing) for current plans.
+:::
+
 ## Advanced setup (optional)
 
 Use **Advanced setup** to adjust access and provisioning details for the monitoring VM:

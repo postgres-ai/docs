@@ -19,7 +19,7 @@ Currently, the AWS Marketplace version of DLE focuses on the "logical" data prov
 
 Compared to traditional RDS clones, Database Lab clones are instant. RDS cloning takes several minutes, and, depending on the database size, additional dozens of minutes or even hours may be needed to "warm up" the database (see ["Lazy load"](https://docs.amazonaws.cn/en_us/AWSEC2/latest/WindowsGuide/ebs-creating-volume.html#ebs-create-volume-from-snapshot)). Obtaining a new DLE clone takes as low as a few seconds, and it does not increase storage and instance bill at all.
 
-A single DLE instance can be used by dozens of engineers or CI/CD pipelines – all of them can work with dozens of thin clones located on a single instance and single storage volume. [RDS Aurora clones](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Managing.Clone.html) are also "thin" by nature, which could be great for development and testing. However, each Aurora clone requires a provisioned instance, increasing the "compute" part of the bill; IO-related charges can be significant as well. This makes Aurora clones less attractive for the use in non-production environments. The use of DLE clones doesn't affect the bill anyhow – both "compute" and "storage" costs remain constant regardles of the number clones provisioned at any time.
+A single DLE instance can be used by dozens of engineers or CI/CD pipelines – all of them can work with dozens of thin clones located on a single instance and single storage volume. [RDS Aurora clones](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Managing.Clone.html) are also "thin" by nature, which could be great for development and testing. However, each Aurora clone requires a provisioned instance, increasing the "compute" part of the bill; IO-related charges can be significant as well. This makes Aurora clones less attractive for the use in non-production environments. The use of DLE clones doesn't affect the bill anyhow – both "compute" and "storage" costs remain constant regardless of the number of clones provisioned at any time.
 
 ## Typical "pilot" setup
 Timeline:
@@ -46,7 +46,7 @@ Outcome:
 
 ## Step 1. Install DLE from the AWS Marketplace
 First steps to install DLE from the AWS Marketplace are trivial:
-- Log in into AWS: https://console.aws.amazon.com/
+- Log in to AWS: https://console.aws.amazon.com/
 - Open the DBLab on [AWS Marketplace page](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec)
 
 And press the "View purchase options" button:
@@ -91,7 +91,7 @@ Now, it is time to fill the form that defines the AWS resources that we need:
 Next, on the same page:
 - define the size of EBS volume that will be created (you can find pricing calculator here: ["Amazon EBS pricing"](https://aws.amazon.com/ebs/pricing/)):
     - put as many GiB as roughly your database has (it is always possible to add more space without downtime),
-    - define how many snapshots you'll be needed (minimum 2);
+    - define how many snapshots you'll need (minimum 2);
 - define secret token (at least 9 characters are required!) – it will be used to communicate with DBLab API, CLI, and UI.
 
 Then, press "Next".
@@ -112,7 +112,7 @@ Once you've pressed "Submit", the process begins.
 You need to wait a few minutes while all resources are being provisioned. Check out the "Outputs" section periodically. Once DLE API and UI are ready, you should see the ordered list of instructions on how to connect to UI and API.
 
 ## Step 2. Configure and launch the DBLab Engine
-Enter the verification token, you have created earlier. You can also find it in the "Outputs" section.
+Enter the verification token you have created earlier. You can also find it in the "Outputs" section.
 
 <p align="center">
     <img src="/assets/dle-aws/DLE_config_step1.png" alt="DBLab Engine configuration: step 1" />
@@ -153,7 +153,7 @@ If data provisioning fails, you can always:
 - adjust the configuration in the "Configuration" tab, and
 - perform a new attempt to initialize DLE.
 
-If something went south in general and you need a fresh start, go back to AWS CloudFormation and delete your stack; then start from the very beginning of this tutorial
+If something went south in general and you need a fresh start, go back to AWS CloudFormation and delete your stack; then start from the very beginning of this tutorial.
 
 ## Getting support
 With DLE installed from AWS Marketplace, the guaranteed vendor support is included – please use [one of the available ways to contact](https://postgres.ai/contact).
@@ -189,7 +189,7 @@ With DBLab, you can create safe, instant copies of your database: perfect for te
 ##### Connect to a clone
 1. From the **Database Lab clone** page under section **Connection info**, copy the **psql connection string** field contents by clicking the **Copy** button.
     ![Database Lab clone page / psql connection string](/assets/dle-aws/AWS_DLE_connect_clone1.png)
-1. Here we assume that you have `psql` installed on your working machine. In the terminal, type `psql` and paste the **psql connection string** field contents. Change the database name `DBNAME` parameter, you can always use `postgres` for the initial connection.
+1. Here we assume that you have `psql` installed on your working machine. In the terminal, type `psql` and paste the **psql connection string** field contents. Change the database name `DBNAME` parameter — you can always use `postgres` for the initial connection.
 1. Run the command and type the password you've set during the clone creation.
 1. Test established connection by listing tables in the database using `\d`.
     ![Terminal / psql](/assets/guides/connect-clone-2.png)
@@ -378,5 +378,5 @@ dblab branch --snapshot-id SNAPSHOT_ID my_first_branch
 For more, see [the full client CLI reference](/docs/reference-guides/dblab-client-cli-reference).
 
 :::info Have questions?
-[Reach out to the PostgresAI team](https://postgres.ai/contact), we'll be happy to help!
+[Reach out to the PostgresAI team](https://postgres.ai/contact) — we'll be happy to help!
 :::

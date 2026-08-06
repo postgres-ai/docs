@@ -1,10 +1,10 @@
 ---
-title: "05. Backups"
-sidebar_label: "05. Backups"
+title: "05. WAL, backups, DR"
+sidebar_label: "05. WAL, backups, DR"
 sidebar_position: 6
 ---
 
-# 05. Backups and DR
+# 05. WAL, backups, DR
 
 Monitor backup status, WAL archiving, and disaster recovery readiness.
 
@@ -28,29 +28,16 @@ Track backup health to ensure:
 
 ## Key panels
 
-### WAL archiving status
+The dashboard is organized into four rows: **WAL overview**, **WAL archiving**, **Replication slot
+retention**, and **Configuration and WAL producers**.
+
+### pg_wal directory size
 
 **What it shows:**
-- WAL files waiting to be archived
-- Archive success/failure rate
-- Archive lag time
-
-**Healthy state:**
-- `ready_count` near 0 (no backlog)
-- Consistent archive rate matching WAL generation
+- Size of the `pg_wal` directory over time
 
 **Warning signs:**
-- Growing `ready_count` = archiving falling behind
-- Archive failures = storage or network issues
-
-### Last backup age
-
-**What it shows:**
-- Time since last successful backup
-- Backup duration trend
-
-**Healthy range:**
-- Within your backup schedule (e.g., < 24h for daily backups)
+- Steady growth = WAL is accumulating (archiving stuck or an inactive replication slot pinning WAL)
 
 ### WAL generation rate
 
@@ -58,15 +45,44 @@ Track backup health to ensure:
 - WAL bytes generated per second
 - Helps size archive storage and bandwidth
 
-### Checkpoint activity
+### WAL archive success and errors / WAL archive success rate
 
 **What it shows:**
-- Checkpoint frequency and duration
-- Checkpoint write/sync times
+- Counts of successful vs failed archive attempts (from `pg_stat_archiver`)
+- The success rate as a percentage
 
 **Healthy state:**
-- Checkpoints completing within `checkpoint_timeout`
-- No checkpoint warnings in logs
+- 100% success rate, errors flat at zero
+
+**Warning signs:**
+- Archive failures = storage or network issues
+
+### Archive lag bytes / Archive lag time and files
+
+**What it shows:**
+- How far behind archiving is, in bytes, in time, and in number of unarchived files
+
+**Healthy state:**
+- Lag near 0 (no backlog), consistent archive rate matching WAL generation
+
+**Warning signs:**
+- Growing lag = archiving falling behind
+
+### Retained WAL by replication slot / Inactive replication slots
+
+**What it shows:**
+- WAL retained on behalf of each replication slot
+- Count of inactive replication slots
+
+**Warning signs:**
+- An inactive slot retaining large amounts of WAL can fill the disk
+
+### WAL-related settings / Top queries by WAL bytes/s
+
+**What it shows:**
+- A table of WAL-related configuration settings (e.g. `archive_mode`, `archive_command`,
+  `wal_keep_size`, `max_wal_size`, `checkpoint_timeout`)
+- The queries generating the most WAL per second (from `pg_stat_statements`)
 
 ## Variables
 
@@ -74,6 +90,7 @@ Track backup health to ensure:
 |----------|---------|
 | `cluster_name` | Cluster filter |
 | `node_name` | Node filter |
+| `db_name` | Database filter |
 
 ## Backup tools integration
 

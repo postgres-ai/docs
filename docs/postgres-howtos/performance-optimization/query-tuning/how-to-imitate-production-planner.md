@@ -36,7 +36,7 @@ to support fast database cloning/branching for query optimization and database t
 To achieve the planner's prod/non-prod behavior parity, two components are needed:
 
 1) Matching database settings
-2) The same or very similar statistic (the content of `pg_statistic`)
+2) The same or very similar statistics (the content of `pg_statistic`)
 
 ## Matching database settings
 
@@ -63,7 +63,7 @@ Notes:
   FS or their settings.
 - The value of `shared_buffers` doesn't matter(!) – it will only affect the executor's behavior and buffer pool's
   hit/read ratio. What does matter for the planner is `effective_cache_size` and you can set it to a value that
-  significantly exceed the actual RAM available, "fooling" the planner in a good sense, achieving the goal to match the
+  significantly exceeds the actual RAM available, "fooling" the planner in a good sense, achieving the goal to match the
   production planner behavior. So you can have, say, 1 TiB of RAM and `shared_buffers = '250GB'` in production and
   `effective_cache_size = '750GB'`, and be able to effectively analyze and optimize queries on a small 8-GiB machine
   with `shared_buffers = '2GB'` and `effective_cache_size = '750GB'`. The planner will assume you have a lot of RAM when
@@ -98,13 +98,13 @@ Notes:
 - The logical method gives the matching row counts, but the size of tables and indexes is going to be
   different – `relpages` is smaller in a freshly provisioned node, the bloat is not preserved, and tuples, generally,
   are stored in a different order (we can call this bloat "good" since we want to have it in testing environments to
-  match the production state). This method still enables quite efficient query optimization workflow, with an additional
+  match the production state). This method still enables a quite efficient query optimization workflow, with an additional
   idea that the importance of keeping bloat low in production becomes higher.
 - After dump/restore you must explicitly run `ANALYZE` (or `vacuumdb --analyze -j <number of workers>`) to initially
   gather statistics in `pg_statistic`, because `pg_restore` (or `psql`) won't run it for you.
 - If the database content needs to be changed to remove sensitive data, this most certainly is going to affect the
   planner behavior. For some queries, the impact may be quite low, but for others it can be critical, making query
-  optimization virtually impossible. These negative effects are generally grater than those caused by dump/restore
+  optimization virtually impossible. These negative effects are generally greater than those caused by dump/restore
   losing bloat because:
     - dump/restore affects `relpages` (bloat lost) and the order of tuples, but not the content of `pg_statistic`
     - removal of sensitive data can not only reorder tuples, produce irrelevant bloat ("bad bloat"), but also lose

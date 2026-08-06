@@ -14,9 +14,9 @@ const ContactPage: React.FC = () => {
       {
         name: 'Community on Slack',
         description:
-          'Join other PostgresAI users to get help and latest news',
+          'Join other PostgresAI users to get help and the latest news',
         icon: '/assets/contact/slack.svg',
-        buttonText: 'Join the Community',
+        buttonText: 'Join the community',
         onButtonClick: () => openLink('https://slack.postgres.ai/'),
       },
       {
@@ -41,7 +41,7 @@ const ContactPage: React.FC = () => {
   }, [])
 
   return (
-    <Layout title="PostgreSQL Contact us">
+    <Layout title="Contact PostgresAI">
       <main className="banner text-center">
         <section
           className={classNames('container padding-vert--xl', styles.container)}
@@ -87,7 +87,7 @@ const ContactPage: React.FC = () => {
                   </a>
                   {' '}or{' '}
                   <a
-                    href="https://gitlab.com/postgres-ai/database-lab/-/issues"
+                    href="https://github.com/postgres-ai/database-lab-engine/issues"
                     target="_blank"
                     className={styles.link}
                   >
@@ -116,7 +116,7 @@ const ContactPage: React.FC = () => {
                   <a className={styles.link} href="/docs" target="_blank">
                     Documentation section
                   </a>{' '}
-                  containing tutorials and how-tos for most popular use cases.
+                  containing tutorials and how-tos for the most popular use cases.
                 </div>
                 <div className={styles.footerText}>
                   It's a good idea to start with the{' '}

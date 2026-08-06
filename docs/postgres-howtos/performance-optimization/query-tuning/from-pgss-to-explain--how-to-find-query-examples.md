@@ -29,7 +29,7 @@ In a few hours, I'm presenting my "Seamless Postgres query optimization" tutoria
 
 ## The problem of jumping from pgss to EXPLAIN
 
-Once a problematic `pgss` record is identified (which is the subject of query macro-optimization that we've discussed on [days 5-7](https://twitter.com/samokhvalov/status/1709069225762095258), the first thing to do is to understand the direction of optimization.
+Once a problematic `pgss` record is identified (which is the subject of query macro-optimization that we've discussed on [days 5-7](https://twitter.com/samokhvalov/status/1709069225762095258)), the first thing to do is to understand the direction of optimization.
 
 Two most common basic situations of `pgss` records requiring optimization:
 1. If `calls` is very high (a lot of QPS, queries per second), the main method to optimize is reduction of this number – this is to be done on client (app) side.
@@ -39,7 +39,7 @@ Of course, it's also not uncommon to have a combination of these two basic cases
 
 In this post, we won't discuss how to use `EXPLAIN` and `EXPLAIN (ANALYZE, BUFFERS)`. Instead, we'll focus on finding proper materials for `EXPLAIN` – particular query examples that need to be studied and improved.
 
-It is worth remembering that a single `pgss` records can be associated with individual queries that are executed differently – using different plans. A basic example illustrating it:
+It is worth remembering that a single `pgss` record can be associated with individual queries that are executed differently – using different plans. A basic example illustrating it:
 ```
 nik=# create table t1 as select 1::int8 as c1;
 SELECT 1
@@ -65,7 +65,7 @@ nik=# explain select from t1 where c1 = 2;
 (2 rows)
 ```
 
-– both queries here will be registered as `select * from t1 where c1 = $1` in `pgss`. But plans are different, because for `c1 = 1`, we have high selectivity, while for `c1 = 2` it is really bad (targeting all but 1 rows in the table).
+– both queries here will be registered as `select * from t1 where c1 = $1` in `pgss`. But plans are different, because for `c1 = 1`, we have high selectivity, while for `c1 = 2` it is really bad (targeting all but 1 row in the table).
 
 This means that looking at just `pgss` record demonstrating poor query latency, we cannot quickly jump to using `EXPLAIN` – we need to find particular query samples to work with.
 
@@ -74,7 +74,7 @@ Below, we discuss options to solve this problem.
 ## Option 1: guessing
 In some cases, it may be fine to guess. But, I had really bad cases when I lost a lot of time making a mistake with guessing. For example, in one case, dealing with a boolean column, I decided to use the value that had a very bad selectivity, and spent a lot of time optimizing this situation, before realizing that application code never ever is going to use it.
 
-It might be tempting to use `pg_statistic` to improve the guesswork. But unfortunately, in general case, this doesn't work really well, because of lack of multi-column statistic (except when it's created explicitly) – without it, we're going to have unrealistic parameter variants in lots of cases.
+It might be tempting to use `pg_statistic` to improve the guesswork. But unfortunately, in the general case, this doesn't work really well, because of a lack of multi-column statistics (except when it's created explicitly) – without it, we're going to have unrealistic parameter variants in lots of cases.
 
 So this method is limited and can be used only for simple cases.
 
@@ -82,7 +82,7 @@ So this method is limited and can be used only for simple cases.
 It is possible to find examples in the Postgres log – of course, if they are logged (usually via the `log_min_duration_statement` parameter or the `auto_explain` extension). To find examples for a given `pgss` record, we need to be able to find association of logged queries and `pgss` records. Two options:
 
 1. For PG14+, option [compute_query_id](https://postgresqlco.nf/doc/en/param/compute_query_id/) can provide the same queryid value that is used in pg_stat_statements, to the log entry.
-2. Alternatively, we can use an excellent library [libpg_query](https://github.com/pganalyze/libpg_query; Ruby, Go, Python and other options are also available). It can be applied both to normalized (`pgss` records) and individual queries, producing so-called fingerprint, that can be then used to find the relationships we need.
+2. Alternatively, we can use an excellent library [libpg_query](https://github.com/pganalyze/libpg_query; Ruby, Go, Python and other options are also available). It can be applied both to normalized (`pgss` records) and individual queries, producing a so-called fingerprint, that can be then used to find the relationships we need.
 
 In general, using Postgres logs to find query examples is a good method, but for heavily-loaded systems, where it is impossible to log all queries, it is going to supply us with very slow examples only – those that exceed [log_min_duration_statement](https://postgresqlco.nf/doc/en/param/log_min_duration_statement/) (usually set to some quite high value, e.g. `500ms`).
 
@@ -98,7 +98,7 @@ This method can be attractive since it doesn't require us to turn on the expensi
 
 However, there are two important limitations here.
 
-First, the column pg_stat_statements.query_id, useful to connect samples from `pg_stat_activity` (`pgsa`) with `pgss` records, was added relatively recently, in PG14. For older versions, we would end up using some regular expressions (implementation can be cumbersome/fragile) of libpg_query's fingerprints (meaning that we need to sample all `pgsa` records and then post-process them). So this method is better to use in PG14+.
+First, the column pg_stat_statements.query_id, useful to connect samples from `pg_stat_activity` (`pgsa`) with `pgss` records, was added relatively recently, in PG14. For older versions, we would end up using some regular expressions (implementation can be cumbersome/fragile) or libpg_query's fingerprints (meaning that we need to sample all `pgsa` records and then post-process them). So this method is better to use in PG14+.
 
 Second, by default, `pg_stat_activity.query` is truncated to 1024 characters – this is defined by [track_activity_query_size](https://postgresqlco.nf/doc/en/param/track_activity_query_size/), which is 1024 by default. It is recommended to increase it significantly – e.g., to 10k, to allow larger queries to be sampled and analyzed. Unfortunately, changing this setting requires a restart.
 

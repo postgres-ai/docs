@@ -1,6 +1,7 @@
 ---
 title: "Data source: WAL-G"
 sidebar_label: "WAL-G"
+description: Configure DBLab Engine to restore a physical Postgres data directory from a WAL-G backup archive, using WAL-G environment variables and settings.
 ---
 
 :::info
@@ -9,18 +10,18 @@ As the first step, you need to set up a machine for DBLab Engine instance. See t
 
 ## Configuration
 ### Jobs
-In order to set up DBLab Engine to automatically get the data from database using [WAL-G](https://github.com/wal-g/wal-g) archival restoration tool you need to use following jobs:
+To set up DBLab Engine to automatically get the data from a database using the [WAL-G](https://github.com/wal-g/wal-g) archival restoration tool, use the following jobs:
 - [physicalRestore](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalrestore)
 - [physicalSnapshot](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalsnapshot)
 
 ### Options
-Copy the example configuration file [`config.example.physical_walg.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.0.3/engine/configs/config.example.physical_walg.yml) from the DBLab Engine repository to `~/.dblab/engine/configs/server.yml` and update the following options:
-- Set secure `server:verificationToken`, it will be used to authorize API requests to the Engine
+Copy the example configuration file [`config.example.physical_walg.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.1.3/engine/configs/config.example.physical_walg.yml) from the DBLab Engine repository to `~/.dblab/engine/configs/server.yml` and update the following options:
+- Set a secure `server:verificationToken` — it will be used to authorize API requests to the Engine
 - Set connection options in `physicalRestore:options:envs`:
     - Use WAL-G environment variables to configure the job, see the [WAL-G configuration reference](https://github.com/wal-g/wal-g#configuration)
 - Set WAL-G settings in `physicalRestore:options:walg`:
     - `backupName` - defines the backup name to restore
-- Set a proper version in Postgres Docker image tag (change the images itself only if you know what are you doing):
+- Set a proper version in Postgres Docker image tag (change the image itself only if you know what you are doing):
     - `databaseContainer:dockerImage`
 
 ## Run DBLab Engine
@@ -30,7 +31,7 @@ Use Docker volumes to make credential files available to WAL-G.
 
 For example: `--volume ~/.dblab/credentials.json:/home/dblab/credentials.json` or store them into a config directory.
 
-Note that credentials location inside the container matches the right part of the mount expression
+Note that the credentials location inside the container matches the right part of the mount expression.
 :::
 
 ```bash
@@ -47,10 +48,9 @@ sudo docker run \
   --volume /sys/kernel/debug:/sys/kernel/debug:rw \
   --volume /lib/modules:/lib/modules:ro \
   --volume /proc:/host_proc:ro \
-  --env DOCKER_API_VERSION=1.39 \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:4.0.3
+  postgresai/dblab-server:4.1.3
 ```
 
 :::info

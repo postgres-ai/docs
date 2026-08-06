@@ -26,12 +26,12 @@ estimated_time: 6 min
 
 
 Previously, we discussed
-[how to implement monitoring for the risks of XID (transaction ID) and MultiXID wraparound](/docs/postgres-howtos/performance-optimization/statistics/how-to-monitor-transaction-id-wraparound-risks).
+[how to implement monitoring for the risks of XID (transaction ID) and MultiXID wraparound](/docs/postgres-howtos/performance-optimization/monitoring/how-to-monitor-transaction-id-wraparound-risks).
 That type of check is critical and a must-have in any monitoring.
 
 However, while it helps you understand the risk level, it doesn't reveal the root cause – something that you'll
 definitely need for your XID wraparound postmortem, when applying the "Five Whys" method (just kidding, we're going to
-improve our monitoring and have autovacuum behavior control, so none of us will ever experience a XID wraparound in
+improve our monitoring and have autovacuum behavior control, so none of us will ever experience an XID wraparound in
 production).
 
 This problem can be solved with the `xmin` horizon monitoring. And this very check is also helpful in understanding
@@ -77,10 +77,10 @@ The "`xmin` horizon" represents the XID of the oldest snapshot of data that must
 
 ## What about bloat?
 
-If `xmin` horizon doesn't progress for short period of time, blocking `autovacuum`, it is not a problem – this normally
+If `xmin` horizon doesn't progress for a short period of time, blocking `autovacuum`, it is not a problem – this normally
 happens often.
 
-But if this happens for long period of time, and `xmin` horizon is far in the past, it can cause two big problems:
+But if this happens for a long period of time, and `xmin` horizon is far in the past, it can cause two big problems:
 
 - XID/MultiXID wraparound, as discussed;
 - higher bloat growth: inability to delete dead tuples now leads to massive deletes of them later, when `xmin` horizon
@@ -122,7 +122,7 @@ Here, the indicators of a problem are:
   horizon)
 - `removable cutoff: 784, which was 112449 XIDs old when operation ended` – this tells us that the XID horizon is 784
   and its age is 112449 – so, the `xmin` horizon (the data version that is still considered needed) is more than 112k
-  transaction behind in the past, at the moment when `autovacuum` finished this processing attempt.
+  transactions behind in the past, at the moment when `autovacuum` finished this processing attempt.
 
 This indicates that the `xmin` horizon is far behind the current moment, and something is holding it in the distant
 past. To understand what it is, we need to check several system views.
@@ -131,49 +131,80 @@ past. To understand what it is, we need to check several system views.
 
 An example query:
 
+<!-- sql-snippet-test: xmin-horizon begin -->
 ```sql
 with bits as (
   select
+    txid_snapshot_xmin(txid_current_snapshot()) as snapshot_xmin,
+    -- Primary client backend snapshots can hold back cleanup of user table tuples.
     (
       select backend_xmin
       from pg_stat_activity
-      order by age(backend_xmin) desc nulls last
+      where backend_xmin is not null
+      order by age(backend_xmin) desc
       limit 1
-    ) as xmin_pg_stat_activity,
+    ) as data_xmin_pg_stat_activity,
+    -- Replication slot xmin can hold back cleanup of user table tuples.
     (
       select xmin
       from pg_replication_slots
-      order by age(xmin) desc nulls last
+      where xmin is not null
+      order by age(xmin) desc
       limit 1
-    ) as xmin_pg_replication_slots,
+    ) as data_xmin_pg_replication_slots,
+    -- Logical replication slot catalog_xmin can hold back cleanup of system catalog tuples.
+    (
+      select catalog_xmin
+      from pg_replication_slots
+      where catalog_xmin is not null
+      order by age(catalog_xmin) desc
+      limit 1
+    ) as catalog_xmin_pg_replication_slots,
+    -- Standby feedback can propagate standby snapshots to the primary.
     (
       select backend_xmin
       from pg_stat_replication
-      order by age(backend_xmin) desc nulls last
+      where backend_xmin is not null
+      order by age(backend_xmin) desc
       limit 1
-    ) as xmin_pg_stat_replication,
+    ) as data_xmin_pg_stat_replication,
+    -- Prepared transactions keep their transaction ID until COMMIT/ROLLBACK PREPARED.
     (
       select transaction
       from pg_prepared_xacts
-      order by age(transaction) desc nulls last
+      order by age(transaction) desc
       limit 1
-    ) as xmin_pg_prepared_xacts
+    ) as data_xmin_pg_prepared_xacts
 )
 select
   *,
-  age(xmin_pg_stat_activity) as xmin_pgsa_age,
-  age(xmin_pg_replication_slots) as xmin_pgrs_age,
-  age(xmin_pg_stat_replication) as xmin_pgsr_age,
-  age(xmin_pg_prepared_xacts) as xmin_pgpx_age,
+  age(data_xmin_pg_stat_activity) as data_xmin_pg_stat_activity_age,
+  age(data_xmin_pg_replication_slots) as data_xmin_pg_replication_slots_age,
+  age(catalog_xmin_pg_replication_slots) as catalog_xmin_pg_replication_slots_age,
+  age(data_xmin_pg_stat_replication) as data_xmin_pg_stat_replication_age,
+  age(data_xmin_pg_prepared_xacts) as data_xmin_pg_prepared_xacts_age,
   greatest(
-    age(xmin_pg_stat_activity),
-    age(xmin_pg_replication_slots),
-    age(xmin_pg_stat_replication),
-    age(xmin_pg_prepared_xacts)
-  ) as xmin_horizon_age
+    age(data_xmin_pg_stat_activity),
+    age(data_xmin_pg_replication_slots),
+    age(data_xmin_pg_stat_replication),
+    age(data_xmin_pg_prepared_xacts)
+  ) as data_horizon_age,
+  greatest(
+    age(data_xmin_pg_stat_activity),
+    age(data_xmin_pg_replication_slots),
+    age(data_xmin_pg_stat_replication),
+    age(data_xmin_pg_prepared_xacts),
+    age(catalog_xmin_pg_replication_slots)
+  ) as catalog_horizon_age
 from bits;
 ```
+<!-- sql-snippet-test: xmin-horizon end -->
 
 Note that the `min(...)` function cannot be applied to XID values directly, because of their nature (32-bit
-and `rotation`) – casting XID to `int` doesn't exist for good reason. But the` age(XID)` function is helpful here. So
-instead of considering `xmin_horizon` values, we need to deal with `xmin_horizon_age` instead.
+and `rotation`) – casting XID to `int` doesn't exist for good reason. But the `age(XID)` function is helpful here. So
+instead of considering raw `xmin` values alone, we need to deal with horizon ages.
+
+The query separates `data_horizon_age` from `catalog_horizon_age`. `pg_replication_slots.xmin` can hold back cleanup of
+user table tuples, while `pg_replication_slots.catalog_xmin` can hold back cleanup of system catalog tuples for logical
+replication. Keeping these as separate metrics avoids conflating different failure modes and remediation steps. The raw
+`snapshot_xmin` column is included as a cross-version anchor for checking what a fresh transaction can currently see.

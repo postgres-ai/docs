@@ -21,13 +21,13 @@ estimated_time: 5 min
 ---
 
 
-When conducting a Postgres benchmark (see [How to benchmark](/docs/postgres-howtos/performance-optimization/indexing/how-to-benchmark)), quite often we need to
+When conducting a Postgres benchmark (see [How to benchmark](/docs/postgres-howtos/performance-optimization/benchmarks/how-to-benchmark)), quite often we need to
 run multiple benchmark iterations on the same setup. It may be reasonable to perform the same series of unified steps
 before and after each iteration:
 
 1. Before: flush the caches (or, conversely, warm them up).
 2. Before: reset cumulative statistics.
-3. After: save statistics and other forms of benchmark artefacts.
+3. After: save statistics and other forms of benchmark artifacts.
 
 The approach described here allows conducting benchmarks in a unified way.
 

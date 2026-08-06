@@ -16,15 +16,15 @@ keywords:
 Postgres Checkup ([postgres-checkup](https://gitlab.com/postgres-ai/postgres-checkup)) is a diagnostics tool for a deep analysis of a Postgres database health. It detects current and potential issues with database performance, scalability, and security. It also produces recommendations on how to resolve or prevent them.
 postgres-checkup also reveals sneaking up, deeper problems that may hit you in the future. It helps to solve many known database administration problems and common pitfalls. It aims to detect issues at a very early stage and to suggest the best ways to prevent them. 
 
-It makes sense to run this tool on a regular basis — weekly, monthly, and quarterly. Additionally, it is recommended using postgres-checkup during major database changes, right before and right after making the change, for the sake of regression control.
+It makes sense to run this tool on a regular basis — weekly, monthly, and quarterly. Additionally, it is recommended to use postgres-checkup during major database changes, right before and right after making the change, for the sake of regression control.
 
-Do you know how big was your database 1, 6, 12 months ago? What are the growth trends for each table and index, how fast the bloat grows in database objects after repacking? Depending on how much detail your monitoring system has and what its retention policies are, these questions might be very tricky to answer in the longer term. This is why it is recommended to store the resulting reports as long as possible; it will enable trend analysis for your database. If you are going to use postgres-checkup with Postgres.ai Platform, uploading reports to the Platform's storage will automatically help you achieve this.
+Do you know how big your database was 1, 6, 12 months ago? What are the growth trends for each table and index, how fast the bloat grows in database objects after repacking? Depending on how much detail your monitoring system has and what its retention policies are, these questions might be very tricky to answer in the longer term. This is why it is recommended to store the resulting reports as long as possible; it will enable trend analysis for your database. If you are going to use postgres-checkup with Postgres.ai Platform, uploading reports to the Platform's storage will automatically help you achieve this.
 
 ## Reports
 
 At the moment, postgres-checkup generates 28 reports organized in 7 groups.
 
-* А. General / Infrastructural
+* A. General / Infrastructural
     - A001 System information
     - A002 Version information
     - A003 Postgres settings
@@ -91,7 +91,7 @@ Usage:
 
 Postgres checkup can separately collect, process and upload data to server. You can set the working mode with --mode option.
 Available values for mode: 'collect', 'process', 'upload', 'run'.
-Mode 'run' executes collecting and processing at once, it is a default mode.  
+Mode 'run' executes collecting and processing at once — it is the default mode.  
   
 General options:  
 
@@ -122,7 +122,7 @@ General options:
 | -S | <nobr>--statement-timeout</nobr> | Statement timeout for all SQL queries (default: 30 seconds) |
 | -t | <nobr>--connection-timeout</nobr> | |
 
-'proccess' options:
+'process' options:
 
 | <nobr>Short&nbsp;option</nobr> | <nobr>Long&nbsp;option</nobr> | Description |
 |---|---|---|
@@ -148,7 +148,7 @@ PGPASSWORD=mypasswd ./checkup collect -h [ssh_user]@host_to_connect_via_ssh \
 ## Installation and configuration
 
 ### Usage postgres-checkup with docker run
-The best way to use Postgres Checkup is by using of docker image of the tool.
+The best way to use Postgres Checkup is by using the docker image of the tool.
 The docker container will run, execute all checks and stop itself. The check result can be found inside the `artifacts` folder in current directory (pwd).
 
 #### Requirements
@@ -163,7 +163,7 @@ grant pg_monitor to pgai_observer;
 ```
 
 #### Usage
-Use the postgres-checkup in this case as follow:
+Use the postgres-checkup in this case as follows:
 
 ```
 export DB_PWD="****"
@@ -191,7 +191,7 @@ docker run \
 
 So, firstly you need to fill the configuration file. The next step is running docker with image `registry.gitlab.com/postgres-ai/postgres-checkup:latest`.
 
-We recommend that you name the configuration file like the project name. Сonfiguration file can be filled once and just be used every time you run postgres-checkup docker image.
+We recommend that you name the configuration file like the project name. Configuration file can be filled once and just be used every time you run postgres-checkup docker image.
 
 Please be careful and run the docker image as one command, like in the example. It means that command `bash run_checkup.sh` should be started inside the docker container.
 
@@ -217,7 +217,7 @@ If you try to check the local instance of Postgres on your host from a container
 
 ### Usage postgres-checkup from sources
 #### Requirements
-The second way to use postgres-checkup run it from sources. In this case, requirements follow.
+The second way to use postgres-checkup is to run it from sources. In this case, requirements follow.
 
 The following OS are supported:
 

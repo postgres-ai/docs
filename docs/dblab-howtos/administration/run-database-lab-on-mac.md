@@ -1,15 +1,20 @@
 ---
 title: How to run DBLab Engine on macOS
 sidebar_label: Run DBLab on macOS
+description: Run DBLab Engine 4.1+ with full ZFS support on Intel or Apple Silicon macOS using Colima, a lightweight Linux VM with Docker.
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 This guide explains how to run the DBLab Engine with full ZFS support **on macOS**, using [**Colima**](https://github.com/abiosoft/colima), a lightweight Linux VM with Docker support.  
-All ZFS operations happen **inside the Colima VM**, so you don't need to install the ZFS module to your macOS.
+All ZFS operations happen **inside the Colima VM**, so you don't need to install the ZFS module on macOS.
 
 :::note
 This guide provides an experimental way to run DBLab Engine on macOS.
+:::
+
+:::info
+This guide applies to both Intel and Apple Silicon Macs. DBLab Engine 4.1 includes the ARM64 / Colima compatibility work needed for this setup, so use DLE 4.1+ and a current Colima release.
 :::
 
 ## Prerequisites: Docker, Colima, Go
@@ -23,7 +28,7 @@ Then install Docker, Colima, and Go:
 brew install docker colima go
 ```
 
-To build the DLE binary locally, **Go 1.23 or higher** is required, so let's check Go version:
+To build the DBLab Engine binary locally, **Go 1.23 or higher** is required, so let's check the Go version:
 ```bash
 go version
 ```
@@ -47,6 +52,8 @@ colima start --cpu 4 --memory 6 --disk 20 --mount $HOME:w
 ```
 
 The `--mount $HOME:w` flag makes your home directory accessible inside Colima at `/mnt/host/Users/yourname/...`.
+
+On Apple Silicon, Colima typically uses an ARM64 Linux VM by default. On Intel Macs, it uses AMD64.
 
 ## 3. Initialize ZFS in Colima VM
 You can either use the provided setup script or run all steps manually if you prefer better control.
@@ -136,7 +143,14 @@ exit
 </Tabs>
 
 ## 4. Build engine
-Compile DBLab for Linux:
+Compile DBLab for Linux using the same architecture as your Colima VM:
+
+Apple Silicon / ARM64:
+```bash
+GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -o bin/dblab-server ./cmd/database-lab/main.go
+```
+
+Intel / AMD64:
 ```bash
 GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o bin/dblab-server ./cmd/database-lab/main.go
 ```
@@ -182,7 +196,6 @@ docker run \
   -v "$(pwd)/configs:/home/dblab/configs:rw" \
   -v "$(pwd)/configs/standard:/home/dblab/standard:ro" \
   -v "$(pwd)/meta:/home/dblab/meta" \
-  --env DOCKER_API_VERSION=1.39 \
   -p 2345:2345 \
   dblab_server:local
 ```
@@ -191,11 +204,15 @@ docker run \
 ### Open DBLab UI
 When the main container (`dblab_server`) starts, it launches an additional container with UI, whose name looks like `dblab_embedded_ui_xxx`; it provides UI available at port `2346` by default (can be changed in `server.yml`).
 
+:::warning
+Because the UI runs in a *separate* container that binds host port `2346` itself, do **not** add `-p 2346:2346` to the `dblab_server` command above. Publishing `2346` on `dblab_server` makes the UI container fail to start with `Bind for 127.0.0.1:2346 failed: port is already allocated` (the engine then logs `failed to start embedded UI container` and continues without a UI).
+:::
+
 In your browser, open [http://127.0.0.1:2346](http://127.0.0.1:2346).
 
 You'll see a **"refreshing"** state while the engine initializes.  This may take some time; please wait until the refresh is complete. Once it's done, you will be able to create snapshots, branches, and clones.
 
-To learn how to work with DBLab UI, see [DBLab Guides](/docs/how-to-guides).
+To learn how to work with DBLab UI, see [DBLab how-to guides](/docs/dblab-howtos).
 
 ### Install and configure DBLab CLI
 ```bash
@@ -221,7 +238,7 @@ docker stop dblab_server
 docker rm -f dblab_server
 ```
 
-Ensure no extra containers (UI, Postgres) that were launched by `dblab_server`, are present (if there are, delete them using `docker rm`):
+Ensure no extra containers (UI, Postgres) that were launched by `dblab_server` are present (if there are, delete them using `docker rm`):
 ```
 docker ps -a \
   --format "ID: {{.ID}}\tName: {{.Names}}\tImage: {{.Image}}\tLabels: {{.Labels}}" \

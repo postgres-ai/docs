@@ -64,7 +64,7 @@ newgrp docker
 
 ## Run Postgres in container with persistent PGDATA
 
-Assuming we want the data directory (`PGDATA`) be in `~/pgdata` and container named as `pg16`:
+Assuming we want the data directory (`PGDATA`) to be in `~/pgdata` and the container named `pg16`:
 
 ```bash
 sudo docker run \

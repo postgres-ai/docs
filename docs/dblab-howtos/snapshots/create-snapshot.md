@@ -1,6 +1,7 @@
 ---
 title: How to create a snapshot
 sidebar_label: Create a snapshot
+description: Create a DBLab Engine snapshot from an existing clone or from the current pool state using the GUI or the dblab CLI (dblab commit, dblab snapshot create).
 ---
 
 :::info
@@ -27,10 +28,21 @@ Before you run any commands, install Database Lab CLI and initialize configurati
 - Command [`dblab snapshot`](/docs/reference-guides/dblab-client-cli-reference#command-snapshot)
 - Command [`dblab commit`](/docs/reference-guides/dblab-client-cli-reference#command-commit)
 
-### Create a snapshot
-Create a snapshot using the `dblab commit` command and specify the clone ID and message (optional):
+### Create a snapshot from a clone
+Create a snapshot from an existing clone using the `dblab commit` command:
 ```bash
 $ dblab commit --clone-id CLONE_ID --message "Snapshot message"
+```
+
+### Create a snapshot from the current pool state
+You can also create a snapshot directly from the current state of a pool (without an existing clone):
+```bash
+$ dblab snapshot create
+```
+
+To specify a particular pool:
+```bash
+$ dblab snapshot create --pool POOL_NAME
 ```
 
 Command `dblab snapshot list` shows all snapshots, including the one just created:

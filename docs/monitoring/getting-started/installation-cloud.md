@@ -23,6 +23,7 @@ Managed PostgreSQL services (RDS, CloudSQL, Supabase) require specific configura
 - RDS PostgreSQL 14+
 - Parameter group with `pg_stat_statements` enabled
 - Security group allowing monitoring access
+- Node.js 18+ (or Bun 1.0+) on the host running the `postgresai` CLI — older versions fail fast
 
 ### Step 1: Enable pg_stat_statements
 
@@ -30,8 +31,8 @@ Create or modify a parameter group:
 
 ```
 shared_preload_libraries = pg_stat_statements
-pg_stat_statements.track = all
-pg_stat_statements.max = 10000
+pg_stat_statements.track = top
+pg_stat_statements.max = 5000
 ```
 
 Apply to your RDS instance and reboot if required.
@@ -44,17 +45,25 @@ Connect as the master user:
 -- Create monitoring user
 create user postgres_ai_mon with password '<STRONG_RANDOM_PASSWORD>';
 
--- Grant required permissions
-grant pg_read_all_stats to postgres_ai_mon;
+-- Grant required permissions (the product requires the built-in pg_monitor role,
+-- not pg_read_all_stats)
+grant pg_monitor to postgres_ai_mon;
 
 -- Enable extension (if not already)
 create extension if not exists pg_stat_statements;
 
--- For each database to monitor
+-- For each database to monitor, connect and grant connect (pg_monitor already
+-- covers reading statistics — monitoring needs metadata only, NOT table data,
+-- so do NOT `grant select on all tables`).
 \c your_database
-grant usage on schema public to postgres_ai_mon;
-grant select on all tables in schema public to postgres_ai_mon;
+grant connect on database your_database to postgres_ai_mon;
 ```
+
+:::tip Use prepare-db for the exact grants
+Instead of granting by hand, run `npx postgresai@latest prepare-db --print-sql` (or run
+`prepare-db` against the master/admin user) to apply the exact, minimal read-only grants the
+product uses. See [Permissions](/docs/monitoring/getting-started/requirements#permissions).
+:::
 
 ### Step 3: Configure security group
 
@@ -68,9 +77,14 @@ Allow inbound traffic from your monitoring stack:
 
 ```bash
 npx postgresai@latest mon local-install \
-  --target-db "postgresql://postgres_ai_mon:password@your-instance.region.rds.amazonaws.com:5432/your_db" \
-  --cluster-name "rds-production"
+  --db-url "postgresql://postgres_ai_mon:password@your-instance.region.rds.amazonaws.com:5432/your_db"
 ```
+
+:::note Labeling clusters and nodes
+The 0.15 `local-install` command does not accept `--cluster-name`/`--node-name`. To
+tag metrics by cluster or node, set `custom_tags.cluster` and `custom_tags.node_name`
+in `instances.yml` (see [Docker Compose → Adding multiple databases](/docs/monitoring/getting-started/installation-docker#adding-multiple-databases)).
+:::
 
 ### RDS-specific considerations
 
@@ -89,7 +103,7 @@ Monitor the primary endpoint. For read replicas, add separate monitoring targets
 
 - Cloud SQL PostgreSQL 14+
 - Private IP or authorized network
-- `cloudsql.pg_stat_statements` flag enabled
+- `cloudsql.enable_pg_stat_statements` flag enabled
 
 ### Step 1: Enable extensions
 
@@ -110,12 +124,14 @@ Using Cloud SQL admin user:
 -- Create monitoring user
 create user postgres_ai_mon with password '<STRONG_RANDOM_PASSWORD>';
 
--- Grant permissions
-grant pg_read_all_stats to postgres_ai_mon;
+-- Grant permissions (the product requires the built-in pg_monitor role,
+-- not pg_read_all_stats)
+grant pg_monitor to postgres_ai_mon;
 
--- On each database
-grant usage on schema public to postgres_ai_mon;
-grant select on all tables in schema public to postgres_ai_mon;
+-- On each database to monitor (pg_monitor already covers reading statistics —
+-- monitoring needs metadata only, NOT table data, so do NOT `grant select on
+-- all tables`):
+grant connect on database your_database to postgres_ai_mon;
 ```
 
 ### Step 3: Configure network access
@@ -134,8 +150,7 @@ Add your monitoring stack's IP to authorized networks:
 For private IP:
 ```bash
 npx postgresai@latest mon local-install \
-  --target-db "postgresql://postgres_ai_mon:password@10.x.x.x:5432/your_db" \
-  --cluster-name "cloudsql-production"
+  --db-url "postgresql://postgres_ai_mon:password@10.x.x.x:5432/your_db"
 ```
 
 For Cloud SQL Auth Proxy:
@@ -145,9 +160,14 @@ cloud_sql_proxy -instances=PROJECT:REGION:INSTANCE=tcp:5432
 
 # Connect
 npx postgresai@latest mon local-install \
-  --target-db "postgresql://postgres_ai_mon:password@localhost:5432/your_db" \
-  --cluster-name "cloudsql-production"
+  --db-url "postgresql://postgres_ai_mon:password@localhost:5432/your_db"
 ```
+
+:::note Labeling clusters and nodes
+The 0.15 `local-install` command does not accept `--cluster-name`/`--node-name`. To
+tag metrics by cluster or node, set `custom_tags.cluster` and `custom_tags.node_name`
+in `instances.yml` (see [Docker Compose → Adding multiple databases](/docs/monitoring/getting-started/installation-docker#adding-multiple-databases)).
+:::
 
 ### Cloud SQL-specific considerations
 
@@ -188,21 +208,27 @@ Connect to your Supabase database and run:
 -- Create monitoring user
 create user postgres_ai_mon with password '<STRONG_RANDOM_PASSWORD>';
 
--- Grant permissions
-grant pg_read_all_stats to postgres_ai_mon;
+-- Grant permissions (the product requires the built-in pg_monitor role,
+-- not pg_read_all_stats)
+grant pg_monitor to postgres_ai_mon;
 
--- Grant access to your schemas
-grant usage on schema public to postgres_ai_mon;
-grant select on all tables in schema public to postgres_ai_mon;
+-- pg_monitor already covers reading statistics — monitoring needs metadata
+-- only, NOT table data, so do NOT `grant select on all tables`:
+grant connect on database postgres to postgres_ai_mon;
 ```
 
 ### Step 4: Start monitoring
 
 ```bash
 npx postgresai@latest mon local-install \
-  --target-db "postgresql://postgres_ai_mon:password@db.xxxx.supabase.co:5432/postgres?sslmode=require" \
-  --cluster-name "supabase-production"
+  --db-url "postgresql://postgres_ai_mon:password@db.xxxx.supabase.co:5432/postgres?sslmode=require"
 ```
+
+:::note Labeling clusters and nodes
+The 0.15 `local-install` command does not accept `--cluster-name`/`--node-name`. To
+tag metrics by cluster or node, set `custom_tags.cluster` and `custom_tags.node_name`
+in `instances.yml` (see [Docker Compose → Adding multiple databases](/docs/monitoring/getting-started/installation-docker#adding-multiple-databases)).
+:::
 
 :::note Connection pooling
 Use the "Direct connection" string, not the pooled connection (port 6543). Monitoring requires direct PostgreSQL protocol access.
@@ -216,10 +242,10 @@ Most cloud providers require SSL:
 
 ```bash
 # Require SSL
---target-db "postgresql://...?sslmode=require"
+--db-url "postgresql://...?sslmode=require"
 
 # Verify certificate (recommended for production)
---target-db "postgresql://...?sslmode=verify-full&sslrootcert=/path/to/ca.crt"
+--db-url "postgresql://...?sslmode=verify-full&sslrootcert=/path/to/ca.crt"
 ```
 
 ### Permission limitations
@@ -248,9 +274,9 @@ For optimal metric collection:
 
 ### "permission denied for function"
 
-Grant required permissions:
+Grant the required role (the product requires `pg_monitor`, not `pg_read_all_stats`):
 ```sql
-grant pg_read_all_stats to postgres_ai_mon;
+grant pg_monitor to postgres_ai_mon;
 ```
 
 ### "pg_stat_statements must be loaded"

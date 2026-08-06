@@ -1,15 +1,16 @@
 ---
 title: Secure DBLab Engine
 sidebar_label: Secure DBLab Engine
+description: Secure the DBLab Engine UI, API, CLI, and database clones with an Envoy proxy and a Let's Encrypt SSL certificate for encrypted HTTPS access.
 ---
 
-To make your work with DBLab Engine UI / API / CLI and clones secure, install and configure [Envoy proxy](https://www.envoyproxy.io) with a SSL certificate.
+To make your work with DBLab Engine UI / API / CLI and clones secure, install and configure [Envoy proxy](https://www.envoyproxy.io) with an SSL certificate.
 
 :::note
 Before you begin, you will need your Organization key and Project name provided by the PostgresAI platform. Obtain these by registering on the [platform](http://console.postgres.ai). Detailed instructions are available [here](https://postgres.ai/docs/dblab-howtos/administration/install-dle-from-postgres-ai).
 :::
 
-## Configuring a secure DBLab engine
+## Configuring a secure DBLab Engine
 
 ### 1. DNS configuration
 Update the DNS `A` record for your public domain to resolve to the public IP address of the DBLab Engine server. Note that DNS changes may take some time to propagate.
@@ -49,3 +50,7 @@ PGPASSWORD=secret_password psql \
 ```
 
 Adjust the port numbers accordingly for other clones, following the pattern `original_port+3000` (e.g., `6001->9001`, `6002->9002`, etc.).
+
+## Alternative: Teleport integration
+
+For zero-trust access control with audit logging, certificate-based authentication, and role-based access, consider using [Teleport integration](/docs/dblab-howtos/administration/teleport-integration) (DBLab Engine 4.1+).

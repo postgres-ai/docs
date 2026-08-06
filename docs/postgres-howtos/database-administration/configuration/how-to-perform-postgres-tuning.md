@@ -51,7 +51,7 @@ perhaps even 95/5 in this case):
 - [PostgreSQL Configurator](https://pgconfigurator.cybertec.at)
 - for TimescaleDB users: [timescaledb-tune](https://github.com/timescale/timescaledb-tune)
 
-Additionally, to the official docs, [this resource](https://postgresqlco.nf) is good to use as a reference (it has
+In addition to the official docs, [this resource](https://postgresqlco.nf) is good to use as a reference (it has
 integrated information from various sources, not only official docs) – for example, check the page for
 [random_page_cost](https://postgresqlco.nf/doc/en/param/random_page_cost/), a parameter which is quite often forgotten.
 
@@ -72,7 +72,7 @@ A general rule here: the more logging, the better. Of course, assuming that you 
 
 In short my recommendations are (this is worth a separate detailed post):
 
-- turn on checkpoint logging, `log_checkpoints='on'`  (fortunately, it's on by default in PG15+),
+- turn on checkpoint logging, `log_checkpoints='on'` (fortunately, it's on by default in PG15+),
 - turn on all autovacuum logging, `log_autovacuum_min_duration=0` (or a very low value)
 - log temporary files except tiny ones (e.g., `log_temp_files = 100`)
 - log all DDL statements `log_statement='ddl'`
@@ -82,14 +82,14 @@ In short my recommendations are (this is worth a separate detailed post):
 
 ## Autovacuum tuning
 
-This is a big topic worth a separate post. In short, the key idea is that default settings don't suit for any modern
+This is a big topic worth a separate post. In short, the key idea is that default settings don't suit any modern
 OLTP case (web/mobile apps), so autovacuum has to be always tuned. If we don't do it, autovacuum becomes a "converter"
 of large portions of dead tuples to bloat, and this eventually negatively affects performance.
 
-Two areas of tuning needs to be addressed:
+Two areas of tuning need to be addressed:
 
 1. Increase the frequency of processing – lowering `**_scale_factor` / `**_threshold` settings, we make autovacuum
-   workers process tables when quite low value of dead tuples is accumulated
+   workers process tables when quite a low value of dead tuples is accumulated
 2. Allocate more resources for processing: more autovacuum workers (`autovacuum_workers`), more memory
    (`autovacuum_work_mem`), and higher "quotas" for work (controlled via `**_cost_limit` / `**_cost_delay`).
 
@@ -98,9 +98,9 @@ Two areas of tuning needs to be addressed:
 Again, it's worth a separate post. But in short, you need to consider raising `checkpoint_timeout` and – most
 importantly – `max_wal_size` (whose default is very small for modern machines and data volumes, just `1GB`), so
 checkpoints occur less frequently, especially when a lot of writes happen. However, shifting settings in this direction
-mean longer recovery time in case of a crash or recovery from backups – this is a trade-off that needs to be analyzed
+means longer recovery time in case of a crash or recovery from backups – this is a trade-off that needs to be analyzed
 for a particular case.
 
-That's it. Generally, this initial/rough tuning of Postgres config shouldn't take long. For a particular cluster of type
+That's it. Generally, this initial/rough tuning of Postgres config shouldn't take long. For a particular cluster or type
 of clusters, it's a 1-2 day work for an engineer. You don't actually need AI for this, empirical tools work well –
 unless you do aim to squeeze 5-10% more (you might want it though, e.g., if you have thousands of servers).

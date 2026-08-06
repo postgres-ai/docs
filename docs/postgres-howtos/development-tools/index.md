@@ -8,7 +8,7 @@ description: Essential tools and techniques for PostgreSQL developers.
 
 Essential tools and techniques for PostgreSQL developers.
 
-## Guides by Category
+## Guides by category
 
 ### psql
 
@@ -22,7 +22,7 @@ Master the PostgreSQL command-line interface.
 - [How to make "\\e" work in psql on a new machine](/docs/postgres-howtos/development-tools/psql/how-to-make-e-work-in-psql) - 5 min *(beginner)*
 - [How to format text output in psql scripts](/docs/postgres-howtos/development-tools/psql/how-to-format-text-output-in-psql-scripts) - 5 min *(beginner)*
 
-### SQL Techniques
+### SQL techniques
 
 Advanced SQL patterns and best practices.
 
@@ -32,7 +32,7 @@ Advanced SQL patterns and best practices.
 - [How to generate fake data](/docs/postgres-howtos/development-tools/sql-techniques/how-to-generate-fake-data) - 5 min *(beginner)*
 - [How to use lib_pgquery in shell to normalize and match queries from various sources](/docs/postgres-howtos/development-tools/sql-techniques/how-to-use-lib-pgquery-in-shell) - 5 min *(beginner)*
 
-### Client Tools
+### Client tools
 
 Work effectively with PostgreSQL client applications.
 

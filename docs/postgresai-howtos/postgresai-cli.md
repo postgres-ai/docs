@@ -46,21 +46,21 @@ Authenticate via browser and store the API key locally:
 <TabItem value="cli" label="Installed CLI" default>
 
 ```bash
-postgresai auth
+postgresai login
 ```
 
 </TabItem>
 <TabItem value="npx" label="npx">
 
 ```bash
-npx postgresai auth
+npx postgresai@latest login
 ```
 
 </TabItem>
 <TabItem value="bunx" label="bunx">
 
 ```bash
-bunx postgresai auth
+bunx postgresai@latest login
 ```
 
 </TabItem>
@@ -81,14 +81,14 @@ postgresai mcp install
 <TabItem value="npx" label="npx">
 
 ```bash
-npx postgresai mcp install
+npx postgresai@latest mcp install
 ```
 
 </TabItem>
 <TabItem value="bunx" label="bunx">
 
 ```bash
-bunx postgresai mcp install
+bunx postgresai@latest mcp install
 ```
 
 </TabItem>
@@ -109,14 +109,14 @@ postgresai issues list
 <TabItem value="npx" label="npx">
 
 ```bash
-npx postgresai issues list
+npx postgresai@latest issues list
 ```
 
 </TabItem>
 <TabItem value="bunx" label="bunx">
 
 ```bash
-bunx postgresai issues list
+bunx postgresai@latest issues list
 ```
 
 </TabItem>
@@ -135,14 +135,14 @@ postgresai issues view <issue_id>
 <TabItem value="npx" label="npx">
 
 ```bash
-npx postgresai issues view <issue_id>
+npx postgresai@latest issues view <issue_id>
 ```
 
 </TabItem>
 <TabItem value="bunx" label="bunx">
 
 ```bash
-bunx postgresai issues view <issue_id>
+bunx postgresai@latest issues view <issue_id>
 ```
 
 </TabItem>
@@ -154,21 +154,21 @@ Post a comment:
 <TabItem value="cli" label="Installed CLI" default>
 
 ```bash
-postgresai issues post_comment <issue_id> "<comment>"
+postgresai issues post-comment <issue_id> "<comment>"
 ```
 
 </TabItem>
 <TabItem value="npx" label="npx">
 
 ```bash
-npx postgresai issues post_comment <issue_id> "<comment>"
+npx postgresai@latest issues post-comment <issue_id> "<comment>"
 ```
 
 </TabItem>
 <TabItem value="bunx" label="bunx">
 
 ```bash
-bunx postgresai issues post_comment <issue_id> "<comment>"
+bunx postgresai@latest issues post-comment <issue_id> "<comment>"
 ```
 
 </TabItem>

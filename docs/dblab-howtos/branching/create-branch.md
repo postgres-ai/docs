@@ -1,6 +1,7 @@
 ---
 title: How to create a database branch
 sidebar_label: Create a database branch
+description: Create a database branch in DBLab Engine from the GUI or the dblab CLI, including branching from a specific parent branch or snapshot ID.
 ---
 
 :::info
@@ -13,15 +14,15 @@ DBLab Engine must be version `4.0` or higher.
    ![Database Lab instance page / Create branch](/assets/guides/create-branch-1.png)
 3. Click the **Create branch** button.
    ![Database Lab instance page / Create branch](/assets/guides/create-branch-2.png)
-4. Fill the **Branch name** field with a meaningful name.
-5. (optional) Change the **Parent branch** and **Snapshot ID** if needed.
+4. Fill in the **Branch name** field with a meaningful name.
+5. (Optional) Change the **Parent branch** and **Snapshot ID** if needed.
 6. Click the **Create branch** button.   
    ![Database Lab instance page / Create branch](/assets/guides/create-branch-3.png)
 7. You will be redirected to the **Database Lab branch** page.
    ![Database Lab instance page / Create branch](/assets/guides/create-branch-4.png) 
 
 ## CLI
-Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/dblab-howtos/cli/cli-install-init).
+Before you run any commands, install the DBLab CLI and initialize the configuration. For more information, see [Install and initialize DBLab CLI](/docs/dblab-howtos/cli/cli-install-init).
 
 ### Reference
 - Command [`dblab branch`](/docs/reference-guides/dblab-client-cli-reference#command-branch)
@@ -33,7 +34,7 @@ $ dblab branch test
 ```
 
 ### Create a database branch with a different parent
-By default, the created branch will be a child of the current branch. You can specify a different parent branch using `--parent-branch`:
+By default, the created branch will be a child of the current branch. If no current branch is set in the local CLI context, DBLab uses `main` as the base branch. You can specify a different parent branch using `--parent-branch`:
 ```bash
 $ dblab branch --parent-branch dev test
 ```

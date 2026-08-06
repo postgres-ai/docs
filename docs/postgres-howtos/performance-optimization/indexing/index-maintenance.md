@@ -48,7 +48,7 @@ where not indisvalid;
 A bit more comprehensive query can be found in [Postgres DBA](https://github.com/NikolayS/postgres_dba/).
 
 When analyzing this list, keep in mind that an invalid index may be a normal situation if this is an index that is being
-built or rebuild by `CREATE INDEX CONCURRENTLY` / `REINDEX CONCURRENTLY`, so it is worth also checking
+built or rebuilt by `CREATE INDEX CONCURRENTLY` / `REINDEX CONCURRENTLY`, so it is worth also checking
 `pg_stat_activity` to identify such processes.
 
 The other invalid indexes have to be rebuilt (`REINDEX CONCURRENTLY`) or dropped (`DROP INDEX CONCURRENTLY`).
@@ -82,19 +82,19 @@ When searching for unused indexes, be careful and avoid mistakes:
    next month.
 2) Don't forget to analyze all the nodes that receive workload – the primary and all replicas. An index that looks
    unused on the primary may be needed on a replica.
-3) If you have multiple installation of your system, make sure you analyzed all of them or at least representative
+3) If you have multiple installations of your system, make sure you analyzed all of them or at least a representative
    portion of them.
 
 Once unused indexes are identified reliably, they need to be dropped using `DROP INDEX CONCURRENTLY`.
 
-Can we soft-drop index ("hide" it from the planner to ensure that planner behavior doesn't change and if so, proceed
+Can we soft-drop an index ("hide" it from the planner to ensure that planner behavior doesn't change and if so, proceed
 with real dropping, otherwise quickly reverting to the original state)? There is no simple answer here, unfortunately:
 
 1) [HypoPG 1.4.0](https://github.com/HypoPG/hypopg/releases/tag/1.4.0) has a feature to "hide" indexes – this is very
-   useful, but you need to install it and, more importantly, and it might be challenging to use it for whole workload,
+   useful, but you need to install it and, more importantly, it might be challenging to use it for the whole workload,
    since you need to call `hypopg_hide_index(oid)` for it.
 2) Some people use a trick with setting `indisvalid` to `false` to hide an index from the planner – but there is a
-   reliable opinion that this is a not safe approach; see
+   reliable opinion that this is not a safe approach; see
    [Peter Geoghegan's Tweet](https://twitter.com/petervgeoghegan/status/1599191964045672449):
 
    > It's unsafe, basically. Though hard to say just how likely it is to break. Here is one hazard that I know of: in

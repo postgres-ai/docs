@@ -38,7 +38,7 @@ Today we will implement RAG ([Retrieval Augmented Generation](https://en.wikiped
    > ⚠️ Warning: this approach doesn't scale well, so it's not recommended for larger production clusters. Consider this as
    either for fun or for only small projects/services.
 3. For each commit, generate OpenAI embeddings and store them in the "vector" format (`pgvector`).
-4. Use semantic search to find commits, sped by `pgvector`'s HNSW index.
+4. Use semantic search to find commits, sped up by `pgvector`'s HNSW index.
 5. Finally, "talk to commit history" via OpenAI GPT4.
 
 (Inspired by: [@jonatasdp's Tweet](https://twitter.com/jonatasdp/status/1714711585191596419))
@@ -115,11 +115,11 @@ psql -X \
 ```
 
 As of July 2025, this will yield ~96k rows, covering more than 10k days of the Postgres development history – more
-than 27 years – the first commit was made on in July 1996!
+than 27 years – the first commit was made in July 1996!
 
 ## Create and store embeddings
 Here is a function that we'll use to get vectors for each commit entry, from OpenAI API using `plpython3u` (`u` here
-means "untrusted" – it is allowed to such functions to talk to the external world):
+means "untrusted" – it is allowed for such functions to talk to the external world):
 
 ```sql
 create or replace function openai_get_embedding(
@@ -146,7 +146,7 @@ $$ language plpython3u;
 ```
 
 Once it's created, start obtaining and storing vectors. We'll do it in small batches, to avoid long-running
-transactions – no to lose large data volumes in case of failure and not to block concurrent sessions, if any:
+transactions – not to lose large data volumes in case of failure and not to block concurrent sessions, if any:
 
 ```sql
 with scope as (
@@ -230,7 +230,7 @@ order by embedding <-> :'q_vector'
 limit 5 \gx
 ```
 
-If index is created, the second query should be very fast. You can check the plan and details of execution using
+If the index is created, the second query should be very fast. You can check the plan and details of execution using
 `EXPLAIN (ANALYZE, BUFFERS)`. Our dataset is tiny (&lt;100k), so the search speed should be ~1ms, and the buffer hit/read
 numbers ~1000 or less. There are a few tuning options for indexes `pgvector` offers, check out its
 [README](https://github.com/pgvector/pgvector/blob/master/README.md).
@@ -372,7 +372,7 @@ Note that it uses the models `text-embedding-3-small` for embeddings and `gpt-4.
 
 2. Another disadvantage of this approach is that `plpython3u` is not available in some Postgres services (e.g., RDS).
 
-3. Finally, when working with in SQL context, it is quite easy to unintentionally have API calls in a loop. This might
+3. Finally, when working within SQL context, it is quite easy to unintentionally have API calls in a loop. This might
    cause excessive expenses. To avoid it, we need to carefully check the execution plans.
 
 4. For some people, such code is harder to debug.

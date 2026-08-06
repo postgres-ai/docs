@@ -19,7 +19,7 @@ export const SignInBanner = (props: SignInBannerProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <p className={styles.description}>To continue, please Sign In or Register</p>
+        <p className={styles.description}>To continue, please sign in or register.</p>
         {saveConversationIdOnSignInClick && threadId
           ? <button onClick={onSignInClick} className="btn btn1">Sign In</button>
           : <a href="/signin" className="btn btn1">Sign In</a>

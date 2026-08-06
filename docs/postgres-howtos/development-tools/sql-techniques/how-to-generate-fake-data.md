@@ -54,7 +54,7 @@ Note that per the [docs](https://postgresql.org/docs/current/functions-math.html
 
 > uses a deterministic pseudo-random number generator. It is fast but not suitable for cryptographic applications...
 
-We shouldn't use it for tasks as token or password generation (for that, use the library called `pgcrypto`).
+We shouldn't use it for tasks such as token or password generation (for that, use the library called `pgcrypto`).
 But it is okay to use it for pure random data generation (not for obfuscation).
 
 Starting with Postgres 16, there is also
@@ -236,7 +236,7 @@ There are several options to use Faker for Python:
 - PL/Python functions.
 
 Here, we'll demonstrate the use of the latter approach, with the "untrusted" version of PL/Python,
-([Day 47: How to install Postgres 16 with plpython3u](/docs/postgres-howtos/advanced-topics/extensions/how-to-install-postgres-16-with-plpython3u); N/A for
+([Day 47: How to install Postgres 16 with plpython3u](/docs/postgres-howtos/advanced-topics/misc/how-to-install-postgres-16-with-plpython3u); N/A for
 managed Postgres services such as RDS; note that in this case, the "trusted" version should suit too).
 
 ```sql

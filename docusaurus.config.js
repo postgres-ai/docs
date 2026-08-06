@@ -35,7 +35,7 @@ module.exports = {
   tagline: SITE_SLOGAN,
   url: URL, // Your website URL.
   baseUrl: BASE_URL, // Base URL for your project.
-  onBrokenLinks: 'warn', //'throw',
+  onBrokenLinks: 'warn', //'throw' — tracked in #189 (fix pre-existing broken links first)
   favicon: '/favicon.svg',
   organizationName: 'postgres-ai',
   projectName: 'docs',
@@ -44,6 +44,7 @@ module.exports = {
   // Files with <placeholder> text need HTML entities: &lt;placeholder&gt;
   markdown: {
     format: 'mdx',
+    mermaid: true,
   },
 
   customFields: {
@@ -429,6 +430,15 @@ module.exports = {
           { from: '/docs/platform/how-to-install-mcp', to: '/docs/postgresai-howtos/how-to-install-mcp' },
           { from: '/docs/platform/how-to-work-with-issues', to: '/docs/postgresai-howtos/how-to-work-with-issues' },
 
+          // Performance optimization redirects (moved from statistics to monitoring / other categories)
+          { from: '/docs/postgres-howtos/performance-optimization/statistics', to: '/docs/postgres-howtos/performance-optimization/monitoring' },
+          { from: '/docs/postgres-howtos/performance-optimization/statistics/index', to: '/docs/postgres-howtos/performance-optimization/monitoring' },
+          { from: '/docs/postgres-howtos/performance-optimization/statistics/ad-hoc-monitoring', to: '/docs/postgres-howtos/performance-optimization/monitoring/ad-hoc-monitoring' },
+          { from: '/docs/postgres-howtos/performance-optimization/statistics/how-to-monitor-transaction-id-wraparound-risks', to: '/docs/postgres-howtos/performance-optimization/monitoring/how-to-monitor-transaction-id-wraparound-risks' },
+          { from: '/docs/postgres-howtos/performance-optimization/statistics/how-to-monitor-xmin-horizon', to: '/docs/postgres-howtos/performance-optimization/monitoring/how-to-monitor-xmin-horizon' },
+          { from: '/docs/postgres-howtos/performance-optimization/statistics/how-to-troubleshoot-streaming-replication-lag', to: '/docs/postgres-howtos/advanced-topics/replication/how-to-troubleshoot-streaming-replication-lag' },
+          { from: '/docs/postgres-howtos/performance-optimization/statistics/how-to-run-analyze', to: '/docs/postgres-howtos/database-administration/maintenance/how-to-run-analyze' },
+
           // DBLab how-tos redirects (moved from /docs/how-to-guides to /docs/dblab-howtos)
           { from: '/docs/how-to-guides', to: '/docs/dblab-howtos' },
           
@@ -548,7 +558,6 @@ module.exports = {
           { from: '/docs/guides/platform', to: '/docs/dblab-howtos' },
           { from: '/docs/tutorials/onboarding', to: '/docs/dblab-howtos/platform/onboarding' },
           { from: '/support', to: '/contact/' },
-          { from: '/careers/dba', to: '/careers/dbe' },
           {
             from: '/docs/how-to-guides/administration/machine-setup',
             to: '/docs/dblab-howtos/administration/install-dle-manually' 
@@ -621,6 +630,22 @@ module.exports = {
             description: '', // default to  `${siteConfig.title} Blog`
             copyright: SITE_NAME,
             language: undefined, // possible values: http://www.w3.org/TR/REC-html40/struct/dirlang.html#langcodes
+            createFeedItems: async ({
+              blogPosts,
+              siteConfig,
+              outDir,
+              defaultCreateFeedItems,
+            }) => {
+              const items = await defaultCreateFeedItems({
+                blogPosts: blogPosts.slice(0, 20),
+                siteConfig,
+                outDir,
+              });
+              return items.map((item) => ({
+                ...item,
+                content: undefined,
+              }));
+            },
           },
         },
         theme: {
@@ -638,4 +663,3 @@ module.exports = {
     ],
   ],
 }
-

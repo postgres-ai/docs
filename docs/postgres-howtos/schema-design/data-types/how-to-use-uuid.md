@@ -24,7 +24,7 @@ on [RFC 4122](https://datatracker.ietf.org/doc/html/rfc4122).
 - Docs: [UUID Data Type](https://postgresql.org/docs/current/datatype-uuid.html)
 - Additional module [uuid-ossp](https://postgresql.org/docs/current/uuid-ossp.html)
 
-A UUID value can be generated using `get_random_uuid()`, it generates UUID version 4
+A UUID value can be generated using `gen_random_uuid()`, it generates UUID version 4
 ([source code for PG16](https://github.com/postgres/postgres/blob/03749325d16c4215ecd6d6a6fe117d93931d84aa/src/backend/utils/adt/uuid.c#L405-L423)):
 
 ```sql
@@ -41,7 +41,7 @@ nik=# select gen_random_uuid();
 (1 row)
 ```
 
-In standard UUIDs, the version can be understood looking at the first character after the 2nd hyphen:
+In standard UUIDs, the version can be understood by looking at the first character after the 2nd hyphen:
 
 ```
 08e63fed-f883-4 ...  👈 this means v4
@@ -71,7 +71,7 @@ Good materials explaining performance aspects:
 - [Identity Crisis: Sequence v. UUID as Primary Key](https://brandur.org/nanoglyphs/026-ids#ulids) by
   [@brandur](https://twitter.com/brandur)
 
-Since Postgres doesn't support UUID v7 natively yet, there are two options to use them
+Since Postgres doesn't support UUID v7 natively yet, there are two options to use them:
 
 - generate on client side
 - implement a helper function in Postgres.
@@ -135,7 +135,7 @@ nik=# select uuid_generate_v7();
 (1 row)
 ```
 
-This function also supports generating UUIDv7 values for artbitrary timestamps, which can be useful in many scenarios:
+This function also supports generating UUIDv7 values for arbitrary timestamps, which can be useful in many scenarios:
 ```
 nik=# select uuid_generate_v7('2024-10-15 01:02:03');
            uuid_generate_v7
@@ -152,7 +152,7 @@ nik=# select uuid_generate_v7('2024-10-15 01:02:03');
 
 A few notes:
 
-1) If you use these value in the `ORDER BY` clause, the chronological order will persist.
+1) If you use these values in the `ORDER BY` clause, the chronological order will persist.
 
 2) For the first 3 values (that we generated during a few seconds) there is a common prefix, `018c1be3-e`, and with the
    last value that was generated slightly later, there is common prefix `018c1be`.

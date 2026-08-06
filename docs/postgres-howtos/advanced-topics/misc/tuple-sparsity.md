@@ -24,20 +24,20 @@ estimated_time: 8 min
 
 Today, we'll discuss tuples and their locations in pages – this is quite entry-level material but useful in many cases.
 
-Understanding physical layout of rows in tables may be important in many cases, especially during performance optimization efforts.
+Understanding the physical layout of rows in tables may be important in many cases, especially during performance optimization efforts.
 
 ## Some terms
 - Page / buffer /  block – unit of storage on disk and in Postgres buffer pool (loaded to RAM unchanged), in most cases 8 KiB (check it: `show block_size;`), it holds a portion of a table or index.
 - Tuple – physical version of a row in a table.
 - Tuple header – metadata about a tuple, including transaction ID, visibility info, and more.
-- Transaction ID (same as XID, `tid`, `txid`) – unique  identifier for a transaction in Postgres:
+- Transaction ID (same as XID, `tid`, `txid`) – unique identifier for a transaction in Postgres:
     - It's allocated for modifying transactions. Read-only ones have "virtualxid" to avoid "wasting" XIDs, since they are still 32-bit as of PG16. There is [work in progress](https://commitfest.postgresql.org/43/3594/) to switch to 64-bit.
-    - You can get a XID allocated for your transactions calling function `pg_current_xact_id()` or, in PG12 and older, `txid_current()`.
+    - You can get an XID allocated for your transactions by calling the function `pg_current_xact_id()` or, in PG12 and older, `txid_current()`.
 
 Tuple header has interesting "hidden", or "system" columns ([docs](https://postgresql.org/docs/current/ddl-system-columns.html)):
-- `ctid` – a hidden (system) column that represents the physical location of tuple in table, it has the form of two integers `(X, Y)`, where:
-    - `X` is page number starting from 0
-    - `Y` is sequential number of tuple inside the page starting from 1
+- `ctid` – a hidden (system) column that represents the physical location of a tuple in a table, it has the form of two integers `(X, Y)`, where:
+    - `X` is the page number starting from 0
+    - `Y` is the sequential number of a tuple inside the page starting from 1
 - `xmin`, `xmax` – XIDs of transactions that created this row version (tuple), and deleted it (making this tuple "dead")
 
 ## ctid
@@ -67,7 +67,7 @@ nik=# select * from t1 where user_id = 101469;
 (8 rows)
 ```
 
-To understand physical locations of these rows, just include `ctid` to the `SELECT` clause of the same query:
+To understand the physical locations of these rows, just include `ctid` in the `SELECT` clause of the same query:
 ```
 nik=# select ctid, * from t1 where user_id = 101469;
     ctid    |   id   | user_id
@@ -119,7 +119,7 @@ nik=# select count(*) from t1 where (ctid::text::point)[0] = 1274;
 (Note, however, that this will be a very slow query for larger tables since it requires a Seq Scan, and we cannot create an index on `ctid` or other system columns. For queries that are aiming to find particular `ctid` (`...where ctid = '(123, 456)'`), though, performance is going to be good thanks to Tid Scan, see https://pgmustard.com/docs/explain/tid-scan).
 
 ## ctid & BUFFERS metrics in execution plans
-Confirming that the original query, indeed, involves many buffer operations (also see Day 1 where we talked about importance of `BUFFERS`):
+Confirming that the original query, indeed, involves many buffer operations (also see Day 1 where we talked about the importance of `BUFFERS`):
 ```
 nik=# explain (analyze, buffers, costs off) select * from t1 where user_id = 101469;
                                                      QUERY PLAN
@@ -141,16 +141,16 @@ nik=# select sum(pg_column_size(t1.*)) from t1 where user_id = 101469;
 (1 row)
 ```
 
-Thus, the Postgres executor must handle 88 KiB to return 317 bytes – this is far from optimal. Since we have an `Index Scan` here, some of those buffer hits are index-related, some – to get data  from heap (table).
+Thus, the Postgres executor must handle 88 KiB to return 317 bytes – this is far from optimal. Since we have an `Index Scan` here, some of those buffer hits are index-related, some – to get data from the heap (table).
 
 ## How to improve?
 
-**Option 0.** Don't do anything but understand what's happening. Perhaps, you don't need to make significant improvements, as none of the options discussed below are perfect. Avoid over-optimization. But understand how sparse tuples are located and be ready to double-check it. In some cases, the fact that the target tuples stored too sparsely can be a significant factor for query performance,  leading to timeouts. In this case, do consider the following tactics.
+**Option 0.** Don't do anything but understand what's happening. Perhaps, you don't need to make significant improvements, as none of the options discussed below are perfect. Avoid over-optimization. But understand how sparse tuples are located and be ready to double-check it. In some cases, the fact that the target tuples are stored too sparsely can be a significant factor for query performance, leading to timeouts. In this case, do consider the following tactics.
 
 **Option 1.** Maintain tables and indexes in good shape:
 - Table bloat control: bloat is regularly analyzed, prevented by well-tuned autovacuum and regularly removed by `pg_repack`.
-- Index maintenance: bloat control as well + regular reindexing, because index health declines over time even if autovacuum is well-tuned (btree health degradation rates improved in PG14, but those optimization does not eliminate the need to reindex on regular basis in heavily loaded systems).
-- Partitioning: one of benefits of partitioning is improved data locality.
+- Index maintenance: bloat control as well + regular reindexing, because index health declines over time even if autovacuum is well-tuned (btree health degradation rates improved in PG14, but those optimizations do not eliminate the need to reindex on a regular basis in heavily loaded systems).
+- Partitioning: one of the benefits of partitioning is improved data locality.
 
 **Option 2.** Use index-only scans instead of index scans. This can be achieved by using multi-column indexes or covering indexes, to include all the columns needed for our query. For our example:
 ```
@@ -172,7 +172,7 @@ nik=# explain (analyze, buffers, costs off) select * from t1 where user_id = 101
 
 **Option 3:** Physically reorganize the table according to the index / column values:
 This is physical reorganization of the table. It has two downsides:
-- You need to choose which index to use for it – only one index. Therefore, it will help only to specific subset of the queries on the workload and can be useless for other queries
+- You need to choose which index to use for it – only one index. Therefore, it will help only a specific subset of the queries in the workload and can be useless for other queries
 - UPDATEs of the rows will move tuples, decreasing the benefits of `CLUSTER`, so it might be needed to repeat it.
 
 There are two ways to reorganize the table

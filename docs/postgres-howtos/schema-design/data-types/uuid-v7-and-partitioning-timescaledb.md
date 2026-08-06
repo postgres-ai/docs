@@ -135,7 +135,7 @@ create table my_table (
 );
 ```
 
-The default value `00000000-...00` for `id` is "fake" – it will always be replaced in trigger, based on the timestamp:
+The default value `00000000-...00` for `id` is "fake" – it will always be replaced in the trigger, based on the timestamp:
 
 ```sql
 create or replace function t_update_uuid() returns trigger
@@ -204,7 +204,7 @@ Child tables: _timescaledb_internal._hyper_2_3_chunk,
 
 ## Test queries – partition pruning
 
-Now we just need to remember that `uuid_ts` should always participate in queries, to let planner deal with as few
+Now we just need to remember that `uuid_ts` should always participate in queries, to let the planner deal with as few
 partitions as possible – but knowing the `id` values, we can always reconstruct the `uuid_ts` values, using
 `uuid_v7_to_ts()`. Note that I first disabled `seqscan` as the table `my_table` has too few rows, otherwise PostgreSQL
 may decide on preferring `seqscan` over index scan:

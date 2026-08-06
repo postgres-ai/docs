@@ -17,7 +17,7 @@ Postgres.ai uses the following data subprocessors:
 | [DocuSign, Inc.](https://docusign.com/) | USA | Contract signing and document management |
 | [GitHub, Inc.](https://github.com/) | USA | Authorized user account authentication (OAuth) |
 | [GitLab B.V.](https://gitlab.com/) | USA | Authorized user account authentication (OAuth) |
-| [Google LLC](https://cloud.google.com/) | USA | Primary data hosting (Google Cloud Platform). Customer Data (including backups) are stored here; AI models (Gemini) provided via API. **Customer Data is not used in Gemini API calls, unless explicitly approved by Customer** |
+| [Google LLC](https://cloud.google.com/) | USA | Primary data hosting (Google Cloud Platform). Customer Data (including backups) is stored here; AI models (Gemini) provided via API. **Customer Data is not used in Gemini API calls, unless explicitly approved by Customer** |
 | [Hetzner Online GmbH](https://hetzner.com/) | Germany, Finland, USA | Managed monitoring data hosting (customer-selected region) |
 | [LinkedIn Corporation](https://linkedin.com/) | USA | Authorized user account authentication (OAuth) |
 | [OpenAI, LLC](https://openai.com/) | USA | AI models provided via API (GPT, Whisper). **Customer Data is not used in OpenAI API calls, unless explicitly approved by Customer** |

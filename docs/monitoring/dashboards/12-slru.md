@@ -33,26 +33,45 @@ Poor SLRU performance can cause system-wide slowdowns.
 
 ## Key panels
 
-### SLRU blocks read
-
-**What it shows:**
-- Blocks read from each SLRU cache
-- Breakdown by cache type
+The dashboard's **SLRU stats** row has one panel per `pg_stat_slru` counter, each broken down by
+cache type (name).
 
 ### SLRU blocks hit
 
 **What it shows:**
-- Cache hit rate
-- Higher is better
+- Blocks served from each SLRU cache (cache hits)
+- Higher relative to reads is better
 
 **Healthy range:**
-- Hit rate > 99% for most caches
+- Hits dominate reads for most caches
+
+### SLRU blocks exist
+
+**What it shows:**
+- `blks_exists` — checks whether a block already exists in the cache
+
+### SLRU blocks read
+
+**What it shows:**
+- Blocks read into each SLRU cache from disk
+- Breakdown by cache type
 
 ### SLRU blocks written
 
 **What it shows:**
 - Write activity to SLRU caches
 - High writes may indicate configuration issues
+
+### SLRU blocks zeroed
+
+**What it shows:**
+- `blks_zeroed` — newly initialized (zeroed) SLRU pages
+
+### SLRU truncates / SLRU flushes
+
+**What it shows:**
+- `truncates` — SLRU segment truncations (e.g. as old transaction data is removed)
+- `flushes` — SLRU buffer flushes to disk
 
 ### SLRU cache types
 
@@ -71,6 +90,7 @@ Poor SLRU performance can cause system-wide slowdowns.
 |----------|---------|
 | `cluster_name` | Cluster filter |
 | `node_name` | Node filter |
+| `db_name` | Database filter |
 
 ## SLRU statistics query
 

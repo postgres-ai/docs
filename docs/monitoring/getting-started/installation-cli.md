@@ -12,7 +12,7 @@ The fastest way to get PostgresAI monitoring running locally.
 
 - Node.js 18+ or Bun 1.0+
 - Docker 20.10+
-- PostgreSQL 14+ with `pg_stat_statements`
+- PostgreSQL 13+ (14+ recommended) with `pg_stat_statements`
 
 :::tip Bun support
 All commands work with both `npx` and `bunx`. The CLI is written in TypeScript and runs natively on Bun.
@@ -29,7 +29,7 @@ PGPASSWORD=your_password npx postgresai@latest prepare-db "postgresql://postgres
 ### What prepare-db does
 
 1. **Enables pg_stat_statements** extension
-2. **Creates monitoring user** (`pgwatch`) with minimal read-only privileges
+2. **Creates monitoring user** (`postgres_ai_mon` by default) with minimal read-only privileges
 3. **Validates configuration** for optimal monitoring
 
 ### prepare-db options
@@ -38,10 +38,11 @@ PGPASSWORD=your_password npx postgresai@latest prepare-db "postgresql://postgres
 npx postgresai@latest prepare-db [connection] [options]
 
 Options:
-  --mon-user <name>     Monitoring username (default: pgwatch)
-  --mon-password <pass> Monitoring password (auto-generated if not set)
-  --skip-extension      Skip pg_stat_statements setup
-  --dry-run             Show what would be done without executing
+  --monitoring-user <name>       Monitoring username (default: postgres_ai_mon)
+  --password <pass>              Monitoring password (auto-generated if not set)
+  --skip-optional-permissions    Skip optional permissions for managed providers
+  --print-sql                    Print SQL instead of executing it
+  --verify                       Verify monitoring permissions after setup
 ```
 
 ### Example output
@@ -49,7 +50,7 @@ Options:
 ```
 ✓ Connected to PostgreSQL 16.2
 ✓ pg_stat_statements extension enabled
-✓ Created monitoring user 'pgwatch'
+✓ Created monitoring user 'postgres_ai_mon'
 ✓ Granted required permissions
 
 Monitoring connection string:
@@ -64,13 +65,14 @@ postgresql://postgres_ai_mon:auto_generated_pass@localhost:5432/mydb
 npx postgresai@latest mon local-install --demo
 ```
 
-Starts a complete stack with a sample PostgreSQL database pre-loaded with pgbench data.
+Starts a complete stack with a sample PostgreSQL database seeded with a small demo dataset (a
+`sample_data` table plus the monitoring schema objects).
 
 ### Production mode
 
 ```bash
 npx postgresai@latest mon local-install \
-  --target-db postgresql://postgres_ai_mon:pass@host:5432/mydb
+  --db-url postgresql://postgres_ai_mon:pass@host:5432/mydb
 ```
 
 ### local-install options
@@ -79,15 +81,13 @@ npx postgresai@latest mon local-install \
 npx postgresai@latest mon local-install [options]
 
 Options:
-  --target-db <uri>     PostgreSQL connection string
-  --demo                Start with demo database
-  --grafana-port <port> Grafana port (default: 3000)
-  --vm-port <port>      VictoriaMetrics port (default: 8428)
-  --cluster-name <name> Cluster identifier in dashboards
-  --node-name <name>    Node identifier (default: node-01)
-  --detach              Run in background
-  --stop                Stop running stack
-  --status              Show stack status
+  --demo            demo mode with sample database (default: false)
+  --api-key <key>   Postgres AI API key for automated report uploads
+  --db-url <url>    PostgreSQL connection URL to monitor
+  --tag <tag>       Docker image tag to use (e.g., 0.14.0, 0.14.0-dev.33)
+  --project <name>  Docker Compose project name (default: postgres_ai)
+  -y, --yes         accept all defaults and skip interactive prompts (default: false)
+  -h, --help        display help for command
 ```
 
 ## Step 3: Access Grafana
@@ -100,8 +100,11 @@ Credentials:
 
 To retrieve the password later:
 ```bash
-grep grafana_password ~/.postgresai/.pgwatch-config
+grep grafana_password ~/.config/postgresai/monitoring/.pgwatch-config
 ```
+
+(The monitoring project lives in `~/.config/postgresai/monitoring` by default, or in
+`$PGAI_PROJECT_DIR` if set.)
 
 Navigate to **Dashboards — Browse — postgres_ai** to see your monitoring dashboards.
 
@@ -110,38 +113,25 @@ Navigate to **Dashboards — Browse — postgres_ai** to see your monitoring das
 ### Check status
 
 ```bash
-npx postgresai@latest mon local-install --status
+npx postgresai@latest mon status
 ```
 
-Output:
-```
-PostgresAI Monitoring Stack Status
-───────────────────────────────────
-Grafana:          Running (`http://localhost:3000`)
-VictoriaMetrics:  Running (`http://localhost:8428`)
-pgwatch:          Running
-Flask Backend:    Running
-
-Monitoring:
-  Cluster: local
-  Node: node-01
-  Target: postgresql://...@localhost:5432/mydb
-```
+Output is the Docker Compose service table for the monitoring stack, including `grafana-with-datasources`, `sink-postgres`, `sink-prometheus`, `pgwatch-postgres`, `pgwatch-prometheus`, and `flask-pgss-api`.
 
 ### Stop stack
 
 ```bash
-npx postgresai@latest mon local-install --stop
+npx postgresai@latest mon stop
 ```
 
 ### View logs
 
 ```bash
 # All containers
-docker compose -f ~/.postgresai/docker-compose.yml logs -f
+docker compose -f ~/.config/postgresai/monitoring/docker-compose.yml logs -f
 
 # Specific service
-docker compose -f ~/.postgresai/docker-compose.yml logs -f pgwatch
+docker compose -f ~/.config/postgresai/monitoring/docker-compose.yml logs -f pgwatch-postgres pgwatch-prometheus
 ```
 
 ## Troubleshooting
@@ -166,15 +156,17 @@ Restart PostgreSQL after this change.
 2. Verify Docker can reach the host:
    ```bash
    # On macOS/Windows, use host.docker.internal
-   --target-db postgresql://user:pass@host.docker.internal:5432/mydb
+   --db-url postgresql://user:pass@host.docker.internal:5432/mydb
    ```
 
 ### "Permission denied"
 
-The monitoring user needs these minimum privileges:
+The monitoring user needs the built-in `pg_monitor` role (this is what `prepare-db` grants and
+what the install/verify step checks for; `pg_read_all_stats` alone is a strict subset and is not
+sufficient):
 
 ```sql
-grant pg_read_all_stats to postgres_ai_mon;
+grant pg_monitor to postgres_ai_mon;
 ```
 
 For RDS/CloudSQL, ensure you're using the master user for `prepare-db`.

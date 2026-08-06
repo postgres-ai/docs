@@ -23,7 +23,7 @@ estimated_time: 5 min
 `psql` is a native terminal-based client for PostgreSQL. It is very powerful, available on many platforms, is installed
 with Postgres (often in a separate package, e.g., `apt install postgresql-client-16` on Ubuntu/Debian).
 
-`psql` supports advanced scripting, and `psql` scripts can be viewed as a superset of Postgres SQL dialect.
+`psql` supports advanced scripting, and `psql` scripts can be viewed as a superset of the Postgres SQL dialect.
 For example, it supports commands like `\set`, `\if`, `\watch`. I usually use extension `.psql` for the scripts that are
 to be executed by `psql`.
 
@@ -94,7 +94,7 @@ Notes:
 
 - These are SQL queries, ending with a semicolon; they can be executed from other clients as well, not only from `psql`.
 - Custom GUC should be accompanied by a "_namespace_" (`set v1 = 1.23;` won't work – un-prefixed parameters are
-  considered as standard GUC, such as `shared_buffers`).
+  considered standard GUC, such as `shared_buffers`).
 - Working with strings is straightforward (`set myvars.v1 to 'hello';`).
 
 Values defined by using `SET` do not persist – they are present only during the ongoing session (or, if `SET LOCAL` is
@@ -158,7 +158,7 @@ used, only during the current transaction). For persistence, use either of these
 ## Server-side variables – how to integrate with SQL
 
 This `SET`/`SHOW` syntax is very common. However, it is often inconvenient because neither `SET` nor `SHOW` can be
-integrated to other SQL queries such as `SELECT`. To solve this, use alternative methods to set and
+integrated into other SQL queries such as `SELECT`. To solve this, use alternative methods to set and
 access – `set_config(...)`
 and `current_setting(...)` ([docs](https://postgresql.org/docs/current/functions-admin.html#FUNCTIONS-ADMIN-SET)).
 
@@ -242,7 +242,7 @@ Consider that we have a script named `largest_tables.psql`:
   limit :limit;
 ```
 
-Now, we can call it dynamically by setting the value for client-side variable `limit`:
+Now, we can call it dynamically by setting the value for the client-side variable `limit`:
 
 ```sql
 ❯ psql -X -f largest_tables.psql -v limit=2

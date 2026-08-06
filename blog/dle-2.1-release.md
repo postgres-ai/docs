@@ -55,7 +55,7 @@ Please send us any feedback you have – it is hard to overestimate its meaning 
 
 - Follow us on Twitter: [@Database_Lab](https://twitter.com/Database_Lab)
 - [Community Slack (English)](https://slack.postgres.ai/), and [Telegram group (Russian)](https://t.me/databaselabru)
-- [Database Lab Engine repository](https://gitlab.com/postgres-ai/database-lab), with the [issue tracker](https://gitlab.com/postgres-ai/database-lab/-/issues)
+- [Database Lab Engine repository](https://gitlab.com/postgres-ai/database-lab), with the [issue tracker](https://github.com/postgres-ai/database-lab-engine/issues)
 
 ---
 

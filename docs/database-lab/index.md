@@ -14,6 +14,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 - [DBLab tutorial for Amazon RDS Postgres](/docs/tutorials/database-lab-tutorial-amazon-rds)
 - [Supported databases](/docs/database-lab/supported-databases)
 - [DBLab UI](/docs/database-lab/user-interface)
+- [Prometheus monitoring](/docs/database-lab/prometheus-monitoring)
 - [Data masking](/docs/database-lab/masking)
 - [DB Migration Checker](/docs/database-lab/db-migration-checker)
 - [Telemetry](/docs/database-lab/telemetry)
@@ -24,7 +25,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 - [Client CLI reference (`dblab`)](/docs/reference-guides/dblab-client-cli-reference)
 - [DBLab Engine configuration reference](/docs/reference-guides/database-lab-engine-configuration-reference)
 
-## User Guides
+## User guides
 - [How to create DBLab clones](/docs/dblab-howtos/cloning/create-clone)
 - [How to connect to DBLab clones](/docs/dblab-howtos/cloning/connect-clone)
 - [How to reset DBLab clone](/docs/dblab-howtos/cloning/reset-clone)
@@ -57,7 +58,7 @@ DBLab Engine includes the server with API with basic single-user authentication,
 
 As an example, cloning of 10 TiB PostgreSQL database takes less than 2 seconds when a single user is using the DBLab Engine instance, and up to 30 seconds when 15 users are working with it at the same time. Moreover, such cloning (called "thin cloning") does not increase budgets: on a single mid-size machine with a single physical copy of the database, it is possible to run dozens of thin clones simultaneously.
 
-Thin cloning is possible thanks to [copy-on-write](https://en.wikipedia.org/wiki/Copy-on-write) capabilities provided by either [ZFS filesystem](https://en.wikipedia.org/wiki/ZFS) or [LVM2](https://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)) (other options such as hardware-based support of thin cloning, can be developed thanks to the modular and open architecture of DBLab Engine).
+Thin cloning is possible thanks to [copy-on-write](https://en.wikipedia.org/wiki/Copy-on-write) capabilities provided by either [ZFS filesystem](https://en.wikipedia.org/wiki/ZFS) or [LVM2](https://en.wikipedia.org/wiki/Logical_Volume_Manager_%28Linux%29) (other options such as hardware-based support of thin cloning, can be developed thanks to the modular and open architecture of DBLab Engine).
 
 Some problems that can be solved by using DBLab:
 
@@ -66,10 +67,10 @@ Some problems that can be solved by using DBLab:
 - help verify database migrations (DB schema changes) and massive data operations.
 
 ### Features
-- Works well both on-premise and in clouds.
-- Thin provisioning in seconds thanks to copy-on-write (CoW) provided by [ZFS](https://en.wikipedia.org/wiki/ZFS) and a special methodology for preparing PostgreSQL database snapshots. There is also an option to use [LVM](https://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)) instead of ZFS.
+- Works well both on-premises and in clouds.
+- Thin provisioning in seconds thanks to copy-on-write (CoW) provided by [ZFS](https://en.wikipedia.org/wiki/ZFS) and a special methodology for preparing PostgreSQL database snapshots. There is also an option to use [LVM](https://en.wikipedia.org/wiki/Logical_Volume_Manager_%28Linux%29) instead of ZFS.
 - Unlimited size of databases (Postgres database size [is unlimited](https://www.postgresql.org/docs/current/limits.html), ZFS volume can be up to 21^28 bytes, or [256 trillion yobibytes](https://en.wikipedia.org/wiki/ZFS)).
-- Supports PostgreSQL from version 9.6 up to the most recently released version.
+- Supports PostgreSQL from version 10 up to the most recently released version.
 - Thin cloning takes only a few seconds, regardless of the database size.
 - REST API.
 - Client CLI included.
@@ -82,7 +83,7 @@ Some problems that can be solved by using DBLab:
 
 ### Paid versions: DBLab SE and EE
 DBLab Engine is also packaged in two paid offerings:
-- **DBLab SE (Standard Edition)** – standalone DBLab Engine, installed via [PostgresAI Console](https://postgres.ai/docs/dblab-howtos/administration/install-dle-from-postgres-ai) or [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec), ideal for small to mid-size teams. It extends the free open-source option with commercial support and compatibility with various Postgres flavours such as AWS RDS and RDS Aurora, GCP CloudSQL, Heroku, Supabase, Timescale Cloud, PostGIS.
+- **DBLab SE (Standard Edition)** – standalone DBLab Engine, installed via [PostgresAI Console](https://postgres.ai/docs/dblab-howtos/administration/install-dle-from-postgres-ai) or [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec), ideal for small to mid-size teams. It extends the free open-source option with commercial support and compatibility with various Postgres flavors such as AWS RDS and RDS Aurora, GCP CloudSQL, Heroku, Supabase, Timescale Cloud, PostGIS.
 - **DBLab EE (Enterprise Edition)** – full-fledged solution that includes enterprise features like unified control plane, user management, comprehensive audit capabilities, SSO, holistic query optimization workflows, and more.
 
 Version comparison and pricing info – see the [DBLab pricing](https://postgres.ai/pricing) page.
@@ -96,5 +97,5 @@ For DBLab EE inquiries, reach out to the PostgresAI team: **<a href="mailto:cont
 
 ### More
 - [Repository](https://gitlab.com/postgres-ai/database-lab)
-- [Issue tracker](https://gitlab.com/postgres-ai/database-lab/issues) (for bugs reports, feature proposals)
+- [Issue tracker](https://github.com/postgres-ai/database-lab-engine/issues) (for bug reports, feature proposals)
 - [Slack](https://slack.postgres.ai/)

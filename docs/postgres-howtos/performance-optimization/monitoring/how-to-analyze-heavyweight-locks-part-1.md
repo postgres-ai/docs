@@ -22,14 +22,14 @@ estimated_time: 5 min
 
 
 Heavyweight locks, both relation- and row-level, are acquired by a query and always held until the end of the
-transaction this query belongs to. So, important principle to remember: once acquired, a lock is not released until
+transaction this query belongs to. So, an important principle to remember: once acquired, a lock is not released until
 `COMMIT` or `ROLLBACK`.
 
 Docs: [Explicit locking](https://postgresql.org/docs/current/explicit-locking.html). A few notes about this doc:
 
 - The title "Explicit Locking" might seem misleading – it actually describes the levels of locks that can be acquired
   implicitly by any statement, not just explicitly via `LOCK`.
-- This page also contains a very useful table, "Conflicting Lock Modes", that helps understand the rules according which
+- This page also contains a very useful table, "Conflicting Lock Modes", that helps understand the rules according to which
   certain locks cannot be acquired due to conflicts and need to wait until the transaction holding such locks finishes,
   releasing the "blocking" locks. This article has an alternative table that might be also helpful:
   [PostgreSQL rocks, except when it blocks: Understanding locks](https://citusdata.com/blog/2018/02/15/when-postgresql-blocks/)
@@ -145,7 +145,7 @@ Notes:
   present during our transaction.
 - Again: **all** indexes are locked with `AccessShareLock`.
 - In this case, all locks are granted. One might think it is always so with `AccessShareLock`, but it's not – if there
-  is a granted or **pending** `AccessExclusiveLock` (the "strongest" on), then our attempt to acquire
+  is a granted or **pending** `AccessExclusiveLock` (the "strongest" one), then our attempt to acquire
   an `AccessShareLock` will be in the pending state. When might a pending `AccessExclusiveLock` occur? If there is an
   attempt of `AccessExclusiveLock` (e.g. `ALTER TABLE`), but there is some long-lasting `AccessShareLock` – a "sandwich"
   situation. This scenario can lead to downtimes when, during an attempt to deploy a very

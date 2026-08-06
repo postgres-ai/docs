@@ -42,14 +42,14 @@ postgresai auth
 <TabItem value="npx" label="npx">
 
 ```bash
-npx postgresai auth
+npx postgresai@latest auth
 ```
 
 </TabItem>
 <TabItem value="bunx" label="bunx">
 
 ```bash
-bunx postgresai auth
+bunx postgresai@latest auth
 ```
 
 </TabItem>
@@ -70,32 +70,59 @@ postgresai mcp install
 <TabItem value="npx" label="npx">
 
 ```bash
-npx postgresai mcp install
+npx postgresai@latest mcp install
 ```
 
 </TabItem>
 <TabItem value="bunx" label="bunx">
 
 ```bash
-bunx postgresai mcp install
+bunx postgresai@latest mcp install
 ```
 
 </TabItem>
 </Tabs>
 
-The CLI will detect supported AI coding tools and configure MCP integration automatically.
+Without arguments, `mcp install` prints a numbered menu and asks you to pick a tool:
+
+```
+Available AI coding tools:
+  1. Cursor
+  2. Claude Code
+  3. Windsurf
+  4. Codex
+Select your AI coding tool (1-4):
+```
+
+To skip the prompt, pass the client name as an argument: `postgresai mcp install <client>`, where `<client>` is one of `cursor`, `claude-code`, `windsurf`, or `codex`.
+
+:::note
+
+`mcp install` pins the absolute path of the `pgai` binary it was invoked from into the client config. If you ran the command via `npx` or `bunx`, the pinned path points into a per-version package cache that may be garbage-collected. For a stable install, prefer `npm install -g postgresai` (or `brew install postgresai`) before running `mcp install`, or re-run `mcp install` after each CLI upgrade.
+
+:::
 
 ## Verify installation
 
-After installation, your AI coding tool will have access to PostgresAI features:
+After installation, restart your AI coding tool. The PostgresAI MCP server exposes 15 tools (see the [`mcp` section of the CLI reference](/docs/reference-guides/postgresai-cli-reference#command-mcp) for full details):
 
-- View and manage issues
-- Access database monitoring data
-- Get AI-assisted recommendations for database optimization
+- **Issues:** `list_issues`, `view_issue`, `create_issue`, `update_issue` — browse and manage issues in the PostgresAI Console.
+- **Issue comments:** `post_issue_comment`, `update_issue_comment` — comment on issues.
+- **Action items:** `list_action_items`, `view_action_item`, `create_action_item`, `update_action_item` — manage action items on an issue (including the approval workflow).
+- **Reports:** `list_reports`, `list_report_files`, `get_report_data` — list and read checkup reports stored in the Console.
+- **Files:** `upload_file`, `download_file` — upload local files to PostgresAI storage and download them back.
+
+To check the install landed, inspect the client config file. For Cursor:
+
+```bash
+cat ~/.cursor/mcp.json
+```
+
+You should see a `postgresai` entry under `mcpServers` with `command` pointing at the `pgai` binary and `args: ["mcp", "start"]`.
 
 ## Manual configuration
 
-If automatic installation doesn't work, you can configure MCP manually. See [PostgresAI CLI reference](/docs/reference-guides/postgresai-cli-reference) for the `mcp` command options.
+If you prefer to wire up MCP by hand, edit the client config and add a `postgresai` entry under `mcpServers`. See the [`mcp install` section of the CLI reference](/docs/reference-guides/postgresai-cli-reference#mcp-install) for the exact JSON shape.
 
 ## Next steps
 

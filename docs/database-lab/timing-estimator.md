@@ -15,7 +15,7 @@ The Query Estimator is an experimental feature of [DBLab Engine](https://gitlab.
 This feature has been removed in DLE 3.4.0. Future versions might include a different implementation of this feature.
 :::
 
-Database Lab clones are almost exact copies of the production database yet some limitations should be kept in mind. Under the hood, Database Lab clones use copy-on-write technology (currently supported: [ZFS](https://en.wikipedia.org/wiki/ZFS) and [LVM&nbsp;2](https://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)). This technology allows reducing cloning time and amount of the extra disk space needed for it almost to zero. On the other side, it has different IO performance in comparison to file systems most commonly used on production environments (such as [ext4](https://en.wikipedia.org/wiki/Ext4)). This difference affects the database operations *timing*, it may be noticeably bigger on the clones. Other factors may affect query *timing* too. That is why it is recommended to focus on the plan structure and data volumes (buffer numbers in the case of "physical" provisioning mode, and row numbers in the case of "logical" provisioning mode) when dealing with EXPLAIN plans. Timing numbers in such plans obtained on thing clones should not be directly compared to the corresponding numbers obtained on production.
+Database Lab clones are almost exact copies of the production database yet some limitations should be kept in mind. Under the hood, Database Lab clones use copy-on-write technology (currently supported: [ZFS](https://en.wikipedia.org/wiki/ZFS) and [LVM&nbsp;2](https://en.wikipedia.org/wiki/Logical_Volume_Manager_%28Linux%29)). This technology allows reducing cloning time and amount of the extra disk space needed for it almost to zero. On the other side, it has different IO performance in comparison to file systems most commonly used on production environments (such as [ext4](https://en.wikipedia.org/wiki/Ext4)). This difference affects the database operations *timing* — it may be noticeably bigger on the clones. Other factors may affect query *timing* too. That is why it is recommended to focus on the plan structure and data volumes (buffer numbers in the case of "physical" provisioning mode, and row numbers in the case of "logical" provisioning mode) when dealing with EXPLAIN plans. Timing numbers in such plans obtained on thin clones should not be directly compared to the corresponding numbers obtained on production.
 
 :::note
 When [configured properly](https://postgres.ai/docs/dblab-howtos/administration/postgresql-configuration#postgresql-configuration-in-clones), Database Lab clones execute SQL queries very similarly to production:
@@ -26,14 +26,14 @@ When [configured properly](https://postgres.ai/docs/dblab-howtos/administration/
 :::
 
 ## Query Estimator
-The Query Estimator aims to forecast the timing numbers for the source (production) eliminating the difference related to the disk IO (slower disks, difference filesystem). The estimator is triggered only for queries that are running more than 0.01 seconds (default value, configurable) and it works under the following assumptions:
-- CPU and RAM models on prod and those that used on clones are the same or very similar
+The Query Estimator aims to forecast the timing numbers for the source (production) eliminating the difference related to the disk IO (slower disks, different filesystem). The estimator is triggered only for queries that are running more than 0.01 seconds (default value, configurable) and it works under the following assumptions:
+- CPU and RAM models on prod and those used on clones are the same or very similar
 - No resources are saturated (CPU, memory, disk IO, network) – neither on clones nor on the source (production) node
 - The state of caches is very similar (estimation works better when the majority of the data we are working with is cached or not cached at all).
 - Locking issues do not affect the timing: there is no significant time spent waiting for some lock to be acquired
 
 ## How is the estimated timing calculated?
-General idea is to use the PostgreSQL waits model, which can be taken from `pg_stat_activity` 
+The general idea is to use the PostgreSQL waits model, which can be taken from `pg_stat_activity` 
 
 During SQL query (or batch) execution, `pg_stat_activity` is queried 100 times per second (default value, configurable) to get current wait events for the target PID or PIDs. The frequency can be changed in the configuration file.
 
@@ -61,7 +61,7 @@ LOG: Profiling process 63 with 10ms sampling
 The estimation methodology implies that the non-IO parts of the overall timing are expected to be very similar on production and clones, focusing on adjusting the values of the IO parts (reads, writes). This makes sense only if the assumptions explained above are true (resources are not saturated, cache states are similar, and so on). 
 
 The general idea is to provide 2 numbers: minimum and maximum estimated execution time of given SQL query. 
-- Minimum execution time will be seen if all needed data already in database cache and database doesn't spend time on Read IO. 
+- Minimum execution time will be seen if all needed data is already in database cache and database doesn't spend time on Read IO. 
 - Maximum execution time will be seen if we need to read all data from disk. 
 
 In real execution some data (not all) could be in cache and time will be in between minimum and maximum values.
@@ -126,4 +126,4 @@ estimator:
 - `readRatio` - the ratio evaluating the timing difference for operations involving IO Read between Database Lab and production environments (use the value from the previous step)
 - `writeRatio` - the ratio evaluating the timing difference for operations involving IO Write between Database Lab and production environments (use the value from the previous step)
 - `profilingInterval` - time interval of samples taken by the profiler, more frequent sampling gives more precise picture of database server waits, but with additional overhead as a trade-off, default is 10ms (100 samples per second)
-- `sampleThreshold` - the minimum number of samples sufficient to display the estimation results, more samples gives more precise picture of database server waits during SQL execution, default value is 20 samples; for example, 20 samples with 10ms interval is 0.2 seconds, it means SQL queries with execution time lower than 0.2 seconds cannot be analysed, decreasing this value increases cost of one sample (20 samples equals 5% as cost of one sample) and decrease quality of such analysis
+- `sampleThreshold` - the minimum number of samples sufficient to display the estimation results, more samples gives more precise picture of database server waits during SQL execution, default value is 20 samples; for example, 20 samples with 10ms interval is 0.2 seconds, it means SQL queries with execution time lower than 0.2 seconds cannot be analyzed, decreasing this value increases cost of one sample (20 samples equals 5% as cost of one sample) and decreases quality of such analysis

@@ -6,16 +6,18 @@ sidebar_position: 5
 
 # Index metrics
 
-Index usage and health metrics from `pg_stat_user_indexes` and related views.
+Index usage and health metrics. In this stack the usage metric reads **`pg_stat_all_indexes`**
+(not `pg_stat_user_indexes`) and the I/O metric reads **`pg_statio_all_indexes`**. Series are
+exported with the `pgwatch_` prefix.
 
 ## Data sources
 
-| View | Description |
-|------|-------------|
-| `pg_stat_user_indexes` | Index usage statistics |
-| `pg_statio_user_indexes` | Index I/O statistics |
-| `pg_indexes` | Index definitions |
-| `pg_class` | Index sizes |
+| Metric group | Underlying view | Description |
+|--------------|-----------------|-------------|
+| `pg_stat_all_indexes` | `pg_stat_all_indexes` | Index usage (`pgwatch_pg_stat_all_indexes_*`) |
+| `pg_statio_all_indexes` | `pg_statio_all_indexes` | Index I/O (`pgwatch_pg_statio_all_indexes_*`) |
+| `pg_class` | `pg_class` | Index sizes (`pgwatch_pg_class_relation_size_bytes`) |
+| `pg_btree_bloat` | – | B-tree bloat estimates (`pgwatch_pg_btree_bloat_*`) |
 
 ## Core metrics
 
@@ -23,24 +25,27 @@ Index usage and health metrics from `pg_stat_user_indexes` and related views.
 
 | Metric | Type | Description |
 |--------|------|-------------|
-| `pg_stat_user_indexes_idx_scan_total` | Counter | Index scans initiated |
-| `pg_stat_user_indexes_idx_tup_read_total` | Counter | Index entries read |
-| `pg_stat_user_indexes_idx_tup_fetch_total` | Counter | Table rows fetched via index |
+| `pgwatch_pg_stat_all_indexes_idx_scan` | Gauge | Index scans initiated |
+| `pgwatch_pg_stat_all_indexes_idx_tup_read` | Gauge | Index entries read |
+| `pgwatch_pg_stat_all_indexes_idx_tup_fetch` | Gauge | Table rows fetched via index |
 
 ### Size metrics
 
 | Metric | Type | Description |
 |--------|------|-------------|
-| `pg_index_size_bytes` | Gauge | Index size in bytes |
+| `pgwatch_pg_class_relation_size_bytes` | Gauge | Relation size in bytes (used for index size) |
+| `pgwatch_pg_btree_bloat_bloat_pct` | Gauge | Estimated B-tree index bloat percentage |
 
 ### I/O metrics
 
 | Metric | Type | Description |
 |--------|------|-------------|
-| `pg_statio_user_indexes_idx_blks_read_total` | Counter | Index blocks read from disk |
-| `pg_statio_user_indexes_idx_blks_hit_total` | Counter | Index blocks hit in buffer cache |
+| `pgwatch_pg_statio_all_indexes_idx_blks_read` | Gauge | Index blocks read from disk |
+| `pgwatch_pg_statio_all_indexes_idx_blks_hit` | Gauge | Index blocks hit in buffer cache |
 
 ## Labels
+
+The cluster label is `cluster` (not `cluster_name`). The index identity labels are correct:
 
 | Label | Description | Example |
 |-------|-------------|---------|
@@ -48,7 +53,7 @@ Index usage and health metrics from `pg_stat_user_indexes` and related views.
 | `relname` | Parent table name | `users` |
 | `schemaname` | Schema name | `public` |
 | `datname` | Database name | `myapp` |
-| `cluster_name` | Cluster identifier | `production` |
+| `cluster` | Cluster identifier (from `custom_tags.cluster`) | `production` |
 | `node_name` | Node identifier | `primary` |
 
 ## Common queries
@@ -56,31 +61,31 @@ Index usage and health metrics from `pg_stat_user_indexes` and related views.
 ### Unused indexes
 
 ```promql
-pg_stat_user_indexes_idx_scan_total == 0
+pgwatch_pg_stat_all_indexes_idx_scan == 0
 ```
 
 ### Index scan rate
 
 ```promql
-rate(pg_stat_user_indexes_idx_scan_total[5m])
+rate(pgwatch_pg_stat_all_indexes_idx_scan[5m])
 ```
 
 ### Index buffer hit ratio
 
 ```promql
-rate(pg_statio_user_indexes_idx_blks_hit_total[5m])
+rate(pgwatch_pg_statio_all_indexes_idx_blks_hit[5m])
 /
 (
-  rate(pg_statio_user_indexes_idx_blks_hit_total[5m])
+  rate(pgwatch_pg_statio_all_indexes_idx_blks_hit[5m])
   +
-  rate(pg_statio_user_indexes_idx_blks_read_total[5m])
+  rate(pgwatch_pg_statio_all_indexes_idx_blks_read[5m])
 )
 ```
 
 ### Largest indexes
 
 ```promql
-topk(10, pg_index_size_bytes)
+topk(10, pgwatch_pg_class_relation_size_bytes)
 ```
 
 ### Index read efficiency
@@ -88,15 +93,15 @@ topk(10, pg_index_size_bytes)
 Ratio of tuples fetched vs tuples read from index:
 
 ```promql
-rate(pg_stat_user_indexes_idx_tup_fetch_total[5m])
+rate(pgwatch_pg_stat_all_indexes_idx_tup_fetch[5m])
 /
-rate(pg_stat_user_indexes_idx_tup_read_total[5m])
+rate(pgwatch_pg_stat_all_indexes_idx_tup_read[5m])
 ```
 
 ### Most active indexes
 
 ```promql
-topk(10, rate(pg_stat_user_indexes_idx_scan_total[5m]))
+topk(10, rate(pgwatch_pg_stat_all_indexes_idx_scan[5m]))
 ```
 
 ## Dashboard usage

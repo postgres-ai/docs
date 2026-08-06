@@ -38,7 +38,7 @@ In the OLTP context (e.g., mobile and web apps), long-running transactions are o
    tuples that are produced by some transaction with `XID > xid1`) cannot be deleted by autovacuum until our transaction
    finishes. This might lead to bloat and performance degradation.
 
-"Long-running" is a relative term, and, of course, its meaning depends on particular situation. Usually, in
+"Long-running" is a relative term, and, of course, its meaning depends on the particular situation. Usually, in
 heavily-loaded systems – say ~10^5 TPS including RO queries and ~10^3 of XID-consuming TPS (writes) – we consider
 transactions running longer than 30-60 seconds to be long. This can be translated to 30-60k dead tuples accumulated in a
 table in the worst case – in the case when all transactions during that time frame produced 1 dead tuple. Of course,
@@ -57,15 +57,15 @@ cannot.
 As of PG16 / 2023, Postgres doesn't provide a way to limit transaction duration (although there is a patch proposed,
 implementing [transaction_timeout](https://commitfest.postgresql.org/45/4040/) – help test and improve it if you can).
 
-There are two limitation settings that can help reduce chances that a long-running transaction occur, but not
-eliminating the risks completely:
+There are two limitation settings that can help reduce chances that a long-running transaction occurs, but not
+eliminate the risks completely:
 
-1) [statement_timeout](https://postgresqlco.nf/doc/en/param/statement_timeout/) – limits the maximum duration of single
+1) [statement_timeout](https://postgresqlco.nf/doc/en/param/statement_timeout/) – limits the maximum duration of a single
    query. For web/mobile apps, set it to a low value, e.g., 30s or 15 s.
 
    You can find in the Postgres docs, that this is "not recommended", but that advice is not practical and I consider it
    as unproductive. We do need to limit statement_timeout globally for web and mobile apps, to be protected: the
-   application code is usually limited anyway, and it's not a good situation when application reached a timeout such as
+   application code is usually limited anyway, and it's not a good situation when the application reached a timeout such as
    30s, but Postgres is still processing an orphaned query. And users usually don't wait for more than a few seconds
    (Read: [What is a slow query?](https://postgres.ai/blog/20210909-what-is-a-slow-sql-query)). Those connections that
    do need a higher or even unlimited value for statement_timeout, can set it using a simple `SET` in a session (e.g.,
@@ -74,7 +74,7 @@ eliminating the risks completely:
 
 2) [idle_in_transaction_session_timeout](https://postgresqlco.nf/doc/en/param/idle_in_transaction_session_timeout/) –
    sets maximum allowed idle time between queries, when in a transaction. Similar recommendations here: set it to a low
-   value, 15-30s. Sessions that absolutely needed it can override the global value.
+   value, 15-30s. Sessions that absolutely need it can override the global value.
 
 If both of these options are set to low values, it doesn't fully prevent long-running transactions from happening. For
 example, if we set both of them to 30s, we might still have a transaction running for hours:
@@ -85,9 +85,9 @@ example, if we set both of them to 30s, we might still have a transaction runnin
 - another query lasting < 30s
 - ...
 
-– in this case, neither of the two thresholds are achieved, but we can have a transaction that hours and even days.
+– in this case, neither of the two thresholds is achieved, but we can have a transaction that lasts hours and even days.
 
-While there is no such a setting as `transaction_timeout` yet, we can consider alternative options to fully prevent
+While there is no such setting as `transaction_timeout` yet, we can consider alternative options to fully prevent
 long-running transactions from happening:
 
 1) A cronjob (or `pg_cron` or `pg_timetable`) record to run a "terminator" query that detects all transactions lasting
@@ -126,7 +126,7 @@ long-running transaction, to understand what queries it consists of. Without suc
 of data (queries are fast, they are usually below `log_min_duration_statement`), so we don't see them in logs.
 
 In this case, we can apply the method described in #PostgresMarathon
-[Ad-hoc monitoring](/docs/postgres-howtos/performance-optimization/statistics/ad-hoc-monitoring) and sample long (> 1min) transactions every 1
+[Ad-hoc monitoring](/docs/postgres-howtos/performance-optimization/monitoring/ad-hoc-monitoring) and sample long (> 1min) transactions every 1
 second (might be worth increasing the frequency here):
 
 ```sql

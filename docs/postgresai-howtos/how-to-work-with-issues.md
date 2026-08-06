@@ -50,7 +50,7 @@ postgresai issues list
 postgresai issues view <issue_id>
 
 # Post a comment
-postgresai issues post_comment <issue_id> "comment"
+postgresai issues post-comment <issue_id> "comment"
 ```
 
 </TabItem>
@@ -58,13 +58,13 @@ postgresai issues post_comment <issue_id> "comment"
 
 ```bash
 # List all issues
-npx postgresai issues list
+npx postgresai@latest issues list
 
 # View a specific issue
-npx postgresai issues view <issue_id>
+npx postgresai@latest issues view <issue_id>
 
 # Post a comment
-npx postgresai issues post_comment <issue_id> "comment"
+npx postgresai@latest issues post-comment <issue_id> "comment"
 ```
 
 </TabItem>
@@ -72,19 +72,25 @@ npx postgresai issues post_comment <issue_id> "comment"
 
 ```bash
 # List all issues
-bunx postgresai issues list
+bunx postgresai@latest issues list
 
 # View a specific issue
-bunx postgresai issues view <issue_id>
+bunx postgresai@latest issues view <issue_id>
 
 # Post a comment
-bunx postgresai issues post_comment <issue_id> "comment"
+bunx postgresai@latest issues post-comment <issue_id> "comment"
 ```
 
 </TabItem>
 </Tabs>
 
-See [PostgresAI CLI reference](/docs/reference-guides/postgresai-cli-reference) for all available commands.
+By default, `issues` commands print human-friendly YAML when stdout is a terminal, and switch to JSON when piped or redirected. Force JSON explicitly with `--json` for scripting:
+
+```bash
+postgresai issues list --json | jq '.[] | {id, title}'
+```
+
+See the [PostgresAI CLI reference](/docs/reference-guides/postgresai-cli-reference#command-issues) for the full `issues` command set (including `create`, `update`, action items, and file attachments).
 
 ## Integrate with AI coding tools
 
@@ -100,14 +106,14 @@ Issues can be resolved directly in AI coding tools that support MCP integration:
 </TabItem>
 <TabItem value="npx" label="npx">
 
-1. Install MCP: `npx postgresai mcp install`
+1. Install MCP: `npx postgresai@latest mcp install`
 2. Open the issue in your AI coding tool (Cursor, Claude Code, Windsurf, or Codex)
 3. Follow the AI-guided steps to resolve the issue
 
 </TabItem>
 <TabItem value="bunx" label="bunx">
 
-1. Install MCP: `bunx postgresai mcp install`
+1. Install MCP: `bunx postgresai@latest mcp install`
 2. Open the issue in your AI coding tool (Cursor, Claude Code, Windsurf, or Codex)
 3. Follow the AI-guided steps to resolve the issue
 

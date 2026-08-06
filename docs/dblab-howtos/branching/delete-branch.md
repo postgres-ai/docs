@@ -1,6 +1,7 @@
 ---
 title: How to delete a database branch
 sidebar_label: Delete a database branch
+description: Delete a database branch in DBLab Engine from the GUI or with the dblab branch command, freeing up resources when the branch is no longer needed.
 ---
 
 :::info
@@ -19,13 +20,13 @@ DBLab Engine must be version `4.0` or higher.
    ![Database Lab instance page / Delete branch](/assets/guides/delete-branch-3.png)
 
 ## CLI
-Before you run any commands, install Database Lab CLI and initialize configuration. For more information, see [Install and initialize Database Lab CLI](/docs/dblab-howtos/cli/cli-install-init).
+Before you run any commands, install the DBLab CLI and initialize the configuration. For more information, see [Install and initialize DBLab CLI](/docs/dblab-howtos/cli/cli-install-init).
 
 ### Reference
 - Command [`dblab branch`](/docs/reference-guides/dblab-client-cli-reference#command-branch)
 
 ### Delete branch
-Delete a database branch with `dblab branch` command, using `-d` or `--delete`:
+Delete a database branch with the `dblab branch` command, using `-d` or `--delete`:
 ```bash
 $ dblab branch -d test
 ```

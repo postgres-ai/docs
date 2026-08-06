@@ -51,7 +51,7 @@ application_name | human_here
 pid              | 93285
 ```
 
-However, having additional query – even a blazing fast one – means an extra RTT
+However, having an additional query – even a blazing fast one – means an extra RTT
 ([round-trip time](https://en.wikipedia.org/wiki/Round-trip_delay)), affecting latency, especially when communicating
 with a distant server.
 

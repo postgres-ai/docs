@@ -1,7 +1,7 @@
 ---
 title: How to troubleshoot streaming replication lag
 sidebar_label: troubleshoot streaming replication lag
-description: Learn how to how to troubleshoot streaming replication lag
+description: Learn how to troubleshoot streaming replication lag
 keywords:
   - postgresql
   - troubleshoot
@@ -22,10 +22,10 @@ estimated_time: 5 min
 Streaming replication in Postgres allows for continuous data replication from a primary server to standby servers, to ensure high availability and balance read-only workloads. However, replication lag can occur, leading to delays in data synchronization. This guide provides steps to troubleshoot and mitigate replication lag.
 
 ## Identifying the lag
-To start investigation we need to understand where we actually have lag, on which stage of replication:
+To start the investigation, we need to understand where we actually have lag, on which stage of replication:
 - sending WAL stream to replica via network by `walsender`
-- receiving WAL stream on replica from network by `walreciever`
-- writing WAL on disk on replica by `walreciever`
+- receiving WAL stream on replica from network by `walreceiver`
+- writing WAL on disk on replica by `walreceiver`
 - applying (replaying) WAL as a recovery process
 
  Thus, streaming replication lag can be categorized into three types:
@@ -74,18 +74,18 @@ from pg_stat_replication;
 ```
 
 ### How to read results
-Meaning of those `_lsn` 
+Meaning of those `_lsn` values:
  - `sent_lsn`: How much WAL (lsn position) has already been sent over the network
  - `write_lsn`: How much WAL (lsn position) has been sent to the operating system (before flushing)
  - `flush_lsn`: How much WAL (lsn position) has been flushed to the disk (written on the disk)
  - `replay_lsn`: How much WAL (lsn position) has been applied (visible for queries)
 
-So lag is a gap between `pg_current_wal_lsn` and `replay_lsn` (`total_lag_bytes`, and it's a good idea to add it to monitoring, but for troubleshooting purposes we will need all 4
+So lag is a gap between `pg_current_wal_lsn` and `replay_lsn` (`total_lag_bytes`), and it's a good idea to add it to monitoring, but for troubleshooting purposes we will need all 4.
 
 - Lag on `sent_lag_bytes` means we have issues with sending the data, i.e. CPU saturated `WALsender` or overloaded network socket on the primary side
 - Lag on `write_lag_bytes` means we have issues with receiving the data, i.e. CPU saturated `WALreceiver` or overloaded network socket on the replica side
 - Lag on `flush_lag_bytes` means we have issues with writing the data on the disk on replica side, i.e. CPU saturated or IO contention of `WALreceiver`
-- Lag `replay_lag_bytes` means we have issues with applying WAL on replica,  usually CPU saturated or IO contention of postgres process
+- Lag on `replay_lag_bytes` means we have issues with applying WAL on replica, usually CPU saturated or IO contention of postgres process
 
 Once we pinpointed the problem, we need to troubleshoot the process(es) on the OS level to find the bottleneck.
 

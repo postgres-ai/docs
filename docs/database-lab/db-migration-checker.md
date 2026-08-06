@@ -12,7 +12,7 @@ keywords:
 ---
 
 ## Overview
-DB Migration Checker is a DLE's component that enables integration with CI/CD tools to automatically test migrations in CI/CD pipelines.
+DB Migration Checker is a DLE component that enables integration with CI/CD tools to automatically test migrations in CI/CD pipelines.
 
 ## Key features
 - **Automated:** DB migration testing in CI/CD pipelines
@@ -46,14 +46,13 @@ DB Migration Checker is a DLE's component that enables integration with CI/CD to
       --volume /var/run/docker.sock:/var/run/docker.sock \
       --volume /tmp/ci_checker:/tmp/ci_checker \
       --volume ~/.dblab/ci_checker/configs:/home/dblab/configs \
-      --env DOCKER_API_VERSION=1.41 \
       postgresai/dblab-ci-checker:3.5.0
     ```
 
 - [optional] Run the [localtunnel](https://github.com/localtunnel/localtunnel) (or an analog) - use it only for debug purposes to make DB migration instance accessible for a CI pipeline
   `lt --port 2500`
 
-- Prepare a new repository with your DB migrations(Flyway, Sqitch, Liquibase, etc.)
+- Prepare a new repository with your DB migrations (Flyway, Sqitch, Liquibase, etc.)
   - add secrets:
     - `DLMC_CI_ENDPOINT` - an endpoint of your Database Lab Migration Checker service. For example, `https://ci-checker.example.com/`, or in case of debug the endpoint given from the localtunnel.
     - `DLMC_VERIFICATION_TOKEN` - verification token for the Database Lab Migration Checker API 

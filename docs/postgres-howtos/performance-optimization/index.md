@@ -8,9 +8,9 @@ description: Master PostgreSQL performance optimization with practical guides co
 
 Master PostgreSQL performance optimization with practical guides covering query tuning, indexing strategies, and system optimization.
 
-## Guides by Category
+## Guides by category
 
-### Query Tuning
+### Query tuning
 
 Learn how to analyze and optimize slow queries using EXPLAIN, pg_stat_statements, and other powerful tools.
 

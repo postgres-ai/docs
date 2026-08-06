@@ -1,11 +1,27 @@
-# 2019 © PostgresAI
+# 2019-2026 © PostgresAI
 #
 # SAST customization: https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
 
 include:
   - template: Security/SAST.gitlab-ci.yml
+  - project: 'postgres-ai/infra'
+    file: '/ci/templates/approval-check.yml'
+
+# Run pipeline only once per push:
+# - MR pipelines for feature branches (not duplicate branch pipelines)
+# - Push pipelines for master/main/production only
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "master"
+    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_COMMIT_BRANCH == "production"
 
 image: docker:20.10.12
+
+# Allow auto-canceling running pipelines when a newer commit is pushed
+default:
+  interruptible: true
 
 stages:
   - validate
@@ -38,8 +54,28 @@ validate_feeds:
       - build/blog/*.xml
       - build/blog/*.json
     expire_in: 1 week
+  allow_failure: true  # broken on Node v24 (sharp binary mismatch) — TODO fix
   only:
     - branches
+
+docs_sql_snippets:
+  stage: validate
+  image: docker:27
+  services:
+    - docker:27-dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+    POSTGRES_VERSIONS: "12 13 14 15 16 17 18"
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - .ci/test-sql-snippets.sh
+        - docs/postgres-howtos/performance-optimization/monitoring/how-to-monitor-xmin-horizon.md
+    - if: $CI_COMMIT_BRANCH == "master"
+  script:
+    - apk add --no-cache bash
+    - bash .ci/test-sql-snippets.sh
 
 # Stages templates.
 .job_template: &build_and_push_definition
@@ -66,7 +102,10 @@ validate_feeds:
     # Build the image.
     # `--cache-from` arg in `docker build` doesn't have any troubles if
     # passed image tag is unavailable - it will simply ignore it.
+    # --network=host: the inner bridge network in dind stalls on outbound
+    # TLS (bun install hangs forever, #226); host = the dind service netns.
     - docker build
+      --network=host
       --cache-from $TAG_LATEST
       --tag $TAG_VERSION
       --tag $TAG_LATEST
@@ -121,24 +160,234 @@ validate_feeds:
 build_and_push_production:
   <<: *build_and_push_definition
   <<: *env_production
+  # bun install occasionally hangs forever inside dind on shared runners
+  # (#226); a healthy build takes ~10 min — fail fast and retry instead of
+  # burning the 1h default timeout.
+  timeout: 30m
+  retry:
+    max: 2
+    when:
+      - job_execution_timeout
+      - stuck_or_timeout_failure
+      - runner_system_failure
   only:
     - master
 
+# DEPRECATED — old v2 staging (k8s ns `staging`, v2.postgres.ai docs path)
+# is being sunset. The `build_and_push_staging` and `deploy_staging` jobs
+# below are gated off with `when: never` and kept for git history; full
+# deletion is Phase 2.
+# New staging is preview-based, deployed from `master` — see
+# `build_and_push_main_staging` / `deploy_main_staging`
+# (https://docs-main.pgai.green).
+# Tracking: https://gitlab.com/postgres-ai/infra/-/work_items/50
 build_and_push_staging:
   <<: *build_and_push_definition
   <<: *env_staging
-  except:
-    - master
+  rules:
+    - when: never
 
 deploy_production:
   <<: *deploy_definition
   <<: *env_production
+  # DAG: deploy as soon as the production image is ready — don't let a flaky
+  # build_and_push_main_staging (bun install hangs in dind, see #226) skip
+  # the whole deploy stage and block production.
+  needs:
+    - build_and_push_production
   only:
     - master
 
 deploy_staging:
   <<: *deploy_definition
   <<: *env_staging
-  when: manual
-  except:
-    - master
+  rules:
+    - when: never
+
+# --- Green: Preview environments (per-MR) ---
+
+.environment_template: &env_review
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    url: https://docs-$CI_COMMIT_REF_SLUG.pgai.green
+    on_stop: stop_review
+    auto_stop_in: 1 week
+  variables:
+    ENV: review
+    BRANCH_SLUG: $CI_COMMIT_REF_SLUG
+
+# SSH setup for preview VM deployments (anchored to avoid duplication)
+.preview_ssh_setup:
+  before_script: &preview_ssh_steps
+    - apk add --no-cache openssh-client
+    - eval $(ssh-agent -s)
+    - echo "$PREVIEW_SSH_KEY" | base64 -d | ssh-add -
+    - mkdir -p ~/.ssh && echo "${PREVIEW_VM_HOST} ${PREVIEW_VM_HOST_KEY}" >> ~/.ssh/known_hosts
+
+# No `environment:` here — build jobs don't deploy, and setting environment
+# creates phantom deployment records that suppress the MR's "Deployed to ..."
+# widget (GitLab keys it off the latest deployment for the env). Pull just the
+# variables (ENV, BRANCH_SLUG) the build script needs from review.sh, not the
+# environment template. Same pattern as platform-all.
+build_and_push_review:
+  stage: prepare_image
+  image: docker:27
+  services:
+    - docker:27-dind
+  variables:
+    DOCKER_BUILDKIT: "1"
+    ENV: review
+    BRANCH_SLUG: $CI_COMMIT_REF_SLUG
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  script:
+    - export BRANCH_SLUG="${CI_COMMIT_REF_SLUG}"
+    - source "./deploy/configs/review.sh"
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+    - docker pull "${CI_REGISTRY_IMAGE}:review-cache" || true
+    # --network=host: see build_and_push_definition (#226)
+    - docker build
+      --network=host
+      --cache-from "${CI_REGISTRY_IMAGE}:review-cache"
+      --tag "${CI_REGISTRY_IMAGE}:review-${BRANCH_SLUG}"
+      --tag "${CI_REGISTRY_IMAGE}:review-latest"
+      --tag "${CI_REGISTRY_IMAGE}:review-cache"
+      --build-arg ARG_URL="${URL}"
+      --build-arg ARG_BASE_URL="${BASE_URL}"
+      --build-arg ARG_SIGN_IN_URL="${SIGN_IN_URL}"
+      --build-arg ARG_BOT_WS_URL="${BOT_WS_URL}"
+      --build-arg ARG_API_URL_PREFIX="${API_URL_PREFIX}"
+      --build-arg ARG_UMAMI_WEBSITE_ID="${UMAMI_WEBSITE_ID}"
+      --build-arg ARG_UMAMI_SCRIPT_URL="${UMAMI_SCRIPT_URL}"
+      .
+    - docker push "${CI_REGISTRY_IMAGE}:review-${BRANCH_SLUG}"
+    - docker push "${CI_REGISTRY_IMAGE}:review-latest"
+    - docker push "${CI_REGISTRY_IMAGE}:review-cache"
+
+deploy_review:
+  stage: deploy
+  image: alpine:3.20
+  <<: *env_review
+  resource_group: preview-docs-${CI_COMMIT_REF_SLUG}
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  needs:
+    - build_and_push_review
+  before_script: *preview_ssh_steps
+  script:
+    - export BRANCH_SLUG="${CI_COMMIT_REF_SLUG}"
+    # Guard against slug collision with permanent staging
+    - if [ "${BRANCH_SLUG}" = "main" ]; then echo "ERROR - slug 'main' conflicts with permanent staging"; exit 1; fi
+    - export IMAGE="${CI_REGISTRY_IMAGE}:review-${BRANCH_SLUG}"
+    # Pipe credential via stdin so it never appears in process arguments
+    - echo "${CI_REGISTRY_PASSWORD}" | ssh deploy@${PREVIEW_VM_HOST} "docker login -u gitlab-ci-token --password-stdin ${CI_REGISTRY}"
+    - |
+      ssh deploy@${PREVIEW_VM_HOST} "\
+        docker rm -f docs-${BRANCH_SLUG} 2>/dev/null; \
+        docker pull ${IMAGE} && \
+        docker run -d \
+          --name docs-${BRANCH_SLUG} \
+          --restart unless-stopped \
+          --memory=512m --cpus=0.5 \
+          --network traefik \
+          --label traefik.enable=true \
+          --label 'traefik.http.routers.docs-${BRANCH_SLUG}.rule=Host(\`docs-${BRANCH_SLUG}.pgai.green\`)' \
+          --label traefik.http.routers.docs-${BRANCH_SLUG}.entrypoints=websecure \
+          --label traefik.http.routers.docs-${BRANCH_SLUG}.tls=true \
+          --label traefik.http.routers.docs-${BRANCH_SLUG}.tls.certresolver=letsencrypt \
+          --label traefik.http.services.docs-${BRANCH_SLUG}.loadbalancer.server.port=3000 \
+          ${IMAGE}"
+    # Preview URL is shown via GitLab environment "View app" button on the MR page
+    - echo "Preview deployed at https://docs-${BRANCH_SLUG}.pgai.green"
+
+stop_review:
+  stage: deploy
+  image: alpine:3.20
+  resource_group: preview-docs-${CI_COMMIT_REF_SLUG}
+  allow_failure: true
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: manual
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    action: stop
+  variables:
+    GIT_STRATEGY: none
+    BRANCH_SLUG: $CI_COMMIT_REF_SLUG
+  before_script: *preview_ssh_steps
+  script:
+    - |
+      ssh deploy@${PREVIEW_VM_HOST} "\
+        docker rm -f docs-${BRANCH_SLUG} 2>/dev/null || true && \
+        docker rmi ${CI_REGISTRY_IMAGE}:review-${BRANCH_SLUG} 2>/dev/null || true"
+
+# --- Green: Permanent staging at docs-main.pgai.green (on master push) ---
+
+build_and_push_main_staging:
+  stage: prepare_image
+  image: docker:27
+  services:
+    - docker:27-dind
+  environment:
+    name: main-staging
+    url: https://docs-main.pgai.green
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+  # Same flaky bun-install hang as build_and_push_production (#226)
+  timeout: 30m
+  retry:
+    max: 2
+    when:
+      - job_execution_timeout
+      - stuck_or_timeout_failure
+      - runner_system_failure
+  script:
+    - source "./deploy/configs/main-staging.sh"
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+    - docker pull "${CI_REGISTRY_IMAGE}:main-latest" || true
+    # --network=host: see build_and_push_definition (#226)
+    - docker build
+      --network=host
+      --cache-from "${CI_REGISTRY_IMAGE}:main-latest"
+      --tag "${CI_REGISTRY_IMAGE}:main-latest"
+      --build-arg ARG_URL="${URL}"
+      --build-arg ARG_BASE_URL="${BASE_URL}"
+      --build-arg ARG_SIGN_IN_URL="${SIGN_IN_URL}"
+      --build-arg ARG_BOT_WS_URL="${BOT_WS_URL}"
+      --build-arg ARG_API_URL_PREFIX="${API_URL_PREFIX}"
+      --build-arg ARG_UMAMI_WEBSITE_ID="${UMAMI_WEBSITE_ID}"
+      --build-arg ARG_UMAMI_SCRIPT_URL="${UMAMI_SCRIPT_URL}"
+      .
+    - docker push "${CI_REGISTRY_IMAGE}:main-latest"
+
+deploy_main_staging:
+  stage: deploy
+  image: alpine:3.20
+  environment:
+    name: main-staging
+    url: https://docs-main.pgai.green
+  resource_group: preview-docs-main
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+  needs:
+    - build_and_push_main_staging
+  before_script: *preview_ssh_steps
+  script:
+    # Pipe credential via stdin so it never appears in process arguments
+    - echo "${CI_REGISTRY_PASSWORD}" | ssh deploy@${PREVIEW_VM_HOST} "docker login -u gitlab-ci-token --password-stdin ${CI_REGISTRY}"
+    - |
+      ssh deploy@${PREVIEW_VM_HOST} "\
+        docker rm -f docs-main 2>/dev/null; \
+        docker pull ${CI_REGISTRY_IMAGE}:main-latest && \
+        docker run -d \
+          --name docs-main \
+          --restart unless-stopped \
+          --memory=512m --cpus=0.5 \
+          --network traefik \
+          --label traefik.enable=true \
+          --label 'traefik.http.routers.docs-main.rule=Host(\`docs-main.pgai.green\`)' \
+          --label traefik.http.routers.docs-main.entrypoints=websecure \
+          --label traefik.http.routers.docs-main.tls=true \
+          --label traefik.http.routers.docs-main.tls.certresolver=letsencrypt \
+          --label traefik.http.services.docs-main.loadbalancer.server.port=3000 \
+          ${CI_REGISTRY_IMAGE}:main-latest"

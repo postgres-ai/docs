@@ -14,12 +14,15 @@ Get PostgresAI monitoring running in minutes with PostgresAI Cloud.
 
 ## Step 1: Choose your plan
 
-Go to [console.postgres.ai](https://console.postgres.ai) and navigate to **Checkup → Monitoring instances → Choose plan**.
+Go to [console.postgres.ai](https://console.postgres.ai), open **Monitoring** in the left sidebar to reach the **Monitoring instances** page, then click **Start setup** (under **Hosted by PostgresAI**) and choose a plan.
 
 ![Plans page](/img/monitoring/cloud-setup/01-plans-page.png)
 
+:::note
+The console screenshot above still shows the retired **Starter** plan. Hobby and Express do not include the monitoring stack — this guide covers **Scale** and **Enterprise**.
+:::
+
 Select a plan based on your needs:
-- **Starter** ($128/mo) — Full monitoring stack for small production databases
 - **Scale** ($512/mo) — 6-month retention, trend analysis, 1 business day SLA
 - **Enterprise** — Dedicated support, Kubernetes & Terraform, custom workflows
 
@@ -63,7 +66,7 @@ For other PostgreSQL databases (RDS, CloudSQL, self-hosted):
 4. Deploy the monitoring stack
 
 :::tip Database preparation
-For automatic setup, provide superuser credentials (used once, never stored). For manual setup, follow the [database preparation guide](/docs/monitoring/getting-started/requirements#database-preparation).
+For automatic setup, provide superuser credentials (used once, never stored). For manual setup, follow the [database preparation guide](/docs/monitoring/getting-started/requirements#permissions).
 :::
 
 ## Step 4: Access your dashboards
@@ -72,7 +75,7 @@ Once deployed, you'll receive:
 - Grafana URL with your dashboards
 - Login credentials
 
-Start with **01. Node overview** for a high-level health check.
+Start with **01. Single node performance overview (high-level)** for a high-level health check.
 
 ## Verify database permissions
 
@@ -96,15 +99,15 @@ Only database metadata is collected — no actual data or query parameters:
 To review exactly what metrics are collected, examine the metric definitions:
 
 - **Prometheus sink metrics**:
-  [metrics.yml (pgwatch-prometheus)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.14.0/config/pgwatch-prometheus/metrics.yml)
+  [metrics.yml (pgwatch-prometheus)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.15.0/config/pgwatch-prometheus/metrics.yml)
 - **PostgreSQL sink metrics** (including normalized queries):
-  [metrics.yml (pgwatch-postgres)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.14.0/config/pgwatch-postgres/metrics.yml)
+  [metrics.yml (pgwatch-postgres)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.15.0/config/pgwatch-postgres/metrics.yml)
 
 See [data privacy details](/docs/monitoring/#data-privacy-metadata-only).
 
 ## First dashboard walkthrough
 
-Key panels to check in **01. Node overview**:
+Key panels to check in **01. Single node performance overview (high-level)**:
 1. **Active session history (ASH)** — Wait events over time (similar to RDS Performance Insights)
 2. **Sessions** — Active, idle, and idle in transaction connections
 3. **TPS** — Transactions per second
@@ -114,16 +117,16 @@ Key panels to check in **01. Node overview**:
 
 ```
 Is there an ongoing incident?
-├─ Yes — Start with "01. Node Overview" for quick triage
-│        └─ High wait events? — "04. Wait Events" for deep-dive
-│        └─ Slow queries? — "02. Query Analysis" then "03. Single Query"
-│        └─ Lock contention? — "13. Lock Contention"
+├─ Yes — Start with "01. Single node performance overview (high-level)" for quick triage
+│        └─ High wait events? — "04. Wait event analysis (Active Session History)" for deep-dive
+│        └─ Slow queries? — "02. Query performance analysis (top-N)" then "03. Single queryid analysis"
+│        └─ Lock contention? — "13. Lock contention"
 │
 ├─ No, routine monitoring
-│   ├─ Query performance review — "02. Query Analysis"
-│   ├─ Index health check — "10. Index Health"
-│   ├─ Table bloat check — "07. Autovacuum" or "08. Table Stats"
-│   └─ Replication lag — "06. Replication"
+│   ├─ Query performance review — "02. Query performance analysis (top-N)"
+│   ├─ Index health check — "10. Aggregated index analysis"
+│   ├─ Table bloat check — "07. Autovacuum and xmin horizon" or "08. Aggregated table analysis"
+│   └─ Replication lag — "06. Replication and HA"
 ```
 
 ## Self-hosted alternative

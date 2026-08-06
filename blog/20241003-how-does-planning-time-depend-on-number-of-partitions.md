@@ -127,7 +127,7 @@ You can explore these results further and even modify the experiment using the P
 
 <p align="center">
     <AssistantWidget
-        aiContext={"Fetch https://postgres.ai/chats/01924928-4727-78a4-a01a-c42e764f5466 and https://postgres.ai/blog/20241003-how-does-planning-time-depend-on-number-of-partitions.\n" +
+        aiContext={"Fetch https://postgres.ai/chats/01924928-4727-78a4-a01a-c42e764f5466 and https://postgres.ai/blog/20241003-how-does-planning-time-depend-on-number-of-partitions\n" +
 "Be prepared to replicate experiment in DBLab:\n" +
 "- display the results in the following format: number of partitions: execution plan\n" +
 "- generate 2-3 data points and show intermediate results to user, before continuing\n\n" +

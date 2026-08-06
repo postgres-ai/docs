@@ -25,7 +25,7 @@ Traditional Postgres major version upgrades require:
 - **Hard to test and verify** procedures for various issues like incompatibilities
 - **Risks of plan flips** and performance regressions after upgrade
 
-## Our solution: Four-component approach
+## Our solution: four-component approach
 
 A complete system:
 
@@ -57,7 +57,8 @@ This solution is **fully developed and battle-tested**. We're offering preview a
       textDecoration: 'none',
       padding: '12px 24px',
       borderRadius: '6px',
-      display: 'inline-block',
+      display: 'inline-flex',
+      alignItems: 'center',
       fontWeight: '500'
     }}
   >

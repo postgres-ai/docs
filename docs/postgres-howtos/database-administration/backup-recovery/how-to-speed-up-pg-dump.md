@@ -33,7 +33,7 @@ Speeding up options discussed here:
 3. Parallelized `pg_dump`
 4. Advanced custom parallelization
 
-## Monitoring Dump Progress
+## Monitoring dump progress
 - **Verbose Output**: Use `pg_dump --verbose` to get detailed information during the dump process.
 - **Progress Estimation**: While `pg_dump` doesn't provide a progress bar, you can estimate progress by monitoring the size of the output file or, in the case of plain-format dumps, using tools like `pv`.
 - **System Monitoring**: Monitor system resources (CPU, I/O) to infer activity levels during the dump.
@@ -44,7 +44,7 @@ In the cases of weak disks or network, it makes sense to apply compression. Note
 - **Custom (`-Fc`) and Directory (`-Fd`) Formats:** These formats apply compression by default. The default method is gzip at level 6, unless specified otherwise.
 - **Plain Format:** No compression is applied by default. To compress, pipe the output through a compression utility, e.g., `pg_dump ... | gzip`.
 
-### Choosing Compression Methods and Levels
+### Choosing compression methods and levels
 PostgreSQL supports multiple compression methods:
 - `zstd`: Offers the best balance between speed and compression ratio. Levels 1–5 are optimal for most datasets.
 - `lz4`: Fastest compression, but results in larger dump sizes.
@@ -55,7 +55,7 @@ For detailed benchmarks and recommendations, refer to [Best pg_dump compression 
 ## Option 2: Avoid dumping to disk, restore on the fly
 When the `directory` format is used (option `-Fd`; this format is the most flexible and I usually use it unless I have a specific situation), then compression is applied by default (`gzip` by default, also available `lz4` and `zstd`).
 
-It also makes sense to use `pg_dump -h ... | pg_restore` and avoid writing to disk and restoring the dump "on the fly". Unfortunately, this can be done only when pg_dump is creating a `plain` dump – with `directory` format, it's not working. To solve this problem, there is a 3rd-party tool called [pgcopydb](https://github.com/dimitri/pgcopydb).
+It also makes sense to use `pg_dump -h ... | pg_restore` and avoid writing to disk and restoring the dump "on the fly". Unfortunately, this can be done only when pg_dump is creating a `plain` dump – with the `directory` format, it's not working. To solve this problem, there is a 3rd-party tool called [pgcopydb](https://github.com/dimitri/pgcopydb).
 
 ## Option 3: pg_dump -j$N
 For servers with a high number of CPUs, when you deal with multiple tables and create dumps in the `directory` format, parallelization (option `-j$N`) can be very helpful. A single, but partitioned, table is going to behave similarly to multiple tables – because physically, the dumping will be applied to multiple tables (partitions).
@@ -118,7 +118,7 @@ pg_dump -Fd -j8 -f ./test_dump test  48.24s user 3.25s system 83% cpu 1:01.83 to
 
 This is because `pg_dump` parallelization is working at table level and cannot parallelize dumping a single table.
 
-To parallelize dumping a single large table, a custom solution is needed. To do that, we need to use multiple SQL clients such as psql, each one working with transaction at `REPEATABLE READ` isolation level (`pg_dump` is also using this level when working; see [the docs](https://postgresql.org/docs/current/transaction-iso.html)), and (important!) all of the dumping transactions need to use the same snapshot.
+To parallelize dumping a single large table, a custom solution is needed. To do that, we need to use multiple SQL clients such as psql, each one working with a transaction at `REPEATABLE READ` isolation level (`pg_dump` is also using this level when working; see [the docs](https://postgresql.org/docs/current/transaction-iso.html)), and (important!) all of the dumping transactions need to use the same snapshot.
 
 The process can be as follows:
 1. In one connection (e.g., in one `psql` session), start a transaction at the `REPEATABLE READ` level:
@@ -160,10 +160,10 @@ The process can be as follows:
       --exclude-table-data="pgbench_accounts" \
       test
     ```
-7. Do not forget to close the first transaction when everything is done – long-running transaction are harmful for OLTP workloads.
-8. To restore, we need to follow the usual pg_dump order: DDL defining objects except indexes; then data load; and finally, constraint validation and index creation. For this, we can benefit from having dump in the `directory` format and use `pg_restore`'s options `-l` and `-L` to list the objects in the dump and filter them to restore, respectively.
+7. Do not forget to close the first transaction when everything is done – long-running transactions are harmful for OLTP workloads.
+8. To restore, we need to follow the usual pg_dump order: DDL defining objects except indexes; then data load; and finally, constraint validation and index creation. For this, we can benefit from having the dump in the `directory` format and use `pg_restore`'s options `-l` and `-L` to list the objects in the dump and filter them to restore, respectively.
 
-A good post about dealing with snapshots when making database dumps: ["Postgres 9.5 feature highlight - pg_dump and external snapshots"](https://paquier.xyz/postgresql-2/postgres-9-5-feature-highlight-pg-dump-snapshots/). A very interesting additional consideration in that post is related to a special case of dumping: initialization of logical replicas. It is possible to use custom dumping methods synchronized with the position of logical slot, but creation of such slot has to be done via replication protocol (`CREATE_REPLICATION_SLOT foo3 LOGICAL test_decoding;`), not using SQL (`select * from  pg_create_logical_replication_slot(...);`).
+A good post about dealing with snapshots when making database dumps: ["Postgres 9.5 feature highlight - pg_dump and external snapshots"](https://paquier.xyz/postgresql-2/postgres-9-5-feature-highlight-pg-dump-snapshots/). A very interesting additional consideration in that post is related to a special case of dumping: initialization of logical replicas. It is possible to use custom dumping methods synchronized with the position of a logical slot, but creation of such a slot has to be done via replication protocol (`CREATE_REPLICATION_SLOT foo3 LOGICAL test_decoding;`), not using SQL (`select * from  pg_create_logical_replication_slot(...);`).
 
 ---
 

@@ -169,7 +169,7 @@ See the full list of Joe's commands in the docs: https://postgres.ai/docs/refere
 ### Links:
 
 - Open-source repository and issue tracker: https://gitlab.com/postgres-ai/joe/
-- Full command list: https://postgres.ai/docs/joe-bot/usage
+- Full command list: https://postgres.ai/docs/joe-bot/
 - Extended images with PostgreSQL: https://hub.docker.com/r/postgresai/extended-postgres Includes HypoPG, pg_hint_plan, more
 - Proposals to add more extensions are welcome in the Custom Images repo: https://gitlab.com/postgres-ai/custom-images
 - Community Slack (English): https://slack.postgres.ai/. After joining, the live demo is available in the #joe-bot-demo channel: https://database-lab-team.slack.com/archives/CTL5BB30R

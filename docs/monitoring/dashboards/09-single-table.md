@@ -31,39 +31,31 @@ When you've identified a problematic table in [08. Table Stats](/docs/monitoring
 
 ## Key panels
 
-### Table size over time
+The dashboard is organized into four rows: **Size stats**, **Estimated bloat stats**, **Activity
+stats**, and **IO stats**.
+
+### Size stats
 
 **What it shows:**
-- Total table size (data + toast + indexes)
-- Growth trend
+- **Table logical size distribution** — the logical size of the table over time
+- **Size growth /s** — the rate of size change
 
 **Use for:**
 - Capacity forecasting
 - Detecting unexpected growth
 - Measuring impact of cleanup operations
 
-### Sequential vs index scans
+### Estimated bloat stats
 
 **What it shows:**
-- Scan type distribution over time
-- Helps identify query pattern changes
+- **Estimated bloat %** and **Estimated bloat size** for the table
 
-**Healthy pattern:**
-- Predominantly index scans for OLTP tables
-- Sequential scans acceptable for small tables or analytics
-
-### Tuple statistics
+### Activity stats
 
 **What it shows:**
-- Live tuples
-- Dead tuples
-- Inserts, updates, deletes per second
-
-### HOT updates
-
-**What it shows:**
-- HOT update count and ratio
-- Non-HOT updates
+- **Tuple operations /s** — inserts, updates (HOT and non-HOT), and deletes per second
+- **Tuple operations distribution (%)** — the same operations as a share of the total
+- **Tuple fetch methods /s** — sequential vs index access over time
 
 **Improving HOT ratio:**
 ```sql
@@ -71,12 +63,14 @@ When you've identified a problematic table in [08. Table Stats](/docs/monitoring
 alter table your_table set (fillfactor = 80);
 ```
 
-### Last vacuum/analyze
+### IO stats
 
 **What it shows:**
-- Time since last vacuum
-- Time since last analyze
-- Auto vs manual operations
+- **Shared block hits /s** and **Shared block reads /s**
+- **Shared block hit ratio**
+
+**Healthy pattern:**
+- High hit ratio, minimal reads for hot tables
 
 ## Variables
 
@@ -85,6 +79,7 @@ alter table your_table set (fillfactor = 80);
 | `cluster_name` | Cluster filter |
 | `node_name` | Node filter |
 | `db_name` | Database filter |
+| `schema_name` | Schema filter |
 | `table_name` | Specific table to analyze |
 
 ## Table information queries
@@ -153,7 +148,7 @@ where relname = 'your_table';
 
 Some metrics require activity to populate:
 - Run queries against the table
-- Wait for next metrics collection cycle (60s default)
+- Wait for next metrics collection cycle (table stats collect every 30s by default)
 
 ### Size metrics don't match pg_relation_size
 

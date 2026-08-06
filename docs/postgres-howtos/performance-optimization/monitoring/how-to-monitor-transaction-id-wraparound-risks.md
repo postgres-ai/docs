@@ -120,7 +120,7 @@ limit 25;
 
 ## Alerts
 
-If we ages grow above certain threshold (usually 200M, see
+If the ages grow above a certain threshold (usually 200M, see
 [autovacuum_freeze_max_age](https://postgresqlco.nf/doc/en/param/autovacuum_freeze_max_age/)), this is a sign that
 something is blocking normal autovacuum work.
 

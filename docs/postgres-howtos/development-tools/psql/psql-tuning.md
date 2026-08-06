@@ -89,7 +89,7 @@ nik=# select null;
 (1 row)
 ```
 
-To fix it (put it to `~/.psqrc` for persistency):
+To fix it (put it to `~/.psqlrc` for persistence):
 
 ```sql
 \pset null 'Ø'

@@ -22,7 +22,7 @@ export const anatoly = {
   avatarUrl: '/assets/author/anatoly.jpg',
   name: 'Anatoly Stansler',
   gitlabUrl: 'https://gitlab.com/anatolystansler',
-  githubUrl: 'https://github.com/anatolystansler',
+  githubUrl: 'https://github.com/astansler',
   linkedinUrl: 'https://www.linkedin.com/in/anatoly-stansler-37265514a',
 }
 
@@ -44,9 +44,9 @@ export const bogdan = {
 }
 
 export const denis = {
-  avatarUrl: '/assets/author/denis.jpeg',
+  avatarUrl: '/assets/author/denis.png',
   name: 'Denis Morozov',
-  role: 'Lead Engineer at',
+  role: 'Staff Engineer at',
   gitlabUrl: 'https://gitlab.com/Sarumyan9999'
 }
 
@@ -60,11 +60,11 @@ export const tanya = {
 export const dmitry = {
   avatarUrl: '/assets/author/dmitry.jpeg',
   name: 'Dmitry Fomin',
-  role: 'Sr. Postgres engineer at',
+  role: 'Sr. Postgres Engineer at',
 }
 
 export const dementii = {
   avatarUrl: '/assets/author/dementii.png',
   name: 'Dementii Priadko',
-  role: 'Postgres engineer at',
+  role: 'Postgres Engineer at',
 }

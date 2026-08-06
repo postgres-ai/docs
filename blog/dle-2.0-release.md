@@ -26,7 +26,7 @@ The Postgres.ai team is proud to announce version 2.0 of Database Lab Engine (DL
 
 This release continues our strategy to automate all routine tasks such as initialization of the PostgreSQL data directory, data transformation, and snapshot management. In DLE 2.0, all these tasks can be flexibly configured in a single configuration file. As a result, building dev&test environments for projects with many databases (such as those that adopted microservice architecture) becomes much easier.
 
-The previous versions of the Database Lab introduced the core technology: thin clone provisioning, based on either [ZFS](https://en.wikipedia.org/wiki/ZFS) (default) or [LVM](<https://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)>). It was already possible to provision full-sized multi-terabyte database clones in just a few seconds and use them for a broad spectrum of tasks such as database schema changes verification, SQL query analysis, or general application testing.
+The previous versions of the Database Lab introduced the core technology: thin clone provisioning, based on either [ZFS](https://en.wikipedia.org/wiki/ZFS) (default) or [LVM](<https://en.wikipedia.org/wiki/Logical_Volume_Manager_%28Linux%29>). It was already possible to provision full-sized multi-terabyte database clones in just a few seconds and use them for a broad spectrum of tasks such as database schema changes verification, SQL query analysis, or general application testing.
 
 Version 2.0 speeds up and empowers the initialization of DLE itself. Instead of using custom scripts for initial and continuous data retrieval, it is now possible to configure everything in a declarative manner to get the data and be up and running.
 

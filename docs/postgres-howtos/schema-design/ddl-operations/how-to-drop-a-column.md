@@ -34,8 +34,8 @@ Application code needs to stop using this column. It means that it needs to be d
 ## Risk 2: partial downtime
 
 Under heavy load, issuing such an alter without a low `lock_timeout` and retries is a bad idea because this statement
-need to acquire AccessExclusiveLock on the table, and if an attempt to acquire it lasts a significant time (e.g. because
-of existing transaction that holds any lock on this table - it can be a transaction that read a single row from this
+needs to acquire AccessExclusiveLock on the table, and if an attempt to acquire it lasts a significant time (e.g. because
+of an existing transaction that holds any lock on this table - it can be a transaction that read a single row from this
 table, or autovacuum processing this table to prevent transaction ID wraparound), then this attempt can be harmful for
 all current queries to this table, since it will be blocking them. This causes partial downtime in projects under load.
 Solution: low `lock_timeout` and retries. An example (more about this and a more advanced example can be found
@@ -71,10 +71,10 @@ end $do$;
 ```
 
 Note that in this particular example, subtransactions are implicitly used (the `BEGIN/EXCEPTION WHEN/END` block). Which
-can be a problem in case of very high `XID` growth rate (e.g., many writing transactions) and a long-running
+can be a problem in the case of a very high `XID` growth rate (e.g., many writing transactions) and a long-running
 transaction – this can trigger `SubtransSLRU` contention on standbys (see:
 [PostgreSQL Subtransactions Considered Harmful](https://postgres.ai/blog/20210831-postgresql-subtransactions-considered-harmful)).
-In this case, implement the retry logic at transaction level.
+In this case, implement the retry logic at the transaction level.
 
 ## Risk 3: false expectations that the data is deleted
 

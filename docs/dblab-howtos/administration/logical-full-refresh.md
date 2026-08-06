@@ -1,17 +1,40 @@
 ---
 title: How to refresh data when working in the "logical" mode
 sidebar_label: Full refresh for "logical" mode
+description: How to fully refresh data in DBLab Engine when using the "logical" provisioning mode, both manually on a single disk and automatically without downtime.
 ---
 
-For the "logical" provisioning mode, the "sync" instance is not yet supported (although, it is possible to implement based on logical replication) and the only option to get fresh data on DBLab Engine is to refresh it fully. Follow these instructions to automate this process. Note, that it is designed for ZFS; if you have a different setup, adjust the snippets accordingly. 
+For the "logical" provisioning mode, the "sync" instance is not yet supported (although it could be implemented based on logical replication), so the only way to get fresh data on DBLab Engine is to refresh it fully. Follow these instructions to automate this process. Note that it is designed for ZFS; if you have a different setup, adjust the snippets accordingly.
 
 :::caution
-Note, that the process described here requires a maintenance window (brief period of downtime) for the DBLab Engine. Also, the existing clones are deleted and completely lost during the process. It means that the proper planning of the maintenance windows is needed. 
+Note that the process described here requires a maintenance window (brief period of downtime) for the DBLab Engine. Also, the existing clones are deleted and completely lost during the process. It means that the proper planning of the maintenance windows is needed. 
 :::
 
 If you are using the "physical" provisioning mode, read [how to configure the "sync" instance](/docs/dblab-howtos/administration/postgresql-configuration#the-sync-instance) instead.
 
-## Refresh data from source
+## Triggering a full refresh via CLI or API (DBLab Engine 4.0+)
+
+If you have multiple pools (disks) configured, you can trigger a full refresh without downtime using the CLI or API. DBLab Engine will refresh data on an inactive pool while clones continue to run on the active pool.
+
+**CLI:**
+```bash
+dblab instance full-refresh
+```
+
+**API:**
+```bash
+curl -X POST -H "Verification-Token: YOUR_TOKEN" http://localhost:2345/full-refresh
+```
+
+:::tip
+A scheduled full refresh can also be configured using the `retrieval.refresh.timetable` option in `server.yml` (crontab format).
+:::
+
+## Manual refresh (single disk)
+
+The process described below requires a maintenance window and deletes existing clones.
+
+### Refresh data from source
 ### 1. Cleanup
 Stop and remove the existing containers, then clean up the data directory and destroy the pool:
 ```bash
@@ -23,7 +46,7 @@ sudo zpool destroy dblab_pool
 ```
 
 ### 2. Set $DBLAB_DISK
-Further, we will need `$DBLAB_DISK` environment variable. It must contain the device name corresponding to the disk where all the DBLab Engine data will be stored.
+Further, we will need the `$DBLAB_DISK` environment variable. It must contain the device name corresponding to the disk where all the DBLab Engine data will be stored.
 
 To understand what needs to be specified in `$DBLAB_DISK` in your particular case, check the output of `lsblk`:
 ```bash
@@ -143,7 +166,7 @@ sudo zpool create -f \
 ```
 
 ### 3. Define a refresh timetable
-Set up a desirable timetable in the `retrieval` section of [your configuration](/docs/dblab-howtos/administration/engine-manage#configure-and-start-a-database-lab-engine-instance) to perform a full refresh automatically
+Set up a desirable timetable in the `retrieval` section of [your configuration](/docs/dblab-howtos/administration/engine-manage#configure-and-start-a-dblab-engine-instance) to perform a full refresh automatically
 ```yaml
 retrieval:
   refresh:

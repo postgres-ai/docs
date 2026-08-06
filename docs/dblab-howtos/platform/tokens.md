@@ -1,17 +1,18 @@
 ---
 title: Create and use DBLab Platform access tokens
 sidebar_label: Create and use tokens
+description: Create, use, and revoke personal and administrative access tokens for DBLab Engine and the DBLab Platform, and enable personal token support.
 ---
 
-By default DBLab Engine uses a single [verification token](/docs/reference-guides/database-lab-engine-configuration-reference#section-global-global-parameters) for authorization of request to its API. For security purposes and more granular control, we recommend enabling access tokens support in DBLab Engine configuration. In this case, all Database Lab users will have personal tokens which can be revoked individually not affecting others.
+By default, DBLab Engine uses a single [verification token](/docs/reference-guides/database-lab-engine-configuration-reference#section-global-global-parameters) for authorization of requests to its API. For security and more granular control, we recommend enabling access tokens support in the DBLab Engine configuration. In this case, all Database Lab users have personal tokens that can be revoked individually without affecting others.
 
-# Token types
+## Token types
 
 ### Engine tokens
-- **Verification tokens** - used for basic authorization of requests to DBLab Engine API. Can be used for initial setup, but it's not recommended to use in the daily practice
+- **Verification tokens** - used for basic authorization of requests to DBLab Engine API. Can be used for initial setup, but using them in daily practice is not recommended
 
 ### Access tokens
-Access tokens can be used to interact both with DBLab Engine and DBLab Platform. To work with the Database Lab CLI/API, generate a new token and use it in the `Verification-Token` header of each individual API request. Alternatively, you can if it with the `--token` flag during CLI initialization; in this case, `Verification-Token` is not needed.
+Access tokens can be used to interact both with DBLab Engine and DBLab Platform. To work with the Database Lab CLI/API, generate a new token and use it in the `Verification-Token` header of each individual API request. Alternatively, you can use it with the `--token` flag during CLI initialization; in this case, `Verification-Token` is not needed.
 
 Access tokens allow calling the following functions on the Platform: `checkup_report_create`, `checkup_report_file_post`, `dblab_token_check`, `joe_message_artifact_post`, `joe_message_post`, `joe_session_command_post`, `joe_session_create`.
 

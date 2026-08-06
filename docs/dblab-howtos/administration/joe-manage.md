@@ -1,10 +1,11 @@
 ---
-title: How to manage Joe bot
-sidebar_label: Manage Joe bot
+title: How to manage Joe Bot
+sidebar_label: Manage Joe Bot
+description: Start, reconfigure, upgrade, and monitor the Joe Bot container for SQL optimization on DBLab Engine clones, and check its status and logs.
 ---
 
 ## Start Joe Bot container
-Define the config file `~/.dblab/joe/configs/joe.yml` according the [configuration options page](/docs/reference-guides/joe-bot-configuration-reference) and run the command:
+Define the config file `~/.dblab/joe/configs/joe.yml` according to the [configuration options page](/docs/reference-guides/joe-bot-configuration-reference) and run the command:
 ```bash
 sudo docker run \
     --name joe_bot \
@@ -16,7 +17,7 @@ sudo docker run \
 postgresai/joe:latest
 ``` 
 
-Ensure that apps folder is writable by Joe inside docker container.
+Ensure that the apps folder is writable by Joe inside the Docker container.
 ## Reconfigure Joe Bot container
 Update the configuration file `~/.dblab/joe/configs/joe.yml`.
 
@@ -25,18 +26,18 @@ Restart the running Joe Bot container:
 sudo docker restart joe_bot
 ```
 
-After restart, all user sessions are restored and should keep working (but PostgreSQL connections are re-established so if users set some session variables, they are lost). This feature works only in Joe versions 0.10 and newer. If you need to reset user sessions, stop the container, remove the file `sessions.json` located in `~/.dblab/joe/meta`, and start the container.
+After restart, all user sessions are restored and should keep working (but Postgres connections are re-established, so if users set some session variables, they are lost). This feature works only in Joe versions 0.10 and newer. If you need to reset user sessions, stop the container, remove the file `sessions.json` located in `~/.dblab/joe/meta`, and start the container.
 
 ## Upgrade Joe Bot 
-Stop and remove the container using `sudo docker stop joe_bot` and `sudo docker rm joe_bot` and then [launching](#start-joe-bot-container) it again.
+Stop and remove the container using `sudo docker stop joe_bot` and `sudo docker rm joe_bot`, and then [launch](#start-joe-bot-container) it again.
 
-After upgrading, all user sessions are restored and should keep working (but PostgreSQL connections are re-established so if users set some session variables, they are lost). This feature works only in Joe versions 0.10 and newer. If you need to reset user sessions, stop the container, remove the file `sessions.json` located in `~/.dblab/joe/meta`, and start the container.
+After upgrading, all user sessions are restored and should keep working (but Postgres connections are re-established, so if users set some session variables, they are lost). This feature works only in Joe versions 0.10 and newer. If you need to reset user sessions, stop the container, remove the file `sessions.json` located in `~/.dblab/joe/meta`, and start the container.
 
 ## Observe Joe Bot logs
 To enable the debugging mode you can use one of the following approaches:
 
-- Set the option `app: debug` to `true` in the [configuration file](/docs/reference-guides/joe-bot-configuration-reference#joe-bot-configuration-file). [Reconfigure the container](#reconfigure-the-joe-bot-container) if the option has been changed.
-- Alternatively, use the environment variable [`JOE_DEBUG`](/docs/reference-guides/joe-bot-configuration-reference#joe_debug) when starting the container (`docker run ... --env JOE_DEBUG=true ...`).
+- Set the option `app: debug` to `true` in the [configuration file](/docs/reference-guides/joe-bot-configuration-reference#joe-bot-configuration-file). [Reconfigure the container](#reconfigure-joe-bot-container) if the option has been changed.
+- Alternatively, use the environment variable [`JOE_APP_DEBUG`](/docs/reference-guides/joe-bot-configuration-reference#joe_app_debug) when starting the container (`docker run ... --env JOE_APP_DEBUG=true ...`).
 
 To observe the container logs, run:
 ```bash

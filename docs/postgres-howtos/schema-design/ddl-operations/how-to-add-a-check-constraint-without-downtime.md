@@ -64,7 +64,7 @@ alter table t
 validate constraint c_id_is_positive;
 ```
 
-This scans whole table, so for a large table, it takes long time – but this query only
+This scans the whole table, so for a large table, it takes a long time – but this query only
 acquires `ShareUpdateExclusiveLock` on the table, not blocking the sessions that run DML queries. However, a lock
 acquisition attempt is going to be blocked if there is `autovacuum` running in the transaction ID wraparound prevention
 mode and processing the table, or if there is another session that builds an index on this table or performs

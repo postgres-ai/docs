@@ -14,10 +14,12 @@ User-defined.
 - Manages all other containers
 - Handles data retrieval and snapshot creation
 - Offers an HTTP API to manage snapshots and clones
+- Exposes operational endpoints such as `/healthz` and `/metrics`
 - Generates an internal DLE RuntimeID on each start to mark related components
 
 #### How to manage
 Operates as a Docker container. See the [guide](/docs/dblab-howtos/administration/engine-manage) for administering DLE.
+For API and metrics details, see [DBLab API reference](/docs/reference-guides/database-lab-engine-api-reference) and [Prometheus monitoring](/docs/database-lab/prometheus-monitoring).
 
 ---
 
@@ -58,7 +60,7 @@ Container names include a DLE RuntimeID, such as `dblab_sync_bt48bvi9c0h0`.
 #### How to manage
 Automatically starts and stops.
 
-To activate a sync instance, use the `syncInstance` option for a physical restore job in the DLE configuration file.
+To activate a sync instance, set `sync.enabled: true` for the `physicalRestore` job in the DBLab Engine configuration file. See [Job `physicalRestore`](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalrestore) for the full set of `sync` options.
 
 ---
 
@@ -179,7 +181,7 @@ Container names include a DLE RuntimeID, such as `dblab_embedded_ui_bt48bvi9c0h0
 - `dblab_engine_name`: `<dle_container_name>`
 
 #### Responsibility
-- provides a visual user interface (UI) for interacting with the DLE.
+- Provides a visual user interface (UI) for interacting with the DLE
 
 #### How to manage
 Automatically starts and stops based on configuration settings in the `embeddedUI` section.

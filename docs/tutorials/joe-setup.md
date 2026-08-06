@@ -14,7 +14,7 @@ keywords:
 description: Learn how to use Joe bot to build a swift workflow of PostgreSQL query optimization running EXPLAIN commands on ultra-fast thin clones.
 ---
 
-[↵ Back to Guides](/docs/guides/)
+[↵ Back to DBLab how-to guides](/docs/dblab-howtos)
 
 ## Step 1. Requirements
 - Set up [DBLab Engine](/docs/tutorials/database-lab-tutorial) (e.g., running on address https://dblab.domain.com) before configuring Joe Bot
@@ -28,7 +28,7 @@ There are two available types of communication with Joe:
 - Web UI powered by [PostgresAI Console](https://postgres.ai/console/)
 - Slack
 
-You can use both of them in parallel. If you can develop in Go language, feel free to implement more types of communication: see [communication channels issues](https://gitlab.com/postgres-ai/joe/-/issues?label_name%5B%5D=Communication+channel).
+You can use both of them in parallel. If you can develop in Go language, feel free to implement more types of communication: see the [Joe Bot issue tracker](https://github.com/postgres-ai/joe/issues).
 
 We need to define where to store the configuration file. We will use `~/.dblab/joe/configs/joe.yml`.
 
@@ -43,7 +43,7 @@ curl -fsSL https://gitlab.com/postgres-ai/joe/-/raw/0.10.0/configs/config.exampl
 Then, configure ways of communication with Joe.
 
 ### Step 2a. Set up Joe in PostgresAI Console ("Web UI")
-If you don't need Web UI and prefer working with Joe only in messengers (such as Slack), comment out `channelMapping: communicationTypes: webui` subsection in Jog config, and proceed to the next step.
+If you don't need Web UI and prefer working with Joe only in messengers (such as Slack), comment out `channelMapping: communicationTypes: webui` subsection in Joe config, and proceed to the next step.
 
 Before configuring Web UI make sure you have a PostgresAI account.
 
@@ -66,17 +66,17 @@ Configure a new Slack App in order to use Joe in Slack and add the app to your t
 1. Create `#db-lab` channel in your Slack Workspace (You can use another channel name).
 
 1. [Create a new Slack App](https://api.slack.com/apps?new_app=1).
-   * Choose *From an app manifest* option in popup.
+   * Choose *From an app manifest* option in the popup.
      ![Slack App - create app from app manifest](/assets/joe/tutorial-slack-create-app.png)
 
-   * Paste next yaml.
+   * Paste the following YAML.
 ```yaml
 _metadata:
   major_version: 1
   minor_version: 1
 display_information:
   name: Joe Bot
-  description: PostgreSQL query optimization assistent
+  description: PostgreSQL query optimization assistant
   background_color: "#2b2c30"
 features:
   app_home:
@@ -148,7 +148,7 @@ and we are ready to run Joe Bot.
     sudo docker logs -f joe_bot
     ```
 
-    Need you to reconfigure or upgrade, you can stop and remove the container any time using `sudo docker stop joe_bot` and `sudo docker rm joe_bot` and then launching it again as described above.
+    If you need to reconfigure or upgrade, you can stop and remove the container any time using `sudo docker stop joe_bot` and `sudo docker rm joe_bot`, and then launch it again as described above.
 
 1. Make a publicly accessible HTTP(S) server port specified in the configuration to receive requests from communication channels Request URL (e.g., http://35.200.200.200:2400, https://joe.dev.domain.com).
 
@@ -172,5 +172,5 @@ Instead of working using insecure HTTP, you can set up NGINX with SSL enabled an
 See available configuration options [here](/docs/reference-guides/joe-bot-configuration-reference).
 
 :::info Have questions?
-Reach out to our team [here](https://postgres.ai/contact/), we'll be happy to help!
+Reach out to our team [here](https://postgres.ai/contact/) — we'll be happy to help!
 :::

@@ -52,7 +52,7 @@ nik=# select pg_size_pretty('3/ED5F1E0'::pg_lsn - '0/110A1E0');
 (1 row)
 ```
 
-If your monitoring doesn't have it, you can understand how much of WAL data was generated per hour or day by looking at:
+If your monitoring doesn't have it, you can understand how much WAL data was generated per hour or day by looking at:
 
 - `pg_wal` directory to see the WAL file names
 - inspecting the backups (for example, checking the names of two full backups created by
@@ -61,7 +61,7 @@ If your monitoring doesn't have it, you can understand how much of WAL data was 
 Both methods should help you to get two LSN values corresponding to two distant points of time.
 
 For further details,
-see [How to understand the LSN values and WAL file name](/docs/postgres-howtos/advanced-topics/internals/lsn-values-and-wal-filenames).
+see [How to understand the LSN values and WAL file name](/docs/postgres-howtos/advanced-topics/misc/lsn-values-and-wal-filenames).
 
 ## WAL metrics in query analysis
 
@@ -139,9 +139,9 @@ Below we discuss various ideas that can help you reduce the amount of WAL genera
 
    To increase distance, we just need to increase `max_wal_size` (default `1GB`) and checkpoint_timeout
    (default `5min`). But this needs to be done with understanding of the trade-off: the bigger distance between
-   checkpoints means more WALs will need to be replayed to achieve consistency point in various situations:
+   checkpoints means more WALs will need to be replayed to achieve a consistency point in various situations:
 
-    - longer recover time after crashes,
+    - longer recovery time after crashes,
     - longer time to provision new nodes from backups.
 
    Still, this method is a must-have for larger setups, since it gives substantial improvement.
@@ -171,6 +171,6 @@ Below we discuss various ideas that can help you reduce the amount of WAL genera
 5) **Partitioning**
 
     Partitioning of large (100+ GiB) tables improves data locality for writes – for example, `UPDATE`s of a bunch of rows
-    could be scattered among many pages if table is not partitioned, and with partitioning schema that defines old
+    could be scattered among many pages if the table is not partitioned, and with a partitioning schema that defines old
     partitions (that receive almost no writes) and partitions with fresh data, most writes are going to be localized in the
     fresh partitions, which can help reduce WAL generation rates.

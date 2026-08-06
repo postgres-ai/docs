@@ -255,7 +255,7 @@ const platforms = [
 const faqItems = [
   {
     question: 'Is this really free?',
-    answer: 'All PostgreSQL health check reports are free forever - no credit card, no trials, no locked features. Paid plans unlock continuous monitoring and expert recommendations that turn findings into clear, prioritized actions.',
+    answer: 'All Postgres health check reports are free forever - no credit card, no trials, no locked features. Paid plans unlock continuous monitoring and expert recommendations that turn findings into clear, prioritized actions.',
   },
   {
     question: 'Is it safe to connect my database?',

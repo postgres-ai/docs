@@ -1,7 +1,7 @@
 ---
 title: Quick start for Supabase
 sidebar_label: Quick start for Supabase
-sidebar_position: 7
+sidebar_position: 8
 keywords:
   - "PostgresAI for Supabase"
   - "Postgres monitoring for Supabase"
@@ -24,7 +24,7 @@ Two monitoring levels are available:
 | Level | Includes | Plan |
 |-------|----------|------|
 | **Quick setup** | Auto-discovery, daily checkups, JSON reports | Free |
-| **Full monitoring** | Grafana dashboards, real-time metrics, advanced alerts, historical data | Scaling |
+| **Full monitoring** | Grafana dashboards, real-time metrics, advanced alerts, historical data | Scale |
 
 ## Prerequisites
 
@@ -33,7 +33,7 @@ Two monitoring levels are available:
    GitHub, or GitLab.
 3. An organization in PostgresAI Console.
    [Create one](https://console.postgres.ai/addorg) if you don't have one yet.
-4. A payment method on file (required for the Scaling plan). In your organization, open **Billing**,
+4. A payment method on file (required for the **Scale** plan). In your organization, open **Billing**,
    click **Edit payment methods**, and add a card in the Stripe portal.
 
 ## Step 1. Start the Supabase setup
@@ -48,7 +48,7 @@ In the **Supabase monitoring** dialog, choose the monitoring level:
 
 - **Quick setup** (Free) — one-click OAuth connection with auto-discovery, daily checkups, and JSON
   reports.
-- **Full monitoring** (Scaling) — dedicated monitoring infrastructure with Grafana dashboards,
+- **Full monitoring** (Scale) — dedicated monitoring infrastructure with Grafana dashboards,
   real-time metrics, advanced alerts, and historical data.
 
 See [Pricing](/pricing) for the full list of available options with feature comparison.
@@ -137,8 +137,8 @@ Open the Grafana URL from the deployment page. You can sign in using one of the 
 
 [![Grafana login page with Sign in with PostgresAI button](/assets/supabase-monitoring/supabase-monitoring-7.png)](/assets/supabase-monitoring/supabase-monitoring-7.png)
 
-Start with **01. Node overview** for a high-level health check of your Supabase database. Key panels
-to check first:
+Start with **01. Single node performance overview (high-level)** for a high-level health check of
+your Supabase database. Key panels to check first:
 
 1. **Active session history (ASH)** — wait events over time
 2. **Sessions** — active, idle, and idle in transaction connections
@@ -189,8 +189,8 @@ PostgresAI monitoring collects only database metadata — no actual data or quer
 review exactly what metrics are collected, examine the metric definitions:
 
 - **Prometheus sink metrics**:
-  [metrics.yml (pgwatch-prometheus)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.14.0/config/pgwatch-prometheus/metrics.yml)
+  [metrics.yml (pgwatch-prometheus)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.15.0/config/pgwatch-prometheus/metrics.yml)
 - **PostgreSQL sink metrics** (including normalized queries):
-  [metrics.yml (pgwatch-postgres)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.14.0/config/pgwatch-postgres/metrics.yml)
+  [metrics.yml (pgwatch-postgres)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.15.0/config/pgwatch-postgres/metrics.yml)
 
 See also: [data privacy details](/docs/monitoring/#data-privacy-metadata-only).

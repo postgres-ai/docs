@@ -49,26 +49,26 @@ Deep-dive into PostgresAI monitoring system components and data flow.
 **Key functions:**
 - Execute SQL queries against PostgreSQL
 - Transform results to Prometheus metrics
-- Expose `/metrics` endpoint
+- Expose the `/pgwatch` metrics endpoint on `:9091` (Prometheus sink)
 
 **Configuration:**
 | Setting | Default | Description |
 |---------|---------|-------------|
-| Scrape interval | 15s | Collection frequency |
-| Statement timeout | 30s | Max query duration |
-| Max connections | 3 | Connections per database |
+| Scrape interval | 30s | VictoriaMetrics scrapes the `pgwatch-prometheus` job every 30s (the 15s global default is overridden for this job; the separate `query-info` job — `metrics_path: /query_info_metrics` — runs every 300s) |
+| Collection interval | per-metric | Each metric group has its own interval in `metrics.yml` (most 30s; `pg_stat_activity`/`wait_events` 15s) |
 
 **Collected data sources:**
 | View | Metrics |
 |------|---------|
 | pg_stat_statements | Query performance |
-| pg_stat_activity | Session state, wait events |
-| pg_stat_user_tables | Table access patterns |
-| pg_stat_user_indexes | Index usage |
-| pg_stat_database | Database-level stats |
-| pg_stat_bgwriter | Checkpoint behavior |
+| pg_stat_activity | Session state |
+| wait_events (from pg_stat_activity) | Wait event sampling |
+| pg_stat_all_tables / table_stats | Table access patterns |
+| pg_stat_all_indexes | Index usage |
+| db_stats (from pg_stat_database) | Database-level stats |
+| bgwriter | Checkpoint behavior |
 
-### VictoriaMetrics — Time-series database
+### VictoriaMetrics — time-series database
 
 **Purpose:** Store and query metrics
 
@@ -86,15 +86,11 @@ Deep-dive into PostgresAI monitoring system components and data flow.
 | High availability | Built-in clustering | Federation |
 
 **Storage model:**
-```
-Data directory structure:
-/var/lib/victoriametrics/
-├── data/
-│   ├── small/          # Recent data (in-memory)
-│   └── big/            # Historical data (on-disk)
-├── indexdb/            # Label indexes
-└── snapshots/          # Point-in-time backups
-```
+
+In this deployment VictoriaMetrics is started with `-storageDataPath=/victoria-metrics-data`, and
+the `victoria_metrics_data` Docker volume is mounted at `/victoria-metrics-data`. The on-disk
+layout under that path follows VictoriaMetrics' standard structure (recent vs. historical data
+parts, a label index, and optional snapshots).
 
 ### Grafana — Visualization
 
@@ -121,6 +117,7 @@ PostgresAI dashboards:
 ├── 11. Single index       (index deep-dive)
 ├── 12. SLRU               (cache stats)
 ├── 13. Lock contention    (lock waits)
+├── 14. I/O statistics     (pg_stat_io, PG16+)
 └── Self-monitoring        (stack health)
 ```
 
@@ -137,13 +134,13 @@ PostgresAI dashboards:
    └── Column values → metric values
    └── Column names → labels
 
-3. Metrics exposed on /metrics endpoint
+3. Metrics exposed on the `/pgwatch` endpoint (`:9091`)
    └── Prometheus exposition format
    └── Timestamp attached
 
-4. VictoriaMetrics scrapes pgwatch
-   └── HTTP GET /metrics
-   └── Configurable interval (default 15s)
+4. VictoriaMetrics scrapes the pgwatch-prometheus sink
+   └── HTTP GET pgwatch-prometheus:9091/pgwatch
+   └── `pgwatch-prometheus` job scrape_interval: 30s (scrape_timeout 25s)
 
 5. Metrics stored in VictoriaMetrics
    └── Compressed time-series storage
@@ -174,20 +171,32 @@ PostgresAI dashboards:
 
 ### Convention
 
-```
-{source}_{view}_{metric}_{unit}_{type}
+pgwatch exports series as `pgwatch_<metric-group>_<column>`. The Prometheus metric **type** is
+driven by each metric group's `gauges:` list in `config/pgwatch-prometheus/metrics.yml`: a column
+is emitted as a Prometheus gauge only if its group lists it (or uses `gauges: ['*']`); otherwise it
+is emitted as a counter. Note this is the **exported** type, not the PostgreSQL semantics — the
+`db_stats` and `pg_stat_statements` groups use `gauges: ['*']` / explicit gauge lists, so their
+cumulative columns (e.g. `xact_commit`, `exec_time_total`) are exported as **gauges** even though
+they only ever increase. Cumulative columns in the `pg_stat_database` family are also **not**
+`_total`-suffixed.
 
-Examples:
-pg_stat_database_xact_commit_total        # Counter
-pg_stat_database_numbackends              # Gauge
-pg_stat_statements_total_exec_time_seconds  # Counter
+```
+pgwatch_<metric-group>_<column>
+
+Examples (Type = the exporter's emitted Prometheus type):
+pgwatch_db_stats_xact_commit                  # Gauge (transactions committed; db_stats uses gauges: ['*'])
+pgwatch_db_stats_numbackends                  # Gauge (current backends)
+pgwatch_pg_stat_statements_exec_time_total    # Gauge (total exec time, ms; listed in pg_stat_statements gauges)
 ```
 
 ### Labels
 
+The cluster label is `cluster` (set from `custom_tags.cluster`). `cluster_name` is only the
+Grafana template variable; dashboard filters select with `cluster="$cluster_name"`.
+
 ```
-{metric_name}{
-  cluster_name="production",
+pgwatch_<metric-group>_<column>{
+  cluster="production",
   node_name="primary",
   datname="myapp",
   schemaname="public",
@@ -209,7 +218,7 @@ Typical values:
 
 Example: 5 databases, 14-day retention
 = 5 × 100 × 1.5 × 1,209,600
-= ~900 MiB
+= 907,200,000 bytes ≈ 907 MB (≈ 865 MiB)
 ```
 
 ### Scaling factors
@@ -288,8 +297,8 @@ PostgresAI monitoring collects **only database metadata** — no actual data or 
 
 Review exactly what is collected:
 
-- **Prometheus metrics**: [pgwatch-prometheus/metrics.yml](https://gitlab.com/postgres-ai/postgresai/-/blob/0.14.0/config/pgwatch-prometheus/metrics.yml)
-- **PostgreSQL metrics** (with query texts): [pgwatch-postgres/metrics.yml](https://gitlab.com/postgres-ai/postgresai/-/blob/0.14.0/config/pgwatch-postgres/metrics.yml)
+- **Prometheus metrics**: [pgwatch-prometheus/metrics.yml](https://gitlab.com/postgres-ai/postgresai/-/blob/0.15.0/config/pgwatch-prometheus/metrics.yml)
+- **PostgreSQL metrics** (with query texts): [pgwatch-postgres/metrics.yml](https://gitlab.com/postgres-ai/postgresai/-/blob/0.15.0/config/pgwatch-postgres/metrics.yml)
 
 ### Verify monitoring database role and its permissions
 
@@ -315,13 +324,14 @@ npx postgresai@latest prepare-db --print-sql
 │                  Internal Network                   │
 │                         │                           │
 │  ┌──────────────────────▼─────────────────────────┐ │
-│  │              VictoriaMetrics                   │ │
-│  │              (port 8428 internal)              │ │
+│  │         VictoriaMetrics (sink-prometheus)      │ │
+│  │      (port 9090 internal, host 59090)          │ │
 │  └──────────────────────┬─────────────────────────┘ │
-│                         │                           │
+│            scrapes pgwatch-prometheus:9091/pgwatch   │
 │  ┌──────────────────────▼─────────────────────────┐ │
-│  │                  pgwatch                       │ │
-│  │              (port 8080 internal)              │ │
+│  │   pgwatch (pgwatch-postgres, pgwatch-prometheus)│ │
+│  │   metrics scraped on pgwatch-prometheus:9091    │ │
+│  │   (web/health ports 8080/8089 are internal)     │ │
 │  └──────────────────────┬─────────────────────────┘ │
 │                         │                           │
 └─────────────────────────┬───────────────────────────┘
@@ -348,12 +358,15 @@ npx postgresai@latest prepare-db --print-sql
 
 ### Collection overhead
 
+Frequencies below are the `full` preset intervals from `config/pgwatch-prometheus/metrics.yml`
+(see the per-metric note above):
+
 | Metric type | Query cost | Frequency |
 |-------------|------------|-----------|
-| pg_stat_database | Low | 15s |
-| pg_stat_statements | Medium | 15s |
-| pg_stat_user_tables | Medium | 60s |
-| Bloat estimation | High | 300s |
+| pg_stat_database (`db_stats`) | Low | 30s |
+| pg_stat_statements | Medium | 30s |
+| pg_stat_all_tables / `table_stats` | Medium | 30s |
+| Bloat estimation (`pg_table_bloat`, `pg_btree_bloat`) | High | 7200s (2h) |
 
 ### Query performance
 

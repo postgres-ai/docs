@@ -2,7 +2,7 @@
 title: "#PostgresMarathon 2-011: Prepared statements and partitioned tables — the paradox, part 3"
 date: 2025-10-30 23:59:59
 authors: nik
-tags: [Postgres insights, PostgresMarathon, internals, locks, prepared statements, partitioning]
+tags: [Postgres insights, PostgresMarathon, internals, locks, lockmanager, prepared statements, partitioning]
 ---
 
 In [#PostgresMarathon 2-009](https://postgres.ai/blog/20251028-postgres-marathon-2-009) and [#PostgresMarathon 2-010](https://postgres.ai/blog/20251029-postgres-marathon-2-010), we explored why execution 6 causes a lock explosion when building a generic plan for partitioned tables — the planner must lock all 52 relations because it can't prune without parameter values.
@@ -172,7 +172,7 @@ The obvious question arises: doesn't re-planning on every execution have overhea
 
 Is planning overhead worse than locking overhead? With partitioned tables, planning involves partition pruning logic. With 12 partitions, planning is fast. In some cases, planning may be expensive. The O(n) locking overhead typically dominates the planning cost, especially with many partitions.
 
-Amit Langote has been working on this problem, with preparatory work in early 2025. The main optimization to move runtime pruning before `AcquireExecutorLocks()` is still work in progress, discussed in the [pgsql-hackers thread](https://www.postgresql.org/message-id/flat/CA+HiwqGKid5q1KnOg3ih7pJ+tpxUKmWS=KpoiBLoRfMCcHig0g@mail.gmail.com). When this lands, executor lock acquisition will only lock the partitions that survive runtime pruning, so generic plan execution 2+ would acquire only 8 locks (parent + 1 partition + indexes), making generic plans viable again for partitioned tables.
+Amit Langote has been working on this problem, with preparatory work in early 2025. The main optimization to move runtime pruning before `AcquireExecutorLocks()` is still work in progress, tracked in the related [CommitFest entry](https://commitfest.postgresql.org/38/3478/). When this lands, executor lock acquisition will only lock the partitions that survive runtime pruning, so generic plan execution 2+ would acquire only 8 locks (parent + 1 partition + indexes), making generic plans viable again for partitioned tables.
 
 There's still a catch: the planner's cost estimation still sees generic plans as expensive, so even with the optimization, `auto` mode may keep choosing custom plans. As Amit notes in [his 2022 blog post](https://amitlan.com/2022/05/16/param-query-partition-woes.html), "Till that's also fixed, users will need to use `plan_cache_mode = force_generic_plan` to have plan caching for partitions." This recommendation applies to future Postgres versions with his locking optimization — for current versions without it, the situation is different.
 

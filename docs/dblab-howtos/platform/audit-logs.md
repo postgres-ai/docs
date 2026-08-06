@@ -1,6 +1,7 @@
 ---
 title: Audit logs and SIEM integration
 sidebar_label: Audit logs and SIEM
+description: View audit logs of critical events in the PostgresAI Platform and forward them to a SIEM such as Splunk or IBM QRadar for security monitoring and compliance.
 ---
 
 The Audit Logs feature captures critical system events.
@@ -11,7 +12,7 @@ Organization owners and admins can view events in the Platform UI and configure 
 To view recent audit logs, choose **Audit** in the left panel:
 ![Audit logs page / Accessing audit logs](/assets/guides/audit-logs-0.png)
 
-Only organization owner and admins can access audit logs.
+Only organization owners and admins can access audit logs.
 
 ## Audit events
 Currently, the following events are captured:
@@ -29,8 +30,8 @@ Currently, the following events are captured:
 
 The DBLab Engine actions (snapshot, branch, clone creation/modification/deletion) are not currently supported in SIEM integration.
 
-## Enabling SIEM Integration
-Admins of organizations having Enterprise subscription can configure integration with a SIEM system such as IBM QRadar SIEM, Splunk Enterprise Security, SumoLogic Cloud SIEM, Devo, Exabeam (LogRythm) SIEM.
+## Enabling SIEM integration
+Admins of organizations with an Enterprise subscription can configure integration with a SIEM system such as IBM QRadar SIEM, Splunk Enterprise Security, SumoLogic Cloud SIEM, Devo, or Exabeam (LogRhythm) SIEM.
 
 ### 1. Enable SIEM integration
 Go to **Manage → Audit settings** and enable SIEM integration:
@@ -41,7 +42,7 @@ Enter your SIEM API endpoint URL (e.g., https://example.com/endpoint), add requi
 ![Audit logs page / Configure SIEM connection settings](/assets/guides/audit-logs-2.png)
 
 ### 3. Configure what to forward and save
-Choose what categories of events that need to be forwarded to SIEM, and then press **Save**:
+Choose which categories of events to forward to SIEM, then press **Save**:
 ![Audit logs page / Configure what to forward and save](/assets/guides/audit-logs-3b.png)
 
 ### Message format for SIEM integration

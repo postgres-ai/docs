@@ -68,7 +68,7 @@ Some users have told us that with UI in hands, it becomes much easier to explain
 ## Persistent clones: keep working with your cloned Postgres databases during maintenance
 Another feature added to DLE 3.0 is also something that DLE users have asked a lot about. Before 3.0, any restart of DLE meant the loss of all clones created – so DLE upgrades, VM restarts, and even simple reconfiguration of DLE always needed a maintenance window, interrupting work.
 
-A partial solution to this problem was the ability to [reconfigure DLE without restarts](/docs/how-to-guides/administration/engine-manage#reconfigure-database-lab-engine) introduced in DLE 2.0. However, this wasn't helpful in the cases of DLE upgrades or VM restarts. Now with DLE 3.0, this problem is fully solved:
+A partial solution to this problem was the ability to [reconfigure DLE without restarts](/docs/dblab-howtos/administration/engine-manage#reconfigure-dblab-engine) introduced in DLE 2.0. However, this wasn't helpful in the cases of DLE upgrades or VM restarts. Now with DLE 3.0, this problem is fully solved:
 - If you are running DLE 2.5 or older, plan one more maintenance window – and this will be the last one for upgrades. All subsequent upgrades will keep clones alive.
 - If you experience a VM failure – not uncommon in cloud environments – once it's back, clones will be re-created, keeping the database state.
 
@@ -93,7 +93,7 @@ We are planning to discuss the aspects of running multiple DLEs on a single mach
 - [Database Lab documentation](/docs)
 - [Tutorial for any database](/docs/tutorials/database-lab-tutorial)
 - [Tutorial for Amazon RDS](/docs/tutorials/database-lab-tutorial-amazon-rds)
-- [Interactive tutorial (Katacoda)](https://www.katacoda.com/postgres-ai/scenarios/database-lab-tutorial)
+- [Interactive tutorial (Katacoda, archived)](https://web.archive.org/web/2022/https://www.katacoda.com/postgres-ai/scenarios/database-lab-tutorial)
 
 :::tip
 To get help, reach out to the Postgres.ai team and the growing community of Database Lab users and contributors: https://postgres.ai/contact.
@@ -102,7 +102,7 @@ To get help, reach out to the Postgres.ai team and the growing community of Data
 ## Request for feedback and contributions
 Feedback and contributions would be greatly appreciated:
 - [Database Lab Community Slack](https://slack.postgres.ai/)
-- [DLE & DB Migration Checker issue tracker](https://gitlab.com/postgres-ai/database-lab/-/issues)
+- [DLE & DB Migration Checker issue tracker](https://github.com/postgres-ai/database-lab-engine/issues)
 - [Issue tracker of the Terraform module for Database Lab](https://gitlab.com/postgres-ai/database-lab-infrastructure/-/issues)
 
 Like Database Lab? Give us a GitHub star: https://github.com/postgres-ai/database-lab.

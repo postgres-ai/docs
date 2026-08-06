@@ -43,7 +43,7 @@ We're not there yet. Today, **PostgresAI** watches, diagnoses, and prepares pull
              │   └── PostgresAI Assistant (AI chat)
              │
              │
-2025         │   POSTGRESAI                                   ◄── WE ARE HERE
+2025-26      │   POSTGRESAI                                   ◄── WE ARE HERE
              │
              │   AI watches, diagnoses, suggests
              │   Expert validation on every recommendation
@@ -88,7 +88,7 @@ We don't believe in "trust us, we're AI." PostgresAI starts with human approval 
 
 The core monitoring tool (postgres_ai) is Apache 2.0 licensed. We believe in transparency and community-driven development. The building blocks are open; the intelligence layer is how we sustain the business.
 
-## Current milestone: PostgresAI (2025)
+## Current milestone: PostgresAI (2026)
 
 Here's how PostgresAI works today:
 
@@ -347,7 +347,7 @@ Logical provisioning: native support of DB provisioning for managed Postgres dat
 - [x] Basic support for masking and obfuscation
     - [x] custom scripts
     - [x] parallel execution of custom scripts
-    - [x] [postgres_anonymizer](https://postgresql-anonymizer.readthedocs.io/en/stable/masking_functions.html)
+    - [x] [postgres_anonymizer](https://postgresql-anonymizer.readthedocs.io/en/stable/masking_functions/)
     - [x] [kitchen-sync](https://github.com/willbryant/kitchen_sync)
     - [ ] [pgsync](https://github.com/ankane/pgsync)
 - [ ] Hybrid setup: raw and obfuscated/masked clones on the same DBLab instance

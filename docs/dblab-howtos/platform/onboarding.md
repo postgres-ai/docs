@@ -4,7 +4,7 @@ sidebar_label: Platform onboarding checklist
 keywords:
   - "DBLab Platform onboarding"
   - "Start using DBLab Engine"
-description: In this document, we will cover tasks that you can start with to work with the DBLab Platform.
+description: "Onboarding checklist for the DBLab Platform: try Joe for SQL optimization, postgres-checkup reports, and DBLab Engine clones via the GUI, API, and CLI."
 ---
 
 :::note
@@ -28,7 +28,7 @@ First, try using the basic features:
     - Note that Database Lab and Joe bot are designed to provide production-like execution plans; however, the timing of the operations cannot be directly compared to production because of different system resources, cache states, and load. Stick to using the following approaches during the optimization:
         - apply relative comparison: compare two execution plans provided by Database Lab / Joe bot under the same circumstances (the same amount of data, a similar state of the cache; particularly, the timing for the very first execution should be discarded in this case because of a high probability of the cold state of caches)
         - focus on using the knowledge about the structure of the execution plan and the provided numbers that represent the amount of data involved, not timing (buffer numbers for "physical" setups; the planned and actual numbers of `rows` for "logical" setups)
-    - Massive operations (such as `CREATE INDEX` for a large table) can be 2-4 times longer than in regular production environment – this is not a problem that can easily be solved; however, in the future, there are plans to provide estimates for production timing numbers (WIP)
+    - Massive operations (such as `CREATE INDEX` for a large table) can be 2-4 times longer than in a regular production environment – this is not a problem that can easily be solved; however, in the future, there are plans to provide estimates for production timing numbers (WIP)
 - [ ] Create a table, experiment with it, and reset the state of your session
     - Create a table with some data: `exec create table t_example as select i from generate_series(1, 10000) i;`
     - See the actual number of rows in the table: `explain select from t_example;`
@@ -39,18 +39,18 @@ First, try using the basic features:
     - Ensure that the table does not exist because the state of the database in your session has been reset: `explain select from t_example` should return an error saying that the table does not exist
         - // Note that sometimes, after performing `reset`, the very first command might fail with either `unexpected EOF` or "postmaster exit" error – this is a known minor issue; just repeat your command
 
-### Query Optimization History and Visualization
+### Query optimization history and visualization
 - [ ] Explore the SQL optimization knowledge base:
     - go to `SQL optimization / History`
-    - choose on your latest `explain` commands and click on it to see details
+    - choose one of your latest `explain` commands and click on it to see details
     - go back to the list and explore the search/filtering capabilities
     - note the bookmarking button on the right, try pressing it, and then use the button "Favorites" next to the search form
-    - choose one of Joe sessions you've been working on; all commands and related metrics ran with Joe stored here; also, from the command details page, you can explore EXPLAIN plain visualization without copy-pasting to external services. Secure and convenient
+    - choose one of Joe sessions you've been working on; all commands and related metrics run with Joe are stored here; also, from the command details page, you can explore EXPLAIN plain visualization without copy-pasting to external services. Secure and convenient
 - [ ] Explore the collaboration features, including sharing
     - Note that you can see optimization sessions of your colleagues; clicking on a particular username or session ID can be very helpful
         - // Note that currently, Slack usernames and Web UI usernames are not interconnected – if you used both communication channels, you would most likely find yourself as two different users presented in History
     - In History, use the "find similar" button (located on the right of each entry in the list) – this is a powerful way to find all `explain` commands ignoring the values (values define the execution plan, so the same query, being executed with different values, may have different execution plans)
-    - Open an `EXPLAIN` entry, see its details, and try sharing using the "Share" button on the right (do not remember to save the settings by pressing "Save changes")
+    - Open an `EXPLAIN` entry, see its details, and try sharing using the "Share" button on the right (do not forget to save the settings by pressing "Save changes")
 - [ ] Visualize an execution plan
     - Being on a page with details for some `EXPLAIN` command, you will see three buttons for visualization -- try them all; all of these visualization engines are installed internally, so all the data is not available to the public by default
     - However, if you want to share it with the public, you can try to combine sharing with visualization features: share a page as was done previously, then open it using the sharing link (`https://postgres.ai/console/shared/XXXXXX`), and use one of the visualization buttons to get a direct link to visualization (the link will have a `#xxx` suffix) – such a link can be used when discussing query behavior anywhere
@@ -71,7 +71,7 @@ dblab init --environment-id ENV_ID --url URL --token YOUR_PERSONAL_TOKEN
 ```bash
 dblab clone create --username USERNAME --password PASSWORD
 ```
-- [ ] Create an SSH tunnel to the machine, allowing to work with remote Postgres clone using -h localhost -p 6XXX – pay attention to the port:
+- [ ] Create an SSH tunnel to the machine, allowing you to work with remote Postgres clone using -h localhost -p 6XXX – pay attention to the port:
 ```bash
 ssh -L localhost:6XXX:URL:6XXX URL
 ```
@@ -79,12 +79,12 @@ ssh -L localhost:6XXX:URL:6XXX URL
 - [ ] Create another clone using the GUI. Go to Database Lab / Instances, and proceed with clone creation. Then set up another SSH tunnel and try working with the new clone.
 
 :::warning
-Please remember that clones are automatically destroyed after some time of inactivity (configurable, the default is 2 hours). You can mark clones as protected from deletion, but please do not leave them for more than a few days -- this might quickly lead to an out-of-disk-space event if continuous synchronization is enabled in your DBLab Engine (ask your administrator for details). You can always check free disk space by going to Database Lab / Instances and checking the details of your DBLab Engine. So, please delete your long-living clones once your work is done. In some cases, if needed, may want to ask the administrator to add more disk space.
+Please remember that clones are automatically destroyed after some time of inactivity (configurable, the default is 2 hours). You can mark clones as protected from deletion, but please do not leave them for more than a few days -- this might quickly lead to an out-of-disk-space event if continuous synchronization is enabled in your DBLab Engine (ask your administrator for details). You can always check free disk space by going to Database Lab / Instances and checking the details of your DBLab Engine. So, please delete your long-living clones once your work is done. In some cases, if needed, you may want to ask the administrator to add more disk space.
 :::
 
 ## Next steps
 Want to try more? Here are several ideas for you:
 - Verify DB schema changes ("database migrations")
-- Create two clones based on two different snapshots and ensure that the date for the latest records correspond to the snapshot time
+- Create two clones based on two different snapshots and ensure that the date for the latest records corresponds to the snapshot time
 - Try your previous tasks: a heavy query optimization or long queries for analytics
 - Learn more using the documentation: https://postgres.ai/docs/

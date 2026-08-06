@@ -61,7 +61,7 @@ that are not necessarily related to PK, but they are still relevant. And eventua
 task. Just bear with me.
 
 **Bad news:** unfortunately, adding a NOT NULL constraint to an existing column means that Postgres will need to perform a
-long (for large tables) full-table scan, during which it will an `AccessExclusiveLock` acquired by `ALTER TABLE` is
+long (for large tables) full-table scan, during which an `AccessExclusiveLock` acquired by `ALTER TABLE` is
 going to be held. This is not what we want if we need zero-downtime operations.
 
 **Good news:** since Postgres 11, we can execute a trick, if we need to add a column with `NOT NULL` – we can benefit from
@@ -79,13 +79,13 @@ happens):
 >
 > ([PG11 release notes](https://postgresql.org/docs/release/11.0/))
 
-And since all rows are pre-filled ("virtually", but it doesn't matter), we can have `NOT NULL` right away, avoiding long
+And since all rows are pre-filled ("virtually", but it doesn't matter), we can have `NOT NULL` right away, avoiding a long
 wait.
 
 **Bad news:** this works only for new columns. If we deal with an existing column, and still want to add a `NOT NULL` to it,
 this won't work.
 
-**Good news:** if we just need a "not null", not matter how defined, we can use a `CHECK` constraint. The good thing about
+**Good news:** if we just need a "not null", no matter how defined, we can use a `CHECK` constraint. The good thing about
 `CHECK` constraints is that their definition can be two-phase:
 
 - first, we define a constraint `CHECK (col1 IS NOT NULL)` with flag `NOT VALID` – this is fast, not blocking other

@@ -53,7 +53,7 @@ Visualize some data such as benchmark results. This function uses QuickChart; se
 | **data**  | `array`   | Array of numbers representing the data points. | N/A | `[10, 20, 30, 40]` |
 
 ## Tool `fetch_whole_web_page`
-Fetch the content of a web page. As of July 2024, this feature is limited to these domains:
+Fetch the content of a web page. The feature is limited to these domains:
 - `github.com`
 - `gitlab.com`
 - `postgresql.org`
@@ -71,7 +71,7 @@ Fetch the content of a web page. As of July 2024, this feature is limited to the
 Database experiment in dedicated environment: creates a PostgreSQL cluster in Hetzner Cloud and executes a series of 
 experiment runs on it using a GitLab CI pipeline.
 
-When started, provides pipeline URL. Once experiment is finished, either succesfully or with errors, 
+When started, provides pipeline URL. Once experiment is finished, either successfully or with errors, 
 the user is informed of the results.
 
 JSON configuration example:
@@ -143,7 +143,7 @@ Access and analyze experiment's results, or get pipeline's job statuses if the e
 | **pipeline_id** (required) | `string` | Pipeline ID. | N/A         | `12345`   |
 
 ## Tool `sql_execute`
-Connects to Postgres database and executes SQL query. If database credentials are provided, they are used to establish Postgres connection. Otherwise, a new DBLab clone is created using `create_dblab_clone` and then clone's credentials are used.
+Connects to Postgres database and executes SQL query. If database credentials are provided, they are used to establish Postgres connection. Otherwise, a new DBLab clone is created using `create_dblab_clone` and then the clone's credentials are used.
 
 ### Input parameters
 
@@ -164,7 +164,7 @@ Connects to Postgres database and executes SQL query. If database credentials ar
 
 
 ## Tool `create_dblab_clone`
-Create a new DBLab clone for a specific Postgres major version (`16` by default). This function is called when user wants to execute a SQL query but hasn't provided DB connection information.
+Create a new DBLab clone for a specific Postgres major version (`16` by default). This function is called when a user wants to execute a SQL query but hasn't provided DB connection information.
 
 ### Input parameters
 

@@ -28,7 +28,7 @@ In some cases, we need to observe some values in Postgres or the environment it'
 
 Being able to organize an "ad hoc" observation on specific metrics is an important skill to master. Here we'll describe some tips and an approach that you can find useful.
 
-In some cases, you can quickly install tools like [Netdata](https://netdata.cloud) (a very powerful modern monitoring that can be quickly installed, has a Postgres plugin or ad-hoc console tools such as [pgCenter](https://github.com/lesovsky/pgcenter) or [pg_top](https://pg_top.gitlab.io). But you still may want to monitor some specific aspects manually.
+In some cases, you can quickly install tools like [Netdata](https://netdata.cloud) (a very powerful modern monitoring that can be quickly installed, has a Postgres plugin) or ad-hoc console tools such as [pgCenter](https://github.com/lesovsky/pgcenter) or [pg_top](https://pg_top.gitlab.io). But you still may want to monitor some specific aspects manually.
 
 Below, we assume that we are using Linux, but most of the considerations can be applied to macOS or BSD systems as well.
 
@@ -42,7 +42,7 @@ Below, we assume that we are using Linux, but most of the considerations can be 
 - prefer collecting data in a form useful for programmed processing (e.g., CSV)
 
 ## An example
-Let's assume we need to collect samples `pg_stat_activity` (`pgsa`) to study long-running transactions – those transactions that last longer than 1 minute.
+Let's assume we need to collect samples of `pg_stat_activity` (`pgsa`) to study long-running transactions – those transactions that last longer than 1 minute.
 
 Here is the recipe – and below we discuss it in detail.
 
@@ -82,7 +82,7 @@ The benefits here are straightforward: if you have internet connectivity issues 
 ## How to use loops / batches
 Some programs you'll use support batched reporting (examples: `iostat -x 5`, `top -b -n 100 -d 5`), some don't support it. In the latter case, use a `while` loop.
 
-I prefer using an infinite loop like `while sleep 5; do ... ; done` – this approach has a small downside – it starts with sleeping first, and only then perform useful work – but it has a benefit that most of the time, you can interrupt using `Ctrl-C`.
+I prefer using an infinite loop like `while sleep 5; do ... ; done` – this approach has a small downside – it starts with sleeping first, and only then performs useful work – but it has a benefit that most of the time, you can interrupt using `Ctrl-C`.
 
 ## Use psql options: -X, -A, -t
 
@@ -94,13 +94,13 @@ Best practices of using `psql` for observability-related sampling (and work auto
 There are several ways to produce a CSV:
 - use psql's command `\copy`  – in this case, results will be saved to file on client's side
 - `copy (...) to '/path/to/file'` – this will save results on server (there might be permissions issue if path is not writable for OS user under which Postgres is running)
-- `psql --csv -F,` – produce a CSV (but there may be issues with escaping values collide with field separator)
+- `psql --csv -F,` – produce a CSV (but there may be issues with escaping values that collide with the field separator)
 - `copy (...) to stdout` – this approach is, perhaps, most convenient for the sampling/logging purposes
 
 ## Master log-fu: don't lose STDERR, have timestamps, append
 For later analysis (who knows what we'll decide to check a couple of hours later?) it is better to save everything to a file.
 
-But it is also critically important not to lose the errors – usually, they are printed to `STDERR`, so we either need to write them to a separate file. We also might want not to lose the existing content of the file so instead of just overwriting (`>`) we want to append (`>>`):
+But it is also critically important not to lose the errors – usually, they are printed to `STDERR`, so we need to write them to a separate file. We also might want not to lose the existing content of the file so instead of just overwriting (`>`) we want to append (`>>`):
 ```shell
 command   2>>error.log >>messages.log
 ```
@@ -110,9 +110,9 @@ Or just redirect everything to a single file:
 command  &>>everything.log
 ```
 
-If you want to both see everything and log it, use `tee` – or, with append mode, `tee -a` (here, `2>&1` redirects `STDERR` to `STDOUT` first, an then `tee` gets everything from `STDOUT`):
+If you want to both see everything and log it, use `tee` – or, with append mode, `tee -a` (here, `2>&1` redirects `STDERR` to `STDOUT` first, and then `tee` gets everything from `STDOUT`):
 ```shell
-commend 2>&1 | tee -a everything.log
+command 2>&1 | tee -a everything.log
 ```
 
 If the output you have lacks timestamps (not the case with the psql snippet we used above though), then use `ts` to prepend each line with a timestamp:
@@ -126,7 +126,7 @@ Finally, it is usually wise to name the file with result with some details and c
 ```shell
 command 2>&1 \
   | ts \
-  | tee -a observing_our_comand_$(date +%Y%m%d).log
+  | tee -a observing_our_command_$(date +%Y%m%d).log
 ```
 
 One downside of using `tee` is that, in some cases, you might accidentally stop it (e.g., pressing `Ctrl-C` in a wrong `tmux` window/pane). Due to this, some people prefer using `nohup ... &` to run observability actions in background and observing the result using `tail -f`.

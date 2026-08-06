@@ -1,16 +1,17 @@
 ---
 title: How to perform a Postgres major upgrade in a DBLab clone
 sidebar_label: Upgrade Postgres in a clone
+description: Run an in-place Postgres major version upgrade with pg_upgrade inside a DBLab clone to test a new Postgres release before upgrading production.
 ---
 
-Here we discuss in-place major upgrades of Postgres inside DBLab clones, which can be very helpful for testing new Postgres versions before upgrading production. Switching to a new Postgres major version for the whole DBLab instance is outside of the scope of this help article.
+This guide covers in-place major upgrades of Postgres inside DBLab clones, which is helpful for testing new Postgres versions before upgrading production. Switching to a new Postgres major version for the whole DBLab instance is outside the scope of this article.
 
 :::info
-DBLab Engine must be version `3.4.0` or higher. Postgres image used by DBLab has to be either "Generic" version `0.3.0` or newer, or "SE" (paid customers) version `0.4.0` or newer.
+DBLab Engine must be version `3.4.0` or higher. The Postgres image used by DBLab must be either "Generic" version `0.3.0` or newer, or "SE" (paid customers) version `0.4.0` or newer.
 :::
 
 :::info
-The process described here is semi-automated. Full automation of Postgres upgrades inside clones is not yet supported. Some actions require SSH connection to the server with DBLab Engine.
+The process described here is semi-automated. Full automation of Postgres upgrades inside clones is not yet supported. Some actions require an SSH connection to the server with DBLab Engine.
 :::
 
 ## 1. Create a clone and mark it "protected"
@@ -19,10 +20,9 @@ Create a clone [as usual](/docs/dblab-howtos/cloning/create-clone).
 It is recommended to mark the clone [protected](/docs/dblab-howtos/cloning/clone-protection), so that DBLab Engine does not delete it during database maintenance.
 
 Once the clone is created, remember its port.
-:::
 
 ## 2. Connect to DBLab server using SSH and perform Postgres major upgrade
-Perform the following steps to upgrade PostgreSQL inside your clone.
+Perform the following steps to upgrade Postgres inside your clone.
 
 ### 1. Export the clone port
 Assuming your clone's port is 6000:
@@ -36,7 +36,7 @@ sudo docker exec -it dblab_clone_${DBLAB_CLONE_PORT} bash
 ```
 
 ### 3. Define necessary variables
-Define a bunch of additional environment variables (edit if needed, e.g., `$PG_NEW_VERSION`)
+Define additional environment variables (edit if needed, for example `$PG_NEW_VERSION`):
 ```bash
 export PG_USER=postgres
 export PG_NEW_VERSION=17  # target major version
@@ -122,7 +122,7 @@ su postgres -c "cd /var/lib/postgresql && /usr/lib/postgresql/${PG_NEW_VERSION}/
   --check"
 ```
 
-If your Postgres setup is compatible with the new version (you received the message "`Clusters are compatible`"), you can proceed. Otherwise, all reported issues have to be resolved before proceeding.
+If your Postgres setup is compatible with the new version (you received the message "`Clusters are compatible`"), you can proceed. Otherwise, resolve all reported issues before proceeding.
 
 ### 10. Upgrade Postgres
 ```bash
@@ -190,7 +190,7 @@ Optional (if any), collect statistics for partitioned tables.
   where relkind = 'p' \gexec
   ```
 
-Done! You can exit from container:
+Done. You can exit the container:
 ```bash
 exit
 ```

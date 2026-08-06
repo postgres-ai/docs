@@ -30,17 +30,17 @@ One of the possible approaches is explained here.
 ## Rough tuning and "safe" values of work_mem
 
 First, apply rough optimization as described in
-[Rough configuration tuning (80/20 rule; OLTP)](/docs/postgres-howtos/performance-optimization/query-tuning/rough-oltp-configuration-tuning).
+[Rough configuration tuning (80/20 rule; OLTP)](/docs/postgres-howtos/database-administration/configuration/rough-oltp-configuration-tuning).
 
 A query can "spend" `work_mem` multiple times (for multiple operations). But it is not allocated fully for
 each operation – an operation can need a lower amount of memory.
 
-Therefore, it is hard to reliably predict, how much memory we'll need to use to handle a workload, without actual
+Therefore, it is hard to reliably predict how much memory we'll need to use to handle a workload, without actual
 observation of the workload.
 
-Moreover, in Postgres 13, new parameter was added,
+Moreover, in Postgres 13, a new parameter was added,
 [hash_mem_multiplier](https://postgresqlco.nf/doc/en/param/hash_mem_multiplier/), adjusting the logic. The default is 2
-in PG13-16. It means that max memory used by a single hash operation is 2 * `work_mem`.
+in PG13-16. It means that the max memory used by a single hash operation is 2 * `work_mem`.
 
 Worth mentioning, understanding how much memory is used by a session in Linux is very tricky per se – see a great
 article by Andres Freund:
@@ -50,13 +50,13 @@ article by Andres Freund:
 A safe approach would be:
 
 - estimate how much memory is free – subtracting `shared_buffers`, `maintenance_work_mem`, etc.,
-- then divide the estimated available memory by `max_connections` and additional number such as 4-5 (or more, to be on
-  even safer side) – assuming that each backend will be using up to 4*`work_mem` or 5*`work_mem`. Of course, this multiplier
+- then divide the estimated available memory by `max_connections` and an additional number such as 4-5 (or more, to be on
+  an even safer side) – assuming that each backend will be using up to 4*`work_mem` or 5*`work_mem`. Of course, this multiplier
   itself is a very rough estimate – in reality, OLTP workloads usually are much less hungry on average (e.g., having a
-  lot of PK lookups mean that average memory consumption is very low).
+  lot of PK lookups means that the average memory consumption is very low).
 
 In practice, it can make sense to adjust `work_mem` to a higher value, but this needs to be done after understanding the
-behavior of Postgres under certain workload. The following steps are parts of iterative approach for further tuning.
+behavior of Postgres under certain workload. The following steps are parts of an iterative approach for further tuning.
 
 ## Temp files monitoring
 
@@ -96,11 +96,11 @@ It makes sense to raise it for individual queries. Consider two options:
 ## Raise work_mem globally
 
 Only if the previous steps are not suitable (e.g., it is hard to optimize queries and you cannot tune `work_mem` for parts
-of workload), then consider raising `work_mem` globally, evaluating OOM risks.
+of the workload), then consider raising `work_mem` globally, evaluating OOM risks.
 
 ## Iterate
 
-After some time, review data from monitoring to ensure that situation improved or decide to perform another iteration.
+After some time, review data from monitoring to ensure that the situation improved or decide to perform another iteration.
 
 ## Extra: pg_get_backend_memory_contexts
 

@@ -37,7 +37,7 @@ Community news:
 - 🌠 DLE repository on GitHub now has 1,100+ stars; many thanks to everyone who supports the project in any way
 - 💥 Pieter Vincken has published a blog post describing their experience of using DLE: [\"Testing with production data made easy\"](https://ordina-jworks.github.io/cloud/2022/02/14/postgres-ai.html)
 - 📈 The Twitter account has reached 400 followers – please follow [@Database_Lab](https://twitter.com/Database_Lab)
-- 🎉 DLE now has 15 contributors. More contributions are welcome! See [\"good first issues\"](https://gitlab.com/postgres-ai/database-lab/-/issues?sort=created_date&state=opened&label_name%5B%5D=good+first+issue)
+- 🎉 DLE now has 15 contributors. More contributions are welcome! See [\"good first issues\"](https://github.com/postgres-ai/database-lab-engine/issues?q=is%3Aopen+label%3A%22good+first+issue%22)
 - 🥇 Please consider various ways to contribute – read [CONTRIBUTING.md](https://github.com/postgres-ai/database-lab-engine/blob/master/CONTRIBUTING.md)
 
 ## What's new
@@ -69,8 +69,8 @@ If you are running DLE 3.0 or older, please read the full [Migration notes](http
 ## Get started
 
 To get started with Database Lab Engine 3.1:
-1. Check out the [installation guide](https://postgres.ai/docs/database-lab/getting-started)
-2. Join our [community Slack](https://postgres.ai/community)
+1. Check out the [installation guide](https://postgres.ai/docs/tutorials/database-lab-tutorial)
+2. Join our [community Slack](https://slack.postgres.ai/)
 3. Follow [@Database_Lab](https://twitter.com/Database_Lab) on Twitter for updates
 
 <BlogFooter author={nik} />

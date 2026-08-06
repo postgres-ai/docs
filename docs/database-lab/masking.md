@@ -17,10 +17,10 @@ keywords:
 ## Data masking: "pre-masking"
 Allows setting up dynamic masking rules without actual data changes. According to these rules, PII (personally identifiable information) data is masked only when certain users access it.
 
-### Pre-masking, option 1а: dump without PII directly from a production server
+### Pre-masking, option 1a: dump without PII directly from a production server
 Database Lab retrieves the data from production in the form of an anonymized logical dump. This approach requires additional masking set up on the primary production database. Dumping may happen on a replica.
 
-![Pre-masking / Option 1а. Anonymized dump](/assets/masking-1a-dump.png)
+![Pre-masking / Option 1a. Anonymized dump](/assets/masking-1a-dump.png)
 
 #### Pros
 - Very secure: PII is stored only on production and does not reach the DBLab Engine
@@ -46,7 +46,7 @@ DBLab Engine in the production infrastructure is used to create an anonymized du
 - Data structure is not identical to production, making SQL troubleshooting and optimization less reliable
 
 ## Data masking: "post-masking"
-Allows to set up dynamic masking rules, without actual data changing. Data is dynamically masked on the side of the DBLab Engine.
+Allows setting up dynamic masking rules without actual data changes. Data is dynamically masked on the side of the DBLab Engine.
 
 ### Post-masking, option 2a: DBLab Engine on production
 DBLab Engine is deployed only on production infrastructure, and it physically stores PII. Depending on the access level, developers may or may not have access to the unmasked data.
@@ -62,7 +62,7 @@ DBLab Engine is deployed only on production infrastructure, and it physically st
 - High requirements for security administration
 - More difficult to configure and maintain access (developers need to deal with the production environment; automation scripts need to reach the DBLab Engine, which may cause complications)
 
-### Post-masking, option 2b: DBLab Engine in Test/Dev/Staging
+### Post-masking, option 2b: DBLab Engine in test/dev/staging
 DBLab Engine is deployed only on test/dev/staging infrastructure, and it physically stores PII. Developers work with masked data.
 
 ![Post-masking / Option 2b. DBLab Engine in Test/Dev/Staging](/assets/masking-2b-staging.png)
@@ -84,7 +84,7 @@ DBLab Engine supports obfuscation of any type via injecting an SQL transformatio
 
 Options:
 - Use custom obfuscation script (define it using `preprocessingScript` option of [`logicalSnapshot`](/docs/reference-guides/database-lab-engine-configuration-reference#job-logicalsnapshot) or [`physicalSnapshot`](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalsnapshot) jobs)
-- Use PostgreSQL Anonymizer: [Permanently remove sensitive data](https://postgresql-anonymizer.readthedocs.io/en/stable/static_masking.html)
+- Use PostgreSQL Anonymizer: [Permanently remove sensitive data](https://postgresql-anonymizer.readthedocs.io/en/stable/static_masking/)
 
 #### Pros
 - PII data anonymization not affecting production servers
