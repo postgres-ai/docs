@@ -50,7 +50,8 @@ On the **Create PostgresAI monitoring managed instance** page:
 
 :::note
 The console screenshot above still shows the retired **Startup** ($128/month) tier, which is no
-longer offered. See [Pricing](/pricing) for current plans.
+longer offered. The Scale card also still shows the previous 6-month monitoring retention; Scale now
+includes 13-month retention. See [Pricing](/pricing) for current plans.
 :::
 
 ## Advanced setup (optional)

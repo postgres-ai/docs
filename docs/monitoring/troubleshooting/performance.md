@@ -104,7 +104,7 @@ VM_RETENTION_PERIOD=168h   # 7 days, down from the default 336h (14 days)
 ```
 
 `VM_RETENTION_PERIOD` accepts VictoriaMetrics durations with hour/day/week/year suffixes — for
-example `168h` or `7d`, `336h` or `14d`, `30d`, `4380h` (a bare integer is interpreted as months).
+example `168h` or `7d`, `336h` or `14d`, `30d` (a bare integer is interpreted as months).
 The bundled `.env.example` lists `30d` as a valid example.
 
 **Enable compression:**

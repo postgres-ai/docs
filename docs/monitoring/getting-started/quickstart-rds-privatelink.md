@@ -80,8 +80,9 @@ See [Pricing](/pricing) for the full list of options with feature comparison.
 
 :::note
 The console screenshot above still shows the retired **Starter** plan (the Scale card's "Everything
-included in Starter" bullet refers to it). Starter is no longer offered — click **Choose Scale**, or
-contact us about **Enterprise**.
+included in Starter" bullet refers to it). The Scale card also still shows the previous 6-month
+monitoring retention; Scale now includes 13-month retention. Starter is no longer offered — click
+**Choose Scale**, or contact us about **Enterprise**.
 :::
 
 ## Step 3. Create the read-only monitoring role

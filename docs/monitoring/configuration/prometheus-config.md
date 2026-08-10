@@ -119,6 +119,7 @@ docker compose up -d --force-recreate sink-prometheus
 | 14d | ~1 GiB per database | Default |
 | 30d | ~2 GiB per database | Production |
 | 90d | ~6 GiB per database | Compliance requirements |
+| 9490h | ~26 GiB per database | Long history (13 months) |
 
 ### Query-id mapping retention
 
@@ -143,7 +144,7 @@ Paired examples:
 | History | `VM_RETENTION_PERIOD` | `QUERYID_RETENTION_HOURS` |
 |---------|-----------------------|---------------------------|
 | Short (7 days) | `168h` | `168` |
-| Long (6 months) | `4380h` | `4380` |
+| Long (13 months) | `9490h` | `9490` |
 
 Migrate `.env` with `postgresai mon update-config`, then recreate the services that read these
 values at startup — `VM_RETENTION_PERIOD` is read by sink-prometheus and `QUERYID_RETENTION_HOURS`
