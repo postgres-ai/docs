@@ -14,7 +14,6 @@ tags:
   - latency
 ---
 
-import { DbLabBanner } from '@site/src/components/DbLabBanner'
 import { BlogFooter } from '@site/src/components/BlogFooter'
 import { nik } from '@site/src/config/authors'
 
@@ -31,8 +30,6 @@ Well, usually, we say that 1 ms is good enough for an SQL query duration, while 
 Why so?
 
 It's all dictated by our expectations for HTTP/HTTPS requests. When a user opens a web page or interacts with a mobile app, triggering API calls, we expect the server to respond fast. It is possible and makes sense to define some requirements for the speed of such a response. In an article ["Response Times: The 3 Important Limits"](https://www.nngroup.com/articles/response-times-3-important-limits/) published in 1993, Jakob Nielsen, a famous web usability consultant and human–computer interaction researcher, described the "0.1 / 1 / 10" rule for building well-performant interfaces:
-
-<DbLabBanner />
 
 > There are 3 main time limits (which are determined by human perceptual abilities) to keep in mind when optimizing web and application performance.
 >
