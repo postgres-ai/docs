@@ -1446,3 +1446,29 @@ header .avatar {
   margin-top: 1.5em !important;
   margin-bottom: 0.5em !important;
 }
+
+/* SOC 2 Type 2 badge in the site footer.
+   Two supplied Sensiba variants swapped by theme. Do not replace this with a
+   CSS filter on one asset: attestation marks must not be altered. */
+.footer-soc2-badge {
+  display: inline-block;
+  line-height: 0;
+  margin-top: 0.75rem;
+}
+
+.footer-soc2-badge img {
+  width: 160px;
+  height: auto;
+}
+
+.footer-soc2-badge-dark {
+  display: none;
+}
+
+html[data-theme='dark'] .footer-soc2-badge-light {
+  display: none;
+}
+
+html[data-theme='dark'] .footer-soc2-badge-dark {
+  display: inline-block;
+}
