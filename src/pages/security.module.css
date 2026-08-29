@@ -179,16 +179,9 @@ html[data-theme='dark'] .badgeDark {
   align-self: flex-start;
 }
 
-.success {
-  padding: 0.9rem 1.1rem;
-  border-radius: 8px;
-  background: var(--ifm-color-success-contrast-background);
-  color: var(--ifm-color-success-contrast-foreground);
-}
-
-.error {
-  color: var(--ifm-color-danger);
-  margin: 0;
+.formNote {
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.9375rem;
 }
 
 @media (max-width: 768px) {
