@@ -38,7 +38,7 @@ Two monitoring levels are available:
 
 ## Step 1. Start the Supabase setup
 
-In PostgresAI Console, navigate to **Checkup — Getting started** and click **Connect Supabase**.
+In PostgresAI Console, navigate to **DB health — Getting started** and click **Connect Supabase**.
 
 [![PostgresAI Console: Getting started page with the Connect Supabase button](/assets/supabase-monitoring/supabase-monitoring-1.png)](/assets/supabase-monitoring/supabase-monitoring-1.png)
 

@@ -127,7 +127,7 @@ This shows all `GRANT` statements and confirms the minimal, read-only nature of 
 
 The easiest way to set up PostgresAI monitoring is through [Console.Postgres.ai](https://console.postgres.ai):
 
-1. Navigate to **Checkup → Monitoring instances** in the left menu
+1. Navigate to **DB health → Monitoring instances** in the left menu
 2. Click **Choose plan**
 3. Select the **Scale** plan (or contact us about **Enterprise**)
 

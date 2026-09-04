@@ -81,7 +81,7 @@ wait events. It never reads your data or raw query parameters. See
 
 ## Step 1. Start the guided setup
 
-In PostgresAI Console, navigate to **Checkup — Getting started**. On the **RDS / Aurora** card,
+In PostgresAI Console, navigate to **DB health — Getting started**. On the **RDS / Aurora** card,
 click **Start guided setup**.
 
 [![PostgresAI Console: Getting started page with the RDS / Aurora "Start guided setup" card](/assets/rds-privatelink-monitoring/rds-privatelink-monitoring-1.png)](/assets/rds-privatelink-monitoring/rds-privatelink-monitoring-1.png)

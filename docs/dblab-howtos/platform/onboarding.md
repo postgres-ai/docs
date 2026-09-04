@@ -56,7 +56,7 @@ First, try using the basic features:
     - However, if you want to share it with the public, you can try to combine sharing with visualization features: share a page as was done previously, then open it using the sharing link (`https://postgres.ai/console/shared/XXXXXX`), and use one of the visualization buttons to get a direct link to visualization (the link will have a `#xxx` suffix) – such a link can be used when discussing query behavior anywhere
 
 ## postgres-checkup reports
-- [ ] Explore postgres-checkup reports: go to `Checkup / Reports` and choose any report and section, e.g., `K003 Top-50 Queries by total_time`, which may be helpful for discovering the most loaded queries in your database.
+- [ ] Explore postgres-checkup reports: go to `DB health / Checkup reports` and choose any report and section, e.g., `K003 Top-50 Queries by total_time`, which may be helpful for discovering the most loaded queries in your database.
 
 ## Database Lab GUI, API, and CLI
 If you have access to the production:
