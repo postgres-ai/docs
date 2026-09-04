@@ -21,6 +21,7 @@ Copy the example configuration file [`config.example.physical_walg.yml`](https:/
     - Use WAL-G environment variables to configure the job, see the [WAL-G configuration reference](https://github.com/wal-g/wal-g#configuration)
 - Set WAL-G settings in `physicalRestore:options:walg`:
     - `backupName` - defines the backup name to restore
+    - `customOptions` (optional) - extra `wal-g backup-fetch` flags, for options WAL-G exposes only on the command line, such as `--mask`, `--restore-spec` and `--restore-only`. Anything that has a `WALG_*` environment variable should go to `physicalRestore:options:envs` instead, because these options reach `backup-fetch` alone — see the [configuration reference](/docs/reference-guides/database-lab-engine-configuration-reference#job-physicalrestore)
 - Set a proper version in Postgres Docker image tag (change the image itself only if you know what you are doing):
     - `databaseContainer:dockerImage`
 
