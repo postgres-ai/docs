@@ -2,6 +2,8 @@ import React from 'react'
 import Layout from '@theme/Layout'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 
+import PostgresCity from '../components/PostgresCity'
+
 import styles from './index.module.css'
 import { TRUSTED_BY_COMPANIES } from './pricing'
 import { SITE_NAME, SITE_SLOGAN, SITE_SUBTITLE } from '../config/site'
@@ -62,6 +64,12 @@ function IndexPage() {
                   <a href={signInUrl} className={styles.ctaPrimary}>
                     Check my database now
                   </a>
+                </div>
+
+                {/* What a Postgres cluster is actually doing, drawn from a
+                    running model. Derived from PGSimCity. */}
+                <div className={styles.cityContainer}>
+                  <PostgresCity title="A PostgreSQL cluster, running" />
                 </div>
 
                 {/* Video Container */}

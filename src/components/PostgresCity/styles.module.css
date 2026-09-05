@@ -1,0 +1,333 @@
+/*
+ * The scene owns its own light: it draws its own sky, so it sits on either
+ * page background without a frame fighting it. Everything outside the canvas
+ * is the page's own monospace voice.
+ */
+
+.figure {
+  margin: 0;
+  width: 100%;
+}
+
+.title {
+  font-family: var(--ifm-font-family-base);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  margin: 0 0 10px 0;
+  text-align: center;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  /* 16:9 down to a taller crop on a phone, where a wide band would leave the
+     districts too small to name. */
+  aspect-ratio: 16 / 9;
+  min-height: 240px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #d4d9de;
+  background: #eef2f5;
+}
+
+html[data-theme='dark'] .stage {
+  border-color: #23293a;
+  background: #04060c;
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* --- district hit targets ------------------------------------------------ */
+
+.hits {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hit {
+  position: absolute;
+  width: 62px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: border-color 120ms ease, background-color 120ms ease;
+}
+
+.hit:hover,
+.hitOn {
+  border-color: rgba(255, 97, 18, 0.55);
+  background: rgba(255, 97, 18, 0.07);
+}
+
+.hit:focus-visible {
+  outline: 2px solid #ff6112;
+  outline-offset: 2px;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --- motion control ------------------------------------------------------ */
+
+.motionToggle {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  z-index: 2;
+  font-family: var(--ifm-font-family-base);
+  font-size: 11px;
+  line-height: 1;
+  padding: 5px 8px;
+  border-radius: 3px;
+  border: 1px solid rgba(120, 130, 145, 0.4);
+  background: rgba(255, 255, 255, 0.72);
+  color: #2b3440;
+  cursor: pointer;
+}
+
+html[data-theme='dark'] .motionToggle {
+  background: rgba(6, 10, 18, 0.7);
+  border-color: rgba(120, 145, 190, 0.35);
+  color: #cfdcf0;
+}
+
+.motionToggle:focus-visible {
+  outline: 2px solid #ff6112;
+  outline-offset: 2px;
+}
+
+/* --- the explanation slot ------------------------------------------------ */
+
+/*
+ * Fixed height. The text under the scene changes on hover, and a box that
+ * grows and shrinks would shove the rest of the page around while somebody is
+ * reading it.
+ */
+.blurbSlot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  min-height: 62px;
+  display: flex;
+  align-items: flex-end;
+  padding: 10px 14px;
+  background: linear-gradient(to top, rgba(238, 242, 245, 0.9) 30%, rgba(238, 242, 245, 0));
+  pointer-events: none;
+}
+
+html[data-theme='dark'] .blurbSlot {
+  background: linear-gradient(to top, rgba(4, 6, 12, 0.88) 30%, rgba(4, 6, 12, 0));
+}
+
+.blurb,
+.blurbHint {
+  font-family: var(--ifm-font-family-base);
+  font-size: 12px;
+  line-height: 1.45;
+  margin: 0;
+  max-width: 78ch;
+}
+
+.blurb strong {
+  letter-spacing: 0.06em;
+}
+
+.blurbSub {
+  opacity: 0.62;
+}
+
+.blurbHint {
+  opacity: 0.6;
+}
+
+/* --- legend -------------------------------------------------------------- */
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 16px;
+  margin: 12px 0 0 0;
+  font-family: var(--ifm-font-family-base);
+  font-size: 11px;
+  line-height: 1.3;
+  opacity: 0.85;
+}
+
+.key {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.key::before {
+  content: '';
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  margin-right: 6px;
+  background: currentColor;
+}
+
+/* Day values, matching the palette the canvas paints with in light mode. */
+.key[data-c='wal']::before {
+  background: #b8720a;
+}
+.key[data-c='dirty']::before {
+  background: #e02b46;
+}
+.key[data-c='clean']::before {
+  background: #1d5fcb;
+}
+.key[data-c='checkpoint']::before {
+  background: #c42d92;
+}
+.key[data-c='bgwriter']::before {
+  background: #0e8f8c;
+}
+.key[data-c='vacuum']::before {
+  background: #8b2bc0;
+}
+.key[data-c='replication']::before {
+  background: #e2690d;
+}
+.key[data-c='storage']::before {
+  background: #17954f;
+}
+
+/* Night values. Same meanings, separately tuned — not the day set dimmed. */
+html[data-theme='dark'] .key[data-c='wal']::before {
+  background: #ffb03a;
+}
+html[data-theme='dark'] .key[data-c='dirty']::before {
+  background: #ff4d6d;
+}
+html[data-theme='dark'] .key[data-c='clean']::before {
+  background: #3fa7ff;
+}
+html[data-theme='dark'] .key[data-c='checkpoint']::before {
+  background: #ff7ac6;
+}
+html[data-theme='dark'] .key[data-c='bgwriter']::before {
+  background: #4fe3c1;
+}
+html[data-theme='dark'] .key[data-c='vacuum']::before {
+  background: #b57bff;
+}
+html[data-theme='dark'] .key[data-c='replication']::before {
+  background: #ff9c1c;
+}
+html[data-theme='dark'] .key[data-c='storage']::before {
+  background: #55d6a0;
+}
+
+/* --- disclosure ---------------------------------------------------------- */
+
+/*
+ * This paragraph is content, not decoration. No breakpoint below may hide it,
+ * shrink it below the legend, or move it out of the reader's path: the claim
+ * above it is only honest while this is next to it.
+ */
+.disclosure {
+  font-family: var(--ifm-font-family-base);
+  font-size: 11.5px;
+  line-height: 1.5;
+  margin: 10px auto 0 auto;
+  max-width: 86ch;
+  text-align: center;
+  opacity: 0.72;
+}
+
+.disclosure a {
+  text-decoration: underline;
+}
+
+/* --- text alternative ---------------------------------------------------- */
+
+.textAlt {
+  font-family: var(--ifm-font-family-base);
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 10px auto 0 auto;
+  max-width: 86ch;
+  text-align: left;
+}
+
+.textAlt summary {
+  cursor: pointer;
+  opacity: 0.7;
+  text-align: center;
+}
+
+.textAlt ul {
+  margin: 10px 0;
+  padding-left: 1.2em;
+}
+
+.textAlt li {
+  margin-bottom: 6px;
+}
+
+/* --- responsive ---------------------------------------------------------- */
+
+@media (max-width: 996px) {
+  .stage {
+    aspect-ratio: 3 / 2;
+  }
+
+  .hit {
+    width: 54px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 620px) {
+  /* The scene is a wide band, so a tall box just adds empty sky. Keep it near
+     the scene's own proportions and let the caption do the vertical work. */
+  .stage {
+    aspect-ratio: 4 / 3;
+    min-height: 260px;
+  }
+
+  .hit {
+    width: 48px;
+    height: 38px;
+  }
+
+  .blurbSlot {
+    min-height: 74px;
+    padding: 8px 10px;
+  }
+
+  .legend {
+    gap: 4px 12px;
+    font-size: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hit {
+    transition: none;
+  }
+}

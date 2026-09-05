@@ -10,7 +10,8 @@
     "build": "bun run build:copy-md && bun run build:copy-rules && docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
-    "serve": "docusaurus serve"
+    "serve": "docusaurus serve",
+    "test": "bun test src/components"
   },
   "dependencies": {
     "@docusaurus/core": "3.9.2",
