@@ -256,6 +256,53 @@ module.exports = {
               </iframe>            
                 `,
             },
+            {
+              // Attestation badges. Both marks use the supplied files and are
+              // swapped by theme - never a CSS filter, altering them is barred.
+              // The AICPA seal MUST link to aicpa.org/soc4so (its terms), while
+              // the Sensiba badge points at our own /security page.
+              // AICPA usage rights expire 2027-06-04 unless a new report issues.
+              html: `
+                <div class="footer-attestations">
+                  <a href="/security" class="footer-soc2-badge" aria-label="SOC 2® Type 2 attested - see security and compliance">
+                    <img
+                      src="/assets/compliance/soc2-type2-sensiba.png"
+                      alt="SOC 2® Type 2 attested — audited by Sensiba LLP"
+                      width="160"
+                      height="75"
+                      loading="lazy"
+                      class="footer-soc2-badge-light"
+                    />
+                    <img
+                      src="/assets/compliance/soc2-type2-sensiba-white.png"
+                      alt="SOC 2® Type 2 attested — audited by Sensiba LLP"
+                      width="160"
+                      height="75"
+                      loading="lazy"
+                      class="footer-soc2-badge-dark"
+                    />
+                  </a>
+                  <a href="https://www.aicpa.org/soc4so" target="_blank" rel="noopener noreferrer" class="footer-aicpa-seal">
+                    <img
+                      src="/assets/compliance/aicpa-soc2-seal-k.png"
+                      alt="AICPA SOC for Service Organizations seal (SOC 2®)"
+                      width="64"
+                      height="64"
+                      loading="lazy"
+                      class="footer-aicpa-seal-light"
+                    />
+                    <img
+                      src="/assets/compliance/aicpa-soc2-seal.png"
+                      alt="AICPA SOC for Service Organizations seal (SOC 2®)"
+                      width="64"
+                      height="64"
+                      loading="lazy"
+                      class="footer-aicpa-seal-dark"
+                    />
+                  </a>
+                </div>
+                `,
+            },
           ],
         },
         {
@@ -363,6 +410,10 @@ module.exports = {
             {
               label: 'Case studies',
               to: '/resources/',
+            },
+            {
+              label: 'Security & compliance',
+              to: '/security/',
             },
             {
               label: 'Terms of service',
