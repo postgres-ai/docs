@@ -32,6 +32,22 @@ image: docker:20.10.12
 # Allow auto-canceling running pipelines when a newer commit is pushed
 default:
   interruptible: true
+  # The Kubernetes executor starts dind as a sidecar and does not wait for it,
+  # so wait for the daemon before the first docker call (#270).
+  #
+  # INVARIANT: this wait runs for any job whose image ships a docker client
+  # (the global default image is docker:20.10.12) AND that has DOCKER_HOST set
+  # (set globally). Such a job MUST declare a docker:*-dind service, otherwise
+  # the daemon never comes up and the job fails after the 60 s timeout. Jobs
+  # that need no dind must either use a docker-less image or override
+  # before_script (see validate_feeds, deploy_review, stop_review,
+  # deploy_main_staging). Non-docker images skip the wait via `command -v`.
+  before_script:
+    - |
+      if command -v docker >/dev/null 2>&1 && [ -n "${DOCKER_HOST:-}" ]; then
+        for i in $(seq 1 30); do docker info >/dev/null 2>&1 && break; sleep 2; done
+        docker info >/dev/null 2>&1 || { echo "dind not reachable at $DOCKER_HOST after 60 s"; docker info; exit 1; }
+      fi
 
 stages:
   - validate
@@ -41,6 +57,11 @@ stages:
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive # Ensure .cursor submodule is initialized
+  # Docker-in-Docker over TCP for every job that declares a dind service. On the
+  # group's Kubernetes runner the service shares the job pod, so it is reachable
+  # on localhost; the SaaS "docker" alias does not resolve there (#270).
+  DOCKER_HOST: tcp://localhost:2375
+  DOCKER_TLS_CERTDIR: ""
   ENV: "local" # Should be overwritten by environment template.
   NAMESPACE: "default" # Should be overwritten by environment template.
   REGISTRY: "gcr.io/postgres-ai/docs"
@@ -74,8 +95,6 @@ docs_sql_snippets:
   services:
     - docker:27-dind
   variables:
-    DOCKER_HOST: tcp://docker:2375
-    DOCKER_TLS_CERTDIR: ""
     POSTGRES_VERSIONS: "12 13 14 15 16 17 18"
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
