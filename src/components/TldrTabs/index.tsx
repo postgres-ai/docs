@@ -35,6 +35,11 @@ type TldrTabsProps = {
 const tabs = ['Founders', 'Developers', 'DBAs', 'Managers', 'Ask AI'] as const;
 type TabType = typeof tabs[number];
 
+// The "Ask AI" tab is only offered when the post supplies aiContext; without it
+// the chat has nothing to ground answers in. See postgres-ai/docs#271.
+const visibleTabs = (aiContext?: string): readonly TabType[] =>
+  aiContext ? tabs : tabs.filter((tab) => tab !== 'Ask AI');
+
 /**
  * A tabbed TL;DR component that displays content tailored to different audiences.
  * Includes tabs for Founders, Developers, DBAs, Managers, and an AI chat tab.
@@ -74,7 +79,7 @@ export const TldrTabs = (props: TldrTabsProps) => {
       <div className={styles.header}>
         <span className={styles.tldrLabel}>TL;DR</span>
         <div className={styles.tabs}>
-          {tabs.map((tab) => (
+          {visibleTabs(aiContext).map((tab) => (
             <button
               key={tab}
               className={`${styles.tab} ${activeTab === tab ? styles.activeTab : ''}`}
