@@ -53,7 +53,7 @@ beneficial for performance.
 
 📣 UUIDv7 has been committed to Postgres 18! https://x.com/samokhvalov/status/1867204871159710181
 
-UUID values are 16-byte – the same as `timestamptz` or `timestamp` values.
+UUID values occupy 16 bytes – twice the size of `timestamptz` or `timestamp` values, which [occupy 8 bytes each](https://www.postgresql.org/docs/current/datatype-datetime.html#DATATYPE-DATETIME-TABLE).
 
 Good materials explaining performance aspects:
 
