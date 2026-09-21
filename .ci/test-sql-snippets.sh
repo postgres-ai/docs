@@ -39,7 +39,9 @@ wait_for_postgres() {
   local container="$1"
   local attempt
   for attempt in $(seq 1 60); do
-    if "${DOCKER_CMD[@]}" exec "${container}" pg_isready -U postgres >/dev/null 2>&1; then
+    # The image entrypoint starts a temporary socket-only server during init.
+    # Wait for TCP so readiness means the final server has started.
+    if "${DOCKER_CMD[@]}" exec "${container}" pg_isready -h 127.0.0.1 -U postgres >/dev/null 2>&1; then
       return 0
     fi
     sleep 1
