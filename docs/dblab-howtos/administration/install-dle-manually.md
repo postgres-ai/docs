@@ -243,16 +243,16 @@ sudo docker stop dblab_pg_initdb
 sudo docker rm dblab_pg_initdb
 ```
 
-Now, we need to take care of DBLab Engine configuration. Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.1.3/engine/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
+Now, we need to take care of DBLab Engine configuration. Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.2.0/engine/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
 ```bash
 mkdir -p ~/.dblab/engine/configs
 
-curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/v4.1.3/engine/configs/config.example.logical_generic.yml \
+curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/v4.2.0/engine/configs/config.example.logical_generic.yml \
   --output ~/.dblab/engine/configs/server.yml
 ```
 
 Open `~/.dblab/engine/configs/server.yml` and edit the following options:
-- Set a secure `server:verificationToken` — it will be used to authorize API requests to the DBLab Engine
+- Set a secure `server:verificationToken` — it will be used to authorize API requests to the DBLab Engine. The 4.2 example uses the placeholder `${DBLAB_VERIFICATION_TOKEN}`: either replace it with the token, or keep it and pass the variable to the container with `--env-file /etc/dblab/engine.env` (a root-owned file with mode 600 holding `DBLAB_VERIFICATION_TOKEN=...`; see [Environment variables](/docs/reference-guides/database-lab-engine-configuration-reference#environment-variables)); the engine does not start while the variable is unset
 - Remove `logicalDump` section completely
 - Remove `logicalRestore` section completely
 - Leave `logicalSnapshot` as is
@@ -264,16 +264,16 @@ Open `~/.dblab/engine/configs/server.yml` and edit the following options:
 
 If you want to try Database Lab for an existing database, you need to copy the data to the Postgres data directory on the DBLab Engine server, to the directory `/var/lib/dblab/dblab_pool/data`. This step is called "thick cloning". It only needs to be completed once. There are several options to physically copy the data directory. Here we will use the standard Postgres tool, `pg_basebackup`. However, we are not going to use it directly (although, it is possible) – we will specify its options in the DBLab Engine configuration file.
 
-First, copy the example configuration file [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.1.3/engine/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
+First, copy the example configuration file [`config.example.physical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.2.0/engine/configs/config.example.physical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
 ```bash
 mkdir -p ~/.dblab/engine/configs
 
-curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/v4.1.3/engine/configs/config.example.physical_generic.yml \
+curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/v4.2.0/engine/configs/config.example.physical_generic.yml \
   --output ~/.dblab/engine/configs/server.yml
 ```
 
 Next, open `~/.dblab/engine/configs/server.yml` and edit the following options:
-- Set a secure `server:verificationToken` — it will be used to authorize API requests to the DBLab Engine
+- Set a secure `server:verificationToken` — it will be used to authorize API requests to the DBLab Engine. The 4.2 example uses the placeholder `${DBLAB_VERIFICATION_TOKEN}`: either replace it with the token, or keep it and pass the variable to the container with `--env-file /etc/dblab/engine.env` (a root-owned file with mode 600 holding `DBLAB_VERIFICATION_TOKEN=...`; see [Environment variables](/docs/reference-guides/database-lab-engine-configuration-reference#environment-variables)); the engine does not start while the variable is unset
 - In `retrieval:spec:physicalRestore:options:envs`, specify how to reach the source Postgres database to run `pg_basebackup`: `PGUSER`, `PGPASSWORD`, `PGHOST`, and `PGPORT`
 - If your Postgres major version is not 17 (default), set the proper version in Postgres Docker image tag:
     - `databaseContainer:dockerImage`
@@ -289,16 +289,20 @@ If you want to try Database Lab for an existing database, you need to copy the d
 
 Here we will configure DBLab Engine to use a "logical" method of thick cloning, dump/restore.
 
-First, copy the example configuration file [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.1.3/engine/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
+:::tip Quick path (DBLab Engine 4.2+)
+On a new instance the UI Configuration page opens in Simple mode: paste the source URL and password and the engine proposes the rest. The same detection is available from the terminal with [`dblab local-install`](/docs/reference-guides/dblab-client-cli-reference#command-local-install). In a manual install, first create the pending marker so the engine waits for configuration instead of immediately refreshing against the empty example source: `mkdir -p ~/.dblab/engine/meta && touch ~/.dblab/engine/meta/pending.retrieval`. Then start the engine with the unmodified example config (with `DBLAB_VERIFICATION_TOKEN` set) and open the UI Configuration page or run `dblab local-install` against it. Without the marker, apply with `dblab local-install --start` or trigger a full refresh after applying. The manual steps below remain fully supported.
+:::
+
+First, copy the example configuration file [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.2.0/engine/configs/config.example.logical_generic.yml) from the Database Lab repository to `~/.dblab/engine/configs/server.yml`:
 ```bash
 mkdir -p ~/.dblab/engine/configs
 
-curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/v4.1.3/engine/configs/config.example.logical_generic.yml \
+curl -fsSL https://gitlab.com/postgres-ai/database-lab/-/raw/v4.2.0/engine/configs/config.example.logical_generic.yml \
   --output ~/.dblab/engine/configs/server.yml
 ```
 
 Now open `~/.dblab/engine/configs/server.yml` and edit the following options:
-- Set a secure `server:verificationToken` — it will be used to authorize API requests to the DBLab Engine
+- Set a secure `server:verificationToken` — it will be used to authorize API requests to the DBLab Engine. The 4.2 example uses the placeholder `${DBLAB_VERIFICATION_TOKEN}`: either replace it with the token, or keep it and pass the variable to the container with `--env-file /etc/dblab/engine.env` (a root-owned file with mode 600 holding `DBLAB_VERIFICATION_TOKEN=...`; see [Environment variables](/docs/reference-guides/database-lab-engine-configuration-reference#environment-variables)); the engine does not start while the variable is unset
 - Set connection options in `retrieval:spec:logicalDump:options:source:connection`:
     - `dbname`: database name to connect to
     - `host`: database server host
@@ -340,7 +344,7 @@ sudo docker run \
   --volume /proc:/host_proc:ro \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:4.1.3
+  postgresai/dblab-server:4.2.0
 ```
 
 </TabItem>
@@ -362,7 +366,7 @@ sudo docker run \
   --volume /proc:/host_proc:ro \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:4.1.3
+  postgresai/dblab-server:4.2.0
 ```
 
 </TabItem>
@@ -384,7 +388,7 @@ sudo docker run \
   --volume /proc:/host_proc:ro \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:4.1.3
+  postgresai/dblab-server:4.2.0
 ```
 
 </TabItem>

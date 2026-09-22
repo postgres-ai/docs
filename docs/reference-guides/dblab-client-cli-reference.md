@@ -86,14 +86,15 @@ If you register a Database Lab instance on the Postgres.ai Platform through the 
 COMMANDS:
    init          initialize Database Lab CLI
    port-forward  start port forwarding to DBLab instance
-   branch        list, create, or delete branch
+   branch        list, create, delete, or switch branches
    switch        switch to specified branch
    commit        create a new snapshot containing the current state of data and the given log message describing the changes
    log           show snapshot history for branch
-   clone         create, update, delete, reset, or retrieve clone
+   clone         create, update, delete, reset, upgrade, or retrieve clone
    instance      display instance info
    snapshot      create, retrieve, or delete snapshot
-   teleport      Teleport integration commands (DLE 4.1+)
+   local-install probe a source database and configure logical retrieval from the terminal (DBLab 4.2+)
+   teleport      Teleport integration commands (DBLab 4.1+)
    config        configure CLI environments
    help, h       shows a list of commands or help for one command
 ```
@@ -145,20 +146,34 @@ dblab --forwarding-server-url "ssh://user@remote.host:22" --forwarding-local-por
 :::note
 Requires DBLab 4.0 or higher
 :::
-List, create, or delete branches.
+List, create, delete, or switch branches, and manage branch deletion protection.
 
 **Usage**
 ```bash
-dblab branch [command options] BRANCH_NAME
+dblab branch [command options] [BRANCH_NAME]
+dblab branch list|create|delete|switch [command options] [BRANCH_NAME]
 ```
 
-**Options**
+The bare form (`dblab branch ...`) dispatches on its arguments: no arguments lists branches, a name creates a branch, `--delete` removes one, and `--protected` updates protection. The `list`, `create`, `delete` and `switch` subcommands (DBLab 4.2+) express the same operations unambiguously and take precedence, so a branch cannot be named after one of them through the bare form; use the subcommand (`dblab branch create list`) for such a name.
+
+**Subcommands (DBLab 4.2+)**
+- `list` (alias `ls`) - list branches
+- `create [--parent-branch NAME | --snapshot-id ID] BRANCH_NAME` - create a branch
+- `delete` (alias `rm`) `BRANCH_NAME` - delete a branch
+- `switch BRANCH_NAME` - switch to a branch
+
+**Options (bare form)**
 - `--parent-branch` (string, optional) - name of the parent branch
 - `--snapshot-id` (string, optional) - snapshot ID for the new branch
 - `--delete`, `-d` (string, optional) - delete a database branch
+- `--protected` , `-p` (string, optional) - update deletion protection of `BRANCH_NAME`: a number of minutes or a duration such as `30m`, `2h`, `7d`; `true` or `0` for no expiry (branches and snapshots have no default lease); `false` for off. When `retention.protectionMaxDurationMinutes` is set, `true` and `0` yield a lease equal to that cap and longer requests are capped. DBLab 4.2+. Applies to the bare form only; it cannot precede a subcommand.
 
 :::note
 The parameters `--parent-branch` and `--snapshot-id` cannot be specified at the same time.
+:::
+
+:::note
+A protected branch is skipped by the [retention sweep](/docs/reference-guides/database-lab-engine-configuration-reference#section-retention-automatic-deletion-of-unused-branches-and-snapshots) and cannot be deleted manually until protection is removed. The maximum lease is capped by `retention.protectionMaxDurationMinutes`.
 :::
 
 **Example**
@@ -181,6 +196,20 @@ dblab branch --parent-branch dev test
 To delete branch named `test`:
 ```bash
 dblab branch --delete test
+```
+
+To protect branch `test` from deletion for 7 days, then to remove the protection:
+```bash
+dblab branch --protected 7d test
+dblab branch --protected false test
+```
+
+The same operations with the explicit subcommands (DBLab 4.2+):
+```bash
+dblab branch list
+dblab branch create --parent-branch main feature-x
+dblab branch delete feature-x
+dblab branch create list   # a branch literally named "list"
 ```
 
 ## Command: `switch`
@@ -381,6 +410,33 @@ The parameters `--latest` and `--snapshot-id` cannot be specified at the same ti
 ```bash
 dblab clone reset TestCloneID
 ```
+
+---
+### Subcommand `upgrade`
+:::note
+Requires DBLab 4.2 or higher, and `provision.pgUpgradeImage` set on the instance.
+:::
+Upgrade a clone to the Postgres major version the instance is configured to upgrade to. The target version is not a parameter: it follows from `provision.pgUpgradeImage` and is reported by `dblab instance status` as `cloneUpgrade.targetVersion`. See [Upgrade Postgres in a clone](/docs/dblab-howtos/cloning/clone-upgrade) for the full behaviour, outcomes and limitations.
+
+**Usage**
+```bash
+dblab clone upgrade [command options] CLONE_ID
+```
+**Arguments**
+- `CLONE_ID` (string, required) - an ID of the Database Lab clone to upgrade
+
+**Options**
+- `--async` , `-a` (boolean, default: false) - return as soon as the engine accepts the request instead of waiting for the upgrade to finish (the synchronous wait is capped at 30 minutes)
+- `--docker-image` (string, default: "") - image the upgraded clone runs. By default the engine substitutes the target major into the clone's current image tag, keeping every other tag component (extension bundle, glibc suffix). When the given tag names a major, it must be the target major; the repository must be allowed by `provision.upgradeImageAllowList` if that list is set
+- `--help` , `-h` (boolean, default: false) - show help
+
+**Example**
+```bash
+dblab clone upgrade TestCloneID
+# The clone has been upgraded to PostgreSQL 17: TestCloneID
+```
+
+A failed upgrade is reported as an error carrying the clone status message, which names the version the clone ended up on and where to find the `pg_upgrade` log. Resetting the clone (`dblab clone reset`) returns it to the instance-wide version.
 
 ---
 ### Subcommand `destroy`
@@ -619,6 +675,7 @@ dblab snapshot command [command options] [arguments...]
 - `list` - list all existing snapshots.
 - `create` - create a snapshot. DLE 4.0+.
 - `delete` - delete existing snapshot. DLE 4.0+.
+- `update` - update snapshot deletion protection. DBLab 4.2+.
 - `help` , `h` -  shows a list of commands or help for one command.
 
 ---
@@ -667,6 +724,27 @@ dblab snapshot delete "dblab_pool/dataset_1@snapshot_20241028174127"
 Force deletion of snapshots with dependent clones is available through the API (`DELETE /snapshot/{id}?force=true`) or the UI, but is not currently supported via the CLI.
 :::
 
+### Subcommand `update`
+:::note
+Requires DBLab 4.2 or higher
+:::
+Update the deletion protection of a snapshot. A protected snapshot is skipped by the [retention sweep](/docs/reference-guides/database-lab-engine-configuration-reference#section-retention-automatic-deletion-of-unused-branches-and-snapshots) and cannot be deleted manually until protection is removed.
+
+**Usage**
+```bash
+dblab snapshot update [command options] SNAPSHOT_ID
+```
+
+**Options**
+- `--protected` , `-p` (string, required) - deletion protection: a number of minutes or a duration such as `30m`, `2h`, `7d`; `true` or `0` for no expiry (branches and snapshots have no default lease); `false` for off. When `retention.protectionMaxDurationMinutes` is set, `true` and `0` yield a lease equal to that cap and longer requests are capped.
+
+**Example**
+
+```bash
+dblab snapshot update --protected 7d "dblab_pool/dataset_1@snapshot_20241028174127"
+dblab snapshot update --protected false "dblab_pool/dataset_1@snapshot_20241028174127"
+```
+
 ---
 ### Subcommand `help` , `h`
 Show help for the command.
@@ -674,6 +752,52 @@ Show help for the command.
 **Usage**
 ```bash
 dblab snapshot help
+```
+
+## Command: `local-install`
+:::note
+Requires DBLab 4.2 or higher
+:::
+Probe a source database and configure logical retrieval from the terminal. The command connects the engine to the source (`POST /admin/probe-source`), shows the proposed configuration (detected managed-Postgres provider, Postgres major version and matching Docker image, databases, `shared_buffers`, `shared_preload_libraries`, query tuning) and applies it (`POST /admin/config`) after confirmation. It is the terminal equivalent of the Simple mode on the UI Configuration page. The provider, image, `shared_buffers`, preload libraries and database list have override flags; the detected Postgres major, collation and query tuning do not (adjust them in the UI Expert mode or in `server.yml` afterwards). Hand-editing `server.yml` remains fully supported.
+
+Prerequisites and effects:
+- The command uses the CLI environment configured with [`dblab init`](#command-init) (or the global `--url` / `--token` options).
+- It configures logical retrieval only. It writes the source connection (`host`, `port`, `dbname`, `username`, optional `password`, `connectionString`), the database list, the Docker image and `databaseConfigs`; other `logicalDump` options (`dumpLocation`, `parallelJobs`, `customOptions`, ...) are kept. It is refused on an instance configured for physical retrieval: switching modes requires editing `server.yml`.
+- It is refused when `server.disableConfigModification` is enabled on the engine.
+- `--password` puts the secret in the process list and shell history; prefer the interactive prompt, or set the password in `server.yml` via a `${VAR}` placeholder / `PGPASSWORD` on the engine and omit the flag.
+- `sslmode=require` in the source URL encrypts the connection but does not verify the server certificate; use `sslmode=verify-full&sslrootcert=/path/to/ca.pem` for managed providers. The CA file path is opened inside the DBLab Engine container (mount it with `--volume` on `docker run`) and inside the `logicalDump` container that runs `pg_dump` (a `volume` entry in `logicalDump.options.containerConfig`, DBLab Engine 4.2+); a file that exists only on the host fails with a certificate error.
+
+**Usage**
+```bash
+dblab local-install [command options]
+```
+
+**Options**
+- `--source-url` (string, required) - source libpq connection string (`postgresql://` URI or keyword/value DSN). It must not embed a password
+- `--password` (string, optional) - source database password; prompted for if omitted and a TTY is present. With no TTY and no flag, the engine falls back to a password already in its config or to `PGPASSWORD`
+- `--provider` (string, optional) - override the detected managed-Postgres provider key shown in the preview
+- `--docker-image` (string, optional) - override the resolved Docker image (full reference); wins over the engine-resolved image
+- `--docker-tag` (string, optional) - override only the tag of the resolved Docker image
+- `--shared-buffers` (string, optional) - override the recommended `shared_buffers` value
+- `--shared-preload-libraries` (string, optional) - override the `shared_preload_libraries` probed from the source; use it when the source preloads a library the clone image does not ship (for example `rdsutils` on RDS)
+- `--dbname` (string, optional, repeatable) - database to dump; defaults to the probed database
+- `--start` (boolean, default: false) - trigger a full refresh after applying even when retrieval is not pending
+- `--no-start` (boolean, default: false) - never trigger a full refresh after applying
+- `--yes` , `-y` (boolean, default: false) - apply without the confirmation prompt
+
+**Example**
+
+Prompt for the password, review the proposal, then start retrieval:
+```bash
+dblab local-install --source-url postgresql://postgres@db.example.com:5432/app --start
+```
+
+Managed provider requiring TLS, non-interactively; the full connection string is preserved. The source preloads `rdsutils`, which the clone image does not ship, so the probed list is replaced. Omit `--password` to be prompted instead of passing the secret on the command line. The CA bundle at `/certs/rds-ca.pem` must be mounted into both the engine container and the `logicalDump` container (see above):
+```bash
+dblab local-install \
+  --source-url 'postgresql://app@db.rds.amazonaws.com:5432/app?sslmode=verify-full&sslrootcert=/certs/rds-ca.pem' \
+  --shared-preload-libraries pg_stat_statements \
+  --yes --start
 ```
 
 
@@ -711,6 +835,7 @@ dblab teleport serve [command options]
 - `--dblab-token` (string, required) - DBLab verification token (or via env var `DBLAB_TOKEN`)
 - `--webhook-secret` (string, required) - shared secret that DBLab Engine sends in the `DBLab-Webhook-Token` header for webhook payload verification (or via env var `WEBHOOK_SECRET`)
 - `--tctl-path` (string, optional, default: `tctl`) - path to the `tctl` binary if it is not on `$PATH`
+- `--label` (string, optional, repeatable) - additional Teleport resource label in `key=value` form, attached to every resource the sidecar registers (or via env var `TELEPORT_LABELS`). The reserved labels `dblab`, `dblab_instance`, `clone_id` and `dblab_user` are set by the sidecar and are rejected here. DBLab 4.2+.
 
 **Example**
 ```bash
@@ -721,7 +846,8 @@ dblab teleport serve \
   --listen-addr 0.0.0.0:9876 \
   --dblab-url http://localhost:2345 \
   --dblab-token "$DBLAB_TOKEN" \
-  --webhook-secret "$WEBHOOK_SECRET"
+  --webhook-secret "$WEBHOOK_SECRET" \
+  --label environment=production --label service=dblab
 ```
 
 ---

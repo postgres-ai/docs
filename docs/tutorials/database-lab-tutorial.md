@@ -185,8 +185,10 @@ Now UI should be available at http://127.0.0.1:2346
 ## Step 2. Configure DBLab and run the data retrieval
 
 :::note
-Currently, configuring DBLab in UI allows config changes only for the "logical" mode of data retrieval (dump/restore) – the only available method for managed PostgreSQL cloud services such as RDS Postgres, RDS Aurora Postgres, Azure Postgres, or Heroku. "Physical" mode is not yet supported in UI but is still possible (through SSH connection and [editing DBLab config file directly](/docs/dblab-howtos/administration/engine-manage)). More about [various data retrieval options for DBLab](/docs/dblab-howtos/administration/data).
+Since DBLab Engine 4.2, the Configuration page of a new, unconfigured instance opens in **Simple mode**: paste the source connection URL and password, and the engine connects to the source and proposes the rest (provider, Postgres version and matching image, databases, `shared_buffers`, preload libraries). Review the proposal, adjust any value, and apply. **Expert mode** exposes the full configuration, including the WAL-G and pgBackRest settings of an instance that is already in the "physical" mode of data retrieval. The same detection is available from the terminal with [`dblab local-install`](/docs/reference-guides/dblab-client-cli-reference#command-local-install). Editing the config file directly (over SSH, see [Manage DBLab Engine](/docs/dblab-howtos/administration/engine-manage)) remains fully supported; it is required to switch an instance between logical and physical mode, and on engines before 4.2 for any physical-mode setting. More about [various data retrieval options for DBLab](/docs/dblab-howtos/administration/data).
 :::
+
+The steps and screenshots below describe **Expert mode**. On DBLab Engine 4.2+ a new instance opens in Simple mode; either follow its prompts (paste the source URL and password, review, apply) or switch to Expert mode to follow along.
 
 Enter the verification token you have created earlier.
 

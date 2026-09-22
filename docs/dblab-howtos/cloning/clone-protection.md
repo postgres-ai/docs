@@ -122,6 +122,10 @@ The response includes `protectedTill` showing when protection expires:
 }
 ```
 
+## Branches and snapshots (DBLab Engine 4.2+)
+Since DBLab Engine 4.2 the same protection grammar applies to branches and snapshots (`dblab branch --protected 7d NAME`, `dblab snapshot update --protected 7d ID`, `PATCH /branch/{name}`, `PATCH /snapshot/{id}`), and an optional retention policy deletes unused branches and snapshots automatically. See [Delete a database branch](/docs/dblab-howtos/branching/delete-branch#protect-a-branch-from-deletion-dblab-engine-42) and [Delete a snapshot](/docs/dblab-howtos/snapshots/delete-snapshot#protect-a-snapshot-from-deletion-dblab-engine-42).
+
 ## Related
 - Guide: [Destroy a clone](/docs/dblab-howtos/cloning/destroy-clone)
 - Reference: [Cloning configuration](/docs/reference-guides/database-lab-engine-configuration-reference#section-cloning-thin-cloning-policies)
+- Reference: [Retention configuration](/docs/reference-guides/database-lab-engine-configuration-reference#section-retention-automatic-deletion-of-unused-branches-and-snapshots)

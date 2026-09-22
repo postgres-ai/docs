@@ -31,6 +31,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 - [How to reset DBLab clone](/docs/dblab-howtos/cloning/reset-clone)
 - [How to destroy DBLab clone](/docs/dblab-howtos/cloning/destroy-clone)
 - [Protect clones from manual and automatic deletion](/docs/dblab-howtos/cloning/clone-protection)
+- [How to upgrade Postgres to a new major version in a DBLab clone](/docs/dblab-howtos/cloning/clone-upgrade)
 - [How to install and initialize DBLab CLI](/docs/dblab-howtos/cli/cli-install-init)
 
 ## Overview
@@ -75,8 +76,9 @@ Some problems that can be solved by using DBLab:
 - REST API.
 - Client CLI included.
 - UI included in all versions.
-- Automated deletion of clones after a specified number of minutes of inactivity (configurable).
-- Protection from deletion, to avoid automated and accidental deletions.
+- Automated deletion of clones after a specified number of minutes of inactivity (configurable), and an optional retention policy that expires unused branches and snapshots (4.2+).
+- Protection from deletion, to avoid automated and accidental deletions, for clones, branches and snapshots.
+- Postgres major version upgrade of a single clone in place, to rehearse an upgrade on production-like data (4.2+).
 - Continuously updated original copy of data is supported.
 - Multiple snapshots to allow provisioning of various versions of the database.
 - Custom PostgreSQL Docker images to work with extended PostgreSQL setups (extensions, additional tools, or even modified PostgreSQL engine).
