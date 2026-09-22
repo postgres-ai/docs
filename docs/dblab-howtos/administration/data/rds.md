@@ -26,8 +26,12 @@ If you want to use **IAM database authentication**, read how to enable it [here]
 You need to know the **master password**. If you have lost the password, you can reset it. Read how to reset it [here](https://aws.amazon.com/premiumsupport/knowledge-center/reset-master-user-password-rds/).
 :::
 
-Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.1.3/engine/configs/config.example.logical_generic.yml) from the DBLab Engine repository to `~/.dblab/engine/configs/server.yml` and update the following options:
-- Set a secure `server:verificationToken` — it will be used to authorize API requests to the Engine
+:::tip Quick path (DBLab Engine 4.2+)
+On a new instance the UI Configuration page opens in Simple mode: paste the source URL and password and the engine proposes the rest. The same detection is available from the terminal with [`dblab local-install`](/docs/reference-guides/dblab-client-cli-reference#command-local-install). The manual steps below remain fully supported.
+:::
+
+Copy the contents of configuration example [`config.example.logical_generic.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.2.0/engine/configs/config.example.logical_generic.yml) from the DBLab Engine repository to `~/.dblab/engine/configs/server.yml` and update the following options:
+- Set a secure `server:verificationToken` — it will be used to authorize API requests to the Engine. The 4.2 example uses the placeholder `${DBLAB_VERIFICATION_TOKEN}`: either replace it with the token, or keep it and pass the variable to the container with `--env-file /etc/dblab/engine.env` (a root-owned file with mode 600 holding `DBLAB_VERIFICATION_TOKEN=...`; see [Environment variables](/docs/reference-guides/database-lab-engine-configuration-reference#environment-variables)); the engine does not start while the variable is unset
 - Set connection options in `retrieval:spec:logicalDump:options:source:connection`:
     - `dbname`: database name to connect to
     - `host`: database server host
@@ -54,7 +58,7 @@ sudo docker run \
   --volume /proc:/host_proc:ro \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:4.1.3
+  postgresai/dblab-server:4.2.0
 ```
 
 :::info
@@ -80,8 +84,8 @@ Alternatively, you can add `AmazonRDSFullAccess`, `IAMFullAccess` policies to an
 :::
 
 ### Set up and run DBLab Engine
-Copy the contents of configuration example [`config.example.logical_rds_iam.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.1.3/engine/configs/config.example.logical_rds_iam.yml) from the DBLab Engine repository to `~/.dblab/engine/configs/server.yml` and update the following options:
-- Set a secure `server:verificationToken` — it will be used to authorize API requests to the Engine
+Copy the contents of configuration example [`config.example.logical_rds_iam.yml`](https://gitlab.com/postgres-ai/database-lab/-/blob/v4.2.0/engine/configs/config.example.logical_rds_iam.yml) from the DBLab Engine repository to `~/.dblab/engine/configs/server.yml` and update the following options:
+- Set a secure `server:verificationToken` — it will be used to authorize API requests to the Engine. The 4.2 example uses the placeholder `${DBLAB_VERIFICATION_TOKEN}`: either replace it with the token, or keep it and pass the variable to the container with `--env-file /etc/dblab/engine.env` (a root-owned file with mode 600 holding `DBLAB_VERIFICATION_TOKEN=...`; see [Environment variables](/docs/reference-guides/database-lab-engine-configuration-reference#environment-variables)); the engine does not start while the variable is unset
 - Set connection options `retrieval:spec:logicalDump:options:source:connection`:
     - `dbname`: database name to connect to
     - `username`: database user name
@@ -119,7 +123,7 @@ sudo docker run \
   --env AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
   --detach \
   --restart on-failure \
-  postgresai/dblab-server:4.1.3
+  postgresai/dblab-server:4.2.0
 ```
 
 :::info

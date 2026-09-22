@@ -11,7 +11,7 @@ description: Install DBLab Engine from the AWS Marketplace to get instant databa
 If you're using AWS, [installing DBLab from the AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-wlmm2satykuec) is the fastest way to get database branching for any database, including RDS and RDS Aurora. It is not limited to RDS: any Postgres or Postgres-compatible database can serve as a source for DBLab.
 
 :::info
-Currently, only the "logical" mode of data retrieval (dump/restore) is supported – the only available method for managed Postgres cloud services such as RDS Postgres, RDS Aurora Postgres, Azure Postgres, or Heroku. "Physical" mode is not yet supported by the module, but it will be in the future. More about [various data retrieval options for DBLab](/docs/dblab-howtos/administration/data).
+Currently, only the "logical" mode of data retrieval (dump/restore) is supported – the only available method for managed Postgres cloud services such as RDS Postgres, RDS Aurora Postgres, Azure Postgres, or Heroku. "Physical" mode is not part of the Marketplace setup flow; switching an instance to it requires [editing the config file directly](/docs/dblab-howtos/administration/engine-manage). On an instance already in physical mode, DBLab Engine 4.2+ lets you edit the WAL-G and pgBackRest settings in the UI Configuration page's Expert mode. More about [various data retrieval options for DBLab](/docs/dblab-howtos/administration/data).
 :::
 
 :::note

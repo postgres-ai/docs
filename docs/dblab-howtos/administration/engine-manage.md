@@ -18,7 +18,7 @@ All YAML features can be used, including anchors and aliases, to help you conven
 
 For instance, you can define a binding with `&` and then refer to it using an alias denoted by `*`.
 
-See config examples [here](https://gitlab.com/postgres-ai/database-lab/-/tree/v4.1.3/engine/configs)
+See config examples [here](https://gitlab.com/postgres-ai/database-lab/-/tree/v4.2.0/engine/configs)
 :::
 
 After configuring DBLab Engine, run the following command:
@@ -38,7 +38,7 @@ sudo docker run \
   --volume /sys/kernel/debug:/sys/kernel/debug:rw \
   --volume /lib/modules:/lib/modules:ro \
   --volume /proc:/host_proc:ro \
-  postgresai/dblab-server:4.1.3
+  postgresai/dblab-server:4.2.0
 ``` 
 
 :::info
@@ -78,6 +78,12 @@ echo 'set backupcopy=yes' >> ~/.vimrc
 ## Upgrade DBLab Engine
 Stop and remove the container using `sudo docker stop dblab_server` and `sudo docker rm dblab_server`. After that, [launch](#configure-and-start-a-dblab-engine-instance) a new container.
 
+:::info Upgrading to 4.2
+No 4.2 feature turns itself on: clone upgrades need `provision.pgUpgradeImage`, branch and snapshot retention needs a non-zero `retention` window, and per-user Teleport access needs `platform.enablePersonalTokens` together with `platform.bindClonesToUser`. The 4.2 example configs reference the API token from the environment (`verificationToken: "${DBLAB_VERIFICATION_TOKEN}"`); replace the placeholder or pass the variable to the container, otherwise the engine refuses to start. See the [4.2 release notes](/blog/20260917-dblab-engine-4-2-released) and the [configuration reference](/docs/reference-guides/database-lab-engine-configuration-reference).
+
+One prerequisite: the `*-zfs0.8` server images are no longer built since 4.2 (the last one is `4.1.4-zfs0.8`). Hosts still on ZFS 0.8 (stock Ubuntu 18.04/20.04) must move to ZFS 2.x before upgrading (see below).
+:::
+
 :::caution
 Prior to version 3.0.0, upgrading or restarting DBLab Engine meant losing all running clones. In DBLab Engine 3.0.0, clones became persistent: after any restart — including a VM restart — existing Postgres containers are restarted as well. The same should apply to future upgrades unless a specific upgrade breaks backward compatibility (consulting the release notes is advised).
 :::
@@ -90,9 +96,9 @@ An example of error:
 ```
 If you need to upgrade an existing DBLab Engine setup that is running on ZFS 0.8.x, consider the following options:
 
-Option 1: upgrade your system to use ZFS 2.1, optionally upgrade your pool (`zpool upgrade dblab_pool`), and then upgrade DBLab Engine to use the default image, `postgresai/dblab-server:3.5.0`
+Option 1: upgrade your system to use ZFS 2.x, optionally upgrade your pool (`zpool upgrade dblab_pool`), and then upgrade DBLab Engine to the current default image, `postgresai/dblab-server:4.2.0`
 
-Option 2: postpone the ZFS upgrade, stay on ZFS 0.8, and upgrade DBLab Engine to version 3.1 using a special image, `postgresai/dblab-server:3.5.0-zfs08`
+Option 2 (up to DBLab Engine 4.1 only): postpone the ZFS upgrade, stay on ZFS 0.8, and use a special image such as `postgresai/dblab-server:4.1.4-zfs0.8`. These images are not built for 4.2 and later.
 :::
 
 ## Observe DBLab Engine logs
@@ -106,7 +112,7 @@ If you need to save the logs in a file:
 sudo docker logs dblab_server 2>&1 | gzip > dblab_server.log.gz
 ```
 
-If you want to see more details, enable debug mode by setting the option `debug` to `true` (see [example](https://gitlab.com/postgres-ai/database-lab/-/tree/v4.1.3/engine/configs)). Next, follow [the reconfiguration guidelines](#reconfigure-dblab-engine) to apply the change.
+If you want to see more details, enable debug mode by setting the option `debug` to `true` (see [example](https://gitlab.com/postgres-ai/database-lab/-/tree/v4.2.0/engine/configs)). Next, follow [the reconfiguration guidelines](#reconfigure-dblab-engine) to apply the change.
 
 :::caution
 When debug mode is turned on, logs may contain sensitive data such as API secret keys for the backup system.

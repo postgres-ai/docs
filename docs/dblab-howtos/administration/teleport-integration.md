@@ -1,7 +1,7 @@
 ---
 title: Teleport integration
 sidebar_label: Teleport integration
-description: Integrate DBLab Engine 4.1+ with Teleport for secure, audited, certificate-based access to Postgres database clones with role-based access control.
+description: Integrate DBLab Engine 4.1+ with Teleport for secure, audited, certificate-based access to Postgres database clones with role-based access control, including per-user clone access and custom resource labels (4.2+).
 ---
 
 DBLab Engine 4.1 includes built-in integration with [Teleport](https://goteleport.com/), enabling secure, audited access to database clones through Teleport's access control. The integration works as a sidecar process that automatically registers and deregisters DBLab clones as Teleport database resources.
@@ -150,10 +150,14 @@ databaseContainer: &db_container
   dockerImage: "postgresai/extended-postgres:16"
   containerConfig:
     "shm-size": 1gb
-    volume: "/etc/dblab/certs:/var/lib/postgresql/cert:ro"
+    volume: "/etc/dblab/certs:/certs:ro"
 ```
 
 Cert files on the host must have uid 999 ownership before DBLab Engine starts, because the postgres user inside the container runs as uid 999.
+
+:::danger Never mount into `/var/lib/postgresql/...`
+Earlier versions of this guide used `/var/lib/postgresql/cert` as the container-side path. On Postgres 18+ images that directory is a Docker `VOLUME` (the official image moved it from `/var/lib/postgresql/data` to the parent directory in v18, and `extended-postgres` inherits it). A bind mount nested inside a Docker volume is deleted **on the host** when the clone container is removed with its anonymous volumes. Mount certs to a neutral path such as `/certs` instead. If you change the path on an existing setup, update the `ssl_*` values in `databaseConfigs` too and run a data refresh: the values are baked into the snapshot's Postgres config.
+:::
 
 ### 8. Webhook URL — Docker networking
 
@@ -175,14 +179,14 @@ databaseContainer: &db_container
   dockerImage: "postgresai/extended-postgres:16"
   containerConfig:
     "shm-size": 1gb
-    volume: "/etc/dblab/certs:/var/lib/postgresql/cert:ro"
+    volume: "/etc/dblab/certs:/certs:ro"
 
 databaseConfigs: &db_configs
   configs:
     ssl: "on"
-    ssl_cert_file: "/var/lib/postgresql/cert/server.crt"
-    ssl_key_file: "/var/lib/postgresql/cert/server.key"
-    ssl_ca_file: "/var/lib/postgresql/cert/teleport-ca.crt"
+    ssl_cert_file: "/certs/server.crt"
+    ssl_key_file: "/certs/server.key"
+    ssl_ca_file: "/certs/teleport-ca.crt"
 
 webhooks:
   hooks:
@@ -211,6 +215,58 @@ dblab teleport serve \
 ```
 
 See the [CLI reference](/docs/reference-guides/dblab-client-cli-reference#command-teleport) for all available options.
+
+### Custom resource labels (DBLab Engine 4.2+)
+
+Every resource the sidecar registers carries the labels `dblab: "true"`, `dblab_instance: <environment-id>`, `environment: <environment-id>` and, for clones, `clone_id`. Add your own with the repeatable `--label key=value` flag (or the `TELEPORT_LABELS` environment variable) so DBLab clones fit the same access rules as your other databases:
+
+```bash
+dblab teleport serve ... --label environment=staging --label service=dblab
+```
+
+An operator-supplied `environment` label replaces the default. The reserved labels `dblab`, `dblab_instance`, `clone_id` and `dblab_user` cannot be overridden; the sidecar refuses to start if one is passed.
+
+Clone IDs containing characters Teleport rejects in resource names are mapped to hyphens when the resource is created (4.2+); earlier versions failed to register such clones silently.
+
+## Per-user clone access
+
+By default, every Teleport user who holds a role granting access to DBLab resources can connect to **any** clone. Since DBLab Engine 4.2 the engine can label each clone with the identity of the user who created it, so that a Teleport role can limit each engineer to their own clones.
+
+Enable clone binding in `server.yml`:
+
+```yaml
+platform:
+  enablePersonalTokens: true   # required: the identity comes from the personal token
+  bindClonesToUser: true
+```
+
+When `bindClonesToUser` is enabled, a clone created with a **personal token** is labeled `dblab_user: <email>`, the authenticated user's full email address, matching Teleport's `external.email`. The label is derived from the authenticated identity, not from any clone-create parameter, so a personal-token caller cannot label a clone as someone else. The clone's Postgres username is not changed, so existing connection strings, Joe and CI automation keep working.
+
+Clones created with the shared `verificationToken` (for example CI pipelines or Joe) carry **no** `dblab_user` label by default. They are created normally, but are not reachable through a per-user role that matches on `dblab_user`; grant such callers access through a broader role.
+
+A proxy that authenticates with the shared `verificationToken` on behalf of a known user (for example the PostgresAI Platform serving Console requests) can assert the acting user by sending the `X-Forwarded-User-Email` header; the engine then labels the clone as if that user had used a personal token. The header is ignored on personal-token requests and when authorization is disabled.
+
+:::caution The label is only as trustworthy as the shared token
+The engine accepts `X-Forwarded-User-Email` from **any** caller that presents the shared `verificationToken`; it cannot tell a trusted proxy from another token holder. Anyone holding that token (CI, Joe, the sidecar's own `--dblab-token`) can therefore create a clone attributed to any user. Keep the shared token on trusted proxies and automation you control, give people personal tokens, and do not treat `dblab_user` as an audit record of who created a clone unless every shared-token holder is trusted.
+:::
+
+Then give users a role that matches their own email:
+
+```yaml
+kind: role
+version: v7
+metadata:
+  name: dblab-self-access
+spec:
+  allow:
+    db_labels:
+      dblab: ['true']
+      dblab_user: ['{{external.email}}']
+    db_names: ['*']
+    db_users: ['*']
+```
+
+Users holding only this role see and connect to their own clones; the broader `dblab-user` role from the prerequisites keeps giving access to every clone, including unlabeled ones.
 
 ## Connecting to a clone
 
@@ -242,3 +298,5 @@ tsh proxy db --tunnel dblab-clone-production-<clone-id>-6000
 | SSL settings not applied to new clones | Snapshot created before SSL config | Trigger a data refresh to create a new snapshot |
 | Webhook not received | Docker networking issue | Use `host.docker.internal` or bridge IP for webhook URL |
 | Permission denied on cert files | Wrong file ownership | `chown 999:999` on cert files |
+| Cert files disappear from the host after a clone is deleted | Certs mounted under `/var/lib/postgresql/...`, a Docker volume on PG 18+ images | Mount to a neutral path such as `/certs` (see step 7), update `ssl_*` paths, run a data refresh |
+| Clone has no `dblab_user` label | Created with the shared token, or `bindClonesToUser` / `enablePersonalTokens` off | Use a personal token and enable both options in `platform` |

@@ -10,7 +10,11 @@ DBLab Engine behavior can be controlled using the main configuration file that h
 DBLab Engine supports [YAML 1.2](https://yaml.org/spec/1.2/spec.html) including anchors, aliases, tags, map merging.
 :::
 
-Example config files can be found here: https://gitlab.com/postgres-ai/database-lab/-/tree/v4.1.3/engine/configs.
+Example config files can be found here: https://gitlab.com/postgres-ai/database-lab/-/tree/v4.2.0/engine/configs.
+
+:::tip Secrets out of the config file (DBLab Engine 4.2+)
+Any value that is exactly `${VAR}` or `$VAR` is replaced with that environment variable when the config is read, and the engine refuses to start when the variable is unset. See [Environment variables](#environment-variables).
+:::
 
 You may store configuration files in any suitable location. The recommended location of configuration files for DBLab Engine is `~/.dblab/engine/configs`.
 
@@ -143,6 +147,7 @@ Here is how the configuration file is structured:
 | `provision` | Describes how thin cloning and database branching are organized. |
 | `retrieval` | Defines the data flow: a series of "jobs" for initial retrieval of the data, and, optionally, continuous data synchronization with the source, snapshot creation and retention policies. The initial retrieval may be either "logical" (dump/restore) or "physical" (based on replication or restoration from an archive). |
 | `cloning` | Thin cloning policies.                                                                                                                                                                                                                                                                                                    |
+| `retention` | Automatic deletion of unused branches and snapshots, and the cap on their protection leases. Supported since DBLab Engine 4.2. |
 | `platform` | PostgresAI Platform integration (provides GUI, advanced features such as user management, logs).                                                                                                                                                                                                                         |
 | `observer` | CI Observer configuration. CI Observer helps verify database schema changes (database migrations) automatically, in CI/CD pipelines. Available on the PostgresAI Platform.                                                                                                                                               |
 | `webhooks` | Webhook configuration for clone lifecycle events. Allows integration with external systems for notifications and automation.                                                                                                                                                                                               |
@@ -158,7 +163,7 @@ Here is how the configuration file is structured:
   - `dbname` (string, optional, default: "postgres") - a default database name for logical/physical restore jobs
 
 ## Section `server`: DBLab Engine API server
-- `verificationToken` (string, required) - the token that is used to work with Database Lab API
+- `verificationToken` (string, required) - the token that is used to work with Database Lab API. Since DBLab Engine 4.2 the example configs reference it from the environment: `verificationToken: "${DBLAB_VERIFICATION_TOKEN}"` (see [Environment variables](#environment-variables))
 - `host` (string, optional) - The host which the DBLab Engine API server accepts HTTP connections from. An empty string (default) means "all available addresses".
 - `port` (integer, required, default: 2345) - HTTP server port
 - `disableConfigModification` (boolean, optional, default: false) - disable modifying configuration via UI/API; when enabled, configuration changes can only be made by editing the config file directly
@@ -187,6 +192,10 @@ Here is how the configuration file is structured:
 - `keepUserPasswords` (bool, optional, default: "false") - By default, in addition to creating a new user with administrative privileges, DBLab Engine resets passwords for all existing users. This is done for security reasons. If this behavior is undesirable and you want to keep the ability to authenticate for the existing users with their unchanged passwords, then set the value of the variable to `true`.
 - `containerConfig` (key-value, optional) - options to pass custom parameters to clone containers
 - `cloneAccessAddresses` (string, optional, default: "127.0.0.1") - IP addresses that can be used to access clones. By default, use a loop-back to accept only local connections. The empty string means "all available addresses". The option supports multiple IPs (using comma-separated format) and IPv6 addresses (for example, `[::1]`)
+- `pgUpgradeImage` (string, optional) - the image that runs `pg_upgrade` for [clone major upgrades](/docs/dblab-howtos/cloning/clone-upgrade) (`dblab clone upgrade`, `POST /clone/{id}/upgrade`). Its major is the version clones are upgraded to: the engine reads it out of a release tag (`:17`, `:17-0.8.0`, `:17-0.8.0-glibc236`) and re-reads it from the image's `PG_MAJOR` before every upgrade; a tag that states no major (a digest pin, `latest`) is fetched in the background at startup and the major is read from the image. Leave unset to disable clone upgrades. The clone must be on Postgres 12 or newer, and the target must be newer than the clone's major and at most four majors ahead. Supported since DBLab Engine 4.2. Example: `"postgresai/pg-upgrade:17"`
+- `pgUpgradeTimeout` (string, optional, default: `3h`) - how long a single clone upgrade run may take, as a Go duration (`30m`, `3h`); this option takes a duration rather than a `...Minutes` integer. When the budget runs out, the upgrade container is removed and the outcome is handled like any other failed upgrade: the clone restarts on its original version if nothing had been converted yet, otherwise it is rebuilt from its origin snapshot and data written since the clone was created is lost. Supported since DBLab Engine 4.2.
+- `pgUpgradePullTimeout` (string, optional, default: `1h`) - how long each of the two image pulls made for a clone upgrade may take, as a Go duration. The pulls happen while the clone is still running, so exceeding the budget leaves the clone untouched. Supported since DBLab Engine 4.2.
+- `upgradeImageAllowList` (list of strings, optional) - repositories an explicit `dblab clone upgrade --docker-image` (or the `dockerImage` field of the upgrade request) may name. When unset or empty, any repository the instance can reach is accepted, which lets any API token holder run an arbitrary image over a clone's data; set it whenever the API is reachable by non-administrators, especially with `platform.enablePersonalTokens`. Supported since DBLab Engine 4.2. Example: `["postgresai/extended-postgres"]`
 
 ## Section `retrieval`: data retrieval
 - `refresh` (key-value, optional) - describes configuration for a full refresh.
@@ -222,6 +231,7 @@ Options:
   - Example: `"memory": "2gb"`, `"cpus": "1.5"`, `"shm-size": "1gb"`
 - `source` (key-value, required) - describes source of data:
    - `type` (string, required) -  defines location type of a dumped database. Available values: `local`, `remote`, `rdsIam`
+   - `connectionString` (string, optional) - a full libpq connection string for the source (`source.connectionString`, a sibling of `source.connection`), either a URI (`postgresql://user@host:5432/dbname?sslmode=verify-full&sslrootcert=/path/to/ca.pem`) or keyword/value form (`host=... port=... dbname=... sslmode=...`). When set, it wins over the discrete `connection.*` fields and preserves every libpq option (`sslmode`, `connect_timeout`, `sslrootcert`, `options`, ...) end-to-end into `pg_dump` and the engine's own connections to the source. The password must not be embedded here; set it via `connection.password` or the `PGPASSWORD` environment variable. Note that `sslmode=require` encrypts but does not authenticate the server; use `verify-full` with `sslrootcert` for managed providers, and mount the CA file into both the DBLab Engine container and the `logicalDump` container (`containerConfig` `volume`), since both open the path. Supported since DBLab Engine 4.2.
    - `connection` (key-value, required) - defines connection parameters of source:
       - `dbname` (string, required) - database name used for connection purposes; also see `logicalDump.databases`
       - `host` (string, required) - defines hostname of the database
@@ -254,7 +264,7 @@ Restores a PostgreSQL database from an archive created by pg_dump in one of the 
 Options:
 - `dumpLocation` (string, required) - specifies the location of the archive files (or directories, for directory-format archives) on the host machine to be restored
 - `dockerImage` (string, required) - specifies the Docker image containing the restore-required tool
-- `containerConfig` (key-value, optional) - options to pass custom parameters to logicalRestore container
+- `containerConfig` (key-value, optional) - options to pass custom parameters to logicalRestore container. Since DBLab Engine 4.2, `volume` entries here are applied as bind mounts to the retrieval container
 - `forceInit` (removed, boolean, optional, default: false) - init data even if the Postgres directory (see the configuration options `global.mountDir` and `global.dataSubDir`) is not empty; note the existing data might be overwritten; removed since DBLab Engine 3.4.0
 - `parallelJobs` (integer, optional, default: 1) - defines the number of concurrent jobs using the `pg_restore` option `jobs`. This option can dramatically reduce the time to restore a large database to a server running on a multiprocessor machine
 - `databases` (key-value, optional) - defines options for specifying the database list that must be restored. By default, DBLab Engine restores all available databases. Do not specify the databases section to restore all databases. Available options for each database: `tables`, `format`
@@ -306,7 +316,7 @@ Supported restore tools:
 Options:
 - `tool` (string, required) - defines the tool to restore data. See available restore tools list
 - `dockerImage` (string, required) - specifies the Docker image containing the restoring tool
-- `containerConfig` (key-value, optional) - options to pass custom parameters to physicalRestore container
+- `containerConfig` (key-value, optional) - options to pass custom parameters to physicalRestore container. Since DBLab Engine 4.2, `volume` entries here are applied as bind mounts to the retrieval containers (restore and sync); earlier versions ignored them for retrieval jobs. Do not mount into `/var/lib/postgresql/...` on Postgres 18+ images (see the [Teleport guide](/docs/dblab-howtos/administration/teleport-integration#7-volume-mounting-for-certs))
 - `sync`  (key-value, optional) - keep PGDATA up to date after (replaying new WALs from the source) the initial data fetching:
    - `enabled` (boolean, optional, default: false) - runs a separate container to keep Database Lab data up to date
    - `healthCheck` (key-value, optional) - describes health check options for the  sync container:
@@ -372,10 +382,38 @@ Options:
 - `protectionMaxDurationMinutes` (integer, optional, default: 10080) - maximum allowed protection duration in minutes. Users cannot request a protection duration longer than this value. Use `0` to remove the limit. Supported since DBLab Engine 4.1.
 - `protectionExpiryWarningMinutes` (integer, optional, default: 1440) - send a warning webhook notification the specified number of minutes before a protection lease expires. Supported since DBLab Engine 4.1.
 
+## Section `retention`: automatic deletion of unused branches and snapshots
+Supported since DBLab Engine 4.2. A background sweeper deletes branches and snapshots that have stayed unused for longer than the configured window. The sweep is safe-only: an entity that has clones, child branches or child snapshots, is a branch head, or is protected is never removed, and nothing is force-deleted to make room. Both windows default to `0`, so upgrading changes nothing until you opt in.
+
+An entity counts as *unused* when it has no dependents (clones, child branches, child snapshots) and no protection. The sweeper schedules the deletion the first time it sees the entity unused (`now + window`), skips it while the schedule has not been reached, and clears the schedule again if the entity gains a dependent or protection in the meantime. Deleted entities produce the usual `branch_delete` / `snapshot_delete` [webhooks](#section-webhooks-webhook-configuration).
+
+What the sweep does **not** cover:
+- the automatic pool-level snapshots created by data retrieval (full refresh) and the physical `_pre` snapshots. These are managed separately: in physical mode, `physicalSnapshot.options.scheduler.retention` (`timetable`, `limit`, see [Job `physicalSnapshot`](#job-physicalsnapshot)) sets how many are kept; in logical mode, older snapshots without clones are removed on each full refresh. Only user snapshots (on branches or created from clones) are candidates for this sweep
+- the default branch `main`
+- pools without branch metadata (LVM)
+
+Enabling retention, or changing `checkIntervalMinutes`, takes effect only after an engine restart.
+
+- `unusedSnapshotMinutes` (integer, optional, default: 0) - auto-delete a snapshot with no clones or child snapshots after this many minutes unused; `0` disables it
+- `unusedBranchMinutes` (integer, optional, default: 0) - auto-delete a branch with no clones or child branches after this many minutes unused; `0` disables it
+- `checkIntervalMinutes` (integer, optional, default: 5) - sweep cadence in minutes. Unlike the windows and the per-tick cap, which are re-read on every sweep and picked up on configuration reload, a changed interval needs an engine restart (see above)
+- `protectionMaxDurationMinutes` (integer, optional, default: 0) - cap for timed protection of branches and snapshots set via API or CLI (`dblab branch --protected`, `dblab snapshot update --protected`, `PATCH /branch/{name}`, `PATCH /snapshot/{id}`), in minutes; `0` means no cap. Clone protection is capped separately by `cloning.protectionMaxDurationMinutes`
+- `maxDeletionsPerTick` (integer, optional, default: 50) - maximum number of entities deleted per sweep; the excess is deferred to the next tick so that a first sweep after downtime cannot flood webhooks
+
+```yaml
+retention:
+  unusedSnapshotMinutes: 0
+  unusedBranchMinutes: 0
+  checkIntervalMinutes: 5
+  protectionMaxDurationMinutes: 0
+  maxDeletionsPerTick: 50
+```
+
 ## Section `platform`: PostgresAI Platform integration
 - `url` (string, optional, default: "https://postgres.ai/api/general") - Platform API URL
 - `accessToken` (string, required) - the token for authorization in Platform API. This token can be obtained on the PostgresAI Console
 - `enablePersonalTokens` (boolean, optional, default: false) - enables authorization with personal tokens of the organization's members
+- `bindClonesToUser` (boolean, optional, default: false) - label each clone created with a personal token with the authenticated user's full email address (`dblab_user`), taken from the identity behind the token rather than from any request parameter. The [Teleport sidecar](/docs/dblab-howtos/administration/teleport-integration#per-user-clone-access) uses this label for per-user clone access. Requires `enablePersonalTokens`. Clones created with the shared `verificationToken` stay unlabeled unless the caller asserts a user with the `X-Forwarded-User-Email` header, which every holder of the shared token may do, so the label is only as trustworthy as the shared token itself. The clone's Postgres username is unchanged. Supported since DBLab Engine 4.2.
 - `projectName` (string, optional) - project name for identification in the Platform
 - `orgKey` (string, optional) - organization key for Platform integration
 - `enableTelemetry` (boolean, optional, default: true) - enable anonymous statistics collection sent to PostgresAI; used to analyze DBLab Engine usage and help development decisions. See [telemetry documentation](https://postgres.ai/docs/database-lab/telemetry) for the full list of collected data points
@@ -452,6 +490,7 @@ Webhooks provide a way to notify external systems about clone lifecycle events. 
   - `trigger` (list of strings, required) - specifies which clone events should trigger this webhook. Available trigger types:
     - `clone_create` - triggered when a new clone is created
     - `clone_reset` - triggered when an existing clone is reset to a different snapshot
+    - `clone_upgrade` - triggered when a clone has been [upgraded to a newer Postgres major](/docs/dblab-howtos/cloning/clone-upgrade); the payload has the same fields as `clone_create` except `owner_user`. Supported since DBLab Engine 4.2.
     - `clone_delete` - triggered when a clone is deleted. Supported since DBLab Engine 4.1.
     - `clone_protection_expiring` - triggered when a clone's protection lease is about to expire (based on `protectionExpiryWarningMinutes`). Supported since DBLab Engine 4.1.
     - `clone_protection_expired` - triggered when a clone's protection lease has expired and protection has been automatically removed. Supported since DBLab Engine 4.1.
@@ -539,47 +578,18 @@ The section has been removed in DBLab Engine 3.4.0
 - `sampleThreshold` - (integer, optional, default: 20) - the minimum number of samples sufficient to display the estimation results
 
 ## Environment variables
-DBLab Engine supports several environment variables that can override configuration file settings or provide sensitive data like passwords. Environment variables have higher priority than configuration file values.
+A DBLab config has to hold a source password, and usually cloud storage or WAL-G credentials too. Two mechanisms keep such values out of the file.
 
-### Supported environment variables
+### Placeholders in the config file (DBLab Engine 4.2+)
+Any config value that is exactly `${VAR}` or `$VAR` is replaced with the environment variable `VAR` when the config is read. This works for every string value in the file, including the retrieval job options, except the `observer.replacementRules` subtree (where `${name}` is a regex backreference), so any credential can be referenced this way:
 
-#### Database connection
-- `PGPASSWORD` - PostgreSQL password for source database connections. Overrides `password` in job configurations
-- `PGUSER` - PostgreSQL username. Can override `username` in job configurations  
-- `PGHOST` - PostgreSQL hostname. Can override `host` in job configurations
-- `PGPORT` - PostgreSQL port. Can override `port` in job configurations
-- `PGDATABASE` - PostgreSQL database name. Can override `dbname` in job configurations
-
-#### AWS/cloud integration  
-- `AWS_ACCESS_KEY_ID` - AWS access key for S3/RDS access
-- `AWS_SECRET_ACCESS_KEY` - AWS secret key
-- `AWS_SESSION_TOKEN` - AWS session token (for temporary credentials)
-- `AWS_REGION` - AWS region (can override `awsRegion` in RDS IAM configuration)
-
-#### WAL-G configuration
-- `WALG_S3_PREFIX` - S3 prefix for WAL-G backups
-- `WALG_COMPRESSION_METHOD` - compression method for WAL-G
-- `WALG_S3_STORAGE_CLASS` - S3 storage class
-
-#### Platform integration
-- `DLE_PLATFORM_ACCESS_TOKEN` - Platform access token (overrides `platform.accessToken`)
-- `DLE_VERIFICATION_TOKEN` - API verification token (overrides `server.verificationToken`)
-
-### Priority order
-When the same parameter is defined in multiple places, DBLab Engine uses this priority order:
-1. **Environment variables** (highest priority)
-2. **Configuration file values**
-3. **Default values** (lowest priority)
-
-### Security best practices
-- **Use environment variables for sensitive data** like passwords and tokens
-- **Avoid putting credentials in configuration files** in production
-- **Use Docker secrets or Kubernetes secrets** to manage environment variables securely
-- **Rotate credentials regularly** and update environment variables accordingly
-
-### Example usage
 ```yaml
-# Configuration file - no sensitive data
+server:
+  verificationToken: "${DBLAB_VERIFICATION_TOKEN}"
+
+platform:
+  accessToken: "${PGAI_PLATFORM_ACCESS_TOKEN}"
+
 retrieval:
   spec:
     logicalDump:
@@ -587,18 +597,39 @@ retrieval:
         source:
           connection:
             host: "postgres.example.com"
-            port: 5432
             username: "backup_user"
-            # password: "" # Use PGPASSWORD environment variable instead
+            password: "${SOURCE_DB_PASSWORD}"
 ```
 
 ```bash
-# Environment variables - sensitive data
-export PGPASSWORD="secure_password_here"
-export DLE_VERIFICATION_TOKEN="secure_api_token"
-export AWS_ACCESS_KEY_ID="your_access_key"
-export AWS_SECRET_ACCESS_KEY="your_secret_key"
+# /etc/dblab/engine.env, owned by root, chmod 600
+DBLAB_VERIFICATION_TOKEN=secure_api_token
+PGAI_PLATFORM_ACCESS_TOKEN=platform_token
+SOURCE_DB_PASSWORD=secure_password_here
 ```
+
+```bash
+docker run --name dblab_server --env-file /etc/dblab/engine.env ...
+```
+
+Passing the values inline (`-e VAR=value`) also works but leaves the secrets in the shell history and the process list. A bare `-e VAR` forwards the variable from the calling environment without writing the value on the command line, but note that `sudo docker run` resets the environment by default, so the variable is silently dropped unless you run `sudo --preserve-env=VAR docker run ...`; `--env-file` is not affected by `sudo`.
+
+Rules:
+- Only a *whole* value is a placeholder. A value that merely contains a `$` (a password, a regex backreference such as `***$1` in `observer.replacementRules`, a dollar-quoted SQL block) is a literal and reaches its consumer untouched, so nothing needs escaping.
+- An unset variable is a startup failure. A config that silently loses its verification token is worse than one that refuses to start.
+- Quoting decides the resulting type: a quoted placeholder is always a string, while an unquoted one can also stand in for a numeric or boolean setting (spell booleans `true` and `false`; `yes` and `no` stay strings).
+- The admin API and the UI Configuration page keep the placeholder text rather than the resolved value, so saving the configuration from the UI cannot persist a resolved secret into the file. They also refuse to *introduce* a placeholder the file on disk does not already reference; new placeholders are added by editing the file.
+- The `dblab` CLI accepts the same `${VAR}` form for the environment token (`dblab init --token '${DBLAB_TOKEN}'`) and fails when the variable is unset.
+
+The variable names above (`DBLAB_VERIFICATION_TOKEN`, `PGAI_PLATFORM_ACCESS_TOKEN`) are the ones used in the example configs; any name works. The 4.2 example configs ship with `verificationToken: "${DBLAB_VERIFICATION_TOKEN}"`, so an engine started from an unedited example needs that variable set or it refuses to start.
+
+### `PGPASSWORD` for the logical dump source
+For the `logicalDump` job, the environment variable `PGPASSWORD` set on the DBLab Engine container is used as the source password when `source.connection.password` is empty, and takes precedence over it when both are set. On DBLab Engine 4.2+ prefer a `${VAR}` placeholder in `password`, which behaves the same for every job type.
+
+### Security best practices
+- **Keep credentials out of the configuration file**: reference them with placeholders (4.2+) or `PGPASSWORD`
+- **Use Docker secrets or Kubernetes secrets** to populate the environment variables
+- **Rotate credentials regularly** and restart or reload the engine after updating the environment
 
 ## Section `diagnostic`: Diagnostic collection configuration
 - `logsRetentionDays` (integer, optional, default: 7) - the number of days after which collected containers logs will be discarded

@@ -9,3 +9,4 @@ description: "How to work with DBLab Engine snapshots: create and delete snapsho
 
 - [How to create a snapshot](/docs/dblab-howtos/snapshots/create-snapshot)
 - [How to delete a snapshot](/docs/dblab-howtos/snapshots/delete-snapshot)
+- [Protect a snapshot from deletion](/docs/dblab-howtos/snapshots/delete-snapshot#protect-a-snapshot-from-deletion-dblab-engine-42) and [automatic deletion of unused snapshots](/docs/dblab-howtos/snapshots/delete-snapshot#automatic-deletion-of-unused-snapshots-dblab-engine-42) (DBLab Engine 4.2+)
