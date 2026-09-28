@@ -3,8 +3,19 @@
 
 set -e
 
-echo "Building site to generate feeds..."
-bun run build
+case "${1:-}" in
+  "")
+    echo "Building site to generate feeds..."
+    bun run build
+    ;;
+  --skip-build)
+    # Validate the already-built artifact; missing feeds still fail below.
+    ;;
+  *)
+    echo "Usage: $0 [--skip-build]" >&2
+    exit 2
+    ;;
+esac
 
 echo ""
 echo "Validating RSS/Atom feeds..."
