@@ -31,6 +31,17 @@ const BOT_WS_URL = !!process.env.BOT_WS_URL ? process.env.BOT_WS_URL : '/ai-bot-
 const CONSULTING_WEBHOOK = process.env.CONSULTING_WEBHOOK ? process.env.CONSULTING_WEBHOOK : ''
 
 module.exports = {
+  // Use the native bundler and share MDX compilation across client/server.
+  // Keep existing HTML/CSS minifiers and rendering semantics.
+  future: {
+    experimental_faster: {
+      swcJsLoader: true,
+      swcJsMinimizer: true,
+      mdxCrossCompilerCache: true,
+      rspackBundler: true,
+      rspackPersistentCache: true,
+    },
+  },
   title: SITE_NAME,
   tagline: SITE_SLOGAN,
   url: URL, // Your website URL.

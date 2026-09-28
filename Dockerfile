@@ -6,6 +6,17 @@ FROM oven/bun:1.3.13-debian@sha256:e95356cb8e1de62ad69ab3bd3584ba947013d27650a22
 # This is much faster than compiling from source (~2 min saved)
 RUN apt-get update && apt-get install -y --no-install-recommends libvips42 && rm -rf /var/lib/apt/lists/*
 
+# Install dependencies before environment-specific arguments so MR URLs do not
+# invalidate the dependency layer shared by preview builds.
+WORKDIR /docs
+
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
+
+# Validate generated feeds with the same tools as the former standalone CI job.
+# Keep this after dependency installation to preserve its existing cache layer.
+RUN apt-get update && apt-get install -y --no-install-recommends libxml2-utils jq && rm -rf /var/lib/apt/lists/*
+
 ARG ARG_REACT_APP_API_SERVER
 ENV REACT_APP_API_SERVER=$ARG_REACT_APP_API_SERVER
 
@@ -30,13 +41,10 @@ ENV UMAMI_WEBSITE_ID=$ARG_UMAMI_WEBSITE_ID
 ARG ARG_UMAMI_SCRIPT_URL
 ENV UMAMI_SCRIPT_URL=$ARG_UMAMI_SCRIPT_URL
 
-WORKDIR /docs
-
-COPY package.json bun.lock ./
-RUN bun install --frozen-lockfile
-
 COPY . .
-RUN bun run build
+# Compilation caches help local rebuilds, but are not read by the runtime or
+# restored into subsequent Docker builds. Do not ship them to the registry/VM.
+RUN bun run build && bash .ci/validate-feeds.sh --skip-build && rm -rf node_modules/.cache
 
 EXPOSE 3000
 CMD ["bun", "run", "serve"]
