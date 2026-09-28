@@ -95,7 +95,16 @@ nik=# select count(*)
 Why 226 again? The thing is that, the size of the value doesn't matter here; it just needs to be less or equal to 8
 bytes. For every row, alignment padding adds zeroes, so we'll always have 8 bytes for each row. Math:
 
-![floor((8192 - 24) / (4 + 24 + 8)) = 226](/img/postgres-howtos/0066-formula-1.gif)
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="floor((8192 - 24) / (4 + 24 + 8)) = 226">
+  <mrow>
+    <mo>⌊</mo>
+    <mfrac>
+      <mrow><mn>8192</mn><mo>−</mo><mn>24</mn></mrow>
+      <mrow><mn>4</mn><mo>+</mo><mn>24</mn><mo>+</mo><mn>8</mn></mrow>
+    </mfrac>
+    <mo>⌋</mo><mo>=</mo><mn>226</mn>
+  </mrow>
+</math>
 
 👉 What we have counted here:
 
@@ -111,7 +120,16 @@ structures (for [PG16](https://github.com/postgres/postgres/blob/REL_16_STABLE/s
 
 The answer is YES. Postgres allows tables without columns (!)  In this case, the math is:
 
-![floor((8192 - 24) / (4 + 24)) = 291](/img/postgres-howtos/0066-formula-2.gif)
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="floor((8192 - 24) / (4 + 24)) = 291">
+  <mrow>
+    <mo>⌊</mo>
+    <mfrac>
+      <mrow><mn>8192</mn><mo>−</mo><mn>24</mn></mrow>
+      <mrow><mn>4</mn><mo>+</mo><mn>24</mn></mrow>
+    </mfrac>
+    <mo>⌋</mo><mo>=</mo><mn>291</mn>
+  </mrow>
+</math>
 
 Let's see (note the empty column list in the `SELECT` clause):
 
