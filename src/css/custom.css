@@ -1506,3 +1506,33 @@ html[data-theme='dark'] .footer-aicpa-seal-light {
 html[data-theme='dark'] .footer-aicpa-seal-dark {
   display: inline-block;
 }
+
+/* Editorial correction notes: a single disclosure, with a readable unified diff. */
+.article-corrections {
+  margin-block: 2rem 1.5rem;
+  padding: .75rem 1rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  font-size: .8125rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.article-corrections p { margin: 0 0 .65rem; }
+.article-corrections details {
+  --ifm-alert-background-color: transparent;
+  --ifm-alert-foreground-color: var(--ifm-font-color-base);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-shadow: none;
+}
+.article-corrections summary { cursor: pointer; font-weight: 500; }
+.article-corrections summary:focus-visible { outline: 2px solid var(--ifm-color-primary); outline-offset: 4px; }
+.article-corrections .article-corrections-topic { margin: 1rem 0 .4rem; font-weight: 600; }
+.article-corrections-pair { margin-bottom: 1rem; font-family: var(--ifm-font-family-monospace); font-size: .75rem; }
+.article-corrections-pair > div { padding: .5rem .75rem; border-inline-start: 2px solid; }
+.article-corrections-removed { background: rgba(220, 60, 60, .08); border-color: #c64747; }
+.article-corrections-added { background: rgba(40, 160, 95, .08); border-color: #29945a; }
+.article-corrections-pair > div > p:first-child { font-size: .6875rem; margin-bottom: .25rem; }
+.article-corrections-pair > div > p:last-child { margin-bottom: 0; }
+.article-corrections code { font-size: 1em; white-space: normal; }
