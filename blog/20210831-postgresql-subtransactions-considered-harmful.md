@@ -187,7 +187,7 @@ In this example, the main transaction had `XID = 1549100656`, and additional XID
 This example clearly shows two facts that may be not intuitive:
 
 1. XIDs assigned to subtransactions are used in tuple headers, hence participating in MVCC tuple visibility checks – although results of subtransactions are never visible to other transactions until the main transaction is committed (in PostgreSQL, "minimal" isolation level supported is `READ COMMITTED`).
-1. Subtransactions contribute to the growth of global XID value (32 bit, requiring special automated maintenance usually done by autovacuum). Therefore it implicitly increases risks associated with XID wraparound: if the mentioned maintenance is lagging for some reason and this issue is not resolved, the system may reach a point when the mechanism of transaction ID wraparound protection puts the cluster to the single-user mode causing long-lasting downtime (see examples of how popular SaaS systems were down because of that: [Sentry](https://blog.sentry.io/transaction-id-wraparound-in-postgres/), [Mailchimp](https://mailchimp.com/what-we-learned-from-the-recent-mandrill-outage/)). One may have, say, 1000 writing transactions per second, but if they all use 10 subtransactions, then XID is incremented by 10000 per second. This might not be expected by users – poor autovacuum needs to run in the "transaction ID wraparound prevention" mode more often than it would be if subtransactions had "local" IDs inside each transaction, not "wasting" global XIDs.
+1. Subtransactions contribute to the growth of global XID value (32 bit, requiring special automated maintenance usually done by autovacuum). Therefore it implicitly increases risks associated with XID wraparound: if the mentioned maintenance is lagging for some reason and this issue is not resolved, the system may reach a point when the mechanism of transaction ID wraparound protection puts the cluster to the single-user mode causing long-lasting downtime (see examples of how popular SaaS systems were down because of that: [Sentry](https://blog.sentry.io/transaction-id-wraparound-in-postgres/), [Mailchimp](https://mailchimp.com/what-we-learned-from-the-recent-mandrill-outage/)). At 1000 writing transactions per second, if each transaction uses 10 subtransactions that each receive an XID, the total consumption is 11,000 XIDs per second: 1000 for the top-level transactions plus 10,000 for their subtransactions. This might not be expected by users – poor autovacuum needs to run in the "transaction ID wraparound prevention" mode more often than it would be if subtransactions had "local" IDs inside each transaction, not "wasting" global XIDs.
 
 Bottom line: there is a trade-off between active use of subtransactions and the XID growth. Understanding this "price" of using subtransactions is essential to avoid issues in heavily-loaded systems.
 
@@ -411,7 +411,7 @@ The picture below visualizes the performance degradation observed on the standby
   />
 </a>
 
-What's happening here? The workload on the primary issues UPDATEs in transactions involving subtransactions. The `xmin` values in tuples have XID belonging to subtransactions, so each time we read such tuple and need to check its visibility, subtransaction mechanism is involved – there is a global cache for all subtransactions, also SLRU ("simple least-recently-used" cache, see [slru.c](https://github.com/postgres/postgres/blob/317632f3073fc06047a42075eb5e28a9577a4f96/src/backend/access/transam/slru.c)), but very small – see [subtrans.h](https://github.com/postgres/postgres/blob/4bf0bce161097869be5a56706b31388ba15e0113/src/include/access/subtrans.h#L15:9):
+What's happening here? The workload on the primary issues UPDATEs in transactions involving subtransactions. When a standby snapshot has `suboverflowed` set, visibility checks for XIDs in the snapshot's `xmin`-to-`xmax` range (`xmin` inclusive, `xmax` exclusive) look up their top-level parent in `pg_subtrans`. This applies to top-level XIDs as well as subtransaction XIDs, not to every tuple read. XIDs outside that range return before the parent lookup. A long-running transaction can keep the snapshot's `xmin` low, widening the range of XIDs that need these lookups – there is a global cache for all subtransactions, also SLRU ("simple least-recently-used" cache, see [slru.c](https://github.com/postgres/postgres/blob/317632f3073fc06047a42075eb5e28a9577a4f96/src/backend/access/transam/slru.c)), but very small – see [subtrans.h](https://github.com/postgres/postgres/blob/4bf0bce161097869be5a56706b31388ba15e0113/src/include/access/subtrans.h#L15:9):
 
 ```C
 /* Number of SLRU buffers to use for subtrans */
@@ -483,7 +483,7 @@ for pg_xact are implemented in transam.c, while the low-level functions are in
 clog.c.  pg_subtrans is contained completely in subtrans.c.
 ```
 
-On the picture above, the last chart shows Subtrans SLRU reads and hits. It is easy to see that the moment when reads start is exactly when standby's TPS starts to degrade. If we check the disk IO, we will not find any real reads or writes – all operations with `pg_subtrans` are dealing with the page cache. But the fact that it is needed to be checked, as well as the growing number of such checks, affects performance in a really bad way – in our experiment, TPS went down ~20x during 5 minutes, from ~210k down to ~20k.
+On the picture above, the last chart shows Subtrans SLRU reads and hits. It is easy to see that the moment when reads start is exactly when standby's TPS starts to degrade. If we check the disk IO, we will not find any real reads or writes – all operations with `pg_subtrans` are dealing with the page cache. But the fact that it is needed to be checked, as well as the growing number of such checks, affects performance in a really bad way – in our experiment, TPS went down ~10.5x during 5 minutes, from ~210k down to ~20k (210,000 / 20,000 = 10.5).
 
 Again, the meaning of "long" in "long-running transaction" may vary. It may be a few seconds for heavily-loaded systems, so just a regular slow query can very negatively affect standbys' performance.
 
@@ -568,3 +568,70 @@ All problems are easy to reproduce. We have provided recommendations for Postgre
 The future work may include additional benchmarks and testing of patches.
 
 <BlogFooter author={nik} />
+
+<aside className="article-corrections" aria-label="Article corrections">
+
+<details>
+<summary>3 corrections made on <time dateTime="2025-09-22">2025-09-22</time></summary>
+
+<p className="article-corrections-topic">Total versus additional XID consumption</p>
+
+<div className="article-corrections-pair">
+<div className="article-corrections-removed">
+
+**− Removed**
+
+One may have, say, 1000 writing transactions per second, but if they all use 10 subtransactions, then XID is incremented by 10000 per second.
+
+</div>
+<div className="article-corrections-added">
+
+**+ Added**
+
+At 1000 writing transactions per second, if each transaction uses 10 subtransactions that each receive an XID, the total consumption is 11,000 XIDs per second: 1000 for the top-level transactions plus 10,000 for their subtransactions.
+
+</div>
+</div>
+
+<p className="article-corrections-topic">Standby visibility checks</p>
+
+<div className="article-corrections-pair">
+<div className="article-corrections-removed">
+
+**− Removed**
+
+The `xmin` values in tuples have XID belonging to subtransactions, so each time we read such tuple and need to check its visibility, subtransaction mechanism is involved
+
+</div>
+<div className="article-corrections-added">
+
+**+ Added**
+
+When a standby snapshot has `suboverflowed` set, visibility checks for XIDs in the snapshot's `xmin`-to-`xmax` range (`xmin` inclusive, `xmax` exclusive) look up their top-level parent in `pg_subtrans`. This applies to top-level XIDs as well as subtransaction XIDs, not to every tuple read. XIDs outside that range return before the parent lookup. A long-running transaction can keep the snapshot's `xmin` low, widening the range of XIDs that need these lookups
+
+</div>
+</div>
+
+<p className="article-corrections-topic">Slowdown arithmetic</p>
+
+<div className="article-corrections-pair">
+<div className="article-corrections-removed">
+
+**− Removed**
+
+in our experiment, TPS went down ~20x during 5 minutes, from ~210k down to ~20k.
+
+</div>
+<div className="article-corrections-added">
+
+**+ Added**
+
+in our experiment, TPS went down ~10.5x during 5 minutes, from ~210k down to ~20k (210,000 / 20,000 = 10.5).
+
+</div>
+</div>
+
+The standby explanation was checked against [`XidInMVCCSnapshot()`](https://github.com/postgres/postgres/blob/REL_18_3/src/backend/utils/time/snapmgr.c#L1870-L1964) and [GitLab’s account of the investigation](https://about.gitlab.com/blog/why-we-spent-the-last-month-eliminating-postgresql-subtransactions/). The slowdown correction uses the endpoints already stated in this article.
+
+</details>
+</aside>
