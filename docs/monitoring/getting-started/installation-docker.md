@@ -24,9 +24,10 @@ cd postgresai
 # Configure stack secrets
 cp .env.example .env
 # Edit .env and set (at minimum):
-#   PGAI_TAG=0.15.0          # .env.example ships 0.14.0 — bump it to this release
+#   PGAI_TAG=0.17.0          # .env.example ships 0.14.0 — bump it to this release
 #   VM_AUTH_PASSWORD=...     # required (non-empty) — Grafana datasource won't provision without it
 #   REPLICATOR_PASSWORD=...  # required if you keep the demo target-db/target-standby services
+#   VM_*_AUTH_KEY=...        # 0.17+: VictoriaMetrics admin-endpoint keys (openssl rand -hex 32)
 
 # Create instances.yml (the list of databases to monitor).
 # This file MUST exist as a FILE before `docker compose up`: docker-compose.yml
@@ -57,7 +58,7 @@ Create a `.env` file or set these environment variables:
 
 ```bash
 # Required
-PGAI_TAG=0.15.0
+PGAI_TAG=0.17.0
 REPLICATOR_PASSWORD=<generated-secret>
 
 # Required in 0.15: VictoriaMetrics basic auth. VM_AUTH_PASSWORD must be non-empty.
@@ -65,6 +66,15 @@ REPLICATOR_PASSWORD=<generated-secret>
 # See: Authentication and security in the Prometheus/VictoriaMetrics config guide.
 VM_AUTH_USERNAME=vmauth
 VM_AUTH_PASSWORD=<generated-secret>
+
+# 0.17+: keys for VictoriaMetrics admin endpoints (delete, snapshot, force merge, pprof).
+# Generate each with: openssl rand -hex 32. If left blank, sink-prometheus generates a random
+# key at every start, so the endpoints stay closed but you cannot use them.
+# See: Admin-endpoint keys in the Prometheus/VictoriaMetrics config guide.
+VM_DELETE_AUTH_KEY=<generated-secret>
+VM_SNAPSHOT_AUTH_KEY=<generated-secret>
+VM_FORCE_MERGE_AUTH_KEY=<generated-secret>
+VM_PPROF_AUTH_KEY=<generated-secret>
 
 # Target databases are defined in instances.yml
 # Use postgres_ai_mon by default after running prepare-db.
@@ -171,7 +181,7 @@ All stack images are **version-pinned** in 0.15 — none use `:latest`. Postgres
 (`pgwatch`, `monitoring-flask-backend`, `reporter`, configs) are pinned to `PGAI_TAG`, and the
 third-party images are pinned to specific releases (for example `grafana/grafana:12.3.2`,
 `victoriametrics/victoria-metrics:v1.140.0`, `postgres:17`). Pinning makes deployments
-reproducible and auditable and avoids silent, unreviewed upgrades — set `PGAI_TAG=0.15.0` to
+reproducible and auditable and avoids silent, unreviewed upgrades — set `PGAI_TAG=0.17.0` to
 deploy this release.
 
 ## Reliability and restart behavior
@@ -222,7 +232,12 @@ sink-prometheus:
     - VM_RETENTION_PERIOD=336h
     - VM_QUERY_DURATION=30s
     - VM_MAX_CONCURRENT_REQUESTS=16
+    - VM_MAX_MEMORY_PER_QUERY=512MiB    # 0.17+ query guardrails
+    - VM_MAX_UNIQUE_TIMESERIES=20000
 ```
+
+Set these in `.env` rather than editing the compose file. See
+[Query and search tuning](/docs/monitoring/configuration/prometheus-config#query-and-search-tuning).
 
 ### pgwatch
 

@@ -29,7 +29,7 @@ Experience the full monitoring solution: https://demo.postgres.ai (login: demo /
 PostgresAI full monitoring, express-mode checkups, and PostgresAI Console
 checkup analysis support PostgreSQL 14 through PostgreSQL 19.
 
-PostgreSQL 19 is currently a pre-release (Beta 2). Use it for compatibility
+PostgreSQL 19 is still a pre-release (beta). Use it for compatibility
 testing rather than production workloads until PostgreSQL 19 reaches general
 availability. PostgresAI preserves the beta version label in checkup reports,
 selects PostgreSQL 19-compatible metric SQL, and does not report a PostgreSQL
@@ -110,8 +110,8 @@ PostgresAI monitoring collects **only database metadata** — no actual data or 
 
 Review exactly what metrics are collected by examining the metric definitions:
 
-- **Prometheus sink metrics**: [metrics.yml (pgwatch-prometheus)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.15.0/config/pgwatch-prometheus/metrics.yml)
-- **PostgreSQL sink metrics** (including normalized queries): [metrics.yml (pgwatch-postgres)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.15.0/config/pgwatch-postgres/metrics.yml)
+- **Prometheus sink metrics**: [metrics.yml (pgwatch-prometheus)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.17.0/config/pgwatch-prometheus/metrics.yml)
+- **PostgreSQL sink metrics** (including normalized queries): [metrics.yml (pgwatch-postgres)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.17.0/config/pgwatch-postgres/metrics.yml)
 
 ### Verify database permissions
 

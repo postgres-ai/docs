@@ -60,15 +60,24 @@ broken down per `query_id`).
 
 **Wait event categories:**
 
-| Category | Description | Common events |
-|----------|-------------|---------------|
-| **CPU** | On-CPU processing | `CPU*` |
-| **IO** | Disk I/O operations | `DataFileRead`, `WALWrite` |
-| **LWLock** | Internal PostgreSQL locks | `BufferContent`, `LockManager` |
-| **Lock** | Row/table locks | `tuple`, `transactionid` |
-| **BufferPin** | Buffer pinning | `BufferPin` |
-| **Activity** | Background processes | `LogicalLauncherMain` |
-| **IPC** | Inter-process communication | `BgWorkerStartup` |
+| Category | Color | Description | Common events |
+|----------|-------|-------------|---------------|
+| **CPU** | `#50FA7B` green | On-CPU processing | `CPU*` |
+| **IO** | `#1E64FF` blue | Disk I/O operations | `DataFileRead`, `WALWrite` |
+| **LWLock** | `#FF79C6` pink | Internal PostgreSQL locks | `BufferContent`, `LockManager` |
+| **Lock** | `#FF5555` red | Row/table locks | `tuple`, `transactionid` |
+| **BufferPin** | `#00D2B4` teal | Buffer pinning | `BufferPin` |
+| **Activity** | `#9664FF` purple | Background processes | `LogicalLauncherMain` |
+| **IPC** | `#00C8FF` cyan | Inter-process communication | `BgWorkerStartup` |
+| **Client** | `#FFDC64` yellow | Waiting on the client | `ClientRead` |
+| **Timeout** | `#FFA500` orange | Sleeps and timeouts | `PgSleep` |
+| **Extension** | `#BE96FF` lavender | Extension-defined waits | `Extension` |
+| **IdleTx** | `#F1FA8C` pale yellow | Idle in transaction | — |
+| Unknown / other | `#B4B4B4` gray | Anything else | — |
+
+Since 0.17, every ASH panel in every dashboard uses these fixed colors, so a wait-event type keeps
+its color regardless of series order; individual events inherit their type's color. The colors
+identify categories — they are not a health verdict. The screenshots above use the earlier palette.
 
 **Interpretation guide** for the most common wait events you will see in these panels:
 

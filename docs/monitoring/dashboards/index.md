@@ -118,6 +118,10 @@ Most dashboards share these filter variables:
 
 Select the format using the **Query texts** variable at the top of the dashboard.
 
+Table legends across all dashboards sort the same way by default, always descending: rate panels
+by **Mean**, per-call and latency panels by **Max**, and point-in-time levels by **Last**. Click a
+legend column header to sort differently.
+
 ## Top-N filtering
 
 Many dashboards limit each panel to the top-N series (for example, the `top_n` variable on

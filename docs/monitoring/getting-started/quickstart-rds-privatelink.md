@@ -343,9 +343,9 @@ Only database metadata — no actual data or raw query parameters. Query text is
 collected, examine the metric definitions:
 
 - **Prometheus sink metrics**:
-  [metrics.yml (pgwatch-prometheus)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.15.0/config/pgwatch-prometheus/metrics.yml)
+  [metrics.yml (pgwatch-prometheus)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.17.0/config/pgwatch-prometheus/metrics.yml)
 - **PostgreSQL sink metrics** (including normalized queries):
-  [metrics.yml (pgwatch-postgres)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.15.0/config/pgwatch-postgres/metrics.yml)
+  [metrics.yml (pgwatch-postgres)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.17.0/config/pgwatch-postgres/metrics.yml)
 
 See also: [data privacy details](/docs/monitoring/#data-privacy-metadata-only).
 

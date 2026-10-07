@@ -157,13 +157,15 @@ The `prepare-db` command creates a user with **read-only access to metadata only
 grant pg_monitor to postgres_ai_mon;
 grant connect on database <database> to postgres_ai_mon;
 grant select on pg_catalog.pg_index to postgres_ai_mon;
+grant pg_read_all_stats to postgres_ai_mon;  -- 0.17+ (already part of pg_monitor)
 -- plus a small postgres_ai schema (with a pg_statistic view for bloat analysis)
 -- that prepare-db creates and grants usage/select on
 ```
 
-`prepare-db` grants the built-in `pg_monitor` role (not `pg_read_all_stats`, which is a strict
-subset of `pg_monitor` and would not be sufficient — the install/verify step checks for
-`pg_monitor` membership).
+`prepare-db` grants the built-in `pg_monitor` role. `pg_read_all_stats` alone is a strict subset
+of `pg_monitor` and would not be sufficient — the install/verify step checks for `pg_monitor`
+membership. Since 0.17, `prepare-db` also grants `pg_read_all_stats` explicitly, because
+cluster-wide `pg_stat_statements` collection depends on it.
 
 :::tip Review exact permissions
 To see the complete SQL used to create the monitoring role:

@@ -140,16 +140,17 @@ victoriaMetrics:
 
 # pgwatch collectors. Two deployments are shipped: one writing to the Postgres
 # sink and one writing to the Prometheus (VictoriaMetrics) sink. Each runs a
-# single replica.
+# single replica. The chart's values.yaml still defaults these images to 0.15.0;
+# pin the release you deploy.
 pgwatchPostgres:
   enabled: true
-  image: postgresai/pgwatch:0.15.0
+  image: postgresai/pgwatch:0.17.0
   logLevel: error
   resources: {}
 
 pgwatchPrometheus:
   enabled: true
-  image: postgresai/pgwatch:0.15.0
+  image: postgresai/pgwatch:0.17.0
   logLevel: error
   resources: {}
 
@@ -198,7 +199,7 @@ top-level `existingSecret`. The chart reads these keys:
 | `postgres-password` | Internal Postgres metrics sink |
 | `grafana-admin-user` | Grafana admin username |
 | `grafana-admin-password` | Grafana admin password |
-| `pgai-api-key` | PostgresAI platform API key (reporter) |
+| `pgai-api-key` | PostgresAI platform API key for the reporter; must be a per-organization token |
 | `vm-auth-password` | VictoriaMetrics basic auth (when `victoriaMetrics.auth.enabled: true`) |
 | `db-password-<passwordSecretKey>` | Password for each monitored database |
 
@@ -282,6 +283,67 @@ secrets:
 
 This mirrors the `VM_AUTH_USERNAME` / `VM_AUTH_PASSWORD` keys used by the Docker Compose stack —
 see [Authentication and security](/docs/monitoring/configuration/prometheus-config#authentication-and-security).
+
+### VictoriaMetrics admin endpoints
+
+In 0.17 the Docker Compose stack puts VictoriaMetrics' admin endpoints (series deletion,
+snapshots, forced merge, pprof) behind per-install keys — see
+[Admin-endpoint keys](/docs/monitoring/configuration/prometheus-config#admin-endpoint-keys). The
+Helm chart does not set these keys, and its VictoriaMetrics basic auth is off by default
+(`victoriaMetrics.auth.enabled: false`). Out of the box, anyone who can reach the VictoriaMetrics
+service — or use Grafana, through the datasource — can call those endpoints, including series
+deletion.
+
+When auth is enabled, the chart passes the password as `-httpAuth.password=$(VM_AUTH_PASSWORD)`,
+so it ends up in the VictoriaMetrics command line, which `/debug/pprof/cmdline` serves unless
+`-pprofAuthKey` is set.
+
+To close this, add the key flags through `victoriaMetrics.extraArgs`. Your list replaces the
+chart's default list, so keep the query guardrails in it (see
+[VictoriaMetrics query limits](#victoriametrics-query-limits)):
+
+```yaml
+victoriaMetrics:
+  extraArgs:
+    - -search.maxQueryDuration=30s
+    - -search.maxConcurrentRequests=16
+    - -search.maxMemoryPerQuery=512MiB
+    - -search.maxUniqueTimeseries=20000
+    - -memory.allowedPercent=60
+    # One random value per key, for example from `openssl rand -hex 32`
+    - -deleteAuthKey=<secret>
+    - -snapshotAuthKey=<secret>
+    - -forceMergeAuthKey=<secret>
+    - -pprofAuthKey=<secret>
+```
+
+These values are plain text in your values file and in the pod spec, so anyone who can read the
+StatefulSet can read them; keep the values file out of version control. They also land in the
+VictoriaMetrics command line, visible in the node's process table and served by
+`/debug/pprof/cmdline`: the `-pprofAuthKey` value therefore reveals the other keys (and the
+basic-auth password), so guard it like all of them together. Also restrict who can
+reach the VictoriaMetrics service with a NetworkPolicy, and grant Grafana access only to people you
+would trust with the metrics store.
+
+### VictoriaMetrics query limits
+
+The chart passes VictoriaMetrics flags through `victoriaMetrics.extraArgs`. Since 0.17 the
+defaults include query guardrails, so a runaway dashboard query fails with an error instead of
+running VictoriaMetrics out of memory:
+
+```yaml
+victoriaMetrics:
+  extraArgs:
+    - -search.maxQueryDuration=30s
+    - -search.maxConcurrentRequests=16
+    - -search.maxMemoryPerQuery=512MiB
+    - -search.maxUniqueTimeseries=20000
+    - -memory.allowedPercent=60
+```
+
+A list in your values file replaces the default list, so if you override `extraArgs`, include
+these flags. See
+[Query and search tuning](/docs/monitoring/configuration/prometheus-config#query-and-search-tuning).
 
 ### Ingress configuration
 
