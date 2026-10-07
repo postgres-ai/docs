@@ -28,6 +28,28 @@ pg_stat_statements.track = 'all'
 pg_stat_statements.max = 10000
 ```
 
+## Collection scope
+
+Since 0.17, the `pg_stat_statements` metric is collected **cluster-wide**: one query reads the
+statistics of every non-template database in the cluster, whichever database pgwatch connects to.
+Earlier versions reported only the connected database, so activity in other databases was invisible
+unless each one was a separate target.
+
+- Each database keeps its own top 100 queries (by total execution time, among queries with at least
+  3 calls and 1 second of total execution time), labeled with `datname`. The number of series
+  therefore grows with the number of databases.
+- The bundled dashboards still show only the connected database. Their database selector lists
+  the databases that report `pgwatch_db_size_size_b`, and the `db_size` metric covers only the
+  connected one, so the query panels of dashboards 01, 02, 03, and 05 filter the other databases
+  out. To see a database there, give it its own target; to see its collected series without one,
+  use Grafana Explore or [`postgresai promql`](/docs/reference-guides/postgresai-cli-reference#command-promql)
+  with a `datname` selector.
+- Query texts are not cluster-wide. The `pgss_queryid_queries` metric, which supplies the query
+  text shown in the dashboards and reports, still reads only the connected database. Keep a target
+  per database whose query texts you need.
+- The monitoring role needs `pg_read_all_stats` to see other roles' queries; without it,
+  PostgreSQL hides their `queryid` and text. `pg_monitor` includes it, and `prepare-db` grants both.
+
 ## Core metrics
 
 All series are exported as `pgwatch_pg_stat_statements_<column>`. Times are in **milliseconds**
@@ -169,8 +191,9 @@ These metrics are used in:
    show pg_stat_statements.track;
    ```
 
-3. Ensure the monitoring user has access (the product grants the built-in `pg_monitor` role, not
-   `pg_read_all_stats`):
+3. Ensure the monitoring user has access. The product requires the built-in `pg_monitor` role,
+   which includes `pg_read_all_stats` (since 0.17, `prepare-db` also grants `pg_read_all_stats`
+   explicitly):
    ```sql
    grant pg_monitor to postgres_ai_mon;
    ```

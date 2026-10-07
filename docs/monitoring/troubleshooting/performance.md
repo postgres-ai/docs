@@ -77,9 +77,12 @@ limit 10;
 ## VictoriaMetrics tuning
 
 The compose stack reads only these VictoriaMetrics (`sink-prometheus`) environment variables:
-`VM_AUTH_USERNAME`, `VM_AUTH_PASSWORD`, `VM_RETENTION_PERIOD`, `VM_QUERY_DURATION`, and
-`VM_MAX_CONCURRENT_REQUESTS`. Variables such as `VM_STORAGE_*`, `VM_SEARCH_*`, and a per-query
-memory limit do not exist here.
+`VM_AUTH_USERNAME`, `VM_AUTH_PASSWORD`, `VM_RETENTION_PERIOD`, `VM_QUERY_DURATION`,
+`VM_MAX_CONCURRENT_REQUESTS`, and — since 0.17 — the query guardrails `VM_MAX_MEMORY_PER_QUERY`,
+`VM_MAX_UNIQUE_TIMESERIES`, `VM_MEMORY_ALLOWED_PERCENT`, the free-form `VM_EXTRA_ARGS`, and the
+admin-endpoint keys (`VM_*_AUTH_KEY`). Variables such as `VM_STORAGE_*` and `VM_SEARCH_*` do not
+exist here. See
+[Query and search tuning](/docs/monitoring/configuration/prometheus-config#query-and-search-tuning).
 
 ### Query performance
 
@@ -195,7 +198,8 @@ Each service in `docker-compose.yml` sets top-level `cpus:` and `mem_limit:` key
 come from environment variables — there is no `deploy.resources.limits` block. Override them in
 `.env` rather than editing the compose file. These limits apply only when a container is
 recreated, so after editing `.env` run `docker compose up -d --force-recreate <service>` to apply
-them (`postgresai mon update-config` migrates `.env` but does not recreate services). CPUs are
+them (`postgresai mon update-config` migrates `.env` and, since 0.17, recreates only a running
+sink-prometheus). CPUs are
 floats (Docker Compose `cpus:` semantics); memory is in **bytes**.
 
 ```bash

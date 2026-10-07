@@ -104,6 +104,20 @@ postgresai mon restart pgwatch-prometheus
 (The CLI `mon targets add` / `mon targets remove` path does this for you automatically: it
 re-renders the sources and recreates the collectors.)
 
+:::note Several databases in one cluster
+Since 0.17, the `pg_stat_statements` metric is collected cluster-wide: one target already reports
+query metrics for every database in its cluster, labeled by `datname`. Query texts, and table- and
+index-level metrics, are still read only from the database each target connects to, and the
+bundled dashboards still show only that database (the other databases' query series are visible in
+Grafana Explore or through `postgresai promql`). Add a target per database you want in the
+dashboards.
+
+Each extra target in the same cluster collects the cluster-wide query metrics again. Give each
+target its own `node_name` so the dashboards, which filter by `cluster` and `node_name`, do not
+show the same queries twice. See
+[Collection scope](/docs/monitoring/metrics/pg-stat-statements#collection-scope).
+:::
+
 :::tip Security
 Keep credentials in `instances.yml` out of version control. The stack's `.env` file holds stack
 secrets (such as `REPLICATOR_PASSWORD` and `VM_AUTH_USERNAME` / `VM_AUTH_PASSWORD`), not the

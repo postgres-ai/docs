@@ -30,6 +30,8 @@ When you've identified a problematic query in [02. Query analysis](/docs/monitor
 ### Query text
 
 A table at the top of the dashboard displays the full, non-truncated query text for the selected `query_id`.
+Since 0.17, long queries wrap inside the cell, and the cell inspector (hover the cell and click
+the inspect icon) opens the text in a dialog for reading or copying.
 
 :::tip
 The query shown uses parameter placeholders (`$1`, `$2`). For actual parameter values, check application logs.

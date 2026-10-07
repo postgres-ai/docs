@@ -41,21 +41,25 @@ Similar to AWS RDS Performance Insights, this panel shows wait event distributio
 - Stacked bar chart of active sessions by wait event category
 - Each bar represents a sampling interval
 
-**Wait event categories:**
+**Wait event categories** (colors as of 0.17; the screenshot above uses the earlier palette):
 | Category | Color | Indicates |
 |----------|-------|-----------|
-| CPU* | Green | On-CPU activity (query execution) |
-| IO | Blue | Disk I/O waits |
-| Lock | Red | Row/table lock waits |
-| LWLock | Dark red | Lightweight lock contention |
-| Timeout | Brown (`#6f450c`) | Sleep/timeout events |
+| CPU* | Green (`#50FA7B`) | Active, no wait event reported (query execution) |
+| IO | Blue (`#1E64FF`) | Disk I/O waits |
+| Lock | Red (`#FF5555`) | Row/table lock waits |
+| LWLock | Pink (`#FF79C6`) | Lightweight lock contention |
+| Timeout | Orange (`#FFA500`) | Sleep/timeout events |
+
+Every ASH panel uses the same fixed color per wait-event type; see
+[04. Wait events](/docs/monitoring/dashboards/wait-events#active-session-history) for the full
+palette.
 
 **Healthy state:**
 - Mostly green (CPU) with occasional blue (IO)
 - Total height below `max_connections * 0.5`
 
 **Warning signs:**
-- Sustained dark red (LWLock) — Internal contention
+- Sustained pink (LWLock) — Internal contention
 - Sustained red (Lock) — Application-level locking issues
 - Spikes above normal baseline — Sudden load increase
 

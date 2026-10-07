@@ -13,9 +13,14 @@ keywords:
 # Upgrading the monitoring stack
 
 This page covers upgrading an existing self-hosted monitoring stack to a newer PostgresAI
-release (for example, from 0.14.x to 0.15.0). New installs should follow the
+release (for example, from 0.16.x to 0.17.0). New installs should follow the
 [CLI](/docs/monitoring/getting-started/installation-cli) or
 [Docker Compose](/docs/monitoring/getting-started/installation-docker) guides instead.
+
+Upgrading from 0.16.x? Read [What changes in 0.17](#what-changes-in-017), then follow
+[Upgrade with the CLI](#upgrade-with-the-cli-recommended) or
+[Upgrade with Docker Compose](#upgrade-with-docker-compose-manual). The PostgreSQL 15 → 17
+migration below applies only if you are coming from 0.14.x or earlier.
 
 :::danger Breaking change in 0.15.0: bundled PostgreSQL 15 → 17
 0.15.0 upgrades the bundled PostgreSQL images from **15 to 17** for the stack's own
@@ -28,6 +33,116 @@ stack will not come up until you migrate the data. **Do the
 bring-up step** (`docker compose up -d`) in either upgrade path. This affects every
 self-hosted deployment; your externally-monitored databases are **not** touched.
 :::
+
+## What changes in 0.17
+
+0.17.0 needs no data migration: the bundled PostgreSQL, VictoriaMetrics, and Grafana images are
+the same as in 0.16. Set `PGAI_TAG=0.17.0` and run the usual
+[CLI](#upgrade-with-the-cli-recommended) or [Docker Compose](#upgrade-with-docker-compose-manual)
+upgrade. The changes below are the ones you may notice.
+
+### New `.env` keys: VictoriaMetrics admin-endpoint keys
+
+VictoriaMetrics' administrative endpoints (series deletion, snapshots, forced merge, and
+`/debug/pprof`) now require a key, generated per install and stored in `.env`:
+
+```bash
+VM_DELETE_AUTH_KEY=<hex secret>
+VM_SNAPSHOT_AUTH_KEY=<hex secret>
+VM_FORCE_MERGE_AUTH_KEY=<hex secret>
+VM_PPROF_AUTH_KEY=<hex secret>
+```
+
+- **CLI installs:** `mon update`, `mon update-config`, and `mon local-install` add any missing
+  key (a key that is present but blank counts as missing). `mon update` and `mon update-config`
+  then run `docker compose up -d --no-deps sink-prometheus` if `sink-prometheus` is running, so the
+  keys take effect right away. `mon restart` alone would not apply them: `docker compose restart`
+  re-runs the container with its old command line.
+- **Manual Docker Compose:** add the four keys to `.env` (generate each with
+  `openssl rand -hex 32`) before `docker compose up -d`. A blank key does not leave the endpoint
+  open — `sink-prometheus` generates a random key at every start — but then you have no key to
+  call the endpoint with.
+- Nothing that reads metrics uses these keys. Grafana, the Flask backend, and the reporter keep
+  using `VM_AUTH_USERNAME` / `VM_AUTH_PASSWORD`.
+
+To confirm the running `sink-prometheus` enforces them, run this from the monitoring directory. The
+first call is a control and must return `200`; the second calls the read-only snapshot list with
+basic auth but no key. Both read the credentials from stdin (`-K -`), so the password does not
+appear on the curl command line; `vm_auth` escapes `"` and `\` for curl's config syntax:
+
+```bash
+VM_USER="$(sed -n 's/^VM_AUTH_USERNAME=//p' .env)"
+VM_PASS="$(sed -n 's/^VM_AUTH_PASSWORD=//p' .env)"
+vm_auth() { printf 'user = "%s"\n' "$(printf '%s:%s' "$VM_USER" "$VM_PASS" | sed 's/[\\"]/\\&/g')"; }
+
+# Control: basic auth still reads metrics. Expect 200.
+vm_auth | curl -s -K - -o /dev/null -w '%{http_code}\n' http://localhost:59090/api/v1/labels
+
+# No key: expect 401 with the authKey error below.
+vm_auth | curl -s -K - -w 'HTTP %{http_code}\n' http://localhost:59090/snapshot/list
+```
+
+The keys are in effect only if the second call answers `401` with the body
+`Expected to receive non-empty authKey when -snapshotAuthKey is set`. A JSON snapshot list
+(`200`), or a `401` with an empty body, means they are not: recreate the container with
+`docker compose up -d --no-deps sink-prometheus` and check again. If the control call does not
+return `200`, fix the basic-auth credentials first, or the second result means nothing.
+
+See [Admin-endpoint keys](/docs/monitoring/configuration/prometheus-config#admin-endpoint-keys) for
+what each key guards and how to use or rotate one. This covers the Docker Compose stack and the
+Terraform AWS deployment. The Helm chart does not set these keys; see
+[VictoriaMetrics admin endpoints](/docs/monitoring/getting-started/installation-helm#victoriametrics-admin-endpoints)
+for how to add them.
+
+### Restart `sink-prometheus` once to pick up the new scrape limit
+
+The `pgwatch-prometheus` scrape job's `sample_limit` is raised from 10000 to 50000. The limit is
+all-or-nothing: a `full` preset on a large database can exceed 10000 samples, and VictoriaMetrics
+then discarded the whole scrape, so every pgwatch series went missing at once. VictoriaMetrics
+does not watch its scrape configuration for changes, so restart it once after the upgrade:
+
+```bash
+docker compose restart sink-prometheus
+```
+
+### One-off drop in index findings
+
+H001 (invalid), H002 (unused), and H004 (redundant indexes) — and the `unused_indexes`,
+`redundant_indexes`, `rarely_used_indexes`, and `index_definitions` metrics behind them — no longer
+report indexes in `pg_catalog`, `information_schema`, `pg_toast`, or temporary schemas. Those
+indexes cannot be dropped, so recommending their removal was always wrong. Expect a one-off drop in
+unused/redundant index counts and total sizes on the first report after the upgrade. Bloat
+(F004/F005) and wraparound (F002) checks still include catalogs.
+
+### `pg_stat_statements` now covers every database in the cluster
+
+The `pg_stat_statements` metric used to report only the database pgwatch connects to. It now reads
+all non-template databases of each monitored cluster and keeps the top 100 queries per database.
+Query metrics appear for databases that are not configured as targets, and the series count grows
+with the number of databases. See
+[Collection scope](/docs/monitoring/metrics/pg-stat-statements#collection-scope).
+
+### Other 0.17 changes
+
+- **`mon local-install` keeps your `.env` settings.** It used to rewrite `.env` and keep only a few
+  credentials. Now it keeps every key it does not manage (retention, resource limits,
+  `GF_SERVER_ROOT_URL`, …) and prints `Preserved existing .env settings: …`. It still resets
+  `PGAI_TAG` to the CLI's version. See the [note below](#additive-value-preserving-env-migration-mon-update--mon-update-config).
+- **VictoriaMetrics query guardrails.** `sink-prometheus` now limits each query to 512 MiB and
+  20000 unique series, so a runaway dashboard query fails with an error instead of running
+  VictoriaMetrics out of memory. If you raised `SINK_PROMETHEUS_MEM`, see
+  [Query and search tuning](/docs/monitoring/configuration/prometheus-config#query-and-search-tuning).
+- **Optional `instance-jobs` container.** The compose file defines a new `instance-jobs` service
+  behind a compose profile. It is off by default, and an upgrade never turns it on or off. See
+  [Outbound collection channel](/docs/monitoring/getting-started/installation-cli#outbound-collection-channel-instance-jobs).
+- **`instances.yml` is owner-only.** `mon targets add` / `mon targets remove` now write
+  `instances.yml` with mode `0600`, tightening an existing looser file.
+- **Supabase pooler.** The CLI warns when a connection string points at the transaction-mode port
+  (`6543`) of the Supabase pooler. Use session mode (`5432`) — see
+  [Supabase](/docs/monitoring/getting-started/installation-cloud#supabase).
+- **Dashboards.** Wait-event (ASH) panels use one fixed color per wait-event type across all
+  dashboards, table legends sort consistently, and the **Query text** panel on
+  [03. Single query](/docs/monitoring/dashboards/single-query) wraps long queries.
 
 ## PostgreSQL 15 → 17 major-version migration
 
@@ -411,8 +526,9 @@ progress (draft MR
 
 If you installed with `postgresai mon local-install`, upgrade with the CLI. `mon update` pulls the
 new images and migrates your `.env` file; `mon update-config` regenerates the pgwatch sources.
-Neither command restarts or recreates the running services, so after pulling you **must** recreate
-the containers with the new images — preserving your existing values. Because the stack is already
+Apart from `sink-prometheus` (see below), neither command restarts or recreates the running
+services, so after pulling you **must** recreate the containers with the new images — preserving
+your existing values. Because the stack is already
 running, recreate it with `docker compose up -d` directly: `up -d` recreates any container whose
 image changed. A plain `postgresai mon restart` only runs `docker compose restart` and restarts the
 **existing** containers on the **old** image, so it does not apply a pulled image — and a bare
@@ -423,19 +539,20 @@ performs `up -d`.
 
 ```bash
 # From the monitoring directory (~/.config/postgresai/monitoring by default for npx/global installs)
-$EDITOR .env                              # set PGAI_TAG=0.15.0 FIRST — see note below
-npx postgresai@latest mon update          # migrate .env + pull new images (does NOT restart)
+$EDITOR .env                              # set PGAI_TAG=0.17.0 FIRST — see note below
+npx postgresai@latest mon update          # migrate .env + pull images (recreates only sink-prometheus)
 npx postgresai@latest mon update-config   # regenerate pgwatch sources.yml
 # ⚠️ 0.15.0 only: complete the PostgreSQL 15 → 17 migration BEFORE this bring-up.
 #    See "PostgreSQL 15 → 17 major-version migration" above.
 docker compose up -d                      # recreate containers to apply the pulled images
 # (CLI alternative: `npx postgresai@latest mon stop && npx postgresai@latest mon start`)
+docker compose restart sink-prometheus    # 0.17: reread the scrape config (see "What changes in 0.17")
 ```
 
-> **Set `PGAI_TAG=0.15.0` in `.env` first.** All stack images are pinned to `${PGAI_TAG}`, and
+> **Set `PGAI_TAG=0.17.0` (the target release) in `.env` first.** All stack images are pinned to `${PGAI_TAG}`, and
 > `mon update` / `mon update-config` do **not** change `PGAI_TAG` (only `mon local-install` rewrites
-> it). If you leave a stale `PGAI_TAG=0.14.x`, the commands above just re-pull and recreate the
-> **old** images — not an upgrade. Edit `.env` and set `PGAI_TAG=0.15.0` before running `mon update`.
+> it). If you leave a stale `PGAI_TAG=0.16.x`, the commands above just re-pull and recreate the
+> **old** images — not an upgrade. Edit `.env` and set `PGAI_TAG=0.17.0` before running `mon update`.
 
 > `mon update` prints a hint to run `postgres-ai mon restart` afterward, but `docker compose restart`
 > restarts containers in place and does **not** pull in a newly-fetched image. A bare `mon start`
@@ -445,9 +562,9 @@ docker compose up -d                      # recreate containers to apply the pul
 
 | Command | What it does |
 |---------|--------------|
-| `$EDITOR .env` → `PGAI_TAG=0.15.0` | **Do this first.** Pins the stack images to the new tag. `mon update` / `mon update-config` do **not** change `PGAI_TAG` (only `mon local-install` rewrites it), and every image is pinned to `${PGAI_TAG}` — so without this step the commands below just re-pull the **old** tag. |
-| `mon update` | Migrates `.env` (additively) and pulls the pinned images for the tag in `.env` (set `PGAI_TAG=0.15.0` first — `mon update` does **not** advance it). It does **not** restart or recreate the services — run `docker compose up -d` afterward to recreate the containers and apply the new images. (A bare `postgresai mon start` will not do this on a running stack; it no-ops with `Monitoring services are already running`. Use `docker compose up -d`, or `mon stop` then `mon start`.) |
-| `mon update-config` | Migrates `.env` and regenerates the pgwatch `sources.yml` files (via the `sources-generator`). It does not regenerate the Grafana datasources, does not restart the collectors, and does not reseed the config volume. |
+| `$EDITOR .env` → `PGAI_TAG=0.17.0` | **Do this first.** Pins the stack images to the new tag. `mon update` / `mon update-config` do **not** change `PGAI_TAG` (only `mon local-install` rewrites it), and every image is pinned to `${PGAI_TAG}` — so without this step the commands below just re-pull the **old** tag. |
+| `mon update` | Migrates `.env` (additively) and pulls the pinned images for the tag in `.env` (set `PGAI_TAG=0.17.0` first — `mon update` does **not** advance it). Since 0.17 it also brings a running `sink-prometheus` in line with the compose file and `.env` (`docker compose up -d --no-deps sink-prometheus`) so the [admin-endpoint keys](#new-env-keys-victoriametrics-admin-endpoint-keys) take effect, and starts the `instance-jobs` container if its profile is enabled. It does **not** restart or recreate the other services — run `docker compose up -d` afterward to recreate the containers and apply the new images. (A bare `postgresai mon start` will not do this on a running stack; it no-ops with `Monitoring services are already running`. Use `docker compose up -d`, or `mon stop` then `mon start`.) |
+| `mon update-config` | Migrates `.env` and regenerates the pgwatch `sources.yml` files (via the `sources-generator`). Since 0.17 it also brings a running `sink-prometheus` in line with the compose file and `.env`, like `mon update`. It does not regenerate the Grafana datasources or restart the collectors. Its `sources-generator` run starts `config-init` first, so after a `PGAI_TAG` change it also re-seeds the config volume with the new version's files. |
 
 ### Additive, value-preserving `.env` migration (`mon update` / `mon update-config`)
 
@@ -456,19 +573,27 @@ release are appended with safe defaults, and every existing value (passwords, re
 limits, OAuth, `GF_SERVER_ROOT_URL`, …) is preserved. These two commands never overwrite a value
 you have already set, so they are the recommended way to upgrade an existing, tuned deployment.
 
-:::warning `local-install` rewrites `.env` — it does not migrate additively
-`postgresai mon local-install -y` does **not** preserve arbitrary keys. It rewrites `.env` from
-scratch, carrying forward only your **credentials and registry** — `PGAI_REGISTRY`,
-`GF_SECURITY_ADMIN_PASSWORD`, `REPLICATOR_PASSWORD`, `VM_AUTH_USERNAME`, `VM_AUTH_PASSWORD` — and
-it always resets `PGAI_TAG` to the CLI's own version. Any other key you had set is **dropped**,
-including retention (`VM_RETENTION_PERIOD`, `QUERYID_RETENTION_HOURS`), resource-limit overrides
-(`*_CPUS` / `*_MEM`, e.g. `SINK_PROMETHEUS_MEM`), and `GF_SERVER_ROOT_URL` / `BIND_HOST`. To
-upgrade a tuned deployment, prefer `mon update` / `mon update-config` above; if you do run
-`local-install`, re-apply those settings to `.env` afterward and run `docker compose up -d` so the
-affected containers are recreated with the restored values (`mon restart` would not pick up changed
-container env vars — those are read only when a container is recreated — and a bare `postgresai mon
-start` is a no-op on a running stack, so it would not recreate them either; use `docker compose up -d`,
-or `mon stop` then `mon start`).
+:::warning `local-install` rewrites the keys it manages
+Since 0.17, `postgresai mon local-install -y` keeps every `.env` key it does not manage —
+retention (`VM_RETENTION_PERIOD`, `QUERYID_RETENTION_HOURS`), resource limits (`*_CPUS` /
+`*_MEM`), `GF_SERVER_ROOT_URL`, `BIND_HOST`, comments — and lists them as
+`Preserved existing .env settings: …`. It rewrites the keys it manages: `PGAI_TAG` is always reset
+to the CLI's own version, credentials (`GF_SECURITY_ADMIN_PASSWORD`, `REPLICATOR_PASSWORD`,
+`VM_AUTH_*`, the `VM_*_AUTH_KEY` admin keys) and `PGAI_REGISTRY` are carried over or generated, and
+`COMPOSE_PROFILES` is merged rather than replaced.
+
+On a stopped stack, outside demo mode, `local-install` also starts `instances.yml` fresh with only
+the `--db-url` target. On a running stack it writes `.env` (plus `--project` to `.pgwatch-config`
+and, on a non-git install, the CLI-owned `docker-compose.yml`), starts or removes `instance-jobs` per
+`--instance-jobs` / `--no-instance-jobs`, and exits with `Monitoring services are already running`.
+It recreates no other container, so no new image or key takes effect. Either way it is not an
+upgrade command — use `mon update`.
+
+**0.16 and earlier CLIs dropped every other key**, so run `local-install` with the 0.17 CLI
+(`npx postgresai@latest`). If an older `local-install` already dropped your settings, re-apply them
+to `.env` and run `docker compose up -d` so the affected containers are recreated with the restored
+values (`mon restart` does not pick up changed container env vars, and a bare `postgresai mon start`
+is a no-op on a running stack).
 :::
 
 :::tip Node.js 18+ required
@@ -540,10 +665,12 @@ If you manage the stack with `docker compose` directly:
 git pull
 
 # 2. Pin the new image tag and add any newly required keys
-#    Required in 0.15:
-#      PGAI_TAG=0.15.0
+#      PGAI_TAG=0.17.0
+#    Required since 0.15:
 #      VM_AUTH_USERNAME=vmauth
 #      VM_AUTH_PASSWORD=<non-empty secret>
+#    New in 0.17 (generate each with: openssl rand -hex 32):
+#      VM_DELETE_AUTH_KEY, VM_SNAPSHOT_AUTH_KEY, VM_FORCE_MERGE_AUTH_KEY, VM_PPROF_AUTH_KEY
 $EDITOR .env
 
 # 3. Pull images and restart
@@ -560,9 +687,9 @@ All stack images are version-pinned (no `:latest`) for reproducible upgrades —
 
 - **Retention is now plan-parameterizable.** `VM_RETENTION_PERIOD` (metrics) and
   `QUERYID_RETENTION_HOURS` (query-id mapping) can be tuned per deployment. `mon update` /
-  `mon update-config` preserve any values you have set; `mon local-install -y` does **not** (it
-  rewrites `.env` and drops these keys — see the warning above), so re-apply them afterward if you
-  upgrade via `local-install`. See
+  `mon update-config` preserve any values you have set. `mon local-install -y` from a CLI before
+  0.17 does **not** (it rewrites `.env` and drops these keys — see the warning above), so re-apply
+  them afterward if you used an older `local-install`; the 0.17 CLI keeps them. See
   [Retention](/docs/monitoring/configuration/prometheus-config#retention).
 - **Restart policies.** Critical services ship with `restart: unless-stopped` and survive host
   reboots without a manual systemd unit. See

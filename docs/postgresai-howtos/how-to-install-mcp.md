@@ -120,6 +120,8 @@ cat ~/.cursor/mcp.json
 
 You should see a `postgresai` entry under `mcpServers` with `command` pointing at the `pgai` binary and `args: ["mcp", "start"]`.
 
+If you authenticated with a global token (**All my organizations**), every tool call needs an `org_id` argument; the server does not assume an organization. Run `postgresai orgs` to list the ids your token can reach.
+
 ## Manual configuration
 
 If you prefer to wire up MCP by hand, edit the client config and add a `postgresai` entry under `mcpServers`. See the [`mcp install` section of the CLI reference](/docs/reference-guides/postgresai-cli-reference#mcp-install) for the exact JSON shape.

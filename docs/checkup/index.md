@@ -24,6 +24,14 @@ Do you know how big your database was 1, 6, 12 months ago? What are the growth t
 
 At the moment, postgres-checkup generates 28 reports organized in 7 groups.
 
+:::tip Express checkup in the PostgresAI CLI
+[`postgresai checkup`](/docs/reference-guides/postgresai-cli-reference#command-checkup) runs a
+subset of these reports (A002–A004, A007, A013, D001, D004, F001–F005, F009, G001, G003, H001,
+H002, H004, I001) directly from the CLI, with its own implementation. Since 0.17, its F001 also
+lints the autovacuum configuration, its F003 adds autovacuum/autoanalyze threshold analysis and autovacuum worker/queue
+saturation, and its H001/H002/H004 no longer report system-catalog indexes.
+:::
+
 * A. General / Infrastructural
     - A001 System information
     - A002 Version information

@@ -19,12 +19,7 @@ the terminal (and to scripts and AI agents): plan a query, get the real
 execution plan, build real or hypothetical indexes, and iterate — every result
 also lands in the Joe history in the PostgresAI Console.
 
-:::caution dev channel
-`pgai joe` and `pgai projects` ship in CLI 0.16, which is currently published
-under the **`dev`** npm dist-tag — that's why the examples below run
-`npx pgai@dev …` rather than plain `npx pgai`. Once 0.16 reaches `latest`, the
-`@dev` suffix will no longer be needed.
-:::
+`pgai joe` and `pgai projects` require CLI 0.16 or later.
 
 ## Reference
 
@@ -40,25 +35,28 @@ under the **`dev`** npm dist-tag — that's why the examples below run
   organization — Joe CLI commands are rejected with `403 Forbidden` otherwise.
 
 The CLI is published as two equivalent npm packages: `postgresai` (canonical)
-and `pgai` (short wrapper). `npm install -g postgresai@dev` installs both the
-`postgresai` and `pgai` binaries; `npx pgai@dev …` runs without installing.
+and `pgai` (short wrapper). `npm install -g postgresai` installs both the
+`postgresai` and `pgai` binaries; `npx pgai@latest …` runs without installing.
 
 ## Authenticate
 
 ```bash
-npx pgai@dev login
+npx pgai@latest login
 ```
 
 This opens your browser (OAuth with PKCE), asks you to pick an organization,
 and stores the resulting API key in `~/.config/postgresai/config.json`. All
-`joe` commands authenticate with this key. See the
+`joe` commands authenticate with this key. If you choose **All my
+organizations** (a global token, CLI 0.17+), add `--org <alias>` or
+`--org-id <id>` to every `joe` and `projects` command, or set `PGAI_ORG` once
+— see [organization selection](/docs/reference-guides/postgresai-cli-reference#organization-selection). See the
 [auth reference](/docs/reference-guides/postgresai-cli-reference#command-auth)
 for storing a key directly (`--set-key`), useful in CI.
 
 ## Find a project with Joe ready
 
 ```bash
-npx pgai@dev projects
+npx pgai@latest projects
 ```
 
 ```
@@ -73,9 +71,8 @@ For projects without one, register a Joe instance first, or target a Joe
 instance directly with `--instance-id <id>`.
 
 :::note
-Examples below use the short `pgai joe …` form for brevity; while 0.16 is on
-the dev channel, run them as `npx pgai@dev joe …` (or install globally with
-`npm install -g postgresai@dev`).
+Examples below use the short `pgai joe …` form for brevity; without a global
+install, run them as `npx pgai@latest joe …`.
 :::
 
 ## Get a query plan (no execution)
@@ -214,6 +211,9 @@ budget-expired one-shot — resume by id), `1` for a failed command or any error
 - **`403 Forbidden` / "Joe API v2 requires the All Features role"** — ask an
   org admin to grant your user the **AllFeaturesUser** (or **Admin**) role.
 - **`401`** — your stored API key is missing or expired; re-run `pgai login`.
+- **"This command needs an organization, and you are signed in with a global
+  token"** — pass `--org <alias>` or `--org-id <id>` (or set `PGAI_ORG`); run
+  `pgai orgs` to list the organizations your token can reach.
 - **Environments behind Cloudflare Access** (previews, some staging setups) —
   the CLI's plain HTTPS calls may be blocked by the access layer; you may need
   extra setup (e.g. a service token) or to run from an allowed network. For

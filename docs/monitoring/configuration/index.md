@@ -22,9 +22,9 @@ Configuration guides for customizing PostgresAI monitoring components.
 ### CLI installation
 
 Configuration is stored in the monitoring directory `.env` file. `update-config` migrates `.env`
-and regenerates the pgwatch `sources.yml`, but it does **not** restart services — keys read by a
-service at container startup (e.g. the `VM_*` flags below, consumed by sink-prometheus) only take
-effect once that service is recreated:
+and regenerates the pgwatch `sources.yml`. Since 0.17 it also applies `.env` to a running
+sink-prometheus, so the `VM_*` flags below take effect; it does not restart any other service, so
+keys read by those services at startup take effect only once the service is recreated:
 
 ```bash
 # Example .env overrides (default VM_RETENTION_PERIOD is 336h ≡ 14 days)
@@ -33,7 +33,8 @@ VM_QUERY_DURATION=30s
 VM_MAX_CONCURRENT_REQUESTS=16
 
 postgresai mon update-config
-# These VM_* values are read by sink-prometheus at startup; recreate it to apply:
+# Since 0.17, update-config already applies these to a running sink-prometheus.
+# On older CLIs, recreate it yourself:
 docker compose up -d --force-recreate sink-prometheus
 ```
 
@@ -94,9 +95,10 @@ Set the values in the monitoring stack `.env`. These are Compose `cpus:` / `mem_
 only take effect when a container is recreated, so after migrating `.env` with
 `postgresai mon update-config` recreate the affected services with
 `docker compose up -d --force-recreate <service>` (or set the values before the initial
-`docker compose up -d` for manual installs); `update-config` does not recreate services. The
-VictoriaMetrics engine tuning flags
-(`VM_QUERY_DURATION`, `VM_MAX_CONCURRENT_REQUESTS`) are documented under
+`docker compose up -d` for manual installs); `update-config` does not recreate services, except
+that since 0.17 it brings a running sink-prometheus in line with `.env`. The VictoriaMetrics engine
+tuning flags (`VM_QUERY_DURATION`, `VM_MAX_CONCURRENT_REQUESTS`, and the 0.17 query guardrails) are
+documented under
 [Query and search tuning](/docs/monitoring/configuration/prometheus-config#query-and-search-tuning).
 
 ## Config seeding and operator edits
@@ -114,12 +116,15 @@ an in-place upgrade of a running stack, run `docker compose up -d` directly to r
 not `mon start`.) `postgresai mon restart` does **not** trigger a reseed: it runs
 `docker compose restart`, which restarts the existing `config-init` container in place on the
 **old** image, so it still reads the old `/VERSION`, the marker still matches, and nothing is
-re-copied. Note that `postgresai mon update-config` does **not** reseed the volume either: it
-migrates the `.env` file (additive required keys), refreshes the CLI-owned `docker-compose.yml`
-to match the stack version for non-git/global installs (a no-op for git checkouts; it touches
-only the compose file, never `.env`/`instances.yml`/`.pgwatch-config`), and regenerates the
-pgwatch sources (`docker compose run --rm sources-generator`). It does not restart Grafana or
-sink-prometheus. To force a fresh reseed, remove the version marker from the config volume so
+re-copied. `postgresai mon update-config` migrates the `.env` file (additive required keys),
+refreshes the CLI-owned `docker-compose.yml` to match the stack version for non-git/global
+installs (a no-op for git checkouts), and regenerates the pgwatch sources
+(`docker compose run --rm sources-generator`). That run starts `config-init` first, so after a
+`PGAI_TAG` change it **does** reseed the volume. Since 0.17 it then runs
+`docker compose up -d --no-deps sink-prometheus`, which recreates a running sink-prometheus only if
+its `.env` values or compose definition changed. That does not reload a re-seeded
+`prometheus.yml`; run `docker compose restart sink-prometheus` for that. It does not restart Grafana
+or the collectors. To force a fresh reseed, remove the version marker from the config volume so
 `config-init` re-copies the image defaults on the next start.
 
 The `config-init` service is the only one that mounts the volume read-write (at `/target`); every

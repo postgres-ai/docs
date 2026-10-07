@@ -43,7 +43,7 @@ You can also manage issues using the PostgresAI CLI:
 <TabItem value="cli" label="Installed CLI" default>
 
 ```bash
-# List all issues
+# List open issues (add --status all to include closed ones)
 postgresai issues list
 
 # View a specific issue
@@ -57,7 +57,7 @@ postgresai issues post-comment <issue_id> "comment"
 <TabItem value="npx" label="npx">
 
 ```bash
-# List all issues
+# List open issues (add --status all to include closed ones)
 npx postgresai@latest issues list
 
 # View a specific issue
@@ -71,7 +71,7 @@ npx postgresai@latest issues post-comment <issue_id> "comment"
 <TabItem value="bunx" label="bunx">
 
 ```bash
-# List all issues
+# List open issues (add --status all to include closed ones)
 bunx postgresai@latest issues list
 
 # View a specific issue
@@ -83,6 +83,8 @@ bunx postgresai@latest issues post-comment <issue_id> "comment"
 
 </TabItem>
 </Tabs>
+
+`issues list` shows open issues by default; pass `--status closed` or `--status all` for the rest. If you signed in with a global token (**All my organizations**), add `--org <alias>` or `--org-id <id>` to each command, or set `PGAI_ORG` — see [organization selection](/docs/reference-guides/postgresai-cli-reference#organization-selection).
 
 By default, `issues` commands print human-friendly YAML when stdout is a terminal, and switch to JSON when piped or redirected. Force JSON explicitly with `--json` for scripting:
 

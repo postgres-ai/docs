@@ -231,7 +231,16 @@ in `instances.yml` (see [Docker Compose → Adding multiple databases](/docs/mon
 :::
 
 :::note Connection pooling
-Use the "Direct connection" string, not the pooled connection (port 6543). Monitoring requires direct PostgreSQL protocol access.
+Use the **Direct connection** string or the **session pooler** (port `5432` on the
+`*.pooler.supabase.com` host, user name `postgres_ai_mon.<project-ref>`). Do not use the
+transaction pooler (port `6543`): pgwatch caches prepared statements per connection, these collide
+under transaction pooling (`prepared statement "stmtcache_…" already exists`), and metric
+collection stops without a visible error.
+
+The direct `db.<project-ref>.supabase.co` host can be IPv6-only; if your Docker host has no IPv6
+connectivity, use the session pooler. Since 0.17, the CLI warns when a connection string points at
+port `6543` on a pooler host, and the `databaseUrl` returned by `prepare-db --supabase --json` uses
+the session-mode port.
 :::
 
 ## Common cloud considerations

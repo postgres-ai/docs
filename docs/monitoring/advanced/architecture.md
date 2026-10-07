@@ -121,6 +121,25 @@ PostgresAI dashboards:
 └── Self-monitoring        (stack health)
 ```
 
+### instance-jobs — outbound collection channel (optional)
+
+**Purpose:** Let PostgresAI request data from the monitoring host without opening any inbound
+connection to it. New in 0.17, off by default.
+
+**How it works:**
+- Polls the PostgresAI platform over outbound HTTPS for work
+- Runs each job against the local VictoriaMetrics (for example, a PromQL query sent with
+  `postgresai promql`)
+- Posts the result back, then waits for the next poll
+
+The container is gated by the `instance-jobs` compose profile. Enable it with
+`postgresai mon local-install --instance-jobs` (disable with `--no-instance-jobs`), which writes
+`COMPOSE_PROFILES=instance-jobs` to `.env` so every later `mon` command covers it; an upgrade never
+turns it on or off. It authenticates with the API key in `.pgwatch-config`, mounted read-only, and
+runs with a read-only filesystem and no Linux capabilities. PostgresAI must also enable the channel
+on the platform side; until then a running container receives no work. See
+[Outbound collection channel](/docs/monitoring/getting-started/installation-cli#outbound-collection-channel-instance-jobs).
+
 ## Data flow
 
 ### Collection flow
@@ -297,8 +316,8 @@ PostgresAI monitoring collects **only database metadata** — no actual data or 
 
 Review exactly what is collected:
 
-- **Prometheus metrics**: [pgwatch-prometheus/metrics.yml](https://gitlab.com/postgres-ai/postgresai/-/blob/0.15.0/config/pgwatch-prometheus/metrics.yml)
-- **PostgreSQL metrics** (with query texts): [pgwatch-postgres/metrics.yml](https://gitlab.com/postgres-ai/postgresai/-/blob/0.15.0/config/pgwatch-postgres/metrics.yml)
+- **Prometheus metrics**: [pgwatch-prometheus/metrics.yml](https://gitlab.com/postgres-ai/postgresai/-/blob/0.17.0/config/pgwatch-prometheus/metrics.yml)
+- **PostgreSQL metrics** (with query texts): [pgwatch-postgres/metrics.yml](https://gitlab.com/postgres-ai/postgresai/-/blob/0.17.0/config/pgwatch-postgres/metrics.yml)
 
 ### Verify monitoring database role and its permissions
 
@@ -351,7 +370,7 @@ npx postgresai@latest prepare-db --print-sql
 | Component | Credential type | Storage |
 |-----------|-----------------|---------|
 | PostgreSQL | Password | Environment variable / secret |
-| VictoriaMetrics | Basic auth | Config file |
+| VictoriaMetrics | Basic auth; admin-endpoint keys (0.17+) | `.env`, passed to the container as env vars; its entrypoint writes them to files for VictoriaMetrics |
 | Grafana | OAuth/LDAP | Database |
 
 ## Performance characteristics

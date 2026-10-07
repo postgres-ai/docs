@@ -66,6 +66,12 @@ bunx postgresai@latest login
 </TabItem>
 </Tabs>
 
+In the browser, pick one organization, or **All my organizations** to get a
+global token that works across all of them. With a global token, add
+`--org <alias>` or `--org-id <id>` (or set `PGAI_ORG`) to organization-specific
+commands, and run `postgresai orgs` to list the organizations it can reach. See
+[organization selection](/docs/reference-guides/postgresai-cli-reference#organization-selection).
+
 ## Install MCP (Cursor, Claude Code, Windsurf, Codex)
 
 Install MCP integration for your AI coding tool:
@@ -96,7 +102,7 @@ bunx postgresai@latest mcp install
 
 ## Work with issues
 
-List issues:
+List open issues (pass `--status closed` or `--status all` for the rest):
 
 <Tabs groupId="cli-runner" queryString>
 <TabItem value="cli" label="Installed CLI" default>
