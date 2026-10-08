@@ -286,8 +286,14 @@ deploy_review:
     - export IMAGE="${CI_REGISTRY_IMAGE}:review-${BRANCH_SLUG}"
     # Pipe credential via stdin so it never appears in process arguments
     - echo "${CI_REGISTRY_PASSWORD}" | ssh deploy@${PREVIEW_VM_HOST} "docker login -u gitlab-ci-token --password-stdin ${CI_REGISTRY}"
+    # Superseded preview images accumulate after repeated deployments. Remove only
+    # this branch's previous image once the tag points elsewhere, even if the new
+    # container fails to start (the old container is already gone by then).
+    # A VM-wide prune would race with other branches' deployments (Docker runs
+    # one prune at a time) and touch other projects' images.
     - |
       ssh deploy@${PREVIEW_VM_HOST} "\
+        OLD_IMAGE=\$(docker inspect -f '{{.Image}}' docs-${BRANCH_SLUG} 2>/dev/null); \
         docker rm -f docs-${BRANCH_SLUG} 2>/dev/null; \
         docker pull ${IMAGE} && \
         docker run -d \
@@ -301,7 +307,13 @@ deploy_review:
           --label traefik.http.routers.docs-${BRANCH_SLUG}.tls=true \
           --label traefik.http.routers.docs-${BRANCH_SLUG}.tls.certresolver=letsencrypt \
           --label traefik.http.services.docs-${BRANCH_SLUG}.loadbalancer.server.port=3000 \
-          ${IMAGE}"
+          ${IMAGE}; \
+        STATUS=\$?; \
+        NEW_IMAGE=\$(docker image inspect -f '{{.Id}}' ${IMAGE} 2>/dev/null); \
+        if [ -n \"\$OLD_IMAGE\" ] && [ \"\$OLD_IMAGE\" != \"\$NEW_IMAGE\" ]; then \
+          docker rmi \"\$OLD_IMAGE\" || echo 'Previous image kept (still referenced)'; \
+        fi; \
+        exit \$STATUS"
     # Preview URL is shown via GitLab environment "View app" button on the MR page
     - echo "Preview deployed at https://docs-${BRANCH_SLUG}.pgai.green"
 
