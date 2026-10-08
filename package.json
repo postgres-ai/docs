@@ -34,7 +34,8 @@
     "react-masonry-css": "^1.0.16",
     "react-type-animation": "^3.2.0",
     "rehype-raw": "^7.0.0",
-    "remark-gfm": "^4.0.0"
+    "remark-gfm": "^4.0.0",
+    "shaders": "4.0.1"
   },
   "browserslist": {
     "production": [
