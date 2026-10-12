@@ -2,11 +2,9 @@
 title: Questions & answers
 sidebar_label: Questions & answers
 keywords:
-  - "self-driving postgres"
   - "postgresql monitoring"
   - "database branching"
   - "postgresql thin cloning"
-  - "autonomous postgres"
   - "database lab engine"
   - "postgresql automation"
 ---
@@ -15,9 +13,9 @@ keywords:
 
 ## What is PostgresAI?
 
-We're building Self-Driving Postgres. Your database monitors itself, diagnoses problems, and delivers fixes — performance improvements, security patches, zero-downtime upgrades. Each recommendation is tested and verified on a clone of your real data.
+Slow queries, incidents, major upgrades and growth: PostgresAI combines monitoring, expert help and database branching to address Postgres trouble. Changes are tested on a copy of your data before they reach production.
 
-We're not fully autonomous yet. PostgresAI watches, diagnoses, and prepares pull requests. You review, approve, and merge. Human in the loop on every change.
+Human or agent, the same rule applies: review the evidence and approve the change before production.
 
 See the full [Vision & roadmap](/docs/roadmap).
 
@@ -123,6 +121,6 @@ Yes. PostgresAI works with:
 
 ## Where can I learn more?
 
-- [Vision & roadmap](/docs/roadmap) — The Self-Driving Postgres journey
+- [Vision & roadmap](/docs/roadmap) — PostgresAI vision and roadmap
 - [postgres_ai monitoring](/docs/monitoring) — Observability and monitoring
 - [Postgres how-tos](/docs/postgres-howtos) — 100+ practical guides

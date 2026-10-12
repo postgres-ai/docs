@@ -178,8 +178,8 @@ module.exports = {
               to: '/products/postgres-ai-zdu'
             },
             {
-              label: 'PostgresAI Assistant',
-              to: '/blog/20240127-postgres-ai-bot',
+              label: 'Assistant (Joe)',
+              to: '/products/joe',
             },
           ],
         },
@@ -207,16 +207,19 @@ module.exports = {
               label: 'DBLab how-tos',
               to: '/docs/dblab-howtos',
             },
-            {
-              label: 'Questions & answers',
-              to: '/docs/questions-and-answers',
-            },
           ],
         },
         {
           to: '/blog',
-          label: 'Blog',
+          label: 'Resources',
           position: 'right',
+          items: [
+            { label: 'Blog', to: '/blog' },
+            { label: 'Postgres FM', href: 'https://postgres.fm' },
+            { label: 'Postgres.TV', href: 'https://www.youtube.com/PostgresTV' },
+            { label: 'Case studies', to: '/resources/' },
+            { label: 'Questions & answers', to: '/docs/questions-and-answers' },
+          ],
         },
         {
           to: '/consulting',
@@ -320,16 +323,8 @@ module.exports = {
           title: 'DOCS',
           items: [
             {
-              label: 'Questions & answers',
-              to: '/docs/questions-and-answers',
-            },
-            {
               label: 'Getting started',
               to: '/docs/',
-            },
-            {
-              label: 'PostgresAI Assistant',
-              to: '/docs/reference-guides/postgres-ai-bot-reference',
             },
             {
               label: 'DBLab docs',
@@ -361,11 +356,7 @@ module.exports = {
               to: '/products/postgres-ai-zdu',
             },
             {
-              label: 'PostgresAI assistant',
-              to: '/blog/20240127-postgres-ai-bot',
-            },
-            {
-              label: 'Joe bot for SQL optimization',
+              label: 'Assistant (Joe)',
               to: '/products/joe',
             },
             {
@@ -375,37 +366,23 @@ module.exports = {
           ],
         },
         {
-          title: 'SOCIAL',
+          title: 'COMMUNITY',
           items: [
-            {
-              label: 'Community Slack',
-              href: 'https://slack.postgres.ai/',
-            },
-            {
-              label: 'Postgres.TV (YouTube)',
-              href: 'https://www.youtube.com/PostgresTV',
-            },
-            {
-              label: 'Postgres FM (podcast)',
-              href: 'https://postgres.fm',
-            },
-            {
-              label: 'Twitter @postgres_ai',
-              href: 'https://twitter.com/postgres_ai',
-            },
-            {
-              label: 'Twitter @Database_Lab',
-              href: 'https://twitter.com/Database_Lab',
-            },
-            {
-              label: 'LinkedIn',
-              href: 'https://www.linkedin.com/company/postgres-ai',
-            },
+            { label: 'Postgres FM (podcast)', href: 'https://postgres.fm' },
+            { label: 'Postgres.TV (YouTube)', href: 'https://www.youtube.com/PostgresTV' },
+            { label: 'Community Slack', href: 'https://slack.postgres.ai/' },
+            { label: 'LinkedIn', href: 'https://www.linkedin.com/company/postgres-ai' },
+            { label: 'X @postgres_ai', href: 'https://twitter.com/postgres_ai' },
+            { label: 'X @Database_Lab', href: 'https://twitter.com/Database_Lab' },
           ],
         },
         {
           title: 'LINKS',
           items: [
+            {
+              label: 'Questions & answers',
+              to: '/docs/questions-and-answers',
+            },
             {
               label: 'GitLab',
               href: 'https://gitlab.com/postgres-ai',
@@ -441,7 +418,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} ${SITE_NAME}`,
+      copyright: `<p>Knowledge open. Evidence on real data. Keys with the owner.</p>Copyright © ${new Date().getFullYear()} ${SITE_NAME}`,
     },
 
     prism: {

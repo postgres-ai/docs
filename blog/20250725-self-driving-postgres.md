@@ -17,6 +17,8 @@ tags:
 
 import { BlogContactForm } from '@site/src/components/BlogContactForm'
 
+> **Historical note (October 2026):** This July 2025 announcement is preserved as history; our [current approach](/) is Postgres trouble fixed with evidence, changes tested on a copy of your data, and owner approval before production.
+
 # SDP – Self-Driving Postgres. Open-source
 
 I'm excited to announce that Postgres AI has started work on a new project – open-source Self-Driving Postgres (SDP).

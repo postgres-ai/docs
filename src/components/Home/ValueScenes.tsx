@@ -53,8 +53,8 @@ export function Stage({ label, children, hero = false, quiet = false }: { label:
 const CONTROL_STEPS = [
   { label: 'Monitor', title: 'Signals, continuously checked.', detail: 'Track query performance, indexes, settings and database risks over time.', status: 'MONITORING', name: 'Observe' },
   { label: 'Diagnose', title: 'Problems become a worklist.', detail: 'Prioritize findings by severity, with evidence and a recommended next step.', status: 'PRIORITIZING', name: 'Diagnose' },
-  { label: 'Test', title: 'Create. Experiment. Dispose. Repeat.', detail: 'Try changes on full-size DBLab clones. Discard them when you’re done; production stays untouched.', status: 'VALIDATING', name: 'Validate' },
-  { label: 'Review', title: 'Your team stays in control.', detail: 'Review the evidence and decide which changes to apply. Production changes stay deliberate.', status: 'REVIEW', name: 'Decide' },
+  { label: 'Test on a copy', title: 'Every change tested first.', detail: 'The fix runs on a full branch of your data. Plans and timing before and after.', status: 'VALIDATING', name: 'Validate' },
+  { label: 'Apply', title: 'Your team stays in control.', detail: 'You see the result and approve. Then it goes to production.', status: 'APPLY', name: 'Decide' },
 ]
 
 function ControlFlow({ paused }: { paused: boolean }) {

@@ -24,31 +24,61 @@ const PRICING = '/pricing'
 const CONSOLE = 'https://console.postgres.ai/'
 
 function Hero({ consoleUrl }: { consoleUrl: string }) {
-  const platformBaseUrl = useBaseUrl('/img/platforms/')
   return (
     <section className={clsx(styles.section, styles.hero)} aria-labelledby="home-title">
       <div className={clsx('container', styles.heroGrid)}>
         <div className={styles.heroCopy}>
-          <p className={styles.eyebrow}>Postgres expertise, automated.</p>
+          <p className={styles.eyebrow}>Postgres experts. Monitoring. Every change tested first.</p>
           <h1 id="home-title" className={styles.h1}>
-            Postgres under control.{' '}
-            <span className={styles.accent}>Focus on your product.</span>
+            Postgres trouble? We fix it.{' '}
+            <span className={styles.accent}>And we show the evidence.</span>
           </h1>
           <p className={styles.heroSub}>
-            Keep database health under control with continuous monitoring, prioritized fixes and safe testing with database branching.
-            Give your team and coding agents room to build the product.
+            Slow queries, incidents, a major upgrade you are not looking forward to, growth you are not sure you can handle. Monitoring catches it. Experts fix it. Every change, upgrades included, is tested on a copy of your data before it reaches production.
           </p>
           <div className={styles.heroCta}>
             <div className={styles.ctaPair}>
               <a href={consoleUrl} className={clsx(styles.btn, styles.btnPrimary)}>Get started in minutes →</a>
+              <Link to="/consulting" className={styles.btn}>Talk to an expert →</Link>
             </div>
-            <p className={styles.heroQuickLink}>Sign in or create your Console account.</p>
+            <p className={styles.heroQuickLink}>Free checkup, no credit card. Your data stays in your environment.</p>
           </div>
         </div>
         <div className={styles.heroTile}>
           <ControlScene />
         </div>
       </div>
+
+    </section>
+  )
+}
+
+const TROUBLES = [
+  { title: 'Slow queries and high load.', body: 'Find the cause, fix it, confirm it on a copy of your data.', to: '/consulting' },
+  { title: 'Incidents and corruption.', body: 'Fast response, root cause, a fix that is tested before it is applied.', to: '/consulting' },
+  { title: 'Major upgrades, zero downtime.', body: 'PG12 to PG18 and beyond, rehearsed on your data, applied without a maintenance window.', to: '/products/postgres-ai-zdu' },
+  { title: 'Growth and capacity.', body: 'Know what breaks at 10x before it does. Indexes, vacuum, connections, storage.', to: '/consulting' },
+]
+
+function Troubles() {
+  return (
+    <section className={clsx(styles.section, styles.troubles)} aria-labelledby="troubles-title">
+      <div className="container">
+        <RevealTitle id="troubles-title" className={styles.h2} text="What teams call us for" />
+        <div className={styles.troubleGrid}>
+          {TROUBLES.map(item => <Link key={item.title} to={item.to} className={styles.troubleCard}>
+            <h3>{item.title}</h3><p>{item.body}</p><span aria-hidden="true">→</span>
+          </Link>)}
+        </div>
+        <p className={styles.inlineLinks}><Link to="/consulting">Already know the problem? Talk to an expert →</Link></p>
+      </div>
+    </section>
+  )
+}
+
+function WorksWith() {
+  const platformBaseUrl = useBaseUrl('/img/platforms/')
+  return (
       <div className={clsx('container', styles.works)}>
         <p className={styles.worksLabel}>Works with any Postgres</p>
         <ul className={styles.worksList}>
@@ -63,7 +93,29 @@ function Hero({ consoleUrl }: { consoleUrl: string }) {
         </ul>
 
       </div>
+  )
+}
+
+function SameRule() {
+  return (
+    <section className={clsx(styles.section, styles.sameRule)} aria-labelledby="same-rule-title">
+      <div className="container">
+        <RevealTitle id="same-rule-title" className={styles.h2} text="Human or agent, same rule." />
+        <p className={styles.lede}>Coding agents now propose many database changes. They get the same treatment as our own experts: the change runs on a copy of your data, the evidence is shown, and you approve before production.</p>
+        <p className={styles.inlineLinks}><Link to="/docs/dblab-howtos/branching">How we test changes →</Link></p>
+      </div>
     </section>
+  )
+}
+
+function PodcastStrip() {
+  return (
+    <aside className={styles.podcastStrip} aria-label="Postgres podcasts and live sessions">
+      <div className="container">
+        <p>Postgres FM. Our weekly podcast since 2022, 190+ episodes on running Postgres in production. <a href="https://postgres.fm">Listen →</a></p>
+        <p className={styles.podcastSecondary}>Postgres.TV: live hacking sessions on Postgres internals. <a href="https://www.youtube.com/PostgresTV">Watch →</a></p>
+      </div>
+    </aside>
   )
 }
 
@@ -73,8 +125,8 @@ function MonitorDiagnose() {
       <div className="container">
         <div className={styles.chapterHead}>
           <p className={styles.eyebrow}>01 / Monitor → Diagnose</p>
-          <RevealTitle id="see-title" className={styles.h2} text="Keep database problems from slowing your product." />
-          <p className={styles.lede}>Track around 1,000 metrics across queries, indexes, storage and database risks. Prioritized findings explain what needs attention and what to do next.</p>
+          <RevealTitle id="see-title" className={styles.h2} text="Catch it before it becomes an incident." />
+          <p className={styles.lede}>Track around 1,000 metrics across queries, indexes, storage and database risks. Prioritized findings explain what needs attention, what to do next, and what to test first.</p>
         </div>
         <DiagnosisScene consoleUrl={CONSOLE} />
       </div>
@@ -87,9 +139,9 @@ function TestReview({ consoleUrl }: { consoleUrl: string }) {
     <section id="branch" className={clsx(styles.section, styles.chapter, styles.chapterAlt)} aria-labelledby="branch-title">
       <div className="container">
         <div className={styles.chapterHead}>
-          <p className={styles.eyebrow}>DBLab / Database branching for coding agents</p>
-          <RevealTitle id="branch-title" className={styles.h2} text="Database branching. A full Postgres for every agent." />
-          <p className={styles.lede}>Give every coding agent its own branch: an isolated, fully writable Postgres clone with your schema, data and extensions. Ready in a couple of seconds, even at 100 TiB. Run migrations and experiments in parallel, then discard the branches. Production stays untouched.</p>
+          <p className={styles.eyebrow}>DBLab / Test on a copy</p>
+          <RevealTitle id="branch-title" className={styles.h2} text="Every change tested on a full copy first. Upgrades included." />
+          <p className={styles.lede}>Migrations, index changes, config, major upgrades: we run them on a branch of production-size data in seconds, compare plans and timing, and show you the result before anything touches production. Your engineers and your coding agents get the same branches.</p>
         </div>
         <p className={styles.branchPromise}>More agents. One shared base. No extra full-copy storage costs.</p>
         <CloneEconomics />
@@ -103,16 +155,13 @@ function TestReview({ consoleUrl }: { consoleUrl: string }) {
 /* Read-only checkups, plan-only Joe responses, obfuscated test data and
  * infrastructure choice, backed by the SOC 2 Type 2 attestation. */
 function Guardrails() {
-  const sensiba = useBaseUrl('/assets/compliance/soc2-type2-sensiba.png')
-  const sensibaDark = useBaseUrl('/assets/compliance/soc2-type2-sensiba-white.png')
-  const seal = useBaseUrl('/assets/compliance/aicpa-soc2-seal-k.png')
-  const sealDark = useBaseUrl('/assets/compliance/aicpa-soc2-seal.png')
   return (
     <section className={clsx(styles.section, styles.guardrails)} aria-labelledby="guardrails-title">
       <div className="container">
         <p className={styles.eyebrow}>Guardrails</p>
         <RevealTitle id="guardrails-title" className={styles.h2} text="Safe by default." />
         <ul className={styles.guardList}>
+          <li><strong>Your keys, your decision.</strong> PostgresAI never changes production without your approval.</li>
           <li>
             <strong>Read-only checkups.</strong> Select queries over Postgres's catalog and statistics views, with the
             pg_monitor role.
@@ -123,18 +172,8 @@ function Guardrails() {
           <li>
             <strong>Keep PII out of testing.</strong> Use DBLab Cloud or your own infrastructure. Obfuscate sensitive data before it reaches agents and non-production environments.
           </li>
-          <li className={styles.guardSoc}>
-            <span>
-              <strong>SOC 2 Type 2.</strong> Examined by Sensiba LLP. <Link to="/security">Security</Link>
-            </span>
-            <span className={styles.badges}>
-              <img className={styles.lightOnly} src={sensiba} alt="Sensiba SOC 2 Type 2" width={120} height={44} loading="lazy" />
-              <img className={styles.darkOnly} src={sensibaDark} alt="Sensiba SOC 2 Type 2" width={120} height={44} loading="lazy" />
-              <a href="https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2" className={styles.seal}>
-                <img className={styles.lightOnly} src={seal} alt="AICPA SOC 2" width={44} height={44} loading="lazy" />
-                <img className={styles.darkOnly} src={sealDark} alt="AICPA SOC 2" width={44} height={44} loading="lazy" />
-              </a>
-            </span>
+          <li>
+            <Link to="/security"><strong>SOC2</strong></Link>
           </li>
         </ul>
       </div>
@@ -142,15 +181,15 @@ function Guardrails() {
   )
 }
 
-function FinalCta({ consoleUrl }: { consoleUrl: string }) {
+function FinalCta() {
   return (
     <section className={clsx(styles.section, styles.final)} aria-labelledby="final-title">
       <div className={clsx('container', styles.finalInner)}>
-        <RevealTitle id="final-title" className={styles.h2} text="Focus on building your product. We'll keep your Postgres healthy." />
+        <RevealTitle id="final-title" className={styles.h2} text="In trouble now? Talk to an expert today." />
         <div className={styles.ctaPair}>
-          <a href={consoleUrl} className={clsx(styles.btn, styles.btnPrimary)}>Get started in minutes →</a>
+          <Link to="/consulting" className={clsx(styles.btn, styles.btnPrimary)}>Talk to an expert →</Link>
         </div>
-        <p className={styles.inlineLinks}>Start with a free checkup or continuous monitoring. <Link to={PRICING}>See pricing →</Link></p>
+        <p className={styles.inlineLinks}>Not on fire? Start with a free checkup or continuous monitoring. <Link to={PRICING}>See pricing →</Link></p>
       </div>
     </section>
   )
@@ -165,12 +204,16 @@ export default function Home({ testimonials }: { signInUrl?: string; testimonial
         <link rel="stylesheet" href={FONTS_HREF} />
       </Head>
       <Hero consoleUrl={CONSOLE} />
+      <Troubles />
+      <WorksWith />
       <Proof testimonials={testimonials} />
       <MonitorDiagnose />
       <TestReview consoleUrl={CONSOLE} />
-      <CustomerLogos consoleUrl={CONSOLE} />
+      <SameRule />
       <Guardrails />
-      <FinalCta consoleUrl={CONSOLE} />
+      <CustomerLogos consoleUrl={CONSOLE} />
+      <PodcastStrip />
+      <FinalCta />
       <ParticleWordmark />
     </div>
   )
