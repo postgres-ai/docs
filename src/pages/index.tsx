@@ -1,14 +1,15 @@
 import React from 'react'
 import Layout from '@theme/Layout'
+import Head from '@docusaurus/Head'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 
 import Home from '../components/Home'
 import { SITE_NAME } from '../config/site'
 
 // The homepage's own slogan and description (the site-wide tagline in site.json is unchanged)
-const HOME_SLOGAN = "Postgres trouble fixed, with evidence"
+const HOME_SLOGAN = "Zero drama Postgres"
 const HOME_DESCRIPTION =
-  'Slow queries, incidents, major upgrades and growth. Monitoring catches it. Experts fix it. Every change, upgrades included, is tested on a copy of your data before production.'
+  'We fix Postgres trouble and keep it fixed. Every change, upgrades included, is rehearsed on a full copy of your data with evidence before it lands.'
 
 // Testimonials
 const testimonials = [
@@ -44,6 +45,10 @@ function IndexPage() {
 
   return (
     <Layout title={`${SITE_NAME} – ${HOME_SLOGAN}`} description={HOME_DESCRIPTION}>
+      <Head>
+        <title>{`${SITE_NAME} – ${HOME_SLOGAN}`}</title>
+        <meta property="og:title" content={`${SITE_NAME} – ${HOME_SLOGAN}`} />
+      </Head>
       <main>
         <Home signInUrl={signInUrl} testimonials={testimonials} />
       </main>

@@ -1315,3 +1315,13 @@
 @media (min-width: 997px) and (max-width: 1199px) { .heroCta .btn { font-size: 13px; padding-inline: 14px; } .heroCta .ctaPair { column-gap: 12px; } }
 .heroCopy .btn:not(.btnPrimary) { color: var(--h-text); border-color: var(--h-text); }
 .heroCopy .btn:not(.btnPrimary):hover { color: var(--h-bg); background: var(--h-text); }
+
+/* Keep the WI25 headline on one line without constraining browser zoom. */
+.home .heroCopy .h1 { font-size: clamp(26px, 7.5vw, 48px); }
+.heroSubtitle {
+  margin: 0 0 16px;
+  font-size: clamp(16px, 1.4vw, 20px);
+  line-height: 1.5;
+  font-weight: 600;
+  color: var(--h-text);
+}
