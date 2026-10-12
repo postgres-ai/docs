@@ -4,10 +4,8 @@ title: PostgresAI documentation
 hide_title: false
 sidebar_label: Documentation home
 slug: /
-description: PostgresAI is building Self-Driving Postgres. Your database monitors itself, diagnoses problems, tests fixes, and hands you a PR. AI watches, diagnoses, suggests; you approve, you merge.
+description: Postgres experts, monitoring, and database branching. Find the problem, test the change on a copy of your data, and review the evidence before production.
 keywords:
-  - "self-driving postgres"
-  - "autonomous postgres"
   - "postgresql monitoring"
   - "postgresql automation"
   - "postgresai monitoring"
@@ -20,9 +18,9 @@ keywords:
 
 # PostgresAI documentation
 
-We're building **Self-Driving Postgres**. Your database monitors itself, diagnoses problems, and delivers fixes — performance improvements, security patches, zero-downtime upgrades. Each recommendation is tested and verified on a clone of your real data.
+Slow queries, incidents, major upgrades and growth: PostgresAI combines monitoring, expert help and database branching to address Postgres trouble. Changes are tested on a copy of your data before they reach production.
 
-We're not fully autonomous yet. The system watches, diagnoses, and prepares pull requests. You review, you approve, you merge. Human in the loop on every change.
+Human or agent, the same rule applies: review the evidence and approve the change before production.
 
 <table class='docs-home'>
   <tr>

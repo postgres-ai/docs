@@ -22,7 +22,7 @@ const EXTRA_LOGOS = [
   { name: 'Outtake', file: 'outtake.svg', aspect: 137 / 25, h: 26 },
 ]
 
-// Lead customers first; the rest follow.
+// Preserve the customer set and order from master.
 const ORDER = ['Supabase', 'GitLab', 'Suno', 'Orb', 'WorkOS', 'Gadget', 'Resend', 'Photoroom', 'Miro', 'Outtake', 'Chewy.com']
 
 function MaskLogo({ name, file, aspect, h }: (typeof EXTRA_LOGOS)[number]) {
@@ -70,7 +70,7 @@ export function CustomerLogos({ consoleUrl }: { consoleUrl: string }) {
   return (
     <section className={clsx(styles.section, styles.proof)} aria-labelledby="trusted-by-title">
       <div className="container">
-        <h2 id="trusted-by-title" className={styles.proofTitle}>You're in good company</h2>
+        <h2 id="trusted-by-title" className={styles.proofTitle}>Trusted on production Postgres at</h2>
         <div className={clsx(styles.proofGrid, styles.logoMeshOnly)}>
           <ul className={styles.logos}>
             {ORDER.map(name => <li key={name} className={styles.logo}><LogoFor name={name} /></li>)}

@@ -6,9 +6,9 @@ import Home from '../components/Home'
 import { SITE_NAME } from '../config/site'
 
 // The homepage's own slogan and description (the site-wide tagline in site.json is unchanged)
-const HOME_SLOGAN = "Postgres under control. Focus on your product."
+const HOME_SLOGAN = "Postgres trouble fixed, with evidence"
 const HOME_DESCRIPTION =
-  'Keep database health under control with continuous monitoring, prioritized fixes and safe testing on full-size clones. Give your team and coding agents room to build the product.'
+  'Slow queries, incidents, major upgrades and growth. Monitoring catches it. Experts fix it. Every change, upgrades included, is tested on a copy of your data before production.'
 
 // Testimonials
 const testimonials = [
