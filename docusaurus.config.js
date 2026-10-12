@@ -142,9 +142,9 @@ module.exports = {
     ],
 
     announcementBar: {
-      id: 'monitoring_supabase_launch',
+      id: 'postgres_free_health_check',
       content:
-        "🚀 New PostgresAI: <a href='/docs/monitoring'>monitoring, health checks, issue detection</a> — now with <a href='/docs/monitoring/getting-started/quickstart-supabase'>Supabase integration</a>",
+        "Find what’s slowing Postgres down. <a href='/postgres-check'>Get a free health check →</a>",
       backgroundColor: '#D7EEF2',
       textColor: '#013A44',
       isCloseable: true,
