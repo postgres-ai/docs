@@ -28,13 +28,10 @@ function Hero({ consoleUrl }: { consoleUrl: string }) {
     <section className={clsx(styles.section, styles.hero)} aria-labelledby="home-title">
       <div className={clsx('container', styles.heroGrid)}>
         <div className={styles.heroCopy}>
-          <p className={styles.eyebrow}>Postgres experts. Monitoring. Every change tested first.</p>
-          <h1 id="home-title" className={styles.h1}>
-            Postgres trouble? We fix it.{' '}
-            <span className={styles.accent}>And we show the evidence.</span>
-          </h1>
+          <h1 id="home-title" className={styles.h1}>Zero drama Postgres</h1>
+          <p className={styles.heroSubtitle}>Pain now fixed. Pain tomorrow prevented.</p>
           <p className={styles.heroSub}>
-            Slow queries, incidents, a major upgrade you are not looking forward to, growth you are not sure you can handle. Monitoring catches it. Experts fix it. Every change, upgrades included, is tested on a copy of your data before it reaches production.
+            Slow queries, incidents, growth limits: we fix them. Then every change, upgrades included, is rehearsed on a full copy of your data and comes back with evidence before it touches production.
           </p>
           <div className={styles.heroCta}>
             <div className={styles.ctaPair}>
