@@ -29,7 +29,7 @@ function Hero({ consoleUrl }: { consoleUrl: string }) {
       <div className={clsx('container', styles.heroGrid)}>
         <div className={styles.heroCopy}>
           <h1 id="home-title" className={styles.h1}>Zero drama Postgres</h1>
-          <p className={styles.heroSubtitle}>Pain now fixed. Pain tomorrow prevented.</p>
+          <p className={styles.heroSubtitle}>Today's pains fixed. Tomorrow's pains prevented.</p>
           <p className={styles.heroSub}>
             Slow queries, incidents, growth limits: we fix them. Then every change, upgrades included, is rehearsed on a full copy of your data and comes back with evidence before it touches production.
           </p>
