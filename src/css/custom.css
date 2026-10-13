@@ -1035,6 +1035,29 @@ html[data-theme="dark"] .sign-in-button {
   height: 100%;
 }
 
+.resources .resource-source {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  height: 100%;
+  min-height: 180px;
+  padding: 1.5rem;
+  background: var(--ifm-color-emphasis-100);
+  color: var(--ifm-font-color-base);
+  text-align: center;
+}
+
+.resources .resource-source span {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.resources .resource-source small {
+  font-size: 1rem;
+}
+
 .resources  .card__image img {
   object-fit: cover;
 }
