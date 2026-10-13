@@ -211,13 +211,18 @@ module.exports = {
         },
         {
           to: '/blog',
+          label: 'Blog',
+          position: 'right',
+        },
+        {
+          to: '/resources/',
           label: 'Resources',
           position: 'right',
           items: [
-            { label: 'Blog', to: '/blog' },
-            { label: 'Postgres FM', href: 'https://postgres.fm' },
-            { label: 'Postgres.TV', href: 'https://www.youtube.com/PostgresTV' },
+            { label: 'Podcast', href: 'https://postgres.fm' },
+            { label: 'YouTube', href: 'https://www.youtube.com/PostgresTV' },
             { label: 'Case studies', to: '/resources/' },
+            { label: 'SOC2', to: '/security' },
             { label: 'Questions & answers', to: '/docs/questions-and-answers' },
           ],
         },

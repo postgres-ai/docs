@@ -4,7 +4,7 @@ import Layout from '@theme/Layout';
 
 import resources from '../../data/resources';
 
-const TITLE = 'Resources';
+const TITLE = 'Case studies';
 
 function Showcase() {
   return (
@@ -22,7 +22,14 @@ function Showcase() {
                       href={resource.link}
                       target="_blank"
                       rel="noreferrer noopener">
-                        <img src={resource.preview} alt={resource.title} />
+                        {resource.preview ? (
+                          <img src={resource.preview} alt={resource.title} />
+                        ) : (
+                          <div className="resource-source">
+                            <span>{resource.source}</span>
+                            <small>{resource.kind}</small>
+                          </div>
+                        )}
                     </a>
                   </div>
                   <div className="card__body">
@@ -42,7 +49,7 @@ function Showcase() {
                           <a
                             className="button button--small button--secondary button--block"
                             href={resource.link}>
-                            Read more
+                            {resource.action || 'Read more'}
                           </a>
                         )}
                         {!resource.internalLink && (
@@ -51,7 +58,7 @@ function Showcase() {
                             href={resource.link}
                             target="_blank"
                             rel="noreferrer noopener">
-                            Read more
+                            {resource.action || 'Read more'}
                           </a>
                         )}
                       </div>
