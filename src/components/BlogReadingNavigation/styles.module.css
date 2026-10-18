@@ -1,0 +1,36 @@
+.desktop {
+  position: sticky;
+  top: calc(var(--ifm-navbar-height) + 1rem);
+  max-height: calc(100vh - var(--ifm-navbar-height) - 2rem);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding: 0.25rem 0.5rem 1rem;
+  font-size: 0.8rem;
+}
+.title { font-weight: 600; margin-bottom: 1.25rem; line-height: 1.4; }
+.label { font-family: var(--ifm-font-family-monospace); color: var(--ifm-color-content-secondary); font-size: 0.75rem; letter-spacing: 0.06em; margin: 0.75rem 0; }
+.tree, .tree ul { list-style: none; margin: 0; padding: 0; }
+.tree ul { padding-left: 0.85rem; }
+.tree li { margin: 0.6rem 0; }
+.tree a { display: block; position: relative; padding-left: 1rem; font-family: var(--ifm-font-family-monospace); line-height: 1.5; overflow-wrap: anywhere; }
+.tree a::before { content: '└'; position: absolute; left: 0; color: var(--ifm-color-content-secondary); }
+.tree a:global(.table-of-contents__link--active) { font-weight: 700; color: var(--ifm-color-primary); }
+.tree a:focus-visible { outline: 2px solid var(--ifm-color-primary); outline-offset: 3px; }
+/* Expand the current branch, while keeping every branch keyboard accessible. */
+.desktop .tree li > ul { display: none; }
+.desktop .tree li:has(:global(.table-of-contents__link--active)) > ul,
+.desktop .tree li:focus-within > ul,
+.desktop .tree li:hover > ul { display: block; }
+.progress { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; font-family: var(--ifm-font-family-monospace); color: var(--ifm-color-content-secondary); }
+.filled { color: var(--ifm-color-primary); }
+.mobile { display: none; }
+@media (max-width: 996px) {
+  .desktop { display: none; }
+  .mobile { display: block; margin: 1rem 0 1.5rem; padding: 0.75rem 1rem; border: 1px solid var(--ifm-color-emphasis-300); border-radius: var(--ifm-global-radius); }
+  .mobile summary { cursor: pointer; font-weight: 600; }
+}
+@media (min-width: 997px) {
+  :global(.blog-post-page .row):has(> :global(.col--2) .desktop) > :global(main.col--9) { --ifm-col-width: 66.6667%; }
+  :global(.blog-post-page .col--2):has(> .desktop) { --ifm-col-width: 25%; }
+  .desktop { font-size: 0.875rem; }
+}
