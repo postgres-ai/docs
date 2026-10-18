@@ -7,7 +7,7 @@ import BlogPostItem from '@theme/BlogPostItem';
 import BlogPostPaginator from '@theme/BlogPostPaginator';
 import BlogPostPageMetadata from '@theme/BlogPostPage/Metadata';
 import BlogPostPageStructuredData from '@theme/BlogPostPage/StructuredData';
-import TOC from '@theme/TOC';
+import BlogReadingNavigation from '@site/src/components/BlogReadingNavigation';
 import ContentVisibility from '@theme/ContentVisibility';
 import type {Props} from '@theme/BlogPostPage';
 import type {BlogSidebar} from '@docusaurus/plugin-content-blog';
@@ -23,19 +23,13 @@ function BlogPostPageContent({
   const {nextItem, prevItem, frontMatter} = metadata;
   const {
     hide_table_of_contents: hideTableOfContents,
-    toc_min_heading_level: tocMinHeadingLevel,
-    toc_max_heading_level: tocMaxHeadingLevel,
   } = frontMatter;
   return (
     <BlogLayout
       sidebar={undefined}
       toc={
         !hideTableOfContents && toc.length > 0 ? (
-          <TOC
-            toc={toc}
-            minHeadingLevel={tocMinHeadingLevel}
-            maxHeadingLevel={tocMaxHeadingLevel}
-          />
+          <BlogReadingNavigation />
         ) : undefined
       }>
       <ContentVisibility metadata={metadata} />

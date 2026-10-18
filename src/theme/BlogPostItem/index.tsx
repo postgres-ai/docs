@@ -1,4 +1,5 @@
 import React from 'react';
+import BlogReadingNavigation from '@site/src/components/BlogReadingNavigation';
 import {useBlogPost} from '@docusaurus/plugin-content-blog/client';
 import BlogPostItem from '@theme-original/BlogPostItem';
 import BlogPostItemHeader from '@theme/BlogPostItem/Header';
@@ -20,6 +21,7 @@ export default function BlogPostItemWrapper(props: Props): JSX.Element {
   return (
     <article itemProp="blogPost" itemScope itemType="http://schema.org/BlogPosting">
       <BlogPostItemHeader />
+      <BlogReadingNavigation mobile />
       
       {/* Display cover image after title and author */}
       {coverImage && (
