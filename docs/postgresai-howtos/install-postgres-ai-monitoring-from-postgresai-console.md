@@ -56,13 +56,15 @@ includes 13-month retention. See [Pricing](/pricing) for current plans.
 
 ## Advanced setup (optional)
 
-Use **Advanced setup** to adjust access and provisioning details for the monitoring VM:
+Use **Advanced setup** to choose where the monitoring VM runs:
 
-1. **SSH keys (optional)**: add SSH keys if you need SSH access to the provisioned monitoring VM.
-2. **Cloud provider**: select where the monitoring VM will be provisioned (for example, AWS or Hetzner).
-3. **Cloud region**: choose the geographic region for the monitoring VM. For best results, pick a region closest to where your Postgres instance is running.
+1. **Cloud provider**: select where the monitoring VM will be provisioned (for example, AWS or Hetzner).
+2. **Cloud region**: choose the geographic region for the monitoring VM. For best results, pick a region closest to where your Postgres instance is running.
 
-[![PostgresAI Console: Advanced setup section with SSH keys, cloud provider selection, and cloud region selection](/assets/install-postgres-ai-monitoring-from-postgresai-console/install-postgres-ai-monitoring-from-postgresai-console-3.png)](/assets/install-postgres-ai-monitoring-from-postgresai-console/install-postgres-ai-monitoring-from-postgresai-console-3.png)
+The monitoring VM runs in PostgresAI cloud and PostgresAI operates it: it gets no SSH keys of yours.
+You work with it through Grafana and the PostgresAI Console.
+
+[![PostgresAI Console: Advanced setup section with cloud provider selection and cloud region selection](/assets/install-postgres-ai-monitoring-from-postgresai-console/install-postgres-ai-monitoring-from-postgresai-console-3.png)](/assets/install-postgres-ai-monitoring-from-postgresai-console/install-postgres-ai-monitoring-from-postgresai-console-3.png)
 
 ## Deploy
 

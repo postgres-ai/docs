@@ -77,7 +77,7 @@ After authorization, you are returned to PostgresAI Console.
 
 1. In **Billing & plan**, confirm your payment method.
 2. In **Supabase project**, select the **Organization** and check the **Projects to provision**.
-3. Optionally, expand **Advanced setup** to configure SSH keys, cloud provider, or cloud region.
+3. Optionally, expand **Advanced setup** to choose the cloud provider or cloud region.
 4. Click **Deploy**.
 
 [![Set up Supabase monitoring: billing, organization, and project selection](/assets/supabase-monitoring/supabase-monitoring-4.png)](/assets/supabase-monitoring/supabase-monitoring-4.png)

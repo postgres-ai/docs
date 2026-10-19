@@ -876,6 +876,45 @@ postgresai dblab branch create feature-x --project main-db --snapshot <snapshot-
 postgresai dblab clone destroy <clone-id> --project main-db
 ```
 
+### `dblab deploy`
+
+Deploys DBLab Engine and Joe in PostgresAI cloud from a source database, then follows the deploy until
+it is ready.
+
+```bash
+PGPASSWORD=<password> postgresai dblab deploy 'postgresql://<user>@<host>:5432/<db>'
+```
+
+- `--size S|M|L` (default `S`), `--disk <GiB>` (default 50), `--cloud hetzner|aws|gcp`, `--location <location>`.
+- `--provider generic|rds|supabase` — where the source runs (default: detected).
+- `--name`, `--wait <minutes>` / `--no-wait`, `--yes`, `--json` — as in `mon deploy`.
+- It shows the estimated monthly cost before asking. Without a payment method it stops with the
+  billing page (exit 3).
+
+The server gets no SSH keys of yours. Clones are reached through an SSH tunnel as `dblab-tunnel`; allow
+your key with [`dblab access`](#dblab-access) once the deploy is ready.
+
+`dblab instances list`, `dblab instances watch <id|name>` and `dblab instances delete <id|name>` list,
+follow and delete DBLabs.
+
+### `dblab access`
+
+Which SSH keys can open a tunnel to the clones of a DBLab in PostgresAI cloud. The tunnel user,
+`dblab-tunnel`, can only forward connections to the clone ports; it has no shell on the server.
+Organization admins change the keys; a change applies to new connections within a minute.
+
+- `list <id|name>` — the allowed keys and the tunnel command.
+- `add <id|name> --public-key-file <path>` — allow a public key; it is added to the organization's SSH
+  keys if it is new (`--name` names it). A private key file is refused.
+- `add <id|name> --ssh-key <name|id>...` — allow keys the organization already has.
+- `remove <id|name> --ssh-key <name|id>...` — stop keys from opening a tunnel; the organization keeps them.
+
+```bash
+postgresai dblab access add main-db --public-key-file ~/.ssh/id_ed25519.pub
+ssh -N -L 6000:127.0.0.1:6000 dblab-tunnel@<server ip>
+psql "host=127.0.0.1 port=6000 user=<clone user> dbname=postgres"
+```
+
 ## Command: `issues`
 
 Manage issues, comments, and action items in the PostgresAI Console.
