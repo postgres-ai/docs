@@ -18,6 +18,25 @@ varying vec3 vColor;
 varying float vAlpha;
 mat3 rotY(float a) { float c=cos(a),s=sin(a); return mat3(c,0.,s,0.,1.,0.,-s,0.,c); }
 mat3 rotX(float a) { float c=cos(a),s=sin(a); return mat3(1.,0.,0.,0.,c,-s,0.,s,c); }
+// Intersect the eye-to-orbit segment with a closed, finite cylinder.
+// An analytic solid hides rear streams even between the sparse wall particles.
+float cylinderBlocks(vec3 eye, vec3 point, float bottom) {
+ vec3 ray=point-eye;
+ float a=dot(ray.xz,ray.xz), b=dot(eye.xz,ray.xz);
+ float c=dot(eye.xz,eye.xz)-113.5*113.5;
+ float discriminant=b*b-a*c;
+ if(discriminant<0. || a<.0001) return 0.;
+ float root=sqrt(discriminant);
+ float enter=(-b-root)/a, leave=(-b+root)/a;
+ if(abs(ray.y)<.0001) {
+  if(eye.y<bottom || eye.y>bottom+48.) return 0.;
+ } else {
+  float cap0=(bottom-eye.y)/ray.y, cap1=(bottom+48.-eye.y)/ray.y;
+  enter=max(enter,min(cap0,cap1));
+  leave=min(leave,max(cap0,cap1));
+ }
+ return float(max(enter,0.)<min(leave,.999));
+}
 void main() {
  float seed=aMeta.x, extra=step(2.5,aMeta.y), disposable=step(3.5,aMeta.y);
  float edge=step(1.5,aMeta.y)*(1.-extra);
@@ -55,7 +74,16 @@ void main() {
  p *= 1.+uReview*uPulse*.035;
  // Keep the face within its viewing cone while the complete Review scene turns.
  float pointerTurn=mix(1.,.5,uReview);
- p=rotX(mix(mix(.33,.16,uClone),.04+sin(uTime*.28)*.045,uReview)+uPointer.y*.14*pointerTurn)*rotY(uPointer.x*.24*pointerTurn)*p;
+ float pitch=mix(mix(.33,.16,uClone),.04+sin(uTime*.28)*.045,uReview)+uPointer.y*.14*pointerTurn;
+ float turn=uPointer.x*.24*pointerTurn;
+ // Undo the view rotation for the eye, using the same perspective as projection.
+ vec3 eye=rotY(-turn)*rotX(-pitch)*vec3(0.,0.,-650.);
+ vec3 center=rotY(yaw)*vec3(-35.*uDiagnose,0.,0.);
+ float hidden=0.;
+ if(orbit>.5) {
+  hidden=max(cylinderBlocks(eye-center,p-center,-82.),max(cylinderBlocks(eye-center,p-center,-10.),cylinderBlocks(eye-center,p-center,62.)));
+ }
+ p=rotX(pitch)*rotY(turn)*p;
  float perspective=650./(650.+p.z);
  vec2 pixel=p.xy*perspective*uScale;
  vec2 clip=pixel*2./uViewport;
@@ -80,12 +108,23 @@ void main() {
  vColor=mix(vColor,vec3(1.,.60,.23),uClone*disposable*.65);
 
  vAlpha=(.25+.65*perspective)*mix(.8,.28+sweep*.8,orbit) * mix(1.,.92+focus*.37,uDiagnose*(1.-orbit))*mix(1.,1.15,uClone);
- vec3 lightWarm=vec3(.74,.20,.025), lightCool=vec3(.025,.36,.30);
+ vec3 lightWarm=vec3(.94,.46,.20), lightCool=vec3(.69,.51,.22);
  vec3 lightColor=mix(lightWarm,lightCool,orbit*.85);
  lightColor=mix(lightColor,mix(lightCool,lightWarm,alert),focus*uDiagnose);
  lightColor=mix(lightColor,vec3(.025,.38,.18),uReview*step(30.,aReview.x));
  lightColor *= mix(.80,1.12,seed)*mix(1.,mix(.72,1.,1.-smoothstep(-42.,42.,aClone.z)),uClone);
+ // Keep orbit gold independent of the orange body and diagnostic palette.
+ float glint=pow(max(0.,sin(seed*157.+uTime*1.8)),48.)*pow(max(0.,sin(seed*67.-uTime*.7)),8.);
+ vec3 gold=mix(vec3(.96,.70,.035),vec3(1.,.87,.25),sweep);
+ gold=mix(gold,vec3(1.,.97,.76),glint);
+ lightColor=mix(lightColor,gold,orbit);
+ // Small, sparse champagne highlights travel along the gold, not a flashing halo.
+ gl_PointSize += orbit*uLight*glint*2.*uDpr;
+ vAlpha *= 1.+orbit*uLight*glint*.45;
  vColor=mix(vColor,lightColor,uLight);
+ // Lighter, finer particles on paper; preserve dark-theme luminance.
+ gl_PointSize *= mix(1.,.86,uLight);
+ vAlpha *= mix(1.,mix(.78,.72,orbit),uLight);
  vAlpha=mix(vAlpha,.55,uReview*step(30.,aReview.x));
  vAlpha *= mix(1.,max(step(.86,fract(seed*37.)),alert)*(.45+alert*.55),focus*uDiagnose);
  vAlpha *= mix(1.,.10,orbit*uClone);
@@ -111,7 +150,12 @@ void main() {
  vAlpha *= 1.-max(eyes,mouth)*uReview;
  // Apply the same inspection contrast after all mode-specific colour/opacity.
  vAlpha *= mix(1.,.60+influence*.95,uPointerOn)*(1.+uLight*.18);
- vColor *= mix(1.,.75+influence*.55,uPointerOn);
+ // On paper, RGB dimming turns gold/Apricot back into muddy ochre/brown.
+ // Keep the light palette stable; opacity and point size provide inspection contrast.
+ vColor *= mix(mix(1.,.75+influence*.55,uPointerOn),1.,uLight);
+ // The solid proxy is meaningful only once the database has assembled.
+ // Fade it away with the cylinder during Test/Review and the click burst.
+ vAlpha *= 1.-hidden*orbit*smoothstep(.92,1.,uOpening)*(1.-uClone)*(1.-uReview)*(1.-smoothstep(0.,.12,uPulse));
 }
 `
 const FRAGMENT = `
@@ -133,14 +177,20 @@ export default function ControlUniverse({ step, paused }: { step: number; paused
   const wrapperRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef({ step, paused })
   inputRef.current = { step, paused }
-  const [ready, setReady] = useState(false)
+  const [renderer, setRenderer] = useState<'pending' | 'ready' | 'fallback'>('pending')
 
   useEffect(() => {
     const canvas = canvasRef.current
     const wrapper = wrapperRef.current
     if (!canvas || !wrapper) return undefined
-    const gl = canvas.getContext('webgl', { alpha: true, antialias: false, depth: false, powerPreference: 'low-power' })
-    if (!gl) return undefined
+    const gl = (() => {
+      try {
+        return canvas.getContext('webgl', { alpha: true, antialias: false, depth: false, powerPreference: 'low-power' })
+      } catch {
+        return null
+      }
+    })()
+    if (!gl) { setRenderer('fallback'); return undefined }
     const shaders: WebGLShader[] = []
     const buffers: WebGLBuffer[] = []
     let program: WebGLProgram | null = null
@@ -169,6 +219,7 @@ export default function ControlUniverse({ step, paused }: { step: number; paused
     } catch {
       shaders.forEach(s => gl.deleteShader(s))
       if (program) gl.deleteProgram(program)
+      setRenderer('fallback')
       return undefined
     }
     gl.useProgram(program)
@@ -394,7 +445,7 @@ export default function ControlUniverse({ step, paused }: { step: number; paused
     function burst() { if (!motionReduced && !inputRef.current.paused) { pulse = 1; wake() } }
     function visibility() { if (document.hidden) { cancelAnimationFrame(raf); raf = 0 } else wake() }
     function preference() { motionReduced = reduce.matches; wake() }
-    function contextLost(event: Event) { event.preventDefault(); lost = true; cancelAnimationFrame(raf); raf = 0; setReady(false) }
+    function contextLost(event: Event) { event.preventDefault(); lost = true; cancelAnimationFrame(raf); raf = 0; setRenderer('fallback') }
     const observer = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting
       if (visible) wake()
@@ -413,7 +464,7 @@ export default function ControlUniverse({ step, paused }: { step: number; paused
     canvas.addEventListener('webglcontextlost', contextLost)
     document.addEventListener('visibilitychange', visibility)
     reduce.addEventListener('change', preference)
-    resize(); setReady(true)
+    resize(); setRenderer('ready')
     return () => {
       alive = false; logo.onload = null; cancelAnimationFrame(raf)
       observer.disconnect(); resizer.disconnect(); controls.disconnect(); themeObserver.disconnect()
@@ -423,16 +474,22 @@ export default function ControlUniverse({ step, paused }: { step: number; paused
     }
   }, [logoUrl])
 
-  return <div ref={wrapperRef} className={styles.universe} data-step={step} data-paused={paused} data-ready={ready}>
+  return <div ref={wrapperRef} className={styles.universe} data-step={step} data-paused={paused} data-ready={renderer === 'ready'} data-renderer={renderer}>
+    <noscript><style>{`.${styles.universeFallback} { display: block; }`}</style></noscript>
     <svg className={styles.universeFallback} viewBox="0 0 600 470" aria-hidden="true">
-      <defs><mask id="review-face-cutout" maskUnits="userSpaceOnUse" x="0" y="0" width="600" height="470"><rect width="600" height="470" fill="white" stroke="none" /><circle cx="266" cy="194" r="15" fill="black" stroke="none" /><circle cx="334" cy="194" r="15" fill="black" stroke="none" /><path d="M240 319 Q300 349 360 319 Q300 380 240 319" fill="black" stroke="none" /></mask></defs>
+      <defs><mask id="orbit-cylinder-cutout" maskUnits="userSpaceOnUse" x="0" y="0" width="600" height="470">
+        <rect width="600" height="470" fill="white" stroke="none" />
+        {[155, 225, 295].map(y => <g key={y} fill="black" stroke="none"><path d={`M190 ${y} v42 a110 28 0 0 0 220 0 v-42 Z`} /><ellipse cx="300" cy={y} rx="110" ry="28" /></g>)}
+      </mask><mask id="review-face-cutout" maskUnits="userSpaceOnUse" x="0" y="0" width="600" height="470"><rect width="600" height="470" fill="white" stroke="none" /><circle cx="266" cy="194" r="15" fill="black" stroke="none" /><circle cx="334" cy="194" r="15" fill="black" stroke="none" /><path d="M240 319 Q300 349 360 319 Q300 380 240 319" fill="black" stroke="none" /></mask></defs>
       {step === 2 && <g>{[340,410,480].map((x,i)=><svg key={x} x={x} y="130" width="28" height="195" viewBox="29 11.5 4.4 25" opacity={1-i*.3}><image href={logoUrl} width="48" height="48" /></svg>)}</g>}
       <g mask={step === 3 ? 'url(#review-face-cutout)' : undefined} transform={step === 3 ? 'translate(-45 24) scale(.85)' : step === 2 ? 'translate(-65 24) scale(.85)' : undefined}>
       {step < 2 && [155, 225, 295].map(y => <path key={y} d={`M190 ${y} v42 a110 28 0 0 0 220 0 v-42 a110 28 0 0 1-220 0`} fill="#e97632" fillOpacity=".32" />)}
       {step === 3 && [155, 225, 295].map(y => <path key={y} d={`M190 ${y} v42 a110 28 0 0 0 220 0 v-42 a110 28 0 0 1-220 0`} fill="#cf501b" fillOpacity=".72" />)}
       {[155, 225, 295].map(y => <g key={y}><path d={`M 190 ${y} v 42 a 110 28 0 0 0 220 0 v -42`} /><ellipse cx="300" cy={y} rx="110" ry="28" /></g>)}
-      <ellipse cx="300" cy="235" rx="230" ry="85" transform="rotate(-25 300 235)" />
-      <ellipse cx="300" cy="235" rx="230" ry="85" transform="rotate(25 300 235)" />
+      {[-25, 25].map(angle => <g key={angle} className={styles.universeOrbits}>
+        <g mask="url(#orbit-cylinder-cutout)"><path d="M70 235 A230 85 0 0 1 530 235" transform={`rotate(${angle} 300 235)`} /></g>
+        <path d="M530 235 A230 85 0 0 1 70 235" transform={`rotate(${angle} 300 235)`} />
+      </g>)}
       </g>
       {step === 1 && <g><circle cx="465" cy="210" r="34" fill="#ff612220" /><circle cx="465" cy="210" r="44" /><path d="M465 158v16m0 72v16m-52-52h16m72 0h16" /></g>}
       {step === 3 && <g stroke="#79eca0"><rect x="358" y="105" width="170" height="260" rx="4" />{[153,216,281].map(y => <g key={y}><rect x="373" y={y-12} width="22" height="24" rx="2" /><path d={`M377 ${y} l6 5 l9 -12`} strokeWidth="3" /><path d={`M409 ${y} h91`} strokeWidth="5" /></g>)}</g>}
