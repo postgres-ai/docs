@@ -1102,8 +1102,8 @@
 .universe::before { content: ''; position: absolute; inset: 14% 18%; border-radius: 50%; pointer-events: none; background: radial-gradient(ellipse, #ff6a121c, #0ec8c508 45%, transparent 72%); filter: blur(20px); }
 .universe canvas, .universeFallback { display: block; position: absolute; inset: 0; width: 100%; height: 100%; }
 .universe canvas { filter: drop-shadow(0 0 7px #ff9d3240); }
-.universeFallback { fill: #ff621203; stroke: #ff9b65; stroke-width: 1; opacity: .6; }
-.universe[data-ready="true"] .universeFallback { display: none; }
+.universeFallback { display: none; fill: #ff621203; stroke: #ff9b65; stroke-width: 1; opacity: .6; }
+.universe[data-renderer="fallback"] .universeFallback { display: block; }
 .universeHint { position: absolute; bottom: 30px; left: 0; right: 0; text-align: center; font: 10px var(--h-mono); letter-spacing: .03em; color: #8c9d9e; pointer-events: none; }
 .universeProduction { position: absolute; top: 10%; left: 0; right: 0; text-align: center; font: 9px var(--h-mono); letter-spacing: .16em; color: #f3b895; pointer-events: none; }
 .universe[data-paused="true"] .universeHint { visibility: hidden; }
@@ -1198,7 +1198,7 @@
 @media (max-width: 767px) { .quoteGrid { grid-template-columns: minmax(0,1fr); gap: 30px; } }
 /* The hero participates in the site's theme, including its illustration labels. */
 :global(html[data-theme='light']) .section.hero { background: var(--h-bg); color: var(--h-text); }
-:global(html[data-theme='light']) .section.hero::before { background: radial-gradient(ellipse at 75% 45%, #c9e3df55, transparent 55%), radial-gradient(ellipse at 65% 0%, #ffb78322, transparent 45%); }
+:global(html[data-theme='light']) .section.hero::before { background: radial-gradient(ellipse at 75% 45%, #ead8b52b, transparent 55%), radial-gradient(ellipse at 65% 0%, #ffb78322, transparent 45%); }
 :global(html[data-theme='light']) .home .heroCopy .h1 { color: var(--h-text); }
 :global(html[data-theme='light']) .heroCopy .accent,
 :global(html[data-theme='light']) .heroCopy .eyebrow { color: var(--h-orange-ink); }
@@ -1220,7 +1220,6 @@
 :global(html[data-theme='light']) .universeHint { color: #52696a; }
 :global(html[data-theme='light']) .universeBackdrop { opacity: .1; }
 :global(html[data-theme='light']) .universeBackdrop .shaderCanvas { mix-blend-mode: multiply; }
-:global(html[data-theme='light']) .universeFallback { stroke: #a5410c; }
 :global(html[data-theme='light']) .heroDiagnosis { background: #f7f5f0ee; color: #a5410c; }
 :global(html[data-theme='light']) .heroDiagnosis span { color: #52696a; }
 :global(html[data-theme='light']) .heroReview { color: #52696a; }
@@ -1325,3 +1324,9 @@
   font-weight: 600;
   color: var(--h-text);
 }
+
+/* Keep the light-theme sculpture airy, without a green cast on the paper. */
+:global(html[data-theme='light']) .universe::before { background: radial-gradient(ellipse, #f4ad5910, #e8c77808 45%, transparent 72%); }
+:global(html[data-theme='light']) .universeFallback { stroke: #d99558; }
+
+:global(html[data-theme='light']) .universeOrbits { stroke: #f5b309; }

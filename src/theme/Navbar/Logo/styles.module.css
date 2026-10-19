@@ -1,0 +1,18 @@
+.seasonal img {
+  transform-origin: 50% 75%;
+}
+
+/* A short greeting, not a looping distraction. The link still navigates home. */
+@media (prefers-reduced-motion: no-preference) {
+  .seasonal:hover img,
+  .seasonal:focus-visible img {
+    animation: pumpkinGreeting 650ms ease-in-out;
+  }
+}
+
+@keyframes pumpkinGreeting {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-8deg) translateY(-1px); }
+  60% { transform: rotate(6deg) translateY(-1px); }
+  80% { transform: rotate(-3deg); }
+}
