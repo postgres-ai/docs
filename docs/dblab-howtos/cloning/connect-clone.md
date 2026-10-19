@@ -70,9 +70,27 @@ DBNAME=#
 1. Test the connection by fetching tables.
   ![CloudBeaver / Tables](/assets/guides/connect-clone-6.png)
 
+## DBLab in PostgresAI cloud
+A DBLab deployed to PostgresAI cloud gets no SSH keys of yours. Its clones listen on the server's
+localhost and are reached through an SSH tunnel as `dblab-tunnel`, a user that can only forward
+connections to the clone ports.
+
+1. Allow your SSH key: on the DBLab's page in the Console, in **Clone access**, select or add your key
+   (organization admins), or run `postgresai dblab access add <id or name> --public-key-file ~/.ssh/id_ed25519.pub`.
+   A change applies to new connections within a minute.
+1. Open the tunnel for the clone's port, for example 6000:
+```bash
+ssh -N -L 6000:127.0.0.1:6000 dblab-tunnel@<server ip>
+```
+1. In a second terminal, connect to the clone through it:
+```bash
+psql "host=127.0.0.1 port=6000 user=<clone user> dbname=postgres"
+```
+
 ## SSH port forwarding
 :::tip
-SSH keys need to be on the server with the DBLab Engine to use this connection option.
+SSH keys need to be on the server with the DBLab Engine to use this connection option. For a DBLab in
+PostgresAI cloud, see [DBLab in PostgresAI cloud](#dblab-in-postgresai-cloud).
 :::
 
 ### GUI
