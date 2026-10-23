@@ -8,9 +8,11 @@ Terms of Service: https://postgres.ai/tos/
 
 # Privacy policy
 
-*Last Updated: February 10, 2026*
+*Last Updated: October 23, 2026*
 
 This Privacy Policy (this "Policy") is adopted by Nombox LLC d.b.a. PostgresAI ("PostgresAI," "we," or "us"), located at 421 Broadway #5120, San Diego, CA 92101, US.
+
+PostgresAI services are provided by Nombox LLC d.b.a. PostgresAI and its affiliated company DBLab Inc. In this policy, "PostgresAI", "we" and "us" mean both companies. Both may process your personal data for the purposes described here, and each is responsible for that processing.
 
 PostgresAI has the utmost respect for your privacy, and thus, we want to give you the best possible experience while you are using our website. Hence, please take your time to review this Policy. Your continued use of our website and our services will constitute your representation that you have read, understood and agreed to this Policy.
 
@@ -99,6 +101,7 @@ You can obtain a list of our Service Providers on request at privacy@postgres.ai
 
 In addition to sharing with Service Providers as described above, we may also share your information with others in the following circumstances:
 
+- With our affiliated company DBLab Inc.
 - With our partners who may help us distribute the Services to Customers
 - In the event of a merger, sale, change in control, or reorganization of all or a part of our business
 - When we are required to disclose personal information to respond to subpoenas, court orders, or legal process, or to establish or exercise our legal rights or defend against legal claims
