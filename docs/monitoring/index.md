@@ -29,11 +29,11 @@ Experience the full monitoring solution: https://demo.postgres.ai (login: demo /
 PostgresAI full monitoring, express-mode checkups, and PostgresAI Console
 checkup analysis support PostgreSQL 14 through PostgreSQL 19.
 
-PostgreSQL 19 is still a pre-release (beta). Use it for compatibility
+PostgreSQL 19 is currently a pre-release (RC1). Use it for compatibility
 testing rather than production workloads until PostgreSQL 19 reaches general
-availability. PostgresAI preserves the beta version label in checkup reports,
+availability. PostgresAI preserves the pre-release version label in checkup reports,
 selects PostgreSQL 19-compatible metric SQL, and does not report a PostgreSQL
-19 beta server as being behind the latest stable major release.
+19 pre-release server as being behind the latest stable major release.
 
 On PostgreSQL 19, the full monitoring collector uses the native
 [`pg_get_multixact_stats()`](https://www.postgresql.org/docs/19/functions-info.html)

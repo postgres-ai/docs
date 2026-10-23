@@ -97,7 +97,7 @@ Yes. Monitoring can run in PostgresAI Cloud or in your own infrastructure. We se
 ## What Postgres versions are supported?
 
 PostgresAI full monitoring, express-mode checkups, and Console checkup analysis
-support Postgres 14 through PostgreSQL 19. PostgreSQL 19 is currently Beta 2,
+support Postgres 14 through PostgreSQL 19. PostgreSQL 19 is currently RC1,
 so use that version for compatibility testing rather than production workloads
 until general availability. DBLab Engine supports Postgres 10+.
 

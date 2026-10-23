@@ -284,7 +284,7 @@ Generate health-check reports directly from PostgreSQL ("express mode")
 and optionally upload them to the PostgresAI Console.
 
 Express mode supports PostgreSQL 14 through PostgreSQL 19. For PostgreSQL 19
-beta releases, it preserves version labels such as `19beta2` while using
+pre-releases, it preserves version labels such as `19rc1` while using
 `server_version_num` (`190000`) for version-aware metric selection. PostgreSQL
 19 remains a pre-release; use it for compatibility testing rather than
 production workloads until general availability.
