@@ -56,7 +56,7 @@ All of these were available in the incident below. The question still had no ans
 
 ## One incident: the slow checkout
 
-Everything that follows is a reproduction built to match a pattern we keep seeing. The scripts and the raw data are in the [`checkout-tail-20261022`](https://github.com/DmitryNFomin/pg_wait_tracer/tree/master/tests/results/checkout-tail-20261022) directory. All runs are plain SQL on a real disk: no `pg_sleep`, no injected delays.
+Everything that follows is a reproduction built to match a pattern we keep seeing. The scripts, the READMEs and the summaries are in the [`checkout-tail-20261022`](https://github.com/DmitryNFomin/pg_wait_tracer/tree/master/tests/results/checkout-tail-20261022) and [`reruns-20261023`](https://github.com/DmitryNFomin/pg_wait_tracer/tree/master/tests/results/reruns-20261023) directories of the pg_wait_tracer repository; the per-request logs and trace rings they summarize are in the [`evidence-20261023` release](https://github.com/DmitryNFomin/pg_wait_tracer/releases/tag/evidence-20261023). All runs are plain SQL on a real disk: no `pg_sleep`, no injected delays.
 
 An online shop's checkout does three things in one transaction: look up a catalog row, which is mostly a real disk read because the catalog does not fit in memory; update one of 1,000 stock rows; commit. Sixteen clients send 2,000 of these per second through [pgbench](https://www.postgresql.org/docs/current/pgbench.html). A typical request takes 1.5 ms. There is a tail at 10–25 ms.
 
