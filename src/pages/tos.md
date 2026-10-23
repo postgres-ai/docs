@@ -8,9 +8,11 @@ Privacy Policy: https://postgres.ai/privacy/
 
 # Terms of Service
 
-*Last Updated: February 10, 2026*
+*Last Updated: October 23, 2026*
 
-These Terms of Service (these "Terms" or this "Agreement") are entered into by and between the customer ("Customer" or "you")  and Nombox LLC d.b.a. PostgresAI ("PostgresAI" or "we" or "us").
+These Terms are an agreement between you and Nombox LLC d.b.a. PostgresAI ("PostgresAI"). Services may be operated or delivered by its affiliated company DBLab Inc. PostgresAI remains responsible to you for the services. PostgresAI may assign this agreement to DBLab Inc. with notice to you.
+
+In these Terms, "Terms" and "Agreement" mean these Terms of Service, "Customer" and "you" mean the customer, and "we" and "us" mean PostgresAI.
 
 This Agreement governs all use of the Services located at https://postgres.ai and any Services located at sub-domains of the `postgres.ai` domain, and any other websites and Services owned and operated by PostgresAI that incorporate this Agreement, and any Services provided by PostgresAI to you pursuant to any other written agreement that incorporates this Agreement by reference and any updates, modifications or enhancements to any of the foregoing (collectively, the "Service").
 

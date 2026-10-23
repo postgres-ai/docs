@@ -105,6 +105,11 @@ const SecurityPage: React.FC = () => {
                 Criteria, performed by Sensiba LLP, covering the period March 4 –
                 June 4, 2026.
               </p>
+              <p>
+                The SOC 2 Type 2 report is issued to DBLab Inc., an affiliate of
+                Nombox LLC d.b.a. PostgresAI. It covers the systems behind
+                PostgresAI services.
+              </p>
               <p className={styles.reportNote}>
                 The SOC 3® report is publicly available and can be downloaded
                 below. The SOC 2 Type 2 report contains detailed control and
