@@ -103,7 +103,7 @@ The left bars are the dashboard's view and they agree with pg_wait_sampling. The
 
 This is what one of them looks like:
 
-![Timeline of a 12.63 ms request: a 0.27 ms disk read for the catalog lookup, then 10.97 ms waiting on Lock:transactionid inside the stock update, then 0.53 ms of WAL write and fsync at commit. A 10 ms sampler catches it in at most one sample.](/assets/blog/20261103-wait-events-1-one-slow-request.svg)
+![Timeline of a 12.63 ms request: a 0.27 ms disk read for the catalog lookup, then 10.97 ms waiting for a row lock (transaction lock) inside the stock update, then 0.53 ms of WAL write and fsync at commit. A 10 ms sampler catches it in at most one sample.](/assets/blog/20261103-wait-events-1-one-slow-request.svg)
 
 The request spent 87% of its life waiting for one row lock. The disk read that the dashboard ranked high took 0.27 ms. The commit path that the dashboard ranked first took 0.53 ms.
 
