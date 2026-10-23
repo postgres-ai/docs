@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 406" width="760" height="406" role="img" aria-labelledby="t d">
+<title id="t">Latency tail of the checkout request in four runs</title>
+<desc id="d">Complementary distribution of request latency on log axes for baseline, synchronous_commit off, 2 GB cache, and the chunked background job. The first two overlap the baseline above 5 ms; the chunked job alone cuts the tail: p99.9 from 11.0 to 5.8 ms, max from 26.7 to 10.0 ms.</desc>
+<style>
+.bg{fill:#fcfcfb}.t1{fill:#0b0b0b}.t2{fill:#52514e}.grid{stroke:#e4e3df}.axis{stroke:#9a9993}.gap{stroke:#fcfcfb}
+.s1{fill:#2a78d6}.s2{fill:#eb6834}.s3{fill:#1baf7a}.s4{fill:#eda100}.s5{fill:#4a3aa7}.n{fill:#c7c6c1}
+.l1{stroke:#2a78d6}.l2{stroke:#eb6834}.l3{stroke:#1baf7a}.l4{stroke:#eda100}
+text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+@media (prefers-color-scheme:dark){.bg{fill:#1a1a19}.t1{fill:#fff}.t2{fill:#c3c2b7}.grid{stroke:#383835}.axis{stroke:#6f6e69}.gap{stroke:#1a1a19}
+.s1{fill:#3987e5}.s2{fill:#d95926}.s3{fill:#199e70}.s4{fill:#c98500}.s5{fill:#9085e9}.n{fill:#55544f}
+.l1{stroke:#3987e5}.l2{stroke:#d95926}.l3{stroke:#199e70}.l4{stroke:#c98500}}
+</style>
+<rect class="bg" width="760" height="406" rx="8"/>
+<text class="t1" x="70" y="28" font-size="15" font-weight="600">Share of checkout requests slower than X, four runs</text>
+<line class="grid" x1="70" x2="560" y1="330.0" y2="330.0" stroke-width="1"/>
+<text class="t2" x="62" y="334.0" font-size="11" text-anchor="end">0.01%</text>
+<line class="grid" x1="70" x2="560" y1="260.0" y2="260.0" stroke-width="1"/>
+<text class="t2" x="62" y="264.0" font-size="11" text-anchor="end">0.1%</text>
+<line class="grid" x1="70" x2="560" y1="190.0" y2="190.0" stroke-width="1"/>
+<text class="t2" x="62" y="194.0" font-size="11" text-anchor="end">1%</text>
+<line class="grid" x1="70" x2="560" y1="120.0" y2="120.0" stroke-width="1"/>
+<text class="t2" x="62" y="124.0" font-size="11" text-anchor="end">10%</text>
+<line class="grid" x1="70" x2="560" y1="50.0" y2="50.0" stroke-width="1"/>
+<text class="t2" x="62" y="54.0" font-size="11" text-anchor="end">100%</text>
+<line class="grid" x1="70.0" x2="70.0" y1="50" y2="330" stroke-width="1"/>
+<text class="t2" x="70.0" y="346" font-size="11" text-anchor="middle">0.5 ms</text>
+<line class="grid" x1="147.5" x2="147.5" y1="50" y2="330" stroke-width="1"/>
+<text class="t2" x="147.5" y="346" font-size="11" text-anchor="middle">1 ms</text>
+<line class="grid" x1="225.0" x2="225.0" y1="50" y2="330" stroke-width="1"/>
+<text class="t2" x="225.0" y="346" font-size="11" text-anchor="middle">2 ms</text>
+<line class="grid" x1="327.5" x2="327.5" y1="50" y2="330" stroke-width="1"/>
+<text class="t2" x="327.5" y="346" font-size="11" text-anchor="middle">5 ms</text>
+<line class="grid" x1="405.0" x2="405.0" y1="50" y2="330" stroke-width="1"/>
+<text class="t2" x="405.0" y="346" font-size="11" text-anchor="middle">10 ms</text>
+<line class="grid" x1="482.5" x2="482.5" y1="50" y2="330" stroke-width="1"/>
+<text class="t2" x="482.5" y="346" font-size="11" text-anchor="middle">20 ms</text>
+<line class="grid" x1="560.0" x2="560.0" y1="50" y2="330" stroke-width="1"/>
+<text class="t2" x="560.0" y="346" font-size="11" text-anchor="middle">40 ms</text>
+<text class="t2" x="315.0" y="366" font-size="12" text-anchor="middle">request latency, from scheduled start (log scale)</text>
+<text class="t2" x="566.0" y="264.0" font-size="11">p99.9</text>
+<path class="l1" d="M70.0,50.0 L78.6,50.0 L87.2,50.1 L95.8,50.1 L104.4,50.2 L113.1,50.4 L121.6,50.7 L130.3,51.2 L138.8,51.9 L147.5,53.1 L156.0,55.0 L164.7,57.7 L173.3,61.4 L181.9,66.3 L190.5,72.9 L199.1,81.4 L207.7,91.8 L216.3,104.5 L224.9,119.3 L233.5,135.4 L242.1,151.6 L250.7,166.2 L259.3,177.6 L267.9,186.1 L276.6,192.3 L285.1,197.8 L293.7,202.5 L302.4,206.7 L311.0,210.4 L319.6,214.1 L328.2,217.7 L336.8,221.2 L345.4,225.1 L354.0,228.6 L362.6,232.1 L371.2,237.7 L379.8,241.4 L388.4,246.1 L397.0,251.3 L405.6,254.4 L414.2,258.9 L422.8,264.1 L431.4,270.9 L440.0,279.2 L448.7,286.1 L457.3,297.1 L465.9,307.1 L474.5,317.7 L483.1,330.0 L491.7,330.0 L500.3,330.0 L508.9,330.0" fill="none" stroke-width="2" stroke-linejoin="round"/>
+<path class="l2" d="M70.0,52.8 L78.6,54.5 L87.2,57.2 L95.8,60.6 L104.4,64.5 L113.1,68.4 L121.6,72.7 L130.3,78.0 L138.8,85.8 L147.5,96.6 L156.0,110.8 L164.7,126.8 L173.3,143.3 L181.9,158.3 L190.5,171.0 L199.1,181.3 L207.7,188.6 L216.3,194.8 L224.9,199.5 L233.5,203.5 L242.1,207.1 L250.7,209.5 L259.3,212.0 L267.9,213.9 L276.6,215.8 L285.1,217.8 L293.7,219.7 L302.4,221.8 L311.0,224.0 L319.6,226.2 L328.2,228.1 L336.8,229.8 L345.4,232.2 L354.0,234.1 L362.6,237.2 L371.2,239.1 L379.8,242.3 L388.4,245.5 L397.0,248.2 L405.6,251.4 L414.2,256.6 L422.8,261.2 L431.4,268.3 L440.0,277.2 L448.7,285.0 L457.3,295.3 L465.9,314.4 L474.5,328.7 L483.1,330.0 L491.7,330.0 L500.3,330.0 L508.9,330.0" fill="none" stroke-width="2" stroke-linejoin="round"/>
+<path class="l4" d="M70.0,50.0 L78.6,50.1 L87.2,50.2 L95.8,50.3 L104.4,50.6 L113.1,50.9 L121.6,51.5 L130.3,52.4 L138.8,53.8 L147.5,55.9 L156.0,59.4 L164.7,64.4 L173.3,71.0 L181.9,79.0 L190.5,88.8 L199.1,101.3 L207.7,116.4 L216.3,133.6 L224.9,150.6 L233.5,164.5 L242.1,174.6 L250.7,182.2 L259.3,187.5 L267.9,192.2 L276.6,196.5 L285.1,200.0 L293.7,203.8 L302.4,207.6 L311.0,211.4 L319.6,215.0 L328.2,218.2 L336.8,221.7 L345.4,224.6 L354.0,228.5 L362.6,232.5 L371.2,236.6 L379.8,241.1 L388.4,245.6 L397.0,249.3 L405.6,252.9 L414.2,257.5 L422.8,263.1 L431.4,269.6 L440.0,279.6 L448.7,286.3 L457.3,298.4 L465.9,313.7 L474.5,327.6 L483.1,330.0 L491.7,330.0 L500.3,330.0" fill="none" stroke-width="2" stroke-linejoin="round"/>
+<path class="l3" d="M70.0,50.0 L78.6,50.0 L87.2,50.1 L95.8,50.1 L104.4,50.2 L113.1,50.4 L121.6,50.7 L130.3,51.1 L138.8,51.8 L147.5,52.8 L156.0,54.5 L164.7,57.1 L173.3,60.6 L181.9,65.1 L190.5,71.3 L199.1,79.3 L207.7,89.2 L216.3,101.4 L224.9,115.6 L233.5,131.9 L242.1,148.7 L250.7,164.7 L259.3,178.8 L267.9,190.8 L276.6,201.3 L285.1,210.4 L293.7,218.0 L302.4,225.8 L311.0,232.9 L319.6,239.2 L328.2,245.7 L336.8,254.0 L345.4,261.4 L354.0,267.4 L362.6,277.3 L371.2,291.6 L379.8,309.6 L388.4,330.0 L397.0,330.0" fill="none" stroke-width="2" stroke-linejoin="round"/>
+<rect class="s1" x="90" y="206" width="14" height="4"/><text class="t1" x="110" y="211" font-size="11">baseline</text>
+<rect class="s2" x="90" y="226" width="14" height="4"/><text class="t1" x="110" y="231" font-size="11">fix A: synchronous_commit = off</text>
+<rect class="s4" x="90" y="246" width="14" height="4"/><text class="t1" x="110" y="251" font-size="11">fix B: 2 GB cache, no disk reads</text>
+<rect class="s3" x="90" y="266" width="14" height="4"/><text class="t1" x="110" y="271" font-size="11">fix C: background job in 5-row chunks</text>
+<text class="t2" x="70" y="380" font-size="11">Runs R0c, F1a, F1b, F2: 2,000 requests/s, 120 s each, about 240,000 requests per run.</text>
+<text class="t2" x="70" y="394" font-size="11">Fixes A and B move the bulk of requests and leave the tail; fix C moves only the tail.</text>
+</svg>

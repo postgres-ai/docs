@@ -3,81 +3,124 @@ title: "What your Postgres is waiting for, and why the dashboard can't tell you"
 date: 2026-11-03 12:00:00
 slug: 20261103-what-postgres-is-waiting-for
 authors: dmitry
-description: "Wait events explained for everyone: what the live flag means, how every dashboard samples it, and one measured incident where the dashboard's own fixes did nothing and the real cause was a lock the dashboard ranked last."
+description: "Wait events, explained for everyone: what the live flag means, how every dashboard samples it, and one measured incident where the dashboard's own fixes did nothing and the cause was a lock it ranked last."
 tags: [Postgres insights, monitoring, wait events, performance]
 unlisted: true
 ---
 
-:::caution Outline for review, not a post yet
-This file is the agreed structure for post 1 of 3. Each section lists what it will say, which data it uses, and what it may not claim. Prose comes after the structure is approved. Audience: developers, technical managers, anyone who has looked at a Postgres wait dashboard. Target length 1,200–1,500 words, one table, one figure.
-:::
+A checkout request was slow. The dashboard said the time went to the commit path and to disk reads. The team tried the two fixes that follow from that, and the slow requests stayed exactly as slow. The cause was a lock that the dashboard ranked last, at 2% of the time. This post explains why a wait dashboard can be right about the time and wrong about the problem, using only what Postgres exposes today. It ends where the next post, about a tool that finds such causes, begins.
 
 <!--truncate-->
 
-## Lede
-
-- One paragraph. A request was slow. The dashboard said "commit path and I/O". Two fixes based on that left the slow requests exactly as slow. The cause was a lock that the dashboard ranked last, at 2%. This post explains why that happens, using only what Postgres exposes today, and ends where the next post starts.
-- No patch, no tool names in the lede.
-
 ## What a wait event is
 
-- A backend that is about to wait writes a name into its slot in shared memory (`Lock:transactionid`, `IO:DataFileRead`, `Client:ClientRead`; about 290 names in 10 classes) and clears it when the wait ends. Visible in `pg_stat_activity.wait_event`.
-- No clock is read, nothing is counted, nothing is logged. It is a live flag: "right now, this backend is inside this wait".
-- One sentence of scope: the interval between the two marks can include time the backend spent runnable but not scheduled, so a wait is "not on a CPU, with a name", not a pure measurement of blocking.
+When a Postgres backend is about to wait for something, it writes a name into its own slot in shared memory. When the wait ends, it clears the slot. The names look like `Lock:transactionid`, `IO:DataFileRead` or `Client:ClientRead`. There are about 290 of them, in ten classes, listed in the [wait event table](https://www.postgresql.org/docs/current/monitoring-stats.html#WAIT-EVENT-TABLE) of the documentation. You read the slot through [`pg_stat_activity.wait_event`](https://www.postgresql.org/docs/current/monitoring-stats.html#MONITORING-PG-STAT-ACTIVITY-VIEW).
+
+That is the whole mechanism. No clock is read, nothing is counted, nothing is logged. A wait event is a live flag that says "right now, this backend is inside this wait". One note on what the flag covers: the interval between the two marks can include time the backend spent waiting for a CPU, so a wait is "not running, and here is the name", not a pure measurement of blocking.
 
 ## Two kinds of time
 
-- Response time is time on a CPU plus time waiting. `EXPLAIN (ANALYZE, BUFFERS)` describes the first very well and reports I/O time if `track_io_timing` is on; it does not say what else a plan node waited on.
-- Keep the current post's framing; drop the CI-pipeline and traffic-jam analogies (Nik's style pass already removed them).
+A request's time is time on a CPU plus time waiting for something else. [`EXPLAIN (ANALYZE, BUFFERS)`](https://www.postgresql.org/docs/current/sql-explain.html) describes the first kind very well: which plan nodes ran, how many rows each produced, where the estimates were wrong. With [`track_io_timing`](https://www.postgresql.org/docs/current/runtime-config-statistics.html#GUC-TRACK-IO-TIMING) it also reports I/O time. It does not say what else a node waited on. A query that spent 90% of its life blocked on a lock produces a plan in which every node looks healthy, with one large number and no indication that the number is waiting rather than work.
 
-## How dashboards see waits: sampling
+Wait events are how Postgres reports the second kind of time. But they report only the wait that is in progress now.
 
-- Because the flag is live and nothing is recorded, every in-server tool reads the flag on a timer and counts what it saw: `pg_wait_sampling` every 10 ms by default, managed-service dashboards the same way with a UI on top. The count per event divided by all counts is a share of time: occupancy.
-- Say plainly that this works: it points at the right subsystem, cheaply, continuously, and without knowing in advance that something will go wrong. On an unthrottled machine the shares are accurate even under heavy oversubscription (write-up, "What we do not claim").
+## How every dashboard sees waits
 
-## What a share cannot tell you
+Because the flag is live and nothing is recorded, every tool built on wait events uses the same technique: read the flag on a timer and count what you saw. The count for each event divided by all counts is a share of time. [pg_wait_sampling](https://github.com/postgrespro/pg_wait_sampling) does this inside the server every 10 ms by default. Managed-service dashboards do the same with a UI on top: [Amazon RDS Performance Insights](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PerfInsights.html), [Google Cloud SQL Query Insights](https://cloud.google.com/sql/docs/postgres/using-query-insights), [Azure Database for PostgreSQL query store](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-query-store). So do the monitoring products: [pganalyze](https://pganalyze.com/), [Datadog Database Monitoring](https://docs.datadoghq.com/database_monitoring/), [Percona PMM](https://docs.percona.com/percona-monitoring-and-management/), [pgwatch](https://github.com/cybertec-postgresql/pgwatch), and our own [PostgresAI monitoring](/docs/monitoring/metrics/wait-events).
 
-Three limits, each in one paragraph with the current post's wording tightened:
+![One second of one backend: six I/O waits of 30 ms and 24 lock waits of 2 ms. A sampler looking every 10 ms records 18 I/O samples and 6 lock samples. The shares are about right; it saw only 6 of the 24 lock waits and cannot report counts or durations.](/assets/blog/20261103-wait-events-1-sampling.gif)
 
-1. **Count versus duration.** A share is a product of how many waits and how long each. Six seconds of `IO:WalSync` is 30,000 syncs at 200 µs or 300 syncs at 20 ms; same share, different fix. Note in the same breath that `pg_stat_io` with `track_wal_io_timing` gives the count and total for I/O, and `pg_stat_lock` for heavyweight locks that lasted longer than `deadlock_timeout` and were acquired, so for those two classes you get a mean; a mean still cannot show a tail.
-2. **Waits shorter than the interval** leave samples in proportion to their length, so twenty 2 ms waits an hour are about four samples out of 360,000. Say "cannot measure", not "cannot see".
-3. **Per-request history.** A sample is a state, not a transition. A sampler with history keeps the order of what it saw, but not request boundaries, not individual durations, and nothing between two samples. The question "why was *this* request slow" has no answer in a share.
+Sampling works. The shares it produces are accurate, and on a machine that is not CPU-throttled they stay accurate under heavy load. It points at the right subsystem, cheaply, continuously, and without anyone knowing in advance that something will go wrong. Most of the time it gets you close to a fix.
+
+## Three things a share cannot tell you
+
+**How many waits, and how long each.** A share is a product: the number of waits times their average length. Six seconds of `IO:WalSync` in a minute can be 30,000 WAL flushes at 200 µs, which is a healthy disk under high commit volume, or 300 flushes at 20 ms, which is a disk that stalls. Same share, different fix. For two classes of waits, Postgres keeps counts and totals elsewhere: [`pg_stat_io`](https://www.postgresql.org/docs/current/monitoring-stats.html#MONITORING-PG-STAT-IO-VIEW) for I/O, and on current master [`pg_stat_lock`](https://www.postgresql.org/docs/devel/monitoring-stats.html#MONITORING-PG-STAT-LOCK-VIEW) for heavyweight-lock waits that lasted longer than `deadlock_timeout` and were acquired. Those give you a mean. A mean still cannot tell 30,000 even flushes from 29,700 fast ones and 300 stalls.
+
+**Waits shorter than the sampling interval.** A 2 ms wait leaves a sample in about one look out of five. Twenty of them in an hour are 40 ms out of 3,600 seconds, and a 10 ms sampler taking 360,000 looks lands inside one of them about four times. From four samples you learn neither the count nor the durations.
+
+**What one request went through.** A sample is a state, not a transition. A sampler with history keeps the order of the states it saw, but not where one request ended and the next began, not how long any wait lasted, and nothing between two looks. The question "why was *this* request slow" has no answer in a share.
 
 ## The tools you already have
 
-- A short question-based table, no patch mentioned: who is blocking whom (`pg_locks`, `pg_blocking_pids()`), lock waits over `deadlock_timeout` (`log_lock_waits`; off by default through Postgres 18, on by default on master as of October 2026), per-statement totals (`pg_stat_statements`), I/O counts and times (`pg_stat_io`, per backend `pg_stat_get_backend_io()`), heavyweight-lock counts and times (`pg_stat_lock`, master), plan-level time (`EXPLAIN (ANALYZE, BUFFERS)`).
-- Purpose of the table: the reader should leave knowing these exist. The next section shows a case where all of them were available and the question still had no answer.
+| Question | Tool | What it gives |
+|---|---|---|
+| Who is blocking whom, right now | [`pg_locks`](https://www.postgresql.org/docs/current/view-pg-locks.html), [`pg_blocking_pids()`](https://www.postgresql.org/docs/current/functions-info.html#FUNCTIONS-INFO-SESSION-TABLE) | the blocker's PID while the wait is in progress |
+| A lock wait longer than `deadlock_timeout` | [`log_lock_waits`](https://www.postgresql.org/docs/current/runtime-config-logging.html#GUC-LOG-LOCK-WAITS) (off by default through Postgres 18, on by default on master as of 2026-10) | a log line with the holders, the queue, and the elapsed time once the lock is acquired |
+| Totals per statement | [`pg_stat_statements`](https://www.postgresql.org/docs/current/pgstatstatements.html) | calls, total and mean time, blocks read; no wait breakdown |
+| I/O counts and times | [`pg_stat_io`](https://www.postgresql.org/docs/current/monitoring-stats.html#MONITORING-PG-STAT-IO-VIEW), per backend [`pg_stat_get_backend_io()`](https://www.postgresql.org/docs/current/monitoring-stats.html#MONITORING-STATS-BACKEND-FUNCS-TABLE) | exact counts and totals per operation type; no distribution, no worst case |
+| Heavyweight-lock counts and times | [`pg_stat_lock`](https://www.postgresql.org/docs/devel/monitoring-stats.html#MONITORING-PG-STAT-LOCK-VIEW) (master) | waits over `deadlock_timeout` that were acquired, by lock type |
+| Where a plan spends its time | [`EXPLAIN (ANALYZE, BUFFERS)`](https://www.postgresql.org/docs/current/sql-explain.html) | per node elapsed time and I/O time |
+| Where the server's time goes, continuously | a sampler: [pg_wait_sampling](https://github.com/postgrespro/pg_wait_sampling) or a dashboard | shares of time per wait event and per query |
 
-## One incident: the slow checkout (case 1)
+All of these were available in the incident below. The question still had no answer.
 
-Source: five-cases write-up, case 1, directory `checkout-tail-20261022/` and the repeats in `reruns-20261023/`.
+## One incident: the slow checkout
 
-- **The situation.** An online shop's checkout: lookup a catalog row (mostly a real disk read), update one of 1,000 stock rows, commit. 2,000 requests/s from 16 clients. Typical request 1.5 ms; a tail at 10–25 ms. A background job recalculates reserved stock over 100 items about five times a second and holds those row locks for about 17 ms while it runs.
-- **What the dashboard said.** `pg_wait_sampling` on the request backends: `LWLock:WALWrite` 32.7%, `IO:WalSync` 29.3%, CPU 22.4%, `IO:DataFileRead` 12.3%, `Lock:transactionid` 2.3%. By query: COMMIT 78% of samples.
-- **The two fixes it suggests, tried.** The one table of the post:
+Everything that follows is a reproduction built to match a pattern we keep seeing. The scripts and the raw data are in the [`checkout-tail-20261022`](https://github.com/DmitryNFomin/pg_wait_tracer/tree/master/tests/results/checkout-tail-20261022) directory. All runs are plain SQL on a real disk: no `pg_sleep`, no injected delays.
 
-  | Run | Change | Mean | p99.9 | Requests > 5 ms |
-  |---|---|---:|---:|---:|
-  | baseline | — | 1.51 ms | 10.98 ms | 972 |
-  | fix A | `synchronous_commit = off` | 0.83 ms | 11.36 ms | 688 |
-  | fix B | 2 GB `shared_buffers`, prewarmed, no memory limit | 1.34 ms | 11.30 ms | 954 |
-  | fix C | background job in 5-row chunks | 1.52 ms | 5.78 ms | 388 |
+An online shop's checkout does three things in one transaction: look up a catalog row, which is mostly a real disk read because the catalog does not fit in memory; update one of 1,000 stock rows; commit. Sixteen clients send 2,000 of these per second through [pgbench](https://www.postgresql.org/docs/current/pgbench.html). A typical request takes 1.5 ms. There is a tail at 10–25 ms.
 
-  Fix A halves the mean and gives up durability; the tail does not move. Fix B removes the disk reads; the tail does not move. Only fix C moves it, and fix C is not something any share pointed at.
-- **How fix C was found.** Exact per-wait timing with statement boundaries (the subject of post 2) rebuilt each request from its own waits. Of requests over 8 ms, 65% were dominated by `Lock:transactionid`, the event at 2.3% of the profile. The slow requests were the ones that landed on a stock row the background job was holding. The mean never moved because they are 0.1% of requests.
-- **Honesty paragraph, mandatory.** (a) An expert can find a hint in the sampler: the per-query view shows `UPDATE stock` at 41% `Lock:transactionid`; what it cannot say is that these waits, not the commit path at 25× the share, make the tail. (b) Fix C ran once on the original VM; three repeats on a re-created, faster VM (job 8 ms instead of 17) confirmed the direction: requests over 5 ms outside stall seconds 125–220 → 0–29, the UPDATE's lock share 22% → 0–1%. (c) Four of those six runs had multi-second stalls hitting every request at once, in both arms, cause not found; that is why the comparison is on requests over 5 ms, not p99.9. Define "stall second" the way the final reanalysis defines it (see open item in writer notes).
-- Figure: one chart, "share of the profile" versus "share of slow requests dominated by this event" for the five events. Data is in the case 1 reconstruction table (patch run R1b). Replaces F0.
+A background job recalculates reserved stock. About five times a second it runs one `update` over 100 consecutive items, which takes about 17 ms, and it holds the row locks on those 100 items until it finishes.
+
+### What the dashboard said
+
+pg_wait_sampling, on the request backends, over a 120 s window:
+
+| Wait event | Share |
+|---|---:|
+| `LWLock:WALWrite` | 32.7% |
+| `IO:WalSync` | 29.3% |
+| CPU | 22.4% |
+| `IO:DataFileRead` | 12.3% |
+| `Lock:transactionid` | 2.3% |
+
+By query, `COMMIT` holds 78% of the samples. The commit path, then disk reads. That is the picture any wait dashboard would show for this workload, and it is correct about where the time goes.
+
+### The two fixes it suggests, tried
+
+The commit path at the top says: make commits cheaper. The reads say: add memory. Both were tried, and a third fix was tried later for comparison.
+
+| Run | Change | Mean | p99 | p99.9 | Max | Requests over 5 ms |
+|---|---|---:|---:|---:|---:|---:|
+| baseline | | 1.51 ms | 3.08 ms | 10.98 ms | 26.7 ms | 972 |
+| fix A | `synchronous_commit = off` | 0.83 ms | 1.74 ms | 11.36 ms | 25.7 ms | 688 |
+| fix B | 2 GB `shared_buffers`, prewarmed, no memory limit | 1.34 ms | 2.82 ms | 11.30 ms | 23.9 ms | 954 |
+| fix C | background job in 5-row chunks | 1.52 ms | 2.92 ms | 5.78 ms | 10.0 ms | 388 |
+
+Fix A halves the mean and gives up durability on a crash. The tail does not move. Fix B removes the disk reads. The tail does not move. Fix C changes nothing in the database's configuration, and it is the only one that moves the tail: p99.9 from 11.0 to 5.8 ms, the worst request from 26.7 to 10.0 ms.
+
+![Share of requests slower than X for the four runs, on log axes. Fixes A and B overlap the baseline above 5 ms; fix C alone cuts the tail.](/assets/blog/20261103-wait-events-1-latency-tail.svg)
+
+Fix C was not something any share pointed at. Here is how it was found.
+
+### What made the slow requests slow
+
+The baseline run was repeated with exact per-wait timing turned on: every wait with its duration, and markers where each statement and transaction began and ended. That makes it possible to rebuild each request from its own waits and ask, for the slow ones only, what they waited on. The tool that recorded this is the subject of the next post; here only its answer matters.
+
+![Paired bars per wait event: share of all wait time versus share of slow requests where this was the main wait. WAL write lock 34.5% versus 12%, WAL fsync 30% versus 3%, client round trip 20.5% versus 33%, disk read 11.5% versus 0%, row lock 2.5% versus 51%.](/assets/blog/20261103-wait-events-1-profile-vs-tail.svg)
+
+The left bars are the dashboard's view and they agree with pg_wait_sampling. The right bars are the view per slow request. `Lock:transactionid` is 2.5% of all wait time and the main wait in 51% of the requests that took more than 5 ms; at an 8 ms threshold it is 65%. The slow requests are the ones that landed on a stock row the background job was holding. The mean never moved because they are 0.1% of all requests.
+
+This is what one of them looks like:
+
+![Timeline of a 12.63 ms request: a 0.27 ms disk read for the catalog lookup, then 10.97 ms waiting on Lock:transactionid inside the stock update, then 0.53 ms of WAL write and fsync at commit. A 10 ms sampler catches it in at most one sample.](/assets/blog/20261103-wait-events-1-one-slow-request.svg)
+
+The request spent 87% of its life waiting for one row lock. The disk read that the dashboard ranked high took 0.27 ms. The commit path that the dashboard ranked first took 0.53 ms.
+
+### The fix, and the repeats
+
+If the job holds 100 row locks for 17 ms, hold fewer for less time. Fix C runs the same job as 20 statements of 5 rows each, about 1 ms per statement. That is the whole change.
+
+The fix ran once on the original VM, which is the table above. It was then repeated three times, alternating with three baseline runs, on a re-created VM. Two things were different there. The new VM was faster, so the job took 8 ms instead of 17 and the lock tail was smaller to begin with. And four of the six runs had short stalls of 10–150 ms, a few per run, that hit every request at once in both arms; their cause was not found, so the comparison excludes the moments when at least 20 requests were late at the same time, a condition that never occurs in any of the original runs. With that exclusion, requests over 5 ms, baseline against fix C: 125 against 0, 300 against 24, 334 against 245. pg_wait_sampling's own per-query view agrees: the stock update's `Lock:transactionid` share fell from 22% to 0–1%.
+
+### What the dashboard could have shown
+
+An expert could have found a hint. pg_wait_sampling's per-query view shows the stock update at 41% `Lock:transactionid`, and someone who drills into that one statement sees lock waits. What no share can say is that these waits, and not the commit path at 25 times their size, are what makes the tail. For that you need the waits of each request, with their durations, in order.
 
 ## What to take from this
 
-- A share answers "where does the server spend its time" and answers it correctly. It does not answer "why was this request slow" when the cause is rare, short, or ranked last. Those need every wait with its duration, grouped by request.
-- Two ways to get that today, each with a price: an in-core patch under review (post 2) and an eBPF tracer from outside the server (post 3). One sentence each, with links.
+A wait dashboard answers "where does the server spend its time", and in this incident it answered correctly. It does not answer "why was this request slow" when the cause is rare, short, or small in total. For that question you need every wait with its duration, grouped by the request it belonged to. Nothing in a released Postgres records that today.
 
-## Writer notes (not published)
+Two things do, each with a price. One is a patch under review on pgsql-hackers, [`pg_wait_event_tracing`](https://www.postgresql.org/message-id/CAPHG-0moXufhp9ssiVHE%2B83A7SyTApTxf4zMr4h7X6%2BtEDTrEQ%40mail.gmail.com) ([commitfest entry](https://commitfest.postgresql.org/patch/6984/), [code](https://github.com/DmitryNFomin/postgres/pull/2)), which records every wait inside the server; it produced the numbers above, and it needs a patched build. The other is [pg_wait_tracer](https://github.com/DmitryNFomin/pg_wait_tracer), an eBPF tool that watches the same flag from outside the server on a stock Postgres; it reached the same conclusion on this workload, and it needs root on the host. The next two posts cover them in turn, including what each one costs while it watches.
 
-- **May claim:** sampled profiles estimate where time accumulates; they do not recover individual wait counts, durations or per-request histories; in this incident the sampler's ranking led to two fixes that did not help.
-- **May not claim:** "sampling is wrong", "samplers run late under load", "no tool could have found this" (the 41% per-query hint exists; application-side tracing was not excluded), "p99.9 halved" without "in the original run".
-- **Open before writing:** the stall-second definition in the repeats. The current count-based rule (≥ 20 requests over 5 ms in a second) can also match a lock convoy second, which biases against the finding but invites the question. Prefer a rule that uses "all clients slowed in that second". Needs a reanalysis of `reruns-20261023/`, not a rerun.
-- **From the current post, reuse:** "Two kinds of time", "Why counting samples is not enough" (tightened), the `IO:WalSync` example. Drop everything else.
-- No TldrTabs on this post; it is short enough.
-- Dates in frontmatter are placeholders.
+If you prefer the talk version, this incident and four others were presented at PGConf.EU 2026: [Stop guessing: unlocking wait events at scale with existing and new tools](https://www.postgresql.eu/events/pgconfeu2026/schedule/session/7907-stop-guessing-unlocking-wait-events-at-scale-with-existing-and-new-tools/) ([slides](https://www.postgresql.eu/events/pgconfeu2026/sessions/session/7907/slides/952/PGConf2026_Dmitry_Fomin_Stop_%20Guessing_v4.pdf)).
