@@ -113,7 +113,7 @@ All of these were available in the incident below. The question still had no ans
 
 ## One incident: the slow checkout
 
-Everything that follows is a reproduction built to match a pattern we keep seeing. The scripts, the READMEs and the summaries are in the [`checkout-tail-20261022`](https://github.com/DmitryNFomin/pg_wait_tracer/tree/master/tests/results/checkout-tail-20261022) and [`reruns-20261023`](https://github.com/DmitryNFomin/pg_wait_tracer/tree/master/tests/results/reruns-20261023) directories of the pg_wait_tracer repository; the per-request logs and trace rings they summarize are in the [`evidence-20261023` release](https://github.com/DmitryNFomin/pg_wait_tracer/releases/tag/evidence-20261023). All runs are plain SQL on a real disk: no `pg_sleep`, no injected delays.
+Everything that follows is a reproduction built to match a pattern we keep seeing. The scripts, the READMEs and the summaries are in the [`checkout-tail-20261022`](https://github.com/DmitryNFomin/pg_wait_tracer/tree/master/tests/results/checkout-tail-20261022) and [`reruns-20261023`](https://github.com/DmitryNFomin/pg_wait_tracer/tree/master/tests/results/reruns-20261023) directories of the pg_wait_tracer repository; the per-request logs and trace rings they summarize are in the [`evidence-20261023` release](https://github.com/DmitryNFomin/pg_wait_tracer/releases/tag/evidence-20261023). The figures in this post are generated from that data by the scripts in [`static/assets/blog/src/20261103-wait-events-1/`](https://gitlab.com/postgres-ai/docs/-/tree/master/static/assets/blog/src/20261103-wait-events-1) of this site's repository. All runs are plain SQL on a real disk: no `pg_sleep`, no injected delays.
 
 An online shop's checkout does three things in one transaction: look up a catalog row, which is mostly a real disk read because the catalog does not fit in memory; update one of 1,000 stock rows; commit. Sixteen clients send 2,000 of these per second through [pgbench](https://www.postgresql.org/docs/current/pgbench.html). A typical request takes 1.5 ms. There is a tail at 10–25 ms.
 
@@ -146,7 +146,7 @@ The commit path at the top says: make commits cheaper. The reads say: add memory
 
 Fix A halves the mean and gives up durability on a crash. The tail does not move. Fix B removes the disk reads. The tail does not move. Fix C changes nothing in the database's configuration, and it is the only one that moves the tail: p99.9 from 11.0 to 5.8 ms, the worst request from 26.7 to 10.0 ms.
 
-![Share of requests slower than X for the four runs, on log axes. Fixes A and B overlap the baseline above 5 ms; fix C alone cuts the tail.](/assets/blog/20261103-wait-events-1-latency-tail.svg)
+![Share of requests slower than X for the four runs, on log axes, drawn one run at a time. Fixes A and B overlap the baseline above 5 ms; fix C alone cuts the tail.](/assets/blog/20261103-wait-events-1-latency-tail.gif)
 
 Fix C was not something any share pointed at. Here is how it was found.
 
@@ -160,7 +160,7 @@ The left bars are the dashboard's view and they agree with pg_wait_sampling. The
 
 This is what one of them looks like:
 
-![Timeline of a 12.63 ms request: a 0.27 ms disk read for the catalog lookup, then 10.97 ms waiting for a row lock (transaction lock) inside the stock update, then 0.53 ms of WAL write and fsync at commit. A 10 ms sampler catches it in at most one sample.](/assets/blog/20261103-wait-events-1-one-slow-request.svg)
+![A 12.63 ms request replayed about 500 times slower: a 0.27 ms disk read for the catalog lookup, then 10.97 ms waiting for a row lock inside the stock update, then 0.53 ms of WAL write and fsync at commit. A 10 ms sampler gets at most one look at it.](/assets/blog/20261103-wait-events-1-one-slow-request.gif)
 
 The request spent 87% of its life waiting for one row lock. The disk read that the dashboard ranked high took 0.27 ms. The commit path that the dashboard ranked first took 0.53 ms.
 
