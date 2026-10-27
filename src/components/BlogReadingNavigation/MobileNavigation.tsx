@@ -123,14 +123,14 @@ export default function MobileNavigation({children, progress, permalink}: {
 
   const navigation = <div ref={control} className={`${styles.mobileControl} ${docked ? styles.docked : ''}`}>
     <button type="button" className={styles.toggle} aria-expanded={open}
-      aria-controls="blog-mobile-tos" onClick={() => setOpen(value => !value)}>
+      aria-controls="blog-mobile-toc" onClick={() => setOpen(value => !value)}>
       <svg className={styles.chevron} viewBox="0 0 16 16" aria-hidden="true" focusable="false">
         <path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
-      <span>ToS</span>
+      <span>ToC</span>
       <span className={styles.compactProgress} aria-label={`${progress}% read`}>{progress}%</span>
     </button>
-    <nav id="blog-mobile-tos" hidden={!open} className={styles.mobilePanel} aria-label="Article contents"
+    <nav id="blog-mobile-toc" hidden={!open} className={styles.mobilePanel} aria-label="Article contents"
       onClick={event => {
         if ((event.target as Element).closest('a')) {
           setOpen(false);

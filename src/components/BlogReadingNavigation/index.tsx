@@ -43,7 +43,7 @@ export default function BlogReadingNavigation({mobile = false}: {mobile?: boolea
   const content = (
     <>
       {!mobile && <div className={styles.title}>{title}</div>}
-      <div className={styles.label} aria-hidden="true">ToS</div>
+      <div className={styles.label} aria-hidden="true">ToC</div>
       <TOCItems
         toc={toc}
         minHeadingLevel={frontMatter.toc_min_heading_level}
