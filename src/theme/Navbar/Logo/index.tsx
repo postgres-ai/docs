@@ -36,12 +36,12 @@ export default function NavbarLogo() {
     };
   }, []);
 
-  if (!seasonal || !logo) return <Logo className="navbar__brand" imageClassName="navbar__logo" titleClassName="navbar__title text--truncate" />;
+  if (!seasonal || !logo) return <><Logo className="navbar__brand" imageClassName="navbar__logo" titleClassName="navbar__title text--truncate" /><div className="blog-reading-navbar-slot" /></>;
 
-  return <Link to={href} target={logo.target} className={`navbar__brand ${styles.seasonal}`} data-seasonal-logo="halloween-2026">
+  return <><Link to={href} target={logo.target} className={`navbar__brand ${styles.seasonal}`} data-seasonal-logo="halloween-2026">
     <div className="navbar__logo">
       <img src={image} alt={logo.alt ?? (title ? '' : siteConfig.title)} width={logo.width} height={logo.height} className={logo.className} style={logo.style} />
     </div>
     {title != null && <b className="navbar__title text--truncate">{title}</b>}
-  </Link>;
+  </Link><div className="blog-reading-navbar-slot" /></>;
 }

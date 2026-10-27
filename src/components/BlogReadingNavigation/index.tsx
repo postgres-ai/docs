@@ -3,6 +3,7 @@ import {useBlogPost} from '@docusaurus/plugin-content-blog/client';
 import {blogPostContainerID} from '@docusaurus/utils-common';
 import TOCItems from '@theme/TOCItems';
 import styles from './styles.module.css';
+import MobileNavigation from './MobileNavigation';
 
 /** Blog-only navigation; the bar measures reading progress, not loading. */
 export default function BlogReadingNavigation({mobile = false}: {mobile?: boolean}) {
@@ -42,7 +43,7 @@ export default function BlogReadingNavigation({mobile = false}: {mobile?: boolea
   const content = (
     <>
       {!mobile && <div className={styles.title}>{title}</div>}
-      <div className={styles.label} aria-hidden="true">TREE</div>
+      <div className={styles.label} aria-hidden="true">ToS</div>
       <TOCItems
         toc={toc}
         minHeadingLevel={frontMatter.toc_min_heading_level}
@@ -60,9 +61,6 @@ export default function BlogReadingNavigation({mobile = false}: {mobile?: boolea
     </>
   );
   return mobile ? (
-    <details className={styles.mobile}>
-      <summary>On this page</summary>
-      <nav aria-label="Article contents">{content}</nav>
-    </details>
+    <MobileNavigation progress={progress} permalink={permalink}>{content}</MobileNavigation>
   ) : <nav className={styles.desktop} aria-label="Article contents">{content}</nav>;
 }
