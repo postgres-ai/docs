@@ -8,7 +8,17 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 import os, subprocess, sys
 OUT=sys.argv[1]; FR=sys.argv[2]; os.makedirs(FR,exist_ok=True)
-BG='#fcfcfb'; T1='#0b0b0b'; T2='#52514e'; GRID='#e4e3df'; AXIS='#9a9993'; BLUE='#2a78d6'; ORANGE='#eb6834'; NONE='#d9d8d3'
+
+# ---- theme ----
+import os as _os
+THEME = _os.environ.get('THEME', 'light')
+if THEME == 'dark':
+    BG, T1, T2, GRID, AXIS = '#1a1a19', '#ffffff', '#c3c2b7', '#383835', '#6f6e69'
+    BLUE, ORANGE, AQUA, YELLOW, VIOLET, GREYBAR = '#3987e5', '#d95926', '#199e70', '#c98500', '#9085e9', '#55544f'
+else:
+    BG, T1, T2, GRID, AXIS = '#fcfcfb', '#0b0b0b', '#52514e', '#e4e3df', '#9a9993'
+    BLUE, ORANGE, AQUA, YELLOW, VIOLET, GREYBAR = '#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#4a3aa7', '#c7c6c1'
+NONE = '#d9d8d3' if THEME == 'light' else '#3a3a37'
 plt.rcParams.update({'font.family':['DejaVu Sans'],'font.size':12,'text.color':T1,'figure.facecolor':BG,'axes.facecolor':BG,'savefig.facecolor':BG})
 T=1000.0
 io=[(50,30),(220,30),(400,30),(560,30),(720,30),(900,30)]

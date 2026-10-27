@@ -11,15 +11,25 @@ import matplotlib.pyplot as plt
 
 DATA, OUT, FR = sys.argv[1], sys.argv[2], sys.argv[3]
 os.makedirs(FR, exist_ok=True)
-BG, T1, T2, GRID = '#fcfcfb', '#0b0b0b', '#52514e', '#e4e3df'
+
+# ---- theme ----
+import os as _os
+THEME = _os.environ.get('THEME', 'light')
+if THEME == 'dark':
+    BG, T1, T2, GRID, AXIS = '#1a1a19', '#ffffff', '#c3c2b7', '#383835', '#6f6e69'
+    BLUE, ORANGE, AQUA, YELLOW, VIOLET, GREYBAR = '#3987e5', '#d95926', '#199e70', '#c98500', '#9085e9', '#55544f'
+else:
+    BG, T1, T2, GRID, AXIS = '#fcfcfb', '#0b0b0b', '#52514e', '#e4e3df', '#9a9993'
+    BLUE, ORANGE, AQUA, YELLOW, VIOLET, GREYBAR = '#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#4a3aa7', '#c7c6c1'
+
 plt.rcParams.update({'font.family': ['DejaVu Sans'], 'font.size': 12, 'text.color': T1, 'axes.labelcolor': T2,
                      'xtick.color': T2, 'ytick.color': T2, 'axes.edgecolor': GRID, 'grid.color': GRID,
                      'figure.facecolor': BG, 'axes.facecolor': BG, 'savefig.facecolor': BG})
 lat = json.load(open(DATA))
-RUNS = [('sh-R0c', '#2a78d6', 'baseline', 'p99.9 = 11.0 ms\n972 requests over 5 ms'),
-        ('sh-F1a', '#eb6834', 'fix A: asynchronous commit', 'mean halves, p99.9 = 11.4 ms\nthe tail stays'),
-        ('sh-F1b', '#eda100', 'fix B: 2 GB cache, no disk reads', 'reads gone, p99.9 = 11.3 ms\nthe tail stays'),
-        ('sh-F2',  '#1baf7a', 'fix C: job in 5-row chunks', 'p99.9 = 5.8 ms, max 10.0 ms\nonly the tail moves')]
+RUNS = [('sh-R0c', BLUE, 'baseline', 'p99.9 = 11.0 ms\n972 requests over 5 ms'),
+        ('sh-F1a', ORANGE, 'fix A: asynchronous commit', 'mean halves, p99.9 = 11.4 ms\nthe tail stays'),
+        ('sh-F1b', YELLOW, 'fix B: 2 GB cache, no disk reads', 'reads gone, p99.9 = 11.3 ms\nthe tail stays'),
+        ('sh-F2',  AQUA, 'fix C: job in 5-row chunks', 'p99.9 = 5.8 ms, max 10.0 ms\nonly the tail moves')]
 FPS, PER, HOLD = 12, 1.8, 4.5
 N = int(FPS * (PER * len(RUNS) + HOLD))
 

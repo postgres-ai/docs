@@ -9,6 +9,7 @@ unlisted: true
 ---
 
 import { TldrTabs } from '@site/src/components/TldrTabs'
+import ThemedImage from '@theme/ThemedImage'
 
 A checkout request was slow. The dashboard said the time went to the commit path and to disk reads. The team tried the two fixes that follow from that, and the slow requests stayed exactly as slow. The cause was a lock that the dashboard ranked last, at 2% of the time. This post explains why a wait dashboard can be right about the time and wrong about the problem, using only what Postgres exposes today. It ends where the next post, about a tool that finds such causes, begins.
 
@@ -85,7 +86,13 @@ Wait events are how Postgres reports the second kind of time. But they report on
 
 Because the flag is live and nothing is recorded, every tool built on wait events uses the same technique: read the flag on a timer and count what you saw. The count for each event divided by all counts is a share of time. [pg_wait_sampling](https://github.com/postgrespro/pg_wait_sampling) does this inside the server every 10 ms by default. Managed-service dashboards do the same with a UI on top: [Amazon RDS Performance Insights](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PerfInsights.html), [Google Cloud SQL Query Insights](https://cloud.google.com/sql/docs/postgres/using-query-insights), [Azure Database for PostgreSQL query store](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-query-store). So do the monitoring products: [pganalyze](https://pganalyze.com/), [Datadog Database Monitoring](https://docs.datadoghq.com/database_monitoring/), [Percona PMM](https://docs.percona.com/percona-monitoring-and-management/), [pgwatch](https://github.com/cybertec-postgresql/pgwatch), and our own [PostgresAI monitoring](/docs/monitoring/metrics/wait-events).
 
-![One second of one backend: six I/O waits of 30 ms and 24 lock waits of 2 ms. A sampler looking every 10 ms records 18 I/O samples and 6 lock samples. The shares are about right; it saw only 6 of the 24 lock waits and cannot report counts or durations.](/assets/blog/20261103-wait-events-1-sampling.gif)
+<ThemedImage
+  alt="One second of one backend: six I/O waits of 30 ms and 24 lock waits of 2 ms. A sampler looking every 10 ms records 18 I/O samples and 6 lock samples. The shares are about right; it saw only 6 of the 24 lock waits and cannot report counts or durations."
+  sources={{
+    light: "/assets/blog/20261103-wait-events-1-sampling.gif",
+    dark: "/assets/blog/20261103-wait-events-1-sampling-dark.gif",
+  }}
+/>
 
 Sampling works. The shares it produces are accurate, and on a machine that is not CPU-throttled they stay accurate under heavy load. It points at the right subsystem, cheaply, continuously, and without anyone knowing in advance that something will go wrong. Most of the time it gets you close to a fix.
 
@@ -146,7 +153,13 @@ The commit path at the top says: make commits cheaper. The reads say: add memory
 
 Fix A halves the mean and gives up durability on a crash. The tail does not move. Fix B removes the disk reads. The tail does not move. Fix C changes nothing in the database's configuration, and it is the only one that moves the tail: p99.9 from 11.0 to 5.8 ms, the worst request from 26.7 to 10.0 ms.
 
-![Share of requests slower than X for the four runs, on log axes, drawn one run at a time. Fixes A and B overlap the baseline above 5 ms; fix C alone cuts the tail.](/assets/blog/20261103-wait-events-1-latency-tail.gif)
+<ThemedImage
+  alt="Share of requests slower than X for the four runs, on log axes, drawn one run at a time. Fixes A and B overlap the baseline above 5 ms; fix C alone cuts the tail."
+  sources={{
+    light: "/assets/blog/20261103-wait-events-1-latency-tail.gif",
+    dark: "/assets/blog/20261103-wait-events-1-latency-tail-dark.gif",
+  }}
+/>
 
 Fix C was not something any share pointed at. Here is how it was found.
 
@@ -160,7 +173,13 @@ The left bars are the dashboard's view and they agree with pg_wait_sampling. The
 
 This is what one of them looks like:
 
-![A 12.63 ms request replayed about 500 times slower: a 0.27 ms disk read for the catalog lookup, then 10.97 ms waiting for a row lock inside the stock update, then 0.53 ms of WAL write and fsync at commit. A 10 ms sampler gets at most one look at it.](/assets/blog/20261103-wait-events-1-one-slow-request.gif)
+<ThemedImage
+  alt="A 12.63 ms request replayed about 500 times slower: a 0.27 ms disk read for the catalog lookup, then 10.97 ms waiting for a row lock inside the stock update, then 0.53 ms of WAL write and fsync at commit. A 10 ms sampler gets at most one look at it."
+  sources={{
+    light: "/assets/blog/20261103-wait-events-1-one-slow-request.gif",
+    dark: "/assets/blog/20261103-wait-events-1-one-slow-request-dark.gif",
+  }}
+/>
 
 The request spent 87% of its life waiting for one row lock. The disk read that the dashboard ranked high took 0.27 ms. The commit path that the dashboard ranked first took 0.53 ms.
 

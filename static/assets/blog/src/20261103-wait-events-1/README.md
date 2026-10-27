@@ -37,11 +37,21 @@ $V request_gif.py data/r1b.json     $O/20261103-wait-events-1-one-slow-request.g
 python3 svg_figures.py data $O
 ```
 
+Each GIF exists in a light and a dark variant (`…-dark.gif`); the post shows the one
+matching the reader's theme through Docusaurus's `ThemedImage`. Set `THEME=dark` in
+the environment to render the dark variant:
+
+```sh
+THEME=dark $V sampler_gif.py $O/20261103-wait-events-1-sampling-dark.gif /tmp/fr_sampler_dark
+THEME=dark $V tail_gif.py    data/latency.json $O/20261103-wait-events-1-latency-tail-dark.gif /tmp/fr_tail_dark
+THEME=dark $V request_gif.py data/r1b.json     $O/20261103-wait-events-1-one-slow-request-dark.gif /tmp/fr_request_dark
+```
+
 ## Conventions
 
 - Palette (light surface `#fcfcfb`): blue `#2a78d6`, orange `#eb6834`, aqua `#1baf7a`,
   yellow `#eda100`, violet `#4a3aa7`; text `#0b0b0b` / `#52514e`; grid `#e4e3df`.
-  The SVGs carry a dark-mode variant via `prefers-color-scheme`; the GIFs are light only.
+  Dark palette: surface `#1a1a19`, blue `#3987e5`, orange `#d95926`, aqua `#199e70`, yellow `#c98500`, violet `#9085e9`; text `#ffffff` / `#c3c2b7`; grid `#383835`. The SVGs switch via `prefers-color-scheme`; the GIFs via the `THEME` variable above.
 - GIFs: 1100 px wide, 12 fps, 128-colour palette from ffmpeg `palettegen`, no dither,
   looped; each shows live counters from the first frame and holds its last frame
   for 4–4.5 s so the conclusion can be read before the loop restarts.

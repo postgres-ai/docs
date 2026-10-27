@@ -12,9 +12,19 @@ from matplotlib.patches import Rectangle
 
 DATA, OUT, FR = sys.argv[1], sys.argv[2], sys.argv[3]
 os.makedirs(FR, exist_ok=True)
-BG, T1, T2, AXIS, GREY = '#fcfcfb', '#0b0b0b', '#52514e', '#9a9993', '#c7c6c1'
-COL = {'Client:ClientRead': '#4a3aa7', 'IO:DataFileRead': '#eda100', 'Lock:transactionid': '#eb6834',
-       'LWLock:WALWrite': '#2a78d6', 'IO:WalWrite': '#2a78d6', 'IO:WalSync': '#2a78d6'}
+
+# ---- theme ----
+import os as _os
+THEME = _os.environ.get('THEME', 'light')
+if THEME == 'dark':
+    BG, T1, T2, GRID, AXIS = '#1a1a19', '#ffffff', '#c3c2b7', '#383835', '#6f6e69'
+    BLUE, ORANGE, AQUA, YELLOW, VIOLET, GREYBAR = '#3987e5', '#d95926', '#199e70', '#c98500', '#9085e9', '#55544f'
+else:
+    BG, T1, T2, GRID, AXIS = '#fcfcfb', '#0b0b0b', '#52514e', '#e4e3df', '#9a9993'
+    BLUE, ORANGE, AQUA, YELLOW, VIOLET, GREYBAR = '#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#4a3aa7', '#c7c6c1'
+GREY = GREYBAR
+COL = {'Client:ClientRead': VIOLET, 'IO:DataFileRead': YELLOW, 'Lock:transactionid': ORANGE,
+       'LWLock:WALWrite': BLUE, 'IO:WalWrite': BLUE, 'IO:WalSync': BLUE}
 NAME = {'Client:ClientRead': 'client round trip', 'IO:DataFileRead': 'disk read', 'Lock:transactionid': 'row lock',
         'LWLock:WALWrite': 'WAL write', 'IO:WalWrite': 'WAL write', 'IO:WalSync': 'WAL fsync'}
 plt.rcParams.update({'font.family': ['DejaVu Sans'], 'font.size': 12, 'text.color': T1,
