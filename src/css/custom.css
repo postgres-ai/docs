@@ -1559,3 +1559,59 @@ html[data-theme='dark'] .footer-aicpa-seal-dark {
 .article-corrections-pair > div > p:first-child { font-size: .6875rem; margin-bottom: .25rem; }
 .article-corrections-pair > div > p:last-child { margin-bottom: 0; }
 .article-corrections code { font-size: 1em; white-space: normal; }
+
+/* Blog post tables: a bordered box in the same family as the TL;DR block
+   (src/components/TldrTabs), tinted header, horizontal rules only,
+   tabular figures. Column alignment comes from the Markdown separator
+   row (---: and :---:). Infima makes the table display: block with
+   overflow: auto, so wide tables scroll inside the box. */
+#__blog-post-container table {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 0 var(--ifm-leading);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 8px;
+  border-collapse: collapse;
+  font-size: .9em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5;
+}
+#__blog-post-container table thead {
+  background-color: var(--ifm-color-emphasis-100);
+}
+#__blog-post-container table tr {
+  background-color: transparent;
+  border-top: 0;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+#__blog-post-container table thead tr {
+  border-bottom: 1px solid var(--ifm-color-emphasis-300);
+}
+#__blog-post-container table tbody tr:last-child { border-bottom: 0; }
+#__blog-post-container table th,
+#__blog-post-container table td {
+  border: 0;
+  padding: .5rem 1rem;
+  text-align: start;
+  vertical-align: top;
+}
+#__blog-post-container table th {
+  color: var(--ifm-font-color-base);
+  font-weight: 600;
+  vertical-align: bottom;
+}
+#__blog-post-container table th code { font-size: 1em; }
+/* Right-aligned columns hold numbers with units: keep "32.6 s" on one line */
+#__blog-post-container table td[style*='right'] { white-space: nowrap; }
+[data-theme='dark'] #__blog-post-container table {
+  border-color: var(--ifm-color-emphasis-400);
+}
+[data-theme='dark'] #__blog-post-container table thead {
+  background-color: var(--ifm-color-emphasis-200);
+}
+[data-theme='dark'] #__blog-post-container table thead tr {
+  border-bottom-color: var(--ifm-color-emphasis-400);
+}
+[data-theme='dark'] #__blog-post-container table tbody tr {
+  border-bottom-color: var(--ifm-color-emphasis-300);
+}

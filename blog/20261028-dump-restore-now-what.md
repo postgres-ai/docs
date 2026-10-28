@@ -118,7 +118,7 @@ vacuum analyze;
 The chart shows the query time with a cold cache after each step, on a linear time axis that starts at 0 s. Each bar is the median of 9 cold runs, and each dot is one run. At this scale, the 23 ms bar is too short to see. Under each step: the plan on `events` and its heap fetches.
 
 | Step after pg_restore | Plan on `events` | Heap fetches | Time, cold cache |
-| --- | --- | --- | --- |
+| --- | --- | ---: | ---: |
 | pg_restore only | Hash Join over a Seq Scan | - | 32.6 s |
 | + ANALYZE | Index Only Scan | 24,983 | 6.1 s |
 | + VACUUM ANALYZE | Index Only Scan | 0 | 23 ms |
@@ -146,7 +146,7 @@ What we set on purpose:
 I repeated the large test on Postgres 19rc1: same host, same archives. On a primary, Postgres 19 can set visibility-map bits during ordinary reads. In this test it set almost all of them, and this changes the result.
 
 | Step after pg_restore | Heap fetches | Time, cold cache |
-| --- | --- | --- |
+| --- | ---: | ---: |
 | pg_restore only, first run (3 runs) | - | 110 to 113 s |
 | pg_restore only, later runs (6 runs) | - | 29.5 s |
 | + ANALYZE | 0 | 23 ms |
@@ -172,7 +172,7 @@ Buffer accesses are the evidence here; the fixture is fully cached, so the milli
 
 The small test also showed that a SELECT can write. On a table with no index, the first `count(*)` after a checkpoint dirtied 3,449 blocks and wrote 26.9 MiB of WAL, for a 27 MiB table. These are hint bits. This first-read work exists across Postgres 14–19, not just 19: reads set missing hint bits on committed rows and dirty heap pages. With data checksums or `wal_log_hints` enabled, the first hint-bit change after a checkpoint can require a full-page image. See [`MarkBufferDirtyHint`](https://github.com/postgres/postgres/blob/REL_18_6/src/backend/storage/buffer/bufmgr.c#L5439) and [`XLogSaveBufferForHint`](https://github.com/postgres/postgres/blob/REL_18_6/src/backend/access/transam/xloginsert.c#L1065); the experiments used `full_page_writes = on`.
 
-On indexed tables, pg_restore's ordinary `CREATE INDEX` scans already set most hint bits on committed rows. [`heapam_index_build_range_scan`](https://github.com/postgres/postgres/blob/REL_18_6/src/backend/access/heap/heapam_handler.c#L1171) calls `HeapTupleSatisfiesVacuum`, which sets those bits. This does not apply to rows still uncommitted under `pg_restore --single-transaction`, or to tables without indexes. It does not build the visibility map. Postgres 19 additionally lets eligible reads set visibility-map bits through on-access pruning ([commit 378a216187aea1b488ce60ed07dd1ac5c14a9984](https://github.com/postgres/postgres/commit/378a216187aea1b488ce60ed07dd1ac5c14a9984)).
+On indexed tables, pg_restore's ordinary `CREATE INDEX` scans already set most hint bits on committed rows. [`heapam_index_build_range_scan`](https://github.com/postgres/postgres/blob/REL_18_6/src/backend/access/heap/heapam_handler.c#L1171) calls `HeapTupleSatisfiesVacuum`, which sets those bits. This does not apply to rows still uncommitted under `pg_restore --single-transaction`, or to tables without indexes. It does not build the visibility map. Postgres 19 additionally lets eligible reads set visibility-map bits through on-access pruning ([commit 378a216187a](https://github.com/postgres/postgres/commit/378a216187aea1b488ce60ed07dd1ac5c14a9984)).
 
 ![WAL written and shared blocks dirtied by the first SELECT after pg_restore: on Postgres 18.6 only the index-less table after a checkpoint writes, 26.9 MiB; on 19rc1 the range query on an indexed table also writes 25.6 MiB and sets 3,267 of 3,480 visibility-map bits](/assets/blog/20261028-dump-restore-f4-first-read-writes.svg)
 
@@ -182,7 +182,7 @@ Figure 4 shows the first read of each table, in the order below; it is not one f
 
 On 18.6, a plain VACUUM after pg_restore made the pages all-visible but froze none. A later anti-wraparound vacuum then rewrote the whole table. On a 1,820 MiB database, with checksums on and a checkpoint before maintenance, `VACUUM (FREEZE, ANALYZE)` wrote about the same WAL as `VACUUM ANALYZE` (1.50 GiB against 1.49 GiB), and the later aggressive vacuum then wrote 35 KiB.
 
-On 19rc1, a plain VACUUM after pg_restore froze every page in my fresh-load tests, with data checksums on and a checkpoint between the load and the VACUUM. The cause is [commit 378a216187aea1b488ce60ed07dd1ac5c14a9984](https://github.com/postgres/postgres/commit/378a216187aea1b488ce60ed07dd1ac5c14a9984) by Melanie Plageman: COPY now sets a prune hint on each page, and VACUUM freezes the page in the same WAL record when it clears the hint, if the page already needs a full-page image; hint logging alone is not enough. The Postgres 19 release notes do not mention this effect. In the large test, a plain VACUUM after the first full read left almost all freezing work for a later pass.
+On 19rc1, a plain VACUUM after pg_restore froze every page in my fresh-load tests, with data checksums on and a checkpoint between the load and the VACUUM. The cause is [commit 378a216187a](https://github.com/postgres/postgres/commit/378a216187aea1b488ce60ed07dd1ac5c14a9984) by Melanie Plageman: COPY now sets a prune hint on each page, and VACUUM freezes the page in the same WAL record when it clears the hint, if the page already needs a full-page image; hint logging alone is not enough. The Postgres 19 release notes do not mention this effect. In the large test, a plain VACUUM after the first full read left almost all freezing work for a later pass.
 
 ## Autovacuum can take minutes and never analyzes partitioned parents
 
@@ -251,7 +251,7 @@ I checked automatic parent selection in the source for [14](https://github.com/p
 
 Hackers have discussed this since [2002](https://www.postgresql.org/message-id/flat/GNELIHDDFBOCMGBFGEFOOEOPCBAA.chriskl%40familyhealth.com.au). Since then, autovacuum and, in 18, statistics transport each addressed a part of it. In 2025, Jian He proposed an opt-in `--include-analyze` option and credited Andrey Borodin, Kirk Wolak and me ([thread](https://www.postgresql.org/message-id/flat/CACJufxGx_YLLxmnZVMuUApiVYqjKrydvEQqD3qxhwM6e0_8jrQ%40mail.gmail.com)). As of 2026-10-23 it is not committed, and I found no CommitFest entry for it. My suggestions:
 
-- Let `pg_restore` print post-dump/restore advice, as `pg_upgrade` does, or run an optional VACUUM ANALYZE step.
+- Let `pg_restore` print next steps, as `pg_upgrade` does, for example "run vacuumdb --analyze, then ANALYZE partitioned parents, before traffic", or offer an optional VACUUM ANALYZE step. AI agents read tool output and act on it, so a one-line cue like this is cheap and effective.
 - Do not import `relallvisible` and `relallfrozen` from a logical dump: the source visibility map is not transported.
 - Give `pg_restore` a `COPY FREEZE` path, as [Bruce Momjian proposed in 2013](https://www.postgresql.org/message-id/20130125152433.GY21914%40momjian.us) and [Dimitrios Apostolou proposed with a patch in 2025](https://www.postgresql.org/message-id/ff258f33-00d3-a944-9517-b3cccb662722%40gmx.net).
 - Document the additional Postgres 19 effects: eligible reads can set visibility-map bits, and a plain VACUUM can freeze fresh pages when it clears COPY's prune hints on pages that already need a full-page image.
