@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 480" width="760" height="480" role="img" aria-labelledby="t d">
+<title id="t">Imported relallvisible over an empty visibility map</title>
+<desc id="d">How an Index Only Scan decides per tuple whether to read the heap. After pg_restore from a pg_dump --statistics archive with autovacuum off, pg_class has relpages 3,449 and relallvisible 3,449, imported from the source, while the physical table has 3,480 pages; the planner costs the table as about 99% all-visible and chooses the Index Only Scan over a Bitmap Heap Scan with 3,301 buffers; but the visibility map has 0 of 3,480 pages all-visible, so all 10,000 tuples fetch a heap page: 10,000 heap fetches and 10,032 buffer accesses. After VACUUM the visibility map has 3,449 of 3,480 pages all-visible, all 10,000 tuples return from the index: 0 heap fetches and 34 buffer accesses.</desc>
+<style>
+  .bg{fill:#fcfcfb}.t1{fill:#0b0b0b}.t2{fill:#52514e}.grid{stroke:#e4e3df}.axis{stroke:#9a9993}
+  .s1{fill:#2a78d6}.s2{fill:#eb6834}.band{fill:#eb6834;opacity:.08}.gap{stroke:#fcfcfb}
+  text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+</style>
+<rect class="bg" width="760" height="480" rx="8"/>
+<text class="t1" x="24" y="30" font-size="15" font-weight="600">Imported relallvisible over an empty visibility map</text>
+<text class="t2" x="24" y="50" font-size="13">How an Index Only Scan decides, per tuple, whether to read the heap</text>
+<text class="t1" x="24.0" y="80.0" font-size="13" font-weight="600">After pg_restore from a &#8209;&#8209;statistics archive,</text>
+<text class="t1" x="24.0" y="97.0" font-size="13" font-weight="600">autovacuum off</text>
+<rect class="band" x="42.0" y="106.0" width="300" height="42" rx="4"/>
+<rect class="axis" x="42.0" y="106.0" width="300" height="42" rx="4" fill="none" stroke-width="1"/>
+<text class="t1" x="192.0" y="123.5" font-size="13" text-anchor="middle">pg_class: relpages 3,449, relallvisible 3,449</text>
+<text class="t2" x="192.0" y="139.5" font-size="12" text-anchor="middle">imported from the source; physical table 3,480 pages</text>
+<rect class="t2" x="191.2" y="150.0" width="1.5" height="27.5"/>
+<path class="t2" d="M186.8,177.5 L192.0,184.0 L197.2,177.5 Z"/>
+<text class="t2" x="202.0" y="164.0" font-size="11">chooses Index Only Scan,</text>
+<text class="t2" x="202.0" y="178.0" font-size="11">costed as ~99% all-visible</text>
+<text class="t2" x="182.0" y="164.0" font-size="11" text-anchor="end">over Bitmap Heap Scan</text>
+<text class="t2" x="182.0" y="178.0" font-size="11" text-anchor="end">(3,301 buffers)</text>
+<rect class="axis" x="117.0" y="186.0" width="150" height="26" rx="4" fill="none" stroke-width="1"/>
+<text class="t1" x="192.0" y="203.5" font-size="13" text-anchor="middle">index entry</text>
+<rect class="t2" x="191.2" y="214.0" width="1.5" height="11.5"/>
+<path class="t2" d="M186.8,225.5 L192.0,232.0 L197.2,225.5 Z"/>
+<rect class="band" x="62.0" y="234.0" width="260" height="42" rx="4"/>
+<rect class="axis" x="62.0" y="234.0" width="260" height="42" rx="4" fill="none" stroke-width="1"/>
+<text class="t1" x="192.0" y="251.5" font-size="13" text-anchor="middle">visibility map says all-visible?</text>
+<text class="t2" x="192.0" y="267.5" font-size="12" text-anchor="middle">map: 0 of 3,480 pages all-visible</text>
+<rect class="t2" x="107.2" y="278.0" width="1.5" height="39.5"/>
+<path class="t2" d="M102.8,317.5 L108.0,324.0 L113.2,317.5 Z"/>
+<text class="t2" x="100.0" y="291.0" font-size="11" text-anchor="end">yes</text>
+<text class="t1" x="100.0" y="305.0" font-size="12" text-anchor="end">0</text>
+<rect class="s2" x="273.5" y="278.0" width="5" height="36.0"/>
+<path class="s2" d="M268.0,314.0 L276.0,324.0 L284.0,314.0 Z"/>
+<text class="t2" x="286.0" y="291.0" font-size="11">no</text>
+<text class="t1" x="286.0" y="305.0" font-size="12" font-weight="600">10,000 of</text>
+<text class="t1" x="286.0" y="318.0" font-size="12" font-weight="600">10,000 tuples</text>
+<rect class="axis" x="32.0" y="326.0" width="152" height="26" rx="4" fill="none" stroke-width="1"/>
+<text class="t1" x="108.0" y="343.5" font-size="12" text-anchor="middle">return from index</text>
+<rect class="axis" x="200.0" y="326.0" width="152" height="26" rx="4" fill="none" stroke-width="1"/>
+<text class="t1" x="276.0" y="343.5" font-size="12" text-anchor="middle">fetch heap page</text>
+<text class="t1" x="192.0" y="374.0" font-size="13" font-weight="600" text-anchor="middle">10,000 heap fetches, 10,032 buffer accesses</text>
+<text class="t1" x="400.0" y="80.0" font-size="13" font-weight="600">After VACUUM</text>
+<rect class="axis" x="418.0" y="106.0" width="300" height="42" rx="4" fill="none" stroke-width="1"/>
+<text class="t1" x="568.0" y="123.5" font-size="13" text-anchor="middle">pg_class: relallvisible 3,449</text>
+<text class="t2" x="568.0" y="139.5" font-size="12" text-anchor="middle">set by VACUUM</text>
+<rect class="t2" x="567.2" y="150.0" width="1.5" height="27.5"/>
+<path class="t2" d="M562.8,177.5 L568.0,184.0 L573.2,177.5 Z"/>
+<text class="t2" x="578.0" y="164.0" font-size="11">chooses Index Only Scan,</text>
+<text class="t2" x="578.0" y="178.0" font-size="11">costed as ~99% all-visible</text>
+<rect class="axis" x="493.0" y="186.0" width="150" height="26" rx="4" fill="none" stroke-width="1"/>
+<text class="t1" x="568.0" y="203.5" font-size="13" text-anchor="middle">index entry</text>
+<rect class="t2" x="567.2" y="214.0" width="1.5" height="11.5"/>
+<path class="t2" d="M562.8,225.5 L568.0,232.0 L573.2,225.5 Z"/>
+<rect class="axis" x="438.0" y="234.0" width="260" height="42" rx="4" fill="none" stroke-width="1"/>
+<text class="t1" x="568.0" y="251.5" font-size="13" text-anchor="middle">visibility map says all-visible?</text>
+<text class="t2" x="568.0" y="267.5" font-size="12" text-anchor="middle">map: 3,449 of 3,480 pages all-visible</text>
+<rect class="s1" x="481.5" y="278.0" width="5" height="36.0"/>
+<path class="s1" d="M476.0,314.0 L484.0,324.0 L492.0,314.0 Z"/>
+<text class="t2" x="474.0" y="291.0" font-size="11" text-anchor="end">yes</text>
+<text class="t1" x="474.0" y="305.0" font-size="12" font-weight="600" text-anchor="end">10,000 of</text>
+<text class="t1" x="474.0" y="318.0" font-size="12" font-weight="600" text-anchor="end">10,000 tuples</text>
+<rect class="t2" x="651.2" y="278.0" width="1.5" height="39.5"/>
+<path class="t2" d="M646.8,317.5 L652.0,324.0 L657.2,317.5 Z"/>
+<text class="t2" x="660.0" y="291.0" font-size="11">no</text>
+<text class="t1" x="660.0" y="305.0" font-size="12">0</text>
+<rect class="axis" x="408.0" y="326.0" width="152" height="26" rx="4" fill="none" stroke-width="1"/>
+<text class="t1" x="484.0" y="343.5" font-size="12" text-anchor="middle">return from index</text>
+<rect class="axis" x="576.0" y="326.0" width="152" height="26" rx="4" fill="none" stroke-width="1"/>
+<text class="t1" x="652.0" y="343.5" font-size="12" text-anchor="middle">fetch heap page</text>
+<text class="t1" x="568.0" y="374.0" font-size="13" font-weight="600" text-anchor="middle">0 heap fetches, 34 buffer accesses</text>
+<text class="t2" x="24.0" y="400.0" font-size="12">pg_class is what the planner reads; the visibility map is what the executor checks.</text>
+<text class="t2" x="24.0" y="416.0" font-size="12">With &#8209;&#8209;statistics, pg_dump/pg_restore imports the first and does not copy the second.</text>
+<text class="t2" x="24.0" y="442.0" font-size="12">Small test, Postgres 18.6, 200,000-row table in random heap order, 10,000 keys returned. The same mismatch holds for</text>
+<text class="t2" x="24.0" y="460.0" font-size="12">the large test: relallvisible 4,098,361 imported over an empty map.</text>
+</svg>

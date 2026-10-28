@@ -94,6 +94,46 @@
   margin-bottom: 0;
 }
 
+.analogy {
+  position: relative;
+  margin-top: 1.5rem;
+  padding: 1rem 1rem 0.75rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+}
+
+[data-theme='dark'] .analogy {
+  border-color: var(--ifm-color-emphasis-400);
+}
+
+/* Label sits on the top border, like a fieldset legend */
+.analogyLabel {
+  position: absolute;
+  top: 0;
+  left: 0.75rem;
+  transform: translateY(-50%);
+  margin: 0;
+  padding: 0 0.375rem;
+  background: var(--ifm-background-surface-color);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ifm-color-primary);
+}
+
+/* Light theme sets --ifm-background-color to transparent */
+[data-theme='dark'] .analogyLabel {
+  background: var(--ifm-background-color);
+}
+
+.analogyText {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
 .cta {
   padding: 0.75rem 1rem;
   background: var(--ifm-color-emphasis-100);

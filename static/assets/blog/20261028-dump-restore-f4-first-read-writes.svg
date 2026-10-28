@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 534" width="760" height="534" role="img" aria-labelledby="t d">
+<title id="t">The first read after pg_restore can write</title>
+<desc id="d">Postgres 18.6, checksums on: count(*), index-less table, after checkpoint 26.9 MiB WAL, 3,449 shared blocks dirtied; count(*), index-less table, no checkpoint 0.0 MiB WAL, 1,432 shared blocks dirtied; Range query, indexed table, after checkpoint 0.0 MiB WAL, 0 shared blocks dirtied; count(*), indexed table, right after the range query 0.0 MiB WAL, 0 shared blocks dirtied; count(*), index-less table, after VACUUM 0.0 MiB WAL, 0 shared blocks dirtied. Postgres 19rc1, checksums on: count(*), index-less table, after checkpoint 27.1 MiB WAL, 3,450 shared blocks dirtied; count(*), index-less table, no checkpoint 0.2 MiB WAL, 1,433 shared blocks dirtied; Range query, indexed table, after checkpoint 25.6 MiB WAL, 3,268 shared blocks dirtied; count(*), indexed table, right after the range query 1.4 MiB WAL, 181 shared blocks dirtied; count(*), index-less table, after VACUUM 0.0 MiB WAL, 0 shared blocks dirtied. On Postgres 19rc1 the range query sets 3,267 of 3,480 visibility-map bits.</desc>
+<style>
+  .bg{fill:#fcfcfb}.t1{fill:#0b0b0b}.t2{fill:#52514e}.grid{stroke:#e4e3df}.axis{stroke:#9a9993}
+  .s1{fill:#2a78d6}.s2{fill:#eb6834}.band{fill:#eb6834;opacity:.08}.gap{stroke:#fcfcfb}
+  text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+</style>
+<rect class="bg" width="760" height="534" rx="8"/>
+<text class="t1" x="40.0" y="34.0" font-size="15" font-weight="600">The first read after pg_restore can write</text>
+<text class="t2" x="40.0" y="56.0" font-size="13">WAL written and shared blocks dirtied by one SELECT, from EXPLAIN (ANALYZE, BUFFERS, WAL)</text>
+<rect class="s1" x="40.0" y="70.0" width="12.0" height="12.0" rx="2"/>
+<text class="t2" x="58.0" y="80.5" font-size="12">Postgres 18.6, checksums on</text>
+<rect class="s2" x="254.8" y="70.0" width="12.0" height="12.0" rx="2"/>
+<text class="t2" x="272.8" y="80.5" font-size="12">Postgres 19rc1, checksums on</text>
+<text class="t1" x="222.0" y="104.0" font-size="13" font-weight="600">WAL written by the statement</text>
+<line class="grid" x1="222.0" x2="222.0" y1="122.0" y2="386.0" stroke-width="1"/>
+<text class="t2" x="222.0" y="401.0" font-size="11" text-anchor="middle">0</text>
+<line class="grid" x1="282.0" x2="282.0" y1="122.0" y2="386.0" stroke-width="1"/>
+<text class="t2" x="282.0" y="401.0" font-size="11" text-anchor="middle">10</text>
+<line class="grid" x1="342.0" x2="342.0" y1="122.0" y2="386.0" stroke-width="1"/>
+<text class="t2" x="342.0" y="401.0" font-size="11" text-anchor="middle">20</text>
+<line class="grid" x1="402.0" x2="402.0" y1="122.0" y2="386.0" stroke-width="1"/>
+<text class="t2" x="402.0" y="401.0" font-size="11" text-anchor="middle">30</text>
+<line class="axis" x1="222.0" x2="402.0" y1="386.0" y2="386.0" stroke-width="1"/>
+<text class="t2" x="312.0" y="418.0" font-size="11" text-anchor="middle">MiB</text>
+<rect class="s1" x="222.0" y="130.0" width="161.7" height="13.0" rx="2"/>
+<text class="t1" x="388.7" y="140.5" font-size="12">26.9</text>
+<rect class="s2" x="222.0" y="146.0" width="162.9" height="13.0" rx="2"/>
+<text class="t1" x="389.9" y="156.5" font-size="12">27.1</text>
+<text class="t1" x="227.0" y="194.5" font-size="12">0</text>
+<rect class="s2" x="222.0" y="200.0" width="2.0" height="13.0" rx="0"/>
+<text class="t1" x="228.2" y="210.5" font-size="12">0.2</text>
+<text class="t1" x="227.0" y="248.5" font-size="12">0</text>
+<rect class="s2" x="222.0" y="254.0" width="153.5" height="13.0" rx="2"/>
+<text class="t1" x="380.5" y="264.5" font-size="12">25.6</text>
+<text class="t1" x="227.0" y="302.5" font-size="12">0</text>
+<rect class="s2" x="222.0" y="308.0" width="8.5" height="13.0" rx="2"/>
+<text class="t1" x="235.5" y="318.5" font-size="12">1.4</text>
+<text class="t1" x="227.0" y="356.5" font-size="12">0</text>
+<text class="t1" x="227.0" y="372.5" font-size="12">0</text>
+<text class="t1" x="500.0" y="104.0" font-size="13" font-weight="600">Shared blocks dirtied</text>
+<text class="t2" x="500.0" y="119.0" font-size="11">(heap + VM; table: 3,480 pages)</text>
+<line class="grid" x1="500.0" x2="500.0" y1="122.0" y2="386.0" stroke-width="1"/>
+<text class="t2" x="500.0" y="401.0" font-size="11" text-anchor="middle">0</text>
+<line class="grid" x1="590.0" x2="590.0" y1="122.0" y2="386.0" stroke-width="1"/>
+<text class="t2" x="590.0" y="401.0" font-size="11" text-anchor="middle">2,000</text>
+<line class="grid" x1="680.0" x2="680.0" y1="122.0" y2="386.0" stroke-width="1"/>
+<text class="t2" x="680.0" y="401.0" font-size="11" text-anchor="middle">4,000</text>
+<line class="axis" x1="500.0" x2="680.0" y1="386.0" y2="386.0" stroke-width="1"/>
+<text class="t2" x="590.0" y="418.0" font-size="11" text-anchor="middle">blocks</text>
+<rect class="s1" x="500.0" y="130.0" width="155.2" height="13.0" rx="2"/>
+<text class="t1" x="660.2" y="140.5" font-size="12">3,449</text>
+<rect class="s2" x="500.0" y="146.0" width="155.2" height="13.0" rx="2"/>
+<text class="t1" x="660.2" y="156.5" font-size="12">3,450</text>
+<rect class="s1" x="500.0" y="184.0" width="64.4" height="13.0" rx="2"/>
+<text class="t1" x="569.4" y="194.5" font-size="12">1,432</text>
+<rect class="s2" x="500.0" y="200.0" width="64.5" height="13.0" rx="2"/>
+<text class="t1" x="569.5" y="210.5" font-size="12">1,433</text>
+<text class="t1" x="505.0" y="248.5" font-size="12">0</text>
+<rect class="s2" x="500.0" y="254.0" width="147.1" height="13.0" rx="2"/>
+<text class="t1" x="652.1" y="264.5" font-size="12">3,268</text>
+<text class="t1" x="505.0" y="302.5" font-size="12">0</text>
+<rect class="s2" x="500.0" y="308.0" width="8.1" height="13.0" rx="2"/>
+<text class="t1" x="513.1" y="318.5" font-size="12">181</text>
+<text class="t1" x="505.0" y="356.5" font-size="12">0</text>
+<text class="t1" x="505.0" y="372.5" font-size="12">0</text>
+<text class="t2" x="730.0" y="281.0" font-size="11" text-anchor="end">sets 3,267 of 3,480 visibility-map bits</text>
+<text class="t1" x="40.0" y="138.0" font-size="12">count(*), index-less table,</text>
+<text class="t2" x="40.0" y="153.0" font-size="12">after checkpoint</text>
+<text class="t1" x="40.0" y="192.0" font-size="12">count(*), index-less table,</text>
+<text class="t2" x="40.0" y="207.0" font-size="12">no checkpoint</text>
+<text class="t1" x="40.0" y="246.0" font-size="12">Range query, indexed table,</text>
+<text class="t2" x="40.0" y="261.0" font-size="12">after checkpoint</text>
+<text class="t1" x="40.0" y="300.0" font-size="12">count(*), indexed table,</text>
+<text class="t2" x="40.0" y="315.0" font-size="12">right after the range query</text>
+<text class="t1" x="40.0" y="354.0" font-size="12">count(*), index-less table,</text>
+<text class="t2" x="40.0" y="369.0" font-size="12">after VACUUM</text>
+<text class="t2" x="40.0" y="446.0" font-size="12">Small test, extended small fixture (the 63 MiB base plus an unindexed 200,000-row table), 200,000-row tables,</text>
+<text class="t2" x="40.0" y="464.0" font-size="12">3 fresh pg_restore runs per scenario with identical results.</text>
+<text class="t2" x="40.0" y="482.0" font-size="12">After a checkpoint, the first change to a page needs a full-page image (checksums on);</text>
+<text class="t2" x="40.0" y="500.0" font-size="12">indexed tables already had hint bits set by CREATE INDEX during pg_restore.</text>
+<text class="t2" x="40.0" y="518.0" font-size="12">With checksums off, Postgres 18.6 dirtied the same blocks and wrote no WAL in every scenario.</text>
+</svg>
