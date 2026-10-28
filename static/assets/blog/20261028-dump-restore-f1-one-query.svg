@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" width="760" height="300" role="img" aria-labelledby="t d">
+<title id="t">One query after a logical restore, Postgres 18.6</title>
+<desc id="d">Cold-cache execution time of one join query over a 250 M-row table, linear scale from 0 s. Each bar is the median of 9 runs, each dot is one run. pg_restore only: median 32.6 s, Seq Scan, Hash Join; + ANALYZE: median 6.1 s, Index Only Scan, 24,983 heap fetches; + VACUUM ANALYZE: median 23 ms, Index Only Scan, 0 heap fetches, about 1,400 times faster than pg_restore only.</desc>
+<style>
+  .bg{fill:#fcfcfb}.t1{fill:#0b0b0b}.t2{fill:#52514e}.grid{stroke:#e4e3df}.axis{stroke:#9a9993}
+  .s1{fill:#2a78d6}.s2{fill:#eb6834}.band{fill:#eb6834;opacity:.08}.gap{stroke:#fcfcfb}
+  text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+</style>
+<rect class="bg" width="760" height="300" rx="8"/>
+<text class="t1" x="24" y="30" font-size="15" font-weight="600">One query after a logical restore, Postgres 18.6</text>
+<text class="t2" x="24" y="50" font-size="12">Bar: median of 9 cold-cache runs. Dot: one run.</text>
+<line class="grid" x1="300.0" x2="300.0" y1="64" y2="218" stroke-width="1"/>
+<text class="t2" x="300.0" y="234" font-size="11" text-anchor="middle">0 s</text>
+<line class="grid" x1="355.7" x2="355.7" y1="64" y2="218" stroke-width="1"/>
+<text class="t2" x="355.7" y="234" font-size="11" text-anchor="middle">5 s</text>
+<line class="grid" x1="411.4" x2="411.4" y1="64" y2="218" stroke-width="1"/>
+<text class="t2" x="411.4" y="234" font-size="11" text-anchor="middle">10 s</text>
+<line class="grid" x1="467.1" x2="467.1" y1="64" y2="218" stroke-width="1"/>
+<text class="t2" x="467.1" y="234" font-size="11" text-anchor="middle">15 s</text>
+<line class="grid" x1="522.9" x2="522.9" y1="64" y2="218" stroke-width="1"/>
+<text class="t2" x="522.9" y="234" font-size="11" text-anchor="middle">20 s</text>
+<line class="grid" x1="578.6" x2="578.6" y1="64" y2="218" stroke-width="1"/>
+<text class="t2" x="578.6" y="234" font-size="11" text-anchor="middle">25 s</text>
+<line class="grid" x1="634.3" x2="634.3" y1="64" y2="218" stroke-width="1"/>
+<text class="t2" x="634.3" y="234" font-size="11" text-anchor="middle">30 s</text>
+<line class="grid" x1="690.0" x2="690.0" y1="64" y2="218" stroke-width="1"/>
+<text class="t2" x="690.0" y="234" font-size="11" text-anchor="middle">35 s</text>
+<line class="axis" x1="300" x2="690" y1="218" y2="218" stroke-width="1"/>
+<line class="axis" x1="300" x2="300" y1="64" y2="218" stroke-width="1"/>
+<text class="t2" x="495.0" y="252" font-size="11" text-anchor="middle">Execution time with a cold cache, seconds (linear scale, starts at 0)</text>
+<text class="t1" x="24" y="87.0" font-size="13">pg_restore only</text>
+<text class="t2" x="24" y="103.0" font-size="11">Seq Scan, Hash Join</text>
+<rect class="s1" x="300.0" y="77.0" width="363.45" height="22" fill-opacity=".28"/>
+<circle class="s1" cx="661.4" cy="82.0" r="3" fill-opacity=".85"/>
+<circle class="s1" cx="665.5" cy="82.0" r="3" fill-opacity=".85"/>
+<circle class="s1" cx="661.5" cy="82.0" r="3" fill-opacity=".85"/>
+<circle class="s1" cx="663.3" cy="88.0" r="3" fill-opacity=".85"/>
+<circle class="s1" cx="661.2" cy="88.0" r="3" fill-opacity=".85"/>
+<circle class="s1" cx="664.0" cy="88.0" r="3" fill-opacity=".85"/>
+<circle class="s1" cx="669.9" cy="94.0" r="3" fill-opacity=".85"/>
+<circle class="s1" cx="667.2" cy="94.0" r="3" fill-opacity=".85"/>
+<circle class="s1" cx="661.6" cy="94.0" r="3" fill-opacity=".85"/>
+<text class="t1" x="680.5" y="93.0" font-size="14" font-weight="600">32.6 s</text>
+<text class="t1" x="24" y="135.0" font-size="13">+ ANALYZE</text>
+<text class="t2" x="24" y="151.0" font-size="11">Index Only Scan, 24,983 heap fetches</text>
+<rect class="s1" x="300.0" y="125.0" width="68.03" height="22" fill-opacity=".28"/>
+<circle class="s1" cx="370.3" cy="130.0" r="3" fill-opacity=".85"/>
+<circle class="s1" cx="368.0" cy="130.0" r="3" fill-opacity=".85"/>
+<circle class="s1" cx="368.5" cy="130.0" r="3" fill-opacity=".85"/>
+<circle class="s1" cx="366.3" cy="136.0" r="3" fill-opacity=".85"/>
+<circle class="s1" cx="357.6" cy="136.0" r="3" fill-opacity=".85"/>
+<circle class="s1" cx="361.4" cy="136.0" r="3" fill-opacity=".85"/>
+<circle class="s1" cx="368.0" cy="142.0" r="3" fill-opacity=".85"/>
+<circle class="s1" cx="363.0" cy="142.0" r="3" fill-opacity=".85"/>
+<circle class="s1" cx="369.6" cy="142.0" r="3" fill-opacity=".85"/>
+<text class="t1" x="380.4" y="141.0" font-size="14" font-weight="600">6.1 s</text>
+<text class="t1" x="24" y="183.0" font-size="13">+ VACUUM ANALYZE</text>
+<text class="t2" x="24" y="199.0" font-size="11">Index Only Scan, 0 heap fetches</text>
+<rect class="s1" x="300.0" y="173.0" width="0.26" height="22" fill-opacity=".28"/>
+<circle class="s1" cx="300.3" cy="178.0" r="3" fill-opacity=".85"/>
+<circle class="s1" cx="300.3" cy="178.0" r="3" fill-opacity=".85"/>
+<circle class="s1" cx="300.3" cy="178.0" r="3" fill-opacity=".85"/>
+<circle class="s1" cx="300.3" cy="184.0" r="3" fill-opacity=".85"/>
+<circle class="s1" cx="300.3" cy="184.0" r="3" fill-opacity=".85"/>
+<circle class="s1" cx="300.3" cy="184.0" r="3" fill-opacity=".85"/>
+<circle class="s1" cx="300.3" cy="190.0" r="3" fill-opacity=".85"/>
+<circle class="s1" cx="300.3" cy="190.0" r="3" fill-opacity=".85"/>
+<circle class="s1" cx="300.3" cy="190.0" r="3" fill-opacity=".85"/>
+<text class="t1" x="310.3" y="189.0" font-size="14" font-weight="600">23 ms, about 1,400× faster</text>
+<text class="t2" x="24" y="280" font-size="12">250 M-row table, 31 GiB heap, 16 GiB RAM, OS cache dropped before each run; 9 runs per step.</text>
+</svg>

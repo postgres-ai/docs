@@ -10,6 +10,10 @@ type TldrContent = {
   title: string;
   /** List of bullet points with specific details */
   points: string[];
+  /** Optional analogy shown after the points as a highlighted callout */
+  analogy?: string;
+  /** Optional small label at the top of the analogy callout */
+  analogyLabel?: string;
 }
 
 /**
@@ -101,6 +105,14 @@ export const TldrTabs = (props: TldrTabsProps) => {
                 <li key={index}>{point}</li>
               ))}
             </ul>
+            {content.analogy && (
+              <div className={styles.analogy}>
+                {content.analogyLabel && (
+                  <p className={styles.analogyLabel}>{content.analogyLabel}</p>
+                )}
+                <p className={styles.analogyText}>{content.analogy}</p>
+              </div>
+            )}
           </>
         )}
       </div>

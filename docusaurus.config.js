@@ -659,6 +659,16 @@ module.exports = {
         },
         blog: {
           showReadingTime: true,
+          // Count prose only: fenced code, collapsed <details> blocks, JSX components
+          // (TldrTabs and its aiContext) and image alt text are not read linearly.
+          readingTime: ({content, defaultReadingTime}) =>
+            defaultReadingTime({
+              content: content
+                .replace(/```[\s\S]*?```/g, '')
+                .replace(/<details>[\s\S]*?<\/details>/g, '')
+                .replace(/^<[A-Z][A-Za-z]*[\s\S]*?\/>$/gm, '')
+                .replace(/!\[[^\]]*\]\([^)]*\)/g, ''),
+            }),
           editUrl: 'https://gitlab.com/postgres-ai/docs/-/edit/master/',
           path: 'blog',
           onInlineTags: 'ignore',

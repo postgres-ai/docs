@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 488" width="760" height="488" role="img" aria-labelledby="t d">
+<title id="t">Two queries, two fixes: ANALYZE changes the join, VACUUM changes the index-only read</title>
+<desc id="d">Postgres 18.6, root shared buffer accesses of the natural plan. Skewed join: none 396,608 (Nested Loop), ANALYZE 2,096 (Hash Join), VACUUM 396,608 (Nested Loop), VACUUM ANALYZE 2,096 (Hash Join), --statistics archive, none 2,096 (Hash Join). Covering range query: none 3,301 (Bitmap Heap Scan), ANALYZE 3,301 (Bitmap Heap Scan), VACUUM 34 (Index Only Scan), VACUUM ANALYZE 34 (Index Only Scan), --statistics archive, none 3,301 (Bitmap Heap Scan).</desc>
+<style>
+  .bg{fill:#fcfcfb}.t1{fill:#0b0b0b}.t2{fill:#52514e}.grid{stroke:#e4e3df}.axis{stroke:#9a9993}
+  .s1{fill:#2a78d6}.s2{fill:#eb6834}.band{fill:#eb6834;opacity:.08}.gap{stroke:#fcfcfb}
+  text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+</style>
+<rect class="bg" width="760" height="488" rx="8"/>
+<text class="t1" x="40.0" y="34.0" font-size="15" font-weight="600">Two queries, two fixes: ANALYZE changes the join, VACUUM changes the index-only read</text>
+<text class="t2" x="40.0" y="56.0" font-size="13">Postgres 18.6 after pg_restore, root shared buffer accesses (hit + read). Each panel has its own scale.</text>
+<text class="t2" x="40.0" y="96.0" font-size="11">Maintenance after pg_restore</text>
+<text class="t1" x="222.0" y="96.0" font-size="13" font-weight="600">Skewed join</text>
+<line class="grid" x1="222.0" x2="222.0" y1="110.0" y2="340.0" stroke-width="1"/>
+<text class="t2" x="222.0" y="355.0" font-size="11" text-anchor="middle">0</text>
+<line class="grid" x1="312.0" x2="312.0" y1="110.0" y2="340.0" stroke-width="1"/>
+<text class="t2" x="312.0" y="355.0" font-size="11" text-anchor="middle">200,000</text>
+<line class="grid" x1="402.0" x2="402.0" y1="110.0" y2="340.0" stroke-width="1"/>
+<text class="t2" x="402.0" y="355.0" font-size="11" text-anchor="middle">400,000</text>
+<line class="axis" x1="222.0" x2="402.0" y1="340.0" y2="340.0" stroke-width="1"/>
+<text class="t2" x="312.0" y="372.0" font-size="11" text-anchor="middle">buffer accesses</text>
+<rect class="s1" x="222.0" y="118.0" width="178.5" height="16.0" rx="2"/>
+<text class="t1" x="405.5" y="130.0" font-size="12">396,608</text>
+<text class="t2" x="222.0" y="148.0" font-size="11">Nested Loop</text>
+<rect class="s1" x="222.0" y="164.0" width="2.0" height="16.0" rx="0"/>
+<text class="t1" x="227.9" y="176.0" font-size="12">2,096</text>
+<text class="t2" x="222.0" y="194.0" font-size="11">Hash Join</text>
+<rect class="s1" x="222.0" y="210.0" width="178.5" height="16.0" rx="2"/>
+<text class="t1" x="405.5" y="222.0" font-size="12">396,608</text>
+<text class="t2" x="222.0" y="240.0" font-size="11">Nested Loop</text>
+<rect class="s1" x="222.0" y="256.0" width="2.0" height="16.0" rx="0"/>
+<text class="t1" x="227.9" y="268.0" font-size="12">2,096</text>
+<text class="t2" x="222.0" y="286.0" font-size="11">Hash Join</text>
+<rect class="s1" x="222.0" y="302.0" width="2.0" height="16.0" rx="0"/>
+<text class="t1" x="227.9" y="314.0" font-size="12">2,096</text>
+<text class="t2" x="222.0" y="332.0" font-size="11">Hash Join</text>
+<text class="t1" x="500.0" y="96.0" font-size="13" font-weight="600">Covering range query</text>
+<line class="grid" x1="500.0" x2="500.0" y1="110.0" y2="340.0" stroke-width="1"/>
+<text class="t2" x="500.0" y="355.0" font-size="11" text-anchor="middle">0</text>
+<line class="grid" x1="590.0" x2="590.0" y1="110.0" y2="340.0" stroke-width="1"/>
+<text class="t2" x="590.0" y="355.0" font-size="11" text-anchor="middle">2,000</text>
+<line class="grid" x1="680.0" x2="680.0" y1="110.0" y2="340.0" stroke-width="1"/>
+<text class="t2" x="680.0" y="355.0" font-size="11" text-anchor="middle">4,000</text>
+<line class="axis" x1="500.0" x2="680.0" y1="340.0" y2="340.0" stroke-width="1"/>
+<text class="t2" x="590.0" y="372.0" font-size="11" text-anchor="middle">buffer accesses</text>
+<rect class="s1" x="500.0" y="118.0" width="148.5" height="16.0" rx="2"/>
+<text class="t1" x="653.5" y="130.0" font-size="12">3,301</text>
+<text class="t2" x="500.0" y="148.0" font-size="11">Bitmap Heap Scan</text>
+<rect class="s1" x="500.0" y="164.0" width="148.5" height="16.0" rx="2"/>
+<text class="t1" x="653.5" y="176.0" font-size="12">3,301</text>
+<text class="t2" x="500.0" y="194.0" font-size="11">Bitmap Heap Scan</text>
+<rect class="s1" x="500.0" y="210.0" width="2.0" height="16.0" rx="0"/>
+<text class="t1" x="506.5" y="222.0" font-size="12">34</text>
+<text class="t2" x="500.0" y="240.0" font-size="11">Index Only Scan</text>
+<rect class="s1" x="500.0" y="256.0" width="2.0" height="16.0" rx="0"/>
+<text class="t1" x="506.5" y="268.0" font-size="12">34</text>
+<text class="t2" x="500.0" y="286.0" font-size="11">Index Only Scan</text>
+<rect class="s1" x="500.0" y="302.0" width="148.5" height="16.0" rx="2"/>
+<text class="t1" x="653.5" y="314.0" font-size="12">3,301</text>
+<text class="t2" x="500.0" y="332.0" font-size="11">Bitmap Heap Scan</text>
+<text class="t1" x="40.0" y="130.0" font-size="12">none</text>
+<text class="t1" x="40.0" y="176.0" font-size="12">ANALYZE</text>
+<text class="t1" x="40.0" y="222.0" font-size="12">VACUUM</text>
+<text class="t1" x="40.0" y="268.0" font-size="12">VACUUM ANALYZE</text>
+<text class="t1" x="40.0" y="314.0" font-size="12">--statistics archive, none</text>
+<text class="t2" x="40.0" y="400.0" font-size="12">63 MiB fixture, warm cache, 3 fresh restores × 3 measured passes; buffer accesses are the evidence, not milliseconds.</text>
+<text class="t2" x="40.0" y="418.0" font-size="12">For illustration, warm-cache median execution time: join 145 ms with no maintenance, 67 ms after ANALYZE;</text>
+<text class="t2" x="40.0" y="436.0" font-size="12">range query 6.6 ms with no maintenance, 1.1 ms after VACUUM.</text>
+<text class="t2" x="40.0" y="454.0" font-size="12">Autovacuum on in this track: CREATE INDEX reset the imported relallvisible to 0, so the --statistics arm kept the</text>
+<text class="t2" x="40.0" y="472.0" font-size="12">Bitmap Heap Scan; figure 2 shows the same archive with autovacuum off.</text>
+</svg>

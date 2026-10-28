@@ -10,7 +10,10 @@ import type {Props} from '@theme/BlogPostItem';
 export default function BlogPostItemWrapper(props: Props): JSX.Element {
   const {metadata, assets, isBlogPostPage} = useBlogPost();
   const {frontMatter} = metadata;
-  const coverImage = assets.image ?? frontMatter.image;
+  // `hide_cover_image: true` keeps `image` for social cards only.
+  const coverImage = frontMatter.hide_cover_image
+    ? undefined
+    : assets.image ?? frontMatter.image;
 
   if (!isBlogPostPage) {
     // For blog listing pages, use the original component (no cover images)
