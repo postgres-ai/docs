@@ -498,6 +498,6 @@ export default function ControlUniverse({ step, paused }: { step: number; paused
     {step === 2 && <div className={styles.universeHint}>Create · experiment · dispose · repeat</div>}
     <span className={styles.universeProduction}>{['POSTGRES / HEALTH CONTROL', 'ISOLATE THE SIGNAL / FIND THE CAUSE', 'ONE SHARED BASE / INDEPENDENT CLONES', 'DATABASE EVIDENCE / YOUR DECISION'][step]}</span>
     {step === 1 && <span className={styles.heroDiagnosis}>A problem isolated<span>Evidence → recommended action</span></span>}
-    {step === 3 && <div className={styles.heroReview}><span>Database</span><strong>✅ Evidence ready<span>Awaiting your review</span></strong></div>}
+    {step === 2 && <div className={styles.heroReview}><span>Database</span><strong>✅ Evidence ready<span>Awaiting your review</span></strong></div>}
   </div>
 }
