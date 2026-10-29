@@ -310,12 +310,11 @@ postgresai checkup <CHECK_ID> <conn>
 - `--upload` / `--no-upload` — upload JSON results to PostgresAI Console (requires API key). Default depends on whether an API key is configured.
 - `--project <project>` — project name or ID for the upload (used with `--upload`). Defaults to the value stored by [`set-default-project`](#command-set-default-project); a project is auto-generated on first run if needed. With a global token the stored default is ignored and a generated name is not saved, so pass `--project` to upload to a stable project.
 - `--json` — print JSON to stdout.
-- `--markdown` — print Markdown to stdout. The conversion runs on the PostgresAI API, so the full report JSON is sent there; `--markdown` cannot be combined with `--json` or `--no-upload`.
 - `--org <alias>` / `--org-id <id>` — organization; required with a global token. See [Organization selection](#organization-selection).
 
 :::tip stdout vs stderr
 Progress and error messages are written to **stderr**; **stdout** carries only the report
-payload. This means `--json` / `--markdown` can be piped safely, for example:
+payload. This means `--json` can be piped safely, for example:
 
 ```bash
 postgresai checkup <conn> --json | jq '.checks[] | select(.id == "H002")'
@@ -1108,7 +1107,7 @@ postgresai reports <subcommand> [options]
 
 - `list [options]` — list checkup reports.
 - `files [reportId] [options]` — list files (metadata only) of a checkup report.
-- `data [reportId] [options]` — fetch report file contents (markdown / JSON).
+- `data [reportId] [options]` — fetch report file contents (JSON; markdown only for legacy postgres-checkup uploads).
 
 All `reports` subcommands accept `--org <alias>` / `--org-id <id>`,
 required with a global token (see
@@ -1134,7 +1133,7 @@ postgresai reports files [reportId] [options]
 
 Either `reportId` or `--check-id` is required.
 
-- `--type <type>` — filter by file type: `json` or `md`.
+- `--type <type>` — file type: `json` (default), or `md` for markdown that the legacy postgres-checkup tool uploaded.
 - `--check-id <id>` — filter by check ID (e.g. `H002`).
 - `--json` — output raw JSON.
 
@@ -1144,11 +1143,11 @@ Either `reportId` or `--check-id` is required.
 postgresai reports data [reportId] [options]
 ```
 
-- `--type <type>` — filter by file type: `json` or `md`.
+- `--type <type>` — file type: `json` (default), or `md` for markdown that the legacy postgres-checkup tool uploaded.
 - `--check-id <id>` — filter by check ID (e.g. `H002`).
-- `--formatted` — render markdown with ANSI styling (experimental).
+- `--formatted` — render `md` files with ANSI styling in a terminal (experimental). In a terminal, JSON is indented by default; piped output stays as stored.
 - `-o, --output <dir>` — save files to a directory (using their original filenames).
-- `--json` — output raw JSON.
+- `--json` — print files and metadata as one JSON array (for scripts / jq).
 
 ## Command: `mcp`
 
@@ -1259,8 +1258,8 @@ The 0.15 MCP server registers 15 tools in four groups.
 *Reports:* (new in 0.15 — the only place the reports capability is exposed to AI agents)
 
 - `list_reports` — list checkup reports (metadata: id, project, status, timestamps; supports `before_date` filtering).
-- `list_report_files` — list files in a report (per-check `json` / `md` files; filter by `report_id`, `type`, or `check_id`).
-- `get_report_data` — fetch report file content (`type=md` for analysis, `type=json` for raw check data).
+- `list_report_files` — list the JSON files of a report, one per check (filter by `report_id`, `type`, or `check_id`).
+- `get_report_data` — fetch the JSON data of a report's checks. For findings and recommendations, use the issues tools.
 
 *Files:*
 
