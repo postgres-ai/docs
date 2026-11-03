@@ -8,7 +8,7 @@ Reads DATA_DIR/latency.json and DATA_DIR/r1b.json (from extract_data.py); writes
   OUT_DIR/20261103-wait-events-1-one-slow-request.svg
 Standard library only. Colours follow the site palette; each figure has a light file and a -dark file.
 """
-import json, math, sys, os
+import json, sys, os
 
 DATA, OUT = sys.argv[1], sys.argv[2]
 os.makedirs(OUT, exist_ok=True)

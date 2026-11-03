@@ -53,7 +53,7 @@ def frame(i):
         pts = [(x, y * lat[run]['n']) for x, y in lat[run]['ccdf'] if XMIN <= x <= 28]
         n = int(len(pts) * prog)
         if n > 1:
-            # The baseline is drawn dashed and on top: fixes A and B lie on it above 5 ms
+            # The baseline is drawn dashed and on top: fixes A and B join it above about 8 ms
             base = k == 0
             ax.plot([p[0] for p in pts[:n]], [p[1] for p in pts[:n]], color=col, lw=3.0 if base else 2.6,
                     ls=(0, (5, 3)) if base else '-', zorder=5 if base else 3, solid_capstyle='round')
