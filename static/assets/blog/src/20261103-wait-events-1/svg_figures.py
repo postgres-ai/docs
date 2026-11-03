@@ -175,4 +175,5 @@ def fig_request():
     write('20261103-wait-events-1-one-slow-request.svg', svg(W, H, 'Anatomy of one slow checkout request',
           'Timeline of a 12.63 ms request: BEGIN, a 0.27 ms disk read for the catalog lookup, then 10.97 ms waiting on a row lock inside the stock update, then 0.53 ms of WAL write and fsync at COMMIT. A 10 ms sampler would catch it in at most one sample.', b))
 
-fig_sampling(); fig_tail(); fig_profile(); fig_request()
+# fig_tail() drew a static log-scale version of the tail; the post uses the linear tail GIF instead
+fig_sampling(); fig_profile(); fig_request()

@@ -11,7 +11,6 @@ so restyling means editing a script and re-running it.
 | `20261103-wait-events-1-sampling.gif` | `sampler_gif.py` | synthetic timeline defined in the script |
 | `20261103-wait-events-1-sampling.svg` | `svg_figures.py` (same picture, CSS-animated SVG) | same |
 | `20261103-wait-events-1-latency-tail.gif` | `tail_gif.py` | `data/latency.json` |
-| `20261103-wait-events-1-latency-tail.svg` (static version) | `svg_figures.py` | `data/latency.json` |
 | `20261103-wait-events-1-profile-vs-tail.svg` (and `-dark.svg`) | `svg_figures.py` | `data/r1b.json` |
 | `20261103-wait-events-1-one-slow-request.gif` | `request_gif.py` | `data/r1b.json` |
 | `20261103-wait-events-1-one-slow-request.svg` (static version) | `svg_figures.py` | `data/r1b.json` |
