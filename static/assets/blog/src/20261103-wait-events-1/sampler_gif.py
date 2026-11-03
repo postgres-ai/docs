@@ -10,8 +10,7 @@ import os, subprocess, sys
 OUT=sys.argv[1]; FR=sys.argv[2]; os.makedirs(FR,exist_ok=True)
 
 # ---- theme ----
-import os as _os
-THEME = _os.environ.get('THEME', 'light')
+THEME = os.environ.get('THEME', 'light')
 if THEME == 'dark':
     BG, T1, T2, GRID, AXIS = '#1a1a19', '#ffffff', '#c3c2b7', '#383835', '#6f6e69'
     BLUE, ORANGE, AQUA, YELLOW, VIOLET, GREYBAR = '#3987e5', '#d95926', '#199e70', '#c98500', '#9085e9', '#55544f'

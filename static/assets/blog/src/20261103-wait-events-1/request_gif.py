@@ -14,8 +14,7 @@ DATA, OUT, FR = sys.argv[1], sys.argv[2], sys.argv[3]
 os.makedirs(FR, exist_ok=True)
 
 # ---- theme ----
-import os as _os
-THEME = _os.environ.get('THEME', 'light')
+THEME = os.environ.get('THEME', 'light')
 if THEME == 'dark':
     BG, T1, T2, GRID, AXIS = '#1a1a19', '#ffffff', '#c3c2b7', '#383835', '#6f6e69'
     BLUE, ORANGE, AQUA, YELLOW, VIOLET, GREYBAR = '#3987e5', '#d95926', '#199e70', '#c98500', '#9085e9', '#55544f'
@@ -85,7 +84,7 @@ def frame(i):
     waited = sum(min(e, t) - a for a, e, ev in segs if ev == 'Lock:transactionid' and a < t)
     if done:
         fx.text(0, 0.72, 'The truth: 10.97 of 12.63 ms waiting for one row lock, held by the background job.', fontsize=13, fontweight='bold', va='center')
-        fx.text(0, 0.36, "The sampler's view of the same request: at most one look, saying only \"lock\". A 1 s sampler would almost never look.", fontsize=12, va='center')
+        fx.text(0, 0.36, "The sampler's view of the same request: one or two looks, each saying only \"lock\". A 1 s sampler would almost never look.", fontsize=12, va='center')
         fx.text(0, 0.04, 'Disk read 0.27 ms, WAL write and fsync 0.53 ms, client round trips 0.5 ms in total.', fontsize=12, color=T2, va='center')
     else:
         fx.text(0, 0.72, f'waiting on the row lock so far: {waited:5.2f} ms', fontsize=13, fontweight='bold', va='center')

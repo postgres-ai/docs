@@ -4,7 +4,6 @@
 Usage: svg_figures.py DATA_DIR OUT_DIR
 Reads DATA_DIR/latency.json and DATA_DIR/r1b.json (from extract_data.py); writes
   OUT_DIR/20261103-wait-events-1-sampling.svg
-  OUT_DIR/20261103-wait-events-1-latency-tail.svg
   OUT_DIR/20261103-wait-events-1-profile-vs-tail.svg
   OUT_DIR/20261103-wait-events-1-one-slow-request.svg
 Standard library only. Colours follow the site palette; each figure has a light file and a -dark file.
@@ -90,38 +89,6 @@ def fig_sampling():
     write('20261103-wait-events-1-sampling.svg', svg(W, H, 'What a 10 ms sampler sees of one second of waits',
           f'A one-second timeline with {len(io)} I/O waits of 30 ms and {len(lock)} lock waits of 2 ms. A sampler looking every 10 ms records {nio} I/O samples and {nl} lock samples: the shares are about right, but it saw only {seen} of the {len(lock)} lock waits and cannot report counts or durations.', b, extra))
 
-# ---------------- 2. latency tail, static ----------------
-def fig_tail():
-    lat = json.load(open(os.path.join(DATA, 'latency.json')))
-    W, H = 760, 420; L, R, Tp, Bt = 70, 730, 52, 340
-    xmin, xmax, ymin, ymax = 0.5, 40, 1e-4, 1
-    xx = lambda v: L + (R - L) * (math.log10(v) - math.log10(xmin)) / (math.log10(xmax) - math.log10(xmin))
-    yy = lambda v: Bt - (Bt - Tp) * (math.log10(v) - math.log10(ymin)) / (math.log10(ymax) - math.log10(ymin))
-    b = [f'<text class="t1" x="{L}" y="30" font-size="16" font-weight="600">Share of checkout requests slower than X, four runs</text>']
-    for v, lab in ((1, '100%'), (1e-1, '10%'), (1e-2, '1%'), (1e-3, '0.1%'), (1e-4, '0.01%')):
-        b.append(f'<line class="grid" x1="{L}" x2="{R}" y1="{yy(v):.1f}" y2="{yy(v):.1f}" stroke-width="1"/>')
-        b.append(f'<text class="t2" x="{L-8}" y="{yy(v)+4:.1f}" font-size="12" text-anchor="end">{lab}</text>')
-    for v in (0.5, 1, 2, 5, 10, 20, 40):
-        b.append(f'<line class="grid" x1="{xx(v):.1f}" x2="{xx(v):.1f}" y1="{Tp}" y2="{Bt}" stroke-width="1"/>')
-        b.append(f'<text class="t2" x="{xx(v):.1f}" y="{Bt+18}" font-size="12" text-anchor="middle">{v:g} ms</text>')
-    b.append(f'<text class="t2" x="{(L+R)/2}" y="{Bt+40}" font-size="12" text-anchor="middle">request latency, measured from its scheduled start (log scale)</text>')
-    b.append(f'<text class="t2" x="{L+6}" y="{yy(1e-3)-5:.1f}" font-size="12">p99.9: 1 request in 1,000 is slower than this</text>')
-    series = [('sh-R0c', 'l1', 's1', 'baseline'), ('sh-F1a', 'l2', 's2', 'fix A: synchronous_commit = off'),
-              ('sh-F1b', 'l4', 's4', 'fix B: 2 GB cache, no disk reads'), ('sh-F2', 'l3', 's3', 'fix C: background job in 5-row chunks')]
-    for run, lc, sc, name in series:
-        pts = [(xx(x), yy(max(y, ymin))) for x, y in lat[run]['ccdf'] if y > 0 and x >= xmin]
-        b.append(f'<path class="{lc}" d="M' + ' L'.join(f'{x:.1f},{y:.1f}' for x, y in pts) + '" fill="none" stroke-width="2.5" stroke-linejoin="round"/>')
-    b.append(f'<text class="t1" x="724" y="{yy(1e-3)-22:.1f}" font-size="12" text-anchor="end">baseline, A and B:</text>')
-    b.append(f'<text class="t1" x="724" y="{yy(1e-3)-8:.1f}" font-size="12" text-anchor="end">p99.9 ≈ 11 ms</text>')
-    b.append(f'<text class="t1" x="{xx(5.8)-8:.1f}" y="{yy(1e-3)+26:.1f}" font-size="12" text-anchor="end">C: 5.8 ms</text>')
-    for i, (run, lc, sc, name) in enumerate(series):
-        ny = 283 + i * 17
-        b.append(f'<rect class="{sc}" x="86" y="{ny}" width="16" height="4"/><text class="t1" x="110" y="{ny+5}" font-size="12">{esc(name)}</text>')
-    b.append(f'<text class="t2" x="{L}" y="{H-24}" font-size="11">Runs R0c, F1a, F1b, F2: 2,000 requests/s, 120 s each, about 240,000 requests per run.</text>')
-    b.append(f'<text class="t2" x="{L}" y="{H-9}" font-size="11">Fixes A and B move the bulk of requests and leave the tail; fix C moves only the tail.</text>')
-    write('20261103-wait-events-1-latency-tail.svg', svg(W, H, 'Latency tail of the checkout request in four runs',
-          'Complementary distribution of request latency on log axes for baseline, synchronous_commit off, 2 GB cache, and the chunked background job. The first two overlap the baseline above 5 ms; the chunked job alone cuts the tail: p99.9 from 11.0 to 5.8 ms, max from 26.7 to 10.0 ms.', b))
-
 # ---------------- 3. profile share vs slow-request share ----------------
 def fig_profile():
     r = json.load(open(os.path.join(DATA, 'r1b.json')))
@@ -168,12 +135,11 @@ def fig_request():
     b.append(f'<text class="t1" x="{L-12}" y="{yt+4}" font-size="13" text-anchor="end" font-weight="600">a 10 ms sampler</text>')
     b.append(f'<line class="ann" x1="{X(3.7):.1f}" x2="{X(3.7):.1f}" y1="{y-8}" y2="{yt+6}" stroke-width="1.5" stroke-dasharray="3 3"/>')
     b.append(f'<circle class="s2" cx="{X(3.7):.1f}" cy="{yt}" r="5"/>')
-    b.append(f'<text class="t2" x="{X(3.7)+10:.1f}" y="{yt+4}" font-size="12">at most one look at this request, and only the wait\'s name</text>')
+    b.append(f'<text class="t2" x="{X(3.7)+10:.1f}" y="{yt+4}" font-size="12">one or two looks at this request, and only the wait\'s name</text>')
     for i, (c, n) in enumerate([('s5', 'client round trip, 0.5 ms in total'), ('s4', 'disk read, 0.27 ms'), ('s2', 'row lock, 10.97 ms'), ('s1', 'WAL write + fsync, 0.53 ms')]):
         b.append(f'<rect class="{c}" x="{40+i*180}" y="{H-62}" width="12" height="12"/><text class="t1" x="{58+i*180}" y="{H-51}" font-size="11">{n}</text>')
     b.append(f'<text class="t2" x="40" y="{H-22}" font-size="11">The dashboard ranked the commit path first and disk reads high: here 0.53 and 0.27 ms. The lock it ranked last: 10.97 ms.</text>')
     write('20261103-wait-events-1-one-slow-request.svg', svg(W, H, 'Anatomy of one slow checkout request',
-          'Timeline of a 12.63 ms request: BEGIN, a 0.27 ms disk read for the catalog lookup, then 10.97 ms waiting on a row lock inside the stock update, then 0.53 ms of WAL write and fsync at COMMIT. A 10 ms sampler would catch it in at most one sample.', b))
+          'Timeline of a 12.63 ms request: BEGIN, a 0.27 ms disk read for the catalog lookup, then 10.97 ms waiting on a row lock inside the stock update, then 0.53 ms of WAL write and fsync at COMMIT. A 10 ms sampler would catch it in one or two samples.', b))
 
-# fig_tail() drew a static log-scale version of the tail; the post uses the linear tail GIF instead
 fig_sampling(); fig_profile(); fig_request()

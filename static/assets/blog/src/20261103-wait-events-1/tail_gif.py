@@ -13,8 +13,7 @@ DATA, OUT, FR = sys.argv[1], sys.argv[2], sys.argv[3]
 os.makedirs(FR, exist_ok=True)
 
 # ---- theme ----
-import os as _os
-THEME = _os.environ.get('THEME', 'light')
+THEME = os.environ.get('THEME', 'light')
 if THEME == 'dark':
     BG, T1, T2, GRID, AXIS = '#1a1a19', '#ffffff', '#c3c2b7', '#383835', '#6f6e69'
     BLUE, ORANGE, AQUA, YELLOW, VIOLET, GREYBAR = '#3987e5', '#d95926', '#199e70', '#c98500', '#9085e9', '#55544f'
@@ -28,7 +27,7 @@ plt.rcParams.update({'font.family': ['DejaVu Sans'], 'font.size': 12, 'text.colo
 lat = json.load(open(DATA))
 RUNS = [('sh-R0c', BLUE, 'baseline', 'p99.9 = 11.0 ms\n972 requests over 5 ms'),
         ('sh-F1a', ORANGE, 'fix A: asynchronous commit', 'mean halves, p99.9 = 11.4 ms\nthe tail stays'),
-        ('sh-F1b', YELLOW, 'fix B: 2 GB cache, no disk reads', 'reads gone, p99.9 = 11.3 ms\nthe tail stays'),
+        ('sh-F1b', YELLOW, 'fix B: 2 GiB cache, no disk reads', 'reads gone, p99.9 = 11.3 ms\nthe tail stays'),
         ('sh-F2',  VIOLET, 'fix C: job in 5-row chunks', 'p99.9 = 5.8 ms, max 10.0 ms\nonly the tail moves')]
 XMIN = 3.0
 FPS, PER, HOLD = 12, 1.8, 4.5
@@ -64,8 +63,8 @@ def frame(i):
             px.text(0.11, y, name, fontsize=11, fontweight='bold', va='center')
             if prog >= 1: px.text(0.12, y - 0.95, note, fontsize=10, color=T2, va='center', linespacing=1.4)
     if s >= PER * len(RUNS):
-        fig.text(0.04, 0.035, 'Fixes A and B leave the tail where it was. Fix C changes nothing in the database and cuts it.',
-                 fontsize=11, fontweight='bold', va='center')
+        fig.text(0.04, 0.035, 'Fixes A and B leave the tail where it was. Fix C changes nothing in the database and cuts it.',  # noqa
+                 fontsize=10.5, fontweight='bold', va='center')
     else:
         fig.text(0.04, 0.035, 'Runs R0c, F1a, F1b, F2: 2,000 requests/s, 120 s each, about 240,000 requests per run.', fontsize=11, color=T2, va='center')
     fig.savefig(f'{FR}/f{i:03d}.png'); plt.close(fig)

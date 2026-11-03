@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" width="760" height="360" role="img" aria-labelledby="t d">
 <title id="t">Anatomy of one slow checkout request</title>
-<desc id="d">Timeline of a 12.63 ms request: BEGIN, a 0.27 ms disk read for the catalog lookup, then 10.97 ms waiting on a row lock inside the stock update, then 0.53 ms of WAL write and fsync at COMMIT. A 10 ms sampler would catch it in at most one sample.</desc>
+<desc id="d">Timeline of a 12.63 ms request: BEGIN, a 0.27 ms disk read for the catalog lookup, then 10.97 ms waiting on a row lock inside the stock update, then 0.53 ms of WAL write and fsync at COMMIT. A 10 ms sampler would catch it in one or two samples.</desc>
 <style>
 .bg{fill:#fcfcfb}.t1{fill:#0b0b0b}.t2{fill:#52514e}.grid{stroke:#e4e3df}.axis{stroke:#9a9993}.gap{stroke:#fcfcfb}
 .s1{fill:#2a78d6}.s2{fill:#eb6834}.s3{fill:#1baf7a}.s4{fill:#eda100}.s5{fill:#4a3aa7}.n{fill:#c7c6c1}.ann{stroke:#52514e}
@@ -42,7 +42,7 @@ text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Ar
 <text class="t1" x="138" y="244" font-size="13" text-anchor="end" font-weight="600">a 10 ms sampler</text>
 <line class="ann" x1="315.1" x2="315.1" y1="92" y2="246" stroke-width="1.5" stroke-dasharray="3 3"/>
 <circle class="s2" cx="315.1" cy="240" r="5"/>
-<text class="t2" x="325.1" y="244" font-size="12">at most one look at this request, and only the wait's name</text>
+<text class="t2" x="325.1" y="244" font-size="12">one or two looks at this request, and only the wait's name</text>
 <rect class="s5" x="40" y="298" width="12" height="12"/><text class="t1" x="58" y="309" font-size="11">client round trip, 0.5 ms in total</text>
 <rect class="s4" x="220" y="298" width="12" height="12"/><text class="t1" x="238" y="309" font-size="11">disk read, 0.27 ms</text>
 <rect class="s2" x="400" y="298" width="12" height="12"/><text class="t1" x="418" y="309" font-size="11">row lock, 10.97 ms</text>

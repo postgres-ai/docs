@@ -9,11 +9,12 @@ so restyling means editing a script and re-running it.
 | Output (in `static/assets/blog/`) | Generator | Data |
 |---|---|---|
 | `20261103-wait-events-1-sampling.gif` | `sampler_gif.py` | synthetic timeline defined in the script |
-| `20261103-wait-events-1-sampling.svg` | `svg_figures.py` (same picture, CSS-animated SVG) | same |
+| `20261103-wait-events-1-sampling.svg` (CSS-animated twin, not embedded in the post) | `svg_figures.py` | same |
 | `20261103-wait-events-1-latency-tail.gif` | `tail_gif.py` | `data/latency.json` |
 | `20261103-wait-events-1-profile-vs-tail.svg` (and `-dark.svg`) | `svg_figures.py` | `data/r1b.json` |
 | `20261103-wait-events-1-one-slow-request.gif` | `request_gif.py` | `data/r1b.json` |
-| `20261103-wait-events-1-one-slow-request.svg` (static version) | `svg_figures.py` | `data/r1b.json` |
+| `20261103-wait-events-1-one-slow-request.svg` (static version, not embedded) | `svg_figures.py` | `data/r1b.json` |
+| (none; the post's sampler table) | | `data/sampler_r0c.json`, the pg_wait_sampling shares of run R0c |
 
 `data/*.json` is produced by `extract_data.py` from the raw logs of case 1:
 `tests/results/checkout-tail-20261022/raw/` in
@@ -54,5 +55,7 @@ THEME=dark $V request_gif.py data/r1b.json     $O/20261103-wait-events-1-one-slo
 - GIFs: 1100 px wide, 12 fps, 128-colour palette from ffmpeg `palettegen`, no dither,
   looped; each shows live counters from the first frame and holds its last frame
   for 4–4.5 s so the conclusion can be read before the loop restarts.
-- Numbers in the figures are taken from the data files, never typed in; if a
-  number in the post changes, change the data and regenerate.
+- Measured series come from the data files. A few labels are typed into the scripts
+  from those same files (the example request's 0.27 / 10.97 / 0.53 ms and 87%, the
+  per-run p99.9 notes in the tail legend); the sampler explainer is synthetic by
+  design. If a number changes, change the data, then the labels, then regenerate.
