@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" width="760" height="360" role="img" aria-labelledby="t d">
+<title id="t">Anatomy of one slow checkout request</title>
+<desc id="d">Timeline of a 12.63 ms request: BEGIN, a 0.27 ms disk read for the catalog lookup, then 10.97 ms waiting on a row lock inside the stock update, then 0.53 ms of WAL write and fsync at COMMIT. A 10 ms sampler would catch it in at most one sample.</desc>
+<style>
+.bg{fill:#fcfcfb}.t1{fill:#0b0b0b}.t2{fill:#52514e}.grid{stroke:#e4e3df}.axis{stroke:#9a9993}.gap{stroke:#fcfcfb}
+.s1{fill:#2a78d6}.s2{fill:#eb6834}.s3{fill:#1baf7a}.s4{fill:#eda100}.s5{fill:#4a3aa7}.n{fill:#c7c6c1}.ann{stroke:#52514e}
+.l1{stroke:#2a78d6}.l2{stroke:#eb6834}.l3{stroke:#1baf7a}.l4{stroke:#eda100}
+text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.bg{fill:#1a1a19}.t1{fill:#fff}.t2{fill:#c3c2b7}.grid{stroke:#383835}.axis{stroke:#6f6e69}.gap{stroke:#1a1a19}.ann{stroke:#c3c2b7}
+.s1{fill:#3987e5}.s2{fill:#d95926}.s3{fill:#199e70}.s4{fill:#c98500}.s5{fill:#9085e9}.n{fill:#55544f}
+.l1{stroke:#3987e5}.l2{stroke:#d95926}.l3{stroke:#199e70}.l4{stroke:#c98500}
+</style>
+<rect class="bg" width="760" height="360" rx="8"/>
+<text class="t1" x="40" y="30" font-size="16" font-weight="600">One slow checkout, 12.63 ms, rebuilt from its own waits</text>
+<text class="t2" x="40" y="50" font-size="12">Backend 32748, patch run R1b. Each bar is one wait with its measured length.</text>
+<text class="t1" x="138" y="117" font-size="13" text-anchor="end" font-weight="600">what it waited on</text>
+<line class="axis" x1="150" x2="730" y1="126" y2="126" stroke-width="1"/>
+<rect class="s5" x="151.3" y="100" width="10.0" height="26" rx="2"/>
+<rect class="s4" x="163.9" y="100" width="11.9" height="26" rx="2"/>
+<rect class="s5" x="177.2" y="100" width="4.7" height="26" rx="2"/>
+<rect class="s2" x="187.2" y="100" width="489.3" height="26" rx="2"/>
+<rect class="s5" x="680.3" y="100" width="7.5" height="26" rx="2"/>
+<rect class="s1" x="688.8" y="100" width="4.8" height="26" rx="2"/>
+<rect class="s1" x="693.7" y="100" width="2.0" height="26" rx="2"/>
+<rect class="s1" x="694.4" y="100" width="18.0" height="26" rx="2"/>
+<text x="431.1" y="118" font-size="13" text-anchor="middle" fill="#fff" font-weight="600">Lock:transactionid · 10.97 ms · 87% of the request</text>
+<text class="t2" x="150.0" y="142" font-size="11" text-anchor="middle">0 ms</text>
+<text class="t2" x="239.2" y="142" font-size="11" text-anchor="middle">2 ms</text>
+<text class="t2" x="328.5" y="142" font-size="11" text-anchor="middle">4 ms</text>
+<text class="t2" x="417.7" y="142" font-size="11" text-anchor="middle">6 ms</text>
+<text class="t2" x="506.9" y="142" font-size="11" text-anchor="middle">8 ms</text>
+<text class="t2" x="596.2" y="142" font-size="11" text-anchor="middle">10 ms</text>
+<text class="t2" x="685.4" y="142" font-size="11" text-anchor="middle">12 ms</text>
+<text class="t1" x="138" y="179" font-size="13" text-anchor="end" font-weight="600">which statement</text>
+<rect class="n" x="150.0" y="165" width="3.0" height="20" rx="2"/>
+<rect class="n" x="162.3" y="165" width="20.3" height="20" rx="2"/>
+<rect class="n" x="183.0" y="165" width="496.2" height="20" rx="2"/>
+<text class="t1" x="431.1" y="179" font-size="12" text-anchor="middle">UPDATE stock … WHERE item_id = $1</text>
+<rect class="n" x="688.5" y="165" width="25.0" height="20" rx="2"/>
+<text class="t2" x="150.0" y="199" font-size="11">BEGIN, then SELECT … FROM catalog (0.46 ms)</text>
+<text class="t2" x="701.0" y="199" font-size="11" text-anchor="middle">COMMIT</text>
+<text class="t1" x="138" y="244" font-size="13" text-anchor="end" font-weight="600">a 10 ms sampler</text>
+<line class="ann" x1="315.1" x2="315.1" y1="92" y2="246" stroke-width="1.5" stroke-dasharray="3 3"/>
+<circle class="s2" cx="315.1" cy="240" r="5"/>
+<text class="t2" x="325.1" y="244" font-size="12">at most one look at this request, and only the wait's name</text>
+<rect class="s5" x="40" y="298" width="12" height="12"/><text class="t1" x="58" y="309" font-size="11">client round trip, 0.5 ms in total</text>
+<rect class="s4" x="220" y="298" width="12" height="12"/><text class="t1" x="238" y="309" font-size="11">disk read, 0.27 ms</text>
+<rect class="s2" x="400" y="298" width="12" height="12"/><text class="t1" x="418" y="309" font-size="11">row lock, 10.97 ms</text>
+<rect class="s1" x="580" y="298" width="12" height="12"/><text class="t1" x="598" y="309" font-size="11">WAL write + fsync, 0.53 ms</text>
+<text class="t2" x="40" y="338" font-size="11">The dashboard ranked the commit path first and disk reads high: here 0.53 and 0.27 ms. The lock it ranked last: 10.97 ms.</text>
+</svg>

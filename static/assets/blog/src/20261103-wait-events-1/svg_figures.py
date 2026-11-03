@@ -7,7 +7,7 @@ Reads DATA_DIR/latency.json and DATA_DIR/r1b.json (from extract_data.py); writes
   OUT_DIR/20261103-wait-events-1-latency-tail.svg
   OUT_DIR/20261103-wait-events-1-profile-vs-tail.svg
   OUT_DIR/20261103-wait-events-1-one-slow-request.svg
-Standard library only. Colours follow the site palette and switch with prefers-color-scheme.
+Standard library only. Colours follow the site palette; each figure has a light file and a -dark file.
 """
 import json, math, sys, os
 
@@ -29,8 +29,17 @@ def svg(w, h, title, desc, body, extra=''):
             f'<title id="t">{title}</title>\n<desc id="d">{desc}</desc>\n{STYLE}{extra}\n<rect class="bg" width="{w}" height="{h}" rx="8"/>\n'
             + '\n'.join(body) + '\n</svg>')
 
+MEDIA = '@media (prefers-color-scheme:dark){'
+
 def write(name, content):
-    open(os.path.join(OUT, name), 'w').write(content); print('wrote', name)
+    # The post picks light or dark by the site theme (ThemedImage), and an <img> SVG
+    # cannot see that theme, so each figure is written twice with fixed colours.
+    i = content.index(MEDIA); j = content.index('</style>', i)
+    dark_rules = content[i + len(MEDIA):j].rstrip()[:-1]
+    light = content[:i] + content[j:]
+    dark = content[:i] + dark_rules + '\n' + content[j:]
+    for n, c in ((name, light), (name.replace('.svg', '-dark.svg'), dark)):
+        open(os.path.join(OUT, n), 'w').write(c); print('wrote', n)
 
 # ---------------- 1. sampler explainer, CSS-animated ----------------
 def fig_sampling():

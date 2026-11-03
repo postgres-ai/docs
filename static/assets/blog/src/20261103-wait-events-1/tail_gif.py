@@ -29,7 +29,7 @@ lat = json.load(open(DATA))
 RUNS = [('sh-R0c', BLUE, 'baseline', 'p99.9 = 11.0 ms\n972 requests over 5 ms'),
         ('sh-F1a', ORANGE, 'fix A: asynchronous commit', 'mean halves, p99.9 = 11.4 ms\nthe tail stays'),
         ('sh-F1b', YELLOW, 'fix B: 2 GB cache, no disk reads', 'reads gone, p99.9 = 11.3 ms\nthe tail stays'),
-        ('sh-F2',  AQUA, 'fix C: job in 5-row chunks', 'p99.9 = 5.8 ms, max 10.0 ms\nonly the tail moves')]
+        ('sh-F2',  VIOLET, 'fix C: job in 5-row chunks', 'p99.9 = 5.8 ms, max 10.0 ms\nonly the tail moves')]
 FPS, PER, HOLD = 12, 1.8, 4.5
 N = int(FPS * (PER * len(RUNS) + HOLD))
 
@@ -50,10 +50,13 @@ def frame(i):
         pts = [(x, y) for x, y in lat[run]['ccdf'] if y > 0]
         n = int(len(pts) * prog)
         if n > 1:
-            ax.plot([p[0] for p in pts[:n]], [p[1] for p in pts[:n]], color=col, lw=2.6, solid_capstyle='round')
+            # The baseline is drawn dashed and on top: fixes A and B lie on it above 5 ms
+            base = k == 0
+            ax.plot([p[0] for p in pts[:n]], [p[1] for p in pts[:n]], color=col, lw=3.0 if base else 2.6,
+                    ls=(0, (5, 3)) if base else '-', zorder=5 if base else 3, solid_capstyle='round')
         y = 9.4 - k * 2.3
         if prog > 0:
-            px.plot([0.0, 0.08], [y, y], color=col, lw=5, solid_capstyle='butt')
+            px.plot([0.0, 0.08], [y, y], color=col, lw=5 if k else 3.0, ls=(0, (3, 2)) if k == 0 else '-', solid_capstyle='butt')
             px.text(0.11, y, name, fontsize=11, fontweight='bold', va='center')
             if prog >= 1: px.text(0.12, y - 0.95, note, fontsize=10, color=T2, va='center', linespacing=1.4)
     if s >= PER * len(RUNS):

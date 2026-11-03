@@ -6,9 +6,6 @@
 .s1{fill:#2a78d6}.s2{fill:#eb6834}.s3{fill:#1baf7a}.s4{fill:#eda100}.s5{fill:#4a3aa7}.n{fill:#c7c6c1}.ann{stroke:#52514e}
 .l1{stroke:#2a78d6}.l2{stroke:#eb6834}.l3{stroke:#1baf7a}.l4{stroke:#eda100}
 text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
-@media (prefers-color-scheme:dark){.bg{fill:#1a1a19}.t1{fill:#fff}.t2{fill:#c3c2b7}.grid{stroke:#383835}.axis{stroke:#6f6e69}.gap{stroke:#1a1a19}.ann{stroke:#c3c2b7}
-.s1{fill:#3987e5}.s2{fill:#d95926}.s3{fill:#199e70}.s4{fill:#c98500}.s5{fill:#9085e9}.n{fill:#55544f}
-.l1{stroke:#3987e5}.l2{stroke:#d95926}.l3{stroke:#199e70}.l4{stroke:#c98500}}
 </style>
 <rect class="bg" width="760" height="330" rx="8"/>
 <text class="t1" x="40" y="28" font-size="15" font-weight="600">Where the time went vs. what made requests slow</text>
