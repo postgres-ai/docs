@@ -1,4 +1,5 @@
 const path = require('path')
+const { makeParseFrontMatter } = require('./plugins/description-fallback')
 
 // Site-wide constants (single source of truth)
 const { SITE_NAME, SITE_SLOGAN } = require('./src/config/site.json')
@@ -56,6 +57,9 @@ module.exports = {
   markdown: {
     format: 'mdx',
     mermaid: true,
+    // Docs without a frontmatter description get one built from their first
+    // paragraph (whole sentences, at most 160 chars) instead of its first line.
+    parseFrontMatter: makeParseFrontMatter({ docsDir: path.resolve(__dirname, 'docs') }),
   },
 
   customFields: {
@@ -652,6 +656,8 @@ module.exports = {
     // Google Tag Manager disabled
     // Meta Pixel (Facebook) disabled
     path.resolve(__dirname, 'plugins/route-change'),
+    // /llms.txt and /llms-full.txt for AI agents (https://llmstxt.org)
+    path.resolve(__dirname, 'plugins/llms-txt'),
   ],
 
   presets: [
@@ -712,6 +718,10 @@ module.exports = {
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
+        },
+        sitemap: {
+          // Tag listings, blog pagination and search only dilute the sitemap.
+          ignorePatterns: ['/blog/tags/**', '/docs/tags/**', '/blog/page/**', '/search'],
         },
         pages: {
           exclude: [

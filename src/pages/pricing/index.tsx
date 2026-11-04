@@ -421,7 +421,10 @@ const Pricing = () => {
   }, [])
 
   return (
-    <Layout title="Pricing – PostgresAI">
+    <Layout
+      title="Pricing – PostgresAI"
+      description="Choose the plan that fits your needs: start free, scale as you grow."
+    >
       <main className={styles.mainContainer}>
         {/* Header */}
         <section className={styles.headerSection}>

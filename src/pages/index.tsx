@@ -4,6 +4,7 @@ import Head from '@docusaurus/Head'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 
 import Home from '../components/Home'
+import JsonLd, { ORGANIZATION } from '../components/JsonLd'
 import { SITE_NAME } from '../config/site'
 
 // The homepage's own slogan and description (the site-wide tagline in site.json is unchanged)
@@ -49,6 +50,7 @@ function IndexPage() {
         <title>{`${SITE_NAME} – ${HOME_SLOGAN}`}</title>
         <meta property="og:title" content={`${SITE_NAME} – ${HOME_SLOGAN}`} />
       </Head>
+      <JsonLd data={ORGANIZATION} />
       <main>
         <Home signInUrl={signInUrl} testimonials={testimonials} />
       </main>

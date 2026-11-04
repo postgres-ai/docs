@@ -8,7 +8,10 @@ const TITLE = 'Case studies';
 
 function Showcase() {
   return (
-    <Layout title={TITLE}>
+    <Layout
+      title={TITLE}
+      description="Case studies from Gadget and GitLab on zero-downtime Postgres upgrades and SQL optimization with PostgresAI and DBLab."
+    >
       <main className="container margin-vert--lg">
         <div className="text--center margin-bottom--m">
           <h1>{TITLE}</h1>

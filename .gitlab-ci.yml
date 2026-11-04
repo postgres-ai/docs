@@ -92,6 +92,17 @@ docs_sql_snippets:
     - apk add --no-cache bash
     - bash .ci/test-sql-snippets.sh
 
+# Unit tests for build plugins and theme helpers (node:test files in tests/).
+docs_unit_tests:
+  stage: validate
+  image: oven/bun:1.3.13-debian@sha256:e95356cb8e1de62ad69ab3bd3584ba947013d27650a226804d2fc0af4e17dac2
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "master"
+  script:
+    - bun install --frozen-lockfile --ignore-scripts
+    - bun test tests/
+
 # Stages templates.
 .job_template: &build_and_push_definition
   stage: prepare_image

@@ -1,6 +1,6 @@
 ---
-title: postgres_ai - One tool to rule them all
-description: One observability tool to rule them all - comprehensive monitoring and AI-powered observability solution for any Postgres
+title: PostgresAI monitoring
+description: "AI-native PostgreSQL observability: monitoring, health checks, and root cause analysis, built for humans and AI agents."
 ---
 
 # postgres_ai – enterprise-grade Postgres observability tool

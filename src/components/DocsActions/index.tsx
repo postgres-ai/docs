@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from '@docusaurus/Head';
 import {useDoc} from '@docusaurus/plugin-content-docs/client';
 import ContentActions from '@site/src/components/ContentActions';
 
@@ -29,5 +30,12 @@ export default function DocsActions(): JSX.Element | null {
   // Web IDE, single file editor, clone & edit locally, etc.
   const viewUrl = editUrl.replace('/-/edit/', '/-/blob/');
 
-  return <ContentActions rawUrl={rawUrl} editUrl={viewUrl} />;
+  return (
+    <>
+      <Head>
+        <link rel="alternate" type="text/markdown" href={rawUrl} />
+      </Head>
+      <ContentActions rawUrl={rawUrl} editUrl={viewUrl} />
+    </>
+  );
 }

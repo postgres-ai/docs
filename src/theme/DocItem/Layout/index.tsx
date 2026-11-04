@@ -11,6 +11,7 @@ import DocItemTOCDesktop from '@theme/DocItem/TOC/Desktop';
 import DocItemContent from '@theme/DocItem/Content';
 import DocBreadcrumbs from '@theme/DocBreadcrumbs';
 import DocsActions from '@site/src/components/DocsActions';
+import JsonLd, {DOC_JSON_LD} from '@site/src/components/JsonLd';
 import type {Props} from '@theme/DocItem/Layout';
 
 import styles from './styles.module.css';
@@ -41,8 +42,11 @@ function useDocTOC() {
 
 export default function DocItemLayout({children}: Props): JSX.Element {
   const docTOC = useDocTOC();
+  const {metadata} = useDoc();
+  const jsonLd = DOC_JSON_LD[metadata.id];
   return (
     <div className="row">
+      {jsonLd && <JsonLd data={jsonLd} />}
       <div className={clsx('col', !docTOC.hidden && styles.docItemCol)}>
         <DocVersionBanner />
         <div className={styles.docItemContainer}>

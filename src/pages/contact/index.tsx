@@ -41,7 +41,10 @@ const ContactPage: React.FC = () => {
   }, [])
 
   return (
-    <Layout title="Contact PostgresAI">
+    <Layout
+      title="Contact PostgresAI"
+      description="Get in touch and let us know how we can help."
+    >
       <main className="banner text-center">
         <section
           className={classNames('container padding-vert--xl', styles.container)}
