@@ -11,15 +11,23 @@ tags: [Postgres insights, performance, maintenance, pg_restore, Postgres.FM]
 
 import { TldrTabs } from '@site/src/components/TldrTabs'
 
-Your `pg_dump` and `pg_restore` finished with exit code 0. Row counts match. The app connects. Now what?
+Your `pg_restore` finished without errors. The data is there. The indexes are in place. Is it time to switch traffic? A successful restore can still leave you with painfully slow queries—and the first read can do more than just read. What is missing from the migration runbook?
 
-Is the database ready for queries? Not yet. This post is about logical dump/restore with `pg_dump` and `pg_restore`. A physical restore, from `pg_basebackup`, WAL-G or pgBackRest, copies the data files as they are, so the statistics and the visibility map arrive with them. By default, a restore from a logical dump copies the rows but not the column statistics; on Postgres 18 and later, `pg_dump --statistics` can carry them. The visibility map is never copied: on the new server it starts empty. ANALYZE supplies missing planner statistics; `--statistics` can supply them from Postgres 18. VACUUM builds the visibility map. Postgres 19 reads can also set map bits, but that work then delays the first queries.
+Kirk Wolak and I explain why in [Postgres.FM episode 193, “Dump/restore done. Now what?”](https://postgres.fm/episodes/dump-restore-done-now-what) (transcript included).
+
+<iframe
+  width="100%"
+  style={{ aspectRatio: '16 / 9', border: 0 }}
+  src="https://www.youtube-nocookie.com/embed/0R1BJBzLCoc"
+  title="Postgres.FM episode 193: Dump/restore done. Now what?"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerPolicy="strict-origin-when-cross-origin"
+  allowFullScreen
+></iframe>
 
 <!--truncate-->
 
-Kirk Wolak and I talked about this in Postgres.FM episode 193, "Dump/restore done. Now what?". Episode page, with transcript: https://postgres.fm/episodes/dump-restore-done-now-what.
-
-<iframe width="100%" height="180" frameborder="no" scrolling="no" seamless="" src="https://share.transistor.fm/e/8b453f2d?color=FFFFFF&background=30343C"></iframe>
+This post is about logical dump/restore with `pg_dump` and `pg_restore`. A physical restore, from `pg_basebackup`, WAL-G or pgBackRest, copies the data files as they are, so the statistics and the visibility map arrive with them. By default, a restore from a logical dump copies the rows but not the column statistics; on Postgres 18 and later, `pg_dump --statistics` can carry them. The visibility map is never copied: on the new server it starts empty. ANALYZE supplies missing planner statistics. VACUUM builds the visibility map. Postgres 19 reads can also set map bits, but that work then delays the first queries.
 
 <TldrTabs
   founders={{
