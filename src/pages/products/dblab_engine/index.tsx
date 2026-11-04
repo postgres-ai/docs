@@ -2,6 +2,19 @@ import React from 'react'
 import Layout from '@theme/Layout'
 import styles from '@site/src/pages/index.module.css'
 import { RepoCard } from '@site/src/components/RepoCard'
+import JsonLd, { ORGANIZATION } from '@site/src/components/JsonLd'
+
+const DBLAB_JSON_LD = {
+  '@type': 'SoftwareApplication',
+  name: 'DBLab Engine',
+  url: 'https://postgres.ai/products/dblab_engine/',
+  description:
+    'Instant, thin database branching and cloning for any Postgres database, with fixed storage and compute costs for development, testing, and CI/CD.',
+  applicationCategory: 'DeveloperApplication',
+  license: 'https://www.apache.org/licenses/LICENSE-2.0',
+  sameAs: ['https://github.com/postgres-ai/database-lab-engine', 'https://gitlab.com/postgres-ai/database-lab'],
+  publisher: ORGANIZATION,
+}
 
 const DBLAB_START_URL =
   'https://console.postgres.ai/'
@@ -13,6 +26,7 @@ const DBLabEngine = () => {
       title="DBLab Engine: instant database branching for Postgres"
       description="DBLab Engine delivers instant, thin database branching and cloning for any Postgres database, with fixed storage and compute costs for development, testing, and CI/CD."
     >
+      <JsonLd data={DBLAB_JSON_LD} />
       <section className="banner position-relative text-center">
         <div className="container">
           <div className="row justify-content-center align-items-center">

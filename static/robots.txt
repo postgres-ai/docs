@@ -1,3 +1,11 @@
-User-Agent: *
-Disallow: /raw/docs/
+# Everyone is welcome, AI agents included: we want to be read and cited.
+# This covers search and retrieval bots (OAI-SearchBot, Claude-SearchBot,
+# PerplexityBot, Bingbot), user-triggered fetchers (ChatGPT-User, Claude-User,
+# Perplexity-User) and training crawlers (GPTBot, ClaudeBot, Google-Extended,
+# CCBot). Raw markdown twins of the docs live under /raw/docs/; the index for
+# agents is /llms.txt.
+
+User-agent: *
+Allow: /
+
 Sitemap: https://postgres.ai/sitemap.xml
