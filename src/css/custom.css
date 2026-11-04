@@ -153,10 +153,6 @@ html[data-theme="dark"] .DocSearch {
   padding-left: 0px;
 }
 
-.footer__links div:first-child {
-  flex: auto;
-}
-
 .clear::after {
   content: "";
   clear: both;
@@ -750,11 +746,6 @@ table.docs-home td {
   .six-sec h2, .multi-sec p, .btn  {
     font-size: 16px;
     line-height: initial;
-  }
-
-  .footer__links  {
-    display: grid;
-    grid-template-columns: 1fr;
   }
 
   .multi-sec h3, .six-sec h3 {
@@ -1614,4 +1605,62 @@ html[data-theme='dark'] .footer-aicpa-seal-dark {
 }
 [data-theme='dark'] #__blog-post-container table tbody tr {
   border-bottom-color: var(--ifm-color-emphasis-300);
+}
+
+/* Keep trust signals in the first column rather than a full-width row. */
+.footer .footer__links {
+  display: grid;
+  grid-template-columns: minmax(260px, 1.25fr) .85fr 1fr 1fr 1fr;
+  gap: 1.5rem;
+  margin-inline: 0;
+}
+
+.footer .footer__col {
+  min-width: 0;
+  width: auto;
+  max-width: none;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.footer .footer__title {
+  font-size: 13px;
+  margin-bottom: .75rem;
+}
+
+.footer .footer__link-item {
+  display: inline-block;
+  font-size: 13px;
+  line-height: 1.6;
+  padding-block: .2rem;
+}
+
+.footer .footer__link-item:focus-visible {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 3px;
+}
+
+.footer-status-iframe {
+  max-width: 100%;
+}
+
+@media (max-width: 1199px) {
+  .footer .footer__links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+  }
+  .footer .footer__col:first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 479px) {
+  .footer .footer__links {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+  .footer .footer__link-item {
+    min-height: 32px;
+    padding-block: .4rem;
+  }
 }

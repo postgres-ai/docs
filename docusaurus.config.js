@@ -268,9 +268,9 @@ module.exports = {
           items: [
             {
               html: `
-                <iframe 
+                <iframe title="PostgresAI system status"
                 src=https://postgresai.instatus.com/embed-status/2c18fe48/${COLOR_MODE}-sm 
-                width="230" 
+                width="260"
                 height="61" 
                 frameBorder="0" 
                 scrolling="no" 
@@ -332,7 +332,7 @@ module.exports = {
           title: 'DOCS',
           items: [
             {
-              label: 'Getting started',
+              label: 'PostgresAI docs',
               to: '/docs/',
             },
             {
@@ -390,7 +390,7 @@ module.exports = {
           ],
         },
         {
-          title: 'LINKS',
+          title: 'RESOURCES',
           items: [
             {
               label: 'Questions & answers',
