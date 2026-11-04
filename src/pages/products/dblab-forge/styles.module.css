@@ -1,0 +1,415 @@
+.page {
+  --forge-border: var(--ifm-color-emphasis-300);
+  --forge-surface: var(--ifm-color-emphasis-100);
+  --forge-muted: var(--ifm-color-emphasis-700);
+  --forge-accent: #c24600;
+
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 20px 64px;
+  overflow-wrap: break-word;
+}
+
+html[data-theme='dark'] .page {
+  --forge-muted: var(--ifm-color-emphasis-400);
+  --forge-accent: #ff8a4c;
+}
+
+.hero {
+  padding: 64px 0 48px;
+  border-bottom: 1px solid var(--forge-border);
+}
+
+.title {
+  margin: 0 0 10px;
+  font-size: 52px;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.tagline {
+  margin: 0 0 20px;
+  font-size: 26px;
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--forge-accent);
+}
+
+.lead {
+  max-width: 760px;
+  margin: 0 0 16px;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.availability {
+  margin: 0 0 28px;
+  font-size: 15px;
+  color: var(--forge-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.primaryButton,
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 22px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.primaryButton {
+  background: #c24600;
+  border: 1px solid #c24600;
+  color: #fff;
+}
+
+.primaryButton:hover {
+  background: #a33b00;
+  border-color: #a33b00;
+  color: #fff;
+  text-decoration: none;
+}
+
+.secondaryButton {
+  border: 1px solid var(--forge-border);
+  color: var(--ifm-font-color-base);
+}
+
+.secondaryButton:hover {
+  border-color: var(--ifm-color-emphasis-600);
+  color: var(--ifm-font-color-base);
+  text-decoration: none;
+}
+
+.section {
+  padding: 48px 0 0;
+  scroll-margin-top: 80px;
+}
+
+.sectionTitle {
+  margin: 0 0 12px;
+  font-size: 26px;
+  line-height: 1.25;
+}
+
+.sectionLead {
+  max-width: 760px;
+  margin: 0 0 24px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--forge-muted);
+}
+
+.method {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.methodItem {
+  grid-column: span 2;
+  margin: 0;
+  padding: 20px;
+  border: 1px solid var(--forge-border);
+  border-radius: 8px;
+}
+
+.methodItem:nth-child(n + 4) {
+  grid-column: span 3;
+}
+
+.methodTitle {
+  margin: 0 0 8px;
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.methodText {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.study {
+  margin: 0 0 20px;
+  padding: 24px;
+  border: 1px solid var(--forge-border);
+  border-radius: 8px;
+}
+
+.studyTitle {
+  margin: 0 0 10px;
+  font-size: 19px;
+  line-height: 1.35;
+}
+
+.studySummary,
+.studySetup {
+  margin: 0 0 16px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.studySetup {
+  color: var(--forge-muted);
+}
+
+.chart {
+  display: block;
+  margin: 0 0 16px;
+}
+
+.chart:focus-visible {
+  outline: 2px solid var(--forge-accent);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+.chart img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.chartDark {
+  display: none;
+}
+
+html[data-theme='dark'] .chartLight {
+  display: none;
+}
+
+html[data-theme='dark'] .chartDark {
+  display: block;
+}
+
+.body {
+  max-width: 760px;
+}
+
+.body p {
+  margin: 0 0 14px;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.body p:last-child {
+  margin-bottom: 0;
+}
+
+.studyLinks {
+  margin: 0;
+  font-size: 14px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0 0 16px;
+}
+
+.stat {
+  padding: 16px;
+  border-radius: 6px;
+  background: var(--forge-surface);
+}
+
+.statValue {
+  font-size: 26px;
+  line-height: 1.2;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--forge-accent);
+}
+
+.statLabel {
+  margin-top: 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.statNote {
+  margin-top: 4px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--forge-muted);
+}
+
+.videos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.video {
+  margin: 0;
+}
+
+.videoFrame {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: 8px;
+  background: var(--forge-surface);
+}
+
+.videoCaption {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.questions {
+  margin: 0 0 20px;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--forge-border);
+  border-radius: 8px;
+}
+
+.question {
+  margin: 0;
+  padding: 14px 20px;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.question + .question {
+  border-top: 1px solid var(--forge-border);
+}
+
+.pastGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 24px;
+  margin: 0 0 20px;
+}
+
+.pastGroup {
+  margin: 16px 0 10px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.caveat {
+  max-width: 760px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--forge-muted);
+}
+
+.cta {
+  margin-top: 56px;
+  padding: 32px;
+  border: 1px solid var(--forge-border);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.cta .actions {
+  justify-content: center;
+}
+
+.ctaTitle {
+  margin: 0 0 12px;
+  font-size: 24px;
+  line-height: 1.3;
+}
+
+.ctaText {
+  max-width: 620px;
+  margin: 0 auto 24px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+@media (max-width: 996px) {
+  .method {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .methodItem,
+  .methodItem:nth-child(n + 4) {
+    grid-column: auto;
+  }
+
+  .methodItem:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 720px) {
+  .hero {
+    padding: 40px 0 36px;
+  }
+
+  .title {
+    font-size: 38px;
+  }
+
+  .tagline {
+    font-size: 20px;
+  }
+
+  .pastGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .lead {
+    font-size: 16px;
+  }
+
+  .sectionTitle {
+    font-size: 22px;
+  }
+
+  .method,
+  .videos {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stat:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+
+  .stat {
+    padding: 12px;
+  }
+
+  .statValue {
+    font-size: 20px;
+  }
+
+  .study,
+  .cta {
+    padding: 20px;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    flex: 1 1 100%;
+  }
+}

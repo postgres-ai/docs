@@ -174,6 +174,10 @@ module.exports = {
               to: '/products/dblab_engine'
             },
             {
+              label: 'DBLab Forge',
+              to: '/products/dblab-forge'
+            },
+            {
               label: 'Zero-downtime upgrades',
               to: '/products/postgres-ai-zdu'
             },
@@ -355,6 +359,10 @@ module.exports = {
             {
               label: 'DBLab Engine',
               to: '/docs/database-lab',
+            },
+            {
+              label: 'DBLab Forge',
+              to: '/products/dblab-forge',
             },
             {
               label: 'Zero-downtime upgrades',
