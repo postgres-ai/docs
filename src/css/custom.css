@@ -1607,6 +1607,206 @@ html[data-theme='dark'] .footer-aicpa-seal-dark {
   border-bottom-color: var(--ifm-color-emphasis-300);
 }
 
+/* Blog blocks: one look for every box in a post (TL;DR, figures, tables,
+   details, notes, headline numbers). A clearly visible border all round and a
+   small orange label in capitals; no one-sided accent bars.
+   Components read these tokens: TldrTabs, BlogFigure, StatRow. */
+:root {
+  --pgai-block-border: #c9c6bf;
+  --pgai-block-bg: #fcfcfb;
+  --pgai-block-head-bg: #f3f2ef;
+  --pgai-caption-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+[data-theme='dark'] {
+  --pgai-block-border: #45474d;
+  --pgai-block-bg: #202124;
+  --pgai-block-head-bg: #2a2b2f;
+}
+
+#__blog-post-container table {
+  border-color: var(--pgai-block-border);
+}
+[data-theme='dark'] #__blog-post-container table {
+  border-color: var(--pgai-block-border);
+}
+
+/* <details> blocks (method, appendices); the corrections aside keeps its own plain style */
+#__blog-post-container details.alert:not(.article-corrections details) {
+  --ifm-alert-background-color: var(--pgai-block-bg);
+  --ifm-alert-background-color-highlight: var(--pgai-block-head-bg);
+  --ifm-alert-foreground-color: var(--ifm-font-color-base);
+  --ifm-alert-border-color: var(--pgai-block-border);
+  --ifm-alert-border-left-width: 1px;
+  --docusaurus-details-decoration-color: var(--ifm-color-primary);
+  border: 1px solid var(--pgai-block-border);
+  border-radius: 8px;
+  box-shadow: none;
+}
+#__blog-post-container details.alert:not(.article-corrections details) > summary {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ifm-color-primary);
+}
+
+/* Footnote references: a small numbered chip; src/clientModules/footnotePopover.js opens the note */
+#__blog-post-container sup:has(> a[data-footnote-ref]) {
+  line-height: 0;
+}
+#__blog-post-container a[data-footnote-ref] {
+  display: inline-block;
+  min-width: 1.35em;
+  margin: 0 0.1em;
+  padding: 0.15em 0.35em;
+  border-radius: 999px;
+  background: rgba(255, 97, 17, 0.12);
+  color: var(--ifm-color-primary-darkest);
+  font-family: var(--pgai-caption-font);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: 0.35em;
+}
+[data-theme='dark'] #__blog-post-container a[data-footnote-ref] {
+  background: rgba(255, 115, 44, 0.18);
+  color: var(--ifm-color-primary-lightest);
+}
+#__blog-post-container a[data-footnote-ref]:hover,
+#__blog-post-container a[data-footnote-ref][aria-expanded='true'] {
+  background: var(--ifm-color-primary);
+  color: #fff;
+}
+
+/* The notes at the end of a post */
+#__blog-post-container section.footnotes {
+  margin: 2rem 0;
+  padding: 0.85rem 1.1rem 0.5rem;
+  border: 1px solid var(--pgai-block-border);
+  border-radius: 8px;
+  background: var(--pgai-block-bg);
+  color: var(--ifm-color-emphasis-800);
+  font-family: var(--pgai-caption-font);
+  font-size: 14px;
+}
+#__blog-post-container section.footnotes h2 {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0 0 0.5rem;
+  overflow: visible;
+  clip: auto;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ifm-color-primary);
+}
+#__blog-post-container section.footnotes ol {
+  padding-left: 1.25rem;
+  list-style: decimal;
+}
+#__blog-post-container section.footnotes li {
+  margin-bottom: 0.4rem;
+}
+#__blog-post-container section.footnotes li p {
+  margin: 0;
+}
+/* Notes are sans-serif, like captions; the global "body p, body li" rule forces monospace with !important */
+body #__blog-post-container section.footnotes li,
+body #__blog-post-container section.footnotes li p,
+body .pgai-fn-pop p,
+body #__blog-post-container section.footnotes li a,
+body .pgai-fn-pop a {
+  font-family: var(--pgai-caption-font) !important;
+  font-size: 14px;
+}
+#__blog-post-container section.footnotes li:target {
+  background: rgba(255, 97, 17, 0.08);
+  border-radius: 4px;
+}
+
+/* Footnote popover (wide screens) and bottom sheet (phones) */
+.pgai-fn-pop {
+  position: absolute;
+  z-index: 900;
+  width: min(26rem, calc(100vw - 16px));
+  border: 1px solid var(--pgai-block-border);
+  border-radius: 8px;
+  background: var(--pgai-block-bg);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  color: var(--ifm-font-color-base);
+  font-family: var(--pgai-caption-font);
+  font-size: 14px;
+  line-height: 1.5;
+}
+[data-theme='dark'] .pgai-fn-pop {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+}
+.pgai-fn-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.45rem 0.5rem 0 0.9rem;
+}
+.pgai-fn-label {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ifm-color-primary);
+}
+.pgai-fn-close {
+  width: 1.9rem;
+  height: 1.9rem;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ifm-color-emphasis-700);
+  font-size: 1.3rem;
+  line-height: 1.9rem;
+  cursor: pointer;
+}
+.pgai-fn-close:hover {
+  background: var(--pgai-block-head-bg);
+}
+.pgai-fn-body {
+  padding: 0.2rem 0.9rem 0.8rem;
+}
+.pgai-fn-body p {
+  margin: 0;
+}
+.pgai-fn-body code {
+  font-size: 0.9em;
+}
+@media (max-width: 600px) {
+  .pgai-fn-pop {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    max-height: 60vh;
+    overflow: auto;
+    border-radius: 12px 12px 0 0;
+    padding-bottom: env(safe-area-inset-bottom);
+    font-size: 15px;
+    animation: pgai-fn-up 0.18s ease-out;
+  }
+}
+@keyframes pgai-fn-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pgai-fn-pop { animation: none; }
+}
+
 /* Keep trust signals in the first column rather than a full-width row. */
 .footer .footer__links {
   display: grid;

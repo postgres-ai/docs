@@ -121,15 +121,15 @@ html[data-theme='dark'] .page {
 }
 
 .methodItem {
-  grid-column: span 2;
+  grid-column: span 3;
   margin: 0;
   padding: 20px;
   border: 1px solid var(--forge-border);
   border-radius: 8px;
 }
 
-.methodItem:nth-child(n + 4) {
-  grid-column: span 3;
+.methodItem:last-child {
+  grid-column: 1 / -1;
 }
 
 .methodTitle {
@@ -256,6 +256,7 @@ html[data-theme='dark'] .chartDark {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
+  max-width: 760px;
 }
 
 .video {
@@ -281,19 +282,13 @@ html[data-theme='dark'] .chartDark {
   margin: 0 0 20px;
   padding: 0;
   list-style: none;
-  border: 1px solid var(--forge-border);
-  border-radius: 8px;
 }
 
 .question {
   margin: 0;
-  padding: 14px 20px;
+  padding: 4px 0;
   font-size: 14px;
   line-height: 1.55;
-}
-
-.question + .question {
-  border-top: 1px solid var(--forge-border);
 }
 
 .pastGrid {
@@ -347,8 +342,7 @@ html[data-theme='dark'] .chartDark {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .methodItem,
-  .methodItem:nth-child(n + 4) {
+  .methodItem {
     grid-column: auto;
   }
 
@@ -412,4 +406,9 @@ html[data-theme='dark'] .chartDark {
   .secondaryButton {
     flex: 1 1 100%;
   }
+}
+
+/* One call to action per page: hide the site-wide announcement bar here. */
+:global(html:has(main[data-hide-announcement]) .theme-announcement-bar) {
+  display: none;
 }

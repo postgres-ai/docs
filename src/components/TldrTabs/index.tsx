@@ -34,6 +34,8 @@ type TldrTabsProps = {
   ctaText?: string;
   /** Call-to-action button link */
   ctaLink?: string;
+  /** Tab selected on load; Founders when omitted */
+  defaultTab?: 'Founders' | 'Developers' | 'DBAs' | 'Managers';
 }
 
 const tabs = ['Founders', 'Developers', 'DBAs', 'Managers', 'Ask AI'] as const;
@@ -63,8 +65,8 @@ const visibleTabs = (aiContext?: string): readonly TabType[] =>
  * ```
  */
 export const TldrTabs = (props: TldrTabsProps) => {
-  const { founders, developers, dbas, managers, aiContext, ctaText, ctaLink } = props;
-  const [activeTab, setActiveTab] = useState<TabType>('Founders');
+  const { founders, developers, dbas, managers, aiContext, ctaText, ctaLink, defaultTab } = props;
+  const [activeTab, setActiveTab] = useState<TabType>(defaultTab ?? 'Founders');
 
   const getContent = (tab: TabType): TldrContent | null => {
     switch (tab) {

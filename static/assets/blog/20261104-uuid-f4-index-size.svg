@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 220" width="760" height="220" role="img" aria-labelledby="t d">
+<title id="t">Primary key index at 100M rows: size depends only on the key</title>
+<desc id="d">Run 1, 100M rows: UUIDv4 primary key 3,996 MiB, 41.8 bytes per row, leaves 68% full on average; UUIDv7 3,012 MiB, 31.5 bytes per row, 90% full; int8 2,146 MiB, 22.5 bytes per row, 90% full.</desc>
+<style>
+  .bg{fill:#fcfcfb}.t1{fill:#0b0b0b}.t2{fill:#52514e}.grid{stroke:#e4e3df}.axis{stroke:#9a9993}.mark{stroke:#8a8983}
+  .f-v4{fill:#c4471f}.s-v4{stroke:#c4471f}
+  .f-v7{fill:#2a78d6}.s-v7{stroke:#2a78d6}
+  .f-int8{fill:#a3439f}.s-int8{stroke:#a3439f}
+  text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+</style>
+<rect class="bg" width="760" height="220" rx="8"/>
+<line class="grid" x1="130.0" x2="130.0" y1="28.0" y2="174.0" stroke-width="1"/>
+<text class="t2" x="130.0" y="190.0" font-size="11" text-anchor="middle">0</text>
+<line class="grid" x1="237.5" x2="237.5" y1="28.0" y2="174.0" stroke-width="1"/>
+<text class="t2" x="237.5" y="190.0" font-size="11" text-anchor="middle">1,000</text>
+<line class="grid" x1="345.0" x2="345.0" y1="28.0" y2="174.0" stroke-width="1"/>
+<text class="t2" x="345.0" y="190.0" font-size="11" text-anchor="middle">2,000</text>
+<line class="grid" x1="452.5" x2="452.5" y1="28.0" y2="174.0" stroke-width="1"/>
+<text class="t2" x="452.5" y="190.0" font-size="11" text-anchor="middle">3,000</text>
+<line class="grid" x1="560.0" x2="560.0" y1="28.0" y2="174.0" stroke-width="1"/>
+<text class="t2" x="560.0" y="190.0" font-size="11" text-anchor="middle">4,000</text>
+<text class="t2" x="560.0" y="206.0" font-size="11" text-anchor="end">MiB</text>
+<line class="axis" x1="130.0" x2="130.0" y1="28.0" y2="174.0" stroke-width="1"/>
+<text class="t1" x="118.0" y="52.0" font-size="12" text-anchor="end">UUIDv4</text>
+<rect class="f-v4" x="130.0" y="34.0" width="429.6" height="28.0" rx="2"/>
+<text class="t1" x="567.6" y="47.0" font-size="12">3,996 MiB, 41.8 B/row</text>
+<text class="t2" x="567.6" y="61.0" font-size="11">leaves 68% full</text>
+<text class="t1" x="118.0" y="104.0" font-size="12" text-anchor="end">UUIDv7</text>
+<rect class="f-v7" x="130.0" y="86.0" width="323.8" height="28.0" rx="2"/>
+<text class="t1" x="461.8" y="99.0" font-size="12">3,012 MiB, 31.5 B/row</text>
+<text class="t2" x="461.8" y="113.0" font-size="11">leaves 90% full</text>
+<text class="t1" x="118.0" y="156.0" font-size="12" text-anchor="end">int8</text>
+<rect class="f-int8" x="130.0" y="138.0" width="230.7" height="28.0" rx="2"/>
+<text class="t1" x="368.7" y="151.0" font-size="12">2,146 MiB, 22.5 B/row</text>
+<text class="t2" x="368.7" y="165.0" font-size="11">leaves 90% full</text>
+</svg>

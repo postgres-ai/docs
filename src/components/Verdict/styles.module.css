@@ -1,0 +1,26 @@
+.verdict {
+  display: inline-block;
+  min-width: 6.5rem;
+  margin-right: 0.35rem;
+  padding: 0.05rem 0.5rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  vertical-align: 0.1em;
+}
+
+/* Text colors, checked for contrast on both blog surfaces */
+.held { color: #2f7d32; background: rgba(47, 125, 50, 0.08); }
+.falsified { color: #b3261e; background: rgba(179, 38, 30, 0.07); }
+.notmet { color: #8a5a00; background: rgba(138, 90, 0, 0.08); }
+.nottested { color: var(--ifm-color-emphasis-700); background: transparent; }
+
+[data-theme='dark'] .held { color: #7fd07f; background: rgba(127, 208, 127, 0.1); }
+[data-theme='dark'] .falsified { color: #ff8a80; background: rgba(255, 138, 128, 0.1); }
+[data-theme='dark'] .notmet { color: #f0c36a; background: rgba(240, 195, 106, 0.1); }

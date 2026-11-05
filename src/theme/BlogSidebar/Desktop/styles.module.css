@@ -15,7 +15,7 @@
 }
 
 .sidebarItem {
-  margin-top: 0.7rem;
+  margin-top: 0.55rem;
 }
 
 .sidebarItemLink {
@@ -29,6 +29,73 @@
 
 .sidebarItemLinkActive {
   color: var(--ifm-color-primary) !important;
+}
+
+/* Section labels: the same small orange capitals as the blog blocks */
+.sectionLabel {
+  margin: 1.75rem 0 0.25rem;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ifm-color-primary);
+}
+
+.sectionLabel:first-child {
+  margin-top: 0;
+}
+
+.latestList {
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.latestItem {
+  margin-top: 0.7rem;
+}
+
+.latestLink {
+  display: block;
+  color: var(--ifm-font-color-base);
+}
+
+.latestLink:hover {
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+}
+
+.latestDate {
+  display: block;
+  margin-top: 0.1rem;
+  font-size: 0.72rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.card {
+  margin-top: 0.6rem;
+  margin-right: 1rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--pgai-block-border);
+  border-radius: 8px;
+  background: var(--pgai-block-bg);
+  font-size: 0.8rem;
+}
+
+.cardTitle {
+  display: block;
+  font-weight: 700;
+  color: var(--ifm-font-color-base);
+}
+
+.cardText {
+  margin: 0.3rem 0 0.5rem;
+  line-height: 1.4;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.cardLinks {
+  display: flex;
+  gap: 0.9rem;
 }
 
 @media (max-width: 996px) {

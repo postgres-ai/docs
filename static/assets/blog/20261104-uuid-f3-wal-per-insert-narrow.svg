@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 610" width="380" height="610" role="img" aria-labelledby="t d">
+<title id="t">WAL per insert: UUIDv4 pays full-page images after every checkpoint</title>
+<desc id="d">Left: run 1, each key on its own server, rows 80M to 100M, WAL bytes per insert: UUIDv4 1,324 (145 full-page images per 1,000 inserts), UUIDv7 744 (40), int8 745 (42). Right: WAL bytes per insert in the first 30 s and the last 60 s of a 300 s checkpoint cycle, mean over cycles 10 to 19 (UUIDv4) and 10 to 16 (UUIDv7, int8): UUIDv4 3,871 and 497 B; UUIDv7 835 and 428 B; int8 1,507 and 566 B.</desc>
+<style>
+  .bg{fill:#fcfcfb}.t1{fill:#0b0b0b}.t2{fill:#52514e}.grid{stroke:#e4e3df}.axis{stroke:#9a9993}.mark{stroke:#8a8983}
+  .f-v4{fill:#c4471f}.s-v4{stroke:#c4471f}
+  .f-v7{fill:#2a78d6}.s-v7{stroke:#2a78d6}
+  .f-int8{fill:#a3439f}.s-int8{stroke:#a3439f}
+  text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+</style>
+<rect class="bg" width="380" height="610" rx="8"/>
+<text class="t1" x="16.0" y="34.0" font-size="13" font-weight="600">WAL per insert, rows 80M to 100M</text>
+<line class="grid" x1="52.0" x2="330.0" y1="230.0" y2="230.0" stroke-width="1"/>
+<text class="t2" x="46.0" y="234.0" font-size="12" text-anchor="end">0</text>
+<line class="grid" x1="52.0" x2="330.0" y1="176.7" y2="176.7" stroke-width="1"/>
+<text class="t2" x="46.0" y="180.7" font-size="12" text-anchor="end">500</text>
+<line class="grid" x1="52.0" x2="330.0" y1="123.3" y2="123.3" stroke-width="1"/>
+<text class="t2" x="46.0" y="127.3" font-size="12" text-anchor="end">1,000</text>
+<line class="grid" x1="52.0" x2="330.0" y1="70.0" y2="70.0" stroke-width="1"/>
+<text class="t2" x="46.0" y="74.0" font-size="12" text-anchor="end">1,500</text>
+<rect class="f-v4" x="70.5" y="88.8" width="55.6" height="141.2" rx="2"/>
+<text class="t1" x="98.3" y="80.8" font-size="13" text-anchor="middle">1,324 B</text>
+<text class="t1" x="98.3" y="246.0" font-size="13" text-anchor="middle">UUIDv4</text>
+<text class="t2" x="98.3" y="262.0" font-size="11" text-anchor="middle">145 FPI/1k</text>
+<rect class="f-v7" x="163.2" y="150.6" width="55.6" height="79.4" rx="2"/>
+<text class="t1" x="191.0" y="142.6" font-size="13" text-anchor="middle">744 B</text>
+<text class="t1" x="191.0" y="246.0" font-size="13" text-anchor="middle">UUIDv7</text>
+<text class="t2" x="191.0" y="262.0" font-size="11" text-anchor="middle">40 FPI/1k</text>
+<rect class="f-int8" x="255.9" y="150.5" width="55.6" height="79.5" rx="2"/>
+<text class="t1" x="283.7" y="142.5" font-size="13" text-anchor="middle">745 B</text>
+<text class="t1" x="283.7" y="246.0" font-size="13" text-anchor="middle">int8</text>
+<text class="t2" x="283.7" y="262.0" font-size="11" text-anchor="middle">42 FPI/1k</text>
+<line class="axis" x1="52.0" x2="330.0" y1="230.0" y2="230.0" stroke-width="1"/>
+<text class="t1" x="16.0" y="344.0" font-size="13" font-weight="600">One 300 s cycle: first 30 s vs last 60 s</text>
+<line class="grid" x1="52.0" x2="330.0" y1="540.0" y2="540.0" stroke-width="1"/>
+<text class="t2" x="46.0" y="544.0" font-size="12" text-anchor="end">0</text>
+<line class="grid" x1="52.0" x2="330.0" y1="500.0" y2="500.0" stroke-width="1"/>
+<text class="t2" x="46.0" y="504.0" font-size="12" text-anchor="end">1,000</text>
+<line class="grid" x1="52.0" x2="330.0" y1="460.0" y2="460.0" stroke-width="1"/>
+<text class="t2" x="46.0" y="464.0" font-size="12" text-anchor="end">2,000</text>
+<line class="grid" x1="52.0" x2="330.0" y1="420.0" y2="420.0" stroke-width="1"/>
+<text class="t2" x="46.0" y="424.0" font-size="12" text-anchor="end">3,000</text>
+<line class="grid" x1="52.0" x2="330.0" y1="380.0" y2="380.0" stroke-width="1"/>
+<text class="t2" x="46.0" y="384.0" font-size="12" text-anchor="end">4,000</text>
+<rect class="f-v4" x="65.0" y="385.2" width="31.5" height="154.8" rx="2"/>
+<rect class="f-v4" x="99.5" y="520.1" width="31.5" height="19.9" rx="2" fill-opacity=".45"/>
+<text class="t1" x="80.7" y="379.2" font-size="12" text-anchor="middle">3,871</text>
+<text class="t1" x="115.2" y="514.1" font-size="12" text-anchor="middle">497</text>
+<text class="t1" x="98.0" y="556.0" font-size="13" text-anchor="middle">UUIDv4</text>
+<text class="t2" x="98.0" y="572.0" font-size="11" text-anchor="middle">first | last</text>
+<rect class="f-v7" x="157.6" y="506.6" width="31.5" height="33.4" rx="2"/>
+<rect class="f-v7" x="192.1" y="522.9" width="31.5" height="17.1" rx="2" fill-opacity=".45"/>
+<text class="t1" x="173.4" y="500.6" font-size="12" text-anchor="middle">835</text>
+<text class="t1" x="207.9" y="516.9" font-size="12" text-anchor="middle">428</text>
+<text class="t1" x="190.6" y="556.0" font-size="13" text-anchor="middle">UUIDv7</text>
+<text class="t2" x="190.6" y="572.0" font-size="11" text-anchor="middle">first | last</text>
+<rect class="f-int8" x="250.3" y="479.7" width="31.5" height="60.3" rx="2"/>
+<rect class="f-int8" x="284.8" y="517.4" width="31.5" height="22.6" rx="2" fill-opacity=".45"/>
+<text class="t1" x="266.1" y="473.7" font-size="12" text-anchor="middle">1,507</text>
+<text class="t1" x="300.6" y="511.4" font-size="12" text-anchor="middle">566</text>
+<text class="t1" x="283.3" y="556.0" font-size="13" text-anchor="middle">int8</text>
+<text class="t2" x="283.3" y="572.0" font-size="11" text-anchor="middle">first | last</text>
+<line class="axis" x1="52.0" x2="330.0" y1="540.0" y2="540.0" stroke-width="1"/>
+</svg>

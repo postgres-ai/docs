@@ -33,41 +33,41 @@
 <text class="t1" x="356" y="98" font-size="14" font-weight="600" text-anchor="end">32.6 s</text>
 <text class="t2" x="24" y="114" font-size="11">Seq Scan, Hash Join</text>
 <rect class="s1" x="24.0" y="122" width="309.40" height="20"/>
-<circle class="dot" cx="331.7" cy="126.5" r="3"/>
-<circle class="dot" cx="335.1" cy="126.5" r="3"/>
-<circle class="dot" cx="331.7" cy="126.5" r="3"/>
-<circle class="dot" cx="333.3" cy="132.0" r="3"/>
-<circle class="dot" cx="331.5" cy="132.0" r="3"/>
-<circle class="dot" cx="333.9" cy="132.0" r="3"/>
-<circle class="dot" cx="338.9" cy="137.5" r="3"/>
-<circle class="dot" cx="336.6" cy="137.5" r="3"/>
-<circle class="dot" cx="331.8" cy="137.5" r="3"/>
+<circle class="dot" cx="331.7" cy="147.0" r="2.5"/>
+<circle class="dot" cx="335.1" cy="147.0" r="2.5"/>
+<circle class="dot" cx="331.7" cy="147.0" r="2.5"/>
+<circle class="dot" cx="333.3" cy="147.0" r="2.5"/>
+<circle class="dot" cx="331.5" cy="147.0" r="2.5"/>
+<circle class="dot" cx="333.9" cy="147.0" r="2.5"/>
+<circle class="dot" cx="338.9" cy="147.0" r="2.5"/>
+<circle class="dot" cx="336.6" cy="147.0" r="2.5"/>
+<circle class="dot" cx="331.8" cy="147.0" r="2.5"/>
 <text class="t1" x="24" y="168" font-size="13">+ ANALYZE</text>
 <text class="t1" x="356" y="168" font-size="14" font-weight="600" text-anchor="end">6.1 s</text>
 <text class="t2" x="24" y="184" font-size="11">Index Only Scan, 24,983 heap fetches</text>
 <rect class="s1" x="24.0" y="192" width="57.91" height="20"/>
-<circle class="dot" cx="83.8" cy="196.5" r="3"/>
-<circle class="dot" cx="81.9" cy="196.5" r="3"/>
-<circle class="dot" cx="82.3" cy="196.5" r="3"/>
-<circle class="dot" cx="80.4" cy="202.0" r="3"/>
-<circle class="dot" cx="73.0" cy="202.0" r="3"/>
-<circle class="dot" cx="76.3" cy="202.0" r="3"/>
-<circle class="dot" cx="81.9" cy="207.5" r="3"/>
-<circle class="dot" cx="77.6" cy="207.5" r="3"/>
-<circle class="dot" cx="83.2" cy="207.5" r="3"/>
+<circle class="dot" cx="83.8" cy="217.0" r="2.5"/>
+<circle class="dot" cx="81.9" cy="217.0" r="2.5"/>
+<circle class="dot" cx="82.3" cy="217.0" r="2.5"/>
+<circle class="dot" cx="80.4" cy="217.0" r="2.5"/>
+<circle class="dot" cx="73.0" cy="217.0" r="2.5"/>
+<circle class="dot" cx="76.3" cy="217.0" r="2.5"/>
+<circle class="dot" cx="81.9" cy="217.0" r="2.5"/>
+<circle class="dot" cx="77.6" cy="217.0" r="2.5"/>
+<circle class="dot" cx="83.2" cy="217.0" r="2.5"/>
 <text class="t1" x="24" y="238" font-size="13">+ VACUUM ANALYZE</text>
 <text class="t1" x="356" y="238" font-size="14" font-weight="600" text-anchor="end">23 ms</text>
 <text class="t2" x="24" y="254" font-size="11">Index Only Scan, 0 heap fetches</text>
 <rect class="s1" x="24.0" y="262" width="0.22" height="20"/>
-<circle class="dot" cx="24.3" cy="266.5" r="3"/>
-<circle class="dot" cx="24.3" cy="266.5" r="3"/>
-<circle class="dot" cx="24.3" cy="266.5" r="3"/>
-<circle class="dot" cx="24.3" cy="272.0" r="3"/>
-<circle class="dot" cx="24.3" cy="272.0" r="3"/>
-<circle class="dot" cx="24.3" cy="272.0" r="3"/>
-<circle class="dot" cx="24.3" cy="277.5" r="3"/>
-<circle class="dot" cx="24.3" cy="277.5" r="3"/>
-<circle class="dot" cx="24.3" cy="277.5" r="3"/>
+<circle class="dot" cx="24.3" cy="287.0" r="2.5"/>
+<circle class="dot" cx="24.3" cy="287.0" r="2.5"/>
+<circle class="dot" cx="24.3" cy="287.0" r="2.5"/>
+<circle class="dot" cx="24.3" cy="287.0" r="2.5"/>
+<circle class="dot" cx="24.3" cy="287.0" r="2.5"/>
+<circle class="dot" cx="24.3" cy="287.0" r="2.5"/>
+<circle class="dot" cx="24.3" cy="287.0" r="2.5"/>
+<circle class="dot" cx="24.3" cy="287.0" r="2.5"/>
+<circle class="dot" cx="24.3" cy="287.0" r="2.5"/>
 <text class="t1" x="34.0" y="277" font-size="12" font-weight="600">about 1,400× faster</text>
 <text class="t2" x="24" y="320" font-size="11">Execution time, cold cache, seconds (linear, from 0)</text>
 <text class="t2" x="24" y="340" font-size="11">250 M-row table, 31 GiB heap, 16 GiB RAM, OS cache</text>

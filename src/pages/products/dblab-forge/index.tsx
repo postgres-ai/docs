@@ -6,7 +6,8 @@ import styles from './styles.module.css'
 
 const CONTACT_URL = 'mailto:sales@postgres.ai?subject=DBLab%20Forge'
 
-const UUID_POST = '/blog/20261104-uuidv4-vs-uuidv7'
+const UUID_POST = '/blog/20261105-uuidv4-vs-uuidv7'
+const UUID_BRIEF = 'https://console.postgres.ai/shared/brief/9fffe2da-00c1-470b-a79d-a210ae2306bc'
 const UUID_EPISODE = 'https://postgres.fm/episodes/uuidv4-vs-uuidv7'
 const DUMP_POST = '/blog/20261028-dump-restore-now-what'
 const DUMP_EPISODE = 'https://postgres.fm/episodes/dump-restore-done-now-what'
@@ -34,6 +35,7 @@ type Study = {
   post: string
   episode: string
   episodeLabel: string
+  brief?: string
 }
 
 const METHOD = [
@@ -47,15 +49,26 @@ const METHOD = [
   },
   {
     title: 'Runs reported per server',
-    text: 'Seven runs in the UUID study, one run per cell; three restores and nine cold runs per step in the dump/restore study. Results are reported per server, so the spread between servers stays visible.',
-  },
-  {
-    title: 'Review before trust',
-    text: 'Results are reviewed before they are trusted. In the UUID study, sixteen independent reviews, mostly by AI models, were posted on the study record with responses.',
+    text: 'Results are reported per server, so the spread between servers stays visible instead of disappearing into an average. The UUID study had seven runs, one run per cell; the dump/restore study, three restores and nine cold runs per step.',
   },
   {
     title: 'Full data and a brief',
     text: 'In the UUID study, counters were sampled every 10 seconds: WAL position, pg_stat_io, pg_stat_wal, buffer residency, wait events. The brief gives every number with its source table, the scored predictions, the corrections, and the prior work.',
+  },
+  {
+    title: 'Review before trust',
+    text: (
+      <>
+        Before a ratio is published, the review step compares the servers it
+        came from. In the UUID study, the first run showed int8 inserting 12%
+        faster than UUIDv7; the review found that the int8 server had a faster
+        disk, and on the same server the two keys insert at the same rate (
+        <Link to={UUID_POST}>how we caught it</Link>). That study also had
+        sixteen independent reviews, eight in a hacker role and eight in a DBRE
+        role, run on different AI models and posted on the study record with
+        our responses.
+      </>
+    ),
   },
 ]
 
@@ -90,6 +103,7 @@ const STUDIES: Study[] = [
     },
     setup:
       'Runs took one day; the whole study, with design and reviews, about three days.',
+    brief: UUID_BRIEF,
     post: UUID_POST,
     episode: UUID_EPISODE,
     episodeLabel: 'Postgres.FM episode 194',
@@ -212,7 +226,7 @@ const DBLabForge = () => {
       title="DBLab Forge: Postgres experiments you can check"
       description="DBLab Forge runs controlled Postgres experiments on real cloud servers: same-server comparisons, predictions with falsifiers written before the first row, full data, and a brief. Closed beta, available to PostgresAI customers."
     >
-      <main className={styles.page}>
+      <main className={styles.page} data-hide-announcement>
         <section className={styles.hero}>
           <h1 className={styles.title}>DBLab Forge</h1>
           <p className={styles.tagline}>Postgres experiments you can check</p>
@@ -222,8 +236,19 @@ const DBLabForge = () => {
             written before the first row when a study makes them, the full
             data, and a brief with every number traced to its source.
           </p>
+          <p className={styles.lead}>
+            For teams with a Postgres decision that is expensive to get wrong:
+            UUIDv4 or UUIDv7 before a table reaches billions of rows, which
+            connection pooler before a traffic jump, what to run after
+            pg_restore before switching traffic.
+          </p>
           <p className={styles.availability}>
-            Closed beta, available to PostgresAI customers.
+            Closed beta, available to PostgresAI customers. The UUID study
+            took about three days, one of them running experiments.{' '}
+            <a href={UUID_BRIEF} target="_blank" rel="noopener noreferrer">
+              Its brief is public
+            </a>
+            .
           </p>
           <div className={styles.actions}>
             <a className={styles.primaryButton} href={CONTACT_URL}>
@@ -250,27 +275,6 @@ const DBLabForge = () => {
               </li>
             ))}
           </ol>
-        </section>
-
-        <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>A wrong result, caught by review</h2>
-          <div className={styles.body}>
-            <p>
-              In the UUIDv4 vs UUIDv7 study below, the first run put each key
-              on its own server, and int8 inserted about 12% faster than
-              UUIDv7. A plausible result: the
-              key is half the size. But the review step compared the servers
-              first. The WAL fsync latency measured during the run was 313 µs
-              on the int8 server and 347 µs on the UUIDv7 server: the int8
-              server most likely had a faster disk.
-            </p>
-            <p>
-              The next run put UUIDv7 on the int8 server: over the same 71M
-              rows it inserted 23,458 rows/s, against 23,131 for int8 in the
-              first run. The keys insert at about the same rate.{' '}
-              <Link to={UUID_POST}>Details in the post</Link>.
-            </p>
-          </div>
         </section>
 
         <section id="examples" className={styles.section}>
@@ -304,6 +308,14 @@ const DBLabForge = () => {
               <p className={styles.studySetup}>{study.setup}</p>
               <p className={styles.studyLinks}>
                 <Link to={study.post}>Read the post</Link>
+                {study.brief && (
+                  <>
+                    <span aria-hidden="true"> · </span>
+                    <a href={study.brief} target="_blank" rel="noopener noreferrer">
+                      Open the brief
+                    </a>
+                  </>
+                )}
                 <span aria-hidden="true"> · </span>
                 <a href={study.episode} target="_blank" rel="noopener noreferrer">
                   {study.episodeLabel}
@@ -343,9 +355,8 @@ const DBLabForge = () => {
         </section>
 
         <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>Who it is for</h2>
+          <h2 className={styles.sectionTitle}>Questions we have answered before</h2>
           <p className={styles.sectionLead}>
-            Teams facing a Postgres decision that is expensive to get wrong.
             Forge is the third generation of the experiment harness PostgresAI
             has built since 2018. The first two generations ran experiments in
             our <Link to="/consulting">consulting</Link> work, many of them
@@ -353,7 +364,8 @@ const DBLabForge = () => {
             <a href="https://gitlab.com/postgres-ai/postgresql-consulting/tests-and-benchmarks">
               tests-and-benchmarks
             </a>
-            . A few:
+            . The two studies above ran on Forge; the questions below come
+            from the earlier generations. A few:
           </p>
           <div className={styles.pastGrid}>
             {PAST.map((g) => (

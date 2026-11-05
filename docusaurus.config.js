@@ -444,7 +444,7 @@ module.exports = {
     },
   },
 
-  clientModules: [],
+  clientModules: [require.resolve('./src/clientModules/footnotePopover.js')],
   
   plugins: [
     // Fix cytoscape module resolution for mermaid
@@ -477,6 +477,8 @@ module.exports = {
         redirects: [
           // Blog post URL improvements
           { from: '/blog/20251105-postgres-marathon-2-012', to: '/blog/20251105-postgres-marathon-2-012-ultra-fast-replica-creation-pgbackrest' },
+          // UUID post moved from Nov 4 to Nov 5 (the Forge page links the old URL)
+          { from: '/blog/20261104-uuidv4-vs-uuidv7', to: '/blog/20261105-uuidv4-vs-uuidv7' },
 
           // PostgresAI how-tos redirects (moved from monitoring and platform)
           { from: '/docs/monitoring/how-to-install', to: '/docs/postgresai-howtos/install-postgres-ai-monitoring-from-postgresai-console' },
@@ -674,14 +676,24 @@ module.exports = {
         blog: {
           showReadingTime: true,
           // Count prose only: fenced code, collapsed <details> blocks, JSX components
-          // (TldrTabs and its aiContext) and image alt text are not read linearly.
+          // (TldrTabs and its aiContext) and image alt text (markdown and alt="...") are not read linearly.
+          // Back matter is not read either: everything from the first Method,
+          // References, Acknowledgments, Sources or Appendix heading on, and
+          // footnote definitions ([^id]: ...), which hold provenance.
           readingTime: ({content, defaultReadingTime}) =>
             defaultReadingTime({
               content: content
+                .split(/^#{2,3} (?:Method|References|Acknowledg|Sources|Appendix)/m)[0]
+                .replace(/^\[\^[^\]]+\]:.*$/gm, '')
                 .replace(/```[\s\S]*?```/g, '')
                 .replace(/<details>[\s\S]*?<\/details>/g, '')
                 .replace(/^<[A-Z][A-Za-z]*[\s\S]*?\/>$/gm, '')
-                .replace(/!\[[^\]]*\]\([^)]*\)/g, ''),
+                .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
+                .replace(/\balt="[^"]*"/g, '')
+                // Link targets and HTML tags are not read: keep link text only.
+                .replace(/\]\([^)]*\)/g, ']')
+                .replace(/https?:\/\/\S+/g, '')
+                .replace(/<\/?[A-Za-z][^>]*>/g, ''),
             }),
           editUrl: 'https://gitlab.com/postgres-ai/docs/-/edit/master/',
           path: 'blog',
@@ -689,7 +701,7 @@ module.exports = {
           routeBasePath: 'blog',
           postsPerPage: 10,
           blogSidebarTitle: 'Categories',
-          blogSidebarCount: 1, // Disable posts list in sidebar
+          blogSidebarCount: 5, // Recent posts for the "Latest" list in src/theme/BlogSidebar/Desktop
           blogTagsListComponent: '@theme/BlogTagsListPage',
           blogTagsPostsComponent: '@theme/BlogTagsPostsPage',
           feedOptions: {

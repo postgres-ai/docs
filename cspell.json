@@ -61,7 +61,27 @@
     "HARDDISK",
     "createcluster",
     "setseed",
-    "ctlcluster"
+    "ctlcluster",
+    "uuidv",
+    "autoplay",
+    "pgbench",
+    "bgwriter",
+    "maxpages",
+    "fillfactor",
+    "Vondra",
+    "Aasma",
+    "credativ",
+    "virtio",
+    "Zipfian",
+    "waldump",
+    "InnoDB",
+    "initdb",
+    "OLTP",
+    "zstd",
+    "maxwritten",
+    "Semian",
+    "timestamptz",
+    "nbtsplitloc"
   ],
   "ignoreRegExpList": [
     "/```[\\s\\S]*?```/g"

@@ -1,0 +1,195 @@
+/* Figure card: uses the shared blog block tokens from src/css/custom.css (--pgai-block-*) */
+.figure {
+  margin: 2rem 0;
+  border: 1px solid var(--pgai-block-border);
+  border-radius: 8px;
+  background: var(--pgai-block-bg);
+  overflow: hidden;
+}
+
+.media {
+  position: relative;
+}
+
+.media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Covers the whole chart, so a click or tap anywhere on it opens the zoom */
+.zoom {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.zoomHint {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--pgai-block-border);
+  background: var(--pgai-block-bg);
+  color: var(--ifm-color-emphasis-700);
+  font-size: 15px;
+  line-height: 1.6rem;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.zoom:hover .zoomHint,
+.zoom:focus-visible .zoomHint {
+  opacity: 1;
+}
+
+.picture { display: block; }
+.dark { display: none; }
+
+[data-theme='dark'] .light { display: none; }
+[data-theme='dark'] .dark { display: block; }
+
+.caption {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+  padding: 0.75rem 1rem 0.85rem;
+  border-top: 1px solid var(--pgai-block-border);
+  font-family: var(--pgai-caption-font);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.label {
+  flex: none;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ifm-color-primary);
+}
+
+.captionText p {
+  margin: 0;
+}
+
+.captionText p + p {
+  margin-top: 0.35rem;
+}
+
+.captionText strong {
+  color: var(--ifm-font-color-base);
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  background: rgba(10, 10, 12, 0.96);
+  cursor: zoom-out;
+}
+
+.close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 1;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 1.6rem;
+  line-height: 2.5rem;
+  cursor: pointer;
+}
+
+.lightboxScroll {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3.5rem 1rem 1rem;
+}
+
+.lightboxScroll img {
+  max-width: min(100%, 1400px);
+  max-height: 100%;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  cursor: auto;
+}
+
+.lightboxCaption {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+  align-items: baseline;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0.75rem 1rem 1.25rem;
+  font-family: var(--pgai-caption-font);
+  font-size: 14px;
+  line-height: 1.5;
+  color: #d6d5d0;
+  cursor: auto;
+}
+
+.lightboxCaption strong {
+  color: #fff;
+}
+
+.lightboxCaption .captionText {
+  flex: 1 1 20rem;
+}
+
+.raw {
+  color: var(--ifm-color-primary-light);
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  .figure {
+    margin: 1.5rem 0;
+  }
+
+  .caption {
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.65rem 0.85rem 0.75rem;
+    font-size: 13.5px;
+  }
+
+  /* On a phone, the wide drawing is shown at a readable size; pan to see all of it */
+  .lightboxScroll {
+    justify-content: flex-start;
+  }
+
+  .lightboxScroll img {
+    width: 860px;
+    max-width: none;
+    max-height: none;
+  }
+}
+
+/* Blog body text is monospace, forced by a global "body p, body li" rule with
+   !important in src/css/custom.css; captions are sans-serif so they never read as body text */
+body .captionText,
+body .captionText p {
+  font-family: var(--pgai-caption-font) !important;
+  font-size: inherit;
+  line-height: inherit;
+}
