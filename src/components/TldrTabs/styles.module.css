@@ -1,12 +1,10 @@
+/* Shared blog block look: tokens in src/css/custom.css (--pgai-block-*) */
 .container {
-  border: 1px solid var(--ifm-color-emphasis-300);
+  border: 1px solid var(--pgai-block-border);
   border-radius: 8px;
   margin: 1.5rem 0;
   overflow: hidden;
-}
-
-[data-theme='dark'] .container {
-  border-color: var(--ifm-color-emphasis-400);
+  background: var(--pgai-block-bg);
 }
 
 .header {
@@ -14,19 +12,16 @@
   align-items: center;
   gap: 1rem;
   padding: 0.75rem 1rem;
-  background: var(--ifm-color-emphasis-100);
-  border-bottom: 1px solid var(--ifm-color-emphasis-300);
-}
-
-[data-theme='dark'] .header {
-  background: var(--ifm-color-emphasis-200);
-  border-bottom-color: var(--ifm-color-emphasis-400);
+  background: var(--pgai-block-head-bg);
+  border-bottom: 1px solid var(--pgai-block-border);
 }
 
 .tldrLabel {
   font-weight: 700;
-  font-size: 14px;
-  color: var(--ifm-font-color-base);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ifm-color-primary);
   white-space: nowrap;
 }
 
@@ -98,12 +93,8 @@
   position: relative;
   margin-top: 1.5rem;
   padding: 1rem 1rem 0.75rem;
-  border: 1px solid var(--ifm-color-emphasis-300);
+  border: 1px solid var(--pgai-block-border);
   border-radius: 4px;
-}
-
-[data-theme='dark'] .analogy {
-  border-color: var(--ifm-color-emphasis-400);
 }
 
 /* Label sits on the top border, like a fieldset legend */
@@ -114,7 +105,7 @@
   transform: translateY(-50%);
   margin: 0;
   padding: 0 0.375rem;
-  background: var(--ifm-background-surface-color);
+  background: var(--pgai-block-bg);
   font-size: 12px;
   font-weight: 600;
   line-height: 1;
@@ -123,10 +114,6 @@
   color: var(--ifm-color-primary);
 }
 
-/* Light theme sets --ifm-background-color to transparent */
-[data-theme='dark'] .analogyLabel {
-  background: var(--ifm-background-color);
-}
 
 .analogyText {
   margin: 0;
@@ -136,14 +123,9 @@
 
 .cta {
   padding: 0.75rem 1rem;
-  background: var(--ifm-color-emphasis-100);
-  border-top: 1px solid var(--ifm-color-emphasis-300);
+  background: var(--pgai-block-head-bg);
+  border-top: 1px solid var(--pgai-block-border);
   text-align: center;
-}
-
-[data-theme='dark'] .cta {
-  background: var(--ifm-color-emphasis-200);
-  border-top-color: var(--ifm-color-emphasis-400);
 }
 
 .cta a {

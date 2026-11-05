@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 290" width="380" height="290" role="img" aria-labelledby="t d">
+<title id="t">What sits in shared_buffers at 100M rows</title>
+<desc id="d">Run 1, 1 GiB shared_buffers, 100M rows. UUIDv4: 767 MiB of the primary key index and 50 MiB of the table. UUIDv7: 89 MiB of the index and 475 MiB of the table. int8: 69 MiB of the index and 485 MiB of the table.</desc>
+<style>
+  .bg{fill:#fcfcfb}.t1{fill:#0b0b0b}.t2{fill:#52514e}.grid{stroke:#e4e3df}.axis{stroke:#9a9993}.mark{stroke:#8a8983}
+  .f-v4{fill:#c4471f}.s-v4{stroke:#c4471f}
+  .f-v7{fill:#2a78d6}.s-v7{stroke:#2a78d6}
+  .f-int8{fill:#a3439f}.s-int8{stroke:#a3439f}
+  text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+</style>
+<rect class="bg" width="380" height="290" rx="8"/>
+<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#fcfcfb"/><line x1="0" y1="0" x2="0" y2="6" stroke="#8a8983" stroke-width="2"/></pattern></defs>
+<line class="grid" x1="16.0" x2="16.0" y1="24.0" y2="215.0" stroke-width="1"/>
+<text class="t2" x="16.0" y="231.0" font-size="12" text-anchor="middle">0</text>
+<line class="grid" x1="97.9" x2="97.9" y1="24.0" y2="215.0" stroke-width="1"/>
+<text class="t2" x="97.9" y="231.0" font-size="12" text-anchor="middle">200</text>
+<line class="grid" x1="179.8" x2="179.8" y1="24.0" y2="215.0" stroke-width="1"/>
+<text class="t2" x="179.8" y="231.0" font-size="12" text-anchor="middle">400</text>
+<line class="grid" x1="261.6" x2="261.6" y1="24.0" y2="215.0" stroke-width="1"/>
+<text class="t2" x="261.6" y="231.0" font-size="12" text-anchor="middle">600</text>
+<line class="grid" x1="343.5" x2="343.5" y1="24.0" y2="215.0" stroke-width="1"/>
+<text class="t2" x="343.5" y="231.0" font-size="12" text-anchor="end">800</text>
+<text class="t2" x="364.0" y="247.0" font-size="12" text-anchor="end">MiB</text>
+<line class="axis" x1="16.0" x2="16.0" y1="24.0" y2="215.0" stroke-width="1"/>
+<text class="t1" x="16.0" y="43.0" font-size="13" font-weight="600">UUIDv4</text>
+<text class="t2" x="364.0" y="43.0" font-size="12" text-anchor="end">index 767, table 50 MiB</text>
+<rect class="f-v4" x="16.0" y="51.0" width="314.0" height="26.0" rx="0"/>
+<rect class="" x="332.0" y="51.0" width="18.5" height="26.0" rx="0" fill="url(#hatch)"/>
+<text class="t1" x="16.0" y="108.0" font-size="13" font-weight="600">UUIDv7</text>
+<text class="t2" x="364.0" y="108.0" font-size="12" text-anchor="end">index 89, table 475 MiB</text>
+<rect class="f-v7" x="16.0" y="116.0" width="36.4" height="26.0" rx="0"/>
+<rect class="" x="54.4" y="116.0" width="192.5" height="26.0" rx="0" fill="url(#hatch)"/>
+<text class="t1" x="16.0" y="173.0" font-size="13" font-weight="600">int8</text>
+<text class="t2" x="364.0" y="173.0" font-size="12" text-anchor="end">index 69, table 485 MiB</text>
+<rect class="f-int8" x="16.0" y="181.0" width="28.2" height="26.0" rx="0"/>
+<rect class="" x="46.2" y="181.0" width="196.6" height="26.0" rx="0" fill="url(#hatch)"/>
+<rect class="f-v4" x="16.0" y="257.0" width="14.0" height="12.0" rx="0"/>
+<text class="t2" x="36.0" y="267.0" font-size="12">primary key index</text>
+<rect class="" x="166.0" y="257.0" width="14.0" height="12.0" rx="0" fill="url(#hatch)"/>
+<text class="t2" x="186.0" y="267.0" font-size="12">table (heap)</text>
+</svg>

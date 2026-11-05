@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 508" width="760" height="508" role="img" aria-labelledby="t d">
+<title id="t">UUIDv4 insert rate as a share of the reference key on the same server, past the crossing</title>
+<desc id="d">Same-server ratios of UUIDv4 to the reference key from the crossing to the end of the run. Run 3 x1 0.59; run 4 p1 0.76, p2 0.67, p3 0.61, x1 0.61; run 6 small tier p1 0.69, p3 0.64, x1 0.62 against int8; run 7 p1 0.68, p2 0.67; run 6 mid tier p2 0.89.</desc>
+<style>
+  .bg{fill:#202124}.t1{fill:#ececea}.t2{fill:#a8a7a1}.grid{stroke:#34363b}.axis{stroke:#6d6c68}.mark{stroke:#85847e}
+  .f-v4{fill:#e5683d}.s-v4{stroke:#e5683d}
+  .f-v7{fill:#3987e5}.s-v7{stroke:#3987e5}
+  .f-int8{fill:#b85ab4}.s-int8{stroke:#b85ab4}
+  text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+</style>
+<rect class="bg" width="760" height="508" rx="8"/>
+<line class="grid" x1="200.0" x2="200.0" y1="44.0" y2="448.0" stroke-width="1"/>
+<text class="t2" x="200.0" y="464.0" font-size="11" text-anchor="middle">0</text>
+<line class="grid" x1="310.0" x2="310.0" y1="44.0" y2="448.0" stroke-width="1"/>
+<text class="t2" x="310.0" y="464.0" font-size="11" text-anchor="middle">0.25</text>
+<line class="grid" x1="420.0" x2="420.0" y1="44.0" y2="448.0" stroke-width="1"/>
+<text class="t2" x="420.0" y="464.0" font-size="11" text-anchor="middle">0.5</text>
+<line class="grid" x1="530.0" x2="530.0" y1="44.0" y2="448.0" stroke-width="1"/>
+<text class="t2" x="530.0" y="464.0" font-size="11" text-anchor="middle">0.75</text>
+<line class="grid" x1="640.0" x2="640.0" y1="44.0" y2="448.0" stroke-width="1"/>
+<text class="t2" x="640.0" y="464.0" font-size="11" text-anchor="middle">1</text>
+<line class="mark" x1="420.0" x2="420.0" y1="44.0" y2="448.0" stroke-width="1" stroke-dasharray="2 3"/>
+<text class="t2" x="424.0" y="36.0" font-size="10">predicted ≤ 0.5</text>
+<line class="axis" x1="640.0" x2="640.0" y1="44.0" y2="448.0" stroke-width="1" stroke-dasharray="4 3"/>
+<text class="t2" x="640.0" y="36.0" font-size="10">same speed</text>
+<line class="axis" x1="200.0" x2="200.0" y1="44.0" y2="448.0" stroke-width="1"/>
+<rect class="bg" x="0.0" y="46.0" width="760.0" height="22.0" rx="0"/>
+<text class="t1" x="40.0" y="62.0" font-size="12" font-weight="600">Run 3, tiny tier, 75M rows</text>
+<text class="t2" x="190.0" y="86.0" font-size="11" text-anchor="end">x1</text>
+<rect class="f-v4" x="200.0" y="76.0" width="259.2" height="15.0" rx="2"/>
+<text class="t1" x="465.2" y="88.0" font-size="11">0.59</text>
+<rect class="bg" x="0.0" y="98.0" width="760.0" height="22.0" rx="0"/>
+<text class="t1" x="40.0" y="114.0" font-size="12" font-weight="600">Run 4, tiny tier, 50M rows</text>
+<text class="t2" x="190.0" y="138.0" font-size="11" text-anchor="end">p1</text>
+<rect class="f-v4" x="200.0" y="128.0" width="332.6" height="15.0" rx="2"/>
+<text class="t1" x="538.6" y="140.0" font-size="11">0.76</text>
+<text class="t2" x="190.0" y="162.0" font-size="11" text-anchor="end">p2</text>
+<rect class="f-v4" x="200.0" y="152.0" width="296.6" height="15.0" rx="2"/>
+<text class="t1" x="502.6" y="164.0" font-size="11">0.67</text>
+<text class="t2" x="190.0" y="186.0" font-size="11" text-anchor="end">p3</text>
+<rect class="f-v4" x="200.0" y="176.0" width="269.3" height="15.0" rx="2"/>
+<text class="t1" x="475.3" y="188.0" font-size="11">0.61</text>
+<text class="t2" x="190.0" y="210.0" font-size="11" text-anchor="end">x1</text>
+<rect class="f-v4" x="200.0" y="200.0" width="268.8" height="15.0" rx="2"/>
+<text class="t1" x="474.8" y="212.0" font-size="11">0.61</text>
+<rect class="bg" x="0.0" y="222.0" width="760.0" height="22.0" rx="0"/>
+<text class="t1" x="40.0" y="238.0" font-size="12" font-weight="600">Run 6, small tier, 100M rows</text>
+<text class="t2" x="190.0" y="262.0" font-size="11" text-anchor="end">p1</text>
+<rect class="f-v4" x="200.0" y="252.0" width="302.3" height="15.0" rx="2"/>
+<text class="t1" x="508.3" y="264.0" font-size="11">0.69</text>
+<text class="t2" x="190.0" y="286.0" font-size="11" text-anchor="end">p3</text>
+<rect class="f-v4" x="200.0" y="276.0" width="283.4" height="15.0" rx="2"/>
+<text class="t1" x="489.4" y="288.0" font-size="11">0.64</text>
+<text class="t2" x="190.0" y="310.0" font-size="11" text-anchor="end">x1, vs int8</text>
+<rect class="f-v4" x="200.0" y="300.0" width="271.5" height="15.0" rx="2"/>
+<text class="t1" x="477.5" y="312.0" font-size="11">0.62</text>
+<rect class="bg" x="0.0" y="322.0" width="760.0" height="22.0" rx="0"/>
+<text class="t1" x="40.0" y="338.0" font-size="12" font-weight="600">Run 7, tiny tier, 50M rows</text>
+<text class="t2" x="190.0" y="362.0" font-size="11" text-anchor="end">p1</text>
+<rect class="f-v4" x="200.0" y="352.0" width="299.6" height="15.0" rx="2"/>
+<text class="t1" x="505.6" y="364.0" font-size="11">0.68</text>
+<text class="t2" x="190.0" y="386.0" font-size="11" text-anchor="end">p2</text>
+<rect class="f-v4" x="200.0" y="376.0" width="296.1" height="15.0" rx="2"/>
+<text class="t1" x="502.1" y="388.0" font-size="11">0.67</text>
+<rect class="bg" x="0.0" y="398.0" width="760.0" height="22.0" rx="0"/>
+<text class="t1" x="40.0" y="414.0" font-size="12" font-weight="600">Run 6, mid tier, 100M rows</text>
+<text class="t2" x="190.0" y="438.0" font-size="11" text-anchor="end">p2</text>
+<rect class="f-v4" x="200.0" y="428.0" width="390.7" height="15.0" rx="2"/>
+<text class="t1" x="596.7" y="440.0" font-size="11">0.89</text>
+</svg>
