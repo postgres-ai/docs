@@ -32,8 +32,11 @@ image: docker:20.10.12
 # Allow auto-canceling running pipelines when a newer commit is pushed
 default:
   interruptible: true
-  # The Kubernetes executor starts dind as a sidecar and does not wait for it,
-  # so wait for the daemon before the first docker call (#270).
+  # Docs CI runs on the Hetzner docker-executor runners only.
+  tags:
+    - hetzner-runner
+  # The dind service can come up after the job starts, so wait for the daemon
+  # before the first docker call (#270).
   #
   # INVARIANT: this wait runs for any job whose image ships a docker client
   # (the global default image is docker:20.10.12) AND that has DOCKER_HOST set
@@ -59,11 +62,12 @@ variables:
   # Export inline cache metadata for the ephemeral Docker-in-Docker runners.
   DOCKER_BUILDKIT: "1"
   GIT_SUBMODULE_STRATEGY: recursive # Ensure .cursor submodule is initialized
-  # Docker-in-Docker over TCP for every job that declares a dind service. On the
-  # group's Kubernetes runner the service shares the job pod, so it is reachable
-  # on localhost; the SaaS "docker" alias does not resolve there (#270).
-  DOCKER_HOST: tcp://localhost:2375
-  DOCKER_TLS_CERTDIR: ""
+  # Docker-in-Docker over TLS for every job that declares a dind service. On the
+  # docker executor the service is reachable through its "docker" alias.
+  DOCKER_HOST: tcp://docker:2376
+  DOCKER_TLS_CERTDIR: "/certs"
+  DOCKER_TLS_VERIFY: "1"
+  DOCKER_CERT_PATH: "/certs/client"
   ENV: "local" # Should be overwritten by environment template.
   NAMESPACE: "default" # Should be overwritten by environment template.
   REGISTRY: "gcr.io/postgres-ai/docs"
@@ -112,9 +116,7 @@ docs_unit_tests:
     - source "./deploy/configs/${ENV}.sh"
 
     # Login to Google Container Registry.
-    - echo $GCP_SERVICE_ACCOUNT | base64 -d > ./key.json
-    - docker login -u _json_key --password-stdin https://gcr.io < ./key.json
-    - rm -f ./key.json  # Clean up credentials
+    - echo "$GCP_SERVICE_ACCOUNT" | base64 -d | docker login -u _json_key --password-stdin https://gcr.io
 
     # BuildKit imports remote inline cache metadata itself. Do not eagerly
     # download/unpack the previous site's layers before deciding cache hits.
