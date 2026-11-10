@@ -87,15 +87,18 @@ pgai joe plan "select * from users where email = 'alice@example.com'" \
 
 ```
 command 3521 · ok
+console: https://console.postgres.ai/acme/projects/main-db/sessions/812/commands/40417
 plan:
 Seq Scan on users  (cost=0.00..1877.10 rows=1 width=142)
   Filter: ((email)::text = 'alice@example.com'::text)
 ⚑ client-side: Seq Scan on users — no index serves this predicate; consider adding one.
 ```
 
-The `⚑` line is a lightweight client-side hint derived from the structured
-plan; the full result (plan, statistics, recommendations) is also saved to the
-Joe history in the Console.
+The `console:` line is the result's permalink in the Console (see
+[Console links](#console-links)). The `⚑` line is a lightweight client-side
+hint derived from the structured plan; the full result (plan, statistics,
+recommendations) is also saved to the Console's SQL optimization history
+(**Query optimization → History**).
 
 ## Get the real execution plan
 
@@ -109,6 +112,7 @@ pgai joe explain "select * from users where email = 'alice@example.com'" \
 
 ```
 command 3522 · ok
+console: https://console.postgres.ai/acme/projects/main-db/sessions/812/commands/40418
 plan:
 Seq Scan on users  (cost=0.00..1877.10 rows=1 width=142)
   Filter: ((email)::text = 'alice@example.com'::text)
@@ -183,7 +187,8 @@ provisioned — the CLI exits successfully with a resume handle:
 started 3523 · pending · budget 25s reached — resume:  pgai joe result 3523
 ```
 
-Fetch the result later by command id:
+Fetch the result later by command id. Once the result exists, this also
+prints its `console:` link:
 
 ```bash
 pgai joe result 3523
@@ -200,6 +205,57 @@ pgai joe plan "select 1" --project main-db --json | jq '.plan_json'
 
 Exit codes are script-friendly: `0` for a successful result (and for a
 budget-expired one-shot — resume by id), `1` for a failed command or any error.
+
+In scripts, parse `--json` and not the human output, because the human format
+can get new lines over time, such as `console:`.
+
+## Console links
+
+Each result that Joe stores gets a permanent link to its page in the Console,
+which shows the plan, statistics and recommendations; only members of the
+organization can open it.
+
+The CLI prints the link under the `command N · ok` line, and with `--json`
+the result has the three fields below. The fields come from the platform, so
+every CLI version that has `--json` returns them.
+
+| Field | Meaning |
+|---|---|
+| `console_url` | The link: `<console>/<org alias>/projects/<project alias>/sessions/<session id>/commands/<console command id>`. The session part is `sessions/manual` for a command run outside a session. |
+| `console_command_id` | The command's id in the Console (a string). It is **not** the CLI's `command_id`, which is the id you pass to `pgai joe result`. |
+| `session_id` | The Console session of the result (a string), or `null`. |
+
+```bash
+pgai joe explain "select * from users where id = 1" --project main-db --json \
+  | jq -r '.console_url // empty'
+```
+
+Use `console_url` as given and do not build the link yourself, because it
+needs the Console's session and command ids, which differ from the CLI's
+`command_id`.
+
+Some replies have no link:
+
+- **No stored result.** A pending or budget-expired command, `help`, and a
+  command that Joe rejected have no link, and the three fields are absent.
+  When the command was pending or budget-expired, `pgai joe result <id>`
+  returns the link after the result is ready.
+- **Failed command.** There is a link only if Joe stored a result, and the
+  CLI prints it on stderr after the error. A plain SQL error such as
+  `relation "x" does not exist` usually has none.
+- **`console_url` is `null`.** Either the platform has no Console address
+  configured, which can occur on a self-hosted platform, or the organization
+  or project alias has characters outside `A-Z a-z 0-9 . _ ~ -`.
+
+The link contains the project alias, so old links stop working after you
+change the alias; `pgai joe result <id>` returns a new link.
+
+On postgres.ai, links start with `https://console.postgres.ai/`, and an older
+link that starts with `https://postgres.ai/console/` redirects to the same
+page.
+
+In the Console, the query text and the time in each **Query optimization →
+History** row link to the same page.
 
 ## Troubleshooting
 
