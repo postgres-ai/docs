@@ -700,7 +700,7 @@ to supply `--instance-id` (or `--project`).
 - `--budget <seconds>` — one-shot poll budget in seconds (default: `25`).
 - `--org <alias>` / `--org-id <id>` — organization; required with a global token (also accepted by `joe result`). See [Organization selection](#organization-selection).
 - `--debug` — enable debug output.
-- `--json` — output the full result row as raw JSON (includes `plan_text`, structured `plan_json`, `plan_execution_text`, `plan_execution_json`, `stats`, `recommendations`, `queryid`).
+- `--json` — output the full result row as raw JSON (includes `plan_text`, structured `plan_json`, `plan_execution_text`, `plan_execution_json`, `stats`, `recommendations`, `queryid`, and, once a result is stored, the Console permalink fields `console_url`, `console_command_id`, `session_id` — see [Console links](/docs/postgresai-howtos/joe-cli#console-links)).
 
 ### `joe plan`
 
