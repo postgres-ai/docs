@@ -1,0 +1,150 @@
+[
+  {
+    "category": "DB health control",
+    "rows": [
+      {
+        "feature": "Checkup reports",
+        "values": {
+          "startup": true,
+          "scale": true,
+          "enterprise": true
+        }
+      },
+      {
+        "feature": "Issues and action plans",
+        "values": {
+          "startup": true,
+          "scale": true,
+          "enterprise": true
+        }
+      },
+      {
+        "feature": "Trend analysis (Performance Cliffs and Walls)",
+        "values": {
+          "startup": false,
+          "scale": true,
+          "enterprise": true
+        }
+      }
+    ]
+  },
+  {
+    "category": "Work on issues",
+    "rows": [
+      {
+        "feature": "Work with your AI agent",
+        "values": {
+          "startup": true,
+          "scale": true,
+          "enterprise": true
+        }
+      },
+      {
+        "feature": "Human PostgresAI expert requests included",
+        "values": {
+          "startup": "None",
+          "scale": "Two per month, on two topics",
+          "enterprise": "Contact us"
+        }
+      },
+      {
+        "feature": "Additional expert requests",
+        "values": {
+          "startup": "Two for $500, one-off",
+          "scale": "Two for $500, one-off",
+          "enterprise": "Contact us"
+        }
+      },
+      {
+        "feature": "Expert response time",
+        "values": {
+          "startup": "Not included in base plan",
+          "scale": "Within 24 business hours",
+          "enterprise": "Contact us"
+        }
+      }
+    ]
+  },
+  {
+    "category": "Monitoring",
+    "rows": [
+      {
+        "feature": "Full monitoring",
+        "values": {
+          "startup": true,
+          "scale": true,
+          "enterprise": true
+        }
+      },
+      {
+        "feature": "Historical monitoring for root cause analysis",
+        "values": {
+          "startup": true,
+          "scale": true,
+          "enterprise": true
+        }
+      },
+      {
+        "feature": "Retention",
+        "values": {
+          "startup": "14 days",
+          "scale": "13 months",
+          "enterprise": "Custom"
+        }
+      },
+      {
+        "feature": "Monitoring dashboards (Grafana)",
+        "values": {
+          "startup": false,
+          "scale": true,
+          "enterprise": true
+        }
+      },
+      {
+        "feature": "Private RDS / PrivateLink",
+        "values": {
+          "startup": false,
+          "scale": true,
+          "enterprise": true
+        }
+      },
+      {
+        "feature": "Nodes included (one cluster)",
+        "values": {
+          "startup": "Primary only",
+          "scale": "Primary + up to 5 replicas",
+          "enterprise": "Contact us"
+        }
+      },
+      {
+        "feature": "Email alerts",
+        "values": {
+          "startup": true,
+          "scale": true,
+          "enterprise": true
+        }
+      },
+      {
+        "feature": "Slack alerts",
+        "values": {
+          "startup": true,
+          "scale": true,
+          "enterprise": true
+        }
+      }
+    ]
+  },
+  {
+    "category": "Product support",
+    "rows": [
+      {
+        "feature": "Async email / Slack support",
+        "values": {
+          "startup": true,
+          "scale": true,
+          "enterprise": true
+        }
+      }
+    ]
+  }
+]

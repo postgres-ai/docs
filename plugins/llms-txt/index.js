@@ -85,7 +85,7 @@ const COMPANY = [
   {
     page: '/pricing',
     title: 'Pricing',
-    description: 'Plans (Hobby, Express, Scale, Enterprise) and the DBLab Engine add-on.',
+    description: 'Plans (Starter, Scale, Enterprise) and the DBLab Engine add-on.',
   },
   {
     page: '/consulting',

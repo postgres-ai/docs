@@ -148,7 +148,7 @@ module.exports = {
     announcementBar: {
       id: 'postgres_free_health_check',
       content:
-        "Find what’s slowing Postgres down. <a href='/postgres-check'>Get a free health check →</a>",
+        "Find what’s slowing Postgres down. <a href='/postgres-check'>Explore health checks →</a>",
       backgroundColor: '#D7EEF2',
       textColor: '#013A44',
       isCloseable: true,
@@ -242,7 +242,7 @@ module.exports = {
         {
           type: 'html',
           className: 'menu__list-item--sign-in-button',
-          value: `<a href=${SIGN_IN_URL} class="start-free-button">Start free</a>`,
+          value: `<a href=${SIGN_IN_URL} class="get-started-button">Get started</a>`,
           position: 'right',
         },
         {
