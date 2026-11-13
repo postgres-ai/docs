@@ -46,7 +46,7 @@ We're not there yet. Today, **PostgresAI** watches, diagnoses, and prepares pull
 2025-26      │   POSTGRESAI                                   ◄── WE ARE HERE
              │
              │   AI watches, diagnoses, suggests
-             │   Expert validation on every recommendation
+             │   Expert assistance on request (plan/pack limits)
              │   You approve, you merge
              │
              │
@@ -113,16 +113,14 @@ Here's how PostgresAI works today:
 1. **postgres_ai monitoring** — Open-source, enterprise-grade observability running in your infrastructure
 2. **Health checks & Issues** — Automated detection of problems with actionable recommendations
 3. **AI-powered fixes** — Integration with AI coding tools to generate pull requests
-4. **Expert validation** — Every recommendation backed by human Postgres expertise
+4. **Expert review on request** — Human Postgres experts review recommendations on request (Scale includes two requests per month)
 
 ### What PostgresAI delivers
 
 - 24/7 monitoring that catches issues before they page you
 - Actual solutions, not just alerts:
   > `CREATE INDEX idx_orders_customer_id ON orders(customer_id);`
-  > — tested on a clone, validated by experts, ready to merge
-- Monthly deep-dive health checks from senior DBAs
-- Direct Slack access to people who've seen everything
+  > — tested on a clone, with expert review available on request
 
 ## Future milestones
 
@@ -140,9 +138,9 @@ Here's how PostgresAI works today:
 
 ## Pricing
 
-**$512/month per cluster.**
+**Starter is $16/month per cluster. Scale is $512/month per cluster.** See [Pricing](/pricing) for the full comparison.
 
-postgres_ai monitoring is open source (Apache 2.0). PostgresAI adds the AI layer, expert validation, monthly deep-dive health checks, and direct Slack access to senior DBAs.
+postgres_ai monitoring is open source (Apache 2.0). PostgresAI adds the AI layer. Scale also includes two human expert requests per month.
 
 ## Get started
 

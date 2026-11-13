@@ -21,7 +21,7 @@ See the full [Vision & roadmap](/docs/roadmap).
 
 ## How does PostgresAI work?
 
-PostgresAI combines 24/7 AI monitoring with expert validation.
+PostgresAI combines 24/7 AI monitoring with human expert assistance on request, subject to your plan allowance or purchased requests.
 
 ```
 ╔════════════╗        ╔════════════ PostgresAI ═══════════════════╗
@@ -42,7 +42,7 @@ PostgresAI combines 24/7 AI monitoring with expert validation.
 PostgresAI gives you actual solutions, not just alerts:
 
 > `CREATE INDEX idx_orders_customer_id ON orders(customer_id);`
-> — tested on a clone, validated by experts, ready to merge.
+> — tested on a clone, with expert review available on request within plan or purchased-request limits.
 
 ## What is postgres_ai monitoring?
 
@@ -80,15 +80,15 @@ Issues can be turned into pull requests using AI coding tools (Cursor, etc.).
 
 ## How much does it cost?
 
-**$512/month per cluster** for PostgresAI.
+**Starter is $16/month per cluster**: primary only, Full monitoring, 14-day retention, and no included human expert requests. **Scale is $512/month per cluster**: one primary + up to 5 replicas in one cluster, 13-month retention, Grafana dashboards, Private RDS / PrivateLink, Trend analysis (Performance Cliffs and Walls), and two human expert requests per month on two topics.
 
-postgres_ai monitoring is open source (Apache 2.0).
+Both include Checkup reports, Work with your AI agent, Issues and action plans, historical root cause analysis, email and Slack alerts, and async email / Slack support. Scale has a response guarantee within 24 business hours and a one-week issue conversation. Neither plan includes a dedicated channel.
 
-PostgresAI adds:
-- AI analysis layer
-- Expert validation on recommendations
-- Monthly deep-dive health checks
-- Direct Slack access to senior DBAs
+Included monthly expert requests expire at month end and do not roll over or accumulate. Purchased-pack terms are separate; [contact us](/contact) for details.
+
+Both plans offer a one-off pack of two additional expert requests for $500. [Contact us](/contact) about pack terms or Enterprise. For ongoing expert help, compare upgrading with buying packs; buying an expert pack does not change your plan. See [Pricing](/pricing) for the full comparison.
+
+The monitoring software is open source (Apache 2.0). Hosted monitoring plans are separate from self-hosting the software.
 
 ## Is my data safe?
 

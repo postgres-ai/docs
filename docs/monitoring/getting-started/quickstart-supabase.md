@@ -19,12 +19,13 @@ Set up PostgresAI monitoring for your Supabase databases using the built-in Supa
 The Supabase integration uses OAuth to automatically discover your Supabase projects and provision
 monitoring — no manual database credentials or network configuration required.
 
-Two monitoring levels are available:
+Choose **Starter ($16/cluster/month)** or **Scale ($512/cluster/month)**. Both include Full monitoring, Checkup reports, agent workflows, issues and action plans, email/Slack alerts, and async support.
 
-| Level | Includes | Plan |
-|-------|----------|------|
-| **Quick setup** | Auto-discovery, daily checkups, JSON reports | Free |
-| **Full monitoring** | Grafana dashboards, real-time metrics, advanced alerts, historical data | Scale |
+Starter covers the primary node with 14-day retention and no included expert requests. Scale covers one primary + up to 5 replicas in one cluster with 13-month retention, Grafana dashboards, Private RDS / PrivateLink, Trend analysis (Performance Cliffs and Walls), and two human expert requests per month on two topics. Scale responses are within 24 business hours, with a one-week issue conversation. Both plans offer two additional expert requests for $500 as a one-off pack; [contact us](/contact) for pack terms.
+
+Included monthly expert requests expire at month end and do not roll over or accumulate. Purchased-pack terms are separate; [contact us](/contact) for details.
+
+Partner-sponsored organizations use Scale with **Billed to partner**. A Supabase referral alone does not mean your organization is sponsored. Self-paying organizations choose and pay for their own plan.
 
 ## Prerequisites
 
@@ -33,7 +34,7 @@ Two monitoring levels are available:
    GitHub, or GitLab.
 3. An organization in PostgresAI Console.
    [Create one](https://console.postgres.ai/addorg) if you don't have one yet.
-4. A payment method on file (required for the **Scale** plan). In your organization, open **Billing**,
+4. A payment method on file (required for self-paying **Starter** and **Scale** plans). In your organization, open **Billing**,
    click **Edit payment methods**, and add a card in the Stripe portal.
 
 ## Step 1. Start the Supabase setup
@@ -42,22 +43,15 @@ In PostgresAI Console, navigate to **DB health — Getting started** and click *
 
 [![PostgresAI Console: Getting started page with the Connect Supabase button](/assets/supabase-monitoring/supabase-monitoring-1.png)](/assets/supabase-monitoring/supabase-monitoring-1.png)
 
-## Step 2. Choose monitoring level
+## Step 2. Choose your plan
 
-In the **Supabase monitoring** dialog, choose the monitoring level:
+Choose **Starter** or **Scale** on the monitoring plan page. Both use the same monitoring product; retention, node coverage, dashboards, and expert allowance differ. Enterprise customers can [contact us](/contact).
 
-- **Quick setup** (Free) — one-click OAuth connection with auto-discovery, daily checkups, and JSON
-  reports.
-- **Full monitoring** (Scale) — dedicated monitoring infrastructure with Grafana dashboards,
-  real-time metrics, advanced alerts, and historical data.
-
-See [Pricing](/pricing) for the full list of available options with feature comparison.
-
-[![Supabase monitoring dialog: Quick setup and Full monitoring options](/assets/supabase-monitoring/supabase-monitoring-2.png)](/assets/supabase-monitoring/supabase-monitoring-2.png)
+See [Pricing](/pricing) for the comparison. The selected plan is carried through setup. Partner-sponsored organizations see Scale billed to their partner instead of self-pay prices.
 
 ## Step 3. Authorize Supabase access
 
-After selecting a monitoring level, you are redirected to Supabase to authorize PostgresAI.
+During setup, you are redirected to Supabase to authorize PostgresAI.
 
 Review the requested permissions and select the organization you want to monitor, then click
 **Authorize PostgresAI**.
@@ -75,7 +69,7 @@ The requested permissions include:
 
 After authorization, you are returned to PostgresAI Console.
 
-1. In **Billing & plan**, confirm your payment method.
+1. In **Billing & plan**, confirm your selected plan and payment method (or partner sponsorship).
 2. In **Supabase project**, select the **Organization** and check the **Projects to provision**.
 3. Optionally, expand **Advanced setup** to choose the cloud provider or cloud region.
 4. Click **Deploy**.
@@ -113,9 +107,11 @@ postgresai auth
 postgresai mcp install
 ```
 
-## Step 6. Save Grafana credentials
+## Step 6. Save Grafana credentials (Scale only)
 
-Once the deployment completes, the page shows **Deployment completed successfully!** with your
+Starter users: skip to **Step 8** to review issues in Console. Grafana dashboards are not included in Starter.
+
+For Scale, once the deployment completes, the page shows **Deployment completed successfully!** with your
 Grafana access details:
 
 - **URL** — your dedicated Grafana instance
@@ -128,7 +124,7 @@ Grafana access details:
 Save your Grafana credentials in a password manager — they are not stored in PostgresAI Console.
 :::
 
-## Step 7. Open Grafana dashboards
+## Step 7. Open Grafana dashboards (Scale only)
 
 Open the Grafana URL from the deployment page. You can sign in using one of the following methods:
 

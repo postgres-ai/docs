@@ -16,15 +16,18 @@ Get PostgresAI monitoring running in minutes with PostgresAI Cloud.
 
 Go to [console.postgres.ai](https://console.postgres.ai), open **Monitoring** in the left sidebar to reach the **Monitoring instances** page, then click **Start setup** (under **Hosted by PostgresAI**) and choose a plan.
 
-![Plans page](/img/monitoring/cloud-setup/01-plans-page.png)
+Select a plan for one cluster:
+- **Starter ($16/cluster/month)** — primary only, Full monitoring, 14-day retention, no included human expert requests.
+- **Scale ($512/cluster/month)** — one primary + up to 5 replicas in one cluster, 13-month retention, Grafana dashboards, Private RDS / PrivateLink, Trend analysis (Performance Cliffs and Walls), and two human expert requests per month on two topics. Response within 24 business hours; an issue conversation can continue for one week.
+- **Enterprise** — [contact us](/contact) to discuss your requirements.
 
-:::note
-The console screenshot above still shows the retired **Starter** plan. Hobby and Express do not include the monitoring stack — this guide covers **Scale** and **Enterprise**. The Scale card in the screenshot also still shows the previous 6-month monitoring retention; Scale now includes 13-month retention.
-:::
+Included monthly expert requests expire at month end and do not roll over or accumulate. Purchased-pack terms are separate; [contact us](/contact) for details.
 
-Select a plan based on your needs:
-- **Scale** ($512/mo) — 13-month retention, trend analysis, 1 business day SLA
-- **Enterprise** — Dedicated support, Kubernetes & Terraform, custom workflows
+Both Starter and Scale include Checkup reports, Work with your AI agent, Issues and action plans, historical root cause analysis, email and Slack alerts, and async email / Slack support. Agent workflows include Claude Code, Codex, and MCP, using the appropriate integration for each tool. Full monitoring does not mean Grafana access: dashboards are Scale-only.
+
+Both plans offer a one-off pack of two additional expert requests for $500. Expert requests are separate from ordinary async support; neither plan includes a dedicated channel. [Contact us](/contact) for pack terms. For ongoing expert help, compare upgrading with buying packs; buying an expert pack does not change your plan.
+
+See [Pricing](/pricing) for the complete comparison. Hobby and Express are retired and unsupported; they are not available plans. Existing monitoring customers will transition to Scale. Contact PostgresAI to arrange your transition.
 
 ## Step 2: Select deployment method
 
@@ -69,13 +72,16 @@ For other PostgreSQL databases (RDS, CloudSQL, self-hosted):
 For automatic setup, provide superuser credentials (used once, never stored). For manual setup, follow the [database preparation guide](/docs/monitoring/getting-started/requirements#permissions).
 :::
 
-## Step 4: Access your dashboards
+## Step 4: Review monitoring results
 
-Once deployed, you'll receive:
+On both plans, open Checkup reports and Issues in Console to review findings and action plans.
+Starter includes historical monitoring for root cause analysis without Grafana access.
+
+On **Scale**, you also receive:
 - Grafana URL with your dashboards
 - Login credentials
 
-Start with **01. Single node performance overview (high-level)** for a high-level health check.
+On Scale, start with **01. Single node performance overview (high-level)** for a high-level health check.
 
 ## Verify database permissions
 
@@ -105,7 +111,7 @@ To review exactly what metrics are collected, examine the metric definitions:
 
 See [data privacy details](/docs/monitoring/#data-privacy-metadata-only).
 
-## First dashboard walkthrough
+## First dashboard walkthrough (Scale)
 
 Key panels to check in **01. Single node performance overview (high-level)**:
 1. **Active session history (ASH)** — Wait events over time (similar to RDS Performance Insights)
@@ -113,7 +119,7 @@ Key panels to check in **01. Single node performance overview (high-level)**:
 3. **TPS** — Transactions per second
 4. **QPS** — Queries per second
 
-## Decision tree: which dashboard to use?
+## Decision tree: which dashboard to use? (Scale)
 
 ```
 Is there an ongoing incident?

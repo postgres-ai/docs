@@ -837,7 +837,7 @@ html[data-theme="dark"] .avatar__name > a {
   font-size: 20px;
 }
 
-.start-free-button, .sign-in-button {
+.get-started-button, .sign-in-button {
   font-weight: var(--ifm-font-weight-semibold);
   padding: 0.275rem 1.25rem;
   vertical-align: middle;
@@ -858,14 +858,14 @@ html[data-theme="dark"] .avatar__name > a {
   color: inherit;
 }
 
-/* Primary CTA button - "Start free" */
-html[data-theme="light"] .start-free-button {
+/* Primary CTA button - "Get started" */
+html[data-theme="light"] .get-started-button {
   color: #fff;
   background-color: #0F879D;
   border: 1px solid #0F879D;
 }
 
-html[data-theme="dark"] .start-free-button {
+html[data-theme="dark"] .get-started-button {
   color: #fff;
   background-color: #0F879D;
   border: 1px solid transparent;
@@ -971,7 +971,7 @@ html[data-theme="dark"] .sign-in-button {
     padding-top: 1.75rem;
   }
 
-  .start-free-button, .sign-in-button {
+  .get-started-button, .sign-in-button {
     display: flex;
     width: 100%;
     justify-content: center;

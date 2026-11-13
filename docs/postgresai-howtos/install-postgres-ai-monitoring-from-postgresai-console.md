@@ -14,7 +14,7 @@ Use [PostgresAI Console](https://console.postgres.ai/) to start the PostgresAI m
 
 ## What you get
 
-- **Monitoring stack**: dashboards and metrics collection for Postgres.
+- **Monitoring stack**: metrics collection for Postgres, with Grafana dashboards on Scale.
 - **Daily reports as issues**: recurring issue reports with detected problems and recommended actions. These issues can be integrated into a Cursor-based team workflow, including one-click actions from the issue.
 - **MCP integrations via CLI**: MCP is available for Claude Code, Cursor, Windsurf, and Codex.
 - **Works with Postgres anywhere**: AWS RDS, Google CloudSQL, Heroku Postgres, DigitalOcean Postgres, Supabase, Timescale Cloud, and self-managed Postgres.
@@ -49,9 +49,16 @@ On the **Create PostgresAI monitoring managed instance** page:
 [![PostgresAI Console: Create PostgresAI monitoring managed instance page with billing, project setup, database preparation, and database connection sections](/assets/install-postgres-ai-monitoring-from-postgresai-console/install-postgres-ai-monitoring-from-postgresai-console-2.png)](/assets/install-postgres-ai-monitoring-from-postgresai-console/install-postgres-ai-monitoring-from-postgresai-console-2.png)
 
 :::note
-The console screenshot above still shows the retired **Startup** ($128/month) tier, which is no
-longer offered. The Scale card also still shows the previous 6-month monitoring retention; Scale now
-includes 13-month retention. See [Pricing](/pricing) for current plans.
+The console screenshot above shows old plan terms. The current terms are:
+
+- **Starter** (shown as **Startup**) is $16/month per cluster, not $128/month.
+- **Scale** includes 13-month retention, not 6 months. Scale includes two human expert requests per
+  month, with a response within 24 business hours.
+- Starter and Scale do not include a dedicated Slack or Zoom support channel.
+
+Included monthly expert requests expire at month end and do not roll over or accumulate. Purchased-pack terms are separate; [contact us](/contact) for details.
+
+See [Pricing](/pricing) for current plans.
 :::
 
 ## Advanced setup (optional)
@@ -62,7 +69,7 @@ Use **Advanced setup** to choose where the monitoring VM runs:
 2. **Cloud region**: choose the geographic region for the monitoring VM. For best results, pick a region closest to where your Postgres instance is running.
 
 The monitoring VM runs in PostgresAI cloud and PostgresAI operates it: it gets no SSH keys of yours.
-You work with it through Grafana and the PostgresAI Console.
+Use PostgresAI Console on both plans; Grafana dashboards are available on Scale.
 
 [![PostgresAI Console: Advanced setup section with cloud provider selection and cloud region selection](/assets/install-postgres-ai-monitoring-from-postgresai-console/install-postgres-ai-monitoring-from-postgresai-console-3.png)](/assets/install-postgres-ai-monitoring-from-postgresai-console/install-postgres-ai-monitoring-from-postgresai-console-3.png)
 
@@ -80,7 +87,11 @@ While waiting, you can optionally set up the CLI tools — see [PostgresAI CLI](
 
 ## After deployment
 
-After the deployment completes, you will see a confirmation message and the **Grafana access** details:
+After deployment, open **Checkup reports** and **Issues** in your organization in [PostgresAI Console](https://console.postgres.ai/) to review findings and action plans. This is the route for Starter; Starter does not include Grafana dashboards.
+
+### Grafana access (Scale only)
+
+On Scale, the deployment confirmation also includes **Grafana access** details:
 
 [![PostgresAI Console: Deployment completed successfully and Grafana access details](/assets/install-postgres-ai-monitoring-from-postgresai-console/install-postgres-ai-monitoring-from-postgresai-console-5.png)](/assets/install-postgres-ai-monitoring-from-postgresai-console/install-postgres-ai-monitoring-from-postgresai-console-5.png)
 
@@ -94,11 +105,11 @@ You can open the instance details page from the instances list:
 
 1. In the left sidebar, click **Monitoring** to open **Monitoring instances**.
 2. Select your instance in the list to open the **Monitoring instance** page.
-3. Review the instance details such as status, Grafana URL, and IP address.
+3. Review the instance details such as status and IP address. Scale also shows the Grafana URL; Starter users continue in Console Checkup reports and Issues.
 
 [![PostgresAI Console: Monitoring instance details page with Grafana URL and status](/assets/install-postgres-ai-monitoring-from-postgresai-console/install-postgres-ai-monitoring-from-postgresai-console-6.png)](/assets/install-postgres-ai-monitoring-from-postgresai-console/install-postgres-ai-monitoring-from-postgresai-console-6.png)
 
-## Open UI
+## Open Grafana (Scale only)
 
 Open the Grafana URL from **After deployment** (or from the instance page). You can sign in using one of the following methods:
 
@@ -121,4 +132,4 @@ After about 30 minutes, your first issue reports will be generated. See [How to 
 
 ## Getting support
 
-Guaranteed vendor support is included with PostgresAI monitoring — please [use one of the available ways to contact](/contact/).
+Async email / Slack product support is included with PostgresAI monitoring — please [use one of the available ways to contact](/contact/).

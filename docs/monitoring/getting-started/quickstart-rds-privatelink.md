@@ -88,19 +88,24 @@ click **Start guided setup**.
 
 ## Step 2. Choose the Scale (or Enterprise) plan
 
-AWS PrivateLink monitoring runs on the full monitoring stack, which is available on **Scale** and
-**Enterprise**. On the plan page, click **Choose Scale** (or **Contact sales** for Enterprise).
-Consulting clients already have it enabled and can skip this step.
+AWS PrivateLink monitoring is available on **Scale** and **Enterprise**. Starter ($16/month per
+cluster) does not include it. On the plan page, click **Choose Scale** (or **Contact sales** for
+Enterprise). Consulting clients already have it enabled and can skip this step.
 
 See [Pricing](/pricing) for the full list of options with feature comparison.
 
 [![Choose the PostgresAI plan: Scale includes private RDS via AWS PrivateLink](/assets/rds-privatelink-monitoring/rds-privatelink-monitoring-2.png)](/assets/rds-privatelink-monitoring/rds-privatelink-monitoring-2.png)
 
 :::note
-The console screenshot above still shows the retired **Starter** plan (the Scale card's "Everything
-included in Starter" bullet refers to it). The Scale card also still shows the previous 6-month
-monitoring retention; Scale now includes 13-month retention. Starter is no longer offered — click
-**Choose Scale**, or contact us about **Enterprise**.
+The console screenshot above shows old plan terms. The current terms are:
+
+- **Starter** is $16/month per cluster, not $128/mo.
+- **Scale** includes 13-month retention, not 6 months. The Scale expert response is within
+  24 business hours.
+- Starter and Scale do not include a dedicated support channel. For **Enterprise** support
+  terms, contact us.
+
+See [Pricing](/pricing) for current plans.
 :::
 
 ## Step 3. Create the read-only monitoring role
@@ -420,7 +425,7 @@ databases, see the other [installation options](/docs/monitoring/getting-started
 ### Why is private-RDS monitoring available only on Scale and Enterprise?
 
 The **AWS PrivateLink** path provisions dedicated infrastructure (a monitoring VM and an interface
-endpoint) and is part of the full monitoring stack, available on the **Scale** plan and
-**Enterprise**. Consulting clients get it packaged with their engagement. If you prefer not to use
+endpoint). It is available on the **Scale** plan and **Enterprise**. The **Starter** plan does not
+include it. Consulting clients get it packaged with their engagement. If you prefer not to use
 PrivateLink, you can instead monitor RDS by exposing a publicly reachable database port — see
 [Cloud installation](/docs/monitoring/getting-started/installation-cloud).

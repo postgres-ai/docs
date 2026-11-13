@@ -3,18 +3,19 @@ import Layout from '@theme/Layout'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 
 import styles from './styles.module.css'
+import monitoringPlans from '../../data/monitoringPlans.json'
 
 const MONTHLY_HOURS = 730
 
 const CheckIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="10" cy="10" r="10" fill="#22c55e" />
+  <svg role="img" aria-label="Included" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="10" cy="10" r="10" fill="#15803d" />
     <path d="M6 10l3 3 5-6" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 )
 
 const DashIcon = () => (
-  <span className={styles.dashIcon}>—</span>
+  <span role="img" aria-label="Not included" className={styles.dashIcon}>—</span>
 )
 
 // Logo components for "Trusted by" section (exported for use on front page)
@@ -326,40 +327,23 @@ interface Plan {
 
 const plans: Plan[] = [
   {
-    name: 'Hobby',
-    price: 'Free',
-    description: 'For pet projects and learning',
-    keyFeature: 'Weekly AI-friendly checkup reports',
-    cta: 'Start free',
-    ctaLink: 'https://console.postgres.ai/get-started?plan=hobby',
+    name: 'Starter', price: '$16', period: '/cluster/mo',
+    description: 'For small production databases',
+    keyFeature: 'Primary only · 14-day retention · No expert requests included',
+    cta: 'Choose Starter', ctaLink: 'https://console.postgres.ai/get-started?plan=starter',
   },
   {
-    name: 'Express',
-    price: '$16',
-    period: '/cluster/mo',
-    description: 'For AI builders shipping fast',
-    keyFeature: 'Issues with detailed action plans, daily checkups',
-    cta: 'Get started',
-    ctaLink: 'https://console.postgres.ai/get-started?plan=express',
-  },
-  {
-    name: 'Scale',
-    price: '$512',
-    period: '/cluster/mo',
+    name: 'Scale', price: '$512', period: '/cluster/mo',
     description: 'For growing teams with critical workloads',
-    keyFeature: '13-month history + 1 business day SLA',
-    cta: 'Get started',
-    ctaLink: 'https://console.postgres.ai/get-started?plan=scale',
-    highlight: true,
-    tag: 'Recommended',
+    keyFeature: 'Primary + up to 5 replicas in one cluster · 13-month retention · 2 expert requests/month',
+    cta: 'Choose Scale', ctaLink: 'https://console.postgres.ai/get-started?plan=scale',
+    highlight: true, tag: 'Recommended',
   },
   {
-    name: 'Enterprise',
-    price: 'Custom',
-    description: 'For teams needing SLAs, dedicated support, or on-prem',
-    keyFeature: 'Custom SLA + dedicated support channel',
-    cta: 'Talk to us',
-    ctaLink: 'mailto:sales@postgres.ai',
+    name: 'Enterprise', price: 'Custom',
+    description: 'For large-scale deployments',
+    keyFeature: 'Talk to us about your requirements',
+    cta: 'Talk to us', ctaLink: 'mailto:sales@postgres.ai',
   },
 ]
 
@@ -369,36 +353,13 @@ interface FeatureRow {
   category?: string
 }
 
-const features: FeatureRow[] = [
-  { category: 'Checkup reports', feature: '', values: [] },
-  { feature: 'AI-friendly database checkup reports', values: [true, true, true, true] },
-  { feature: 'Nodes included', values: ['Primary only', 'Primary only', 'Unlimited replicas', 'Unlimited replicas'] },
-  { feature: 'Issues with detailed action plans', values: [false, true, true, true] },
-  { feature: 'Full AI-driven workflow (MCP, Cursor, Claude Code)', values: [false, true, true, true] },
-  
-  { category: 'Monitoring', feature: '', values: [] },
-  { feature: 'Full monitoring stack', values: [false, false, true, true] },
-  { feature: 'Private RDS monitoring over AWS PrivateLink', values: [false, false, true, true] },
-  { feature: 'Monitoring retention', values: ['—', '—', '13 months', 'Custom'] },
-  { feature: 'Monitoring data for the past, ready for RCAs', values: [false, false, true, true] },
-  { feature: 'Trend analysis and risk detection', values: [false, false, true, true] },
-  { feature: 'Advanced reports and workflows', values: [false, false, true, true] },
-  
-  { category: 'Alerts', feature: '', values: [] },
-  { feature: 'Email alerts', values: [false, false, true, true] },
-  { feature: 'Slack alerts', values: [false, false, true, true] },
-  
-  { category: 'Support', feature: '', values: [] },
-  { feature: 'Community support', values: [true, true, true, true] },
-  { feature: 'Async support (email, Slack)', values: [false, false, true, true] },
-  { feature: 'Support SLA', values: ['—', '—', '1 business day', 'Custom'] },
-  { feature: 'Dedicated support channel', values: [false, false, false, true] },
-  
-  { category: 'Advanced', feature: '', values: [] },
-  { feature: 'Kubernetes & Terraform supported', values: [false, false, false, true] },
-  { feature: 'Custom workflows', values: [false, false, false, true] },
-  { feature: 'On-prem deployment', values: [false, false, false, true] },
-]
+const features: FeatureRow[] = monitoringPlans.flatMap(group => [
+  { category: group.category, feature: group.category, values: [] },
+  ...group.rows.map(row => ({
+    feature: row.feature,
+    values: [row.values.startup, row.values.scale, row.values.enterprise],
+  })),
+])
 
 const Pricing = () => {
   const { siteConfig } = useDocusaurusContext()
@@ -406,7 +367,7 @@ const Pricing = () => {
   const { apiUrlPrefix } = customFields
   const [isLoading, setIsLoading] = useState(true)
   const [tableData, setTableData] = useState([])
-  const [selectedPlanIndex, setSelectedPlanIndex] = useState(2) // Default to Scale
+  const [selectedPlanIndex, setSelectedPlanIndex] = useState(1) // Default to Scale
   const [isDblabPricingExpanded, setIsDblabPricingExpanded] = useState(false)
 
   useEffect(() => {
@@ -423,14 +384,14 @@ const Pricing = () => {
   return (
     <Layout
       title="Pricing – PostgresAI"
-      description="Choose the plan that fits your needs: start free, scale as you grow."
+      description="Full Postgres monitoring from $16 per cluster/month. Compare Starter and Scale."
     >
       <main className={styles.mainContainer}>
         {/* Header */}
         <section className={styles.headerSection}>
           <h1 className={styles.mainTitle}>Choose the plan that fits your needs</h1>
           <p className={styles.subtitle}>
-            Start free, scale as you grow
+            One monitoring product. Choose your history, node coverage, and expert help.
           </p>
         </section>
 
@@ -471,9 +432,9 @@ const Pricing = () => {
             <table className={styles.comparisonTable}>
               <thead>
                 <tr>
-                  <th className={styles.featureHeader}></th>
+                  <th scope="col" className={styles.featureHeader}>Feature</th>
                   {plans.map((plan) => (
-                    <th key={plan.name} className={styles.planHeader}>
+                    <th scope="col" key={plan.name} className={styles.planHeader}>
                       {plan.name}
                     </th>
                   ))}
@@ -489,7 +450,7 @@ const Pricing = () => {
                     </tr>
                   ) : (
                     <tr key={idx} className={styles.featureRow}>
-                      <td className={styles.featureCell}>{row.feature}</td>
+                      <th scope="row" className={styles.featureCell}>{row.feature}</th>
                       {row.values.map((value, i) => (
                         <td key={i} className={styles.valueCell}>
                           {typeof value === 'boolean' ? (
@@ -511,6 +472,7 @@ const Pricing = () => {
             <div className={styles.mobilePlanSelector}>
               <span className={styles.mobilePlanSelectorLabel}>Compare plan</span>
               <select 
+                aria-label="Compare plan"
                 className={styles.mobilePlanSelect}
                 value={selectedPlanIndex}
                 onChange={(e) => setSelectedPlanIndex(Number(e.target.value))}
@@ -562,6 +524,20 @@ const Pricing = () => {
               ))}
             </div>
           </div>
+        </section>
+
+        <section className={styles.comparisonSection} aria-labelledby="expert-requests-title">
+          <h2 id="expert-requests-title" className={styles.sectionTitle}>Human expertise when you need it</h2>
+          <p>Scale includes two human PostgresAI expert requests per month, covering two topics.
+            Included monthly requests expire at month end and do not roll over or accumulate.
+            An issue conversation can continue for one week, with a response within 24 business hours.</p>
+          <p>Starter includes no expert requests. Both plans offer a one-off pack of two requests
+            for $500; Scale customers can buy a pack after using their included requests.
+            For ongoing help, compare upgrading with buying packs. Buying an expert pack does not change your plan.</p>
+          <p>Async email / Slack support is separate from expert requests. Neither plan includes
+            a dedicated channel. <a href="/contact">Contact us about expert requests and pack terms</a>.</p>
+          <p>Both plans support agent workflows with Claude Code, Codex, MCP, and other supported
+            tools. Use prompts, CLI skills, or MCP as appropriate for your agent.</p>
         </section>
 
         {/* DBLab Add-on Section */}
@@ -756,10 +732,9 @@ const Pricing = () => {
               question="What plan is best for me?"
               answer={
                 <ul>
-                  <li><strong>Hobby:</strong> You're learning Postgres or running a pet project with no real users yet.</li>
-                  <li><strong>Express:</strong> You're shipping fast (solo or small team) and want to make sure your database survives the first users.</li>
-                  <li><strong>Scale:</strong> You have critical workloads, need longer history, and want faster support.</li>
-                  <li><strong>Enterprise:</strong> You need stricter SLAs, dedicated support, or on-prem deployment.</li>
+                  <li><strong>Starter:</strong> Full monitoring for a primary node, with 14 days of history and no included expert requests.</li>
+                  <li><strong>Scale:</strong> You have critical workloads, need longer history, and want two human expert requests per month with a response within 24 business hours.</li>
+                  <li><strong>Enterprise:</strong> Contact us to discuss your requirements.</li>
                 </ul>
               }
             />
@@ -787,11 +762,11 @@ const Pricing = () => {
         {/* CTA Section */}
         <section className={styles.ctaSection}>
           <h2 className={styles.ctaTitle}>
-            <span className={styles.ctaTitleLight}>Start free,</span> scale with confidence
+            <span className={styles.ctaTitleLight}>Start monitoring,</span> scale with confidence
           </h2>
           <div className={styles.ctaButtons}>
-            <a href="https://console.postgres.ai/" className={styles.ctaPrimary}>
-              Start free
+            <a href="https://console.postgres.ai/get-started?plan=starter" className={styles.ctaPrimary}>
+              Choose Starter
             </a>
             <a href="mailto:sales@postgres.ai" className={styles.ctaSecondary}>
               Talk to us
