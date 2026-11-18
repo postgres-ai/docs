@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358 420" width="358" height="420" role="img" aria-labelledby="t d">
+<title id="t">Temp-table transactions per second against idle sessions, target 500</title>
+<desc id="d">Postgres 18.6, 16 vCPU, 16 DDL clients running CREATE TEMP TABLE with ON COMMIT DROP at a 500 TPS target, one run per point, nothing was measured between the points (dashed lines). 0 idle: 502 TPS, LWLock:SInvalWrite 1.3% of the DDL sessions' active samples. 1000 idle: 502 TPS, 54%. 3000 idle: 274 TPS, 86%. 5000 idle: 127 TPS, 91%. A second run at 5000 idle on another server: 249 TPS (hollow marker).</desc>
+<style>text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}</style>
+<rect width="358" height="420" rx="10" fill="#fcfcfb"/>
+<line x1="22" y1="330" x2="330" y2="330" stroke="#8a8984" stroke-width="1"/>
+<line x1="22" y1="117.5" x2="330" y2="117.5" stroke="#8a8984" stroke-width="1" stroke-dasharray="4 5"/>
+<text x="330" y="137.5" font-size="14" fill="#5f5f5a" text-anchor="end">target 500</text>
+<text x="22" y="352" font-size="14" fill="#5f5f5a">0</text>
+<text x="83.6" y="352" font-size="14" fill="#5f5f5a" text-anchor="middle">1000</text>
+<text x="206.8" y="352" font-size="14" fill="#5f5f5a" text-anchor="middle">3000</text>
+<text x="330" y="352" font-size="14" fill="#5f5f5a" text-anchor="end">5000</text>
+<text x="330" y="374" font-size="14" fill="#5f5f5a" text-anchor="end">idle sessions</text>
+<line x1="22" y1="116.7" x2="83.6" y2="116.7" stroke="#141414" stroke-width="2" stroke-dasharray="6 5"/>
+<line x1="83.6" y1="116.7" x2="206.8" y2="213.6" stroke="#141414" stroke-width="2" stroke-dasharray="6 5"/>
+<line x1="206.8" y1="213.6" x2="330" y2="276" stroke="#141414" stroke-width="2" stroke-dasharray="6 5"/>
+<circle cx="22" cy="116.7" r="5" fill="#141414"/>
+<circle cx="83.6" cy="116.7" r="5" fill="#141414"/>
+<circle cx="206.8" cy="213.6" r="5" fill="#141414"/>
+<circle cx="330" cy="276" r="5" fill="#141414"/>
+<circle cx="330" cy="224.2" r="5.5" fill="#fcfcfb" stroke="#141414" stroke-width="1.8"/>
+<text x="22" y="40" font-size="14" fill="#141414" font-weight="700">502 TPS at 0 and 1000 idle</text>
+<text x="22" y="59" font-size="14" fill="#c4470a" font-weight="600">SInvalWrite 1.3% and 54%</text>
+<text x="200.8" y="239.6" font-size="14" fill="#141414" font-weight="700" text-anchor="end">274</text>
+<text x="200.8" y="258.6" font-size="14" fill="#c4470a" font-weight="600" text-anchor="end">86%</text>
+<text x="318" y="302" font-size="14" fill="#141414" font-weight="700" text-anchor="end">127</text>
+<text x="318" y="321" font-size="14" fill="#c4470a" font-weight="600" text-anchor="end">91%</text>
+<text x="335" y="210.2" font-size="14" fill="#5f5f5a" text-anchor="end">second run: 249</text>
+</svg>

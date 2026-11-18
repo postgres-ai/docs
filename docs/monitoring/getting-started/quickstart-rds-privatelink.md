@@ -13,8 +13,9 @@ keywords:
 
 Set up PostgresAI monitoring for a **private** Amazon RDS database — one that has no
 public endpoint — using the guided setup in [PostgresAI Console](https://console.postgres.ai/).
-PostgresAI reaches your database over **AWS PrivateLink**, so **your database is never exposed to
-the internet**: the connection is outbound-only, from your VPC to PostgresAI.
+PostgresAI reaches your database over **AWS PrivateLink**. Your database gets no public address.
+PostgresAI connects only through the PrivateLink endpoint service in your account, which allowlists
+only the PostgresAI principal.
 
 :::info Available on the Scale plan and Enterprise only
 Private-RDS monitoring over **AWS PrivateLink** is available on the **Scale** plan and on
@@ -44,7 +45,8 @@ wait events. It never reads your data or raw query parameters. See
 :::caution What this flow supports
 - **Single-instance Amazon RDS only.** A Multi-AZ instance (primary plus standby) counts as a
   single instance and is supported. Aurora clusters are not supported by this flow yet.
-- **PostgreSQL 14 or newer** (currently tested up to 18).
+- **PostgreSQL 14 through 19** (19 is a pre-release; see
+  [supported Postgres versions](/docs/monitoring/#supported-postgres-versions)).
 - **Standard (commercial) AWS Regions only.** AWS GovCloud and the China Regions are separate AWS
   partitions, and PrivateLink cannot connect across partitions. If your database runs there,
   [contact us](https://postgres.ai/contact).
@@ -53,7 +55,8 @@ wait events. It never reads your data or raw query parameters. See
   direct-connection setup ([Cloud installation](/docs/monitoring/getting-started/installation-cloud))
   instead, with no CloudFormation stack (see the [FAQ](#what-if-my-rds-instance-is-publicly-accessible)).
 - **One database instance per setup.** To also monitor a read replica, run this flow again for the
-  replica — it gets its own stack and its own monitoring instance.
+  replica — it gets its own stack and its own monitoring instance. Billing stays per cluster: one
+  Scale subscription covers the primary and up to 5 replicas.
 :::
 
 ## Prerequisites
@@ -96,17 +99,8 @@ See [Pricing](/pricing) for the full list of options with feature comparison.
 
 [![Choose the PostgresAI plan: Scale includes private RDS via AWS PrivateLink](/assets/rds-privatelink-monitoring/rds-privatelink-monitoring-2.png)](/assets/rds-privatelink-monitoring/rds-privatelink-monitoring-2.png)
 
-:::note
-The console screenshot above shows old plan terms. The current terms are:
-
-- **Starter** is $16/month per cluster, not $128/mo.
-- **Scale** includes 13-month retention, not 6 months. The Scale expert response is within
-  24 business hours.
-- Starter and Scale do not include a dedicated support channel. For **Enterprise** support
-  terms, contact us.
-
-See [Pricing](/pricing) for current plans.
-:::
+{/* TODO: this screenshot is stale. It shows old plan terms (Starter $128/mo, Scale 6-month
+retention). Replace it with a current capture of the plan step. */}
 
 ## Step 3. Create the read-only monitoring role
 
@@ -271,7 +265,7 @@ While waiting, you can set up the CLI tools:
 npm i -g postgresai
 
 # Authenticate
-postgresai auth
+postgresai auth login
 
 # Set up MCP for your AI coding tool (Cursor, Claude Code, etc.)
 postgresai mcp install
@@ -348,9 +342,9 @@ Only database metadata — no actual data or raw query parameters. Query text is
 collected, examine the metric definitions:
 
 - **Prometheus sink metrics**:
-  [metrics.yml (pgwatch-prometheus)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.17.0/config/pgwatch-prometheus/metrics.yml)
+  [metrics.yml (pgwatch-prometheus)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.18.0/config/pgwatch-prometheus/metrics.yml)
 - **PostgreSQL sink metrics** (including normalized queries):
-  [metrics.yml (pgwatch-postgres)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.17.0/config/pgwatch-postgres/metrics.yml)
+  [metrics.yml (pgwatch-postgres)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.18.0/config/pgwatch-postgres/metrics.yml)
 
 See also: [data privacy details](/docs/monitoring/#data-privacy-metadata-only).
 
@@ -379,8 +373,9 @@ into a zone the load balancer doesn't cover can leave monitoring with no working
 
 A replica is monitored as its own setup: a second CloudFormation stack pointing at the replica's
 instance identifier, added in the console as its own instance. The monitoring role doesn't need
-to be created again — roles created on the primary replicate to the replica. Each monitored
-endpoint counts as a separate monitoring instance. You can do all of this yourself; if you'd like
+to be created again — roles created on the primary replicate to the replica. Billing is per
+cluster: Scale, $512 a month, covers the primary and up to 5 replicas, so a replica's setup adds
+no charge. You can do all of this yourself; if you'd like
 help, [contact us](https://postgres.ai/contact).
 
 ### What does this cost on my AWS side?

@@ -1864,3 +1864,420 @@ body .pgai-fn-pop a {
     padding-block: .4rem;
   }
 }
+
+/* Long read: the layout of blog/20261113-pgaibench.md. Every rule needs
+   .pgai-longread (the wrapper of the post body) or a .pgai-* class, and the
+   header rules need a post page (.blog-post-page) whose article holds
+   .pgai-hero. So other pages, the blog index and the tag pages do not
+   change. Colours come from Infima variables, so both themes work.
+
+   The prose is in a serif face: Charis SIL 5.3.0 (SIL Open Font License
+   1.1; the licence text is next to the font files in static/assets/fonts).
+   The site serves the files, and a page that does not use the family does
+   not download them. The title, headings, code, tables and figure labels
+   stay in the site's monospace face. */
+@font-face {
+  font-family: "Charis SIL";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/fonts/charis-sil/charis-sil-latin-400-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Charis SIL";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/fonts/charis-sil/charis-sil-latin-700-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Measure: text in a 600px column (about 72 characters of 17px serif);
+   the hero, figures and tables take the full post column. --pgai-surface
+   is an opaque page colour for sticky cells and scroll shadows (Infima's
+   light --ifm-background-color is transparent). */
+.pgai-longread {
+  --pgai-measure: 600px;
+  --pgai-body-size: 17px;
+  --pgai-frame: var(--ifm-color-emphasis-500);
+  --pgai-surface: #fff;
+  --pgai-prose-font: "Charis SIL", Charter, "Bitstream Charter", "Iowan Old Style", Georgia, serif;
+  line-height: 1.7;
+}
+html[data-theme='dark'] .pgai-longread { --pgai-surface: var(--ifm-background-color); --pgai-frame: var(--pgai-block-border); }
+.pgai-longread > * { max-width: min(100%, var(--pgai-measure)); margin-inline: auto; }
+.pgai-longread > :is(figure, .pgai-hero, .pgai-table) { max-width: none; }
+.pgai-longread > p { margin-bottom: 1.4rem; }
+.pgai-longread > h2 + p,
+.pgai-longread > h3 + p,
+.pgai-longread > h4 + p { margin-top: 0; }
+.pgai-longread > :is(ul, ol) li + li { margin-top: .4rem; }
+
+/* Prose in the serif face */
+body .pgai-longread > :is(p, ul, ol, blockquote),
+body .pgai-longread > :is(p, ul, ol, blockquote) :is(p, li),
+body .pgai-longread .pgai-box :is(p, li) {
+  font-family: var(--pgai-prose-font) !important;
+  font-size: var(--pgai-body-size) !important;
+  line-height: 1.62 !important;
+}
+/* Run-in head: a paragraph that starts with bold text */
+.pgai-longread > p > strong:first-child { color: var(--ifm-heading-color); }
+
+/* Lede: the first paragraph, one step larger */
+.pgai-lede { font-size: 1.125rem; line-height: 1.6; color: var(--ifm-heading-color); }
+.pgai-longread .pgai-lede { margin-block: 2.5rem 2.5rem; font-size: 1.375rem; line-height: 1.45; }
+body .pgai-longread .pgai-lede { font-size: 19px !important; line-height: 1.5 !important; }
+
+/* Links in the text: text colour with a thin accent underline, in the
+   face of the text around them (the site sets monospace on every link) */
+#__blog-post-container .pgai-longread > :is(p, ul, ol) a:not([data-footnote-ref]),
+#__blog-post-container .pgai-longread .pgai-box a,
+#__blog-post-container .pgai-longread details a:not([data-footnote-ref]) {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--ifm-color-primary) 75%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: .22em;
+}
+#__blog-post-container .pgai-longread > :is(p, ul, ol) a:not([data-footnote-ref]):hover,
+#__blog-post-container .pgai-longread .pgai-box a:hover,
+#__blog-post-container .pgai-longread details a:not([data-footnote-ref]):hover { color: var(--ifm-color-primary); }
+.pgai-longread :is(p, li, blockquote) a { hyphens: none; }
+.pgai-longread :is(p, li, blockquote, summary) a:not(:has(code)) { font-family: inherit !important; }
+
+/* Inline code: the site's face, flows with the sentence (the site makes
+   it an inline block, and then a long statement moves to its own line) */
+.pgai-longread :is(p, li, blockquote) code {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: normal;
+  word-break: normal;
+  vertical-align: baseline;
+}
+.pgai-longread :is(p, li, blockquote, summary) code {
+  display: inline;
+  font-family: var(--ifm-font-family-base);
+  font-size: .84em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.pgai-longread .article-corrections code { font-size: 1em; }
+
+/* Quote: a plain frame on all sides */
+.pgai-longread blockquote {
+  margin: 1.75rem auto;
+  padding: .9rem 1.1rem;
+  border: 1px solid var(--ifm-color-emphasis-400);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--ifm-font-color-base);
+}
+.pgai-longread blockquote > :last-child { margin-bottom: 0; }
+
+/* Summary box ("In short") */
+.pgai-box {
+  margin-block: 1.5rem;
+  padding: .75rem 1rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  background: var(--ifm-color-emphasis-100);
+  overflow-wrap: anywhere;
+}
+.pgai-box > :last-child { margin-bottom: 0; }
+.pgai-longread .pgai-box {
+  margin-block: 2rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--pgai-block-border);
+  border-radius: 6px;
+  background: var(--pgai-block-bg);
+}
+.pgai-longread .pgai-box ul { padding-left: 1.25rem; }
+.pgai-longread .pgai-box li + li { margin-top: .6rem; }
+.pgai-longread .pgai-box li::marker { color: var(--ifm-color-emphasis-600); }
+
+/* Headings: more air above than below; anchor only on hover or focus */
+.pgai-longread > h2 { margin: 3.75rem auto 1rem; font-size: 22px; font-weight: 600; line-height: 1.3; text-wrap: balance; }
+.pgai-longread > h3 { margin: 2.25rem auto .6rem; font-size: 16px; font-weight: 700; line-height: 1.3; }
+.pgai-longread > h4 { margin: 1.9rem auto .5rem; font-size: 15px; font-weight: 600; line-height: 1.3; }
+.pgai-longread > :is(h2, h3, h4) > a.hash-link { opacity: 0; }
+.pgai-longread > :is(h2, h3, h4):hover > a.hash-link,
+.pgai-longread > :is(h2, h3, h4) > a.hash-link:focus-visible { opacity: 1; }
+
+/* BlogFigure, in the column and in a collapsed block: a thin square frame
+   around the chart only, and a small grey caption centred under it.
+   Selects the component's own figure (id="fig-N") by structure, so the
+   component is not edited. */
+.pgai-longread figure[id^='fig-'] { border: 0; border-radius: 0; background: transparent; overflow: visible; }
+.pgai-longread > figure[id^='fig-'] { margin-block: 2.75rem 3rem; }
+.pgai-longread figure[id^='fig-'] > div:first-child { border: 1px solid var(--pgai-frame); background: var(--pgai-block-bg); }
+.pgai-longread figure[id^='fig-'] > figcaption {
+  flex-direction: column;
+  align-items: center;
+  gap: .2rem;
+  max-width: 62ch;
+  margin: 0 auto;
+  padding: .5rem 0 0;
+  border-top: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  text-align: center;
+  text-wrap: pretty;
+  color: var(--ifm-color-emphasis-700);
+}
+
+/* The expanded figure (the dialog of BlogFigure) follows the theme and is
+   opaque. The component draws it dark in both themes at 96% opacity, so
+   the page text shows through, the light drawing sits in a dark view, and
+   inline code in its caption is light text on the light chip. */
+.pgai-longread figure[id^='fig-'] > [role='dialog'] { background: var(--pgai-surface); }
+.pgai-longread figure[id^='fig-'] > [role='dialog'] img { border: 1px solid var(--pgai-frame); border-radius: 0; background: var(--pgai-block-bg); }
+.pgai-longread figure[id^='fig-'] > [role='dialog'] > div:last-child { color: var(--ifm-color-emphasis-700); }
+.pgai-longread figure[id^='fig-'] > [role='dialog'] > div:last-child strong { color: var(--ifm-font-color-base); }
+.pgai-longread figure[id^='fig-'] > [role='dialog'] > div:last-child > a { color: var(--ifm-link-color); }
+.pgai-longread figure[id^='fig-'] > [role='dialog'] > button { color: var(--ifm-font-color-base); background: var(--ifm-color-emphasis-200); }
+.pgai-longread figure[id^='fig-'] > [role='dialog'] > button:hover { background: var(--ifm-color-emphasis-300); }
+
+/* Framed table: a Markdown table in <div className="pgai-table">. A 1px
+   grid, a bold sticky first column, 14px cells (13px on wide screens).
+   A table wider than its frame scrolls inside it, with an edge shadow as
+   the cue. */
+.pgai-table { margin-block: 2.5rem; border: 1px solid var(--pgai-frame); -webkit-overflow-scrolling: touch; }
+.pgai-longread .pgai-table,
+#__blog-post-container .pgai-longread > table {
+  overflow-x: auto;
+  background:
+    linear-gradient(to right, var(--pgai-surface) 40%, transparent) left center / 2.5rem 100% no-repeat local,
+    linear-gradient(to left, var(--pgai-surface) 40%, transparent) right center / 2.5rem 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .22), transparent) left center / .9rem 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .22), transparent) right center / .9rem 100% no-repeat scroll;
+}
+html[data-theme='dark'] .pgai-longread .pgai-table,
+html[data-theme='dark'] #__blog-post-container .pgai-longread > table {
+  background:
+    linear-gradient(to right, var(--pgai-surface) 40%, transparent) left center / 2.5rem 100% no-repeat local,
+    linear-gradient(to left, var(--pgai-surface) 40%, transparent) right center / 2.5rem 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, rgba(255, 255, 255, .2), transparent) left center / .9rem 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, rgba(255, 255, 255, .2), transparent) right center / .9rem 100% no-repeat scroll;
+}
+#__blog-post-container .pgai-longread > table { display: block; width: 100%; max-width: none; }
+#__blog-post-container .pgai-table table {
+  display: table;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+#__blog-post-container .pgai-longread .pgai-table table { font-size: 14px !important; }
+#__blog-post-container .pgai-table thead,
+[data-theme='dark'] #__blog-post-container .pgai-table thead { background: transparent; }
+#__blog-post-container .pgai-table tr { border: 0; }
+#__blog-post-container .pgai-table :is(th, td) {
+  padding: .55rem .8rem;
+  border-right: 1px solid var(--ifm-color-emphasis-300);
+  border-bottom: 1px solid var(--ifm-color-emphasis-300);
+}
+#__blog-post-container .pgai-table :is(th, td):last-child { border-right: 0; }
+#__blog-post-container .pgai-table tbody tr:last-child > * { border-bottom: 0; }
+#__blog-post-container .pgai-table thead th { border-bottom-color: var(--pgai-frame); }
+#__blog-post-container .pgai-longread .pgai-table thead th { background: var(--pgai-surface); }
+/* cells wrap between words only, top-aligned; numbers stay on one line */
+#__blog-post-container .pgai-longread table :is(th, td) { white-space: normal; overflow-wrap: normal; word-break: normal; hyphens: none; }
+#__blog-post-container .pgai-longread .pgai-table :is(th, td) { vertical-align: top; text-align: start; }
+#__blog-post-container .pgai-longread .pgai-table td:nth-child(n+3):not(:last-child) { white-space: nowrap; }
+/* first column: sticky, bold, as wide as its longest word */
+#__blog-post-container .pgai-table :is(th, td):first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  font-weight: 700;
+  white-space: normal;
+}
+#__blog-post-container .pgai-longread .pgai-table :is(th, td):first-child { min-width: 4rem; background: var(--pgai-surface); }
+#__blog-post-container .pgai-longread table :is(th, td):first-child { max-width: 14rem; }
+#__blog-post-container .pgai-longread .pgai-table table :is(th, td):first-child { max-width: none; }
+/* inline code in cells: at the cell size, never broken inside a name */
+body #__blog-post-container .pgai-longread table code {
+  padding: 0 .2em;
+  font-size: inherit !important;
+  line-height: inherit;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+body #__blog-post-container .pgai-longread .pgai-table table code { white-space: nowrap; overflow-wrap: normal; word-break: normal; }
+
+/* Collapsed blocks: the body measure, no shadow, the page colour inside;
+   text in the serif face at 16px (the site forces its monospace and, at
+   phone width, 14px on every p and li). Wide content scrolls in its own
+   box. */
+.pgai-longread > details { width: 100%; min-width: 0; max-width: min(100%, var(--pgai-measure)); margin-inline: auto; }
+.pgai-longread details {
+  --ifm-alert-background-color: transparent;
+  --ifm-alert-border-color: var(--ifm-color-emphasis-300);
+  --ifm-link-color: var(--ifm-color-primary);
+  --ifm-link-hover-color: var(--ifm-color-primary-dark);
+  --pgai-surface: var(--pgai-block-bg);
+  margin-block: 1.5rem;
+  border-radius: 0;
+  box-shadow: none;
+  background: var(--pgai-block-bg);
+}
+#__blog-post-container .pgai-longread details.alert { color: var(--ifm-font-color-base); }
+#__blog-post-container .pgai-longread details.alert,
+#__blog-post-container .pgai-longread details.alert > summary {
+  font-family: var(--pgai-prose-font) !important;
+  font-size: 16px !important;
+}
+#__blog-post-container .pgai-longread details.alert > summary {
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  color: var(--ifm-font-color-base) !important;
+}
+.pgai-longread details > summary::before { border-left-color: var(--ifm-color-primary) !important; }
+/* The arrow of a collapsed block sits on the first line of its summary, at
+   the middle of the lowercase letters. The theme pins it 0.45rem below the
+   top of the summary, which fits the theme's own text size only. The arrow
+   takes the 1rem that the theme leaves for it, so the text does not move. */
+.pgai-longread details > summary > p { display: inline; }
+.pgai-longread details > summary::before {
+  position: static;
+  display: inline-block;
+  box-sizing: border-box;
+  width: 1rem;
+  margin-left: -1rem;
+  vertical-align: middle;
+}
+#__blog-post-container .pgai-longread details.alert > div > div > :is(p, ul, ol),
+#__blog-post-container .pgai-longread details.alert > div > div > :is(ul, ol) li {
+  font-family: var(--pgai-prose-font) !important;
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+}
+#__blog-post-container .pgai-longread details.alert :is(table, pre) { font-family: var(--ifm-font-family-base) !important; }
+/* no blank gap between the summary rule and the first table or figure */
+.pgai-longread details > div > div { margin-top: .75rem !important; padding-top: .75rem !important; }
+.pgai-longread details > div > div > :first-child,
+.pgai-longread details > div > div > :first-child > :first-child { margin-top: 0 !important; }
+.pgai-longread details :is(.pgai-table, figure) { min-width: 0; max-width: 100%; }
+.pgai-longread details figure[id^='fig-'] > figcaption { text-wrap: balance; }
+.pgai-longread details div:has(> .pgai-table, > figure) { min-width: 0; }
+
+/* Footnotes: the measure of the text, the serif face at 15px */
+#__blog-post-container:has(.pgai-longread) section.footnotes {
+  max-width: 600px;
+  margin: 4rem auto 2rem;
+  padding: 1.25rem 0 0;
+  border: 0;
+  border-top: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 0;
+  background: transparent;
+  color: var(--ifm-font-color-base);
+}
+#__blog-post-container:has(.pgai-longread) section.footnotes li { margin-bottom: .75rem; }
+body #__blog-post-container:has(.pgai-longread) section.footnotes li,
+body #__blog-post-container:has(.pgai-longread) section.footnotes li p,
+body #__blog-post-container:has(.pgai-longread) section.footnotes li a {
+  font-family: var(--pgai-prose-font) !important;
+  font-size: 15px;
+  line-height: 1.65;
+}
+/* footnote chips: lifted by offset, so the line keeps its height */
+.pgai-longread sup:has(> a[data-footnote-ref]) { line-height: 0; vertical-align: baseline; }
+#__blog-post-container .pgai-longread a[data-footnote-ref] {
+  position: relative;
+  top: -.5em;
+  padding-block: 0 .05em;
+  line-height: 1.3;
+  vertical-align: baseline;
+}
+
+/* Hero: the title block, a drawing in a tinted panel and a one-paragraph
+   deck, all centred on the page ground. The drawing has a light and a
+   dark file (.pgai-light, .pgai-dark), and the one for the other theme is
+   hidden. The header rules apply on the post page only, so the entry of
+   the post on the blog index keeps the layout of the other entries. */
+.blog-post-page article:has(.pgai-hero) > header { margin: 0; padding-block: 1.5rem .25rem; text-align: center; }
+.blog-post-page article:has(.pgai-hero) > header h1 {
+  max-width: 34ch;
+  margin: 0 auto .75rem;
+  font-size: clamp(1.5rem, .9rem + 1.5vw, 2.125rem) !important;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -.01em;
+  text-wrap: balance;
+}
+.blog-post-page article:has(.pgai-hero) > header :is(time, .margin-vert--md) {
+  font-family: var(--pgai-caption-font);
+  font-size: 13px;
+  color: var(--ifm-color-emphasis-700);
+}
+.blog-post-page article:has(.pgai-hero) > header .margin-vert--md { margin-block: 0 .75rem !important; }
+.blog-post-page article:has(.pgai-hero) > header .row { justify-content: center; margin-bottom: 0 !important; }
+.blog-post-page article:has(.pgai-hero) > header .avatar { justify-content: center; }
+.blog-post-page article:has(.pgai-hero) > header .avatar__intro { flex: 0 1 auto; text-align: start; }
+.pgai-longread > .pgai-hero { margin-block: 1.25rem 2.5rem; text-align: center; }
+.pgai-hero-art { max-width: 45rem; margin: 0 auto 1.5rem; }
+.pgai-hero-art img { display: block; width: 100%; height: auto; }
+html[data-theme='dark'] .pgai-hero-art .pgai-light,
+html:not([data-theme='dark']) .pgai-hero-art .pgai-dark { display: none; }
+body .pgai-longread .pgai-hero-deck {
+  max-width: 36rem;
+  margin: 0 auto;
+  font-family: var(--pgai-prose-font) !important;
+  font-size: 18px !important;
+  line-height: 1.5 !important;
+  text-wrap: balance;
+}
+
+/* Wide screens: slightly tighter cells, so unbroken names fit without a scroll */
+@media (min-width: 601px) {
+  #__blog-post-container .pgai-longread .pgai-table table { font-size: 13px !important; }
+  #__blog-post-container .pgai-longread .pgai-table :is(th, td) { padding: .5rem .6rem; }
+}
+
+/* Phones */
+@media (max-width: 600px) {
+  .pgai-longread, .pgai-longread > * { min-width: 0; }
+  .pgai-longread { overflow-wrap: break-word; }
+  /* the lede on the first screen */
+  .pgai-longread .pgai-lede { margin-block: 0 1.75rem; }
+  body .pgai-longread .pgai-lede { font-size: 18px !important; }
+  .pgai-longread > h2 { margin-top: 3rem; font-size: 20px; }
+  .pgai-longread > h3 { margin-top: 2rem; }
+  /* tables in the column: each column keeps a readable width, and the box
+     scrolls with a clear right-edge shadow; a table in a collapsed block
+     has smaller type and fits its frame */
+  #__blog-post-container .pgai-longread > table { font-size: .75rem; }
+  #__blog-post-container .pgai-longread table :is(th, td) { padding: .45rem .6rem; }
+  #__blog-post-container .pgai-longread > :is(table, .pgai-table) :is(th, td) { width: 7.5rem; min-width: 7.5rem; }
+  #__blog-post-container .pgai-longread > :is(table, .pgai-table) :is(th, td):first-child { width: 8.5rem; }
+  #__blog-post-container .pgai-longread > .pgai-table td:last-child { min-width: 10rem; }
+  #__blog-post-container .pgai-longread details .pgai-table table { font-size: 12px !important; }
+  #__blog-post-container .pgai-longread details .pgai-table :is(th, td) { padding: .45rem .4rem; }
+  .pgai-longread .pgai-table {
+    background:
+      linear-gradient(to right, var(--pgai-surface) 40%, transparent) left center / 2.5rem 100% no-repeat local,
+      linear-gradient(to left, var(--pgai-surface) 40%, transparent) right center / 2.5rem 100% no-repeat local,
+      radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .35), transparent) right center / 1.25rem 100% no-repeat scroll;
+  }
+  html[data-theme='dark'] .pgai-longread .pgai-table {
+    background:
+      linear-gradient(to right, var(--pgai-surface) 40%, transparent) left center / 2.5rem 100% no-repeat local,
+      linear-gradient(to left, var(--pgai-surface) 40%, transparent) right center / 2.5rem 100% no-repeat local,
+      radial-gradient(farthest-side at 100% 50%, rgba(255, 255, 255, .3), transparent) right center / 1.25rem 100% no-repeat scroll;
+  }
+  #__blog-post-container .pgai-longread .pgai-table :is(th, td):not(:first-child) { background: transparent; }
+  /* a first column of code is wide: it scrolls with the rest */
+  #__blog-post-container .pgai-longread .pgai-table table:has(td:first-child code) :is(th, td):first-child { position: static; }
+  .blog-post-page article:has(.pgai-hero) > header { padding-top: .75rem; }
+  .blog-post-page article:has(.pgai-hero) > header h1 { max-width: none; font-size: 1.5rem !important; }
+  .blog-post-page article:has(.pgai-hero) > header .avatar__photo { width: 2rem; height: 2rem; }
+  .pgai-longread > .pgai-hero { margin-block: .75rem 1.75rem; }
+  .pgai-hero-art { margin-bottom: 1rem; }
+  body .pgai-longread .pgai-hero-deck { font-size: 17px !important; }
+}

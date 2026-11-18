@@ -144,112 +144,82 @@ html[data-theme='dark'] .page {
   line-height: 1.6;
 }
 
+.studies {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .study {
-  margin: 0 0 20px;
-  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 22px 24px;
   border: 1px solid var(--forge-border);
+  border-top: 3px solid var(--forge-accent);
   border-radius: 8px;
 }
 
-.studyTitle {
-  margin: 0 0 10px;
-  font-size: 19px;
-  line-height: 1.35;
-}
-
-.studySummary,
-.studySetup {
-  margin: 0 0 16px;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.studySetup {
+.studyMeta {
+  margin: 0 0 6px;
+  font-size: 13px;
+  letter-spacing: 0.02em;
   color: var(--forge-muted);
 }
 
-.chart {
-  display: block;
-  margin: 0 0 16px;
-}
-
-.chart:focus-visible {
-  outline: 2px solid var(--forge-accent);
-  outline-offset: 3px;
-  border-radius: 8px;
-}
-
-.chart img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
-
-.chartDark {
-  display: none;
-}
-
-html[data-theme='dark'] .chartLight {
-  display: none;
-}
-
-html[data-theme='dark'] .chartDark {
-  display: block;
-}
-
-.body {
-  max-width: 760px;
-}
-
-.body p {
+.studyTitle {
   margin: 0 0 14px;
-  font-size: 15px;
-  line-height: 1.65;
+  font-size: 18px;
+  line-height: 1.35;
 }
 
-.body p:last-child {
-  margin-bottom: 0;
-}
-
-.studyLinks {
-  margin: 0;
-  font-size: 14px;
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  margin: 0 0 16px;
-}
-
-.stat {
-  padding: 16px;
-  border-radius: 6px;
-  background: var(--forge-surface);
-}
-
-.statValue {
-  font-size: 26px;
-  line-height: 1.2;
+.headline {
+  margin: 0 0 4px;
+  font-size: 34px;
+  line-height: 1.15;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
-  white-space: nowrap;
   color: var(--forge-accent);
 }
 
-.statLabel {
+.headlineNote {
+  margin: 0 0 14px;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.facts {
+  margin: 0 0 16px;
+  padding-left: 18px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--forge-muted);
+}
+
+.facts li + li {
   margin-top: 6px;
+}
+
+.studyLinks {
+  margin: auto 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--forge-border);
   font-size: 14px;
   font-weight: 600;
 }
 
-.statNote {
-  margin-top: 4px;
-  font-size: 13px;
-  line-height: 1.45;
-  color: var(--forge-muted);
+/* The site link color is 3:1 on white; at 14px the card links need 4.5:1. */
+.studyLinks a {
+  color: var(--forge-accent);
+}
+
+.studyLinks a:focus-visible {
+  outline: 2px solid var(--forge-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 .videos {
@@ -381,25 +351,21 @@ html[data-theme='dark'] .chartDark {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .studies {
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  .stat:nth-child(3) {
-    grid-column: 1 / -1;
-  }
-
-  .stat {
-    padding: 12px;
-  }
-
-  .statValue {
-    font-size: 20px;
+  .headline {
+    font-size: 28px;
   }
 
   .study,
   .cta {
     padding: 20px;
+  }
+
+  .study {
+    padding-top: 18px;
   }
 
   .primaryButton,

@@ -12,29 +12,22 @@ const UUID_EPISODE = 'https://postgres.fm/episodes/uuidv4-vs-uuidv7'
 const DUMP_POST = '/blog/20261028-dump-restore-now-what'
 const DUMP_EPISODE = 'https://postgres.fm/episodes/dump-restore-done-now-what'
 
-type Stat = {
-  value: string
-  label: string
-  note: string
-}
-
-type Chart = {
-  light: string
-  dark?: string
-  narrow?: string
-  narrowDark?: string
-  alt: string
-}
+const TEMP_POST = '/blog/20261118-hidden-costs-of-create-temp-table'
+const TEMP_BRIEF = 'https://console.postgres.ai/shared/brief/dfe99713-f5a8-483b-9aab-1606a883b75d'
+const TEMP_EPISODE = 'https://postgres.fm/episodes/the-hidden-costs-of-create-temp-table'
+const EXT_BRIEF = 'https://console.postgres.ai/shared/brief/c501d438-b872-4705-89a6-bdab30ea1680'
+const EXT_EPISODE = 'https://postgres.fm/episodes/extensions-on-demand'
 
 type Study = {
-  title: string
-  summary: string
-  stats: Stat[]
-  chart: Chart
-  setup: string
-  post: string
-  episode: string
-  episodeLabel: string
+  // Postgres.FM episode number and air date.
+  episode: number
+  date: string
+  episodeUrl: string
+  question: string
+  headline: string
+  headlineNote: string
+  facts: string[]
+  post?: string
   brief?: string
 }
 
@@ -72,78 +65,79 @@ const METHOD = [
   },
 ]
 
+// Newest first. Every number is copied from the post or the brief it links to.
 const STUDIES: Study[] = [
   {
-    title: 'UUIDv4 vs UUIDv7: what a random primary key costs',
-    summary:
-      'Same table, same insert stream, three primary keys on Postgres 18: UUIDv4, UUIDv7 and int8. Seven runs on cloud servers, about 2.1 billion UUID rows in total, fourteen hypotheses with falsifiers.',
-    stats: [
-      {
-        value: '0.62–0.69×',
-        label: 'UUIDv4 insert rate',
-        note: 'vs an ordered key, same server, 100M rows',
-      },
-      {
-        value: '1.5–1.9×',
-        label: 'UUIDv4 WAL per row',
-        note: 'vs an ordered key, same server, 90M–100M rows',
-      },
-      {
-        value: '+33%',
-        label: 'UUIDv4 primary key size',
-        note: 'vs UUIDv7, 100M rows',
-      },
+    episode: 196,
+    date: 'November 13, 2026',
+    episodeUrl: TEMP_EPISODE,
+    question: 'What does a temp table per transaction cost?',
+    headline: '23×',
+    headlineNote:
+      'the TPS of a CTE doing the same work: 86,997 vs 3,783 for CREATE TEMP TABLE in each transaction. Postgres 18.6, 16 vCPU, no idle sessions.',
+    facts: [
+      'With 5,000 idle sessions and a 500 TPS target, temp-table DDL got 127 TPS in one run and 249 in another; 502 with no idle sessions.',
+      'One create and drop sends 132 invalidation messages, and every backend must read them, idle ones too.',
     ],
-    chart: {
-      light: '/assets/blog/20261104-uuid-f1-inserts-per-second.svg',
-      dark: '/assets/blog/20261104-uuid-f1-inserts-per-second-dark.svg',
-      narrow: '/assets/blog/20261104-uuid-f1-inserts-per-second-narrow.svg',
-      narrowDark: '/assets/blog/20261104-uuid-f1-inserts-per-second-narrow-dark.svg',
-      alt: 'Inserts per second as the table grows from 0 to 100M rows, run 6: on the small tier int8 ends at 23.5k, UUIDv7 at 21.7k and UUIDv4 at 13.9k, with UUIDv4 falling from about 26M rows; on the mid tier UUIDv7 ends at 20.9k and UUIDv4 at 18.3k',
-    },
-    setup:
-      'Runs took one day; the whole study, with design and reviews, about three days.',
-    brief: UUID_BRIEF,
-    post: UUID_POST,
-    episode: UUID_EPISODE,
-    episodeLabel: 'Postgres.FM episode 194',
+    post: TEMP_POST,
+    brief: TEMP_BRIEF,
   },
   {
-    title: 'Dump/restore done. Now what?',
-    summary:
-      'After pg_dump and pg_restore, by default the planner statistics and the visibility map are missing. One query over a 250-million-row table with a 31 GiB heap, on a host with 16 GiB of RAM, cold cache, three restores.',
-    stats: [
-      {
-        value: '32.6 s',
-        label: 'right after pg_restore',
-        note: 'Hash Join over a Seq Scan',
-      },
-      {
-        value: '6.1 s',
-        label: 'after ANALYZE',
-        note: '24,983 heap fetches',
-      },
-      {
-        value: '23 ms',
-        label: 'after VACUUM ANALYZE',
-        note: '0 heap fetches',
-      },
+    episode: 195,
+    date: 'November 6, 2026',
+    episodeUrl: EXT_EPISODE,
+    question: 'Does an extension in its own image avoid the restart?',
+    headline: '192–193 s',
+    headlineNote:
+      'without new read-write connections: CloudNativePG restart with persistent sessions, for an extension image and for a fat image alike. Medians of 5.',
+    facts: [
+      'With switchover instead, the longest read-write outage was 6.4 s and 6.5 s.',
+      '18 PGDG extensions take 98 MiB as one image layer; the CloudNativePG pgvector image, 0.31 MiB.',
     ],
-    chart: {
-      light: '/assets/blog/20261028-dump-restore-f1-one-query-solid.svg',
-      dark: '/assets/blog/20261028-dump-restore-f1-one-query-dark.svg',
-      narrow: '/assets/blog/20261028-dump-restore-f1-one-query-narrow.svg',
-      narrowDark: '/assets/blog/20261028-dump-restore-f1-one-query-narrow-dark.svg',
-      alt: 'On Postgres 18.6, one query takes a median 32.6 s cold after a logical restore alone, 6.1 s after ANALYZE (Index Only Scan with 24,983 heap fetches), and 23 ms after VACUUM ANALYZE (0 heap fetches)',
-    },
-    setup: 'Medians of 9 cold runs, Postgres 18.6; also tested on 19rc1.',
+    brief: EXT_BRIEF,
+  },
+  {
+    episode: 194,
+    date: 'October 30, 2026',
+    episodeUrl: UUID_EPISODE,
+    question: 'What does a random UUIDv4 primary key cost?',
+    headline: '0.62–0.69×',
+    headlineNote:
+      'the UUIDv4 insert rate vs an ordered key on the same server, at 100M rows. Postgres 18, seven runs.',
+    facts: [
+      'UUIDv4 wrote 1.5–1.9× the WAL per row of an ordered key, at 90M–100M rows.',
+      'The UUIDv4 primary key was 33% larger than UUIDv7, at 100M rows.',
+    ],
+    post: UUID_POST,
+    brief: UUID_BRIEF,
+  },
+  {
+    episode: 193,
+    date: 'October 23, 2026',
+    episodeUrl: DUMP_EPISODE,
+    question: 'Dump/restore done: what to run before traffic?',
+    headline: '32.6 s → 23 ms',
+    headlineNote:
+      'one query, cold cache: right after pg_restore, then after VACUUM ANALYZE. 250M rows, 31 GiB heap, 16 GiB RAM, Postgres 18.6.',
+    facts: [
+      'After ANALYZE alone: 6.1 s, an Index Only Scan with 24,983 heap fetches.',
+      'Medians of 9 cold runs; also tested on 19rc1.',
+    ],
     post: DUMP_POST,
-    episode: DUMP_EPISODE,
-    episodeLabel: 'Postgres.FM episode 193',
   },
 ]
 
 const VIDEOS = [
+  {
+    id: 'gAdhpYewLZ8',
+    title: 'Postgres.FM episode 196: The hidden costs of CREATE TEMP TABLE',
+    link: TEMP_EPISODE,
+  },
+  {
+    id: '7oeAAqU00zk',
+    title: 'Postgres.FM episode 195: Extensions on demand',
+    link: EXT_EPISODE,
+  },
   {
     id: 'gf8e3JkQ_8M',
     title: 'Postgres.FM episode 194: UUIDv4 vs UUIDv7',
@@ -197,28 +191,6 @@ const PAST = [
     ],
   },
 ]
-
-// Phones get the narrow drawing, as in the blog's BlogFigure.
-const NARROW = '(max-width: 600px)'
-
-const ChartPicture = ({ src, narrow, alt, className }: { src: string; narrow?: string; alt: string; className?: string }) => (
-  <picture className={className}>
-    {narrow && <source media={NARROW} srcSet={narrow} />}
-    <img src={src} alt={alt} loading="lazy" decoding="async" />
-  </picture>
-)
-
-const ChartImage = ({ chart }: { chart: Chart }) => {
-  if (!chart.dark) {
-    return <ChartPicture src={chart.light} narrow={chart.narrow} alt={chart.alt} />
-  }
-  return (
-    <>
-      <ChartPicture className={styles.chartLight} src={chart.light} narrow={chart.narrow} alt={chart.alt} />
-      <ChartPicture className={styles.chartDark} src={chart.dark} narrow={chart.narrowDark} alt={chart.alt} />
-    </>
-  )
-}
 
 const DBLabForge = () => {
   return (
@@ -280,57 +252,53 @@ const DBLabForge = () => {
         <section id="examples" className={styles.section}>
           <h2 className={styles.sectionTitle}>Example studies</h2>
           <p className={styles.sectionLead}>
-            Two recent posts on the PostgresAI blog are based on Forge studies.
-            Each was discussed on Postgres.FM.
+            The four Forge studies published so far, newest first. Each was
+            discussed on Postgres.FM; every number comes from the post or the
+            public brief linked below it.
           </p>
-          {STUDIES.map((study) => (
-            <article key={study.title} className={styles.study}>
-              <h3 className={styles.studyTitle}>
-                <Link to={study.post}>{study.title}</Link>
-              </h3>
-              <p className={styles.studySummary}>{study.summary}</p>
-              <div className={styles.stats}>
-                {study.stats.map((stat) => (
-                  <div key={stat.label} className={styles.stat}>
-                    <div className={styles.statValue}>{stat.value}</div>
-                    <div className={styles.statLabel}>{stat.label}</div>
-                    <div className={styles.statNote}>{stat.note}</div>
-                  </div>
-                ))}
-              </div>
-              <Link
-                to={study.post}
-                className={styles.chart}
-                aria-label={`${study.title}: open the post`}
-              >
-                <ChartImage chart={study.chart} />
-              </Link>
-              <p className={styles.studySetup}>{study.setup}</p>
-              <p className={styles.studyLinks}>
-                <Link to={study.post}>Read the post</Link>
-                {study.brief && (
-                  <>
-                    <span aria-hidden="true"> · </span>
-                    <a href={study.brief} target="_blank" rel="noopener noreferrer">
-                      Open the brief
-                    </a>
-                  </>
-                )}
-                <span aria-hidden="true"> · </span>
-                <a href={study.episode} target="_blank" rel="noopener noreferrer">
-                  {study.episodeLabel}
-                </a>
-              </p>
-            </article>
-          ))}
-
+          <ol className={styles.studies}>
+            {STUDIES.map((study) => (
+              <li key={study.episode} className={styles.study}>
+                <p className={styles.studyMeta}>
+                  Postgres.FM {study.episode} · {study.date}
+                </p>
+                <h3 className={styles.studyTitle}>{study.question}</h3>
+                <p className={styles.headline}>{study.headline}</p>
+                <p className={styles.headlineNote}>{study.headlineNote}</p>
+                <ul className={styles.facts}>
+                  {study.facts.map((fact) => (
+                    <li key={fact}>{fact}</li>
+                  ))}
+                </ul>
+                <p className={styles.studyLinks}>
+                  {study.post && (
+                    <>
+                      <Link to={study.post}>Read the post</Link>
+                      <span aria-hidden="true"> · </span>
+                    </>
+                  )}
+                  {study.brief && (
+                    <>
+                      <a href={study.brief} target="_blank" rel="noopener noreferrer">
+                        Brief
+                      </a>
+                      <span aria-hidden="true"> · </span>
+                    </>
+                  )}
+                  <a href={study.episodeUrl} target="_blank" rel="noopener noreferrer">
+                    Episode {study.episode}
+                  </a>
+                </p>
+              </li>
+            ))}
+          </ol>
         </section>
 
         <section className={styles.section}>
           <h2 className={styles.sectionTitle}>Watch the discussions</h2>
           <p className={styles.sectionLead}>
-            Kirk Wolak and Nikolay Samokhvalov discuss both studies on
-            Postgres.FM.
+            Kirk Wolak and Nikolay Samokhvalov discuss each study on
+            Postgres.FM; in episode 195, with Álvaro Hernández of StackGres.
           </p>
           <div className={styles.videos}>
             {VIDEOS.map((video) => (
@@ -364,7 +332,7 @@ const DBLabForge = () => {
             <a href="https://gitlab.com/postgres-ai/postgresql-consulting/tests-and-benchmarks">
               tests-and-benchmarks
             </a>
-            . The two studies above ran on Forge; the questions below come
+            . The four studies above ran on Forge; the questions below come
             from the earlier generations. A few:
           </p>
           <div className={styles.pastGrid}>

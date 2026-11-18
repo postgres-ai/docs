@@ -119,6 +119,39 @@ labels (plus the instance labels):
 There is no `usename` label on `pg_stat_statements` metrics, and the cluster label is `cluster`
 (not `cluster_name`).
 
+## Query text labels: `pgwatch_query_info`
+
+The `pg_stat_statements` series carry only `queryid`. The query text comes from a separate series,
+`pgwatch_query_info`, with value `1` and one series per query id. Join it to add the text to a
+chart legend or a query result.
+
+- Served by `monitoring_flask_backend` at `/query_info_metrics`, which VictoriaMetrics scrapes
+  every 5 minutes (scrape job `query-info`). The texts come from the Postgres sink, where pgwatch
+  stores the normalized query texts.
+- Only query ids seen in the last 10 minutes are exported (`QUERYID_ACTIVE_MINUTES`, default
+  `10`). An older query id has no `pgwatch_query_info` series, so the join drops it.
+- Every text label has the form `queryid | text`. The `raw_` labels cut the normalized text
+  (whitespace collapsed) at the length limit and end it with `...`. The other `displayname*`
+  labels shorten the text to the same limit but keep the useful parts, such as table names.
+
+Labels:
+
+- `queryid`: the query id, the same value as on the `pg_stat_statements` series.
+- `displayname`, `displayname_medium`, `displayname_long`: shortened text, 30, 60 and 100
+  characters.
+- `displayname_raw_short`, `displayname_raw_medium`, `displayname_raw_long`: the text cut at 30,
+  60 and 100 characters.
+- `displayname_full`: the first 500 characters of the text.
+- `displayname_queryid`: the query id alone.
+
+Example, the top queries by total time with their text:
+
+```promql
+topk(10, sum by (queryid) (rate(pgwatch_pg_stat_statements_exec_time_total[5m])))
+  * on (queryid) group_left(displayname_raw_long)
+  max by (queryid, displayname_raw_long) (pgwatch_query_info)
+```
+
 ## Common queries
 
 ### Top queries by total time

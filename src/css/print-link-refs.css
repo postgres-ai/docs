@@ -1,0 +1,257 @@
+/*
+ * Print/PDF link references for blog posts.
+ *
+ * plugins/print-link-refs (a remark plugin on the blog) puts a
+ * <sup class="pgai-print-ref">[n]</sup> after each link of the post body and
+ * a <section class="pgai-print-refs"> "Links" list at the end of the post.
+ * Both are in the static HTML. On screen they are hidden; in print the markers and the
+ * list show, and the site chrome is hidden.
+ *
+ * Kept out of custom.css on purpose: its long-read block is shared with
+ * another MR and must stay byte-identical.
+ */
+
+.pgai-print-ref,
+.pgai-print-refs {
+  display: none;
+}
+
+@media print {
+  /* Markers: small "[n]", plain text colour, no underline. */
+  .pgai-print-ref {
+    display: inline;
+    font-size: 0.65em;
+    line-height: 0;
+    vertical-align: super;
+    margin-left: 0.1em;
+    color: inherit;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    white-space: nowrap;
+  }
+
+  /* Links list. */
+  .pgai-print-refs {
+    display: block;
+    margin-top: 2rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #999;
+    font-size: 8.5pt;
+    line-height: 1.35;
+    color: #000;
+  }
+
+  .pgai-print-refs__title {
+    font-size: 12pt;
+    margin: 0 0 0.5rem;
+    break-after: avoid;
+  }
+
+  .pgai-print-refs__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .pgai-print-refs__list li {
+    display: flex;
+    gap: 0.5em;
+    margin: 0 0 0.2rem;
+    break-inside: avoid;
+  }
+
+  .pgai-print-refs__num {
+    flex: 0 0 2.6em;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .pgai-print-refs__body {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .pgai-print-refs a.pgai-print-refs__url {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    word-break: normal;
+    font-family: var(--ifm-font-family-monospace, monospace);
+    font-size: 0.95em;
+  }
+
+  /* Site chrome. Infima already hides .navbar, .footer, .menu and
+     .table-of-contents; the blog uses its own reading navigation. */
+  .navbar,
+  .footer,
+  .theme-announcement-bar,
+  .pagination-nav,
+  .blog-post-page .col--2,
+  .blog-post-page nav[aria-label='Article contents'],
+  .blog-post-page [aria-controls='blog-mobile-toc'],
+  .blog-post-page article button {
+    display: none !important;
+  }
+
+  /* Collapsed <details> (Method, Sources) print open, so every numbered link
+     in the Links list also has its marker on the page. The first rule
+     opens a native closed <details> (Chrome 131+, no JS); the second undoes
+     the inline display:none/height:0 that Docusaurus's Details sets once it
+     hydrates. */
+  .blog-post-page article details::details-content {
+    content-visibility: visible;
+    display: block;
+  }
+
+  .blog-post-page article details > div {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Post body takes the full page width once the sidebars are gone. */
+  .blog-post-page main.col {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-left: 0;
+  }
+}
+
+/*
+ * Light print palette, whatever theme the reader has (the site default is
+ * dark). Docusaurus keys the dark theme on html[data-theme='dark']; in print
+ * the variables that theme sets get their light values back (generated from
+ * the light theme's computed values), and the few dark-only rules the post
+ * uses are undone. Light-theme print is not changed by these rules.
+ */
+@media print {
+  html[data-theme='dark']:root {
+    color-scheme: light;
+    --ifm-color-scheme: light;
+    --ifm-color-emphasis-0: #fff;
+    --ifm-color-emphasis-100: #f5f6f7;
+    --ifm-color-emphasis-200: #ebedf0;
+    --ifm-color-emphasis-300: #dadde1;
+    --ifm-color-emphasis-400: #ccd0d5;
+    --ifm-color-emphasis-500: #bec3c9;
+    --ifm-color-emphasis-600: #8d949e;
+    --ifm-color-emphasis-700: #606770;
+    --ifm-color-emphasis-800: #444950;
+    --ifm-color-emphasis-900: #1c1e21;
+    --ifm-color-emphasis-1000: #000;
+    --ifm-background-color: transparent;
+    --ifm-background-surface-color: #fff;
+    --ifm-hover-overlay: rgba(0,0,0,.05);
+    --ifm-color-content: #1c1e21;
+    --ifm-color-content-secondary: #525860;
+    --ifm-breadcrumb-separator-filter: none;
+    --ifm-code-background: #f6f7f8;
+    --ifm-scrollbar-track-background-color: #f1f1f1;
+    --ifm-scrollbar-thumb-background-color: silver;
+    --ifm-scrollbar-thumb-hover-background-color: #a7a7a7;
+    --ifm-table-stripe-background: rgba(0,0,0,.03);
+    --ifm-toc-border-color: #dadde1;
+    --ifm-color-primary-contrast-background: #ebf2fc;
+    --ifm-color-primary-contrast-foreground: #102445;
+    --ifm-color-secondary-contrast-background: #fdfdfe;
+    --ifm-color-secondary-contrast-foreground: #474748;
+    --ifm-color-success-contrast-background: #e6f6e6;
+    --ifm-color-success-contrast-foreground: #003100;
+    --ifm-color-info-contrast-background: #eef9fd;
+    --ifm-color-info-contrast-foreground: #193c47;
+    --ifm-color-warning-contrast-background: #fff8e6;
+    --ifm-color-warning-contrast-foreground: #4d3800;
+    --ifm-color-danger-contrast-background: #ffebec;
+    --ifm-color-danger-contrast-foreground: #4b1113;
+    --pgai-block-border: #c9c6bf;
+    --pgai-block-bg: #fcfcfb;
+    --pgai-block-head-bg: #f3f2ef;
+    --docusaurus-collapse-button-bg: transparent;
+    --docusaurus-collapse-button-bg-hover: rgba(0,0,0,.1);
+    --shimmer-bg: linear-gradient(90deg,#e0e3e8 0%,#9698c3/**/20%,#9698c3/**/60%,#e0e3e8 95%);
+    --docusaurus-highlighted-code-line-bg: #484d5b;
+    --hint-card-border-color: rgba(0,0,0,.25);
+  }
+
+  html[data-theme='dark'] .pgai-longread {
+    --pgai-surface: #fff;
+    --pgai-frame: var(--ifm-color-emphasis-500);
+  }
+
+  html[data-theme='dark'] #__blog-post-container table thead {
+    background-color: transparent;
+  }
+
+  html[data-theme='dark'] #__blog-post-container table :is(thead tr, tbody tr) {
+    border-bottom-color: var(--pgai-block-border);
+  }
+
+  html[data-theme='dark'] .pgai-longread .pgai-table,
+  html[data-theme='dark'] #__blog-post-container .pgai-longread > table {
+    background:
+      linear-gradient(to right, var(--pgai-surface) 40%, transparent) left center / 2.5rem 100% no-repeat local,
+      linear-gradient(to left, var(--pgai-surface) 40%, transparent) right center / 2.5rem 100% no-repeat local,
+      radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .22), transparent) left center / .9rem 100% no-repeat scroll,
+      radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .22), transparent) right center / .9rem 100% no-repeat scroll;
+  }
+
+  html[data-theme='dark'] .avatar__name > a {
+    color: var(--ifm-color-base);
+  }
+
+  /* The live Fig. 2 (QueueFigure) reads its colours from these. */
+  html[data-theme='dark'].blog-post-page figure [class*='root_'] {
+    --qf-ink: #141414;
+    --qf-muted: #5f5f5a;
+    --qf-grid: #e4e3df;
+    --qf-axis: #8a8984;
+    --qf-accent: #ff6111;
+    --qf-accent-ink: #c4470a;
+    --qf-red: #b3261e;
+    --qf-bar: #8a8984;
+    --qf-fill: #bdbcb5;
+    --qf-free: #ebeae5;
+  }
+
+  /* Figures with a -dark variant (BlogFigure, QueueFigure stills): the light
+     one. The variant classes come from a CSS module, so they are matched by
+     their stable local name. */
+  html[data-theme='dark'].blog-post-page figure picture[class*='light_'] {
+    display: block;
+  }
+
+  html[data-theme='dark'].blog-post-page figure picture[class*='dark_'] {
+    display: none;
+  }
+
+  /* Hero: the light still, and no animated canvas (in either theme). */
+  html[data-theme='dark'] .pgai-hero-art .pgai-light {
+    display: inline;
+  }
+
+  html[data-theme='dark'] .pgai-hero-art .pgai-dark,
+  .pgai-hero-art canvas {
+    display: none;
+  }
+
+  /* Code blocks: prism sets the token colours inline from the theme, so in
+     print every theme gets the same plain dark-on-light code. */
+  .blog-post-page .theme-code-block {
+    --prism-color: #1c1e21 !important;
+    --prism-background-color: #f6f7f8 !important;
+    --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.08) !important;
+  }
+
+  .blog-post-page .prism-code {
+    color: #1c1e21 !important;
+    background-color: #f6f7f8 !important;
+  }
+
+  .blog-post-page .prism-code .token-line,
+  .blog-post-page .prism-code .token {
+    color: inherit !important;
+    font-style: normal !important;
+  }
+}

@@ -6,17 +6,19 @@ sidebar_position: 5
 
 # Helm installation
 
-:::info Positioned for production / Enterprise
-Kubernetes deployment with Helm is the recommended path for production and Enterprise use. The chart
-is self-service and the full procedure is below; for dedicated support, SLAs, and managed rollout,
-[contact us](https://postgres.ai/contact).
+:::info Self-service on every plan
+The Helm chart is open source (Apache 2.0) and self-service: install it yourself with the procedure
+below, no plan needed. For dedicated support, SLAs, and a managed rollout,
+[contact us](https://postgres.ai/contact) about Enterprise.
 :::
 
 Deploy PostgresAI monitoring on Kubernetes using Helm.
 
-:::info 0.15 chart defaults
-The Helm chart defaults have been prepared for PostgresAI 0.15 — review updated chart values
-before upgrading. Two things to note when moving to 0.15:
+:::info Chart version and image defaults
+The chart is still versioned 0.15.0 (`Chart.yaml` `version` and `appVersion`), and its
+`values.yaml` defaults the PostgresAI images (`pgwatch`, `monitoring-flask-backend`, `reporter`)
+to `0.15.0`, while the current release is 0.18.0. Pin the image tags of the release you deploy, as
+in the example below. Two chart defaults to note:
 
 - **VictoriaMetrics basic auth** is available but **off by default** (`victoriaMetrics.auth.enabled: false`).
   To protect the VictoriaMetrics endpoint, set `victoriaMetrics.auth.enabled: true` and supply the
@@ -50,32 +52,20 @@ kubectl create secret generic postgres-ai-monitoring-secrets \
   --from-literal=pgai-api-key='POSTGRES_AI_API_KEY' \
   --from-literal=db-password-my-db-password='DB_PASSWORD'
 
-# 3. Install the chart from a repository checkout
-git clone https://gitlab.com/postgres-ai/postgresai.git && cd postgresai
+# 3. Install the chart from a checkout of the release tag
+git clone --branch 0.18.0 https://gitlab.com/postgres-ai/postgresai.git && cd postgresai
 helm install postgres-ai-monitoring ./postgres_ai_helm \
   --namespace postgres-ai-mon \
   --values custom-values.yaml
 ```
 
-Installing from the chart directory in a repository checkout (the command above) works against
-any tag or branch and is the most reliable option.
+Install from the chart directory in a checkout of the release tag, as above. This is the supported
+way to install the chart.
 
-If you prefer a packaged `.tgz`, the chart is published as a release asset under a `helm-v<version>`
-tag. Once the matching release exists (for example `helm-v0.15.0`), open its
-[Releases page](https://gitlab.com/postgres-ai/postgresai/-/releases) and download the
-`postgres-ai-monitoring-chart.tgz` asset from that release, then install it:
-
-```bash
-helm install postgres-ai-monitoring postgres-ai-monitoring-chart.tgz \
-  --namespace postgres-ai-mon \
-  --values custom-values.yaml
-```
-
-:::note
-The packaged chart is registered as a generic release-asset link, so use the **Releases page**
-asset for the tag to obtain its download URL. There is no stable
-`/-/releases/<tag>/downloads/<file>` permalink for it. The `helm-v0.15.0` release may not be cut
-yet at the time of reading — in that case use the repository-checkout install above.
+:::note No packaged chart for current releases
+There is no packaged chart (`.tgz`) for 0.14.0 or later. The release pipeline publishes one only
+for a `helm-v<version>` tag, and no such tag exists yet. The last `.tgz` asset is on the 0.13
+release (December 2025) and predates the current chart; do not use it.
 :::
 
 The secret key for each monitored database must be named `db-password-<passwordSecretKey>`,
@@ -126,7 +116,7 @@ victoriaMetrics:
   image: victoriametrics/victoria-metrics:v1.140.0
   retentionPeriod: 336h  # default 336h (14 days); same as the Docker stack — set to match your plan
   scrapeInterval: 15s
-  # VictoriaMetrics basic auth (optional in 0.15; off by default). The VictoriaMetrics
+  # VictoriaMetrics basic auth (optional; off by default). The VictoriaMetrics
   # StatefulSet, Flask, and the reporter read the password from the chart secret key
   # `vm-auth-password`; the Grafana datasource instead reads the inline value
   # `secrets.vmAuth.password`, so enabling auth requires supplying both (see below).
@@ -140,17 +130,17 @@ victoriaMetrics:
 
 # pgwatch collectors. Two deployments are shipped: one writing to the Postgres
 # sink and one writing to the Prometheus (VictoriaMetrics) sink. Each runs a
-# single replica. The chart's values.yaml still defaults these images to 0.15.0;
+# single replica. The chart's values.yaml defaults these images to 0.15.0;
 # pin the release you deploy.
 pgwatchPostgres:
   enabled: true
-  image: postgresai/pgwatch:0.17.0
+  image: postgresai/pgwatch:0.18.0
   logLevel: error
   resources: {}
 
 pgwatchPrometheus:
   enabled: true
-  image: postgresai/pgwatch:0.17.0
+  image: postgresai/pgwatch:0.18.0
   logLevel: error
   resources: {}
 

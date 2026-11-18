@@ -32,7 +32,7 @@
     "category": "Work on issues",
     "rows": [
       {
-        "feature": "Work with your AI agent",
+        "feature": "Work with your AI agent (CLI, MCP, PromQL)",
         "values": {
           "startup": true,
           "scale": true,
@@ -117,7 +117,7 @@
         }
       },
       {
-        "feature": "Email alerts",
+        "feature": "Email notifications when PostgresAI opens or updates an issue",
         "values": {
           "startup": true,
           "scale": true,
@@ -125,7 +125,7 @@
         }
       },
       {
-        "feature": "Slack alerts",
+        "feature": "Slack notifications when PostgresAI opens or updates an issue",
         "values": {
           "startup": true,
           "scale": true,

@@ -46,25 +46,27 @@ Authenticate via browser and store the API key locally:
 <TabItem value="cli" label="Installed CLI" default>
 
 ```bash
-postgresai login
+postgresai auth login
 ```
 
 </TabItem>
 <TabItem value="npx" label="npx">
 
 ```bash
-npx postgresai@latest login
+npx postgresai@latest auth login
 ```
 
 </TabItem>
 <TabItem value="bunx" label="bunx">
 
 ```bash
-bunx postgresai@latest login
+bunx postgresai@latest auth login
 ```
 
 </TabItem>
 </Tabs>
+
+`postgresai login` is a short alias for `postgresai auth login`, with the same options.
 
 In the browser, pick one organization, or **All my organizations** to get a
 global token that works across all of them. With a global token, add
@@ -99,6 +101,18 @@ bunx postgresai@latest mcp install
 
 </TabItem>
 </Tabs>
+
+## Query metrics with PromQL
+
+Run a PromQL query on a monitoring instance's metric store:
+
+```bash
+npx postgresai@latest promql 'up' --project <project>
+```
+
+The platform queues the query and the instance answers on its next poll, so the first answer can
+take up to about 10 minutes; follow-ups within a minute are fast. Options, prerequisites and
+output: [`promql` in the CLI reference](/docs/reference-guides/postgresai-cli-reference#command-promql).
 
 ## Work with issues
 

@@ -24,7 +24,7 @@ cd postgresai
 # Configure stack secrets
 cp .env.example .env
 # Edit .env and set (at minimum):
-#   PGAI_TAG=0.17.0          # .env.example ships 0.14.0 — bump it to this release
+#   PGAI_TAG=0.18.0          # .env.example ships 0.14.0 — bump it to this release
 #   VM_AUTH_PASSWORD=...     # required (non-empty) — Grafana datasource won't provision without it
 #   REPLICATOR_PASSWORD=...  # required if you keep the demo target-db/target-standby services
 #   VM_*_AUTH_KEY=...        # 0.17+: VictoriaMetrics admin-endpoint keys (openssl rand -hex 32)
@@ -58,7 +58,7 @@ Create a `.env` file or set these environment variables:
 
 ```bash
 # Required
-PGAI_TAG=0.17.0
+PGAI_TAG=0.18.0
 REPLICATOR_PASSWORD=<generated-secret>
 
 # Required in 0.15: VictoriaMetrics basic auth. VM_AUTH_PASSWORD must be non-empty.
@@ -177,11 +177,11 @@ volumes:
 
 ## Image tags and supply chain
 
-All stack images are **version-pinned** in 0.15 — none use `:latest`. PostgresAI images
+All stack images are **version-pinned** — none use `:latest`. PostgresAI images
 (`pgwatch`, `monitoring-flask-backend`, `reporter`, configs) are pinned to `PGAI_TAG`, and the
 third-party images are pinned to specific releases (for example `grafana/grafana:12.3.2`,
 `victoriametrics/victoria-metrics:v1.140.0`, `postgres:17`). Pinning makes deployments
-reproducible and auditable and avoids silent, unreviewed upgrades — set `PGAI_TAG=0.17.0` to
+reproducible and auditable and avoids silent, unreviewed upgrades — set `PGAI_TAG=0.18.0` to
 deploy this release.
 
 ## Reliability and restart behavior

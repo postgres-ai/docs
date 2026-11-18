@@ -537,7 +537,8 @@ const Pricing = () => {
           <p>Async email / Slack support is separate from expert requests. Neither plan includes
             a dedicated channel. <a href="/contact">Contact us about expert requests and pack terms</a>.</p>
           <p>Both plans support agent workflows with Claude Code, Codex, MCP, and other supported
-            tools. Use prompts, CLI skills, or MCP as appropriate for your agent.</p>
+            tools. Use prompts, CLI skills, or MCP as appropriate for your agent. On every plan, agents
+            can query the metrics with PromQL: <code>npx pgai@latest promql</code>.</p>
         </section>
 
         {/* DBLab Add-on Section */}
@@ -748,7 +749,7 @@ const Pricing = () => {
             />
             <FAQItem 
               question="Do you support managed Postgres (RDS, Cloud SQL, etc.)?"
-              answer="Yes. PostgresAI works with self-hosted, AWS RDS, Google Cloud SQL, Azure, Supabase, and other managed providers."
+              answer="Yes. PostgresAI works with self-managed Postgres, AWS RDS, Google Cloud SQL, Azure, Supabase, and other managed providers."
             />
             <FAQItem 
               question="Where can I ask more questions?"

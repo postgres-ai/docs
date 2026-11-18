@@ -505,7 +505,10 @@ answer back.
   with `403` (`Instance queries are not available on this platform.`). A
   query that stays `queued` means the instance is not polling.
 - Expect latency: the first answer cannot arrive before the instance's
-  next poll, which by default happens roughly every 10 minutes (jittered).
+  next poll, which by default happens roughly every 10 minutes (±20%
+  jitter). Follow-ups are fast: after the instance posts an answer, it
+  polls every 5 seconds for about 1 minute, then falls back to the
+  10-minute interval. Ask the next question within that minute.
 - Access: any API token that reaches the instance's organization can run
   queries — a per-organization token, or a global token with `--org` —
   with no role check. A query can return any series stored in the
@@ -1237,7 +1240,8 @@ manually:
 
 **MCP tools exposed**
 
-The 0.15 MCP server registers 15 tools in four groups.
+The 0.18 MCP server registers 16 tools in five groups. It has no metrics tool: query metrics with
+[`promql`](#command-promql).
 
 *Issues:*
 
@@ -1260,6 +1264,10 @@ The 0.15 MCP server registers 15 tools in four groups.
 - `list_reports` — list checkup reports (metadata: id, project, status, timestamps; supports `before_date` filtering).
 - `list_report_files` — list the JSON files of a report, one per check (filter by `report_id`, `type`, or `check_id`).
 - `get_report_data` — fetch the JSON data of a report's checks. For findings and recommendations, use the issues tools.
+
+*Monitoring:*
+
+- `deploy_monitoring` — put a database under PostgresAI Cloud monitoring, the same as `postgresai mon deploy`. A billed box is provisioned only with `yes: true`; without it the result is `action_required` with the price.
 
 *Files:*
 
