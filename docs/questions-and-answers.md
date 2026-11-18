@@ -44,7 +44,7 @@ PostgresAI gives you actual solutions, not just alerts:
 > `CREATE INDEX idx_orders_customer_id ON orders(customer_id);`
 > — tested on a clone, with expert review available on request within plan or purchased-request limits.
 
-## What is postgres_ai monitoring?
+## What is PostgresAI monitoring?
 
 Open-source (Apache 2.0), enterprise-grade Postgres observability. It runs in your infrastructure and powers PostgresAI's analysis.
 
@@ -54,7 +54,7 @@ Features:
 - **Wait event analysis** — similar to AWS RDS Performance Insights
 - **Health check reports** — actionable recommendations
 
-More: [postgres_ai monitoring documentation](/docs/monitoring)
+More: [PostgresAI monitoring documentation](/docs/monitoring) and the [product page](/products/monitoring)
 
 ## What is DBLab Engine?
 
@@ -82,7 +82,7 @@ Issues can be turned into pull requests using AI coding tools (Cursor, etc.).
 
 **Starter is $16/month per cluster**: primary only, Full monitoring, 14-day retention, and no included human expert requests. **Scale is $512/month per cluster**: one primary + up to 5 replicas in one cluster, 13-month retention, Grafana dashboards, Private RDS / PrivateLink, Trend analysis (Performance Cliffs and Walls), and two human expert requests per month on two topics.
 
-Both include Checkup reports, Work with your AI agent, Issues and action plans, historical root cause analysis, email and Slack alerts, and async email / Slack support. Scale has a response guarantee within 24 business hours and a one-week issue conversation. Neither plan includes a dedicated channel.
+Both include Checkup reports, Work with your AI agent, Issues and action plans, historical root cause analysis, email and Slack notifications when PostgresAI opens or updates an issue, and async email / Slack support. Scale has a response guarantee within 24 business hours and a one-week issue conversation. Neither plan includes a dedicated channel.
 
 Included monthly expert requests expire at month end and do not roll over or accumulate. Purchased-pack terms are separate; [contact us](/contact) for details.
 
@@ -115,12 +115,10 @@ Yes. PostgresAI works with:
 1. [Install PostgresAI monitoring](/docs/postgresai-howtos/install-postgres-ai-monitoring-from-postgresai-console)
 2. Start receiving Issues and fixes
 
-**Live demo**: https://demo.postgres.ai (login: demo / password: demo)
-
 **Contact**: nik@postgres.ai
 
 ## Where can I learn more?
 
 - [Vision & roadmap](/docs/roadmap) — PostgresAI vision and roadmap
-- [postgres_ai monitoring](/docs/monitoring) — Observability and monitoring
+- [PostgresAI monitoring](/docs/monitoring) — Observability and monitoring
 - [Postgres how-tos](/docs/postgres-howtos) — 100+ practical guides

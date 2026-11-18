@@ -1,0 +1,120 @@
+/* Blog posts have two measures: a 600px reading column, and the available
+ * article width for figures, tables and video. Keep both on the same axis.
+ * This file overrides, without modifying, the shared long-read stylesheet.
+ */
+@media screen {
+  .blog-post-page .container:has(> .row > main > article) {
+    width: 100%;
+    max-width: 1200px;
+    padding-inline: 24px;
+  }
+
+  .blog-post-page .container > .row:has(> main > article) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 240px;
+    gap: 32px;
+    margin-inline: 0;
+  }
+
+  .blog-post-page .container > .row > main.col:has(> article),
+  .blog-post-page .container > .row:has(> main > article) > .col--2 {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+
+  .blog-post-page .container > .row:has(> main > article):not(:has(> .col--2)) {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 900px;
+    margin-inline: auto;
+  }
+
+  .blog-post-page .col--2 nav[aria-label='Article contents'] {
+    overflow-wrap: anywhere;
+  }
+}
+
+/* The existing mobile control remains inline from 997px to 1199px;
+ * below 997px its existing JavaScript also docks it in the navbar. */
+@media screen and (max-width: 1199px) {
+  .blog-post-page .container:has(> .row > main > article) { max-width: 948px; }
+  .blog-post-page .container > .row:has(> main > article) { grid-template-columns: minmax(0, 1fr); }
+  .blog-post-page .container > .row:has(> main > article) > .col--2 { display: none; }
+}
+
+.blog-post-page article:has(.pgai-longread) {
+  --pgai-measure: 600px;
+}
+
+.blog-post-page article:has(.pgai-longread) > header {
+  width: 100%;
+  max-width: var(--pgai-measure);
+  margin-inline: auto;
+  text-align: start;
+}
+
+.blog-post-page article:has(.pgai-longread) > header h1 {
+  max-width: none;
+  margin-inline: 0;
+  text-wrap: pretty;
+}
+
+.blog-post-page article:has(.pgai-longread) > header :is(.row, .avatar) {
+  justify-content: flex-start;
+}
+
+.blog-post-page article:has(.pgai-longread) > div:has([aria-controls='blog-mobile-toc']) {
+  max-width: var(--pgai-measure);
+  margin-inline: auto;
+}
+
+/* Every breakout fills its article, with equal overhang around the prose. */
+#__blog-post-container .pgai-longread > :is(figure, .pgai-hero, .pgai-table, table, iframe),
+#__blog-post-container .pgai-longread .pgai-hero-art {
+  width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+body #__blog-post-container .pgai-longread .pgai-hero-deck {
+  width: 100%;
+  max-width: var(--pgai-measure);
+  margin-inline: auto;
+  text-align: start;
+  text-wrap: pretty;
+}
+
+/* Hanging markers keep the list text on the same edge as paragraphs.
+ * The page's 24px gutter leaves room for markers on a phone, too. */
+#__blog-post-container .pgai-longread > :is(ul, ol) {
+  padding-inline-start: 0;
+  list-style-position: outside;
+}
+#__blog-post-container .pgai-longread > :is(ul, ol) > li { padding-inline-start: 0; }
+/* Below the width where the column has free margins, hanging markers sit on
+ * the screen edge. Indent lists inside the column instead. */
+@media (max-width: 767px) {
+  #__blog-post-container .pgai-longread > :is(ul, ol) { padding-inline-start: 1.4em; }
+}
+
+/* Long comments and commands remain readable without a hidden horizontal
+ * tail. Preserve source newlines; wrap only when a line exceeds its frame. */
+.blog-post-page #__blog-post-container pre,
+.blog-post-page #__blog-post-container pre code,
+.blog-post-page #__blog-post-container pre .token-line {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.blog-post-page #__blog-post-container pre code { min-width: 0; }
+
+#__blog-post-container .pgai-longread > .pgai-table > table { width: 100%; }
+
+@media (max-width: 600px) {
+  /* A long SQL phrase must not consume the phone's whole table viewport. */
+  body #__blog-post-container .pgai-longread .pgai-table table td:first-child code {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}

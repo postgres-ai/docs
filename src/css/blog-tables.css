@@ -1,0 +1,125 @@
+/*
+ * One table style for every blog post (Nik, 2026-11-17): the "Blog post
+ * tables" rules in custom.css, as in blog/20261105-uuidv4-vs-uuidv7.md. A
+ * 1px rounded border, a tinted header row, horizontal rules only, the site
+ * monospace, numbers right-aligned through the Markdown separator row (---:).
+ *
+ * The long-read block of custom.css styles tables in its own way (a framed
+ * grid in <div className="pgai-table">, and a scroll-shadow frame for a bare
+ * table in .pgai-longread). That block is shared byte for byte with other
+ * long-read branches, so it stays as it is, and this file, loaded after it,
+ * brings both cases back to the common style. A table wider than the column
+ * still scrolls inside its own box, never the page.
+ */
+
+/* the wrapper: no frame or grid of its own, only spacing */
+#__blog-post-container .pgai-table,
+#__blog-post-container .pgai-longread .pgai-table,
+html[data-theme='dark'] #__blog-post-container .pgai-longread .pgai-table {
+  margin-block: 1.5rem 2rem;
+  border: 0;
+  background: none;
+  overflow: visible;
+}
+
+/* the table itself: the same box as a table outside the long read */
+#__blog-post-container .pgai-table table,
+#__blog-post-container .pgai-longread .pgai-table table,
+#__blog-post-container .pgai-longread > table,
+html[data-theme='dark'] #__blog-post-container .pgai-longread > table {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 0 var(--ifm-leading);
+  overflow-x: auto;
+  border: 1px solid var(--pgai-block-border);
+  border-radius: 8px;
+  border-collapse: collapse;
+  border-spacing: 0;
+  background: none;
+  font-size: .9em !important;
+}
+#__blog-post-container .pgai-longread > table { margin-inline: auto; }
+#__blog-post-container .pgai-table thead,
+#__blog-post-container .pgai-longread > table thead {
+  background-color: var(--ifm-color-emphasis-100);
+}
+#__blog-post-container .pgai-table tr {
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+#__blog-post-container .pgai-table thead tr {
+  border-bottom: 1px solid var(--ifm-color-emphasis-300);
+}
+#__blog-post-container .pgai-table tbody tr:last-child { border-bottom: 0; }
+
+/* cells: the default padding, no grid, no sticky bold first column */
+#__blog-post-container .pgai-table :is(th, td),
+#__blog-post-container .pgai-longread .pgai-table :is(th, td),
+#__blog-post-container .pgai-longread .pgai-table :is(th, td):first-child,
+#__blog-post-container .pgai-longread .pgai-table thead th {
+  position: static;
+  min-width: 0;
+  padding: .5rem 1rem;
+  border: 0;
+  background: none;
+  font-weight: inherit;
+}
+#__blog-post-container .pgai-table th,
+#__blog-post-container .pgai-longread .pgai-table thead th,
+#__blog-post-container .pgai-longread .pgai-table thead th:first-child {
+  font-weight: 600;
+  vertical-align: bottom;
+}
+#__blog-post-container .pgai-longread > table :is(th, td):first-child { max-width: none; }
+
+/* dark: the same tints as the default rules */
+[data-theme='dark'] #__blog-post-container .pgai-table thead,
+[data-theme='dark'] #__blog-post-container .pgai-longread > table thead {
+  background-color: var(--ifm-color-emphasis-200);
+}
+[data-theme='dark'] #__blog-post-container .pgai-table thead tr {
+  border-bottom-color: var(--ifm-color-emphasis-400);
+}
+
+/* Put the scroll cue on the table: it is the scrolling element, while
+ * .pgai-table is only a wrapper. Local covers hide each shadow at that
+ * edge; scrolling reveals the opposite edge's shadow in either theme. */
+#__blog-post-container { --pgai-table-surface: #fff; --pgai-table-shadow: rgb(0 0 0 / .32); }
+[data-theme='dark'] #__blog-post-container {
+  --pgai-table-surface: var(--ifm-background-color);
+  --pgai-table-shadow: rgb(255 255 255 / .3);
+}
+#__blog-post-container table,
+html[data-theme] #__blog-post-container .pgai-table table,
+html[data-theme] #__blog-post-container .pgai-longread > table {
+  background:
+    linear-gradient(to right, var(--pgai-table-surface) 40%, transparent) left / 40px 100% no-repeat local,
+    linear-gradient(to left, var(--pgai-table-surface) 40%, transparent) right / 40px 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, var(--pgai-table-shadow), transparent) left / 16px 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, var(--pgai-table-shadow), transparent) right / 16px 100% no-repeat scroll;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ifm-color-emphasis-500) var(--pgai-table-surface);
+}
+#__blog-post-container table::-webkit-scrollbar { height: 10px; }
+#__blog-post-container table::-webkit-scrollbar-thumb {
+  border: 2px solid var(--pgai-table-surface);
+  border-radius: 5px;
+  background: var(--ifm-color-emphasis-500);
+}
+
+/* print: light, the whole table on the page */
+@media print {
+  #__blog-post-container table,
+  #__blog-post-container .pgai-table table,
+  #__blog-post-container .pgai-longread > table {
+    max-width: 100%;
+    overflow: visible;
+    border-color: #c9c6bf !important;
+    background: none !important;
+  }
+  #__blog-post-container table thead,
+  #__blog-post-container .pgai-table thead {
+    background-color: #f5f6f7 !important;
+  }
+  #__blog-post-container table tr { border-bottom-color: #e3e3e3 !important; }
+}

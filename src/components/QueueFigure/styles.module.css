@@ -1,0 +1,626 @@
+/*
+ * Fig. 2: the invalidation queue in five steps (index.tsx, Ring.tsx).
+ * The media box of the figure gives the frame and the background. The
+ * colours and the typeface are those of the post's SVG figures. The print
+ * style sheet (src/css/print-link-refs.css) sets the --qf-* variables of
+ * .root to their light values, so the names stay as they are.
+ *
+ * No <p>, <li>, <table> or <code> in the figure: the blog styles those for
+ * prose.
+ */
+.root {
+  --qf-bg: var(--pgai-block-bg);
+  --qf-ink: #141414;
+  --qf-muted: #5f5f5a;
+  --qf-grid: #e4e3df;
+  --qf-axis: #8a8984;
+  --qf-accent: #ff6111; /* invalidation messages, as in the hero */
+  --qf-accent-ink: #c4470a;
+  --qf-red: #b3261e; /* a cache reset: always with the cross and the word */
+  --qf-bar: #8a8984;
+  --qf-fill: #bdbcb5;
+  --qf-free: #ebeae5;
+  padding: 18px 22px 16px;
+  color: var(--qf-ink);
+  font-family: var(--pgai-caption-font);
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5;
+}
+
+html[data-theme='dark'] .root {
+  --qf-ink: #e6e6e1;
+  --qf-muted: #a3a39d;
+  --qf-grid: #34363b;
+  --qf-axis: #8f8e88;
+  --qf-accent: #ff7a3d;
+  --qf-accent-ink: #ff7a3d;
+  --qf-red: #f2867a;
+  --qf-bar: #8f8e88;
+  --qf-fill: #5c5b57;
+  --qf-free: #34363b;
+}
+
+/* a name from the source code or SQL */
+.mono {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.86em;
+}
+
+/* ---------- layout: the ring on the left, the words on the right ---------- */
+
+.player {
+  display: grid;
+  grid-template-columns: minmax(0, 1.14fr) minmax(0, 1fr);
+  grid-template-areas:
+    'controls controls'
+    'stage text'
+    'stage measured'
+    'key key'
+    'note note';
+  column-gap: 24px;
+}
+
+.controls {
+  grid-area: controls;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-right: auto;
+}
+
+/* the words of the current step lie over the unseen words of all steps */
+.text {
+  grid-area: text;
+  display: grid;
+  align-items: start;
+  padding-top: 6px;
+}
+
+.now,
+.ghost {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+
+.ghost {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.stage {
+  grid-area: stage;
+  align-self: center;
+}
+
+.count {
+  margin-bottom: 4px;
+  color: var(--qf-muted);
+  font-size: 13px;
+}
+
+.title {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.36;
+  text-wrap: pretty;
+}
+
+.detail {
+  margin-top: 8px;
+  color: var(--qf-muted);
+  font-size: 14px;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+/* ---------- controls ---------- */
+
+.button {
+  appearance: none;
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 5px 11px;
+  border: 1px solid var(--qf-axis);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--qf-ink);
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.button b {
+  font-weight: 600;
+}
+
+.button:hover:not(:disabled) {
+  border-color: var(--qf-ink);
+}
+
+.button[aria-current='step'] {
+  border-color: var(--qf-ink);
+  background: var(--qf-ink);
+  color: var(--qf-bg);
+}
+
+.button:disabled {
+  border-color: var(--qf-grid);
+  color: var(--qf-axis);
+  cursor: default;
+}
+
+.button:focus-visible,
+.pick:focus-visible {
+  outline: 2px solid var(--qf-accent-ink);
+  outline-offset: 2px;
+}
+
+.play {
+  min-width: 68px;
+}
+
+/* ---------- the ring ---------- */
+
+.ring {
+  display: block;
+  width: 100%;
+  height: auto;
+  font-family: var(--pgai-caption-font);
+}
+
+.track,
+.arc,
+.cells,
+.signal,
+.path,
+.flash {
+  fill: none;
+}
+
+.track {
+  stroke: var(--qf-free);
+}
+
+.arc {
+  stroke: var(--qf-accent);
+}
+
+.cells {
+  stroke: var(--qf-bg);
+}
+
+.arcFill {
+  fill: var(--qf-accent);
+}
+
+.freeFill {
+  fill: var(--qf-free);
+}
+
+.mark {
+  stroke: var(--qf-ink);
+  stroke-width: 1.5;
+}
+
+.writer,
+.active,
+.signalHead {
+  fill: var(--qf-ink);
+}
+
+/* the writer when it waits for the lock: the outline only */
+.waiting {
+  fill: var(--qf-bg);
+  stroke: var(--qf-ink);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}
+
+.stem {
+  stroke: var(--qf-ink);
+  stroke-width: 1.7;
+}
+
+.stemIdle {
+  fill: none;
+  stroke: var(--qf-axis);
+  stroke-width: 1.4;
+}
+
+.idle {
+  fill: var(--qf-bg);
+  stroke: var(--qf-axis);
+  stroke-width: 1.8;
+}
+
+.cross,
+.crossSmall {
+  fill: none;
+  stroke: var(--qf-red);
+  stroke-width: 2.3;
+  stroke-linecap: round;
+}
+
+/* step 5: 100 lapped sessions, one of up to fifty in a row */
+.crossSmall {
+  stroke-width: 1.9;
+}
+
+/* the session that has the signal: the same pin, in ink */
+.woken {
+  fill: var(--qf-bg);
+  stroke: var(--qf-ink);
+  stroke-width: 2.2;
+}
+
+.flash {
+  stroke: var(--qf-red);
+  stroke-width: 1.6;
+}
+
+.signal {
+  stroke: var(--qf-ink);
+  stroke-width: 1.5;
+}
+
+.path {
+  stroke: var(--qf-axis);
+  stroke-width: 1.5;
+  stroke-dasharray: 2 4;
+}
+
+.pathHead {
+  fill: var(--qf-axis);
+}
+
+/* text of the drawing: a halo in the background colour keeps it clear of lines */
+.label,
+.tick,
+.small,
+.big {
+  paint-order: stroke;
+  stroke: var(--qf-bg);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+.label {
+  fill: var(--qf-ink);
+  font-size: 12.5px;
+  font-weight: 600;
+  text-anchor: middle;
+}
+
+/* the label of a pin: it begins with a small copy of the pin */
+.fromStart {
+  text-anchor: start;
+}
+
+.tick {
+  fill: var(--qf-muted);
+  font-size: 12px;
+}
+
+.small {
+  fill: var(--qf-muted);
+  font-size: 11.5px;
+  text-anchor: middle;
+}
+
+.big {
+  fill: var(--qf-ink);
+  font-size: 20px;
+  font-weight: 700;
+  text-anchor: middle;
+}
+
+/* ---------- the measured numbers ---------- */
+
+/* in every step, under the words: what the idle sessions cost */
+.measured {
+  grid-area: measured;
+  align-self: end;
+  margin-top: 14px;
+}
+
+.measuredHead {
+  color: var(--qf-muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.measuredFoot {
+  margin-top: 6px;
+  color: var(--qf-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.table {
+  margin-top: 6px;
+  border-top: 1px solid var(--qf-grid);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 2.4fr) repeat(4, minmax(0, 1fr));
+  border-bottom: 1px solid var(--qf-grid);
+}
+
+.rowLabel {
+  padding: 5px 6px 6px 0;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.rowLabel small {
+  display: block;
+  color: var(--qf-muted);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  justify-content: center;
+  padding: 4px 4px 6px;
+  border-top: 2px solid transparent;
+}
+
+/* the chosen run: a tint, a rule on top and bold figures */
+.cell.on {
+  border-top-color: var(--qf-ink);
+  background: var(--qf-free);
+}
+
+.value {
+  color: var(--qf-muted);
+  font-size: 14px;
+  white-space: nowrap;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.on .value {
+  color: var(--qf-ink);
+  font-weight: 700;
+}
+
+.bar {
+  display: block;
+  height: 5px;
+}
+
+.barInk {
+  background: var(--qf-axis);
+}
+
+/* the share of the time that the writers wait: hollow, as the writer that waits */
+.barLock {
+  box-sizing: border-box;
+  border: 1.5px solid var(--qf-ink);
+}
+
+/* resets are events: a dotted bar, so it is not read as the lock's share */
+.barReset {
+  background: repeating-linear-gradient(
+    90deg,
+    var(--qf-red) 0 3px,
+    transparent 3px 5px
+  );
+}
+
+.pick {
+  appearance: none;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 30px;
+  padding: 3px 0;
+  border: 1px solid var(--qf-axis);
+  border-radius: 2px;
+  background: var(--qf-bg);
+  color: var(--qf-ink);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.pick:hover {
+  border-color: var(--qf-ink);
+}
+
+.pick[aria-pressed='true'] {
+  border-color: var(--qf-ink);
+  background: var(--qf-ink);
+  color: var(--qf-bg);
+}
+
+/* ---------- the key and the note ---------- */
+
+.key {
+  grid-area: key;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px 18px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--qf-grid);
+  color: var(--qf-muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.key > span {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.glyph {
+  flex: none;
+  width: 14px;
+  height: 14px;
+}
+
+.note {
+  grid-area: note;
+  margin-top: 6px;
+  color: var(--qf-muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+/* ---------- all steps, still: print ---------- */
+
+.board {
+  display: none;
+}
+
+.panel {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 4px 20px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--qf-grid);
+  break-inside: avoid;
+}
+
+.panel .title {
+  font-size: 15px;
+}
+
+.panel .detail {
+  margin-top: 4px;
+  font-size: 13px;
+}
+
+@media (pointer: coarse) {
+  .button,
+  .pick {
+    min-height: 44px;
+  }
+
+  .steps .button {
+    min-width: 44px;
+  }
+}
+
+/* A narrow column: the title, the ring, then the rest, one under the other */
+@media (max-width: 719px) {
+  .root {
+    padding: 14px 14px 12px;
+  }
+
+  .player {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'controls'
+      'head'
+      'stage'
+      'more'
+      'measured'
+      'key'
+      'note';
+  }
+
+  /* the title goes over the ring and the rest under it */
+  .text,
+  .now {
+    display: contents;
+  }
+
+  .ghost {
+    display: none;
+  }
+
+  .controls {
+    margin-bottom: 10px;
+  }
+
+  /* the step buttons are numbers, in a row of their own; the name of the
+     step is over its title */
+  .steps {
+    flex: 1 0 100%;
+    margin-right: 0;
+  }
+
+  .steps .button span {
+    display: none;
+  }
+
+  .play {
+    margin-left: auto;
+  }
+
+  .steps .button {
+    min-width: 40px;
+  }
+
+  .head {
+    grid-area: head;
+    /* room for four lines, so the ring keeps its place from step to step */
+    min-height: 116px;
+  }
+
+  .more {
+    grid-area: more;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .stage {
+    max-width: 400px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .detail {
+    margin-top: 0;
+  }
+
+  .panel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .panel .ring {
+    max-width: 260px;
+    margin: 0 auto;
+  }
+}
+
+@media print {
+  .player {
+    display: none;
+  }
+
+  .board {
+    display: block;
+  }
+
+  .root {
+    padding: 8px 14px;
+  }
+}

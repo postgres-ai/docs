@@ -31,7 +31,7 @@ Human or agent, the same rule applies: review the evidence and approve the chang
         <li><a href='/docs/postgresai-howtos/postgresai-cli'>PostgresAI CLI</a></li>
         <li><a href='/docs/postgresai-howtos/how-to-install-mcp'>Install MCP</a></li>
         <li><a href='/docs/postgresai-howtos/how-to-work-with-issues'>Work with Issues</a></li>
-        <li><a href='https://demo.postgres.ai'>Live demo</a></li>
+        <li><a href='/docs/monitoring'>Monitoring docs</a></li>
       </ul>
     </td>
     <td>

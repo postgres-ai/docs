@@ -22,21 +22,22 @@ export const ORGANIZATION = {
   ],
 }
 
+// The monitoring product page (src/pages/products/monitoring.md).
+export const MONITORING_JSON_LD: Record<string, unknown> = {
+  '@type': 'SoftwareApplication',
+  name: 'PostgresAI monitoring',
+  url: 'https://postgres.ai/products/monitoring',
+  description:
+    'AI-native PostgreSQL observability: monitoring, health checks, and root cause analysis, built for humans and AI agents.',
+  applicationCategory: 'DeveloperApplication',
+  license: 'https://www.apache.org/licenses/LICENSE-2.0',
+  sameAs: ['https://gitlab.com/postgres-ai/postgresai'],
+  publisher: ORGANIZATION,
+}
+
 // Product docs pages that get a SoftwareApplication block, keyed by doc id.
 // Kept here rather than in the markdown so /raw/docs/ stays clean.
-export const DOC_JSON_LD: Record<string, Record<string, unknown>> = {
-  'monitoring/index': {
-    '@type': 'SoftwareApplication',
-    name: 'PostgresAI monitoring',
-    url: 'https://postgres.ai/docs/monitoring',
-    description:
-      'AI-native PostgreSQL observability: monitoring, health checks, and root cause analysis, built for humans and AI agents.',
-    applicationCategory: 'DeveloperApplication',
-    license: 'https://www.apache.org/licenses/LICENSE-2.0',
-    sameAs: ['https://gitlab.com/postgres-ai/postgresai'],
-    publisher: ORGANIZATION,
-  },
-}
+export const DOC_JSON_LD: Record<string, Record<string, unknown>> = {}
 
 type Props = { data: Record<string, unknown> }
 

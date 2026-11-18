@@ -41,7 +41,7 @@ and `pgai` (short wrapper). `npm install -g postgresai` installs both the
 ## Authenticate
 
 ```bash
-npx pgai@latest login
+npx pgai@latest auth login
 ```
 
 This opens your browser (OAuth with PKCE), asks you to pick an organization,
@@ -266,7 +266,7 @@ History** row link to the same page.
   instance directly with `--instance-id <id>`.
 - **`403 Forbidden` / "Joe API v2 requires the All Features role"** — ask an
   org admin to grant your user the **AllFeaturesUser** (or **Admin**) role.
-- **`401`** — your stored API key is missing or expired; re-run `pgai login`.
+- **`401`** — your stored API key is missing or expired; re-run `pgai auth login`.
 - **"This command needs an organization, and you are signed in with a global
   token"** — pass `--org <alias>` or `--org-id <id>` (or set `PGAI_ORG`); run
   `pgai orgs` to list the organizations your token can reach.

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358 346" width="358" height="346" role="img" aria-labelledby="t d">
+<title id="t">Transactions per second: the same work with and without a temp table</title>
+<desc id="d">Postgres 18.6, 16 vCPU, 32 clients, 0 idle sessions, median of 4 runs. CTE with no table: 86997 TPS. Temp table created once per session with ON COMMIT DELETE ROWS: 17866. Created once, TRUNCATE in each transaction: 4405. CREATE TEMP TABLE with ON COMMIT DROP in each transaction: 3783. Created once, DELETE in each transaction: 1514.</desc>
+<style>text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}</style>
+<rect width="358" height="346" rx="10" fill="#fcfcfb"/>
+<text x="14" y="32" font-size="14" fill="#141414" font-weight="600">CTE, no table</text>
+<rect x="14" y="40" width="266" height="18" fill="#141414" rx="2"/>
+<text x="288" y="54" font-size="14" fill="#141414" font-weight="700">86997</text>
+<text x="14" y="88" font-size="14" fill="#5f5f5a">once per session, ON COMMIT DELETE ROWS</text>
+<rect x="14" y="96" width="54.6" height="18" fill="#8a8984" rx="2"/>
+<text x="76.6" y="110" font-size="14" fill="#141414" font-weight="700">17866</text>
+<text x="14" y="144" font-size="14" fill="#5f5f5a">once per session, TRUNCATE each transaction</text>
+<rect x="14" y="152" width="13.5" height="18" fill="#8a8984" rx="2"/>
+<text x="35.5" y="166" font-size="14" fill="#141414" font-weight="700">4405</text>
+<text x="14" y="200" font-size="14" fill="#141414" font-weight="600">ON COMMIT DROP, each transaction</text>
+<rect x="14" y="208" width="11.6" height="18" fill="#ff6111" rx="2"/>
+<text x="33.6" y="222" font-size="14" fill="#c4470a" font-weight="700">3783</text>
+<text x="14" y="256" font-size="14" fill="#5f5f5a">once per session, DELETE each transaction</text>
+<rect x="14" y="264" width="4.6" height="18" fill="#8a8984" rx="2"/>
+<text x="26.6" y="278" font-size="14" fill="#141414" font-weight="700">1514</text>
+<text x="14" y="316" font-size="14" fill="#5f5f5a">TPS, Postgres 18.6, 16 vCPU, 32 clients,</text>
+<text x="14" y="334" font-size="14" fill="#5f5f5a">0 idle sessions, median of 4 runs</text>
+</svg>

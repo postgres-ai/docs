@@ -19,7 +19,7 @@ Set up PostgresAI monitoring for your Supabase databases using the built-in Supa
 The Supabase integration uses OAuth to automatically discover your Supabase projects and provision
 monitoring — no manual database credentials or network configuration required.
 
-Choose **Starter ($16/cluster/month)** or **Scale ($512/cluster/month)**. Both include Full monitoring, Checkup reports, agent workflows, issues and action plans, email/Slack alerts, and async support.
+Choose **Starter ($16/cluster/month)** or **Scale ($512/cluster/month)**. Both include Full monitoring, Checkup reports, agent workflows, issues and action plans, email and Slack notifications when PostgresAI opens or updates an issue, and async support.
 
 Starter covers the primary node with 14-day retention and no included expert requests. Scale covers one primary + up to 5 replicas in one cluster with 13-month retention, Grafana dashboards, Private RDS / PrivateLink, Trend analysis (Performance Cliffs and Walls), and two human expert requests per month on two topics. Scale responses are within 24 business hours, with a one-week issue conversation. Both plans offer two additional expert requests for $500 as a one-off pack; [contact us](/contact) for pack terms.
 
@@ -56,12 +56,11 @@ During setup, you are redirected to Supabase to authorize PostgresAI.
 Review the requested permissions and select the organization you want to monitor, then click
 **Authorize PostgresAI**.
 
-The requested permissions include:
+PostgresAI asks for three scopes: **Projects:read**, **Database:write** and **Secrets:read**.
 
-- **Read and Write** access to Postgres configurations, SQL snippets, SSL enforcement
-  configurations, and TypeScript schema types.
-- **Read** access to the organization and all its members.
-- **Read** access to project metadata, upgrade status, network restrictions, and network bans.
+Supabase asks for Database write access because PostgresAI creates the monitoring role through the
+Supabase Management API. For host stats, PostgresAI also reads the project's secret key on demand.
+It never stores the key, and each use is audit-logged.
 
 [![Supabase OAuth: Authorize API access for PostgresAI](/assets/supabase-monitoring/supabase-monitoring-3.png)](/assets/supabase-monitoring/supabase-monitoring-3.png)
 
@@ -101,7 +100,7 @@ While waiting, you can set up the CLI tools:
 npm i -g postgresai
 
 # Authenticate
-postgresai auth
+postgresai auth login
 
 # Set up MCP for your AI coding tool (Cursor, Claude Code, etc.)
 postgresai mcp install
@@ -143,8 +142,13 @@ your Supabase database. Key panels to check first:
 
 ## Step 8. Review first issues
 
-After about 30 minutes, PostgresAI generates the first automated issue reports. Navigate to
+Monitoring is ready about 10 minutes after Deploy, and the first issues arrive within about 30 minutes. Navigate to
 **Issues** in PostgresAI Console to see detected problems and recommended actions.
+
+After the first checkup, a checkup runs every day. Each issue covers one checkup type: a later
+daily checkup does not open a second issue of the same type, and does not reopen one you closed.
+Every Monday (from 15:00 UTC), a weekly review issue arrives with the week's verdict, actions and
+top queries.
 
 [![PostgresAI Console: Issues page with auto-generated reports](/assets/supabase-monitoring/supabase-monitoring-8.png)](/assets/supabase-monitoring/supabase-monitoring-8.png)
 
@@ -170,23 +174,42 @@ managing issues, assigning team members, and integrating with AI coding tools.
 
 ### What database role is created and what permissions does it have?
 
-The monitoring user is created automatically during Supabase setup with read-only access to metadata
-only. To review the exact SQL statements used to create the monitoring role:
+Supabase setup creates, through the Supabase Management API:
+
+- the role `postgres_ai_mon`, a member of `pg_monitor`;
+- the schema `postgres_ai`;
+- the extension `pg_stat_statements`, if it is not there yet;
+- the views `postgres_ai.pg_statistic` and `public.pg_statistic`;
+- the `SECURITY DEFINER` function `postgres_ai.table_describe`.
+
+The CLI prints the SQL of the same steps for other databases (there, `table_describe` is
+`SECURITY INVOKER` and there is no `public.pg_statistic`):
 
 ```bash
 npx postgresai@latest prepare-db --print-sql
 ```
 
-This shows all `grant` statements and confirms the minimal, read-only nature of the permissions.
+`npx postgresai@latest unprepare-db` drops the role, the `postgres_ai.pg_statistic` view and the
+`table_describe` function. It leaves the `postgres_ai` schema, `public.pg_statistic` and
+`pg_stat_statements` in place.
 
 ### What data is collected from my database?
 
-PostgresAI monitoring collects only database metadata — no actual data or query parameters. To
-review exactly what metrics are collected, examine the metric definitions:
+Metadata: system view statistics, wait events, object names, and query texts with `$1`, `$2` in
+place of parameters. No table data and no application data.
+
+One exception is on by default: the health check includes the first 500 characters of the query
+that holds the xmin horizon, as written, so it can contain literal values. Set
+`postgresai.capture_query_preview=off` to disable it.
+
+For host stats, PostgresAI reads the project's secret key on demand, never stores it, and logs
+each use.
+
+To review exactly what metrics are collected, examine the metric definitions:
 
 - **Prometheus sink metrics**:
-  [metrics.yml (pgwatch-prometheus)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.17.0/config/pgwatch-prometheus/metrics.yml)
+  [metrics.yml (pgwatch-prometheus)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.18.0/config/pgwatch-prometheus/metrics.yml)
 - **PostgreSQL sink metrics** (including normalized queries):
-  [metrics.yml (pgwatch-postgres)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.17.0/config/pgwatch-postgres/metrics.yml)
+  [metrics.yml (pgwatch-postgres)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.18.0/config/pgwatch-postgres/metrics.yml)
 
 See also: [data privacy details](/docs/monitoring/#data-privacy-metadata-only).

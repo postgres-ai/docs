@@ -170,8 +170,8 @@ module.exports = {
           activeBaseRegex: '^/products',
           items: [
             {
-              label: 'postgres_ai monitoring',
-              to: '/docs/monitoring'
+              label: 'PostgresAI monitoring',
+              to: '/products/monitoring'
             },
             {
               label: 'DBLab Engine',
@@ -357,8 +357,8 @@ module.exports = {
               href: SIGN_IN_URL,
             },
             {
-              label: 'postgres_ai monitoring',
-              to: '/docs/monitoring',
+              label: 'PostgresAI monitoring',
+              to: '/products/monitoring',
             },
             {
               label: 'DBLab Engine',
@@ -696,6 +696,10 @@ module.exports = {
                 .replace(/<\/?[A-Za-z][^>]*>/g, ''),
             }),
           editUrl: 'https://gitlab.com/postgres-ai/docs/-/edit/master/',
+          // Print/PDF only: "[n]" after each link and a "Links" list with
+          // the full URLs at the end of the post (src/css/print-link-refs.css).
+          // Canonical host, not URL: a preview build must not print its own host.
+          remarkPlugins: [[require('./plugins/print-link-refs'), {siteUrl: 'https://postgres.ai'}]],
           path: 'blog',
           onInlineTags: 'ignore',
           routeBasePath: 'blog',
@@ -729,7 +733,12 @@ module.exports = {
           },
         },
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: [
+            require.resolve('./src/css/custom.css'),
+            require.resolve('./src/css/print-link-refs.css'),
+            require.resolve('./src/css/blog-tables.css'),
+            require.resolve('./src/css/blog-layout.css'),
+          ],
         },
         sitemap: {
           // Tag listings, blog pagination and search only dilute the sitemap.

@@ -1,0 +1,97 @@
+/* The still frames give the box its size; the canvas covers them.
+   The shared blog layout owns the hero width and alignment. */
+.wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+
+.canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Pause / Play (WCAG 2.2.2): a 44 px target around a small quiet label */
+.pause {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 6px;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  /* hidden until the cover is hovered or focused; it keeps its place, so
+     nothing shifts when it appears */
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.wrap:hover .pause,
+.wrap:focus-within .pause,
+.pause:focus-visible {
+  opacity: 1;
+}
+
+/* Touch screens have no hover: keep the button visible, but quiet */
+@media (hover: none) {
+  .pause {
+    opacity: 0.6;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pause {
+    transition: none;
+  }
+}
+
+@media print {
+  .pause {
+    display: none;
+  }
+}
+
+.face {
+  padding: 4px 10px;
+  border: 1px solid #9a9993;
+  border-radius: 2px;
+  background: rgb(252 252 251 / 0.85);
+  color: #141414;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.pause:hover .face {
+  border-color: #141414;
+}
+
+.pause:focus-visible {
+  outline: 2px solid #c4470a;
+  outline-offset: -2px;
+}
+
+:global(html[data-theme='dark']) .face {
+  border-color: #6d6c68;
+  background: rgb(32 33 36 / 0.85);
+  color: #e6e6e1;
+}
+
+:global(html[data-theme='dark']) .pause:hover .face {
+  border-color: #e6e6e1;
+}
+
+:global(html[data-theme='dark']) .pause:focus-visible {
+  outline-color: #ff7a3d;
+}

@@ -23,7 +23,7 @@ Select a plan for one cluster:
 
 Included monthly expert requests expire at month end and do not roll over or accumulate. Purchased-pack terms are separate; [contact us](/contact) for details.
 
-Both Starter and Scale include Checkup reports, Work with your AI agent, Issues and action plans, historical root cause analysis, email and Slack alerts, and async email / Slack support. Agent workflows include Claude Code, Codex, and MCP, using the appropriate integration for each tool. Full monitoring does not mean Grafana access: dashboards are Scale-only.
+Both Starter and Scale include Checkup reports, Work with your AI agent, Issues and action plans, historical root cause analysis, email and Slack notifications when PostgresAI opens or updates an issue, and async email / Slack support. Agent workflows include Claude Code, Codex, and MCP, using the appropriate integration for each tool. Both plans include the Grafana dashboards and PromQL access for agents (`npx pgai@latest promql`).
 
 Both plans offer a one-off pack of two additional expert requests for $500. Expert requests are separate from ordinary async support; neither plan includes a dedicated channel. [Contact us](/contact) for pack terms. For ongoing expert help, compare upgrading with buying packs; buying an expert pack does not change your plan.
 
@@ -105,9 +105,9 @@ Only database metadata is collected — no actual data or query parameters:
 To review exactly what metrics are collected, examine the metric definitions:
 
 - **Prometheus sink metrics**:
-  [metrics.yml (pgwatch-prometheus)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.17.0/config/pgwatch-prometheus/metrics.yml)
+  [metrics.yml (pgwatch-prometheus)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.18.0/config/pgwatch-prometheus/metrics.yml)
 - **PostgreSQL sink metrics** (including normalized queries):
-  [metrics.yml (pgwatch-postgres)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.17.0/config/pgwatch-postgres/metrics.yml)
+  [metrics.yml (pgwatch-postgres)](https://gitlab.com/postgres-ai/postgresai/-/blob/0.18.0/config/pgwatch-postgres/metrics.yml)
 
 See [data privacy details](/docs/monitoring/#data-privacy-metadata-only).
 

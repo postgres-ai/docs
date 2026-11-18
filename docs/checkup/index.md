@@ -57,7 +57,7 @@ saturation, and its H001/H002/H004 no longer report system-catalog indexes.
 * G. Performance / Connections / Memory-related Settings
     - G001 Memory-related settings
     - G002 Connections and current activity
-    - G003 Timeouts, locks, deadlocks
+    - G003 Timeouts, locks, deadlocks: timeout settings, the deadlock rate, and who blocked whom, with query texts
 
 * H. Index Analysis
     - H001 Invalid indexes

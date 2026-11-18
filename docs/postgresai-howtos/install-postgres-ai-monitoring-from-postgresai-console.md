@@ -89,7 +89,12 @@ While waiting, you can optionally set up the CLI tools — see [PostgresAI CLI](
 
 After deployment, open **Checkup reports** and **Issues** in your organization in [PostgresAI Console](https://console.postgres.ai/) to review findings and action plans. This is the route for Starter; Starter does not include Grafana dashboards.
 
-### Grafana access (Scale only)
+After the first checkup, a checkup runs every day. Each issue covers one checkup type: a later
+daily checkup does not open a second issue of the same type, and does not reopen one you closed.
+Every Monday (from 15:00 UTC), a weekly review issue arrives with the week's verdict, actions and
+top queries.
+
+### Grafana access (Scale only) {#grafana-access-scale-only}
 
 On Scale, the deployment confirmation also includes **Grafana access** details:
 
@@ -128,7 +133,7 @@ After authorization, you will be redirected to Grafana and can open dashboards.
 
 ## Next steps
 
-After about 30 minutes, your first issue reports will be generated. See [How to work with issues](/docs/postgresai-howtos/how-to-work-with-issues) to learn about managing issues, assigning team members, and integrating with AI coding tools.
+Monitoring is ready about 10 minutes after you click **Deploy**, and the first issues arrive within about 30 minutes. See [How to work with issues](/docs/postgresai-howtos/how-to-work-with-issues) to learn about managing issues, assigning team members, and integrating with AI coding tools.
 
 ## Getting support
 

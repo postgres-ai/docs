@@ -35,21 +35,21 @@ MCP (Model Context Protocol) allows AI coding tools to interact with PostgresAI 
 <TabItem value="cli" label="Installed CLI" default>
 
 ```bash
-postgresai auth
+postgresai auth login
 ```
 
 </TabItem>
 <TabItem value="npx" label="npx">
 
 ```bash
-npx postgresai@latest auth
+npx postgresai@latest auth login
 ```
 
 </TabItem>
 <TabItem value="bunx" label="bunx">
 
 ```bash
-bunx postgresai@latest auth
+bunx postgresai@latest auth login
 ```
 
 </TabItem>

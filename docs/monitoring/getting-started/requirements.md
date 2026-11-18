@@ -12,6 +12,7 @@ sidebar_position: 2
 
 | PostgreSQL version | Support status |
 |--------------------|----------------|
+| 19 | Pre-release (RC1): for compatibility tests until it is generally available |
 | 18 | Fully supported |
 | 17 | Fully supported |
 | 16 | Fully supported |
@@ -79,16 +80,20 @@ a command.
 
 ### Kubernetes
 
-Kubernetes deployment is available for Enterprise customers. [Contact us](https://postgres.ai/contact) for details.
+The [Helm chart](/docs/monitoring/getting-started/installation-helm) is self-service. For dedicated support, SLAs, and managed rollout, [contact us](https://postgres.ai/contact).
 
 ## Network requirements
 
 ### PostgresAI Cloud (managed)
 
-Your PostgreSQL instance must be accessible from the internet on its database port (typically 5432).
+The monitoring box must reach your PostgreSQL instance on its database port (typically 5432). Three ways:
 
-:::tip Private networks
-If your database isn't publicly accessible but you still prefer managed setup, [contact us](https://postgres.ai/contact) to discuss options.
+- **Public endpoint**: the database port is reachable from the internet.
+- **IP allowlist** (any plan): in the setup form, select **My database only accepts listed IP addresses**. Deploy shows the box's IP before the box is created, so you can add it to your database's allowlist first.
+- **AWS PrivateLink** for Amazon RDS (Scale and Enterprise; single instances, not Aurora clusters yet): the database gets no public address. See the [quick start for Amazon RDS over AWS PrivateLink](/docs/monitoring/getting-started/quickstart-rds-privatelink).
+
+:::tip Other private networks
+For other private networks, [contact us](https://postgres.ai/contact) to discuss options.
 :::
 
 ### Self-managed installation
@@ -119,7 +124,7 @@ or `kubectl port-forward`.
 
 ### Google CloudSQL
 
-- Database flag: `cloudsql.enable_pg_stat_statements = on`
+- `create extension pg_stat_statements` in each database to monitor (no database flag needed)
 - Private IP or authorized network for monitoring access
 
 ## Storage considerations

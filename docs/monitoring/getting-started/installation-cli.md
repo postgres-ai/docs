@@ -12,7 +12,8 @@ The fastest way to get PostgresAI monitoring running locally.
 
 - Node.js 18+ or Bun 1.0+
 - Docker 20.10+
-- PostgreSQL 13+ (14+ recommended) with `pg_stat_statements`
+- PostgreSQL 14 through 19 with `pg_stat_statements` (see
+  [supported Postgres versions](/docs/monitoring/#supported-postgres-versions))
 
 :::tip Bun support
 All commands work with both `npx` and `bunx`. The CLI is written in TypeScript and runs natively on Bun.
@@ -115,7 +116,7 @@ monitoring directory's name): it is the PostgresAI Console project, saved as `pr
 `.pgwatch-config`.
 For `--api-key`, use a per-organization token. The key is saved in `.pgwatch-config` on the
 monitoring host and also replaces the key stored in the CLI configuration file (if you use a global
-token with the CLI on this machine, run `postgresai login` again afterwards). The report uploader and `instance-jobs` send no organization selector: a
+token with the CLI on this machine, run `postgresai auth login` again afterwards). The report uploader and `instance-jobs` send no organization selector: a
 global token registers the instance (with `--org`), but then report uploads fall back to
 local-only and `instance-jobs` cannot poll for work.
 

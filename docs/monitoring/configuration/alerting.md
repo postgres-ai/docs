@@ -6,15 +6,17 @@ sidebar_position: 5
 
 # Alerting configuration
 
-:::info No bundled alerting in 0.15.0
-PostgresAI monitoring 0.15.0 does **not** ship any alert rules, an Alertmanager service, or a
-`vmalert` component. There are no pre-configured alerts (such as connection, replication, or
+:::info No bundled alerting (0.18.0)
+PostgresAI monitoring 0.18.0 does **not** ship any alert rules or an Alertmanager service. The
+optional `vmalert` service (Docker Compose profile `host-metrics`) evaluates only recording rules
+(`config/prometheus/host_rules.yml`, the `host_*` series); it has no alert rules and sends no
+notifications. There are no pre-configured alerts (such as connection, replication, or
 bloat alerts), no Alertmanager API on port `9093`, and no notification receivers bundled with the
 stack.
 
 The metrics-storage backend is VictoriaMetrics (the `sink-prometheus` service), exposed on host
 port `59090` (container `9090`). The bundled `config/prometheus/prometheus.yml` contains only a
-commented-out `rule_files:` placeholder and **no** `alerting:` / `alertmanager` block:
+commented-out `rule_files:` placeholder (VictoriaMetrics single-node ignores `rule_files`) and **no** `alerting:` / `alertmanager` block:
 
 ```yaml
 rule_files:

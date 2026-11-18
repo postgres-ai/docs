@@ -103,18 +103,19 @@ Monitor the primary endpoint. For read replicas, add separate monitoring targets
 
 - Cloud SQL PostgreSQL 14+
 - Private IP or authorized network
-- `cloudsql.enable_pg_stat_statements` flag enabled
+- The `pg_stat_statements` extension created in each database to monitor
 
 ### Step 1: Enable extensions
 
-In Cloud Console or via gcloud:
+Cloud SQL has no flag to turn `pg_stat_statements` on; it is a supported extension. Connect as
+the Cloud SQL admin user and run, in each database to monitor:
 
-```bash
-gcloud sql instances patch INSTANCE_NAME \
-  --database-flags=cloudsql.enable_pg_stat_statements=on
+```sql
+create extension if not exists pg_stat_statements;
 ```
 
-This requires instance restart.
+No restart is needed. The optional `pg_stat_statements.*` database flags (for example
+`pg_stat_statements.track`) tune the extension; the defaults work for monitoring.
 
 ### Step 2: Create monitoring user
 

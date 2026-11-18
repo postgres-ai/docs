@@ -26,7 +26,6 @@ import { dmitry, dementii } from '@site/src/config/authors'
 
 Today we're releasing [postgres_ai monitoring v0.7](https://gitlab.com/postgres-ai/postgres_ai), an open-source monitoring solution built specifically for Postgres experts who need rapid root cause analysis and deep performance insights. This isn't a tool for beginners—it's designed for experienced DBAs and SREs who need to understand complex performance issues in minutes, not hours.
 
-**Want to see it in action?** Try our [live demo](https://demo.postgres.ai/) (login: `demo` / password: `demo`) to explore the dashboards and see real-time Postgres monitoring in action.
 <!--truncate-->
 ### Why we built this
 
@@ -200,7 +199,6 @@ While postgres_ai monitoring is already comprehensive, it lacks many components 
 This monitoring tool is a gateway to comprehensive analysis that can be performed by Postgres experts with help from AI.
 
 Try it out and let us know what you think!
-- Live demo: [demo.postgres.ai](https://demo.postgres.ai/) (`demo`/`demo`)
 - Installation: [quick start steps](https://gitlab.com/postgres-ai/postgres_ai#-quick-start)
 
 ---

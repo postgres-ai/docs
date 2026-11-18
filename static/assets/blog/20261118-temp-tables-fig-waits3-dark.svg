@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 293" width="760" height="293" role="img" aria-labelledby="t d">
+<title id="t">Where all sessions spend their active time, with 0 and with 5000 idle sessions</title>
+<desc id="d">Postgres 18.6, 16 vCPU, 500 temp-table TPS target, second runs at 0 and 5000 idle sessions on another server (DDL achieved 501 and 249 TPS), all sessions sampled with pg_wait_sampling, Client and Activity waits left out. 0 idle sessions: CPU* 95.0%, LWLock 3.1%, IO 1.8%. 5000 idle sessions: LWLock:SInvalWrite 84.7%, other LWLock 3.4%, CPU* 11.7%, IO 0.13%.</desc>
+<style>text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}</style>
+<rect width="760" height="293" rx="10" fill="#202124"/>
+<text x="24" y="41" font-size="18" fill="#e6e6e1" font-weight="700">0 idle sessions</text>
+<rect x="24" y="51" width="676.4" height="40" fill="#73BF69"/>
+<text x="34" y="77.1" font-size="18" fill="#141414" font-weight="600">CPU* 95.0%</text>
+<rect x="700.4" y="51" width="22.1" height="40" fill="#C4162A"/>
+<line x1="700.4" y1="51" x2="700.4" y2="91" stroke="#202124" stroke-width="1.5"/>
+<rect x="722.5" y="51" width="12.8" height="40" fill="#5794F2"/>
+<line x1="722.5" y1="51" x2="722.5" y2="91" stroke="#202124" stroke-width="1.5"/>
+<text x="736" y="114" font-size="17" fill="#a3a39d" text-anchor="end">LWLock 3.1%, IO 1.8%</text>
+<text x="24" y="163" font-size="18" fill="#e6e6e1" font-weight="700">5000 idle sessions</text>
+<rect x="24" y="173" width="603.1" height="40" fill="#C4162A"/>
+<text x="34" y="199.1" font-size="18" fill="#ffffff" font-weight="600">LWLock:SInvalWrite 84.7%</text>
+<rect x="627.1" y="173" width="24.2" height="40" fill="#C4162A"/>
+<line x1="627.1" y1="173" x2="627.1" y2="213" stroke="#202124" stroke-width="1.5"/>
+<rect x="651.3" y="173" width="83.3" height="40" fill="#73BF69"/>
+<line x1="651.3" y1="173" x2="651.3" y2="213" stroke="#202124" stroke-width="1.5"/>
+<rect x="734.6" y="173" width="1" height="40" fill="#5794F2"/>
+<line x1="734.6" y1="173" x2="734.6" y2="213" stroke="#202124" stroke-width="1.5"/>
+<text x="736" y="236" font-size="17" fill="#a3a39d" text-anchor="end">other LWLock 3.4%, CPU* 11.7%, IO 0.13%</text>
+<text x="24" y="281" font-size="17" fill="#a3a39d">share of active-session samples, all sessions; CPU* = no wait event reported</text>
+</svg>
