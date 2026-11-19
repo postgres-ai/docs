@@ -8,7 +8,7 @@ export const COPY_PER_MONTH = 730 + 117.76
 export const DBLAB_PER_MONTH = 386 + 331 + 81.92
 
 // Platforms named by the monitoring product page and the DBLab docs
-// (src/pages/products/postgres-ai-monitoring.md, docs/database-lab/index.md), plus ClickHouse
+// (src/pages/products/monitoring/index.tsx, docs/database-lab/index.md), plus ClickHouse
 // Postgres, ClickHouse's managed Postgres (the strategy brief, 2026-10-01; `pgai connect`
 // detects *.clickhouse.cloud).
 export const WORKS_WITH = [
