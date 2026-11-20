@@ -42,7 +42,7 @@ const ContactPage: React.FC = () => {
 
   return (
     <Layout
-      title="Contact PostgresAI"
+      title="Contact"
       description="Get in touch and let us know how we can help."
     >
       <main className="banner text-center">

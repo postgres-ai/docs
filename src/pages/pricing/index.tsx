@@ -383,7 +383,7 @@ const Pricing = () => {
 
   return (
     <Layout
-      title="Pricing – PostgresAI"
+      title="Pricing"
       description="Full Postgres monitoring from $16 per cluster/month. Compare Starter and Scale."
     >
       <main className={styles.mainContainer}>
