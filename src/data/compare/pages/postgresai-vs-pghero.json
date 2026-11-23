@@ -1,0 +1,189 @@
+{
+  "slug": "postgresai-vs-pghero",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "PgHero",
+    "vendor": "Andrew Kane",
+    "url": "https://github.com/ankane/pghero",
+    "category": "Postgres performance dashboard",
+    "group": "open-source",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs PgHero: history and wait events vs a performance dashboard",
+  "description": "PgHero is an open-source Postgres dashboard for slow queries and index suggestions. PostgresAI keeps history, samples wait events and files findings as Issues with a fix.",
+  "summary": "PgHero, by Andrew Kane, is an MIT-licensed performance dashboard for Postgres. It connects to a database and shows slow queries, suggested, duplicate and unused indexes, space, connections and vacuum status, with optional history of query and space stats. PostgresAI is a monitoring product with metric history, wait event analysis, scheduled checkups and Issues, hosted or self-hosted. Pick PgHero for a single-container dashboard that answers what is slow and which indexes to add or drop. Pick PostgresAI for continuous metrics, alerts, agent access and expert help.",
+  "chooseThem": [
+    "Open source under the MIT license and free; one Docker container or a gem mounted in a Rails app.",
+    "Suggested indexes: it parses the most time-consuming queries from pg_stat_statements and uses pg_stats estimates to propose an index.",
+    "One overview page flags long running queries, connections, replication lag, vacuuming, columns near integer overflow, invalid indexes and constraints, duplicate, unused and suggested indexes, and slow queries.",
+    "An Explain page runs EXPLAIN, with EXPLAIN ANALYZE opt-in, and links to a plan visualizer; a Tune page lists current settings and links to PgTune.",
+    "System stats such as CPU and IOPS from Amazon RDS and Google Cloud SQL in the same dashboard."
+  ],
+  "proofs": [
+    {
+      "key": "test",
+      "them": "PgHero estimates suggested indexes from pg_stat_statements and pg_stats, and its Explain page runs EXPLAIN, with ANALYZE opt-in, on the database it connects to. The sources we reviewed do not describe testing a change on a separate copy.",
+      "sources": [5, 2]
+    },
+    {
+      "key": "history",
+      "them": "PgHero history is optional: you create tables and schedule tasks that capture query stats every 5 minutes and space stats once a day, and remove old rows with a cleanup task.",
+      "sources": [2, 3]
+    },
+    {
+      "key": "agents",
+      "them": "PgHero has a /health endpoint for health checks, and version 4.0 dropped its Ruby API. The sources we reviewed do not describe an MCP server or an interface for AI agents.",
+      "sources": [2, 6]
+    },
+    {
+      "key": "waits",
+      "them": "PgHero has a Live Queries page and flags queries running longer than 60 seconds by default. The sources we reviewed do not describe wait event sampling.",
+      "sources": [8, 2]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A performance dashboard for Postgres, with pages for Overview, System, Queries, Space, Connections, Live Queries, Maintenance, Explain and Tune. It connects to one or more databases by connection URL.",
+      "sources": [1, 8, 2]
+    },
+    {
+      "key": "platforms",
+      "v": "yes",
+      "them": "Any server it can connect to, running Postgres 14 or newer: version 4.0 dropped support for older versions. The guides cover self-managed servers and Amazon RDS for query stats, and CPU, IOPS and other system stats from Amazon RDS and Google Cloud SQL. Version 4.0 dropped system stats for Azure Database.",
+      "sources": [4, 2, 6]
+    },
+    {
+      "key": "deployment",
+      "v": "yes",
+      "them": "Self-hosted, as a Docker image (the guide includes a Kubernetes example) or a Rails engine mounted in your app. Version 4.0 dropped Linux packages. Historical stats are stored in tables in the monitored database or another one you choose.",
+      "sources": [1, 2, 3, 6]
+    },
+    {
+      "key": "open-source",
+      "v": "yes",
+      "them": "Open source under the MIT license. Version 4.1.0 was released on 2026-10-20.",
+      "sources": [7, 6]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "A Queries tab from pg_stat_statements, with slow-query thresholds of 20 ms average and 100 calls by default. A task you schedule every 5 minutes captures history and adds a time range slider. The Explain page runs EXPLAIN, with ANALYZE opt-in and a 10-second default timeout.",
+      "sources": [2, 3, 4, 6]
+    },
+    {
+      "key": "wait-events",
+      "v": "nd",
+      "them": "A Live Queries page lists running queries, and the overview flags long running queries (60 seconds by default). The sources we reviewed do not describe wait event sampling.",
+      "sources": [8, 2, 9]
+    },
+    {
+      "key": "health-checks",
+      "v": "yes",
+      "them": "The overview checks long running queries, high connections and connections idle in transaction, replication lag, inactive replication slots, cache hit rate, vacuuming, columns near integer overflow, invalid indexes and constraints, and duplicate, unused and suggested indexes and slow queries. Suggested indexes need pg_query and query stats.",
+      "sources": [9, 3, 5]
+    },
+    {
+      "key": "agent-interface",
+      "v": "nd",
+      "them": "A /health endpoint for health checks. Version 4.0 dropped the Ruby API. The sources we reviewed do not describe an MCP server or an interface for AI agents.",
+      "sources": [2, 6]
+    },
+    {
+      "key": "test-fix",
+      "v": "nd",
+      "them": "Suggested indexes are estimated from pg_stat_statements and pg_stats, and EXPLAIN runs on the database PgHero connects to. The sources we reviewed do not describe testing a change on a separate copy.",
+      "sources": [5, 2]
+    },
+    {
+      "key": "expert-help",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. The README invites bug reports and pull requests on GitHub.",
+      "sources": [1]
+    },
+    {
+      "key": "alerts",
+      "them": "The dashboard shows warnings, such as total connections above a threshold of 500 by default. The sources we reviewed do not describe alert notifications.",
+      "sources": [2, 9]
+    },
+    {
+      "key": "retention",
+      "them": "History is optional and kept for as long as you choose: the guides show removing query stats older than 14 days and space stats older than 90 days.",
+      "sources": [2, 3]
+    },
+    {
+      "key": "compliance",
+      "them": "PgHero is software you run yourself. The sources we reviewed do not describe security attestations.",
+      "sources": [1]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Open source",
+      "price": "Free",
+      "notes": "MIT license; you run the Docker image or Rails engine",
+      "sources": [7, 1]
+    }
+  ],
+  "together": "Both read pg_stat_statements and can point at the same database. DBLab, a separate product, copies any PostgreSQL source, so an index PgHero suggests can be created on a full-size DBLab clone and the query timed there before production.",
+  "faq": [
+    {
+      "q": "Is PgHero open source?",
+      "a": "Yes. PgHero is open source under the MIT license, maintained by Andrew Kane, and runs as a Docker image or a Rails engine.",
+      "sources": [7, 1]
+    },
+    {
+      "q": "Does PgHero work with Amazon RDS?",
+      "a": "Yes. The query stats guide covers enabling pg_stat_statements on Amazon RDS through a parameter group, and PgHero can show CPU, IOPS and other system stats from RDS through CloudWatch.",
+      "sources": [4, 2]
+    },
+    {
+      "q": "Does PgHero keep history?",
+      "a": "Optionally. You create tables for query and space stats and schedule capture tasks, every 5 minutes for queries and daily for space. A cleanup task removes old rows; the guides use 14 and 90 days as examples.",
+      "sources": [2, 3]
+    },
+    {
+      "q": "Can I use PostgresAI and PgHero together?",
+      "a": "Yes. They read the same statistics and can watch the same database. DBLab, the PostgresAI cloning product, copies any PostgreSQL source, so an index PgHero suggests can be tested on a full-size clone before production."
+    }
+  ],
+  "sources": [
+    {
+      "title": "PgHero repository README",
+      "url": "https://github.com/ankane/pghero"
+    },
+    {
+      "title": "PgHero Docker guide",
+      "url": "https://github.com/ankane/pghero/blob/master/guides/Docker.md"
+    },
+    {
+      "title": "PgHero Rails guide",
+      "url": "https://github.com/ankane/pghero/blob/master/guides/Rails.md"
+    },
+    {
+      "title": "PgHero query stats guide",
+      "url": "https://github.com/ankane/pghero/blob/master/guides/Query-Stats.md"
+    },
+    {
+      "title": "How PgHero suggests indexes",
+      "url": "https://github.com/ankane/pghero/blob/master/guides/Suggested-Indexes.md"
+    },
+    {
+      "title": "PgHero changelog",
+      "url": "https://github.com/ankane/pghero/blob/master/CHANGELOG.md"
+    },
+    {
+      "title": "PgHero license",
+      "url": "https://github.com/ankane/pghero/blob/master/LICENSE.txt"
+    },
+    {
+      "title": "PgHero source: dashboard navigation",
+      "url": "https://github.com/ankane/pghero/blob/master/app/views/layouts/pg_hero/application.html.erb"
+    },
+    {
+      "title": "PgHero source: overview page",
+      "url": "https://github.com/ankane/pghero/blob/master/app/views/pg_hero/home/index.html.erb"
+    }
+  ]
+}

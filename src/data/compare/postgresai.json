@@ -1,0 +1,1204 @@
+{
+  "checkedOn": "2026-11-18",
+  "limits": [
+    "Monitoring supports PostgreSQL 14 and newer; DBLab supports PostgreSQL 10 and newer.",
+    "Monitoring needs the pg_stat_statements extension. Wait events are sampled from pg_stat_activity, not traced.",
+    "Starter covers the primary node only, keeps 14 days of history, and has no Grafana dashboards and no included expert requests.",
+    "DBLab SE is limited to 2,000 GiB per instance and a single user.",
+    "All DBLab clones share one machine, and copy-on-write storage has different I/O performance, so timings on a clone should not be compared directly with production.",
+    "Managed services such as Amazon RDS are copied to DBLab with dump and restore and refreshed in full; the first copy of a source is slow, about 1 TiB an hour."
+  ],
+  "facts": [
+    {
+      "text": "PostgresAI monitoring shows its dashboards in Grafana. A self-hosted install keeps the metrics on your own infrastructure.",
+      "url": "/docs/monitoring/advanced/architecture"
+    },
+    {
+      "text": "PostgresAI monitoring comes with pre-built Grafana dashboards; on hosted plans Grafana comes with Scale.",
+      "url": "/docs/monitoring/dashboards"
+    },
+    {
+      "text": "The Console has a PostgresAI Assistant, in beta.",
+      "url": "/docs/reference-guides/postgres-ai-bot-reference"
+    },
+    {
+      "text": "DBLab Engine runs on a single machine, with Docker and a ZFS or LVM volume.",
+      "url": "/docs/database-lab"
+    },
+    {
+      "text": "A DBLab clone is an ordinary PostgreSQL server that any Postgres client can connect to.",
+      "url": "/docs/dblab-howtos/cloning/connect-clone"
+    },
+    {
+      "text": "Reset returns a DBLab clone to its snapshot.",
+      "url": "/docs/dblab-howtos/cloning/reset-clone"
+    },
+    {
+      "text": "DBLab 4.0 and later has branches and snapshots (dblab commit).",
+      "url": "/docs/dblab-howtos/branching"
+    },
+    {
+      "text": "DBLab 4.2 adds an in-place major version upgrade of a single clone and retention policies for branches and snapshots.",
+      "url": "/docs/dblab-howtos/administration/engine-manage"
+    },
+    {
+      "text": "Logical mode, the only mode for managed services such as Amazon RDS, gets fresh data by full refresh. With one disk this needs a maintenance window and removes existing clones; with several pools it refreshes without downtime (4.0 and later).",
+      "url": "/docs/dblab-howtos/administration/logical-full-refresh"
+    },
+    {
+      "text": "For Amazon RDS and Aurora, the refresh can dump from a temporary RDS clone, leaving production untouched (4.1 and later).",
+      "url": "/docs/dblab-howtos/administration/data/rds-refresh"
+    },
+    {
+      "text": "Physical mode keeps a continuously updated copy of a self-managed source.",
+      "url": "/docs/dblab-howtos/administration/data"
+    },
+    {
+      "text": "Joe runs EXPLAIN on DBLab clones and is available in Slack, a web UI and the CLI (pgai joe).",
+      "url": "/docs/postgresai-howtos/joe-cli"
+    },
+    {
+      "text": "The express checkup in the postgresai CLI runs from a terminal against PostgreSQL 14 or newer; with --no-upload it needs no account and sends no report data to PostgresAI.",
+      "url": "https://gitlab.com/postgres-ai/postgresai"
+    }
+  ],
+  "kinds": {
+    "monitoring": {
+      "product": "PostgresAI",
+      "productUrl": "/docs/monitoring",
+      "prefix": "postgresai-vs-",
+      "label": "PostgresAI vs monitoring, observability and AI tuning tools",
+      "intro": "PostgresAI monitors PostgreSQL, runs scheduled health checkups and turns findings into Issues that you, your AI agent or a PostgresAI expert can act on. These pages compare it with other tools that watch, diagnose or tune Postgres.",
+      "groups": [
+        {
+          "key": "postgres-tools",
+          "label": "PostgreSQL monitoring and advice products"
+        },
+        {
+          "key": "open-source",
+          "label": "Open-source tools you run yourself"
+        },
+        {
+          "key": "observability",
+          "label": "Observability platforms with Postgres monitoring"
+        },
+        {
+          "key": "provider",
+          "label": "Built into your Postgres provider"
+        },
+        {
+          "key": "ai",
+          "label": "AI tuning and AI DBA tools"
+        }
+      ],
+      "rows": [
+        {
+          "key": "scope",
+          "label": "What it is",
+          "us": "PostgreSQL monitoring with scheduled health checkups. Findings become Issues with severity, evidence and a recommended fix, which you, your AI agent or a PostgresAI expert can act on.",
+          "usSources": [
+            {
+              "title": "PostgresAI monitoring overview",
+              "url": "/docs/monitoring"
+            },
+            {
+              "title": "What are Issues?",
+              "url": "/docs/questions-and-answers"
+            }
+          ]
+        },
+        {
+          "key": "platforms",
+          "label": "Where your Postgres can run, and which versions",
+          "matrix": true,
+          "matrixLabel": "Any provider",
+          "usV": "yes",
+          "us": "Amazon RDS and Aurora, Google Cloud SQL, Azure Database for PostgreSQL, Supabase, Tiger Data, self-managed servers and Postgres running on Kubernetes. PostgreSQL 14 and newer, with the pg_stat_statements extension.",
+          "usSources": [
+            {
+              "title": "PostgresAI monitoring overview",
+              "url": "/docs/monitoring"
+            }
+          ]
+        },
+        {
+          "key": "deployment",
+          "label": "Where it runs and what it collects",
+          "matrix": true,
+          "matrixLabel": "Self-hosted option",
+          "usV": "yes",
+          "us": "Hosted by PostgresAI, or self-hosted in your own cloud account or on your own server. It collects database metadata such as statistics, normalized query texts and wait events, not table data or query parameters.",
+          "usSources": [
+            {
+              "title": "Monitoring quick start",
+              "url": "/docs/monitoring/getting-started"
+            },
+            {
+              "title": "Data privacy: metadata only",
+              "url": "/docs/monitoring#data-privacy-metadata-only"
+            }
+          ]
+        },
+        {
+          "key": "open-source",
+          "label": "Open source",
+          "matrix": true,
+          "matrixLabel": "Open source",
+          "usV": "yes",
+          "us": "The monitoring software is open source under Apache 2.0. Hosted plans are a separate paid service.",
+          "usSources": [
+            {
+              "title": "postgresai repository",
+              "url": "https://gitlab.com/postgres-ai/postgresai"
+            },
+            {
+              "title": "How much does it cost?",
+              "url": "/docs/questions-and-answers"
+            }
+          ]
+        },
+        {
+          "key": "query-analysis",
+          "label": "Query performance analysis",
+          "matrix": true,
+          "matrixLabel": "Query analysis",
+          "usV": "yes",
+          "us": "Top queries from pg_stat_statements by calls, execution time, planning time and rows, with a drill-down dashboard for a single query. For execution plans, Joe runs EXPLAIN on a DBLab clone.",
+          "usSources": [
+            {
+              "title": "Query performance analysis dashboard",
+              "url": "/docs/monitoring/dashboards/query-analysis"
+            },
+            {
+              "title": "Joe bot",
+              "url": "/docs/joe-bot"
+            }
+          ]
+        },
+        {
+          "key": "wait-events",
+          "label": "Wait event analysis",
+          "matrix": true,
+          "matrixLabel": "Wait events",
+          "usV": "yes",
+          "us": "An ASH-style wait event dashboard built from samples of pg_stat_activity. No extra extension is needed.",
+          "usSources": [
+            {
+              "title": "Wait event analysis dashboard",
+              "url": "/docs/monitoring/dashboards/wait-events"
+            }
+          ]
+        },
+        {
+          "key": "health-checks",
+          "label": "Health checks and recommendations",
+          "matrix": true,
+          "matrixLabel": "Health checks",
+          "usV": "yes",
+          "us": "Scheduled checkup reports on settings, autovacuum and bloat, and indexes (invalid, unused, redundant). Each finding becomes an Issue with severity, evidence and a specific fix.",
+          "usSources": [
+            {
+              "title": "Checkup reports",
+              "url": "/docs/checkup"
+            },
+            {
+              "title": "How to work with Issues",
+              "url": "/docs/postgresai-howtos/how-to-work-with-issues"
+            }
+          ]
+        },
+        {
+          "key": "agent-interface",
+          "label": "AI and agent access",
+          "matrix": true,
+          "matrixLabel": "Agent access",
+          "usV": "yes",
+          "us": "The postgresai CLI (alias pgai) and an MCP server with tools for Issues, action items and checkup reports. The setup guide covers Cursor, Claude Code, Windsurf and Codex.",
+          "usSources": [
+            {
+              "title": "How to install MCP for AI coding tools",
+              "url": "/docs/postgresai-howtos/how-to-install-mcp"
+            },
+            {
+              "title": "PostgresAI CLI reference",
+              "url": "/docs/reference-guides/postgresai-cli-reference"
+            }
+          ]
+        },
+        {
+          "key": "test-fix",
+          "label": "Testing a fix before production",
+          "matrix": true,
+          "matrixLabel": "Test on a copy",
+          "usV": "yes",
+          "us": "With DBLab Engine, a separate open-source product: a full-size thin clone of the database in seconds, where an index or query change can be run on real data. DBLab is set up and priced separately.",
+          "usSources": [
+            {
+              "title": "DBLab Engine",
+              "url": "/docs/database-lab"
+            },
+            {
+              "title": "DBLab compared with other ways to branch",
+              "url": "/compare#branching"
+            }
+          ]
+        },
+        {
+          "key": "expert-help",
+          "label": "Human PostgreSQL experts",
+          "matrix": true,
+          "matrixLabel": "Human experts",
+          "usV": "yes",
+          "us": "Scale includes two expert requests a month, answered within 24 business hours. Either plan can buy a one-off pack of two requests for $500. Consulting is separate.",
+          "usSources": [
+            {
+              "title": "Pricing",
+              "url": "/pricing"
+            },
+            {
+              "title": "Postgres consulting",
+              "url": "/consulting"
+            }
+          ]
+        },
+        {
+          "key": "alerts",
+          "label": "Alerts",
+          "us": "Email and Slack alerts on Starter and Scale.",
+          "usSources": [
+            {
+              "title": "Pricing",
+              "url": "/pricing"
+            }
+          ]
+        },
+        {
+          "key": "retention",
+          "label": "History kept",
+          "us": "14 days on Starter, 13 months on Scale, custom on Enterprise.",
+          "usSources": [
+            {
+              "title": "Pricing",
+              "url": "/pricing"
+            }
+          ]
+        },
+        {
+          "key": "compliance",
+          "label": "Security attestations",
+          "us": "SOC 2 Type 2 examination completed for the Security and Availability criteria, covering March 4 to June 4, 2026. The SOC 3 report is public.",
+          "usSources": [
+            {
+              "title": "Security and compliance",
+              "url": "/security"
+            }
+          ]
+        }
+      ],
+      "pricingUrl": "/pricing",
+      "pricing": [
+        {
+          "plan": "Starter",
+          "price": "$16 per cluster/month",
+          "notes": "Primary only, 14-day retention, no expert requests included"
+        },
+        {
+          "plan": "Scale",
+          "price": "$512 per cluster/month",
+          "notes": "Primary and up to 5 replicas in one cluster, 13-month retention, Grafana dashboards, 2 expert requests a month"
+        },
+        {
+          "plan": "Enterprise",
+          "price": "Custom",
+          "notes": "Contact sales"
+        },
+        {
+          "plan": "Self-hosted",
+          "price": "No licence fee",
+          "notes": "Open source under Apache 2.0; you run it yourself"
+        }
+      ],
+      "cta": [
+        {
+          "label": "See plans and pricing",
+          "href": "/pricing",
+          "primary": true
+        },
+        {
+          "label": "Open the live demo",
+          "href": "https://demo.postgres.ai"
+        },
+        {
+          "label": "Talk to us",
+          "href": "/contact"
+        }
+      ],
+      "proofs": [
+        {
+          "key": "fix",
+          "title": "Every finding comes with a fix",
+          "us": "Scheduled checkups turn each finding into an Issue with severity, evidence and a specific fix.",
+          "usSources": [
+            {
+              "title": "Checkup reports",
+              "url": "/docs/checkup"
+            },
+            {
+              "title": "How to work with Issues",
+              "url": "/docs/postgresai-howtos/how-to-work-with-issues"
+            }
+          ]
+        },
+        {
+          "key": "test",
+          "title": "Test the fix on a full-size copy first",
+          "us": "With DBLab Engine, a separate open-source product, an index or query change runs on a full-size thin clone of the database, created in seconds, before it reaches production.",
+          "usSources": [
+            {
+              "title": "DBLab Engine",
+              "url": "/docs/database-lab"
+            },
+            {
+              "title": "DBLab compared with other ways to branch",
+              "url": "/compare#branching"
+            }
+          ]
+        },
+        {
+          "key": "experts",
+          "title": "PostgreSQL experts on the plan",
+          "us": "Scale includes two expert requests a month, answered within 24 business hours. Either plan can buy a one-off pack of two requests for $500.",
+          "usSources": [
+            {
+              "title": "Pricing",
+              "url": "/pricing"
+            },
+            {
+              "title": "Postgres consulting",
+              "url": "/consulting"
+            }
+          ]
+        },
+        {
+          "key": "open",
+          "title": "Open source, no licence fee to self-host",
+          "us": "The monitoring software is open source under Apache 2.0, so self-hosting it carries no licence fee.",
+          "usSources": [
+            {
+              "title": "postgresai repository",
+              "url": "https://gitlab.com/postgres-ai/postgresai"
+            },
+            {
+              "title": "How much does it cost?",
+              "url": "/docs/questions-and-answers"
+            }
+          ]
+        },
+        {
+          "key": "anywhere",
+          "title": "The same checks wherever Postgres runs",
+          "us": "Amazon RDS and Aurora, Google Cloud SQL, Azure Database for PostgreSQL, Supabase, Tiger Data, self-managed servers and Postgres running on Kubernetes.",
+          "usSources": [
+            {
+              "title": "PostgresAI monitoring overview",
+              "url": "/docs/monitoring"
+            }
+          ]
+        },
+        {
+          "key": "agents",
+          "title": "An AI agent can work through the findings",
+          "us": "The postgresai CLI and an MCP server give an agent the Issues, action items and checkup reports. The setup guide covers Cursor, Claude Code, Windsurf and Codex.",
+          "usSources": [
+            {
+              "title": "How to install MCP for AI coding tools",
+              "url": "/docs/postgresai-howtos/how-to-install-mcp"
+            },
+            {
+              "title": "PostgresAI CLI reference",
+              "url": "/docs/reference-guides/postgresai-cli-reference"
+            }
+          ]
+        },
+        {
+          "key": "data",
+          "title": "Metadata only, and it can stay with you",
+          "us": "It collects database metadata such as statistics, normalized query texts and wait events, not table data or query parameters. A self-hosted install keeps the metrics on your own infrastructure.",
+          "usSources": [
+            {
+              "title": "Monitoring quick start",
+              "url": "/docs/monitoring/getting-started"
+            },
+            {
+              "title": "Data privacy: metadata only",
+              "url": "/docs/monitoring#data-privacy-metadata-only"
+            }
+          ]
+        },
+        {
+          "key": "waits",
+          "title": "Wait events with no extra extension",
+          "us": "An ASH-style wait event dashboard built from samples of pg_stat_activity. No extra extension is needed.",
+          "usSources": [
+            {
+              "title": "Wait event analysis dashboard",
+              "url": "/docs/monitoring/dashboards/wait-events"
+            }
+          ]
+        },
+        {
+          "key": "price",
+          "title": "A published price per cluster",
+          "us": "Starter is $16 per cluster a month. Scale is $512 per cluster a month and covers a primary and up to 5 replicas. Self-hosting the open-source software carries no licence fee.",
+          "usSources": [
+            {
+              "title": "Pricing",
+              "url": "/pricing"
+            }
+          ]
+        },
+        {
+          "key": "history",
+          "title": "13 months of history",
+          "us": "Scale keeps 13 months of history.",
+          "usSources": [
+            {
+              "title": "Pricing",
+              "url": "/pricing"
+            }
+          ]
+        }
+      ],
+      "tryIt": {
+        "title": "Check it on your own database",
+        "terminal": [
+          {
+            "kind": "cmd",
+            "text": "npx postgresai@latest checkup postgresql://user@host:5432/db --no-upload"
+          },
+          {
+            "kind": "dim",
+            "text": "# health checks run from your terminal, including:"
+          },
+          {
+            "kind": "dim",
+            "text": "#   F002  Autovacuum: transaction ID wraparound check"
+          },
+          {
+            "kind": "dim",
+            "text": "#   F004  Autovacuum: heap bloat (estimated)"
+          },
+          {
+            "kind": "dim",
+            "text": "#   H001  Invalid indexes"
+          },
+          {
+            "kind": "dim",
+            "text": "#   H002  Unused indexes"
+          },
+          {
+            "kind": "dim",
+            "text": "#   H004  Redundant indexes"
+          }
+        ],
+        "text": "The express checkup works with PostgreSQL 14 or newer. With --no-upload it needs no account and sends no report data to PostgresAI. It needs Node.js 18 or newer and a database role with pg_monitor. Compare what it finds with what your current tool shows for the same database.",
+        "links": [
+          {
+            "label": "Live demo (login demo, password demo)",
+            "href": "https://demo.postgres.ai"
+          },
+          {
+            "label": "Checkup command reference",
+            "href": "/docs/reference-guides/postgresai-cli-reference#command-checkup"
+          }
+        ]
+      },
+      "figure": {
+        "src": "/assets/install-postgres-ai-monitoring-from-postgresai-console/install-postgres-ai-monitoring-from-postgresai-console-10.png",
+        "width": 1268,
+        "height": 906,
+        "alt": "The Issues list in the PostgresAI Console: unused indexes consuming 19.2 GiB, redundant indexes that can be deleted to save 3.76 GiB, an invalid index and estimated index bloat, each opened by a checkup.",
+        "caption": "Checkup findings as Issues in the PostgresAI Console.",
+        "href": "/docs/postgresai-howtos/how-to-work-with-issues"
+      }
+    },
+    "branching": {
+      "product": "DBLab",
+      "productUrl": "/products/dblab_engine",
+      "prefix": "dblab-vs-",
+      "label": "DBLab vs database branching, cloning and test data tools",
+      "intro": "DBLab Engine gives every developer, CI job and AI agent a full-size, writable copy of a PostgreSQL database in seconds, from any Postgres source, on a machine you control. These pages compare it with other ways to get a copy to test on.",
+      "groups": [
+        {
+          "key": "hosted",
+          "label": "Branching built into a Postgres platform"
+        },
+        {
+          "key": "external",
+          "label": "Branching for a database hosted elsewhere"
+        },
+        {
+          "key": "cloud",
+          "label": "Cloud provider copies"
+        },
+        {
+          "key": "test-data",
+          "label": "Database virtualization and test data products"
+        },
+        {
+          "key": "diy",
+          "label": "PostgreSQL itself"
+        }
+      ],
+      "rows": [
+        {
+          "key": "scope",
+          "label": "What it is",
+          "us": "Open-source software that gives every developer, CI job and AI agent a writable, full-size copy of a PostgreSQL database in seconds. Thin clones share one physical copy of the data on one machine.",
+          "usSources": [
+            {
+              "title": "DBLab Engine",
+              "url": "/docs/database-lab"
+            },
+            {
+              "title": "DBLab Engine product page",
+              "url": "/products/dblab_engine"
+            }
+          ]
+        },
+        {
+          "key": "source",
+          "label": "Which databases it can copy",
+          "matrix": true,
+          "matrixLabel": "Any Postgres source",
+          "usV": "yes",
+          "us": "Any PostgreSQL from version 10 up, wherever it runs. Managed services such as Amazon RDS, Aurora, Cloud SQL and Supabase are copied with dump and restore; self-managed servers can also be copied physically with WAL-G, pgBackRest or pg_basebackup.",
+          "usSources": [
+            {
+              "title": "DBLab data sources",
+              "url": "/docs/dblab-howtos/administration/data"
+            },
+            {
+              "title": "Supported PostgreSQL versions and extensions",
+              "url": "/docs/database-lab/supported-databases"
+            }
+          ]
+        },
+        {
+          "key": "mechanism",
+          "label": "How a copy is made",
+          "us": "Copy-on-write in the file system, with ZFS or LVM. Clones share unchanged blocks, so a clone takes extra disk space only for what it changes.",
+          "usSources": [
+            {
+              "title": "DBLab Engine",
+              "url": "/docs/database-lab"
+            }
+          ]
+        },
+        {
+          "key": "speed",
+          "label": "Time to get a copy",
+          "us": "A few seconds whatever the database size: under 2 seconds for a 10 TiB database with one user, up to 30 seconds with 15 users at once. The first copy of the source is slow; about 1 TiB an hour is a good speed.",
+          "usSources": [
+            {
+              "title": "DBLab Engine",
+              "url": "/docs/database-lab"
+            },
+            {
+              "title": "DBLab data sources",
+              "url": "/docs/dblab-howtos/administration/data"
+            }
+          ]
+        },
+        {
+          "key": "data",
+          "label": "Data in a copy",
+          "matrix": true,
+          "matrixLabel": "Full-size data",
+          "usV": "yes",
+          "us": "The whole database as of the chosen snapshot. Physical mode can follow the source continuously; logical mode is refreshed in full, on a schedule.",
+          "usSources": [
+            {
+              "title": "DBLab Engine",
+              "url": "/docs/database-lab"
+            },
+            {
+              "title": "Full refresh in logical mode",
+              "url": "/docs/dblab-howtos/administration/logical-full-refresh"
+            }
+          ]
+        },
+        {
+          "key": "masking",
+          "label": "Masking sensitive data",
+          "matrix": true,
+          "matrixLabel": "Masking",
+          "usV": "yes",
+          "us": "Documented options: load an anonymized dump, or apply SQL transformations or PostgreSQL Anonymizer before snapshots are taken. You define the rules.",
+          "usSources": [
+            {
+              "title": "Data masking and obfuscation",
+              "url": "/docs/database-lab/masking"
+            }
+          ]
+        },
+        {
+          "key": "ci",
+          "label": "CI and migration testing",
+          "matrix": true,
+          "matrixLabel": "CI integration",
+          "usV": "yes",
+          "us": "DB Migration Checker runs pending migrations on a clone in CI, fails those that hold dangerous locks longer than a limit (10 seconds by default) and collects statistics. Any CI job can also create clones through the API or CLI.",
+          "usSources": [
+            {
+              "title": "DB Migration Checker",
+              "url": "/docs/database-lab/db-migration-checker"
+            }
+          ]
+        },
+        {
+          "key": "interfaces",
+          "label": "API, CLI and agent access",
+          "us": "REST API, web UI and the dblab CLI. Joe, also available as pgai joe, returns EXPLAIN plans and timings from a clone, not rows.",
+          "usSources": [
+            {
+              "title": "DBLab Engine",
+              "url": "/docs/database-lab"
+            },
+            {
+              "title": "Joe commands: what is returned",
+              "url": "/docs/reference-guides/joe-bot-commands-reference"
+            },
+            {
+              "title": "Run Joe from the CLI",
+              "url": "/docs/postgresai-howtos/joe-cli"
+            }
+          ]
+        },
+        {
+          "key": "hosting",
+          "label": "Where it runs",
+          "matrix": true,
+          "matrixLabel": "Self-hosted",
+          "usV": "yes",
+          "us": "On a machine you control, in any cloud or on-premises. DBLab SE installs from the PostgresAI Console or AWS Marketplace.",
+          "usSources": [
+            {
+              "title": "DBLab Engine",
+              "url": "/docs/database-lab"
+            },
+            {
+              "title": "Pricing",
+              "url": "/pricing"
+            }
+          ]
+        },
+        {
+          "key": "open-source",
+          "label": "Open source",
+          "matrix": true,
+          "matrixLabel": "Open source",
+          "usV": "yes",
+          "us": "DBLab Engine is open source under Apache 2.0.",
+          "usSources": [
+            {
+              "title": "DBLab Engine",
+              "url": "/docs/database-lab"
+            }
+          ]
+        },
+        {
+          "key": "limits",
+          "label": "Documented limits",
+          "us": "DBLab SE: 2,000 GiB per instance and a single user. All clones share one machine, and copy-on-write storage has different I/O performance, so timings on a clone should not be compared directly with production.",
+          "usSources": [
+            {
+              "title": "Pricing",
+              "url": "/pricing"
+            },
+            {
+              "title": "Query timing on clones and in production",
+              "url": "/docs/database-lab/timing-estimator"
+            }
+          ]
+        },
+        {
+          "key": "cost-model",
+          "label": "What you pay for",
+          "us": "One machine and one physical copy of the data, however many clones run. DBLab SE is billed hourly by the size of that machine, not by database size or number of clones.",
+          "usSources": [
+            {
+              "title": "Pricing",
+              "url": "/pricing"
+            }
+          ]
+        }
+      ],
+      "pricingUrl": "/pricing",
+      "pricing": [
+        {
+          "plan": "DBLab Engine",
+          "price": "Free",
+          "notes": "Open source, Apache 2.0; you run it"
+        },
+        {
+          "plan": "DBLab SE",
+          "price": "From $62/month",
+          "notes": "Billed hourly by machine size, plus your own cloud costs; 2,000 GiB limit; single user"
+        },
+        {
+          "plan": "DBLab EE",
+          "price": "Custom",
+          "notes": "Annual contract, from $0.2662 per 100 GiB per hour; unlimited database size, SSO"
+        }
+      ],
+      "cta": [
+        {
+          "label": "See how DBLab works",
+          "href": "/products/dblab_engine",
+          "primary": true
+        },
+        {
+          "label": "Open the demo",
+          "href": "https://demo.dblab.dev"
+        },
+        {
+          "label": "Pricing",
+          "href": "/pricing"
+        }
+      ],
+      "proofs": [
+        {
+          "key": "any-source",
+          "title": "Clones the Postgres you already run",
+          "us": "Any PostgreSQL from version 10 up, wherever it runs: Amazon RDS, Aurora, Cloud SQL, Supabase or your own servers.",
+          "usSources": [
+            {
+              "title": "DBLab data sources",
+              "url": "/docs/dblab-howtos/administration/data"
+            },
+            {
+              "title": "Supported PostgreSQL versions and extensions",
+              "url": "/docs/database-lab/supported-databases"
+            }
+          ]
+        },
+        {
+          "key": "seconds",
+          "title": "The whole database, in seconds",
+          "us": "A clone takes a few seconds whatever the database size: under 2 seconds for a 10 TiB database with one user.",
+          "usSources": [
+            {
+              "title": "DBLab Engine",
+              "url": "/docs/database-lab"
+            },
+            {
+              "title": "DBLab data sources",
+              "url": "/docs/dblab-howtos/administration/data"
+            }
+          ]
+        },
+        {
+          "key": "cost",
+          "title": "One copy of the data, many clones",
+          "us": "Clones share one physical copy on one machine and take extra disk space only for what they change. DBLab SE is billed by the size of that machine, not by database size or number of clones.",
+          "usSources": [
+            {
+              "title": "DBLab Engine",
+              "url": "/docs/database-lab"
+            },
+            {
+              "title": "Pricing",
+              "url": "/pricing"
+            }
+          ]
+        },
+        {
+          "key": "control",
+          "title": "The data stays on a machine you control",
+          "us": "DBLab runs on a machine you control, in any cloud or on-premises.",
+          "usSources": [
+            {
+              "title": "DBLab Engine",
+              "url": "/docs/database-lab"
+            },
+            {
+              "title": "Pricing",
+              "url": "/pricing"
+            }
+          ]
+        },
+        {
+          "key": "open",
+          "title": "Open source",
+          "us": "DBLab Engine is open source under Apache 2.0.",
+          "usSources": [
+            {
+              "title": "DBLab Engine",
+              "url": "/docs/database-lab"
+            }
+          ]
+        },
+        {
+          "key": "ci",
+          "title": "Catches a dangerous migration in CI",
+          "us": "DB Migration Checker runs pending migrations on a clone in CI and fails those that hold dangerous locks longer than a limit, 10 seconds by default.",
+          "usSources": [
+            {
+              "title": "DB Migration Checker",
+              "url": "/docs/database-lab/db-migration-checker"
+            }
+          ]
+        },
+        {
+          "key": "agents",
+          "title": "Plans for an AI agent, without the rows",
+          "us": "Joe returns EXPLAIN plans and timings from a clone, not rows.",
+          "usSources": [
+            {
+              "title": "Joe commands: what is returned",
+              "url": "/docs/reference-guides/joe-bot-commands-reference"
+            },
+            {
+              "title": "Run Joe from the CLI",
+              "url": "/docs/postgresai-howtos/joe-cli"
+            }
+          ]
+        },
+        {
+          "key": "masking",
+          "title": "Masking by rules you define",
+          "us": "Load an anonymized dump, or apply SQL transformations or PostgreSQL Anonymizer before snapshots are taken.",
+          "usSources": [
+            {
+              "title": "Data masking and obfuscation",
+              "url": "/docs/database-lab/masking"
+            }
+          ]
+        },
+        {
+          "key": "data",
+          "title": "All the data, not a sample",
+          "us": "A clone holds the whole database as of the chosen snapshot.",
+          "usSources": [
+            {
+              "title": "DBLab Engine",
+              "url": "/docs/database-lab"
+            },
+            {
+              "title": "Full refresh in logical mode",
+              "url": "/docs/dblab-howtos/administration/logical-full-refresh"
+            }
+          ]
+        }
+      ],
+      "tryIt": {
+        "title": "Try a clone before you install anything",
+        "terminal": [
+          {
+            "kind": "cmd",
+            "text": "dblab clone create --username dev --password \"$PASSWORD\" --id test"
+          },
+          {
+            "kind": "dim",
+            "text": "# a writable copy of the whole database,"
+          },
+          {
+            "kind": "dim",
+            "text": "# ready for any Postgres client in seconds"
+          }
+        ],
+        "text": "The public demo runs DBLab Engine: open it with the token demo-token, create a clone and connect to it. DBLab Engine is open source, so the next step is a machine of your own.",
+        "links": [
+          {
+            "label": "Open the DBLab demo",
+            "href": "https://demo.dblab.dev"
+          },
+          {
+            "label": "Install DBLab Engine",
+            "href": "/docs/dblab-howtos/administration/install-dle-manually"
+          }
+        ]
+      },
+      "figure": {
+        "src": "/assets/dle-platform/DLE_connect_clone1.png",
+        "width": 2494,
+        "height": 1630,
+        "alt": "The DBLab UI showing a clone that is ready to accept Postgres connections, created in 1.67 seconds, with its psql connection string.",
+        "caption": "A clone in the DBLab UI, ready for connections 1.67 seconds after it was requested (a 2.7 GiB demo database).",
+        "href": "/docs/dblab-howtos/cloning/create-clone"
+      }
+    },
+    "changes": {
+      "product": "DBLab",
+      "productUrl": "/products/dblab_engine",
+      "prefix": "dblab-vs-",
+      "label": "DBLab and schema change tools",
+      "intro": "Schema change tools write, review and deploy migrations. DBLab runs a migration on a full-size clone first and measures how long it takes and which locks it holds. They complement each other; these pages show where each one stops.",
+      "groups": [
+        {
+          "key": "tools",
+          "label": "Schema change and migration tools"
+        }
+      ],
+      "rows": [
+        {
+          "key": "scope",
+          "label": "What it is",
+          "us": "Thin clones of a full-size PostgreSQL database, used to run a schema change on real data before it ships. DBLab does not write, order or deploy migrations.",
+          "usSources": [
+            {
+              "title": "DBLab Engine",
+              "url": "/docs/database-lab"
+            },
+            {
+              "title": "DB Migration Checker",
+              "url": "/docs/database-lab/db-migration-checker"
+            }
+          ]
+        },
+        {
+          "key": "tests-on-data",
+          "label": "Runs the change on full-size data",
+          "matrix": true,
+          "matrixLabel": "Runs on full-size data",
+          "usV": "yes",
+          "us": "DB Migration Checker applies pending migrations to a full-size clone in CI and collects statistics from the run.",
+          "usSources": [
+            {
+              "title": "DB Migration Checker",
+              "url": "/docs/database-lab/db-migration-checker"
+            }
+          ]
+        },
+        {
+          "key": "lock-risk",
+          "label": "Lock and downtime risk",
+          "matrix": true,
+          "matrixLabel": "Measures locks",
+          "usV": "yes",
+          "us": "Measured on the clone: the checker fails a migration that holds a dangerous lock longer than a limit, 10 seconds by default.",
+          "usSources": [
+            {
+              "title": "DB Migration Checker",
+              "url": "/docs/database-lab/db-migration-checker"
+            }
+          ]
+        },
+        {
+          "key": "static-checks",
+          "label": "Static review and lint rules",
+          "matrix": true,
+          "matrixLabel": "Lint rules",
+          "usV": "no",
+          "us": "None. DBLab runs the change; it does not lint SQL.",
+          "usSources": [
+            {
+              "title": "DB Migration Checker",
+              "url": "/docs/database-lab/db-migration-checker"
+            }
+          ]
+        },
+        {
+          "key": "workflow",
+          "label": "Writing, versioning and deploying migrations",
+          "matrix": true,
+          "matrixLabel": "Deploys migrations",
+          "usV": "no",
+          "us": "Not provided. Keep your migration tool; a clone is an ordinary PostgreSQL server that any tool can connect to.",
+          "usSources": [
+            {
+              "title": "DBLab Engine",
+              "url": "/docs/database-lab"
+            }
+          ]
+        },
+        {
+          "key": "approvals",
+          "label": "Approvals and audit trail",
+          "matrix": true,
+          "matrixLabel": "Approval workflow",
+          "usV": "no",
+          "us": "Not a change-approval system. DBLab EE adds SSO, user management and audit for access to clones.",
+          "usSources": [
+            {
+              "title": "DBLab Engine",
+              "url": "/docs/database-lab"
+            }
+          ]
+        },
+        {
+          "key": "rollback",
+          "label": "Rollback",
+          "us": "Not provided for production. On a clone, reset returns the data to the snapshot, so a migration can be run again.",
+          "usSources": [
+            {
+              "title": "How to reset a DBLab clone",
+              "url": "/docs/dblab-howtos/cloning/reset-clone"
+            }
+          ]
+        },
+        {
+          "key": "ci",
+          "label": "CI integration",
+          "us": "The checker runs in CI; the documented example uses GitHub Actions. Any pipeline can also create clones through the API or CLI.",
+          "usSources": [
+            {
+              "title": "Database migration testing",
+              "url": "/products/database-migration-testing"
+            },
+            {
+              "title": "DB Migration Checker",
+              "url": "/docs/database-lab/db-migration-checker"
+            }
+          ]
+        },
+        {
+          "key": "hosting",
+          "label": "Open source and hosting",
+          "matrix": true,
+          "matrixLabel": "Open source",
+          "usV": "yes",
+          "us": "Open source under Apache 2.0, self-hosted in any cloud or on-premises.",
+          "usSources": [
+            {
+              "title": "DBLab Engine",
+              "url": "/docs/database-lab"
+            }
+          ]
+        }
+      ],
+      "pricingUrl": "/pricing",
+      "pricing": [
+        {
+          "plan": "DBLab Engine",
+          "price": "Free",
+          "notes": "Open source, Apache 2.0; you run it"
+        },
+        {
+          "plan": "DBLab SE",
+          "price": "From $62/month",
+          "notes": "Billed hourly by machine size, plus your own cloud costs; 2,000 GiB limit; single user"
+        },
+        {
+          "plan": "DBLab EE",
+          "price": "Custom",
+          "notes": "Annual contract, from $0.2662 per 100 GiB per hour; unlimited database size, SSO"
+        }
+      ],
+      "cta": [
+        {
+          "label": "See how migration testing works",
+          "href": "/products/database-migration-testing",
+          "primary": true
+        },
+        {
+          "label": "Open the demo",
+          "href": "https://demo.dblab.dev"
+        },
+        {
+          "label": "Pricing",
+          "href": "/pricing"
+        }
+      ],
+      "proofs": [
+        {
+          "key": "real-data",
+          "title": "Runs the migration on full-size data",
+          "us": "DB Migration Checker applies pending migrations to a full-size clone in CI and collects statistics from the run.",
+          "usSources": [
+            {
+              "title": "DB Migration Checker",
+              "url": "/docs/database-lab/db-migration-checker"
+            }
+          ]
+        },
+        {
+          "key": "locks",
+          "title": "Measures the locks a migration holds",
+          "us": "The checker fails a migration that holds a dangerous lock longer than a limit, 10 seconds by default.",
+          "usSources": [
+            {
+              "title": "DB Migration Checker",
+              "url": "/docs/database-lab/db-migration-checker"
+            }
+          ]
+        },
+        {
+          "key": "rerun",
+          "title": "Run it again from the same state",
+          "us": "On a clone, reset returns the data to the snapshot, so a migration can be run again.",
+          "usSources": [
+            {
+              "title": "How to reset a DBLab clone",
+              "url": "/docs/dblab-howtos/cloning/reset-clone"
+            }
+          ]
+        },
+        {
+          "key": "ci",
+          "title": "Fits the pipeline you have",
+          "us": "The checker runs in CI, and any pipeline can create clones through the API or CLI.",
+          "usSources": [
+            {
+              "title": "Database migration testing",
+              "url": "/products/database-migration-testing"
+            },
+            {
+              "title": "DB Migration Checker",
+              "url": "/docs/database-lab/db-migration-checker"
+            }
+          ]
+        },
+        {
+          "key": "open",
+          "title": "Open source and self-hosted",
+          "us": "DBLab Engine is open source under Apache 2.0 and runs in any cloud or on-premises.",
+          "usSources": [
+            {
+              "title": "DBLab Engine",
+              "url": "/docs/database-lab"
+            }
+          ]
+        }
+      ],
+      "tryIt": {
+        "title": "Try a clone before you install anything",
+        "terminal": [
+          {
+            "kind": "cmd",
+            "text": "dblab clone create --username dev --password \"$PASSWORD\" --id test"
+          },
+          {
+            "kind": "dim",
+            "text": "# a writable copy of the whole database,"
+          },
+          {
+            "kind": "dim",
+            "text": "# ready for any Postgres client in seconds"
+          }
+        ],
+        "text": "The public demo runs DBLab Engine: open it with the token demo-token, create a clone and connect to it. DBLab Engine is open source, so the next step is a machine of your own.",
+        "links": [
+          {
+            "label": "Open the DBLab demo",
+            "href": "https://demo.dblab.dev"
+          },
+          {
+            "label": "Install DBLab Engine",
+            "href": "/docs/dblab-howtos/administration/install-dle-manually"
+          }
+        ]
+      },
+      "complement": true,
+      "figure": {
+        "src": "/assets/dle-platform/DLE_connect_clone1.png",
+        "width": 2494,
+        "height": 1630,
+        "alt": "The DBLab UI showing a clone that is ready to accept Postgres connections, created in 1.67 seconds, with its psql connection string.",
+        "caption": "A clone in the DBLab UI, ready for connections 1.67 seconds after it was requested (a 2.7 GiB demo database).",
+        "href": "/docs/dblab-howtos/cloning/create-clone"
+      }
+    }
+  }
+}

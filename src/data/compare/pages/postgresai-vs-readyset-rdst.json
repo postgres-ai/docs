@@ -1,0 +1,246 @@
+{
+  "slug": "postgresai-vs-readyset-rdst",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "Readyset RDST",
+    "vendor": "Readyset",
+    "url": "https://readyset.io/docs/readyset-ai/rdst/desktop/agent",
+    "category": "AI slow query agent",
+    "group": "ai",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs Readyset RDST: server monitoring vs a desktop query agent",
+  "description": "Readyset RDST is an open-source desktop agent that ranks slow-query fixes for PostgreSQL. PostgresAI keeps history on a server, and a DBLab clone tests a change first.",
+  "summary": "Readyset RDST is an open-source desktop app and CLI under Apache 2.0. On PostgreSQL it reads pg_stat_statements every minute from your computer, deep-analyzes the heaviest queries with an LLM, and keeps a ranked list of index, rewrite, settings and maintenance actions. Readyset says it never writes to the database. PostgresAI monitors Postgres from a hosted or self-hosted server, runs scheduled checkups and turns findings into Issues that you, your AI agent or a PostgresAI expert can act on. Pick RDST for a free local agent on one computer. Pick PostgresAI for server-side monitoring, longer history and expert help.",
+  "chooseThem": [
+    "Free and open source under Apache 2.0, with a desktop app for macOS (Apple Silicon), Windows and Linux and a CLI.",
+    "A ranked list of Actions: each index or rewrite is scored by its queries' share of database time times the expected speedup, with the SQL to run and undo SQL for indexes.",
+    "Measures each change after you ship it and marks it Verified, with before and after latency, or Didn't help.",
+    "Each action can be copied as a migration for Alembic, Prisma, Rails or Flyway, and PostgreSQL index changes use CREATE INDEX CONCURRENTLY and DROP INDEX CONCURRENTLY.",
+    "Hosted AI is free with a Readyset sign-in, and an Anthropic key of your own raises AI monitoring from 3 to 10 databases. Local monitoring keeps running without AI."
+  ],
+  "proofs": [
+    {
+      "key": "history",
+      "them": "RDST keeps per-minute readings for 48 hours, hourly readings for 90 days and daily readings while its 250 MB per-database local limit allows. It collects only while the computer is awake and RDST is running.",
+      "sources": [10, 19]
+    },
+    {
+      "key": "test",
+      "them": "RDST deep analysis runs read queries with EXPLAIN ANALYZE on your own database with real parameter values, and benchmarks add load to the live database while they run. The sources we reviewed do not describe testing on a separate copy of the data.",
+      "sources": [20, 11]
+    },
+    {
+      "key": "data",
+      "them": "RDST keeps monitoring history on your computer. Its AI calls can include SQL, execution plans, schema metadata and sampled parameter values used for deep analysis; query result rows are not sent.",
+      "sources": [10, 2]
+    },
+    {
+      "key": "experts",
+      "them": "RDST's troubleshooting page sends users who are still stuck to Give feedback in the app or to the RDST Discord. The sources we reviewed do not describe PostgreSQL expert help for RDST.",
+      "sources": [18]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A desktop agent and CLI that run on your computer. The agent reads query statistics every minute, deep-analyzes the heaviest queries and keeps ranked Actions for indexes, rewrites, settings and maintenance. The CLI adds top, analyze, ask, scan, audit and Readyset cache commands.",
+      "sources": [1, 4, 5, 6]
+    },
+    {
+      "key": "platforms",
+      "v": "yes",
+      "them": "PostgreSQL 13 and newer, with pg_stat_statements, on any database the computer can reach, including through a VPN or SSH jump host. The connect page finds RDS and Aurora databases through your AWS account and imports databases from Supabase, Neon and DigitalOcean.",
+      "sources": [1, 8, 9]
+    },
+    {
+      "key": "deployment",
+      "v": "yes",
+      "them": "Runs on your computer; monitoring stops when you quit the app or the computer sleeps. History stays in a local folder. AI features send SQL text, plans, schema metadata and sampled parameter values, not query result rows, to the Readyset-hosted model or to Anthropic with your own key.",
+      "sources": [5, 2, 10, 3, 9]
+    },
+    {
+      "key": "open-source",
+      "v": "yes",
+      "them": "Open source under Apache 2.0; the repository holds the CLI and the Electron desktop app.",
+      "sources": [3, 9]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "Per-query calls per second, average latency and share of database time, with a deep analysis score out of 100. rdst analyze runs EXPLAIN, and EXPLAIN ANALYZE unless --fast is set, and returns candidate indexes and rewrites produced by an LLM.",
+      "sources": [11, 7, 1]
+    },
+    {
+      "key": "wait-events",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. Readyset's post says the agent looks for queries that started waiting on locks, and rdst top and rdst audit can sample pg_stat_activity; the sources do not describe wait event analysis.",
+      "sources": [9, 12, 13]
+    },
+    {
+      "key": "health-checks",
+      "v": "yes",
+      "them": "Database checks run every 15 minutes and feed settings and maintenance Actions, scored by severity. rdst audit reports version, size, connections, cache hit rate, an instance sizing class and LLM index recommendations.",
+      "sources": [4, 13]
+    },
+    {
+      "key": "agent-interface",
+      "v": "yes",
+      "them": "rdst claude registers RDST's MCP tools with Claude Code: targets, query analysis, audits, fleet, caches and code scans. The integration does not expose the agent Inbox or nightly reports. Data agents expose a narrower MCP interface.",
+      "sources": [14]
+    },
+    {
+      "key": "test-fix",
+      "v": "partial",
+      "them": "Deep analysis tests suggested rewrites and keeps one if it ran 20% faster or the planner estimates 20% less work. rdst analyze runs EXPLAIN ANALYZE on the target, and benchmarks run read queries on the live database. The sources we reviewed do not describe testing on a separate copy of the data.",
+      "sources": [4, 11, 7]
+    },
+    {
+      "key": "expert-help",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed for RDST.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "alerts",
+      "them": "Desktop notifications and browser notifications while an RDST tab is open, for an unreachable database, a query running over a minute, query or plan changes and database-wide changes. The docs say email and phone alerts are not available yet.",
+      "sources": [15]
+    },
+    {
+      "key": "retention",
+      "them": "Per-minute readings for 48 hours for the top 1,000 queries, 5-minute readings for 7 days, hourly readings for 90 days and daily readings as long as monitoring has room. Other tracked queries keep 5-minute readings for 48 hours and hourly readings for 30 days. Local storage is 250 MB per database by default.",
+      "sources": [10]
+    },
+    {
+      "key": "compliance",
+      "them": "The sources we reviewed do not describe security attestations for RDST. Monitoring history stays on your computer and database passwords are kept in the operating system keychain.",
+      "sources": [10]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Open source",
+      "price": "Free",
+      "notes": "Apache 2.0; runs on your computer",
+      "sources": [3, 9]
+    },
+    {
+      "plan": "Hosted AI with a Readyset sign-in",
+      "price": "Free",
+      "notes": "Readyset says hosted inference is on us for signed-in users, with a default allowance; AI monitoring on up to 3 databases per account, or 10 with your own Anthropic key",
+      "sources": [17, 2, 16]
+    }
+  ],
+  "pricingNote": "The docs state a monthly AI usage limit per account without giving the amount. The Readyset pricing page lists plans for the Readyset cache, not for RDST.",
+  "together": "RDST connects with a read-only account to any PostgreSQL it can reach, and PostgresAI monitoring works with the same managed services and self-managed servers. A team can run RDST on a laptop for query-level Actions while PostgresAI keeps server-side history, checkups and Issues.",
+  "faq": [
+    {
+      "q": "Is Readyset RDST open source?",
+      "a": "Yes. RDST, including the desktop app and CLI, is open source under Apache 2.0. PostgresAI monitoring is also open source, under Apache 2.0.",
+      "sources": [3, 9]
+    },
+    {
+      "q": "Which LLM does Readyset RDST use?",
+      "a": "Readyset's post says deep analyses and reports run on Claude Haiku from Anthropic. Hosted AI needs a Readyset sign-in; an Anthropic key of your own covers deep analysis and reports but does not replace signing in. Local monitoring works without AI.",
+      "sources": [9, 2]
+    },
+    {
+      "q": "Does Readyset RDST change my database?",
+      "a": "No. The docs say RDST never writes to your database. You run the suggested SQL through your own change process, and RDST measures the affected queries before and after.",
+      "sources": [4, 1]
+    },
+    {
+      "q": "Does Readyset RDST need Readyset caching?",
+      "a": "No. The docs say you don't need a Readyset cache to use RDST and that monitoring needs no Docker or Readyset deployment. If a cache target exists, rdst analyze also measures the query against it.",
+      "sources": [5, 7]
+    },
+    {
+      "q": "Can I use PostgresAI and Readyset RDST together?",
+      "a": "Yes. RDST runs on a computer with a read-only connection, and PostgresAI monitoring runs on its own server, so both can watch the same PostgreSQL database.",
+      "sources": [8, 1]
+    }
+  ],
+  "sources": [
+    {
+      "title": "RDST documentation: RDST Agent",
+      "url": "https://readyset.io/docs/readyset-ai/rdst/desktop/agent"
+    },
+    {
+      "title": "RDST documentation: AI access",
+      "url": "https://readyset.io/docs/readyset-ai/rdst/desktop/ai-credits"
+    },
+    {
+      "title": "RDST repository",
+      "url": "https://github.com/readysettech/rdst"
+    },
+    {
+      "title": "RDST documentation: Actions",
+      "url": "https://readyset.io/docs/readyset-ai/rdst/desktop/agent/actions"
+    },
+    {
+      "title": "RDST documentation: overview",
+      "url": "https://readyset.io/docs/readyset-ai/rdst"
+    },
+    {
+      "title": "RDST documentation: CLI getting started",
+      "url": "https://readyset.io/docs/readyset-ai/rdst/cli/getting-started"
+    },
+    {
+      "title": "RDST documentation: rdst analyze",
+      "url": "https://readyset.io/docs/readyset-ai/rdst/cli/query-analysis/analyze"
+    },
+    {
+      "title": "RDST documentation: connect a database",
+      "url": "https://readyset.io/docs/readyset-ai/rdst/desktop/connect"
+    },
+    {
+      "title": "Readyset blog: Meet the RDST Agent",
+      "url": "https://readyset.io/blog/meet-the-rdst-agent"
+    },
+    {
+      "title": "RDST documentation: data and retention",
+      "url": "https://readyset.io/docs/readyset-ai/rdst/desktop/agent/data-and-retention"
+    },
+    {
+      "title": "RDST documentation: the Database page",
+      "url": "https://readyset.io/docs/readyset-ai/rdst/desktop/agent/database-page"
+    },
+    {
+      "title": "RDST documentation: rdst top",
+      "url": "https://readyset.io/docs/readyset-ai/rdst/cli/query-analysis/top"
+    },
+    {
+      "title": "RDST documentation: rdst audit",
+      "url": "https://readyset.io/docs/readyset-ai/rdst/cli/fleet-and-audit/audit"
+    },
+    {
+      "title": "RDST documentation: Claude Code integration",
+      "url": "https://readyset.io/docs/readyset-ai/rdst/cli/integrations/claude-code"
+    },
+    {
+      "title": "RDST documentation: notifications",
+      "url": "https://readyset.io/docs/readyset-ai/rdst/desktop/agent/notifications"
+    },
+    {
+      "title": "Readyset pricing",
+      "url": "https://readyset.io/pricing"
+    },
+    {
+      "title": "Readyset: September 2026 product update (RDST license and hosted inference)",
+      "url": "https://readyset.io/blog/september-2026-product-update"
+    },
+    {
+      "title": "RDST documentation: troubleshooting",
+      "url": "https://readyset.io/docs/readyset-ai/rdst/desktop/agent/troubleshooting"
+    },
+    {
+      "title": "RDST documentation: get started (desktop install)",
+      "url": "https://readyset.io/docs/readyset-ai/rdst/desktop/install"
+    },
+    {
+      "title": "RDST documentation: privacy and data handling",
+      "url": "https://readyset.io/docs/readyset-ai/rdst/desktop/privacy"
+    }
+  ]
+}

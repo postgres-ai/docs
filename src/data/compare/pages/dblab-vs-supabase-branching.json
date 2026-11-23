@@ -1,0 +1,214 @@
+{
+  "slug": "dblab-vs-supabase-branching",
+  "kind": "branching",
+  "competitor": {
+    "name": "Supabase Branching",
+    "vendor": "Supabase",
+    "url": "https://supabase.com/docs/guides/deployment/branching",
+    "category": "Branching in a Postgres platform",
+    "group": "hosted",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs Supabase Branching: full-size copies vs preview branches",
+  "description": "Supabase Branching creates preview and persistent environments for a Supabase project, without production data by default. DBLab makes full-size clones of any Postgres.",
+  "summary": "Supabase Branching gives a Supabase project separate preview and persistent environments, usually one per Git branch or pull request. A branch gets its schema from your migrations, its Edge Functions and configuration from the base project, and no production data by default. DBLab Engine is open-source software that makes full-size thin clones of any PostgreSQL, including Supabase, on a machine you run. Use Supabase branches to preview schema and app changes on Supabase; use DBLab when a test needs the full production data. The two can be used together on the same Supabase project.",
+  "disclosure": "PostgresAI has a Supabase integration: the PostgresAI Console can connect to Supabase projects and set up monitoring for them.",
+  "chooseThem": [
+    "Your app already runs on Supabase. A branch is a Supabase environment with the project's Edge Functions and configuration, not only a database.",
+    "The GitHub integration creates a Supabase branch for each Git branch, runs your committed migrations, reports status in a pull request comment, and can deploy migrations to production on merge.",
+    "No fixed fee per branch: a Micro branch costs $0.01344 per hour on Pro and Team, and preview branches auto-pause after inactivity.",
+    "Persistent branches give long-lived staging, QA or development environments, with per-branch settings and secrets kept in config.toml.",
+    "Branches start without production data by default, so personal data does not reach preview environments unless you choose Include data."
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A feature of the hosted Supabase platform. \"Supabase branches create separate environments that spin off from your base project.\" Preview branches are ephemeral, for testing; persistent branches are long-lived, for staging, QA or development.",
+      "sources": [1, 12]
+    },
+    {
+      "key": "source",
+      "v": "partial",
+      "them": "Branches spin off a Supabase project. A database on another provider gets there by migration; Supabase has migration guides for Amazon RDS, Postgres, Neon, Heroku, Render and Vercel Postgres.",
+      "sources": [1, 11]
+    },
+    {
+      "key": "mechanism",
+      "them": "Each branch is a separate environment. It clones the base project's Edge Functions and configuration and builds its database schema from migrations: those committed to the repository for a GitHub-connected branch, or the base project's migration history for a Dashboard branch. Seed files can then add rows.",
+      "sources": [3, 1]
+    },
+    {
+      "key": "speed",
+      "them": "The docs we read give no time in seconds. Creation runs migrations and seed files, and the troubleshooting guide says large migrations, large seed files and network latency can slow it.",
+      "sources": [5, 3]
+    },
+    {
+      "key": "data",
+      "v": "partial",
+      "them": "\"By default, new branches do not start with any data or storage objects from your base project.\" Data comes from a seed file, or from the Include data option in the Dashboard, which needs the Point-in-Time Recovery add-on and gives the branch a larger disk and the project's compute size.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "masking",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. The default of starting branches without data, with seed files for sample data, keeps production rows out of preview branches.",
+      "sources": [1, 3]
+    },
+    {
+      "key": "ci",
+      "v": "yes",
+      "them": "The GitHub integration creates a branch per Git branch, runs new migrations on each commit, posts the deployment status on the pull request, and can deploy migrations, functions and buckets to production on merge. Each migration runs in one transaction, so create index concurrently fails there.",
+      "sources": [3]
+    },
+    {
+      "key": "interfaces",
+      "them": "GitHub integration, the Dashboard (branch management there is labeled alpha and beta on the same page), the supabase branches CLI commands (create, list, get, update, pause, unpause, delete), and experimental MCP tools that create, merge, reset, rebase and delete branches on paid plans.",
+      "sources": [3, 2, 7, 8]
+    },
+    {
+      "key": "hosting",
+      "v": "no",
+      "them": "Hosted only. The self-hosting guide says \"Some features of the managed platform aren't available when self-hosting: branching\".",
+      "sources": [10]
+    },
+    {
+      "key": "open-source",
+      "v": "partial",
+      "them": "Supabase is on GitHub under Apache 2.0 and can be self-hosted, but branching is one of the features the docs list as not available when self-hosting.",
+      "sources": [9, 10]
+    },
+    {
+      "key": "limits",
+      "them": "Not on the Free plan. Branches merge only to main, not between preview branches. Custom roles created in the Dashboard are not copied. Preview branches auto-pause after inactivity and resume on the first request. The sources we reviewed do not state a branch count limit.",
+      "sources": [6, 2, 5]
+    },
+    {
+      "key": "cost-model",
+      "them": "Usage-based, with no fixed fee per preview branch. A branch on the default Micro compute starts at $0.01344 per hour, plus egress and disk. Branch usage counts toward the plan quota, is not covered by the Spend Cap, and compute credits do not apply.",
+      "sources": [4, 6]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Free",
+      "price": "$0/month",
+      "notes": "Branching not included",
+      "sources": [6]
+    },
+    {
+      "plan": "Pro",
+      "price": "From $25/month",
+      "notes": "Branching at $0.01344 per branch per hour; $10/month compute credits, which do not apply to branch compute",
+      "sources": [6, 4]
+    },
+    {
+      "plan": "Team",
+      "price": "From $599/month",
+      "notes": "Branching at $0.01344 per branch per hour",
+      "sources": [6]
+    },
+    {
+      "plan": "Enterprise",
+      "price": "Custom",
+      "notes": "Branching price custom",
+      "sources": [6]
+    }
+  ],
+  "pricingNote": "$0.01344 per hour is the Micro compute size. A branch created with Include data matches the project's compute size and uses a larger disk, which costs more.",
+  "together": "DBLab copies a Supabase database by dump and restore, so both can serve the same Supabase project. Supabase branches carry migrations, Edge Functions and configuration through pull requests and preview deployments on Supabase. A DBLab clone of the same database gives a full-size copy of production data on a machine you control, to check query plans and migration timing before the change merges.",
+  "faq": [
+    {
+      "q": "Do Supabase branches include production data?",
+      "a": "Not by default. The docs say new branches do not start with any data or storage objects from the base project. You can load sample data with a seed file, or create a branch in the Dashboard with Include data, which needs the Point-in-Time Recovery add-on.",
+      "sources": [1, 2]
+    },
+    {
+      "q": "What does Supabase Branching cost?",
+      "a": "Branching is on Pro, Team and Enterprise, not Free. There is no fixed fee per preview branch; a branch on Micro compute starts at $0.01344 per hour, plus egress and disk. Branch usage is not covered by the Spend Cap, and compute credits do not apply to it.",
+      "sources": [6, 4]
+    },
+    {
+      "q": "Does Supabase Branching work with self-hosted Supabase?",
+      "a": "No. The self-hosting guide lists branching among the features of the managed platform that are not available when self-hosting.",
+      "sources": [10]
+    },
+    {
+      "q": "Can I use DBLab and Supabase Branching together?",
+      "a": "Yes. Supabase branches run migrations and app previews on Supabase, starting without production data. DBLab copies a Supabase database by dump and restore and gives full-size thin clones on a machine you control, for tests that need real data volumes.",
+      "sources": [1, 3]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Supabase docs: Branching",
+      "url": "https://supabase.com/docs/guides/deployment/branching"
+    },
+    {
+      "title": "Supabase docs: Branching via the Dashboard",
+      "url": "https://supabase.com/docs/guides/deployment/branching/dashboard"
+    },
+    {
+      "title": "Supabase docs: Branching GitHub integration",
+      "url": "https://supabase.com/docs/guides/deployment/branching/github-integration"
+    },
+    {
+      "title": "Supabase docs: Manage branching usage",
+      "url": "https://supabase.com/docs/guides/platform/manage-your-usage/branching"
+    },
+    {
+      "title": "Supabase docs: Branching troubleshooting",
+      "url": "https://supabase.com/docs/guides/deployment/branching/troubleshooting"
+    },
+    {
+      "title": "Supabase pricing",
+      "url": "https://supabase.com/pricing"
+    },
+    {
+      "title": "Supabase CLI reference: supabase branches",
+      "url": "https://supabase.com/docs/reference/cli/supabase-branches"
+    },
+    {
+      "title": "Supabase docs: Model Context Protocol",
+      "url": "https://supabase.com/docs/guides/ai-tools/mcp"
+    },
+    {
+      "title": "supabase/supabase repository",
+      "url": "https://github.com/supabase/supabase"
+    },
+    {
+      "title": "Supabase docs: Self-hosting",
+      "url": "https://supabase.com/docs/guides/self-hosting"
+    },
+    {
+      "title": "Supabase knowledge base: Migration",
+      "url": "https://supabase.com/kb/topics/migration"
+    },
+    {
+      "title": "Supabase docs: Branching configuration",
+      "url": "https://supabase.com/docs/guides/deployment/branching/configuration"
+    }
+  ],
+  "proofs": [
+    {
+      "key": "data",
+      "them": "Supabase branches start without data by default: the schema is built from migrations and rows come from seed files. The Dashboard's Include data option, in public alpha, copies production data and needs the Point-in-Time Recovery add-on.",
+      "sources": [1, 3, 2]
+    },
+    {
+      "key": "control",
+      "them": "Supabase Branching is part of the hosted Supabase platform. Supabase itself can be self-hosted, but the self-hosting guide lists branching among the features that are not available there.",
+      "sources": [1, 10]
+    },
+    {
+      "key": "any-source",
+      "them": "Supabase branches spin off a Supabase project. A database on Amazon RDS, Neon, Heroku, Render or a self-managed server is first migrated to Supabase, with the migration guides Supabase publishes.",
+      "sources": [1, 11]
+    },
+    {
+      "key": "cost",
+      "them": "Supabase bills each preview branch as its own environment: compute from $0.01344 per hour on Micro, plus disk and egress. A branch created with Include data uses a larger disk and the project's compute size.",
+      "sources": [4, 2]
+    }
+  ]
+}

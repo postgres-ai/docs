@@ -1,0 +1,208 @@
+{
+  "slug": "postgresai-vs-ottertune",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "OtterTune",
+    "vendor": "OtterTune",
+    "url": "https://ottertune.com/",
+    "category": "ML database tuning service",
+    "group": "ai",
+    "status": "discontinued",
+    "statusNote": "On June 3, 2024 OtterTune announced that it would shut down OtterTune and all related services on June 13, 2024, delete account data for subscribers and trial users that day, and refund the unused part of active subscriptions. ottertune.com now reads \"OtterTune is Dead (2020-2024)\".",
+    "statusSources": [2, 1, 3]
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs OtterTune: open-source monitoring vs ML knob tuning (closed)",
+  "description": "OtterTune tuned PostgreSQL knobs on Amazon RDS and Aurora with ML until it shut down in June 2024. PostgresAI monitors Postgres on any provider, as open source.",
+  "summary": "OtterTune was a SaaS service that used machine learning to tune PostgreSQL configuration knobs on Amazon RDS and Aurora, with health scores, index checks and query recommendations. It shut down on June 13, 2024, so it can no longer be bought or used. PostgresAI is a different kind of product: it monitors PostgreSQL, runs scheduled checkups and turns findings into Issues that you, your AI agent or a PostgresAI expert act on. PostgresAI reports settings findings as Issues; it does not change configuration automatically, as OtterTune did.",
+  "chooseThem": [
+    "OtterTune is no longer available: the service shut down on June 13, 2024 and account data was deleted that day. This page records what it did for people who used it or are looking for a replacement.",
+    "It tuned 100+ configuration knobs with machine learning toward a target you chose, such as query latency, throughput or CPU utilization.",
+    "It could apply the recommended knob settings itself, with or without human approval, on a tuning schedule you set down to the day and minute.",
+    "Its open-source agent ran in your own environment (Fargate via CloudFormation, Docker, Kubernetes or Helm) and connected to the database from there."
+  ],
+  "proofs": [
+    {
+      "key": "anywhere",
+      "them": "OtterTune supported PostgreSQL only on Amazon RDS and Aurora, and its home page offered a waitlist to users on other environments. The service shut down on June 13, 2024.",
+      "sources": [4, 8, 2]
+    },
+    {
+      "key": "open",
+      "them": "The OtterTune agent was open source under Apache 2.0 and its repository is archived. The tuning service was sold at $220 a month per database, and the sources we reviewed do not describe self-hosting it.",
+      "sources": [10, 5, 6]
+    },
+    {
+      "key": "waits",
+      "them": "OtterTune collected knobs and runtime metrics every minute, and table, index and schema metrics and query digests every hour. The sources we reviewed do not describe wait event analysis.",
+      "sources": [8]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A database configuration tuning and monitoring service, now shut down. An agent in your environment sent knobs and runtime metrics to OtterTune, whose ML engine generated new configurations; it also gave health scores, index checks and query recommendations.",
+      "sources": [6, 4, 2]
+    },
+    {
+      "key": "platforms",
+      "v": "partial",
+      "them": "Amazon RDS and Aurora only. As of March 2022 the docs listed Amazon RDS for PostgreSQL 10 to 14, Aurora PostgreSQL 10 to 13 and Aurora Serverless PostgreSQL 13 and 14. The home page offered a waitlist to users not on Aurora or RDS, and setup needed IAM roles in your AWS account.",
+      "sources": [8, 4]
+    },
+    {
+      "key": "deployment",
+      "v": "nd",
+      "them": "A hosted service, with the agent deployed in your environment. It collected knobs and runtime metrics every minute, and table, index and schema metrics and normalized query digests every hour, not table data. The sources we reviewed do not describe self-hosting the service.",
+      "sources": [6, 7, 8]
+    },
+    {
+      "key": "open-source",
+      "v": "partial",
+      "them": "The agent was open source under Apache 2.0 (repository now archived). The original CMU research prototype is public under the Business Source License 1.1. The sources we reviewed do not describe the commercial service as open source.",
+      "sources": [10, 11, 7]
+    },
+    {
+      "key": "query-analysis",
+      "v": "preview",
+      "them": "Query recommendations based on query digests and summary statistics. The home page in March 2024 labelled query recommendations \"Queries (Beta)\".",
+      "sources": [4, 6, 5]
+    },
+    {
+      "key": "wait-events",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. The documented data was knobs, runtime metrics, table and index metrics, schema and query digests.",
+      "sources": [8, 6]
+    },
+    {
+      "key": "health-checks",
+      "v": "yes",
+      "them": "Health scores for databases, tables, indexes and queries, unused and duplicate index detection, and autovacuum checks for PostgreSQL. Knob recommendations could be applied automatically or reviewed first.",
+      "sources": [5, 4]
+    },
+    {
+      "key": "agent-interface",
+      "v": "partial",
+      "them": "API access was listed on the Standard plan, and a Slack app posted when a configuration was ready or applied. The sources we reviewed do not describe an MCP server or AI agent interface.",
+      "sources": [5, 9]
+    },
+    {
+      "key": "test-fix",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. A manual review mode let a person approve a new configuration before OtterTune applied it to the database.",
+      "sources": [4, 9]
+    },
+    {
+      "key": "expert-help",
+      "v": "partial",
+      "them": "The Standard plan included customer support via Slack, email, chat and video calls; Enterprise added a dedicated onboarding representative. The sources we reviewed do not describe PostgreSQL consulting.",
+      "sources": [5]
+    },
+    {
+      "key": "alerts",
+      "them": "A Slack app sent \"Tuning Disabled\", \"Configuration Applied\" and \"Configuration Ready\" notifications. The sources we reviewed do not describe other alert channels.",
+      "sources": [9]
+    },
+    {
+      "key": "retention",
+      "them": "The home page said charts covered custom time ranges \"with no caps on historical data\". All account data was deleted on June 13, 2024.",
+      "sources": [4, 2]
+    },
+    {
+      "key": "compliance",
+      "them": "OtterTune announced in November 2022 that it had completed a SOC 2 Type II audit, and the 2024 pricing page listed SOC 2 compliance.",
+      "sources": [12, 5]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Standard (2024, no longer sold)",
+      "price": "$220/month per database",
+      "notes": "30-day free trial for up to three databases, no credit card; 25% off on yearly billing",
+      "sources": [5]
+    },
+    {
+      "plan": "Enterprise (2024, no longer sold)",
+      "price": "Custom",
+      "notes": "Volume and term discounts, Amazon S3 bucket support, dedicated onboarding representative",
+      "sources": [5]
+    }
+  ],
+  "pricingNote": "Prices are from the archived pricing page of February 2024. The service shut down on June 13, 2024; active subscribers received prorated refunds.",
+  "faq": [
+    {
+      "q": "What happened to OtterTune?",
+      "a": "On June 3, 2024 the OtterTune team announced that OtterTune and all its related services would shut down on June 13, 2024, with account data deleted that day and prorated refunds for active subscribers. Co-founder Andy Pavlo wrote that he, Dana Van Aken and Bohan Zhang worked on the research project and startup for almost a decade.",
+      "sources": [2, 3]
+    },
+    {
+      "q": "Can I still use OtterTune?",
+      "a": "No. The service was shut down on June 13, 2024, and ottertune.com now shows only a notice that the company is dead. The agent repository on GitHub is archived.",
+      "sources": [1, 2, 10]
+    },
+    {
+      "q": "What did OtterTune do?",
+      "a": "It used machine learning to tune PostgreSQL configuration knobs on Amazon RDS and Aurora toward a target such as latency, throughput or CPU use, and could apply the new settings automatically or after review. It also gave health scores, unused and duplicate index detection, autovacuum checks and query recommendations.",
+      "sources": [4, 5, 6]
+    },
+    {
+      "q": "Is OtterTune open source?",
+      "a": "The sources we reviewed do not describe the commercial service as open source. Its agent is public under Apache 2.0 in an archived repository, and the original Carnegie Mellon research prototype is public under the Business Source License 1.1.",
+      "sources": [10, 11]
+    },
+    {
+      "q": "Does PostgresAI tune configuration like OtterTune did?",
+      "a": "PostgresAI checkups report on settings, autovacuum and bloat, and indexes, and each finding becomes an Issue with a specific fix for you, your AI agent or a PostgresAI expert. It does not change configuration automatically, as OtterTune did."
+    }
+  ],
+  "sources": [
+    {
+      "title": "ottertune.com today",
+      "url": "https://ottertune.com/"
+    },
+    {
+      "title": "OtterTune blog: OtterTune officially shutting down services (June 3, 2024, archived)",
+      "url": "https://web.archive.org/web/20240603223742/https://ottertune.com/blog/ottertune-officially-shutting-down-services"
+    },
+    {
+      "title": "Andy Pavlo: 2024 databases retrospective (CMU blog)",
+      "url": "https://www.cs.cmu.edu/~pavlo/blog/2025/01/2024-databases-retrospective.html"
+    },
+    {
+      "title": "OtterTune home page (March 2024, archived)",
+      "url": "https://web.archive.org/web/20240318041010/https://ottertune.com/"
+    },
+    {
+      "title": "OtterTune plans and pricing (February 2024, archived)",
+      "url": "https://web.archive.org/web/20240229173050/https://ottertune.com/pricing"
+    },
+    {
+      "title": "OtterTune docs: how OtterTune works (archived)",
+      "url": "https://web.archive.org/web/20230601022614/https://docs.ottertune.com/documentation/how-ottertune-works"
+    },
+    {
+      "title": "OtterTune docs: agent setup (archived)",
+      "url": "https://web.archive.org/web/20230601031045/https://docs.ottertune.com/documentation/getting-started/connect-your-database/agent-setup"
+    },
+    {
+      "title": "OtterTune docs: frequently asked questions (archived)",
+      "url": "https://web.archive.org/web/20230601020053/https://docs.ottertune.com/additional-info/frequently-asked-questions"
+    },
+    {
+      "title": "OtterTune docs: Slack integration (archived)",
+      "url": "https://web.archive.org/web/20230601011825/https://docs.ottertune.com/documentation/slack-integration"
+    },
+    {
+      "title": "OtterTune agent repository (archived)",
+      "url": "https://github.com/ottertune/ot-agent"
+    },
+    {
+      "title": "OtterTune research prototype repository (CMU, archived)",
+      "url": "https://github.com/cmu-db/ottertune"
+    },
+    {
+      "title": "OtterTune blog: we got our SOC 2 Type II report (archived)",
+      "url": "https://web.archive.org/web/20230602213646/https://ottertune.com/blog/we-got-our-soc-2-type-ii-report/"
+    }
+  ]
+}

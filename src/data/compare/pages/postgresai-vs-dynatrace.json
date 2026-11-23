@@ -1,0 +1,210 @@
+{
+  "slug": "postgresai-vs-dynatrace",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "Dynatrace",
+    "vendor": "Dynatrace",
+    "url": "https://www.dynatrace.com/hub/detail/postgresdb-remote-monitoring/",
+    "category": "Observability platform",
+    "group": "observability",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs Dynatrace: open-source monitoring vs an ActiveGate extension",
+  "description": "Dynatrace monitors Postgres through an ActiveGate extension, with top statements and plans. PostgresAI is open-source Postgres monitoring with checkups and Issues.",
+  "summary": "Dynatrace is an observability platform. Its PostgreSQL extension runs on an ActiveGate, connects to the database remotely and collects metrics, top statements and execution plans; the Databases app adds a health score, anomaly detection, query rewrite suggestions and index recommendations, and database instances link to the services that call them. PostgresAI monitors PostgreSQL only, runs scheduled checkups and turns findings into Issues that you, your AI agent or a PostgresAI expert can act on. Pick Dynatrace for automatic plan capture and index recommendations next to service data. Pick PostgresAI for open-source monitoring you can self-host, human Postgres experts, or DBLab clones to test a fix.",
+  "chooseThem": [
+    "The Databases app shows the services that call each PostgreSQL instance, and OneAgent on a self-managed host adds the host with its CPU, memory, disk and network metrics.",
+    "Dynatrace Intelligence detects anomalies, gives recommendations such as rewriting queries or adding indexes, and Davis CoPilot can summarize an execution plan.",
+    "Index Recommendations for PostgreSQL use the hypopg extension and a dynatrace_index_advisor function you create in each database; Amazon RDS and Aurora already ship hypopg.",
+    "The PostgreSQL extension collects metrics across databases, activity, WAL, replication, I/O, locks and subscriptions, and captures execution plans for top queries automatically.",
+    "A generally available remote MCP server connects AI clients such as GitHub Copilot, Microsoft Copilot and Atlassian Rovo to Dynatrace data, with OAuth or platform tokens."
+  ],
+  "proofs": [
+    {
+      "key": "open",
+      "them": "Dynatrace is sold as a platform subscription with a 15-day free trial. Its PostgreSQL extension carries no charge, but the data it ingests is billed; the rate card lists Database Monitoring at $0.11 per database-instance-hour.",
+      "sources": [2, 8, 9]
+    },
+    {
+      "key": "waits",
+      "them": "The Dynatrace PostgreSQL extension correlates top statements with pg_stat_activity data to obtain wait event times when possible, ranks statements by waits, and has a metric for the number of backends actively waiting.",
+      "sources": [1, 3]
+    },
+    {
+      "key": "test",
+      "them": "Dynatrace Index Recommendations use the hypopg extension in the monitored database, and Request execution plan fetches a plan from that database. The sources we reviewed do not describe running a change on a separate copy of the data.",
+      "sources": [2, 3]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "An observability platform. For PostgreSQL, an ActiveGate SQL extension pulls metrics, top statements and execution plans over a remote connection; the Databases app shows them with anomaly detection and recommendations. OneAgent can add host metrics for a self-managed server.",
+      "sources": [1, 2, 5, 4]
+    },
+    {
+      "key": "platforms",
+      "v": "yes",
+      "them": "Compatible with all currently maintained Postgres versions; extension 3.0.10 dropped PostgreSQL 13 and below. The docs cover self-hosted servers, Amazon RDS and Aurora (with IAM authentication), Google Cloud SQL and Azure Database for PostgreSQL. It needs an ActiveGate with network access, pg_stat_statements and a user with pg_monitor.",
+      "sources": [2, 1]
+    },
+    {
+      "key": "deployment",
+      "v": "nd",
+      "them": "The ActiveGate runs in your environment and connects to the database remotely. Query parameters are replaced with placeholders and execution plans are sanitized. The sources we reviewed do not describe self-hosting the platform that stores the data.",
+      "sources": [2, 6]
+    },
+    {
+      "key": "open-source",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. Dynatrace is sold as a paid platform with a 15-day free trial.",
+      "sources": [1, 8]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "Top statements ranked by resource use and execution time, filterable by time, CPU, disk or waits, and stored as logs. Execution plans for top queries are captured automatically through a helper function you create in each database, and Request execution plan fetches one for any statement.",
+      "sources": [3, 5, 1, 2, 4]
+    },
+    {
+      "key": "wait-events",
+      "v": "partial",
+      "them": "When possible, top statements are correlated with pg_stat_activity data to get wait event times, and metrics count processes actively waiting. The sources we reviewed do not describe a separate wait event view for PostgreSQL.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "health-checks",
+      "v": "yes",
+      "them": "A health score per instance, an Indexes view to identify unused or problematic indexes, and recommendations for query and configuration optimizations, including rewriting queries or adding indexes. Dynatrace Intelligence detects anomalies, and alert templates cover health alerts and warning signals.",
+      "sources": [5, 7, 1]
+    },
+    {
+      "key": "agent-interface",
+      "v": "yes",
+      "them": "A remote Dynatrace MCP Server, generally available, with OAuth or platform token access from MCP clients such as GitHub Copilot, Microsoft Copilot and Atlassian Rovo. Its Hub page describes a growing collection of tools without listing them.",
+      "sources": [10]
+    },
+    {
+      "key": "test-fix",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. Index Recommendations use the hypopg extension and a dynatrace_index_advisor function in the monitored database; the sources do not describe testing a change on a separate copy.",
+      "sources": [2, 5, 7]
+    },
+    {
+      "key": "expert-help",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. The pricing page says a Dynatrace subscription includes the security, compliance and support infrastructure teams expect.",
+      "sources": [8]
+    },
+    {
+      "key": "alerts",
+      "them": "The Databases app sets up health alerts and warning signals from templates in the Anomaly Detection app, and Dynatrace Intelligence raises problems from anomalies.",
+      "sources": [7, 1]
+    },
+    {
+      "key": "retention",
+      "them": "Database monitoring data, including statements, is kept for 35 days by default, and retention can be adjusted. Metrics include 15 months of retention at 1-minute granularity, extendable to 10 years; log retention is billed at $0.0007 per GiB-day on Pay-per-Query.",
+      "sources": [6, 3, 8]
+    },
+    {
+      "key": "compliance",
+      "them": "The Dynatrace Trust Center lists SOC 2 Type II, ISO 27001:2022, ISO 42001:2023, FedRAMP Moderate and HIPAA, among others.",
+      "sources": [11]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Database Monitoring",
+      "price": "$0.11 per database-instance-hour",
+      "notes": "Rate card list price",
+      "sources": [9]
+    },
+    {
+      "plan": "Infrastructure Monitoring",
+      "price": "$29 per host/month",
+      "notes": "Billed at $0.04 per hour per host",
+      "sources": [8, 9]
+    },
+    {
+      "plan": "Log and metric ingest",
+      "price": "$0.20 per GiB (logs), $0.15 per 100k datapoints (metrics)",
+      "notes": "Ingest and process; retention and log queries are billed separately",
+      "sources": [8]
+    }
+  ],
+  "pricingNote": "The extension docs say there is no charge for the PostgreSQL extension itself, only for the data it ingests; the Hub says the extension was aligned with the latest Database licensing model, and the rate card lists Database Monitoring per database-instance-hour. There is a 15-day free trial.",
+  "together": "DBLab is a separate product that copies any PostgreSQL source, so a team that monitors with Dynatrace can still use a DBLab clone to try an index or query change on full-size data before production.",
+  "faq": [
+    {
+      "q": "Does Dynatrace work with Amazon RDS for PostgreSQL?",
+      "a": "Yes. The PostgreSQL extension runs on an ActiveGate that connects to the database remotely, and its docs cover Amazon RDS, Aurora, Google Cloud SQL and Azure Database for PostgreSQL as well as self-hosted servers.",
+      "sources": [2]
+    },
+    {
+      "q": "Does Dynatrace collect PostgreSQL execution plans?",
+      "a": "Yes. Since extension version 3.0.10, execution plans for top queries are captured automatically. You create a helper function in each monitored database that generates the plans, and plans are sanitized to remove sensitive values.",
+      "sources": [1, 2, 6]
+    },
+    {
+      "q": "What does Dynatrace database monitoring cost?",
+      "a": "The Dynatrace rate card lists Database Monitoring at $0.11 per database-instance-hour. Host monitoring, log and metric ingest are billed separately, and there is a 15-day free trial.",
+      "sources": [9, 8]
+    },
+    {
+      "q": "Which PostgreSQL versions does Dynatrace support?",
+      "a": "The PostgreSQL extension docs say it is compatible with all currently maintained Postgres versions. Extension version 3.0.10 dropped support for PostgreSQL 13 and below. PostgresAI monitoring supports PostgreSQL 14 and later.",
+      "sources": [2, 1]
+    },
+    {
+      "q": "Can I use PostgresAI and Dynatrace together?",
+      "a": "Yes. DBLab, the PostgresAI cloning product, copies any PostgreSQL source, so a team that monitors with Dynatrace can test an index or query change on a full-size DBLab clone before production."
+    }
+  ],
+  "sources": [
+    {
+      "title": "Dynatrace Hub: PostgreSQL extension",
+      "url": "https://www.dynatrace.com/hub/detail/postgresdb-remote-monitoring/"
+    },
+    {
+      "title": "Dynatrace documentation: PostgreSQL extension",
+      "url": "https://docs.dynatrace.com/docs/observe/infrastructure-observability/databases/extensions/postgresdb-remote-monitoring"
+    },
+    {
+      "title": "Dynatrace documentation: database statements and execution plans",
+      "url": "https://docs.dynatrace.com/docs/observe/infrastructure-observability/databases/concepts/statements-and-execution-plans"
+    },
+    {
+      "title": "Dynatrace documentation: database monitoring approaches",
+      "url": "https://docs.dynatrace.com/docs/observe/infrastructure-observability/databases/concepts/db-instance-vs-host-targeted"
+    },
+    {
+      "title": "Dynatrace documentation: databases",
+      "url": "https://docs.dynatrace.com/docs/observe/infrastructure-observability/databases"
+    },
+    {
+      "title": "Dynatrace documentation: data collected with database monitoring",
+      "url": "https://docs.dynatrace.com/docs/observe/infrastructure-observability/databases/database-app/data-collected"
+    },
+    {
+      "title": "Dynatrace Hub: Databases app",
+      "url": "https://www.dynatrace.com/hub/detail/database-overview/"
+    },
+    {
+      "title": "Dynatrace pricing",
+      "url": "https://www.dynatrace.com/pricing/"
+    },
+    {
+      "title": "Dynatrace rate card",
+      "url": "https://www.dynatrace.com/pricing/rate-card/"
+    },
+    {
+      "title": "Dynatrace Hub: Dynatrace MCP Server",
+      "url": "https://www.dynatrace.com/hub/detail/dynatrace-mcp-server/"
+    },
+    {
+      "title": "Dynatrace Trust Center",
+      "url": "https://www.dynatrace.com/company/trust-center/"
+    }
+  ]
+}

@@ -1,0 +1,178 @@
+{
+  "slug": "dblab-vs-squawk",
+  "kind": "changes",
+  "competitor": {
+    "name": "Squawk",
+    "vendor": "Squawk open-source project",
+    "url": "https://squawkhq.com/",
+    "category": "PostgreSQL migration linter",
+    "group": "tools",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs Squawk: lint migration SQL, then run it on a clone",
+  "description": "Squawk lints PostgreSQL migration files for statements that take risky locks. DBLab executes the migration on a full-size clone and fails it if a lock is held too long.",
+  "summary": "Squawk is an open-source linter, formatter and language server for PostgreSQL migrations. It parses SQL files and warns about statements such as CREATE INDEX without CONCURRENTLY, a column type change or a missing lock_timeout. DBLab does not lint. It gives you a full-size thin clone, where DB Migration Checker runs the migration and fails it if it holds a dangerous lock too long. The two fit together: Squawk flags risky SQL in the pull request, DBLab shows what the change does on real data. Squawk's own docs say a migration that passes its lint is not automatically safe to run.",
+  "chooseThem": [
+    "Squawk checks migration SQL without a database copy: install it with npm, pip, Docker or a binary and point it at your SQL files.",
+    "The rules page lists more than 70 rules, among them require-concurrent-index-creation, changing-column-type, constraint-missing-not-valid and require-lock-timeout.",
+    "Each rule has a docs page with examples and reasoning, such as the lock a statement takes and the SQL to write instead.",
+    "A GitHub Action posts violations as a comment on the pull request; the CLI also has a GitLab reporter and a pre-commit hook.",
+    "It also runs as a language server with a VS Code extension, and as a WASM playground that checks SQL locally in the browser."
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A linter, code formatter and language server for Postgres migrations and SQL. Its stated goal is to prevent unexpected downtime caused by database migrations. It parses the SQL text of migration files and reports rule violations.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "tests-on-data",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. Squawk lints SQL files, and its browser playground checks SQL locally. Its safe migrations guide says a migration that passes Squawk's lint is not automatically safe to run.",
+      "sources": [1, 7]
+    },
+    {
+      "key": "lock-risk",
+      "v": "partial",
+      "them": "Predicted from the SQL, not measured. Rules flag statements that take an ACCESS EXCLUSIVE lock, such as a column type change or setting an existing column NOT NULL, plus an index built without CONCURRENTLY and migrations without a lock_timeout.",
+      "sources": [3, 4, 5, 6, 7]
+    },
+    {
+      "key": "static-checks",
+      "v": "yes",
+      "them": "The rules page lists more than 70 rules. Some are opt-in and disabled by default. Rules can be excluded with --exclude, in a .squawk.toml file, or per statement with a squawk-ignore comment.",
+      "sources": [1, 2, 8]
+    },
+    {
+      "key": "workflow",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. Squawk lints SQL that another tool writes and applies; the docs show piping Alembic's offline SQL output into it and say it has no special support for Django or other ORMs.",
+      "sources": [11]
+    },
+    {
+      "key": "approvals",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. Findings appear in the terminal, in an editor or as a pull request comment.",
+      "sources": [1, 9]
+    },
+    {
+      "key": "rollback",
+      "them": "Not documented in the sources we reviewed. In the documented workflows Squawk lints SQL that your migration tool applies.",
+      "sources": [1, 11]
+    },
+    {
+      "key": "ci",
+      "them": "The squawk-action GitHub Action lints migrations and can report violations as a comment on the pull request. Other CI systems can call squawk upload-to-github. The CLI has a gitlab reporter and a pre-commit hook.",
+      "sources": [1, 9, 10]
+    },
+    {
+      "key": "hosting",
+      "v": "yes",
+      "them": "Open source on GitHub with Apache 2.0 and MIT license files. It runs where you run it: CLI from npm, pip, Docker or binaries, a VS Code extension, or the browser playground.",
+      "sources": [1, 12]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Open source",
+      "price": "Free",
+      "notes": "Apache 2.0 and MIT license files in the repository",
+      "sources": [1]
+    }
+  ],
+  "together": "The two check the same pull request in different ways. Squawk reads the migration SQL and flags statements known to take heavy locks, before anything runs. DB Migration Checker then applies the migration to a full-size DBLab clone in CI and fails it if it holds a dangerous lock longer than the limit. Squawk catches a missing CONCURRENTLY without running anything; the clone shows how long the change takes on your real table sizes. Neither deploys the change; your migration tool still does that.",
+  "faq": [
+    {
+      "q": "Is Squawk open source?",
+      "a": "Yes. The repository on GitHub has Apache 2.0 and MIT license files. It installs from npm or pip, as binaries from the releases page, or as a Docker image.",
+      "sources": [1]
+    },
+    {
+      "q": "Does Squawk need a database connection?",
+      "a": "The documented workflows lint SQL files, and the playground checks SQL locally in the browser with a WASM build. The sources we reviewed do not describe connecting to a database. For framework migrations, the docs show generating the SQL first, for example with alembic upgrade head --sql.",
+      "sources": [1, 11, 13]
+    },
+    {
+      "q": "If Squawk passes, is my migration safe?",
+      "a": "Not by itself. Squawk's guide says a migration that passes its lint is not automatically safe to run, and recommends a short lock_timeout and a statement_timeout. Running the migration on a full-size DBLab clone shows its duration and locks on real data.",
+      "sources": [7]
+    },
+    {
+      "q": "Can I use DBLab and Squawk together?",
+      "a": "Yes. Lint the migration with Squawk in the pull request, and run it on a DBLab clone in CI with DB Migration Checker. Squawk does not run migrations and DBLab does not lint SQL, so each covers a step the other does not.",
+      "sources": [1, 10]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Squawk repository and README",
+      "url": "https://github.com/sbdchd/squawk"
+    },
+    {
+      "title": "Squawk docs: rules overview",
+      "url": "https://squawkhq.com/docs/rules"
+    },
+    {
+      "title": "Squawk docs: adding-not-nullable-field",
+      "url": "https://squawkhq.com/docs/adding-not-nullable-field"
+    },
+    {
+      "title": "Squawk docs: require-concurrent-index-creation",
+      "url": "https://squawkhq.com/docs/require-concurrent-index-creation"
+    },
+    {
+      "title": "Squawk docs: changing-column-type",
+      "url": "https://squawkhq.com/docs/changing-column-type"
+    },
+    {
+      "title": "Squawk docs: require-lock-timeout",
+      "url": "https://squawkhq.com/docs/require-lock-timeout"
+    },
+    {
+      "title": "Squawk docs: applying migrations safely",
+      "url": "https://squawkhq.com/docs/safe_migrations"
+    },
+    {
+      "title": "Squawk docs: CLI",
+      "url": "https://squawkhq.com/docs/cli"
+    },
+    {
+      "title": "Squawk docs: GitHub integration",
+      "url": "https://squawkhq.com/docs/github_app"
+    },
+    {
+      "title": "squawk-action repository",
+      "url": "https://github.com/sbdchd/squawk-action"
+    },
+    {
+      "title": "Squawk docs: web frameworks",
+      "url": "https://squawkhq.com/docs/web-frameworks"
+    },
+    {
+      "title": "Squawk releases",
+      "url": "https://github.com/sbdchd/squawk/releases"
+    },
+    {
+      "title": "Squawk docs: quick start",
+      "url": "https://squawkhq.com/docs/"
+    }
+  ],
+  "proofs": [
+    {
+      "key": "real-data",
+      "them": "Squawk parses the SQL text of migration files and reports rule violations. Its guide says a migration that passes Squawk's lint is not automatically safe to run.",
+      "sources": [1, 7]
+    },
+    {
+      "key": "locks",
+      "them": "Squawk's rule docs name the lock a statement takes, such as the ACCESS EXCLUSIVE lock for a column type change, and a rule requires a lock_timeout. The lock is predicted from the SQL; the sources do not describe measuring how long it is held.",
+      "sources": [5, 6, 2]
+    },
+    {
+      "key": "rerun",
+      "them": "Squawk lints SQL that your migration tool applies, and its guide says to retry a migration that hits lock_timeout. The sources we reviewed do not describe running a migration or resetting data between runs.",
+      "sources": [11, 7]
+    }
+  ]
+}

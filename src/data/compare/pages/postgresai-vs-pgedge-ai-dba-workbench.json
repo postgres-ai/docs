@@ -1,0 +1,215 @@
+{
+  "slug": "postgresai-vs-pgedge-ai-dba-workbench",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "pgEdge AI DBA Workbench",
+    "vendor": "pgEdge, Inc.",
+    "url": "https://www.pgedge.com/products/ai-dba-workbench",
+    "category": "Self-hosted PostgreSQL monitoring",
+    "group": "postgres-tools",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs pgEdge AI DBA Workbench: human experts vs an AI assistant",
+  "description": "pgEdge AI DBA Workbench is open-source, self-hosted monitoring with an AI assistant. PostgresAI adds a wait event dashboard and PostgreSQL experts on Scale.",
+  "summary": "pgEdge AI DBA Workbench is open-source PostgreSQL monitoring that you run yourself: a collector, an alerter with threshold rules and three-tier anomaly detection, an MCP server and a web client with an AI assistant, Ellie, that can use cloud or local LLMs. PostgresAI monitors Postgres, runs scheduled checkups and turns findings into Issues that you, your AI agent or a PostgresAI expert can act on, hosted or self-hosted. Pick the Workbench for a free, self-hosted stack with a built-in assistant that can run on a local model. Pick PostgresAI for a hosted option, human experts on the plan, or DBLab clones to test a fix.",
+  "chooseThem": [
+    "Open source under the PostgreSQL License and free to download; the product page lists it as Free (OSS).",
+    "A built-in AI assistant, Ellie, that can query metrics, inspect schemas and run EXPLAIN ANALYZE, with Anthropic, OpenAI, Gemini, Ollama or any OpenAI-compatible endpoint, including fully local models.",
+    "Anomaly detection in three tiers: z-score baselines, embedding similarity with pgvector, and LLM classification that decides whether to alert.",
+    "Self-hosted and can run air-gapped; the product page says your data never leaves your infrastructure.",
+    "Support at no extra cost for pgEdge Enterprise Postgres subscribers."
+  ],
+  "proofs": [
+    {
+      "key": "waits",
+      "them": "The pgEdge AI DBA Workbench pg_stat_activity probe records wait_event_type and wait_event every 60 seconds by default. The sources we reviewed do not describe a dedicated wait event dashboard.",
+      "sources": [5, 6]
+    },
+    {
+      "key": "experts",
+      "them": "The pgEdge AI DBA Workbench product page says pgEdge Enterprise Postgres subscribers receive support at no extra cost. The sources we reviewed do not describe PostgreSQL consulting as part of the Workbench.",
+      "sources": [1]
+    },
+    {
+      "key": "data",
+      "them": "The Workbench pg_stat_activity probe stores each session's query text and client address. Its MCP tools and the Ellie assistant can run SQL queries on monitored databases, with a cloud or local LLM.",
+      "sources": [5, 10, 11]
+    },
+    {
+      "key": "test",
+      "them": "Ellie and the Workbench MCP tools can run EXPLAIN ANALYZE and validate SQL on a monitored database. The sources we reviewed do not describe running a change on a separate copy of the data.",
+      "sources": [10, 11]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "Self-hosted PostgreSQL monitoring and management in four parts: a Collector that stores metrics in a central datastore, an Alerter with thresholds and anomaly detection, a Server with MCP tools and a REST API, and a web Client with dashboards and the Ellie assistant. AI features are optional.",
+      "sources": [1, 2, 3]
+    },
+    {
+      "key": "platforms",
+      "v": "yes",
+      "them": "The product page says it runs on any PostgreSQL 14+ instance, including Amazon RDS, Azure Database for PostgreSQL, Google Cloud SQL, Supabase and pgEdge Cloud; the repository README says v15+. The collector connects remotely, with no agent on the database host. Spock replication status is exposed for pgEdge clusters.",
+      "sources": [1, 3]
+    },
+    {
+      "key": "deployment",
+      "v": "yes",
+      "them": "Self-hosted only in the sources we reviewed: binaries, source build, Docker images or pgEdge packages, and air-gapped installs. The pg_stat_activity probe collects query text and client addresses; the pg_stat_statements probe collects normalized queries.",
+      "sources": [1, 3, 5]
+    },
+    {
+      "key": "open-source",
+      "v": "yes",
+      "them": "Open source under the PostgreSQL License, on GitHub. The product page lists the price as Free (OSS).",
+      "sources": [3, 1]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "A pg_stat_statements probe every 5 minutes keeps the top 1000 queries by total execution time, with planning, I/O, WAL and JIT columns. The server dashboard ranks top queries by resource consumption and shows execution time, calls and rows. Ellie and the MCP server can run EXPLAIN ANALYZE.",
+      "sources": [5, 6, 10]
+    },
+    {
+      "key": "wait-events",
+      "v": "partial",
+      "them": "The pg_stat_activity probe records wait_event_type and wait_event every 60 seconds by default. The sources we reviewed do not describe a dedicated wait event dashboard.",
+      "sources": [5, 6]
+    },
+    {
+      "key": "health-checks",
+      "v": "yes",
+      "them": "Built-in alert rules for connections, blocking, long queries, replication, disk, dead tuples, table bloat, stale autovacuum, transaction ID age and checkpoints. An AI analysis of a server or cluster reviews configuration, alerts and metric trends and returns SQL with a Run button; write statements ask for confirmation.",
+      "sources": [7, 12]
+    },
+    {
+      "key": "agent-interface",
+      "v": "yes",
+      "them": "An MCP server at /mcp/v1 over HTTP or HTTPS with token auth; the v1.0.0 docs list 22 tools: SQL and EXPLAIN on monitored databases, metric history, alerts, baselines, blackouts and an event timeline. Ellie in the web client uses the same tools.",
+      "sources": [10, 11, 1]
+    },
+    {
+      "key": "test-fix",
+      "v": "partial",
+      "them": "Ellie and the MCP tools can run EXPLAIN ANALYZE and validate SQL without running it, on a monitored database. The sources we reviewed do not describe running a change on a separate copy of the data.",
+      "sources": [10, 11]
+    },
+    {
+      "key": "expert-help",
+      "v": "partial",
+      "them": "The product page says pgEdge Enterprise Postgres subscribers receive support at no extra cost. The sources we reviewed do not describe PostgreSQL consulting as part of the Workbench.",
+      "sources": [1]
+    },
+    {
+      "key": "alerts",
+      "them": "Threshold rules plus anomaly detection: z-score baselines, embedding similarity against past anomalies, then LLM classification. Notification channels: email, Slack, Mattermost and webhooks. Blackout windows suppress alerts.",
+      "sources": [8, 9, 7]
+    },
+    {
+      "key": "retention",
+      "them": "Set per probe. Defaults are 7 days for most probes, including pg_stat_statements and pg_stat_activity, and 365 days for settings and HBA probes. Retention can be changed per probe in the datastore.",
+      "sources": [5, 14]
+    },
+    {
+      "key": "compliance",
+      "them": "The sources we reviewed do not describe security attestations for the Workbench. It is self-hosted, so metrics stay in your own datastore.",
+      "sources": [1]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Open source",
+      "price": "Free",
+      "notes": "PostgreSQL License; you run it. LLM costs depend on the provider you configure, or none with a local model",
+      "sources": [1, 3]
+    }
+  ],
+  "pricingNote": "Support comes with a pgEdge Enterprise Postgres subscription; the product page gives no separate price for it.",
+  "faq": [
+    {
+      "q": "Is pgEdge AI DBA Workbench open source?",
+      "a": "Yes. It is released under the PostgreSQL License, with source, binaries and Docker images on GitHub. PostgresAI monitoring is also open source, under Apache 2.0.",
+      "sources": [3, 2]
+    },
+    {
+      "q": "Does pgEdge AI DBA Workbench work with Amazon RDS?",
+      "a": "Yes. The product page says it runs on any PostgreSQL 14+ instance, including Amazon RDS and Supabase; the repository README says v15+. The collector connects over the network, so nothing is installed on the database host.",
+      "sources": [1, 3]
+    },
+    {
+      "q": "Which LLMs can pgEdge AI DBA Workbench use?",
+      "a": "Anthropic, OpenAI and Gemini with an API key, Ollama, or any server with an OpenAI-compatible API such as LM Studio. Monitoring, alerting and dashboards keep working with no LLM configured.",
+      "sources": [13, 12, 1]
+    },
+    {
+      "q": "Is pgEdge AI DBA Workbench generally available?",
+      "a": "Version 1.0.0 was released in June 2026 and is the latest release on GitHub. A 2.0.0-beta1 pre-release was published on November 12, 2026.",
+      "sources": [4, 2]
+    },
+    {
+      "q": "Can I use PostgresAI and pgEdge AI DBA Workbench together?",
+      "a": "DBLab, the PostgresAI cloning product, copies any PostgreSQL source, so a team that monitors with the Workbench can test an index or query change on a full-size DBLab clone before production."
+    }
+  ],
+  "together": "DBLab is a separate product that copies any PostgreSQL source, so a team that monitors with pgEdge AI DBA Workbench can still use a DBLab clone to try an index or query change on full-size data before production.",
+  "sources": [
+    {
+      "title": "pgEdge AI DBA Workbench product page",
+      "url": "https://www.pgedge.com/products/ai-dba-workbench"
+    },
+    {
+      "title": "pgEdge AI DBA Workbench documentation v1.0.0: architecture overview",
+      "url": "https://docs.pgedge.com/ai-dba-workbench/v1-0-0/"
+    },
+    {
+      "title": "pgEdge AI DBA Workbench repository",
+      "url": "https://github.com/pgEdge/ai-dba-workbench"
+    },
+    {
+      "title": "pgEdge AI DBA Workbench releases",
+      "url": "https://github.com/pgEdge/ai-dba-workbench/releases"
+    },
+    {
+      "title": "AI DBA Workbench documentation: probe reference",
+      "url": "https://docs.pgedge.com/ai-dba-workbench/v1-0-0/developer-guide/collector/probe-reference/"
+    },
+    {
+      "title": "AI DBA Workbench documentation: server dashboard",
+      "url": "https://docs.pgedge.com/ai-dba-workbench/v1-0-0/user-guide/dashboards/server/"
+    },
+    {
+      "title": "AI DBA Workbench documentation: alert rule reference",
+      "url": "https://docs.pgedge.com/ai-dba-workbench/v1-0-0/user-guide/alerts/rule-reference/"
+    },
+    {
+      "title": "AI DBA Workbench documentation: anomaly detection",
+      "url": "https://docs.pgedge.com/ai-dba-workbench/v1-0-0/developer-guide/alerter/anomaly-detection/"
+    },
+    {
+      "title": "AI DBA Workbench documentation: notification channels",
+      "url": "https://docs.pgedge.com/ai-dba-workbench/v1-0-0/admin-guide/notification-channels/"
+    },
+    {
+      "title": "AI DBA Workbench documentation: MCP tools",
+      "url": "https://docs.pgedge.com/ai-dba-workbench/v1-0-0/user-guide/mcp-tools/"
+    },
+    {
+      "title": "AI DBA Workbench documentation: Ask Ellie",
+      "url": "https://docs.pgedge.com/ai-dba-workbench/v1-0-0/user-guide/ai/ask-ellie/"
+    },
+    {
+      "title": "AI DBA Workbench documentation: AI overview",
+      "url": "https://docs.pgedge.com/ai-dba-workbench/v1-0-0/user-guide/ai/overview/"
+    },
+    {
+      "title": "AI DBA Workbench documentation: server configuration (LLM providers)",
+      "url": "https://docs.pgedge.com/ai-dba-workbench/v1-0-0/getting-started/configuration/server/"
+    },
+    {
+      "title": "AI DBA Workbench documentation: collector configuration",
+      "url": "https://docs.pgedge.com/ai-dba-workbench/v1-0-0/getting-started/configuration/collector/"
+    }
+  ]
+}

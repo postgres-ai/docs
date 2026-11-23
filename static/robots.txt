@@ -2,8 +2,8 @@
 # This covers search and retrieval bots (OAI-SearchBot, Claude-SearchBot,
 # PerplexityBot, Bingbot), user-triggered fetchers (ChatGPT-User, Claude-User,
 # Perplexity-User) and training crawlers (GPTBot, ClaudeBot, Google-Extended,
-# CCBot). Raw markdown twins of the docs live under /raw/docs/; the index for
-# agents is /llms.txt.
+# CCBot). Raw markdown twins of the docs live under /raw/docs/ and of the
+# comparison pages under /raw/compare/; the index for agents is /llms.txt.
 
 User-agent: *
 Allow: /

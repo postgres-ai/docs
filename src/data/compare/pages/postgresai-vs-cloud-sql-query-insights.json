@@ -1,0 +1,205 @@
+{
+  "slug": "postgresai-vs-cloud-sql-query-insights",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "Cloud SQL Query Insights",
+    "vendor": "Google Cloud",
+    "url": "https://docs.cloud.google.com/sql/docs/postgres/using-query-insights",
+    "category": "Managed Postgres built-in monitoring",
+    "group": "provider",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs Cloud SQL Query Insights: any provider vs inside Cloud SQL",
+  "description": "Cloud SQL Query Insights shows query load, plans and index advice inside Cloud SQL at no extra cost. PostgresAI runs checkups on any provider and files Issues with a fix.",
+  "summary": "Query Insights is built into Cloud SQL for PostgreSQL at no additional cost: query load, top queries, sampled plans and application tags, with wait events, index advisor and 30-day retention on Enterprise Plus. PostgresAI monitoring supports Google Cloud SQL and runs alongside it, adding scheduled checkups, Issues for you or your AI agent, 13-month history on Scale and human experts. Query Insights comes with every Cloud SQL instance; add PostgresAI if you want the same checks across providers, longer history or expert help.",
+  "chooseThem": [
+    "No additional cost: Query Insights is included on both Cloud SQL Enterprise and Enterprise Plus instances, with nothing to install.",
+    "With Enterprise Plus features turned on, it captures wait events and query plans for all executed queries, samples up to 200 plans per minute and keeps metrics for 30 days.",
+    "The managed index advisor tracks your workload and shows CREATE INDEX recommendations with estimated impact in the Query Insights dashboard (Enterprise Plus).",
+    "AI-assisted troubleshooting, in Preview on Enterprise Plus, helps troubleshoot slow queries and high database load with evidence and recommendations; Gemini Cloud Assist investigations need a Premium Support contract.",
+    "A Database Insights remote MCP server gives agents such as Gemini CLI and Claude Code query and system metrics for Cloud SQL for PostgreSQL."
+  ],
+  "proofs": [
+    {
+      "key": "anywhere",
+      "them": "Query Insights is a Cloud SQL feature for Cloud SQL instances. Wait event analysis and the index advisor need Enterprise Plus, and the index advisor and AI-assisted troubleshooting do not support read replicas.",
+      "sources": [1, 2, 5]
+    },
+    {
+      "key": "history",
+      "them": "Query Insights keeps query metrics for 7 days on Enterprise edition and 30 days on Enterprise Plus, where the data sits on the instance disk: about 155 GB for 30 days.",
+      "sources": [1]
+    },
+    {
+      "key": "test",
+      "them": "Database Center assessments, in Preview, test machine type, edition or data cache changes on a clone that uses synthetic pgbench data. The sources we reviewed do not describe testing an index or query change on a copy of your data.",
+      "sources": [6]
+    },
+    {
+      "key": "open",
+      "them": "Query Insights is part of Cloud SQL, which Google describes as a fully managed relational database service, and is viewed in the Google Cloud console.",
+      "sources": [10, 1]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A Cloud SQL feature to detect, diagnose and prevent query performance problems: query load, top queries, sampled query plans, application tags that trace a query by model, view, controller, route, user and host, and active queries. Enterprise Plus adds wait events, the index advisor and AI-assisted troubleshooting (Preview).",
+      "sources": [1, 3]
+    },
+    {
+      "key": "platforms",
+      "v": "no",
+      "them": "Built into Cloud SQL for PostgreSQL, which supports PostgreSQL 9.6 to 18; versions past community end of life are charged for extended support. Query Insights monitors Cloud SQL instances in your Google Cloud project. Gemini in Database Center also covers AlloyDB for PostgreSQL.",
+      "sources": [1, 11, 7]
+    },
+    {
+      "key": "deployment",
+      "v": "no",
+      "them": "Part of Cloud SQL, which Google describes as \"a fully managed relational database service\". Query insights is viewed in the Google Cloud console. For Cloud SQL Enterprise edition, its metrics are stored in Cloud Monitoring.",
+      "sources": [10, 1]
+    },
+    {
+      "key": "open-source",
+      "v": "na",
+      "them": "Does not apply: Query Insights is a feature of Cloud SQL, a Google Cloud service.",
+      "sources": [1]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "Top queries by load, per-query load and sampled plans broken into operations. Enterprise edition samples up to 20 plans per minute and keeps query text up to 4500 bytes (1024 by default); Enterprise Plus captures plans for all queries, up to 200 samples per minute.",
+      "sources": [1, 3]
+    },
+    {
+      "key": "wait-events",
+      "v": "partial",
+      "them": "On Enterprise Plus only: wait events captured for all executed queries, and database load filtered by wait event type. The Enterprise edition list does not include wait event analysis.",
+      "sources": [1, 3]
+    },
+    {
+      "key": "health-checks",
+      "v": "yes",
+      "them": "The index advisor recommends CREATE INDEX commands with estimated impact; it needs Enterprise Plus and does not support read replicas. Gemini in Database Center lists inefficient queries and index advisor findings across the fleet.",
+      "sources": [2, 7]
+    },
+    {
+      "key": "agent-interface",
+      "v": "yes",
+      "them": "The Database Insights remote MCP server at databaseinsights.googleapis.com/mcp offers tools such as get_query_metrics and get_system_metrics. The guide names Gemini CLI, Gemini Code Assist agent mode and Claude Code as clients.",
+      "sources": [4]
+    },
+    {
+      "key": "test-fix",
+      "v": "preview",
+      "them": "Database Center assessments, in Preview, apply a machine type, edition or data cache recommendation to a clone with synthetic pgbench data and compare benchmarks. The sources we reviewed do not describe testing an index or query change on a copy of your data.",
+      "sources": [6]
+    },
+    {
+      "key": "expert-help",
+      "v": "partial",
+      "them": "Google Cloud support contracts. From April 10, 2026, running Gemini Cloud Assist investigations requires a Premium Support contract. The sources we reviewed do not describe PostgreSQL consulting.",
+      "sources": [5]
+    },
+    {
+      "key": "alerts",
+      "them": "Through Cloud Monitoring alerting policies, created in the console, API, gcloud or Terraform. The Cloud SQL integration package includes recommended policies for failed instances and slow transactions; the example sends email and Slack messages.",
+      "sources": [8]
+    },
+    {
+      "key": "retention",
+      "them": "Query metrics are kept for 7 days on Enterprise edition and 30 days on Enterprise Plus.",
+      "sources": [1, 3]
+    },
+    {
+      "key": "compliance",
+      "them": "Cloud SQL is listed among the Google Cloud services in scope for SOC 2. Google Cloud issues SOC 2 Type II reports, quarterly, through Compliance Reports Manager.",
+      "sources": [9]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Enterprise edition",
+      "price": "Included",
+      "notes": "No additional cost for Query Insights; 7-day retention, up to 20 plan samples per minute; metrics stored in Cloud Monitoring; you pay for the Cloud SQL instance",
+      "sources": [1, 3]
+    },
+    {
+      "plan": "Enterprise Plus edition",
+      "price": "Included",
+      "notes": "No additional cost for Query Insights; 30-day retention, wait events, index advisor, up to 200 plan samples per minute; data stored on the instance disk (about 36 GB for 7 days, 155 GB for 30 days)",
+      "sources": [1, 3]
+    }
+  ],
+  "pricingNote": "Cloud SQL editions are priced differently; see the Cloud SQL pricing page. Enterprise Plus Query Insights data uses instance storage and needs automatic storage increases on. As of April 10, 2026, Gemini Cloud Assist investigations require a Premium Support contract.",
+  "together": "PostgresAI monitoring supports Google Cloud SQL, so it can run on the same instances while Query Insights stays on in the console. PostgresAI adds scheduled checkups, Issues and longer history; DBLab can copy a Cloud SQL database with dump and restore for testing a fix.",
+  "faq": [
+    {
+      "q": "What does Cloud SQL Query Insights cost?",
+      "a": "Google states there is no additional cost for Query Insights on Cloud SQL Enterprise or Enterprise Plus instances. Features such as wait events, the index advisor and 30-day retention come with the Enterprise Plus edition.",
+      "sources": [1, 3]
+    },
+    {
+      "q": "How long does Query Insights keep data?",
+      "a": "7 days on Cloud SQL Enterprise edition and 30 days on Enterprise Plus. PostgresAI keeps 14 days on Starter and 13 months on Scale.",
+      "sources": [1]
+    },
+    {
+      "q": "Does Cloud SQL have an index advisor?",
+      "a": "Yes, on Enterprise Plus. It tracks the queries your database runs, periodically recommends new indexes and shows them in the Query Insights dashboard and in the google_db_advisor_recommended_indexes view. Enterprise edition and read replicas are not supported.",
+      "sources": [2]
+    },
+    {
+      "q": "Can I use PostgresAI and Cloud SQL Query Insights together?",
+      "a": "Yes. PostgresAI monitoring supports Google Cloud SQL, and Query Insights stays available in the console. PostgresAI adds scheduled checkups, Issues for your AI agent and expert help.",
+      "sources": [1]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Cloud SQL for PostgreSQL: use query insights",
+      "url": "https://docs.cloud.google.com/sql/docs/postgres/using-query-insights"
+    },
+    {
+      "title": "Cloud SQL for PostgreSQL: use index advisor",
+      "url": "https://docs.cloud.google.com/sql/docs/postgres/use-index-advisor"
+    },
+    {
+      "title": "Cloud SQL for PostgreSQL: Cloud SQL editions overview",
+      "url": "https://docs.cloud.google.com/sql/docs/postgres/editions-intro"
+    },
+    {
+      "title": "Cloud SQL for PostgreSQL: use the Database Insights MCP server",
+      "url": "https://docs.cloud.google.com/sql/docs/postgres/use-database-insights-mcp"
+    },
+    {
+      "title": "Cloud SQL for PostgreSQL: monitor and troubleshoot with AI assistance",
+      "url": "https://docs.cloud.google.com/sql/docs/postgres/monitor-troubleshoot-with-ai"
+    },
+    {
+      "title": "Assess recommendations for Cloud SQL in Database Center",
+      "url": "https://docs.cloud.google.com/sql/docs/postgres/assessments-overview"
+    },
+    {
+      "title": "Database Center: learn database products using Gemini",
+      "url": "https://docs.cloud.google.com/database-center/docs/learn-database-products-using-gemini"
+    },
+    {
+      "title": "Cloud Monitoring: alerting overview",
+      "url": "https://docs.cloud.google.com/monitoring/alerts"
+    },
+    {
+      "title": "Google Cloud SOC 2 compliance",
+      "url": "https://cloud.google.com/security/compliance/soc-2"
+    },
+    {
+      "title": "Cloud SQL for PostgreSQL: Cloud SQL overview",
+      "url": "https://docs.cloud.google.com/sql/docs/postgres/introduction"
+    },
+    {
+      "title": "Cloud SQL for PostgreSQL: Database versions and version policies",
+      "url": "https://docs.cloud.google.com/sql/docs/postgres/db-versions"
+    }
+  ]
+}

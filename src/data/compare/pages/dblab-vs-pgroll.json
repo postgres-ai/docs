@@ -1,0 +1,179 @@
+{
+  "slug": "dblab-vs-pgroll",
+  "kind": "changes",
+  "competitor": {
+    "name": "pgroll",
+    "vendor": "Xata",
+    "url": "https://github.com/xataio/pgroll",
+    "category": "Zero-downtime Postgres migrations",
+    "group": "tools",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs pgroll: test a change on a clone, then roll it out",
+  "description": "pgroll applies reversible PostgreSQL schema changes with expand/contract. DBLab measures a migration's locks on a full-size clone and can reset it for a rerun.",
+  "summary": "pgroll is an open-source CLI that applies PostgreSQL schema changes without breaking running clients: it expands the schema, backfills new columns, serves old and new versions through views, and contracts once old clients are gone. An active migration can be rolled back instantly. DBLab does not deploy changes. It gives you a full-size thin clone of a PostgreSQL database where a migration can be run to see how long it takes and which locks it holds. The two fit together: run pgroll start on a clone, then on production.",
+  "chooseThem": [
+    "pgroll deploys the change itself: old and new schema versions work at the same time through views, so applications can be rolled out side by side. DBLab does not deploy anything.",
+    "An active migration rolls back instantly: the new schema version is removed and the old one was never changed.",
+    "Breaking column changes are handled by adding a new column, backfilling it in batches (1,000 rows by default) and keeping both in sync with triggers.",
+    "Every DDL operation runs with a lock_timeout, 500 ms by default, and migrations are declarative so pgroll can keep the locks it needs short.",
+    "Free and open source under Apache 2.0, a single Go binary that works with any Postgres service, including RDS and Aurora."
+  ],
+  "proofs": [
+    {
+      "key": "locks",
+      "them": "pgroll keeps locks short by design: declarative operations, lock_timeout of 500 ms on its DDL, batched backfills. For raw SQL operations its docs warn that it cannot ensure the change is safe and will not cause application downtime.",
+      "sources": [5, 6, 7, 10]
+    },
+    {
+      "key": "rerun",
+      "them": "pgroll rollback removes the new schema version of an active migration and leaves the old one unchanged. Its docs state that migrations cannot be rolled back once completed.",
+      "sources": [8]
+    },
+    {
+      "key": "real-data",
+      "them": "pgroll runs migrations against the instance given by --postgres-url, and pgroll validate checks a file for syntax errors, invalid options and unknown database objects. The sources we reviewed do not describe running a migration on a copy first.",
+      "sources": [6, 9]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "An open-source command-line tool for safe, reversible, zero-downtime schema migrations on PostgreSQL. It creates virtual schemas of views on top of the physical tables, so old and new schema versions are available at the same time during a migration.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "tests-on-data",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. pgroll runs migrations on the database given by --postgres-url. pgroll validate checks a migration file for syntax errors, invalid options and references to unknown database objects.",
+      "sources": [6, 9]
+    },
+    {
+      "key": "lock-risk",
+      "v": "partial",
+      "them": "Reduced by design: migrations are declarative so pgroll can hold required locks for the shortest possible time, all pgroll DDL uses lock_timeout (500 ms by default), and backfills run in batches with an optional delay. The sources we reviewed do not describe measuring lock time. For raw SQL operations, the docs warn that pgroll cannot ensure the change is safe and will not cause downtime.",
+      "sources": [5, 6, 7, 10]
+    },
+    {
+      "key": "static-checks",
+      "v": "partial",
+      "them": "pgroll validate checks a migration for syntax errors in the pgroll format, unknown or invalid options and unknown database objects. The sources we reviewed do not describe lint rules for SQL.",
+      "sources": [9]
+    },
+    {
+      "key": "workflow",
+      "v": "yes",
+      "them": "Migrations are YAML or JSON files listing operations, such as create_table, or raw SQL. pgroll start applies additive changes and creates a new version schema; pgroll complete drops the old version once no client uses it. pgroll baseline captures an existing schema first.",
+      "sources": [12, 10, 4, 7]
+    },
+    {
+      "key": "approvals",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. pgroll keeps its migration state in a pgroll schema in the database.",
+      "sources": [6]
+    },
+    {
+      "key": "rollback",
+      "them": "pgroll rollback removes the new schema version of an active migration, leaving the old one unchanged. Migrations cannot be rolled back once completed.",
+      "sources": [8, 2]
+    },
+    {
+      "key": "ci",
+      "them": "In CI/CD, pgroll latest schema returns the newest version schema name, which can be passed to the application so tests run against the latest changes. Clients choose a version by setting search_path.",
+      "sources": [11]
+    },
+    {
+      "key": "hosting",
+      "v": "yes",
+      "them": "Apache 2.0 license; a single Go binary with no external dependencies that you run yourself against your own database. Made by Xata.",
+      "sources": [1, 2]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Open source",
+      "price": "Free",
+      "notes": "Apache 2.0; you run it",
+      "sources": [1]
+    }
+  ],
+  "together": "The two cover different steps of the same change. In CI, a job creates a DBLab clone through the API or CLI and runs pgroll start against it, so the team sees how long the backfill takes and which locks the change holds on full-size data; pgroll rollback or a clone reset clears it for the next run. Then pgroll start runs on production, new application versions move to the new version schema, and pgroll complete finishes the change. DBLab does not deploy anything.",
+  "faq": [
+    {
+      "q": "Is pgroll open source?",
+      "a": "Yes. The repository on GitHub, maintained by Xata, is under the Apache License 2.0. pgroll is a single Go binary.",
+      "sources": [1, 2]
+    },
+    {
+      "q": "Which PostgreSQL versions does pgroll support?",
+      "a": "PostgreSQL 14.0 or later, on any Postgres service including RDS and Aurora. On Postgres 14, row level security policies are not respected by its versioned views.",
+      "sources": [2, 3]
+    },
+    {
+      "q": "Can a pgroll migration be rolled back?",
+      "a": "Yes, while it is active. pgroll rollback removes the new schema version and leaves the old one as it was. Once pgroll complete has run, a migration cannot be rolled back.",
+      "sources": [8]
+    },
+    {
+      "q": "Does pgroll test a migration on production-size data?",
+      "a": "The sources we reviewed do not describe that. pgroll applies a migration to the database you give it, and validate checks the file. Backfill time and lock waits depend on the data, so you can run pgroll start on a DBLab clone first.",
+      "sources": [6, 9]
+    },
+    {
+      "q": "Can I use DBLab and pgroll together?",
+      "a": "Yes. A DBLab clone is an ordinary PostgreSQL server, so CI can run pgroll start on a clone to see duration and locks on full-size data, then pgroll runs the same migration on production. DBLab does not deploy migrations, so it does not replace pgroll.",
+      "sources": [2, 6]
+    }
+  ],
+  "sources": [
+    {
+      "title": "pgroll repository on GitHub",
+      "url": "https://github.com/xataio/pgroll"
+    },
+    {
+      "title": "pgroll README",
+      "url": "https://raw.githubusercontent.com/xataio/pgroll/main/README.md"
+    },
+    {
+      "title": "pgroll docs: getting started",
+      "url": "https://raw.githubusercontent.com/xataio/pgroll/main/docs/getting-started.md"
+    },
+    {
+      "title": "pgroll docs: concepts",
+      "url": "https://raw.githubusercontent.com/xataio/pgroll/main/docs/concepts.md"
+    },
+    {
+      "title": "pgroll docs: why use pgroll",
+      "url": "https://raw.githubusercontent.com/xataio/pgroll/main/docs/why-use-pgroll.md"
+    },
+    {
+      "title": "pgroll docs: CLI global flags",
+      "url": "https://raw.githubusercontent.com/xataio/pgroll/main/docs/cli/README.md"
+    },
+    {
+      "title": "pgroll docs: start",
+      "url": "https://raw.githubusercontent.com/xataio/pgroll/main/docs/cli/start.mdx"
+    },
+    {
+      "title": "pgroll docs: rollback",
+      "url": "https://raw.githubusercontent.com/xataio/pgroll/main/docs/cli/rollback.mdx"
+    },
+    {
+      "title": "pgroll docs: validate",
+      "url": "https://raw.githubusercontent.com/xataio/pgroll/main/docs/cli/validate.mdx"
+    },
+    {
+      "title": "pgroll docs: raw SQL operation",
+      "url": "https://raw.githubusercontent.com/xataio/pgroll/main/docs/operations/raw_sql.mdx"
+    },
+    {
+      "title": "pgroll docs: integrating client applications",
+      "url": "https://raw.githubusercontent.com/xataio/pgroll/main/docs/guides/clientapps.mdx"
+    },
+    {
+      "title": "pgroll docs: operations",
+      "url": "https://raw.githubusercontent.com/xataio/pgroll/main/docs/operations/README.md"
+    }
+  ]
+}

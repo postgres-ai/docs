@@ -1,0 +1,207 @@
+{
+  "slug": "dblab-vs-ardent",
+  "kind": "branching",
+  "competitor": {
+    "name": "Ardent",
+    "vendor": "Ardent",
+    "url": "https://www.tryardent.com/",
+    "category": "Postgres branching service",
+    "group": "external",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs Ardent: self-hosted thin clones vs a replicated branch service",
+  "description": "Ardent replicates a Postgres database into a replica it runs and branches it in under 6 seconds. DBLab clones any PostgreSQL on a machine you control.",
+  "summary": "Ardent is a managed service. It keeps a read replica of your Postgres (Supabase, RDS, PlanetScale or self-hosted) in sync through logical replication and makes copy-on-write branches from it in under 6 seconds, with compute that scales and suspends. DBLab Engine is open-source software you run: thin clones of any PostgreSQL on one machine, refreshed in full in logical mode or followed continuously in physical mode. Pick Ardent if you want branches of current data with nothing to operate and can enable logical replication on the source. Pick DBLab if the copies must run on infrastructure you control without a third-party service.",
+  "chooseThem": [
+    "Branches come from a replica that logical replication keeps in sync with production, so a new branch has current data without a full reload.",
+    "Branch creation is under 6 seconds regardless of source size; each branch has compute that auto-scales with load and suspends after 5 minutes idle.",
+    "Nothing to operate: in fully managed mode Ardent hosts the replica and the branches. A managed option in your own cloud account keeps them in your network.",
+    "Built for coding agents: a branch URL gives no access to the source, and a Claude Code skill lets an agent create, use and delete its own branches.",
+    "Starter costs $0 with a $30 one-time credit, then usage-based compute and storage."
+  ],
+  "proofs": [
+    {
+      "key": "control",
+      "them": "Ardent can run its data plane (read replica, branches, secrets) in your cloud account, but the control plane is always operated by Ardent. In fully managed mode the data lives on Ardent's cloud.",
+      "sources": [2, 4]
+    },
+    {
+      "key": "any-source",
+      "them": "Ardent connects Supabase, AWS RDS, PlanetScale and self-managed Postgres 13 or newer through logical replication. RDS needs rds.logical_replication = 1 and a reboot, and replicated tables need a primary key or replica identity.",
+      "sources": [3, 11, 5]
+    },
+    {
+      "key": "masking",
+      "them": "Ardent can run SQL on every new branch after it is created, for example to hash or redact columns. Branches default to a full copy of production data, and the read replica they come from holds that data.",
+      "sources": [4, 2]
+    },
+    {
+      "key": "open",
+      "them": "Ardent is a service with a control plane that Ardent always operates. The sources we reviewed do not describe an open-source release of it.",
+      "sources": [2, 1]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A service that makes isolated, writable copies (branches) of a production Postgres database for coding agents, CI and developers. Ardent replicates the source into a read replica and creates branches from that replica.",
+      "sources": [1, 2, 9]
+    },
+    {
+      "key": "source",
+      "v": "partial",
+      "them": "Postgres on Supabase, AWS RDS, PlanetScale or self-managed; self-managed Postgres must be version 13 or newer. A connector reads the source with logical replication; on RDS this needs rds.logical_replication = 1, which takes effect only after a reboot. Ardent installs its own replication slot and DDL-tracking metadata on the source.",
+      "sources": [3, 11, 5]
+    },
+    {
+      "key": "mechanism",
+      "them": "Logical replication from production through a Kafka-backed pipeline into a read replica. Branches share storage with that replica through copy-on-write, and each branch has compute that auto-scales with load.",
+      "sources": [2]
+    },
+    {
+      "key": "speed",
+      "them": "Branch creation is under 6 seconds, regardless of source database size. First-time connector setup runs once; its duration depends on data size and write rate.",
+      "sources": [3]
+    },
+    {
+      "key": "data",
+      "v": "yes",
+      "them": "\"Branches default to a full copy of your production data.\" A branch is a point-in-time snapshot taken from a continuously synced replica; after creation it is isolated in both directions.",
+      "sources": [4, 3]
+    },
+    {
+      "key": "masking",
+      "v": "partial",
+      "them": "No separate anonymization toggle: you write SQL that runs once on every new branch from a connector after it is created, for example to hash or redact columns. The script runs once per branch.",
+      "sources": [4]
+    },
+    {
+      "key": "ci",
+      "v": "yes",
+      "them": "A documented GitHub Actions workflow creates a branch per pull request with ardent branch create --print-url, runs the tests and deletes the branch even when tests fail. The CLI authenticates with an ARDENT_TOKEN secret.",
+      "sources": [6]
+    },
+    {
+      "key": "interfaces",
+      "them": "The ardent CLI (npm package ardent-cli), a REST API for projects, connectors and branches, and a skill file for Claude Code that lets an agent manage its own branches. The sources we reviewed do not describe an MCP server.",
+      "sources": [6, 7, 10]
+    },
+    {
+      "key": "hosting",
+      "v": "partial",
+      "them": "Fully managed, where Ardent hosts the data plane, or managed in your own cloud account, where the read replica, branches and secrets run in your account. The control plane is always operated by Ardent. Custom BYOC and deployment behind a VPC are listed on Enterprise.",
+      "sources": [2, 4, 8]
+    },
+    {
+      "key": "open-source",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed.",
+      "sources": [1, 8]
+    },
+    {
+      "key": "limits",
+      "them": "Self-managed sources must be Postgres 13 or newer. Branches auto-suspend after 5 minutes of inactivity. Replicated tables need a primary key, a valid unique NOT NULL index or REPLICA IDENTITY FULL. TLS ends at Ardent's routing layer, so clients that force channel binding can reject a branch connection. Starter allows up to 3 projects.",
+      "sources": [11, 5, 4, 8]
+    },
+    {
+      "key": "cost-model",
+      "them": "A plan fee plus usage: compute at $0.40 per CU-hour (1 CU = 1 vCPU + 4 GB RAM) and storage at $0.70 per GB-month, after included credits. A branch adds storage cost only for the data changed on it.",
+      "sources": [8, 3]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Starter",
+      "price": "$0 + compute and storage",
+      "notes": "$30 one-time credit, up to 3 projects, community support",
+      "sources": [8]
+    },
+    {
+      "plan": "Scale",
+      "price": "$250/month + compute and storage",
+      "notes": "$100/month in credits, unlimited projects, Slack support",
+      "sources": [8]
+    },
+    {
+      "plan": "Enterprise",
+      "price": "Custom",
+      "notes": "Unlimited compute and storage, custom BYOC, deploy behind VPC, custom SLAs, team-level access controls",
+      "sources": [8]
+    }
+  ],
+  "pricingNote": "Usage prices apply after included credits: $0.40 per CU-hour and $0.70 per GB-month of storage.",
+  "faq": [
+    {
+      "q": "Where does Ardent keep copies of my data?",
+      "a": "In fully managed mode, the read replica and branches run on Ardent's infrastructure. In the managed, your cloud mode, the whole data plane (read replica, branches and secrets) runs in your own cloud account. DBLab always runs on a machine you control.",
+      "sources": [2, 4]
+    },
+    {
+      "q": "Does Ardent work with Amazon RDS?",
+      "a": "Yes. Set rds.logical_replication = 1 in the parameter group, which takes effect after a reboot, and allow Ardent's outbound IP on the Postgres port. For a private-only instance, the docs point to a BYOC environment with PrivateLink.",
+      "sources": [5]
+    },
+    {
+      "q": "Does Ardent change my production database?",
+      "a": "Ardent syncs with logical replication and does not write to application tables, but it installs its own replication slot and DDL-tracking metadata on the source.",
+      "sources": [3, 4]
+    },
+    {
+      "q": "What does Ardent cost?",
+      "a": "Starter is $0 with a $30 one-time credit; Scale is $250 a month with $100 a month in credits; Enterprise is custom. Usage on top: $0.40 per CU-hour and $0.70 per GB-month.",
+      "sources": [8]
+    },
+    {
+      "q": "Can Ardent mask personal data in a branch?",
+      "a": "You can attach SQL that runs once on every new branch after it is created, for example to hash or redact columns. There is no separate anonymization toggle, and branches default to a full copy of production data.",
+      "sources": [4]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Ardent docs: overview",
+      "url": "https://docs.tryardent.com/"
+    },
+    {
+      "title": "Ardent docs: Architecture",
+      "url": "https://docs.tryardent.com/architecture.md"
+    },
+    {
+      "title": "Ardent docs: FAQ",
+      "url": "https://docs.tryardent.com/faq.md"
+    },
+    {
+      "title": "Ardent docs: Security",
+      "url": "https://docs.tryardent.com/security.md"
+    },
+    {
+      "title": "Ardent docs: AWS RDS connector",
+      "url": "https://docs.tryardent.com/connectors/rds.md"
+    },
+    {
+      "title": "Ardent docs: CI / CD",
+      "url": "https://docs.tryardent.com/workflows/ci-cd.md"
+    },
+    {
+      "title": "Ardent docs: AI agents",
+      "url": "https://docs.tryardent.com/workflows/ai-agents.md"
+    },
+    {
+      "title": "Ardent pricing",
+      "url": "https://www.tryardent.com/pricing"
+    },
+    {
+      "title": "Ardent home page",
+      "url": "https://www.tryardent.com/"
+    },
+    {
+      "title": "Ardent docs index (llms.txt)",
+      "url": "https://docs.tryardent.com/llms.txt"
+    },
+    {
+      "title": "Ardent docs: Self-hosted Postgres",
+      "url": "https://docs.tryardent.com/connectors/self-hosted.md"
+    }
+  ]
+}

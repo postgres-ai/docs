@@ -1,0 +1,241 @@
+{
+  "slug": "postgresai-vs-datadog-database-monitoring",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "Datadog Database Monitoring",
+    "vendor": "Datadog",
+    "url": "https://www.datadoghq.com/product/database-monitoring/",
+    "category": "Database monitoring, part of the Datadog platform",
+    "group": "observability",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs Datadog Database Monitoring: open source vs traced queries",
+  "description": "Datadog Database Monitoring ties Postgres query metrics, plans and wait events to APM traces. PostgresAI is open source and files findings as Issues with a fix.",
+  "summary": "Datadog Database Monitoring is part of the Datadog platform. For Postgres it collects query metrics, query samples, explain plans and wait events and correlates them with APM traces and infrastructure metrics. PostgresAI monitors PostgreSQL, runs scheduled checkups and turns findings into Issues that you, your AI agent or a PostgresAI expert can act on. Pick Datadog if you want slow queries tied to the application traces that run them and plans collected from production. Pick PostgresAI if you want open-source monitoring you can self-host, human Postgres experts, or DBLab clones with real data to test a fix.",
+  "chooseThem": [
+    "Slow Postgres queries link to the services that call them: Datadog correlates distributed traces with query metrics and node-level explain plans in one view.",
+    "Explain plans are collected from production Postgres and kept next to query samples, so you can see how a query's plan changes over time.",
+    "Recommendations for PostgreSQL flag missing and unused indexes, functions in filters, query regressions, high-impact blockers and long-running queries, each with a severity.",
+    "Bits Database Optimization picks slow Postgres queries, tests a rewrite or index against a simulation with synthetic data, and can open a GitHub pull request for the code that issued the query.",
+    "Setup guides for self-hosted Postgres, Amazon RDS and Aurora, Google Cloud SQL and AlloyDB, Azure, Heroku, Supabase and Databricks Lakebase, with Postgres 9.6 to 18 on several of them."
+  ],
+  "proofs": [
+    {
+      "key": "test",
+      "them": "Bits Database Optimization tests optimizations against simulations populated with synthetic data. Workbench, in preview, builds a temporary Postgres from your schema and statistics; Datadog says it does not reproduce production hardware or data, and it expires after 30 minutes by default.",
+      "sources": [8, 10]
+    },
+    {
+      "key": "data",
+      "them": "Datadog Database Monitoring obfuscates query bind parameters and sends query metrics, samples and explain plans to the Datadog intake on one of nine Datadog sites. Schema names and SQL comments are not obfuscated.",
+      "sources": [4, 19]
+    },
+    {
+      "key": "open",
+      "them": "The Datadog Agent user space components are open source under Apache 2.0. Database Monitoring is a paid service, $70 per database host a month billed annually; the sources we reviewed do not describe running it yourself.",
+      "sources": [18, 13]
+    },
+    {
+      "key": "experts",
+      "them": "Datadog Database Monitoring offers automated recommendations and Bits AI optimizations. The sources we reviewed do not describe PostgreSQL experts included with the product.",
+      "sources": [6, 7, 13]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A Datadog product that collects query metrics, query samples, explain plans and wait events from Postgres and shows them next to APM traces and infrastructure metrics. It adds Recommendations, monitors and Bits Database Optimization.",
+      "sources": [1, 6, 5, 8]
+    },
+    {
+      "key": "platforms",
+      "v": "yes",
+      "them": "Setup guides for self-hosted Postgres, Amazon RDS, Amazon Aurora, Google Cloud SQL, Google AlloyDB, Azure, Heroku, Supabase Cloud and Self-Hosted, and Databricks Lakebase. Supported versions: 9.6 to 18 self-hosted and on RDS, Aurora and Cloud SQL; 10 to 18 on AlloyDB; 14 to 18 on Azure. On RDS it needs pg_stat_statements and Agent 7.36.1 or newer.",
+      "sources": [1, 2, 3]
+    },
+    {
+      "key": "deployment",
+      "v": "nd",
+      "them": "The Datadog Agent runs in your infrastructure, on the database host or, for managed services such as RDS, connecting to the instance endpoint remotely. Data goes to one of nine Datadog sites in the US, EU, Japan, Australia and UK. Bind parameters are obfuscated. The sources we reviewed do not describe a self-hosted Datadog backend.",
+      "sources": [3, 4, 19]
+    },
+    {
+      "key": "open-source",
+      "v": "partial",
+      "them": "The Datadog Agent user space components are open source under Apache 2.0. Database Monitoring itself is a paid Datadog service.",
+      "sources": [18, 13]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "Per-query metrics for the top 200 normalized queries per host by total time, collected every 10 seconds by default, plus query samples biased towards slow or frequent queries, and explain plans.",
+      "sources": [4, 1]
+    },
+    {
+      "key": "wait-events",
+      "v": "yes",
+      "them": "Wait event analysis and database load are listed among the Postgres Database Monitoring features, with blocking query insights to find root blockers.",
+      "sources": [5, 6]
+    },
+    {
+      "key": "health-checks",
+      "v": "yes",
+      "them": "A Recommendations page flags, for PostgreSQL, missing and unused indexes, functions in filters, high-impact blockers, query regressions, queries over 30 seconds and high row counts; disk queue depth and low disk space are for Amazon RDS only. An MCP tool runs Postgres health checks such as CPU saturation, restarts and blocking.",
+      "sources": [7, 12]
+    },
+    {
+      "key": "agent-interface",
+      "v": "yes",
+      "them": "The Datadog MCP Server, which Datadog says is under significant development, has a dbm toolset of 12 tools, with setup for Cursor, Claude Code, Codex and other clients. PR Reviews, in preview, comments on GitHub pull requests with production context.",
+      "sources": [11, 12, 9]
+    },
+    {
+      "key": "test-fix",
+      "v": "partial",
+      "them": "Bits Database Optimization tests generated optimizations against simulations with synthetic data and does not export your data. Workbench, in preview, creates a temporary Postgres 12 to 18 database from your schema and statistics, filled with synthetic rows or with data you load yourself; it expires after 30 minutes by default.",
+      "sources": [8, 10]
+    },
+    {
+      "key": "expert-help",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed.",
+      "sources": [6, 13]
+    },
+    {
+      "key": "alerts",
+      "them": "Database Monitoring monitors for waiting queries, long-running queries, query samples and explain plan cost. Notifications go to email, Slack, PagerDuty, Microsoft Teams, Jira, ServiceNow and webhooks.",
+      "sources": [15, 16]
+    },
+    {
+      "key": "retention",
+      "them": "Query metrics are kept for 15 months and query samples for 15 days.",
+      "sources": [4]
+    },
+    {
+      "key": "compliance",
+      "them": "The Datadog Trust Center lists SOC 2 Type 2, ISO/IEC 27001, HIPAA, PCI DSS and FedRAMP High, among others.",
+      "sources": [17]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Database Monitoring",
+      "price": "$70 per database host/month",
+      "notes": "Billed annually; $84 billed month-to-month or on-demand. Datadog supports 200 normalized queries per database host.",
+      "sources": [13, 4]
+    },
+    {
+      "plan": "Bits Database Optimization",
+      "price": "AI credits",
+      "notes": "Priced in AI credits: $500 per 500-credit bundle a month billed annually, or $1.30 per credit on demand. Datadog lists about 0.3 credits on average for an optimization, as a reference.",
+      "sources": [8, 13, 14]
+    }
+  ],
+  "pricingNote": "Automated pull requests from Bits need APM, which is priced separately. Continuous Bits optimizations are capped at 50 distinct queries per database instance per month.",
+  "together": "DBLab is a separate product that copies any PostgreSQL source, so a team that monitors with Datadog can still use a DBLab clone to try an index or query change on full-size real data before production.",
+  "faq": [
+    {
+      "q": "Does Datadog Database Monitoring work with Amazon RDS?",
+      "a": "Yes. Datadog has setup guides for Amazon RDS and Aurora, Google Cloud SQL and AlloyDB, Azure, Heroku, Supabase and self-hosted Postgres. For RDS the Agent runs in your infrastructure and connects to the instance endpoint remotely; it supports PostgreSQL 9.6 to 18 there.",
+      "sources": [2, 3]
+    },
+    {
+      "q": "What does Datadog Database Monitoring cost?",
+      "a": "$70 per database host a month billed annually, or $84 month-to-month or on-demand. Bits Database Optimization is charged in AI credits on top.",
+      "sources": [13, 8]
+    },
+    {
+      "q": "Does Datadog test its query optimizations on my data?",
+      "a": "No. Datadog says Bits Database Optimization tests optimizations against database simulations populated with synthetic data and does not export or use actual data from your environment. Workbench, in preview, is filled with synthetic data generated from your column and table statistics unless you load your own.",
+      "sources": [8, 10]
+    },
+    {
+      "q": "Is Datadog Database Monitoring Workbench generally available?",
+      "a": "No. Datadog marks Workbench and PR Reviews as preview, with access on request. Bits Database Optimization is available for PostgreSQL.",
+      "sources": [10, 9, 8]
+    },
+    {
+      "q": "Can I use PostgresAI and Datadog together?",
+      "a": "Yes. DBLab, the PostgresAI cloning product, copies any PostgreSQL source, so a team that monitors with Datadog can test an index or query change on a full-size DBLab clone before production."
+    }
+  ],
+  "sources": [
+    {
+      "title": "Datadog documentation: Database Monitoring",
+      "url": "https://docs.datadoghq.com/database_monitoring/"
+    },
+    {
+      "title": "Datadog documentation: setting up Postgres",
+      "url": "https://docs.datadoghq.com/database_monitoring/setup_postgres/"
+    },
+    {
+      "title": "Datadog documentation: Database Monitoring for Postgres on Amazon RDS",
+      "url": "https://docs.datadoghq.com/database_monitoring/setup_postgres/rds/"
+    },
+    {
+      "title": "Datadog documentation: Database Monitoring data collected",
+      "url": "https://docs.datadoghq.com/database_monitoring/data_collected/"
+    },
+    {
+      "title": "Datadog documentation: Postgres integration",
+      "url": "https://docs.datadoghq.com/integrations/postgres"
+    },
+    {
+      "title": "Datadog Database Monitoring product page",
+      "url": "https://www.datadoghq.com/product/database-monitoring/"
+    },
+    {
+      "title": "Datadog documentation: recommendations",
+      "url": "https://docs.datadoghq.com/database_monitoring/recommendations/"
+    },
+    {
+      "title": "Datadog documentation: Bits Database Optimization",
+      "url": "https://docs.datadoghq.com/database_monitoring/bits_database_optimization/"
+    },
+    {
+      "title": "Datadog documentation: Database Monitoring PR Reviews",
+      "url": "https://docs.datadoghq.com/database_monitoring/pr_reviews/"
+    },
+    {
+      "title": "Datadog documentation: Database Monitoring Workbench",
+      "url": "https://docs.datadoghq.com/database_monitoring/database_monitoring_workbench/"
+    },
+    {
+      "title": "Datadog documentation: MCP Server",
+      "url": "https://docs.datadoghq.com/mcp_server/"
+    },
+    {
+      "title": "Datadog documentation: MCP Server tools",
+      "url": "https://docs.datadoghq.com/mcp_server/tools/"
+    },
+    {
+      "title": "Datadog pricing list",
+      "url": "https://www.datadoghq.com/pricing/list/"
+    },
+    {
+      "title": "Datadog pricing: Database Monitoring and AI credits",
+      "url": "https://www.datadoghq.com/pricing/?product=database-monitoring"
+    },
+    {
+      "title": "Datadog documentation: Database Monitoring monitor",
+      "url": "https://docs.datadoghq.com/monitors/types/database_monitoring/"
+    },
+    {
+      "title": "Datadog documentation: monitor notifications",
+      "url": "https://docs.datadoghq.com/monitors/notify/"
+    },
+    {
+      "title": "Datadog Trust Center",
+      "url": "https://trust.datadoghq.com/"
+    },
+    {
+      "title": "Datadog Agent repository",
+      "url": "https://github.com/DataDog/datadog-agent"
+    },
+    {
+      "title": "Datadog documentation: Datadog sites",
+      "url": "https://docs.datadoghq.com/getting_started/site/"
+    }
+  ]
+}

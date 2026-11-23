@@ -230,6 +230,7 @@ module.exports = {
             { label: 'Podcast', href: 'https://postgres.fm' },
             { label: 'YouTube', href: 'https://www.youtube.com/PostgresTV' },
             { label: 'Case studies', to: '/resources/' },
+            { label: 'Compare', to: '/compare' },
             { label: 'SOC2', to: '/security' },
             { label: 'Questions & answers', to: '/docs/questions-and-answers' },
           ],
@@ -415,6 +416,10 @@ module.exports = {
             {
               label: 'Case studies',
               to: '/resources/',
+            },
+            {
+              label: 'Compare',
+              to: '/compare',
             },
             {
               label: 'Security & compliance',
@@ -658,6 +663,8 @@ module.exports = {
     // Google Tag Manager disabled
     // Meta Pixel (Facebook) disabled
     path.resolve(__dirname, 'plugins/route-change'),
+    // /compare and one page per file in src/data/compare/pages
+    path.resolve(__dirname, 'plugins/compare-pages'),
     // /llms.txt and /llms-full.txt for AI agents (https://llmstxt.org)
     path.resolve(__dirname, 'plugins/llms-txt'),
   ],

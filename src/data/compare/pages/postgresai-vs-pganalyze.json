@@ -1,0 +1,227 @@
+{
+  "slug": "postgresai-vs-pganalyze",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "pganalyze",
+    "vendor": "pganalyze",
+    "url": "https://pganalyze.com/",
+    "category": "PostgreSQL monitoring and tuning",
+    "group": "postgres-tools",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs pganalyze: open source vs plan and log insights",
+  "description": "pganalyze collects query plans and logs and gives index, query and VACUUM advice. PostgresAI is open-source monitoring that files each finding as an Issue with a fix.",
+  "summary": "pganalyze is a PostgreSQL monitoring service that collects query statistics, EXPLAIN plans from auto_explain and Postgres logs, and turns them into Index, Query and VACUUM Advisor insights. PostgresAI monitors Postgres, runs scheduled checkups and turns findings into Issues that you, your AI agent or a PostgresAI expert can act on. Pick pganalyze if per-query plan analysis, log analysis and query tuning workbooks are what you need. Pick PostgresAI if you want open-source monitoring you can self-host with no licence fee, human experts on the plan, or DBLab clones to test a fix.",
+  "chooseThem": [
+    "Automatic EXPLAIN plan collection from auto_explain, with plan insights such as disk sorts, mis-estimates and stale stats, and a Query Advisor that flags issues like inefficient nested loops.",
+    "Index Advisor models hundreds of candidate index combinations across the whole workload, and is on every plan including the $149 Production plan.",
+    "Log Insights classifies Postgres log lines and includes 100+ preconfigured log event filters with PII filtering on Scale.",
+    "Workbooks hold a baseline query and variants (planner settings, pg_hint_plan hints, rewrites), compare plans and test bind parameter sets.",
+    "Install guides for 10 platforms, including Heroku Postgres, Crunchy Bridge, Aiven, Supabase and Neon, and PostgreSQL 10 and newer."
+  ],
+  "proofs": [
+    {
+      "key": "open",
+      "them": "The pganalyze collector is open source under the 3-clause BSD license. The pganalyze FAQ says pganalyze itself is not open source; self-hosting it with Enterprise Server comes with the Enterprise plan, which has custom annual pricing.",
+      "sources": [2, 4, 3]
+    },
+    {
+      "key": "history",
+      "them": "pganalyze keeps 14 days of historic statistics on Production, 35 days on Scale and 100 days on Enterprise.",
+      "sources": [3]
+    },
+    {
+      "key": "test",
+      "them": "pganalyze Workbooks run EXPLAIN ANALYZE of a query and its variants on a database you connect. The docs say Workbooks are not suited for testing CREATE INDEX, do not support DML queries and limit each run to 60 seconds.",
+      "sources": [11]
+    },
+    {
+      "key": "agents",
+      "them": "The pganalyze MCP server has 30 tools, including Workbooks tools that run EXPLAIN ANALYZE. It is in public preview, limited to 100 requests per billable server per hour, and its tools may change.",
+      "sources": [12]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A PostgreSQL monitoring and tuning service. A collector sends query statistics, schema, plans and logs to pganalyze Cloud or a self-hosted Enterprise Server, which runs the Index, Query and VACUUM Advisors, Log Insights and automated checks.",
+      "sources": [2, 3, 5]
+    },
+    {
+      "key": "platforms",
+      "v": "yes",
+      "them": "Install guides for Amazon RDS and Aurora, Azure Flexible Server, Google Cloud SQL and AlloyDB, CloudNativePG on Kubernetes, self-managed servers, Heroku Postgres, Crunchy Bridge, Aiven, Supabase and Neon. The minimum supported version is PostgreSQL 10. It needs pg_stat_statements.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "deployment",
+      "v": "yes",
+      "them": "pganalyze Cloud, or Enterprise Server behind your firewall (Docker on a VM, or Kubernetes on EKS or AKS) on the Enterprise plan. The collector never sends table rows; parameter values in query samples are sent unless filter_query_sample is set to normalize.",
+      "sources": [2, 3, 5]
+    },
+    {
+      "key": "open-source",
+      "v": "partial",
+      "them": "The collector is open source under the 3-clause BSD license. The pganalyze FAQ answers \"Is pganalyze open source?\" with no: it is a commercial product, sold as a cloud service or as the self-hosted Enterprise Server.",
+      "sources": [4, 2]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "Query statistics from pg_stat_statements, plus EXPLAIN plans collected from auto_explain output in the Postgres logs with 8 plan insights. Plan collection and Query Advisor, which analyzes plans for issues such as inefficient nested loops, are on the Scale plan and higher.",
+      "sources": [10, 8, 3]
+    },
+    {
+      "key": "wait-events",
+      "v": "yes",
+      "them": "A Wait Events tab with data collected every 10 seconds, plotted in 150-second buckets, and Connection Traces per connection. Both are on the Scale plan and higher.",
+      "sources": [13]
+    },
+    {
+      "key": "health-checks",
+      "v": "yes",
+      "them": "Automated checks for slow queries, blocking and idle transactions, missing, invalid and unused indexes, settings, disk space, replication lag and VACUUM, including wraparound. VACUUM Advisor covers bloat, freezing, autovacuum performance and activity.",
+      "sources": [6, 9, 7]
+    },
+    {
+      "key": "agent-interface",
+      "v": "preview",
+      "them": "An MCP server in public preview at app.pganalyze.com/mcp with 30 tools for servers, queries, tables, EXPLAIN plans, issues, logs and Workbooks. Setup is documented for Claude Code, Codex and Cursor, with OAuth, API key or personal access token (early access). During the preview it is limited to 100 requests per billable server per hour.",
+      "sources": [12]
+    },
+    {
+      "key": "test-fix",
+      "v": "partial",
+      "them": "Index Advisor models candidate indexes without creating them. Workbooks compare EXPLAIN ANALYZE of a query and its variants on a database you connect; the docs list limits: not suited for testing CREATE INDEX, no DML queries, 60 seconds per run. The sources we reviewed do not describe running a change on a separate copy of the data.",
+      "sources": [7, 11]
+    },
+    {
+      "key": "expert-help",
+      "v": "partial",
+      "them": "Enterprise includes proactive Solution Engineering support and training for using pganalyze, and a one-month guided evaluation for large deployments. The sources we reviewed do not describe PostgreSQL consulting beyond the product.",
+      "sources": [3, 2]
+    },
+    {
+      "key": "alerts",
+      "them": "Alert destinations: email, Slack and PagerDuty, plus webhooks and incident.io in early access. Email and PagerDuty are notified for critical issues only.",
+      "sources": [6]
+    },
+    {
+      "key": "retention",
+      "them": "14 days on Production, 35 days on Scale, 100 days on Enterprise.",
+      "sources": [3]
+    },
+    {
+      "key": "compliance",
+      "them": "The pricing and security pages state that pganalyze is SOC 2 Type 2 certified. Infrastructure is hosted in Amazon data centers.",
+      "sources": [14, 3]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Production",
+      "price": "$149/month",
+      "notes": "1 database server, 14 days of history, Index Advisor, Workbooks, health checks, MCP server",
+      "sources": [3]
+    },
+    {
+      "plan": "Scale",
+      "price": "$399/month",
+      "notes": "Up to 4 servers, $100/month for each additional billable server; 35 days of history; Query and VACUUM Advisors, auto_explain plans, Log Insights, SAML SSO",
+      "sources": [3]
+    },
+    {
+      "plan": "Enterprise",
+      "price": "Custom",
+      "notes": "Annual; Enterprise Server for self-hosting, 100 days of history, LDAP, Solution Engineering support",
+      "sources": [3]
+    }
+  ],
+  "pricingNote": "pganalyze bills per billable server: a primary counts as 1.0 and a replica as 0.5. There is a 14-day free trial with Scale features and no free plan.",
+  "together": "DBLab is a separate product that copies any PostgreSQL source, so a team that monitors with pganalyze can still use a DBLab clone to try an index or query change on full-size data before production.",
+  "faq": [
+    {
+      "q": "Is pganalyze open source?",
+      "a": "The pganalyze collector is open source under the 3-clause BSD license. The pganalyze FAQ says pganalyze itself is not open source: it is a commercial product, sold as a cloud service or as the self-hosted Enterprise Server. PostgresAI monitoring is open source under Apache 2.0.",
+      "sources": [4, 2]
+    },
+    {
+      "q": "Does pganalyze work with Amazon RDS?",
+      "a": "Yes. pganalyze has install guides for Amazon RDS and Aurora, Google Cloud SQL and AlloyDB, Azure Flexible Server and several other providers. The collector runs on a server with network access to the database.",
+      "sources": [1]
+    },
+    {
+      "q": "What does pganalyze cost?",
+      "a": "Production is $149 a month for one server and Scale is $399 a month for up to 4 servers, with $100 a month for each extra billable server. Enterprise, including self-hosted Enterprise Server, has custom annual pricing. A 14-day trial needs no credit card.",
+      "sources": [3, 2]
+    },
+    {
+      "q": "Can I self-host pganalyze?",
+      "a": "Yes, on the Enterprise plan. pganalyze Enterprise Server runs behind your firewall on Docker or Kubernetes, and no monitoring data leaves your network.",
+      "sources": [5, 2]
+    },
+    {
+      "q": "Can I use PostgresAI and pganalyze together?",
+      "a": "Yes. DBLab, the PostgresAI cloning product, copies any PostgreSQL source, so a team that monitors with pganalyze can test an index or query change on a full-size DBLab clone before production."
+    }
+  ],
+  "sources": [
+    {
+      "title": "pganalyze documentation: get started (install)",
+      "url": "https://pganalyze.com/docs/install"
+    },
+    {
+      "title": "pganalyze FAQ",
+      "url": "https://pganalyze.com/faq/"
+    },
+    {
+      "title": "pganalyze pricing",
+      "url": "https://pganalyze.com/pricing"
+    },
+    {
+      "title": "pganalyze collector repository",
+      "url": "https://github.com/pganalyze/collector"
+    },
+    {
+      "title": "pganalyze Enterprise Server",
+      "url": "https://pganalyze.com/docs/enterprise"
+    },
+    {
+      "title": "pganalyze documentation: alerts and check-up",
+      "url": "https://pganalyze.com/docs/checks/"
+    },
+    {
+      "title": "pganalyze documentation: Index Advisor",
+      "url": "https://pganalyze.com/docs/index-advisor/getting-started"
+    },
+    {
+      "title": "pganalyze documentation: Query Advisor",
+      "url": "https://pganalyze.com/docs/query-advisor/getting-started"
+    },
+    {
+      "title": "pganalyze documentation: VACUUM Advisor",
+      "url": "https://pganalyze.com/docs/vacuum-advisor"
+    },
+    {
+      "title": "pganalyze documentation: EXPLAIN plans",
+      "url": "https://pganalyze.com/docs/explain"
+    },
+    {
+      "title": "pganalyze documentation: Workbooks",
+      "url": "https://pganalyze.com/docs/workbooks"
+    },
+    {
+      "title": "pganalyze documentation: MCP server",
+      "url": "https://pganalyze.com/docs/mcp"
+    },
+    {
+      "title": "pganalyze documentation: connections and wait events",
+      "url": "https://pganalyze.com/docs/connections"
+    },
+    {
+      "title": "pganalyze security",
+      "url": "https://pganalyze.com/security"
+    }
+  ]
+}

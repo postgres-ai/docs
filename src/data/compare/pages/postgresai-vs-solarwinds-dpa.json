@@ -1,0 +1,224 @@
+{
+  "slug": "postgresai-vs-solarwinds-dpa",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "SolarWinds DPA",
+    "vendor": "SolarWinds",
+    "url": "https://www.solarwinds.com/database-performance-analyzer",
+    "category": "Self-hosted database performance analysis",
+    "group": "observability",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs SolarWinds DPA: open source vs commercial wait-time analysis",
+  "description": "SolarWinds DPA is self-hosted, agentless wait-time analysis with table and index advisors, sold by quote. PostgresAI is open source with a list price per cluster.",
+  "summary": "SolarWinds Database Performance Analyzer (DPA) is self-hosted, agentless software that analyzes PostgreSQL by wait time, with table and index advisors, anomaly detection and AI Query Assist. PostgresAI monitors PostgreSQL, runs scheduled checkups and turns findings into Issues that you, your AI agent or a PostgresAI expert can act on. Pick DPA if you want wait-time analysis on servers you run, with years of summarized history. Pick PostgresAI if you want open-source monitoring, public prices, agent access through MCP or human experts.",
+  "chooseThem": [
+    "Wait-time analysis is the core of the product: it ranks statements by the time users and applications wait, and flags hours when wait time is higher than predicted.",
+    "Self-hosted and agentless: the DPA server and its repository database run on servers you control, and SolarWinds says DPA uses less than one percent of database resources.",
+    "Table advisors flag PostgreSQL tables that had inefficient queries each day, index advisors flag missing indexes, and with pgstattuple a table advisor shows an index bloat percentage.",
+    "Reports keep wait-time data summarized by day for five years.",
+    "Covers self-managed PostgreSQL and EDB Postgres as well as Amazon RDS, Aurora, Azure Database for PostgreSQL Flexible Server and Cloud SQL."
+  ],
+  "proofs": [
+    {
+      "key": "open",
+      "them": "SolarWinds DPA needs a subscription license for each monitored database instance; if a subscription is not renewed, DPA keeps historical data but stops collecting new data. The sources we reviewed do not describe DPA as open source.",
+      "sources": [7]
+    },
+    {
+      "key": "price",
+      "them": "The DPA entry on the SolarWinds pricing page offers a 14-day trial and a quote, with no list price. On AWS Marketplace, DPA is billed by the number of database instances monitored each hour.",
+      "sources": [15, 7]
+    },
+    {
+      "key": "history",
+      "them": "SolarWinds DPA keeps detailed chart data for a shorter period, typically 30 days. Reports summarize the previous 90 days by hour and older data by day, for five years.",
+      "sources": [12]
+    },
+    {
+      "key": "test",
+      "them": "DPA's table and index advisors and AI Query Assist suggest changes, and SolarWinds advises reviewing a suggestion carefully before implementing it. The sources we reviewed do not describe running a change on a separate copy of the data.",
+      "sources": [5, 6]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "Self-hosted database performance monitoring that supports PostgreSQL. It focuses on application and end-user wait time rather than health metrics, and adds table and index advisors, wait time anomaly detection, alerts and AI Query Assist.",
+      "sources": [1, 9, 4]
+    },
+    {
+      "key": "platforms",
+      "v": "yes",
+      "them": "Self-managed PostgreSQL 14 to 18, EDB Postgres 14 to 16, Amazon RDS for PostgreSQL 14 to 17, Aurora PostgreSQL 14 to 16, Azure Database for PostgreSQL Flexible Server 14 to 17 and Cloud SQL for PostgreSQL 14 to 17. Complete monitoring needs pg_stat_statements; limited monitoring reads pg_stat_activity only.",
+      "sources": [2, 10]
+    },
+    {
+      "key": "deployment",
+      "v": "yes",
+      "them": "Self-hosted and agentless: the DPA server runs on Windows Server 2022 or 2025 or Linux, or from AWS and Azure Marketplace images, and stores collected data in a separate repository database. SolarWinds Observability SaaS, a separate SaaS product, also monitors PostgreSQL on dedicated hosts, RDS, Aurora, Cloud SQL and Azure.",
+      "sources": [3, 9, 14]
+    },
+    {
+      "key": "open-source",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. DPA is sold with subscription licenses per monitored database instance.",
+      "sources": [7]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "Wait time per SQL statement, with complete SQL text and execution statistics from pg_stat_statements in complete mode, and a Query Details page per query. AI Query Assist sends a query and its captured plan, with personal data masked, to an LLM for tuning suggestions.",
+      "sources": [10, 4, 6]
+    },
+    {
+      "key": "wait-events",
+      "v": "yes",
+      "them": "Wait-based analysis is the core of DPA: it ranks the issues causing the most wait time. For PostgreSQL, limited mode reads pg_stat_activity only, and complete mode adds pg_stat_statements. The sources we reviewed do not state the sampling interval.",
+      "sources": [9, 10]
+    },
+    {
+      "key": "health-checks",
+      "v": "yes",
+      "them": "Table advisors, available for PostgreSQL, list tables that had inefficient queries each day; index advisors flag missing indexes, and for PostgreSQL the pgstattuple extension lets a table advisor show an index bloat percentage. Anomaly detection flags hours when wait time is higher than predicted.",
+      "sources": [5, 4, 10, 8]
+    },
+    {
+      "key": "agent-interface",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. AI Query Assist, for PostgreSQL queries among others, sends a query and its plan through SolarWinds Observability SaaS to an LLM for tuning suggestions, up to four requests per instance in 24 hours; it is not an interface for AI agents.",
+      "sources": [6, 1]
+    },
+    {
+      "key": "test-fix",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. Table advisors and AI Query Assist suggest changes; the sources do not describe running a change on a separate copy of the data.",
+      "sources": [5, 6]
+    },
+    {
+      "key": "expert-help",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. The product page describes expert tuning advisors in the software, not PostgreSQL consulting.",
+      "sources": [1]
+    },
+    {
+      "key": "alerts",
+      "them": "Wait time, resource, administrative and custom SQL alerts, including a wait time anomaly alert, sent by email or as SNMP traps. DPA recommends an execution interval of at least 10 minutes.",
+      "sources": [11, 16]
+    },
+    {
+      "key": "retention",
+      "them": "Reports summarize the previous 90 days by hour and older data by day, available for five years. Detailed chart data is kept for a shorter period, typically 30 days.",
+      "sources": [12]
+    },
+    {
+      "key": "compliance",
+      "them": "DPA is self-hosted. The SolarWinds Trust Center lists ISO/IEC 27001:2022 for the ISMS supporting SolarWinds products and services, and SOC 2 Type 2 reports for Pingdom, Loggly, Service Desk and Observability SaaS. The sources we reviewed do not describe a SOC 2 report for DPA.",
+      "sources": [13]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "DPA subscription",
+      "price": "Quote",
+      "notes": "One license per monitored database instance; the DPA entry on the SolarWinds pricing page shows no price; 14-day free trial",
+      "sources": [1, 7, 15]
+    },
+    {
+      "plan": "AWS Marketplace",
+      "price": "Metered hourly",
+      "notes": "Billed through Amazon by the number of database instances monitored each hour; prices are on AWS Marketplace",
+      "sources": [7]
+    }
+  ],
+  "pricingNote": "A lapsed subscription keeps historical data but stops new collection. You can register more instances than you have licenses for.",
+  "together": "DBLab is a separate product that copies any PostgreSQL source, so a team that monitors with DPA can still use a DBLab clone to try an index or query change on full-size data before production.",
+  "faq": [
+    {
+      "q": "Does SolarWinds DPA support PostgreSQL?",
+      "a": "Yes. DPA lists self-managed PostgreSQL 14 to 18 and EDB Postgres, Amazon RDS and Aurora, Azure Database for PostgreSQL Flexible Server and Cloud SQL for PostgreSQL. Table and index advisors need complete monitoring, which reads pg_stat_statements.",
+      "sources": [2, 10]
+    },
+    {
+      "q": "Is SolarWinds DPA available as SaaS?",
+      "a": "DPA itself is self-hosted on Windows or Linux, or from AWS and Azure Marketplace images. SolarWinds Observability SaaS is a separate SaaS product that also monitors PostgreSQL.",
+      "sources": [3, 14]
+    },
+    {
+      "q": "What does SolarWinds DPA cost?",
+      "a": "The DPA entry on the SolarWinds pricing page shows no price; DPA is licensed per monitored database instance with subscription licenses, offered by quote, with a 14-day free trial. On AWS Marketplace it is metered by the number of instances monitored each hour.",
+      "sources": [1, 7, 15]
+    },
+    {
+      "q": "Can I use PostgresAI and SolarWinds DPA together?",
+      "a": "Yes. DBLab, the PostgresAI cloning product, copies any PostgreSQL source, so a team that monitors with DPA can test an index or query change on a full-size DBLab clone before production."
+    }
+  ],
+  "sources": [
+    {
+      "title": "SolarWinds Database Performance Analyzer",
+      "url": "https://www.solarwinds.com/database-performance-analyzer"
+    },
+    {
+      "title": "DPA documentation: database instances DPA can monitor",
+      "url": "https://documentation.solarwinds.com/en/success_center/dpa/content/dpa-database-versions-you-can-monitor.htm"
+    },
+    {
+      "title": "DPA documentation: system requirements",
+      "url": "https://documentation.solarwinds.com/en/success_center/dpa/content/install-dpa-requirements.htm"
+    },
+    {
+      "title": "DPA administrator guide",
+      "url": "https://documentation.solarwinds.com/en/success_center/dpa/content/dpa_administrator_guide.htm"
+    },
+    {
+      "title": "DPA documentation: table tuning advisors",
+      "url": "https://documentation.solarwinds.com/en/success_center/dpa/content/dpa-table_tuning_advisors.htm"
+    },
+    {
+      "title": "DPA documentation: AI Query Assist",
+      "url": "https://documentation.solarwinds.com/en/success_center/dpa/content/dpa-request-ai-query-optimization.htm"
+    },
+    {
+      "title": "DPA documentation: licensing model",
+      "url": "https://documentation.solarwinds.com/en/success_center/dpa/content/dpa_licensing_model.htm"
+    },
+    {
+      "title": "DPA documentation: find and investigate anomalies",
+      "url": "https://documentation.solarwinds.com/en/success_center/dpa/content/dpa-find-investigate-anomalies.htm"
+    },
+    {
+      "title": "DPA documentation: wait-based monitoring",
+      "url": "https://documentation.solarwinds.com/en/success_center/dpa/content/gettingstarted/dpa-gs-wait-based-monitoring.htm"
+    },
+    {
+      "title": "DPA documentation: register a PostgreSQL instance",
+      "url": "https://documentation.solarwinds.com/en/success_center/dpa/content/dpa-register-postgresql-instance.htm"
+    },
+    {
+      "title": "DPA documentation: wait time alerts",
+      "url": "https://documentation.solarwinds.com/en/success_center/dpa/content/dpa-create-wait-time-alert.htm"
+    },
+    {
+      "title": "DPA documentation: about reports",
+      "url": "https://documentation.solarwinds.com/en/success_center/dpa/content/dpa-about-reports.htm"
+    },
+    {
+      "title": "SolarWinds Trust Center",
+      "url": "https://www.solarwinds.com/trust-center"
+    },
+    {
+      "title": "SolarWinds Observability SaaS: monitor PostgreSQL",
+      "url": "https://documentation.solarwinds.com/en/success_center/observability/content/configure/configure-database-postgresql.htm"
+    },
+    {
+      "title": "SolarWinds pricing",
+      "url": "https://www.solarwinds.com/pricing"
+    },
+    {
+      "title": "DPA documentation: alert categories and types",
+      "url": "https://documentation.solarwinds.com/en/success_center/dpa/content/dpa-alert-categories-and-types.htm"
+    }
+  ]
+}

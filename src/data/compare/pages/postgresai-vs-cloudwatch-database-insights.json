@@ -1,0 +1,224 @@
+{
+  "slug": "postgresai-vs-cloudwatch-database-insights",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "CloudWatch Database Insights",
+    "vendor": "Amazon Web Services",
+    "url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Database-Insights.html",
+    "category": "AWS database monitoring",
+    "group": "provider",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs CloudWatch Database Insights: any provider vs built into AWS",
+  "description": "CloudWatch Database Insights shows DB load, top SQL and wait events for RDS and Aurora. PostgresAI is open source, runs on any provider and files findings as Issues.",
+  "summary": "CloudWatch Database Insights is the AWS monitoring console for RDS and Aurora and the successor to Performance Insights. Standard mode is free with 7 days of data; Advanced mode adds per-query statistics, lock trees, execution plans and a fleet view, billed per vCPU-hour. PostgresAI monitors PostgreSQL on any provider and turns checkup findings into Issues with a fix. On AWS the two are not exclusive: keep Database Insights, and add PostgresAI for checkups, Issues, agent access or expert help.",
+  "chooseThem": [
+    "Standard mode is part of RDS and Aurora with no extra charge for 7 days of DB load, top SQL and wait event data, and nothing to install.",
+    "DB Load is collected every second and can be sliced by waits, SQL, host, user, database and, where supported, blocking session and plan.",
+    "Advanced mode adds a fleet view, per-query statistics, lock trees for Aurora PostgreSQL and RDS for PostgreSQL, execution plans for Aurora PostgreSQL, and 15 months of lock and plan history.",
+    "One console for RDS for PostgreSQL, Aurora PostgreSQL and self-managed PostgreSQL on EC2, across accounts and Regions.",
+    "Integrated with CloudWatch alarms, CloudWatch Logs, RDS events and Application Signals, so calling services show next to database load."
+  ],
+  "proofs": [
+    {
+      "key": "anywhere",
+      "them": "Database Insights covers Amazon RDS and Aurora, and self-managed PostgreSQL 14 or later that can run on Amazon EC2, with the CloudWatch agent on the same host. AWS states that monitoring a remote database is not supported.",
+      "sources": [1, 4, 5]
+    },
+    {
+      "key": "open",
+      "them": "Database Insights is a feature of Amazon CloudWatch, which AWS describes as its fully managed monitoring and observability service. Standard mode is free for 7 days of data; longer retention and Advanced mode are billed per vCPU-hour or ACU-hour.",
+      "sources": [12, 1, 3]
+    },
+    {
+      "key": "fix",
+      "them": "Database Insights raises proactive recommendations when a metric crosses a threshold learned from the resource's baseline, with analysis and recommended actions. They need a paid retention period and are offered in 16 Regions.",
+      "sources": [8, 7]
+    },
+    {
+      "key": "test",
+      "them": "Database Insights analyzes the running database: DB load, top SQL, locks, plans and on-demand performance analysis. The sources we reviewed do not describe trying a change on a copy of the data.",
+      "sources": [1, 6]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A CloudWatch feature to monitor and troubleshoot database fleets with pre-built dashboards: DB load by dimension, top SQL, wait events, database telemetry, slow queries from logs and on-demand performance analysis. AWS migrated Performance Insights users to Database Insights.",
+      "sources": [1, 6]
+    },
+    {
+      "key": "platforms",
+      "v": "partial",
+      "them": "Amazon RDS for PostgreSQL and Aurora PostgreSQL, including Aurora PostgreSQL Limitless, plus self-managed PostgreSQL 14 or later that can run on Amazon EC2. For self-managed databases the CloudWatch agent must run on the database host; AWS states that monitoring a remote database is not supported.",
+      "sources": [1, 4, 5]
+    },
+    {
+      "key": "deployment",
+      "v": "no",
+      "them": "Part of Amazon CloudWatch, which AWS describes as its \"fully managed monitoring and observability service\". Access to sensitive dimensions such as SQL text can be restricted with fine-grained access policies.",
+      "sources": [12, 1]
+    },
+    {
+      "key": "open-source",
+      "v": "na",
+      "them": "Does not apply: Database Insights is a feature of Amazon CloudWatch, an AWS cloud service.",
+      "sources": [1]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "Top SQL by DB load in both modes. Advanced mode adds per-query statistics, slow SQL query patterns from exported logs, and execution plans; among PostgreSQL engines, plan analysis is supported only for Aurora PostgreSQL. Self-managed PostgreSQL reads pg_stat_statements and captures plans by running EXPLAIN.",
+      "sources": [1, 6, 5]
+    },
+    {
+      "key": "wait-events",
+      "v": "yes",
+      "them": "DB Load, measured as average active sessions, is collected every second and sliced by waits, SQL, host, user and database. Advanced mode adds lock trees for Aurora PostgreSQL and RDS for PostgreSQL.",
+      "sources": [6, 1, 9]
+    },
+    {
+      "key": "health-checks",
+      "v": "yes",
+      "them": "Proactive recommendations when metrics cross thresholds learned from the resource's baseline, with analysis and recommended investigations. They need a paid retention period and are offered in 16 Regions. Advanced mode adds on-demand performance analysis reports.",
+      "sources": [8, 7, 6]
+    },
+    {
+      "key": "agent-interface",
+      "v": "partial",
+      "them": "The Performance Insights API and aws pi CLI commands return DB load by dimension, top dimension keys, full SQL text and performance analysis reports. AWS Labs' CloudWatch MCP Server, run locally next to the AI client, reads CloudWatch metrics, alarms and logs. The sources we reviewed do not describe MCP tools for Database Insights itself.",
+      "sources": [9, 13]
+    },
+    {
+      "key": "test-fix",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. Database Insights analyzes the running database; the sources do not describe trying a change on a copy.",
+      "sources": [1, 6]
+    },
+    {
+      "key": "expert-help",
+      "v": "partial",
+      "them": "AWS Support plans (Business Support+, Enterprise Support, Unified Operations) cover AWS services. The sources we reviewed do not describe PostgreSQL consulting tied to Database Insights.",
+      "sources": [10]
+    },
+    {
+      "key": "alerts",
+      "them": "CloudWatch alarms on database metrics, in both modes. Advanced mode also shows RDS events in CloudWatch.",
+      "sources": [1]
+    },
+    {
+      "key": "retention",
+      "them": "Standard: 7 days free, 1 to 24 months paid. Advanced: 1 to 24 months included, 15 months for lock and plan analysis. Self-managed: 15 months of metrics.",
+      "sources": [1, 2, 4]
+    },
+    {
+      "key": "compliance",
+      "them": "Amazon CloudWatch and Amazon RDS are listed as in scope on the AWS SOC services-in-scope page.",
+      "sources": [11]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Standard mode",
+      "price": "Free",
+      "notes": "Up to 7 days of detailed database and per-query metrics; 1-24 months retention billed per vCPU-hour or ACU-hour (US East example: $0.002054 per vCPU-hour for the first month, $0.000086 for each further month); rates vary by Region",
+      "sources": [3, 1]
+    },
+    {
+      "plan": "Advanced mode",
+      "price": "$0.0125 per vCPU-hour",
+      "notes": "Per provisioned instance; $0.003125 per ACU-hour for Aurora Serverless; turned on per cluster; 1-24 months retention included",
+      "sources": [3, 1]
+    },
+    {
+      "plan": "Self-managed PostgreSQL",
+      "price": "Usage-based",
+      "notes": "Standard CloudWatch OpenTelemetry metrics and CloudWatch Logs pricing; 15 months of metrics",
+      "sources": [4, 3]
+    }
+  ],
+  "pricingNote": "API calls up to 1 million a month are included, then $0.00001 per call. The pricing page example: a 2-vCPU provisioned writer and one Aurora Serverless reader averaging 4 ACUs cost $27 for 720 hours in Advanced mode. OS process data needs RDS Enhanced Monitoring.",
+  "together": "PostgresAI monitoring supports Amazon RDS and Aurora, so it can run against the same databases while Database Insights stays on. Database Insights keeps the AWS view of DB load, top SQL and the fleet; PostgresAI adds scheduled checkups, Issues with a fix, agent access and expert help.",
+  "faq": [
+    {
+      "q": "What happened to Performance Insights?",
+      "a": "AWS documentation says the end-of-life date for Performance Insights was July 31, 2026, and that AWS has migrated Performance Insights users to Database Insights. The Performance Insights API is still documented as a way to query Database Insights data.",
+      "sources": [1, 9]
+    },
+    {
+      "q": "Is CloudWatch Database Insights free?",
+      "a": "Standard mode includes up to 7 days of detailed database and per-query metrics at no extra cost. Longer retention and Advanced mode are paid; Advanced mode is $0.0125 per vCPU-hour for provisioned instances.",
+      "sources": [3, 1]
+    },
+    {
+      "q": "Can Database Insights monitor self-managed PostgreSQL?",
+      "a": "Yes, PostgreSQL 14 or later with the CloudWatch agent on the same host; AWS says monitoring a remote database is not supported. Self-managed databases do not use Standard or Advanced mode and keep 15 months of metrics.",
+      "sources": [4, 5]
+    },
+    {
+      "q": "What is the difference between Standard and Advanced mode?",
+      "a": "Both show the top contributors to DB load and support alarms. Advanced mode adds per-query statistics, a saved fleet view, lock analysis for PostgreSQL engines, execution plans for Aurora PostgreSQL, slow SQL from logs, OS processes and on-demand analysis, with 1 to 24 months of retention included.",
+      "sources": [1]
+    },
+    {
+      "q": "Can I use PostgresAI and CloudWatch Database Insights together?",
+      "a": "Yes. PostgresAI monitoring supports Amazon RDS and Aurora, so both can watch the same database. Database Insights stays the AWS console view; PostgresAI adds checkups, Issues and expert help.",
+      "sources": [1]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Amazon CloudWatch: CloudWatch Database Insights",
+      "url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Database-Insights.html"
+    },
+    {
+      "title": "Amazon RDS: pricing and data retention for Database Insights",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PerfInsights.Overview.cost.html"
+    },
+    {
+      "title": "Amazon CloudWatch pricing",
+      "url": "https://aws.amazon.com/cloudwatch/pricing/"
+    },
+    {
+      "title": "Amazon CloudWatch: monitoring self-managed databases",
+      "url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Database-Insights-Self-Managed.html"
+    },
+    {
+      "title": "Amazon CloudWatch: monitoring self-managed PostgreSQL",
+      "url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Database-Insights-Self-Managed-PostgreSQL.html"
+    },
+    {
+      "title": "Amazon CloudWatch: Database Instance Dashboard",
+      "url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Database-Insights-Database-Instance-Dashboard.html"
+    },
+    {
+      "title": "Amazon RDS: engine, Region and instance class support for Database Insights",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_DatabaseInsights.Engines.html"
+    },
+    {
+      "title": "Amazon RDS: Database Insights proactive recommendations",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PerfInsights.InsightsRecommendationViewDetails.html"
+    },
+    {
+      "title": "Amazon RDS: Performance Insights API",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PerfInsights.API.html"
+    },
+    {
+      "title": "AWS Support plans",
+      "url": "https://aws.amazon.com/premiumsupport/plans/"
+    },
+    {
+      "title": "AWS services in scope: SOC",
+      "url": "https://aws.amazon.com/compliance/services-in-scope/SOC/"
+    },
+    {
+      "title": "Amazon CloudWatch product page",
+      "url": "https://aws.amazon.com/cloudwatch/"
+    },
+    {
+      "title": "AWS Labs: CloudWatch MCP Server",
+      "url": "https://awslabs.github.io/mcp/servers/cloudwatch-mcp-server"
+    }
+  ]
+}

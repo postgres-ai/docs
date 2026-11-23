@@ -1,0 +1,198 @@
+{
+  "slug": "dblab-vs-vela",
+  "kind": "branching",
+  "competitor": {
+    "name": "Vela",
+    "vendor": "simplyblock",
+    "url": "https://vela.run/",
+    "category": "Self-hosted Postgres platform",
+    "group": "hosted",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs Vela: clones of any Postgres vs branches on Vela",
+  "description": "Vela is a self-hosted Postgres platform that branches its own databases with copy-on-write NVMe storage. DBLab clones any PostgreSQL where it already runs.",
+  "summary": "Vela, from simplyblock, is a self-hostable Postgres platform built from a fork of Supabase Studio and simplyblock's NVMe storage. Branches and clones of a Vela database are copy-on-write at the block level, and each runs as its own instance. Existing databases are loaded into Vela with pg_dump and psql. simplyblock announced the public beta in February 2026. DBLab Engine is open-source software that makes thin clones of any PostgreSQL, including managed services, without moving it. Pick Vela if you want to run your Postgres on a self-hosted platform with branching built in; pick DBLab to clone databases that stay where they are.",
+  "chooseThem": [
+    "Branching is built into the platform your databases run on, in your own infrastructure, with block-level copy-on-write that Vela says forks 1TB in under a second at the storage layer.",
+    "A full Postgres platform, not only copies: Vela Studio, RBAC, scheduled backups with point-in-time restore, and separate scaling of compute and storage.",
+    "Each branch is a separate database instance with its own resource limits, so tests on one branch run on their own compute.",
+    "The code is open source under Apache 2.0 or MIT.",
+    "A free hosted sandbox with 2 vCPU, 4 GiB RAM and 100 GiB NVMe to try it before self-hosting."
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A self-hostable, serverless Postgres development platform with database branching and separate scaling of compute and storage. It combines a fork of Supabase Studio, a controller and simplyblock storage.",
+      "sources": [5, 10]
+    },
+    {
+      "key": "source",
+      "v": "partial",
+      "them": "Branches and clones are made from branches in a Vela project. Existing data is loaded with pg_dump and psql for Postgres-to-Postgres moves, or with CSV and pgloader imports; the sources we reviewed do not describe ongoing sync from an external database.",
+      "sources": [6, 8]
+    },
+    {
+      "key": "mechanism",
+      "them": "Copy-on-write at the block level in simplyblock's distributed NVMe storage. A fork or snapshot is a metadata-only operation; a VM is then provisioned and the volume attached.",
+      "sources": [4, 3]
+    },
+    {
+      "key": "speed",
+      "them": "Vela says forking a 1TB database typically completes in under one second at the storage layer and that clone time is independent of data size. The clone guide says it \"may take a few moments\"; a new database usually takes less than a minute.",
+      "sources": [4, 6, 7]
+    },
+    {
+      "key": "data",
+      "v": "yes",
+      "them": "Cloning a branch copies the schema, data and configuration into a new, independent branch. Branches can also start from a snapshot, and scheduled backups allow point-in-time restore.",
+      "sources": [6, 3, 13]
+    },
+    {
+      "key": "masking",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed.",
+      "sources": [3, 1]
+    },
+    {
+      "key": "ci",
+      "v": "partial",
+      "them": "Vela describes a pipeline that creates a branch for a pull request, runs tests and migrations, then deletes it. The sources we reviewed include no CI integration, API or CLI reference for that workflow.",
+      "sources": [3]
+    },
+    {
+      "key": "interfaces",
+      "them": "Vela Studio, a web dashboard, for projects, branches and clones. Vela's branching page says branches can be created from the UI or an API; the sources we reviewed do not include an API, CLI or MCP reference for branch operations.",
+      "sources": [6, 3]
+    },
+    {
+      "key": "hosting",
+      "v": "yes",
+      "them": "Self-hosted on Kubernetes, OpenShift, bare metal or VMs, on AWS, GCP, Azure or on-premises. simplyblock announced the public beta on February 9, 2026. A free hosted sandbox is offered for evaluation.",
+      "sources": [9, 10, 4, 12]
+    },
+    {
+      "key": "open-source",
+      "v": "yes",
+      "them": "\"All code is either Apache License 2.0 or MIT licensed.\" The main simplyblock/vela repository is under Apache 2.0.",
+      "sources": [10, 11]
+    },
+    {
+      "key": "limits",
+      "them": "Sandbox: 2 vCPU, 4 GiB RAM, 100 GiB NVMe and 10,000 IOPS; databases pause after inactivity and public internet transfer is blocked. The sources we reviewed do not state limits for self-hosted deployments.",
+      "sources": [2, 12]
+    },
+    {
+      "key": "cost-model",
+      "them": "Self-hosted Enterprise is licensed per vCPU, at a custom price that depends on deployment scope; compute and storage run on your own infrastructure. The sandbox is free.",
+      "sources": [4, 2]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Vela Sandbox",
+      "price": "Free",
+      "notes": "Hosted, for evaluation; 2 vCPU, 4 GiB RAM, 100 GiB NVMe, 10,000 IOPS; branches and clones bound by these resources",
+      "sources": [2, 12]
+    },
+    {
+      "plan": "Enterprise",
+      "price": "Custom",
+      "notes": "Self-hosted on Kubernetes, OpenShift or private cloud; licensed per vCPU; priority support and rollout engineering",
+      "sources": [2, 4]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Is Vela open source?",
+      "a": "Yes. simplyblock says all Vela code is under Apache 2.0 or MIT, and the main repository on GitHub is Apache 2.0. Enterprise support for self-hosted deployments is sold separately.",
+      "sources": [10, 11, 2]
+    },
+    {
+      "q": "Can Vela branch a database that runs on Amazon RDS?",
+      "a": "Not in place. Vela branches databases in a Vela project, so an existing database has to be loaded first; the docs recommend pg_dump and psql. DBLab clones such databases where they are, by dump and restore.",
+      "sources": [8, 6]
+    },
+    {
+      "q": "Is Vela in beta?",
+      "a": "simplyblock announced the public beta of Vela on February 9, 2026. The product pages we read today do not say beta or generally available, and the open-source announcement calls the release a request for feedback.",
+      "sources": [9, 10, 1]
+    },
+    {
+      "q": "What does Vela cost?",
+      "a": "The hosted sandbox is free. Self-hosted Enterprise is licensed per vCPU at a custom price; you also pay for your own compute and storage.",
+      "sources": [2, 4]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Vela home page",
+      "url": "https://vela.run/"
+    },
+    {
+      "title": "Vela pricing",
+      "url": "https://vela.run/pricing/"
+    },
+    {
+      "title": "Vela: Database branching",
+      "url": "https://vela.run/database-branching/"
+    },
+    {
+      "title": "Vela: Vela Storage",
+      "url": "https://vela.run/articles/vela-storage"
+    },
+    {
+      "title": "Vela docs: Important notes",
+      "url": "https://docs.vela.run/latest/important-notes/"
+    },
+    {
+      "title": "Vela docs: Clone your database",
+      "url": "https://docs.vela.run/latest/database/clone-database/"
+    },
+    {
+      "title": "Vela docs: Create your first branch",
+      "url": "https://docs.vela.run/latest/database/getting-started/"
+    },
+    {
+      "title": "Vela docs: Import data",
+      "url": "https://docs.vela.run/latest/database/importing-data/"
+    },
+    {
+      "title": "simplyblock press release: Vela beta launch",
+      "url": "https://www.simplyblock.io/press-releases/simplyblock-vela-beta-launch"
+    },
+    {
+      "title": "Vela blog: Vela is open source",
+      "url": "https://vela.run/blog/vela-open-source"
+    },
+    {
+      "title": "simplyblock/vela repository",
+      "url": "https://github.com/simplyblock/vela"
+    },
+    {
+      "title": "Vela Sandbox",
+      "url": "https://vela.run/sandbox/"
+    },
+    {
+      "title": "Vela features",
+      "url": "https://vela.run/features/"
+    }
+  ],
+  "proofs": [
+    {
+      "key": "any-source",
+      "them": "Vela branches and clones are made from branches in a Vela project. An existing PostgreSQL database is loaded into Vela first; Vela's docs recommend pg_dump and psql for Postgres-to-Postgres moves.",
+      "sources": [6, 8]
+    },
+    {
+      "key": "cost",
+      "them": "Each Vela branch is a separate database instance with its own resource limits. Self-hosted Enterprise is licensed per vCPU at a custom price that depends on deployment scope; the hosted sandbox is free.",
+      "sources": [6, 4, 2]
+    },
+    {
+      "key": "ci",
+      "them": "Vela describes creating a branch per pull request from the UI or an API, then running migrations and tests on it. The sources we reviewed do not describe a check that fails a migration on lock duration.",
+      "sources": [3]
+    }
+  ]
+}

@@ -1,0 +1,237 @@
+{
+  "slug": "postgresai-vs-pgdash",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "pgDash",
+    "vendor": "RapidLoop, Inc.",
+    "url": "https://pgdash.io/",
+    "category": "PostgreSQL monitoring",
+    "group": "postgres-tools",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs pgDash: open source with wait events vs pgmetrics reports",
+  "description": "pgDash monitors PostgreSQL from pgmetrics reports, as SaaS or self-hosted, with alerts. PostgresAI is open source and samples wait events from pg_stat_activity.",
+  "summary": "pgDash is a PostgreSQL monitoring service from RapidLoop. The open-source pgmetrics tool collects a report, usually from a cron job every few minutes, and the pgdash CLI sends it to pgDash SaaS or a self-hosted server. It shows queries and plans, diagnostics, index and bloat data, replication and alerts. PostgresAI monitors Postgres, runs scheduled checkups and turns findings into Issues that you, your AI agent or a PostgresAI expert can act on. Pick pgDash for PgBouncer and Pgpool dashboards, change alerts, or an air-gapped install. Pick PostgresAI for open-source monitoring you can self-host with no licence fee, a wait event dashboard, an MCP server, or human experts.",
+  "chooseThem": [
+    "The self-hosted version has the same features as SaaS and runs air-gapped, with no internet access needed; Debian, Ubuntu and RHEL packages are provided.",
+    "Change Alerts flag new or dropped users, tables and indexes and sudden table size changes between two consecutive reports (Pro and Enterprise).",
+    "Integrations add dashboards for PgBouncer pools, Pgpool backends and query cache, and AWS CloudWatch metrics and logs for RDS and Aurora.",
+    "Index Management lists unused indexes and bloated indexes that need reindexing, and Tablespace Management generates SQL to move or drop objects.",
+    "The pgmetrics collector is open source under Apache 2.0, works with PostgreSQL 9.3 to 18, and needs no extension on the server."
+  ],
+  "proofs": [
+    {
+      "key": "open",
+      "them": "pgDash collects data with pgmetrics, which is open source under Apache 2.0. pgDash itself is sold as SaaS or as a self-hosted version on Pro and Enterprise, licensed annually and paid in advance.",
+      "sources": [13, 12, 3, 10]
+    },
+    {
+      "key": "waits",
+      "them": "pgDash Locks and Backends shows backends waiting on locks and which queries wait for which. Data arrives each time pgmetrics runs and sends a report; the docs suggest running it every 5 to 10 minutes from a cron job.",
+      "sources": [2, 5, 7]
+    },
+    {
+      "key": "history",
+      "them": "pgDash keeps 30 days of data on Basic and 90 days on Pro and Enterprise. Self-hosted pgDash prunes time series data older than 3 months by default.",
+      "sources": [3, 10]
+    },
+    {
+      "key": "agents",
+      "them": "pgDash has an AI-enhanced Chat that answers questions about a server's status, configuration and performance, on Pro and Enterprise. The sources we reviewed do not describe an MCP server or a CLI for AI agents.",
+      "sources": [1, 2, 11]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A PostgreSQL monitoring and diagnostics service. pgmetrics collects a report, the pgdash CLI uploads it, and pgDash shows queries and plans, Diagnostics reports, tables and indexes, locks and backends, replication, alerts, Teams sharing and an AI-enhanced chat.",
+      "sources": [1, 2, 4]
+    },
+    {
+      "key": "platforms",
+      "v": "yes",
+      "them": "Self-managed servers, and a dedicated guide for AWS RDS and Aurora, including Aurora Serverless and Global. pgmetrics works with PostgreSQL 9.3 to 18 and also lists Azure Database for PostgreSQL Flexible Server, Azure Cosmos DB for PostgreSQL and Google Cloud SQL.",
+      "sources": [6, 12]
+    },
+    {
+      "key": "deployment",
+      "v": "yes",
+      "them": "SaaS at app.pgdash.io, or self-hosted on Debian 11 and 12, Ubuntu 20.04 to 24.04 or RHEL 8 and 9, with no internet access needed. By default pgmetrics sends the 100 slowest queries from pg_stat_statements, first 500 characters of each.",
+      "sources": [9, 10, 7]
+    },
+    {
+      "key": "open-source",
+      "v": "partial",
+      "them": "The pgmetrics collector is open source under Apache 2.0. pgDash itself is a commercial product, sold as SaaS or as an annual self-hosted license.",
+      "sources": [13, 12, 3]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "Query statistics from pg_stat_statements, time series per query, and execution plans with visualization and tuning suggestions. Plans come from auto_explain output in the Postgres logs, read locally or through CloudWatch Logs for RDS and Aurora.",
+      "sources": [2, 7]
+    },
+    {
+      "key": "wait-events",
+      "v": "partial",
+      "them": "Locks and Backends shows backends waiting on locks, which queries wait for which, and long-open or idle transactions. Data arrives each time pgmetrics runs, which the docs suggest every 5 to 10 minutes. The sources we reviewed do not describe a sampled wait event history.",
+      "sources": [2, 5, 7]
+    },
+    {
+      "key": "health-checks",
+      "v": "yes",
+      "them": "Diagnostics reports scan servers and databases for issues. Configuration Check gives recommendations on security, data safety, tuning and reliability. Index Management finds unused and bloated indexes; table bloat and vacuum data are shown per table.",
+      "sources": [2]
+    },
+    {
+      "key": "agent-interface",
+      "v": "partial",
+      "them": "AI-enhanced Chat answers questions about a server's status, configuration and performance (Pro and Enterprise); self-hosted installs bring an OpenAI or Google Gemini key. Alerts can go to webhooks. The sources we reviewed do not describe an MCP server.",
+      "sources": [1, 11, 14]
+    },
+    {
+      "key": "test-fix",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed.",
+      "sources": [2, 1]
+    },
+    {
+      "key": "expert-help",
+      "v": "partial",
+      "them": "Product support by email at support@rapidloop.com for self-hosted installs. The sources we reviewed do not describe PostgreSQL consulting.",
+      "sources": [9]
+    },
+    {
+      "key": "alerts",
+      "them": "Warning and critical threshold rules at server, database, table and tablespace level, such as wraparound, replication lag, bloat and free disk. Notifications go to email, Slack, PagerDuty, VictorOps, xMatters and webhooks.",
+      "sources": [8, 1]
+    },
+    {
+      "key": "retention",
+      "them": "30 days on Basic, 90 days on Pro and Enterprise. Self-hosted pgDash prunes time series data older than 3 months by default.",
+      "sources": [3, 10]
+    },
+    {
+      "key": "compliance",
+      "them": "The security page, last updated 18 February 2022, describes HTTPS-only access with HSTS and TLS 1.2 and 1.3, and hashed passwords. The sources we reviewed do not describe SOC 2 or ISO 27001 attestations.",
+      "sources": [15]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Basic",
+      "price": "$100/month",
+      "notes": "2 database servers, 30 days of history, basic alerting, integrations",
+      "sources": [3]
+    },
+    {
+      "plan": "Pro",
+      "price": "$200/month",
+      "notes": "5 database servers included, $50 for each additional server; 90 days of history; change alerts, AI-enhanced Chat, Teams",
+      "sources": [3]
+    },
+    {
+      "plan": "Enterprise",
+      "price": "Contact us",
+      "notes": "20+ database servers, 90 days of history, same features as Pro",
+      "sources": [3]
+    },
+    {
+      "plan": "Self-hosted",
+      "price": "Quote",
+      "notes": "Pro or Enterprise, priced like SaaS but licensed annually, paid in advance with a 10% discount",
+      "sources": [3, 10]
+    }
+  ],
+  "pricingNote": "pgDash bills by the maximum number of concurrent servers monitored in a month. A server is one PostgreSQL cluster; each RDS read replica and each Aurora replica counts as one. There is a 14-day free trial.",
+  "together": "DBLab is a separate product that copies any PostgreSQL source, so a team that monitors with pgDash can still use a DBLab clone to try an index or query change on full-size data before production.",
+  "faq": [
+    {
+      "q": "Is pgDash open source?",
+      "a": "The collector, pgmetrics, is open source under Apache 2.0. pgDash, the service that stores and shows the data, is a commercial product from RapidLoop, sold as SaaS or as a self-hosted annual license. PostgresAI monitoring is open source under Apache 2.0.",
+      "sources": [13, 12, 3]
+    },
+    {
+      "q": "Does pgDash work with Amazon RDS?",
+      "a": "Yes. pgDash documents AWS RDS PostgreSQL and Aurora, including Serverless and Global. pgmetrics runs on a machine with access to the database, typically an EC2 instance, and can also pull CloudWatch metrics and Postgres logs.",
+      "sources": [6]
+    },
+    {
+      "q": "What does pgDash cost?",
+      "a": "Basic is $100 a month for 2 servers and Pro is $200 a month for 5 servers plus $50 for each extra server. Enterprise, for 20 or more servers, is priced on request. Self-hosted is available on Pro and Enterprise as an annual license.",
+      "sources": [3]
+    },
+    {
+      "q": "How often does pgDash collect data?",
+      "a": "Each time you run pgmetrics and pipe its report to the pgdash CLI, usually from a cron job. The docs suggest every 5 to 10 minutes; alert rules are evaluated when each report arrives.",
+      "sources": [5, 7, 8]
+    },
+    {
+      "q": "Can I use PostgresAI and pgDash together?",
+      "a": "Yes. DBLab, the PostgresAI cloning product, copies any PostgreSQL source, so a team that monitors with pgDash can test an index or query change on a full-size DBLab clone before production."
+    }
+  ],
+  "sources": [
+    {
+      "title": "pgDash home page",
+      "url": "https://pgdash.io/"
+    },
+    {
+      "title": "pgDash features",
+      "url": "https://pgdash.io/features"
+    },
+    {
+      "title": "pgDash pricing",
+      "url": "https://pgdash.io/pricing"
+    },
+    {
+      "title": "pgDash documentation: overview",
+      "url": "https://docs.pgdash.io/"
+    },
+    {
+      "title": "pgDash documentation: getting started",
+      "url": "https://docs.pgdash.io/getting-started"
+    },
+    {
+      "title": "pgDash documentation: AWS RDS and Aurora",
+      "url": "https://docs.pgdash.io/aws-rds-getting-started"
+    },
+    {
+      "title": "pgDash documentation: working with queries",
+      "url": "https://docs.pgdash.io/queries"
+    },
+    {
+      "title": "pgDash documentation: alerts",
+      "url": "https://docs.pgdash.io/alerts"
+    },
+    {
+      "title": "pgDash documentation: self-hosted",
+      "url": "https://docs.pgdash.io/self-hosted"
+    },
+    {
+      "title": "pgDash documentation: self-hosted FAQ",
+      "url": "https://docs.pgdash.io/self-hosted-faq"
+    },
+    {
+      "title": "pgDash documentation: AI integration for self-hosted",
+      "url": "https://docs.pgdash.io/ai"
+    },
+    {
+      "title": "pgmetrics documentation",
+      "url": "https://pgmetrics.io/docs/"
+    },
+    {
+      "title": "pgmetrics repository",
+      "url": "https://github.com/rapidloop/pgmetrics"
+    },
+    {
+      "title": "pgDash documentation: webhooks",
+      "url": "https://docs.pgdash.io/webhooks"
+    },
+    {
+      "title": "pgDash security",
+      "url": "https://pgdash.io/security"
+    }
+  ]
+}

@@ -1,0 +1,239 @@
+{
+  "slug": "postgresai-vs-edb-postgres-enterprise-manager",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "EDB Postgres Enterprise Manager",
+    "vendor": "EDB (EnterpriseDB)",
+    "url": "https://www.enterprisedb.com/products/postgres-enterprise-manager",
+    "category": "PostgreSQL monitoring and management",
+    "group": "postgres-tools",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs EDB Postgres Enterprise Manager: any Postgres vs EDB fleets",
+  "description": "EDB Postgres Enterprise Manager monitors Postgres from a pgAdmin-based console, each server under an EDB subscription. PostgresAI covers any server, at a list price.",
+  "summary": "EDB Postgres Enterprise Manager (PEM) is a self-hosted monitoring and management console for PostgreSQL, EDB Postgres Advanced Server and EDB Postgres Extended, built on pgAdmin 4. It is included with EDB Standard and Enterprise subscriptions, and every server it monitors must be covered by one. PostgresAI monitors Postgres, runs scheduled checkups and turns findings into Issues that you, your AI agent or a PostgresAI expert can act on. Pick PEM if you already have an EDB subscription, run EDB Postgres Advanced Server or EDB Failover Manager, or want monitoring and administration in one console. Pick PostgresAI for Postgres not covered by an EDB subscription, or for published prices.",
+  "chooseThem": [
+    "Included with EDB Standard and Enterprise subscriptions at no extra licence cost, and the PEM server and backend consume no subscription cores.",
+    "One console for monitoring and administration: dashboards, alerts, Capacity Manager, Log Manager, a Query tool, Schema Diff, ERD tool and a PL debugger, built on pgAdmin 4.",
+    "Monitors EDB Postgres Advanced Server and EDB Postgres Extended as well as PostgreSQL 14 to 18, plus Barman, EDB Postgres Distributed, Failover Manager and Replication Server.",
+    "SQL Profiler traces statements with plans, buffers and timings, ad hoc or on a schedule, and the Performance Diagnostic dashboard breaks down wait events.",
+    "EDB sells 24x7 PostgreSQL support and services, including diagnostics, upgrades and performance work, alongside the product."
+  ],
+  "proofs": [
+    {
+      "key": "anywhere",
+      "them": "EDB Postgres Enterprise Manager monitors hosts with a PEM agent, and Amazon RDS and EDB's cloud service remotely, where OS data is missing and Audit Manager and Log Manager are not supported. Every monitored server must be covered by an EDB Standard or Enterprise subscription.",
+      "sources": [5, 4]
+    },
+    {
+      "key": "price",
+      "them": "PEM is included with EDB Standard and Enterprise subscriptions, and every Postgres server it monitors must be covered by one. The PEM pages we reviewed publish no price, and EDB Community 360 is not enough.",
+      "sources": [4, 1, 18]
+    },
+    {
+      "key": "waits",
+      "them": "The PEM Performance Diagnostic dashboard shows wait events in 15-second points. It needs the EDB wait states module, added to shared_preload_libraries, which requires a database restart.",
+      "sources": [7]
+    },
+    {
+      "key": "test",
+      "them": "PEM AI Insights suggests fixes for an EXPLAIN plan, and its docs advise testing a recommended index or configuration change against your own workload first. The sources we reviewed do not describe a copy of the database for that.",
+      "sources": [9]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A monitoring and management tool based on pgAdmin 4. Agents report host and database metrics to a PEM server, which provides dashboards, alerts, SQL Profiler, Performance Diagnostic, Capacity, Log and Audit Managers and admin tools. Version 10.6 was released on 29 September 2026.",
+      "sources": [2, 3, 6, 20]
+    },
+    {
+      "key": "platforms",
+      "v": "partial",
+      "them": "PostgreSQL, EDB Postgres Advanced Server and EDB Postgres Extended 14 to 18, on hosts where you install a PEM agent, plus remote monitoring for Amazon RDS and EDB's own cloud service, where some features are limited or missing. Every monitored server must be covered by an EDB Standard or Enterprise subscription.",
+      "sources": [2, 5, 4]
+    },
+    {
+      "key": "deployment",
+      "v": "yes",
+      "them": "Self-hosted: you install the PEM server, a Postgres backend database and a web server on Linux or Windows hosts. Monitoring data is stored in the pem database on your backend.",
+      "sources": [3, 6, 10]
+    },
+    {
+      "key": "open-source",
+      "v": "nd",
+      "them": "PEM is based on the open-source pgAdmin 4 project and requires an EDB Standard or Enterprise subscription. The PEM REST API documentation lists its license as the Limited Use Software License Agreement. The sources we reviewed do not describe PEM's own source code as public.",
+      "sources": [2, 4, 15]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "SQL Profiler, an extension enabled on each server, records query plans, buffer usage and execution times, with an optional minimum duration. AI Insights, when an LLM provider is configured, reviews EXPLAIN plans and suggests fixes with SQL.",
+      "sources": [8, 3, 10, 9]
+    },
+    {
+      "key": "wait-events",
+      "v": "yes",
+      "them": "The Performance Diagnostic dashboard shows active sessions by wait event type in 15-second points, with the top 15 queries. It needs the EDB wait states module, loaded through shared_preload_libraries, which requires a restart.",
+      "sources": [7]
+    },
+    {
+      "key": "health-checks",
+      "v": "yes",
+      "them": "Predefined alert templates, including size-aware autovacuum and autoanalyze overdue alerts added in 10.6. AI analysis reports on security, performance and schema design list findings by severity with SQL, once an LLM provider is enabled. Tuning Wizard, Postgres Expert and Index Advisor were removed in 10.0.",
+      "sources": [13, 11, 9, 10]
+    },
+    {
+      "key": "agent-interface",
+      "v": "partial",
+      "them": "A REST API and a CLI for exporting and importing alert templates and probes. An AI Assistant chat in the Query tool writes SQL from plain language, using Anthropic, OpenAI, Ollama or Docker Model Runner. The sources we reviewed do not describe an MCP server for PEM.",
+      "sources": [15, 16, 9]
+    },
+    {
+      "key": "test-fix",
+      "v": "nd",
+      "them": "The AI Insights docs advise testing a recommended index or configuration change against your own workload before production. The sources we reviewed do not describe a copy or clone for that in PEM.",
+      "sources": [9]
+    },
+    {
+      "key": "expert-help",
+      "v": "yes",
+      "them": "EDB offers support for PostgreSQL with patching, operations, diagnostics, upgrades and performance, 24x7x365, plus technical account management and other services.",
+      "sources": [1]
+    },
+    {
+      "key": "alerts",
+      "them": "Thresholds on any metric trigger high, medium or low alerts on the Global Overview dashboard. Notifications go by email over SMTP, webhooks, SNMP or Nagios, or run a script.",
+      "sources": [13, 12]
+    },
+    {
+      "key": "retention",
+      "them": "Set per probe: each probe has a data retention setting for how long its history is kept in the PEM backend database you run.",
+      "sources": [14, 3]
+    },
+    {
+      "key": "compliance",
+      "them": "The EDB Trust Center lists a SOC 2 report. PEM is self-hosted, so monitoring data stays in your own PEM backend database.",
+      "sources": [19, 3]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "EDB Standard or Enterprise subscription",
+      "price": "No public price",
+      "notes": "PEM is included; every monitored Postgres server must be covered, and the PEM server and backend consume no cores",
+      "sources": [4, 1, 18]
+    }
+  ],
+  "pricingNote": "The PEM licensing page refers to EDB Standard and Enterprise subscriptions; the EDB plans page now lists EDB Postgres AI plans such as Enterprise Postgres. An EDB Community 360 subscription is not enough to monitor a server with PEM.",
+  "together": "DBLab is a separate product that copies any PostgreSQL source, so a team that monitors PostgreSQL with PEM can try an index suggested by AI Insights on a full-size DBLab clone before production, as the PEM docs advise.",
+  "faq": [
+    {
+      "q": "Is EDB Postgres Enterprise Manager free?",
+      "a": "No separate price is published. PEM is included with EDB Standard and Enterprise subscriptions, and every Postgres server it monitors must be covered by one of them; EDB Community 360 is not enough.",
+      "sources": [4, 1]
+    },
+    {
+      "q": "Does EDB Postgres Enterprise Manager work with Amazon RDS?",
+      "a": "Yes, through remote monitoring with an agent on another host. Some features are limited: dashboards lack operating system data, and Audit Manager and Log Manager are not supported. The RDS server must be covered by an EDB Standard or Enterprise subscription.",
+      "sources": [5, 4]
+    },
+    {
+      "q": "Does PEM still have Index Advisor and Tuning Wizard?",
+      "a": "No. The PEM 10.0 release notes say Log Analysis Expert, Tuning Wizard, Postgres Expert and Index Advisor were removed, and point to the EDB Postgres Tuner extension for tuning. PEM now has AI analysis reports and AI Insights for plans, which need an LLM provider.",
+      "sources": [10, 9]
+    },
+    {
+      "q": "How does PEM relate to EDB Postgres AI and Hybrid Manager?",
+      "a": "EDB documents PEM under EDB Postgres AI, Platform and tools, and released PEM 10.6 on 29 September 2026. Hybrid Manager, which provisions and manages clusters in EDB Postgres AI, has its own dashboards built on Prometheus, Grafana and Loki. The sources we reviewed do not describe one replacing the other.",
+      "sources": [2, 20, 17]
+    },
+    {
+      "q": "Can I use PostgresAI and EDB Postgres Enterprise Manager together?",
+      "a": "Yes, for PostgreSQL. DBLab, the PostgresAI cloning product, copies any PostgreSQL source, so an index suggested in PEM can be tested on a full-size DBLab clone before production."
+    }
+  ],
+  "sources": [
+    {
+      "title": "EDB Postgres Enterprise Manager product page",
+      "url": "https://www.enterprisedb.com/products/postgres-enterprise-manager"
+    },
+    {
+      "title": "PEM documentation: overview and Postgres compatibility",
+      "url": "https://www.enterprisedb.com/docs/pem/latest/"
+    },
+    {
+      "title": "PEM documentation: components and architecture",
+      "url": "https://www.enterprisedb.com/docs/pem/latest/pem_architecture/"
+    },
+    {
+      "title": "PEM documentation: how PEM licensing works",
+      "url": "https://www.enterprisedb.com/docs/pem/latest/considerations/licensing/"
+    },
+    {
+      "title": "PEM documentation: remote monitoring",
+      "url": "https://www.enterprisedb.com/docs/pem/latest/monitoring_performance/pem_remote_monitoring/"
+    },
+    {
+      "title": "PEM documentation: monitoring performance",
+      "url": "https://www.enterprisedb.com/docs/pem/latest/monitoring_performance/"
+    },
+    {
+      "title": "PEM documentation: Performance Diagnostic",
+      "url": "https://www.enterprisedb.com/docs/pem/latest/tuning_performance/performance_diagnostic/"
+    },
+    {
+      "title": "PEM documentation: profiling workloads",
+      "url": "https://www.enterprisedb.com/docs/pem/latest/profiling_workloads/"
+    },
+    {
+      "title": "PEM documentation: configuring AI features",
+      "url": "https://www.enterprisedb.com/docs/pem/latest/pem_ai_features/"
+    },
+    {
+      "title": "PEM 10.0.0 release notes",
+      "url": "https://www.enterprisedb.com/docs/pem/latest/pem_rel_notes/pem_10.0.0_rel_notes/"
+    },
+    {
+      "title": "PEM 10.6.0 release notes",
+      "url": "https://www.enterprisedb.com/docs/pem/latest/pem_rel_notes/pem_10.6.0_rel_notes/"
+    },
+    {
+      "title": "PEM documentation: notifications",
+      "url": "https://www.enterprisedb.com/docs/pem/latest/monitoring_performance/notifications/"
+    },
+    {
+      "title": "PEM documentation: alerts",
+      "url": "https://www.enterprisedb.com/docs/pem/latest/monitoring_performance/alerts/"
+    },
+    {
+      "title": "PEM documentation: probes",
+      "url": "https://www.enterprisedb.com/docs/pem/latest/monitoring_performance/probes/"
+    },
+    {
+      "title": "PEM documentation: REST APIs",
+      "url": "https://www.enterprisedb.com/docs/pem/latest/pem_rest_api/"
+    },
+    {
+      "title": "PEM documentation: command line interface",
+      "url": "https://www.enterprisedb.com/docs/pem/latest/pem_cli/"
+    },
+    {
+      "title": "EDB Postgres AI Hybrid Manager documentation",
+      "url": "https://www.enterprisedb.com/docs/edb-postgres-ai/latest/hybrid-manager/"
+    },
+    {
+      "title": "EDB Postgres AI plans",
+      "url": "https://www.enterprisedb.com/products/plans-comparison"
+    },
+    {
+      "title": "EDB Trust Center",
+      "url": "https://trust.enterprisedb.com/"
+    },
+    {
+      "title": "PEM release notes",
+      "url": "https://www.enterprisedb.com/docs/pem/latest/pem_rel_notes/"
+    }
+  ]
+}

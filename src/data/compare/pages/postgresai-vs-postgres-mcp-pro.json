@@ -1,0 +1,179 @@
+{
+  "slug": "postgresai-vs-postgres-mcp-pro",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "Postgres MCP Pro",
+    "vendor": "Crystal DBA",
+    "url": "https://github.com/crystaldba/postgres-mcp",
+    "category": "PostgreSQL MCP server",
+    "group": "ai",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs Postgres MCP Pro: always-on monitoring vs an MCP server",
+  "description": "Postgres MCP Pro is an open-source MCP server with health checks and hypopg index tuning. PostgresAI monitors continuously, and a DBLab clone runs an index on real data.",
+  "summary": "Postgres MCP Pro is an open-source MCP server under the MIT license. An AI agent calls its tools on demand to list schemas, run SQL in a read-only or unrestricted mode, get EXPLAIN plans, find top queries, run PgHero-based health checks and search for indexes with hypopg. Its tools read the database at the time of the call; the sources we reviewed do not describe stored history. PostgresAI monitors Postgres continuously, runs scheduled checkups and turns findings into Issues that you, your AI agent or a PostgresAI expert can act on. Pick Postgres MCP Pro for a free, local tool that gives an agent direct access to one database. Pick PostgresAI for history, alerts and expert help. An agent can use both.",
+  "chooseThem": [
+    "Free and open source under the MIT license; it runs locally with Docker or Python 3.12 and needs only a connection string.",
+    "Workload index tuning: a greedy search adapted from Microsoft's Anytime algorithm, with hypopg to predict plan cost for each candidate set of indexes.",
+    "An execute_sql tool for the agent, with a restricted mode that runs read-only transactions with a time limit and an unrestricted mode for development.",
+    "explain_query can show the plan with hypothetical indexes, so an index idea is checked against the planner before anyone creates it.",
+    "Health checks for index, vacuum, connection, buffer cache, replication, constraint and sequence health, adapted from PgHero."
+  ],
+  "proofs": [
+    {
+      "key": "test",
+      "them": "Postgres MCP Pro estimates the effect of candidate indexes with hypopg, which simulates how the planner would use them, and compares plans before and after each index. The README notes that this relies on the accuracy of the hypopg predictions.",
+      "sources": [1]
+    },
+    {
+      "key": "waits",
+      "them": "Postgres MCP Pro provides its functions through nine MCP tools, listed in the README: schemas, objects, SQL, EXPLAIN, top queries, index analysis and health checks. None of them covers wait events.",
+      "sources": [1]
+    },
+    {
+      "key": "fix",
+      "them": "Postgres MCP Pro runs health checks adapted from PgHero when an agent calls analyze_db_health. The README says the team is working to fully validate these checks and may extend them.",
+      "sources": [1]
+    },
+    {
+      "key": "experts",
+      "them": "The Postgres MCP Pro README points to GitHub issues, pull requests and a Discord server for questions and requests.",
+      "sources": [1]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "An MCP server that an AI agent calls on demand, with 9 tools: schema listing, object details, SQL execution, EXPLAIN, top queries, workload and per-query index recommendations, and database health checks. The sources we reviewed do not describe continuous metric collection.",
+      "sources": [1]
+    },
+    {
+      "key": "platforms",
+      "v": "yes",
+      "them": "Any PostgreSQL reachable with a connection URI. The README gives extension setup for AWS RDS, Azure and Google Cloud SQL, and for self-managed Postgres, and says testing focuses on PostgreSQL 15, 16 and 17, with support planned for 13 through 17. Index tuning and query analysis need pg_stat_statements and hypopg.",
+      "sources": [1]
+    },
+    {
+      "key": "deployment",
+      "v": "yes",
+      "them": "You run it: a Docker image or a Python package, started by the MCP client over stdio, or as a shared server over SSE. It reads the database when a tool is called; execute_sql results, which can include table rows, go to the calling LLM.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "open-source",
+      "v": "yes",
+      "them": "Open source under the MIT license; the license file reads Copyright (c) 2025, Crystal Corp.",
+      "sources": [5, 1]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "get_top_queries reports the slowest queries from pg_stat_statements by total or mean execution time. explain_query returns the execution plan, optionally with hypothetical indexes.",
+      "sources": [1]
+    },
+    {
+      "key": "wait-events",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. The listed tools do not include wait event analysis.",
+      "sources": [1]
+    },
+    {
+      "key": "health-checks",
+      "v": "yes",
+      "them": "analyze_db_health checks index health (unused, duplicate, bloated, invalid), buffer cache hit rate, connections, vacuum and wraparound, replication, invalid constraints and sequences near their limit. The README says the checks are adapted from PgHero.",
+      "sources": [1]
+    },
+    {
+      "key": "agent-interface",
+      "v": "yes",
+      "them": "It is an MCP server. The README covers Claude Desktop and gives setup notes for Cursor, Windsurf, Goose and Qodo Gen. Transports are stdio and SSE; streamable HTTP was added on the main branch in January 2026, after the latest tagged release.",
+      "sources": [1, 4, 3]
+    },
+    {
+      "key": "test-fix",
+      "v": "partial",
+      "them": "hypopg simulates how the planner would use candidate indexes, and the index search compares plans before and after each index. These are planner cost estimates; the sources we reviewed do not describe running a change on a separate copy of the data.",
+      "sources": [1]
+    },
+    {
+      "key": "expert-help",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. The README points to GitHub issues and a Discord server for questions and requests.",
+      "sources": [1]
+    },
+    {
+      "key": "alerts",
+      "them": "Not documented in the sources we reviewed. The tools answer when an agent calls them; the README does not describe scheduled checks or notifications.",
+      "sources": [1]
+    },
+    {
+      "key": "retention",
+      "them": "The sources we reviewed do not describe stored history. The tools read pg_stat_statements and system views on the connected database at the time of the call.",
+      "sources": [1]
+    },
+    {
+      "key": "compliance",
+      "them": "Not documented in the sources we reviewed. It is software you run yourself, connected to your database with credentials you supply.",
+      "sources": [1]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Open source",
+      "price": "Free",
+      "notes": "MIT license; you run it. The experimental LLM index tuning needs an OpenAI API key",
+      "sources": [5, 1]
+    }
+  ],
+  "together": "Both products have MCP servers, and both document setup for Cursor and Windsurf. An agent can use PostgresAI for monitoring history, checkup findings and Issues, and Postgres MCP Pro for direct SQL, EXPLAIN and hypopg index experiments on a database it connects to.",
+  "faq": [
+    {
+      "q": "Is Postgres MCP Pro open source?",
+      "a": "Yes, under the MIT license. It installs from Docker Hub or PyPI. PostgresAI monitoring is also open source, under Apache 2.0.",
+      "sources": [5, 2]
+    },
+    {
+      "q": "Is Postgres MCP Pro still maintained?",
+      "a": "The latest tagged release on GitHub and PyPI is 0.3.0, from May 16, 2025. The main branch has later commits, the most recent on August 16, 2026, including streamable HTTP support. The GitHub repository is not archived. The README says the project is created and maintained by Crystal DBA.",
+      "sources": [3, 2, 4, 1]
+    },
+    {
+      "q": "Does Postgres MCP Pro monitor my database?",
+      "a": "It runs checks and queries when an AI agent calls one of its tools. The sources we reviewed do not describe continuous collection, stored history or alerts, which is what PostgresAI monitoring provides.",
+      "sources": [1]
+    },
+    {
+      "q": "Does Postgres MCP Pro work with Amazon RDS?",
+      "a": "Yes. It connects with a standard Postgres URI, and the README describes enabling pg_stat_statements and hypopg on AWS RDS, Azure and Google Cloud SQL with CREATE EXTENSION.",
+      "sources": [1]
+    },
+    {
+      "q": "Can I use PostgresAI and Postgres MCP Pro together?",
+      "a": "Yes. Both are MCP servers, so one agent can use PostgresAI for checkup findings and Issues and Postgres MCP Pro for SQL, EXPLAIN and hypothetical index tests on the same database.",
+      "sources": [1]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Postgres MCP Pro repository and README",
+      "url": "https://github.com/crystaldba/postgres-mcp"
+    },
+    {
+      "title": "postgres-mcp on PyPI",
+      "url": "https://pypi.org/project/postgres-mcp/"
+    },
+    {
+      "title": "Postgres MCP Pro releases",
+      "url": "https://github.com/crystaldba/postgres-mcp/releases"
+    },
+    {
+      "title": "Postgres MCP Pro commit history",
+      "url": "https://github.com/crystaldba/postgres-mcp/commits/main/"
+    },
+    {
+      "title": "Postgres MCP Pro license",
+      "url": "https://github.com/crystaldba/postgres-mcp/blob/main/LICENSE"
+    }
+  ]
+}

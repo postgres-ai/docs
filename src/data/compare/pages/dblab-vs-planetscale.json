@@ -1,0 +1,197 @@
+{
+  "slug": "dblab-vs-planetscale",
+  "kind": "branching",
+  "competitor": {
+    "name": "PlanetScale",
+    "vendor": "PlanetScale",
+    "url": "https://planetscale.com/postgres",
+    "category": "Managed Postgres platform",
+    "group": "hosted",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs PlanetScale: clones in seconds vs branches restored from backup",
+  "description": "PlanetScale for Postgres branches are separate deployments, empty or restored from a backup. DBLab makes thin clones of any Postgres in seconds on a machine you run.",
+  "summary": "PlanetScale for Postgres runs managed, highly available Postgres clusters. A PlanetScale branch is a separate database deployment: either empty, with no schema or data, or restored from a backup with schema and data, on its own development or production cluster. DBLab Engine is open-source software that makes full-size thin clones of any PostgreSQL on one machine you run, with copy-on-write so clones share one copy of the data. If production runs on PlanetScale, a branch restored from a backup gives a full, separate copy there. If production stays elsewhere, or you need many copies at once, DBLab clones it where it is.",
+  "chooseThem": [
+    "Your database already runs on PlanetScale. A branch restored from a backup is a full, separate deployment of your data, with any point in time from the oldest backup to 5 minutes ago.",
+    "A restored branch has its own cluster, so tests on it do not share I/O with other copies. Production branches can have two replicas for high availability.",
+    "Development branches run on PS-DEV instances and are billed only for the time they are used. Up to 100 development branches per database by default, configurable up to 5,000.",
+    "The pscale CLI creates branches on Postgres databases, from a parent branch or from a backup ID, in a chosen region and cluster size.",
+    "PlanetScale for Postgres runs in AWS, GCP and Azure, with a Metal tier on local NVMe storage; a single-node cluster starts at $5/month."
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "PlanetScale for Postgres provides \"fully-managed, high availability PostgreSQL database clusters\". Branches are \"isolated database deployments that provide you with separate environments for development and testing\".",
+      "sources": [1, 2]
+    },
+    {
+      "key": "source",
+      "v": "partial",
+      "them": "Branches belong to a PlanetScale database. An external Postgres gets there by import: pg_dump and pg_restore for smaller databases, WAL streaming (logical replication) for near-zero downtime, or pgcopydb for large databases.",
+      "sources": [2, 6]
+    },
+    {
+      "key": "mechanism",
+      "them": "Each branch is its own deployment on its own cluster; \"There is no data replication between branches.\" A branch with data is made by restoring a backup, using WAL replay for points in time between backups.",
+      "sources": [2, 4]
+    },
+    {
+      "key": "speed",
+      "them": "The docs we read give no time in seconds. A branch with data is a restore from backup; time depends on cluster size, data volume and how far back you go. PlanetScale's example puts a restore within the 12-hour backup interval at \"typically minutes to under an hour\"; older points may need days of WAL replayed.",
+      "sources": [4, 8]
+    },
+    {
+      "key": "data",
+      "v": "partial",
+      "them": "A branch from the Branches page \"does not include schema or data\". A branch restored from a backup \"includes both the schema and the data for the selected backup\", at any point from the oldest backup to 5 minutes ago.",
+      "sources": [2, 4]
+    },
+    {
+      "key": "masking",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. A branch restored from a backup holds the same data as the source branch.",
+      "sources": [2, 4]
+    },
+    {
+      "key": "ci",
+      "v": "partial",
+      "them": "The sources we reviewed do not describe a CI integration or migration check for Postgres branches. The pscale CLI creates branches, including from a backup.",
+      "sources": [5, 2]
+    },
+    {
+      "key": "interfaces",
+      "them": "The dashboard Branches page, the pscale CLI and a hosted MCP server. pscale branch create works for Postgres databases, with --from (parent branch), --restore (backup ID), --restore-point, --region and --cluster-size. The MCP server runs read or write queries on a branch, with access set per database.",
+      "sources": [2, 5, 10]
+    },
+    {
+      "key": "hosting",
+      "v": "partial",
+      "them": "A fully managed service in AWS, GCP and Azure. On the Enterprise plan, PlanetScale Managed deploys a single-tenant data plane for Postgres into your own AWS, GCP or Azure account, which PlanetScale operates. The sources we reviewed do not describe running it on your own servers.",
+      "sources": [1, 3, 9]
+    },
+    {
+      "key": "open-source",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed for PlanetScale for Postgres. It runs PostgreSQL, which is open source.",
+      "sources": [1]
+    },
+    {
+      "key": "limits",
+      "them": "100 development branches per database by default, settable from 1 to 5,000. Development branches have no replicas and 10 GB of egress a month. Restored branches stay in the source region, lose extensions and get new passwords. Default backups every 12 hours, kept 2 days.",
+      "sources": [2, 7, 4]
+    },
+    {
+      "key": "cost-model",
+      "them": "Each branch is billed for its own cluster size, plus storage, backups and egress. \"You will be charged for the storage consumed by all production and development branches.\" Development branches are billed only while used; a new one starts as a single-node PS-DEV cluster that begins at $5/month, depending on the region.",
+      "sources": [2, 3, 7]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "PS-5 single node",
+      "price": "$5/month",
+      "notes": "1/16 vCPU, 512 MiB RAM, AWS us-east-1; extra storage, backups and egress billed separately",
+      "sources": [11, 1]
+    },
+    {
+      "plan": "PS-5 highly available",
+      "price": "$15/month",
+      "notes": "Primary and two replicas, 1/16 vCPU, 512 MiB RAM each, AWS us-east-1",
+      "sources": [11]
+    },
+    {
+      "plan": "Metal M-10 highly available",
+      "price": "$50/month",
+      "notes": "Primary and two replicas, arm64, 1/8 vCPU, 1 GiB RAM, 10 GiB local NVMe included, AWS us-east-1",
+      "sources": [11]
+    }
+  ],
+  "pricingNote": "Prices are per cluster, so each branch adds the cost of its own cluster. Backup storage beyond 2x disk size is $0.023 per GB-month; private-network egress is $0.01 per GB.",
+  "faq": [
+    {
+      "q": "Does a PlanetScale Postgres branch include my data?",
+      "a": "Only when restored from a backup. A branch created from the Branches page has no schema or data. A branch restored from a backup includes both, as of the chosen backup or point in time.",
+      "sources": [2, 4]
+    },
+    {
+      "q": "Can PlanetScale branch a database that runs on Amazon RDS?",
+      "a": "Not in place. Branches belong to a PlanetScale database, so the data is imported first with pg_dump and pg_restore, WAL streaming or pgcopydb. DBLab clones an RDS database where it is, by dump and restore onto a machine you run.",
+      "sources": [2, 6]
+    },
+    {
+      "q": "What does a PlanetScale Postgres branch cost?",
+      "a": "Each branch runs on its own cluster and is billed for that cluster, plus storage for all branches, backups and egress. Clusters start at $5/month single node and $15/month highly available (PS-5, AWS us-east-1). Development branches use PS-DEV instances, billed only while used.",
+      "sources": [2, 3, 7]
+    },
+    {
+      "q": "How long does it take to create a PlanetScale Postgres branch with data?",
+      "a": "A branch with data is restored from a backup, and the time depends on cluster size, data volume and how far back you restore. PlanetScale's example puts a restore within the default 12-hour backup interval at typically minutes to under an hour; older points can need days of WAL replayed. A DBLab clone takes a few seconds whatever the database size.",
+      "sources": [8, 4]
+    }
+  ],
+  "sources": [
+    {
+      "title": "PlanetScale for Postgres",
+      "url": "https://planetscale.com/postgres"
+    },
+    {
+      "title": "PlanetScale docs: Postgres branching",
+      "url": "https://planetscale.com/docs/postgres/branching"
+    },
+    {
+      "title": "PlanetScale pricing",
+      "url": "https://planetscale.com/pricing"
+    },
+    {
+      "title": "PlanetScale docs: Postgres backups",
+      "url": "https://planetscale.com/docs/postgres/backups"
+    },
+    {
+      "title": "PlanetScale CLI: branch",
+      "url": "https://planetscale.com/docs/cli/branch"
+    },
+    {
+      "title": "PlanetScale docs: Postgres imports",
+      "url": "https://planetscale.com/docs/postgres/imports/postgres-imports"
+    },
+    {
+      "title": "PlanetScale docs: Postgres pricing",
+      "url": "https://planetscale.com/docs/postgres/pricing"
+    },
+    {
+      "title": "PlanetScale docs: Postgres point-in-time recovery",
+      "url": "https://planetscale.com/docs/postgres/backups/point-in-time-recovery"
+    },
+    {
+      "title": "PlanetScale docs: PlanetScale Managed overview",
+      "url": "https://planetscale.com/docs/plans/managed"
+    },
+    {
+      "title": "PlanetScale docs: MCP server",
+      "url": "https://planetscale.com/docs/mcp-server"
+    },
+    {
+      "title": "PlanetScale pricing catalog (pricing.md)",
+      "url": "https://planetscale.com/pricing.md"
+    }
+  ],
+  "proofs": [
+    {
+      "key": "seconds",
+      "them": "A PlanetScale Postgres branch with data is restored from a backup onto its own cluster. PlanetScale's example puts a restore within the 12-hour backup interval at typically minutes to under an hour; older points can need days of WAL replayed.",
+      "sources": [8, 4]
+    },
+    {
+      "key": "cost",
+      "them": "Each PlanetScale branch is its own cluster and is billed for it. A branch restored from a backup inherits the parent's cluster size, and storage is charged for all production and development branches.",
+      "sources": [2, 7]
+    },
+    {
+      "key": "any-source",
+      "them": "PlanetScale branches belong to a PlanetScale database. A Postgres database on another provider is imported first, with pg_dump and pg_restore, WAL streaming or pgcopydb.",
+      "sources": [2, 6]
+    }
+  ]
+}

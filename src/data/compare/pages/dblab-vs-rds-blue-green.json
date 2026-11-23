@@ -1,0 +1,201 @@
+{
+  "slug": "dblab-vs-rds-blue-green",
+  "kind": "branching",
+  "competitor": {
+    "name": "Amazon RDS Blue/Green Deployments",
+    "vendor": "Amazon Web Services",
+    "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/blue-green-deployments-overview.html",
+    "category": "Managed staging and switchover",
+    "group": "cloud",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs Amazon RDS Blue/Green Deployments: test clones vs a switchover",
+  "description": "RDS Blue/Green Deployments keep a synced staging copy of production for an upgrade, then switch over to it. DBLab gives many people writable clones of any Postgres.",
+  "summary": "Amazon RDS Blue/Green Deployments create a green copy of a production RDS or Aurora database, kept in sync by replication, so you can apply a change such as a major version upgrade and then switch production to it, typically in under a minute. DBLab Engine is open-source software that gives developers, CI jobs and AI agents many writable thin clones of any PostgreSQL on one machine. They solve different steps: blue/green to stage and ship a change to production, DBLab to try changes many times on disposable copies. Teams on RDS or Aurora can use both.",
+  "chooseThem": [
+    "Built to ship the change: upgrade the engine version, change the parameter group or storage on the green copy, then switch over, typically under a minute, with the same endpoint names and no application changes.",
+    "The green copy stays in sync with production by replication until switchover, and switchover has built-in guardrails. AWS says it is done with no data loss.",
+    "Part of Amazon RDS and Aurora, with no separate tool or server. AWS states the green environment costs the same as the blue one.",
+    "The green environment copies the production topology, including read replicas, Multi-AZ, storage configuration, Performance Insights and Enhanced Monitoring.",
+    "After switchover the old production instances are kept, renamed with -old1, for regression testing until you delete them."
+  ],
+  "proofs": [
+    {
+      "key": "cost",
+      "them": "A blue/green deployment creates a green copy of the production environment. AWS: green instances cost the same as blue ones, \"approximately 2x the cost\" while the deployment exists, and old production instances are billed until deleted.",
+      "sources": [1, 9, 10]
+    },
+    {
+      "key": "ci",
+      "them": "With physical replication the green environment is strictly read-only and takes no schema changes. With logical replication, a DDL change on blue means deleting and recreating the deployment. The sources we reviewed do not describe a migration check.",
+      "sources": [3]
+    },
+    {
+      "key": "any-source",
+      "them": "Blue/Green Deployments copy an RDS for PostgreSQL instance (11.1 and higher) or an Aurora cluster, with blue and green in the same AWS account. Multi-AZ DB clusters and cross-Region read replicas are not supported.",
+      "sources": [10, 3]
+    },
+    {
+      "key": "control",
+      "them": "Blue/Green Deployments are part of Amazon RDS: \"Amazon RDS is responsible for hosting the software components and infrastructure of DB instances and DB clusters.\"",
+      "sources": [11]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A feature of Amazon RDS and Aurora that creates a staging (green) environment copying production (blue) and kept in sync with it, for testing changes such as engine upgrades and parameter changes, then switching it over to become production. Available for RDS for PostgreSQL and Aurora PostgreSQL.",
+      "sources": [1, 6]
+    },
+    {
+      "key": "source",
+      "v": "partial",
+      "them": "Copies an RDS for PostgreSQL DB instance (version 11.1 and higher) or an Aurora DB cluster. \"The resources in the blue environment and green environment must be in the same AWS account.\" Multi-AZ DB cluster deployments are not supported.",
+      "sources": [3, 10, 7]
+    },
+    {
+      "key": "mechanism",
+      "them": "RDS: the green primary is restored from a DB snapshot and kept in sync by physical replication, or by logical replication when a major version upgrade is requested on recent minor versions (for example 16.1 and up, 15.4 and up). Aurora PostgreSQL: logical replication is required for replication from blue to green, and its restrictions are listed as limitations.",
+      "sources": [4, 2, 12, 7]
+    },
+    {
+      "key": "speed",
+      "them": "The docs we read give no creation time. On RDS the green instance loads data from Amazon S3 in the background (lazy loading); storage initialization reads all blocks ahead of time, and AWS advises waiting for loading to finish before switchover. Switchover typically takes under a minute.",
+      "sources": [4, 5, 1]
+    },
+    {
+      "key": "data",
+      "v": "yes",
+      "them": "A full copy of the production database and topology, kept in sync with production by replication until switchover.",
+      "sources": [1, 4]
+    },
+    {
+      "key": "masking",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. The green environment is meant to become production, so it carries production data.",
+      "sources": [1]
+    },
+    {
+      "key": "ci",
+      "v": "partial",
+      "them": "The sources we reviewed do not describe a CI integration. Deployments are created with create-blue-green-deployment or the CreateBlueGreenDeployment API; CloudFormation is listed as not supported for blue/green deployments.",
+      "sources": [8, 3]
+    },
+    {
+      "key": "interfaces",
+      "them": "AWS Management Console, AWS CLI and RDS API. RDS Proxy and AWS smart drivers can redirect connections at switchover without waiting for DNS. On RDS, green is read-only by default; with logical replication, writes can be enabled per session with default_transaction_read_only.",
+      "sources": [1, 6, 8]
+    },
+    {
+      "key": "hosting",
+      "v": "no",
+      "them": "Part of Amazon RDS, a managed AWS service. \"Amazon RDS is responsible for hosting the software components and infrastructure of DB instances and DB clusters.\"",
+      "sources": [11]
+    },
+    {
+      "key": "open-source",
+      "v": "na",
+      "them": "Blue/Green Deployments are a feature of Amazon RDS and Aurora, managed AWS services used through the AWS console, CLI or API.",
+      "sources": [11]
+    },
+    {
+      "key": "limits",
+      "them": "Physical replication: green is strictly read-only, no schema changes, no manual major upgrade after creation. Logical replication: DDL, GRANT/REVOKE and large objects are not replicated, and such a change on blue means deleting and recreating the deployment; tables need a primary key or REPLICA IDENTITY FULL; the apply process is single-threaded. Not supported: cascading and cross-Region read replicas, CloudFormation.",
+      "sources": [3, 7]
+    },
+    {
+      "key": "cost-model",
+      "them": "AWS: \"You will incur the same price for running your workloads on green instances as you do for blue instances\", covering instances, storage, I/O and enabled features such as backups, \"approximately 2x\" while both run. Old production instances are billed until you delete them.",
+      "sources": [9, 10]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Green environment",
+      "price": "Same rates as the blue environment",
+      "notes": "Standard RDS pricing for DB instances, storage, read/write I/O and enabled features such as backups; AWS describes this as about 2x while both environments run",
+      "sources": [9]
+    },
+    {
+      "plan": "Old blue environment after switchover",
+      "price": "Standard billing",
+      "notes": "Charged until you delete the old production instances",
+      "sources": [10, 3]
+    }
+  ],
+  "pricingNote": "The feature has no separate fee in the sources we read; you pay for the DB instances and storage of both environments at the usual RDS or Aurora rates.",
+  "together": "They cover different steps and can run against the same database. DBLab copies Amazon RDS and Aurora with dump and restore, and for RDS and Aurora its refresh can dump from a temporary RDS clone, leaving production untouched (DBLab 4.1 and later). Teams can rehearse a migration or query change many times on DBLab clones, and use a blue/green deployment to stage an engine upgrade and switch production over.",
+  "faq": [
+    {
+      "q": "Can I use an RDS blue/green deployment as a test database for developers?",
+      "a": "It is a staging copy for testing a change before switchover. With physical replication the green instance is strictly read-only; with logical replication writes can be enabled, but AWS recommends keeping green read-only because writes can cause replication conflicts and unintended data in production after switchover.",
+      "sources": [1, 3, 5]
+    },
+    {
+      "q": "Does Blue/Green use physical or logical replication for PostgreSQL?",
+      "a": "RDS for PostgreSQL uses physical replication unless you request a major version upgrade on a supported source version, such as 16.1 and up or 15.4 and up; then it uses logical replication. For Aurora PostgreSQL, AWS lists the logical replication restrictions as limitations of blue/green deployments.",
+      "sources": [2, 7]
+    },
+    {
+      "q": "What does an RDS blue/green deployment cost?",
+      "a": "AWS says green instances cost the same as blue ones, including instances, storage, I/O and features such as backups, about twice the cost while both run. The old production instances are billed until you delete them.",
+      "sources": [9, 10]
+    },
+    {
+      "q": "Can I use DBLab and RDS Blue/Green Deployments together?",
+      "a": "Yes. DBLab copies RDS and Aurora with dump and restore, and its refresh can dump from a temporary RDS clone, leaving production untouched (DBLab 4.1 and later). Use DBLab clones to rehearse changes; use blue/green to stage the production change and switch over.",
+      "sources": [1]
+    }
+  ],
+  "sources": [
+    {
+      "title": "RDS User Guide: Overview of Amazon RDS Blue/Green Deployments",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/blue-green-deployments-overview.html"
+    },
+    {
+      "title": "RDS User Guide: PostgreSQL replication methods for blue/green deployments",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/blue-green-deployments-replication-type.html"
+    },
+    {
+      "title": "RDS User Guide: Limitations and considerations for blue/green deployments",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/blue-green-deployments-considerations.html"
+    },
+    {
+      "title": "RDS User Guide: Creating a blue/green deployment",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/blue-green-deployments-creating.html"
+    },
+    {
+      "title": "RDS User Guide: Best practices for blue/green deployments",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/blue-green-deployments-best-practices.html"
+    },
+    {
+      "title": "Aurora User Guide: Overview of Aurora Blue/Green Deployments",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/blue-green-deployments-overview.html"
+    },
+    {
+      "title": "Aurora User Guide: Limitations and considerations for blue/green deployments",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/blue-green-deployments-considerations.html"
+    },
+    {
+      "title": "RDS API Reference: CreateBlueGreenDeployment",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateBlueGreenDeployment.html"
+    },
+    {
+      "title": "Amazon RDS FAQs: Blue/Green Deployments",
+      "url": "https://aws.amazon.com/rds/faqs/"
+    },
+    {
+      "title": "Amazon RDS for PostgreSQL FAQs",
+      "url": "https://aws.amazon.com/rds/postgresql/faqs/"
+    },
+    {
+      "title": "RDS User Guide: What is Amazon RDS?",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html"
+    },
+    {
+      "title": "Aurora User Guide: Creating a blue/green deployment",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/blue-green-deployments-creating.html"
+    }
+  ]
+}

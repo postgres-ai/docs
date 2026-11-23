@@ -1,0 +1,189 @@
+{
+  "slug": "dblab-vs-aurora-cloning",
+  "kind": "branching",
+  "competitor": {
+    "name": "Amazon Aurora cloning",
+    "vendor": "Amazon Web Services",
+    "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Managing.Clone.html",
+    "category": "Managed database cloning",
+    "group": "cloud",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs Amazon Aurora cloning: clones of any Postgres vs Aurora clusters",
+  "description": "Aurora cloning creates a new Aurora cluster that shares the source's storage pages, with its own DB instances. DBLab clones any PostgreSQL on one machine you control.",
+  "summary": "Aurora cloning is part of Amazon Aurora. A clone is a new Aurora DB cluster whose volume shares the source's pages by copy-on-write; you add DB instances to it and pay for those instances and for the pages the clone changes. DBLab Engine is open-source software that keeps one copy of any PostgreSQL, including Aurora and RDS, on a machine you run, and serves many thin clones from it. If production is on Aurora and each test copy needs its own compute, Aurora clones are the direct path. If you need many copies at once, masking, or sources outside Aurora, DBLab fits.",
+  "chooseThem": [
+    "Your database already runs on Aurora. A clone is made from the cluster itself, with no second copy to load and no clone server to run.",
+    "A clone starts with all of the source's data and is charged storage only for pages it changes; in AWS's example a clone that modifies 100 of 1,000 pages is charged for 100.",
+    "Each clone is a full Aurora cluster with its own DB instances, sized as you choose, including Aurora Serverless, so heavy tests do not share a machine with other copies.",
+    "Cross-account cloning with AWS RAM lets another AWS account, such as a test or audit account, create a clone; up to 15 cross-account clones per cluster.",
+    "Clones can be placed in a different VPC, and you can clone a clone."
+  ],
+  "proofs": [
+    {
+      "key": "any-source",
+      "them": "Aurora cloning copies Aurora DB clusters that have at least one DB instance, in the same AWS Region. An RDS for PostgreSQL database first has to be migrated into Aurora PostgreSQL, from a snapshot or through an Aurora read replica.",
+      "sources": [1, 6]
+    },
+    {
+      "key": "cost",
+      "them": "Each Aurora clone is its own DB cluster: you pay for its DB instances by instance-hour or ACU-hour, plus storage for the pages it changes. After 15 copy-on-write clones of a cluster, the next clone is a full copy.",
+      "sources": [1, 4]
+    },
+    {
+      "key": "control",
+      "them": "Aurora is a fully managed engine: \"Amazon RDS is responsible for hosting the software components and infrastructure of DB instances and DB clusters.\" Clones stay in the source's AWS Region.",
+      "sources": [5, 1]
+    },
+    {
+      "key": "masking",
+      "them": "An Aurora clone starts with all of the source cluster's pages as of the latest restorable time. The sources we reviewed do not describe masking data in a clone.",
+      "sources": [1]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A feature of Amazon Aurora, which includes Aurora PostgreSQL, that creates a new Aurora DB cluster which \"initially shares the same data pages as the original, but is a separate and independent volume.\" AWS lists testing schema and parameter changes, exports and analytics, and dev and test copies as uses.",
+      "sources": [1, 5]
+    },
+    {
+      "key": "source",
+      "v": "partial",
+      "them": "Clones Aurora DB clusters, in the same account or shared from another account with AWS RAM. An RDS for PostgreSQL database gets there by migration: from a snapshot or through an Aurora read replica; data can also be imported from Amazon S3.",
+      "sources": [1, 2, 6]
+    },
+    {
+      "key": "mechanism",
+      "them": "Copy-on-write at the Aurora storage layer. \"When the clone is created, no data is copied\"; the clone points to the source's pages, and a write on either side creates a new page. The clone cluster then needs its own DB instances to accept connections.",
+      "sources": [1]
+    },
+    {
+      "key": "speed",
+      "them": "AWS says cloning is \"designed to be fast\" and faster than restoring a snapshot. The docs we read give no time in seconds. With the CLI the clone cluster is created first, without DB instances; you add a writer instance once the cluster is available.",
+      "sources": [1]
+    },
+    {
+      "key": "data",
+      "v": "yes",
+      "them": "The whole cluster volume as of the latest restorable time. The clone shares the source's pages at creation; later changes on the source are not visible in the clone.",
+      "sources": [1]
+    },
+    {
+      "key": "masking",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "ci",
+      "v": "partial",
+      "them": "The sources we reviewed do not describe a CI integration or migration check. Clones are created with the AWS CLI (restore-db-cluster-to-point-in-time with --restore-type copy-on-write, then create-db-instance) or the RDS API.",
+      "sources": [1]
+    },
+    {
+      "key": "interfaces",
+      "them": "AWS Management Console (Create clone, which makes a cluster with one DB instance), AWS CLI and RDS API. Cross-account sharing uses the AWS RAM console, CLI or API.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "hosting",
+      "v": "no",
+      "them": "Aurora is \"a fully managed relational database engine\" in AWS. \"Amazon RDS is responsible for hosting the software components and infrastructure of DB instances and DB clusters.\"",
+      "sources": [5]
+    },
+    {
+      "key": "open-source",
+      "v": "na",
+      "them": "Aurora cloning is a feature of Amazon Aurora, a managed AWS service used through the AWS console, CLI or API.",
+      "sources": [5]
+    },
+    {
+      "key": "limits",
+      "them": "Up to 15 copy-on-write clones; after that a new clone is a full copy that \"acts like a point-in-time recovery\". Clones count toward DB clusters per Region (40 by default, adjustable). Same Region only. The source needs at least one DB instance. Cross-account: 15 per cluster, one per account, not for clusters encrypted with the default RDS key.",
+      "sources": [1, 2, 3]
+    },
+    {
+      "key": "cost-model",
+      "them": "A clone is an Aurora cluster: you pay for its DB instances (per instance-hour, or per ACU-hour for Aurora Serverless) and for the storage of pages it changes. Shared pages are charged to the source; if the source is deleted, their charges move to the clones.",
+      "sources": [1, 4]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "DB instances of the clone",
+      "price": "Per instance-hour, by instance class",
+      "notes": "Aurora PostgreSQL db.r6i.large: $0.29 per hour on Aurora Standard, $0.377 on I/O-Optimized, US East (N. Virginia); partial hours billed in 1-second increments with a 10-minute minimum",
+      "sources": [4]
+    },
+    {
+      "plan": "Aurora Serverless capacity",
+      "price": "$0.12 per ACU-hour",
+      "notes": "Aurora PostgreSQL, Aurora Standard, US East (N. Virginia); $0.16 per ACU-hour on I/O-Optimized",
+      "sources": [4]
+    },
+    {
+      "plan": "Aurora Standard storage",
+      "price": "$0.10 per GB-month",
+      "notes": "Aurora PostgreSQL, US East (N. Virginia); plus $0.20 per 1 million I/Os; a clone is charged only for the pages it changes",
+      "sources": [4, 1]
+    },
+    {
+      "plan": "Aurora I/O-Optimized storage",
+      "price": "$0.225 per GB-month",
+      "notes": "Aurora PostgreSQL, US East (N. Virginia)",
+      "sources": [4]
+    }
+  ],
+  "pricingNote": "Prices are the Aurora PostgreSQL list prices for US East (N. Virginia) in the price tables on the Aurora pricing page; other Regions differ. The pricing page we read lists no separate charge for cloning.",
+  "together": "DBLab names Aurora as a source: it copies an Aurora database with dump and restore and refreshes it in full. For RDS and Aurora, that refresh can dump from a temporary RDS clone, leaving production untouched (DBLab 4.1 and later). Aurora clones stay available for tests that need their own Aurora compute.",
+  "faq": [
+    {
+      "q": "Can Aurora cloning copy an RDS for PostgreSQL or self-managed database?",
+      "a": "Not directly. Cloning works on Aurora DB clusters. AWS documents migrating an RDS for PostgreSQL instance into Aurora PostgreSQL from a snapshot or through an Aurora read replica, and importing data from Amazon S3. DBLab copies RDS, Aurora and self-managed PostgreSQL where they are.",
+      "sources": [1, 6]
+    },
+    {
+      "q": "What does an Aurora clone cost?",
+      "a": "You pay for the clone's DB instances, by instance-hour or ACU-hour, and for the storage of pages the clone changes. In AWS's example, a source with 1,000 pages is charged for 1,000 and a clone that modifies 100 pages is charged for 100.",
+      "sources": [1, 4]
+    },
+    {
+      "q": "How many Aurora clones can I create?",
+      "a": "As many as the DB cluster quota allows, 40 per Region by default and adjustable. Only the first 15 use copy-on-write; after that a new clone is a full copy. Cross-account clones are limited to 15 per cluster, one per AWS account.",
+      "sources": [1, 2, 3]
+    },
+    {
+      "q": "Can I use DBLab and Aurora cloning together?",
+      "a": "Yes. DBLab copies Aurora with dump and restore. For RDS and Aurora, its full refresh can dump from a temporary RDS clone, leaving production untouched (DBLab 4.1 and later). Developers then get thin clones from DBLab, while Aurora clones remain an option for tests that need their own Aurora instances.",
+      "sources": [1]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Aurora User Guide: Cloning a volume for an Amazon Aurora DB cluster",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Managing.Clone.html"
+    },
+    {
+      "title": "Aurora User Guide: Cross-account cloning with AWS RAM",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Managing.Clone.Cross-Account.html"
+    },
+    {
+      "title": "Aurora User Guide: Quotas and constraints",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_Limits.html"
+    },
+    {
+      "title": "Amazon Aurora pricing",
+      "url": "https://aws.amazon.com/rds/aurora/pricing/"
+    },
+    {
+      "title": "Aurora User Guide: What is Amazon Aurora?",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html"
+    },
+    {
+      "title": "Aurora User Guide: Migrating data to Aurora PostgreSQL",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.Migrating.html"
+    }
+  ]
+}

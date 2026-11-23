@@ -1,0 +1,245 @@
+{
+  "slug": "dblab-vs-neon",
+  "kind": "branching",
+  "competitor": {
+    "name": "Neon",
+    "vendor": "Databricks",
+    "url": "https://neon.com/",
+    "category": "Serverless Postgres platform",
+    "group": "hosted",
+    "status": "acquired",
+    "statusNote": "Neon announced on May 14, 2025 that it would join Databricks and now describes itself as part of Databricks. Its Postgres is now called Lakebase Postgres, also sold on Databricks as Lakebase.",
+    "statusSources": [15, 18, 19]
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs Neon: clones of any Postgres vs branches on Neon",
+  "description": "Neon branches a database hosted on Neon, with copy-on-write storage and a compute per branch. DBLab clones any PostgreSQL, wherever it runs, on a machine you control.",
+  "summary": "Neon is a hosted Postgres service from Databricks; its database is now called Lakebase Postgres. A Neon branch is a copy-on-write clone of a database in a Neon project, with all of the parent's data by default and its own compute. DBLab Engine is open-source software that makes full-size thin clones of any PostgreSQL, including Amazon RDS, Aurora and self-managed servers, on a machine you run. If production already lives on Neon, or you plan to move it there, Neon branches are the direct path. If production stays on another provider or on your own servers, DBLab clones it in place without moving it.",
+  "chooseThem": [
+    "Your database already runs on Neon. Branches are made from the production branch itself, with no second copy to load and no clone server to run.",
+    "Branches from a past state: within the history window (up to 7 days on Launch, up to 30 days on Scale) you can branch from an older point or roll a branch back with instant restore.",
+    "Each branch can have its own compute that autoscales and scales to zero, billed by CU-hour. The Free plan costs $0, needs no credit card and includes 100 projects with 10 branches each.",
+    "Ready-made CI hooks: GitHub Actions to create, delete and reset branches and post a schema diff on a pull request, plus a Vercel integration that makes a branch per preview deployment.",
+    "Reset from parent replaces a branch with the parent's latest schema and data in one operation, and branches can carry an expiration time."
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A hosted serverless Postgres platform from Databricks, built around Lakebase Postgres, with separate storage and compute. A branch is a copy-on-write clone of a database in a Neon project, used for development, testing, previews and restores.",
+      "sources": [18, 1]
+    },
+    {
+      "key": "source",
+      "v": "partial",
+      "them": "Branches are made from branches in a Neon project. An external database gets there by migration: the Import Data Assistant (under 10 GB), pg_dump and pg_restore, pgcopydb, or logical replication from RDS, Azure or self-managed Postgres, which can keep the Neon copy current.",
+      "sources": [1, 7, 8]
+    },
+    {
+      "key": "mechanism",
+      "them": "Copy-on-write in Neon's own storage engine (pageserver and safekeepers). A branch shares data with its parent; writes to a branch are saved as a delta. You connect to a branch through a compute attached to it.",
+      "sources": [1, 2, 20]
+    },
+    {
+      "key": "speed",
+      "them": "Neon says branching creates copy-on-write clones instantly, that a full copy is created in seconds, and that it does not add load to the parent. A branch needs a compute to accept connections; an idle compute scales to zero and restarts on the next query.",
+      "sources": [1, 19, 2, 16]
+    },
+    {
+      "key": "data",
+      "v": "yes",
+      "them": "\"By default, branches are created with all of the data that existed in the parent branch.\" A branch can be made from the current state or a past one within the history window. Schema-only branches (beta) copy the schema without rows.",
+      "sources": [1, 3, 5]
+    },
+    {
+      "key": "masking",
+      "v": "preview",
+      "them": "Anonymized branches, in beta, apply static masking with PostgreSQL Anonymizer when the branch is created. The parent is unchanged. Anonymized branches cannot be reset to parent or restored, and are unavailable for connections while masking runs.",
+      "sources": [6]
+    },
+    {
+      "key": "ci",
+      "v": "yes",
+      "them": "GitHub Actions create, delete and reset branches and post a schema diff between two branches as a pull request comment. The Vercel integration creates a preview/<git-branch> branch for each preview deployment and can delete it when the Git branch is deleted.",
+      "sources": [11, 12, 4]
+    },
+    {
+      "key": "interfaces",
+      "them": "Neon Console, REST API (POST /projects/{project_id}/branches) and the neon CLI. The Neon MCP server lets AI assistants create, reset and delete branches and run SQL; Neon recommends it for development and testing only, not production.",
+      "sources": [13, 14]
+    },
+    {
+      "key": "hosting",
+      "v": "partial",
+      "them": "A hosted service in 8 AWS regions; Azure regions are deprecated for new projects. The open-source engine \"can be run on a workstation for small experiments\"; the sources we reviewed do not describe a self-hosted production setup.",
+      "sources": [10, 9]
+    },
+    {
+      "key": "open-source",
+      "v": "yes",
+      "them": "The Neon storage engine and compute code are on GitHub under Apache 2.0. The hosted service, with its plans and limits, is a separate paid offering.",
+      "sources": [9, 16]
+    },
+    {
+      "key": "limits",
+      "them": "Included branches per project: 10 on Free and Launch, 25 on Scale; Free is capped at 10, paid plans at 5,000. History window: 6 hours on Free, up to 7 days on Launch, up to 30 days on Scale. Free storage: 1 GB per project, 20 GB per account. Schema-only branches: 1 GB, 3 GB or 20 GB by plan.",
+      "sources": [16, 17, 5, 3]
+    },
+    {
+      "key": "cost-model",
+      "them": "Usage: compute by CU-hour ($0.106 on Launch, $0.222 on Scale), storage at $0.35 per GB-month, history for instant restore at $0.20 per GB-month, and $1.50 per branch-month beyond the included branches.",
+      "sources": [16, 5]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Free",
+      "price": "$0/month",
+      "notes": "100 projects, 100 CU-hours per project, 1 GB storage per project (20 GB in total), 10 branches per project, 6-hour history window",
+      "sources": [16]
+    },
+    {
+      "plan": "Launch",
+      "price": "Pay for what you use",
+      "notes": "$0.106 per CU-hour, $0.35 per GB-month storage, $0.20 per GB-month instant restore history, 10 branches included then $1.50 per branch-month, history up to 7 days",
+      "sources": [16]
+    },
+    {
+      "plan": "Scale",
+      "price": "Pay for what you use",
+      "notes": "$0.222 per CU-hour, $0.35 per GB-month storage, $0.20 per GB-month instant restore history, 25 branches included then $1.50 per branch-month, history up to 30 days",
+      "sources": [16]
+    }
+  ],
+  "pricingNote": "Paid plans have no monthly minimum. Egress beyond 500 GB per project, snapshots and object storage are billed separately.",
+  "faq": [
+    {
+      "q": "Can Neon branch a database that runs on Amazon RDS or my own server?",
+      "a": "Not in place. Neon branches are made within a Neon project, so the data has to be brought into Neon first, by the Import Data Assistant, pg_dump and pg_restore, pgcopydb, or logical replication from RDS, Azure or self-managed Postgres. DBLab clones such databases where they are, by dump and restore for managed services.",
+      "sources": [7, 8]
+    },
+    {
+      "q": "Is Neon open source?",
+      "a": "The Neon storage engine and compute are on GitHub under Apache 2.0, and the README says it can be run on a workstation for small experiments. Neon itself is sold as a hosted service.",
+      "sources": [9]
+    },
+    {
+      "q": "What does a Neon branch cost?",
+      "a": "Free includes 10 branches per project. Launch includes 10 and Scale 25, with extra branches at $1.50 per branch-month. On top come compute by CU-hour ($0.106 on Launch, $0.222 on Scale) and storage at $0.35 per GB-month.",
+      "sources": [16]
+    },
+    {
+      "q": "Can Neon mask personal data in a branch?",
+      "a": "Yes, in beta. Anonymized branches apply static masking with PostgreSQL Anonymizer when the branch is created; to get fresh data you create a new anonymized branch. Schema-only branches (also beta) copy no rows at all.",
+      "sources": [6, 3]
+    },
+    {
+      "q": "What happened to Neon?",
+      "a": "On May 14, 2025, Neon announced that it would join Databricks, and it now describes itself as part of Databricks. Neon is still sold under its own name with Free, Launch and Scale plans. Its database is now called Lakebase Postgres, and the same database is also sold on Databricks as Lakebase.",
+      "sources": [15, 18, 19, 16]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Neon docs: Branching",
+      "url": "https://neon.com/docs/introduction/branching"
+    },
+    {
+      "title": "Neon docs: Manage branches",
+      "url": "https://neon.com/docs/manage/branches"
+    },
+    {
+      "title": "Neon docs: Schema-only branches",
+      "url": "https://neon.com/docs/guides/branching-schema-only"
+    },
+    {
+      "title": "Neon docs: Reset from parent",
+      "url": "https://neon.com/docs/guides/reset-from-parent"
+    },
+    {
+      "title": "Neon docs: History window",
+      "url": "https://neon.com/docs/postgres/backup-restore/history-window"
+    },
+    {
+      "title": "Neon docs: Data anonymization",
+      "url": "https://neon.com/docs/workflows/data-anonymization"
+    },
+    {
+      "title": "Neon docs: Data migration guides",
+      "url": "https://neon.com/docs/import/migrate-intro"
+    },
+    {
+      "title": "Neon docs: Replicate data from Postgres to Neon",
+      "url": "https://neon.com/docs/guides/logical-replication-postgres-to-neon"
+    },
+    {
+      "title": "neondatabase/neon repository",
+      "url": "https://github.com/neondatabase/neon"
+    },
+    {
+      "title": "Neon docs: Regions",
+      "url": "https://neon.com/docs/introduction/regions"
+    },
+    {
+      "title": "Neon docs: Branching with GitHub Actions",
+      "url": "https://neon.com/docs/guides/branching-github-actions"
+    },
+    {
+      "title": "Neon docs: Vercel integration",
+      "url": "https://neon.com/docs/guides/neon-managed-vercel-integration"
+    },
+    {
+      "title": "Neon docs: Neon MCP server",
+      "url": "https://neon.com/docs/ai/neon-mcp-server"
+    },
+    {
+      "title": "Neon docs: Branching with the Neon API",
+      "url": "https://neon.com/docs/guides/branching-neon-api"
+    },
+    {
+      "title": "Neon blog: Neon and Databricks",
+      "url": "https://neon.com/blog/neon-and-databricks"
+    },
+    {
+      "title": "Neon pricing",
+      "url": "https://neon.com/pricing"
+    },
+    {
+      "title": "Neon docs: Neon plans",
+      "url": "https://neon.com/docs/introduction/plans"
+    },
+    {
+      "title": "Neon docs: Why Neon?",
+      "url": "https://neon.com/docs/get-started/why-neon"
+    },
+    {
+      "title": "Neon docs: Neon and Lakebase",
+      "url": "https://neon.com/docs/introduction/neon-and-lakebase"
+    },
+    {
+      "title": "Neon docs: The lakebase architecture",
+      "url": "https://neon.com/docs/introduction/architecture-overview"
+    }
+  ],
+  "proofs": [
+    {
+      "key": "any-source",
+      "them": "Neon branches are made from branches in a Neon project. A database on Amazon RDS, Cloud SQL or a self-managed server is first migrated into Neon, with the Import Data Assistant (under 10 GB), pg_dump, pgcopydb or logical replication.",
+      "sources": [1, 7, 8]
+    },
+    {
+      "key": "control",
+      "them": "Neon is a hosted service; new projects are created in one of Neon's AWS regions. Its storage engine is open source, and the repository says it can be run on a workstation for small experiments. The sources we reviewed do not describe running it in production on your own machines.",
+      "sources": [10, 9]
+    },
+    {
+      "key": "cost",
+      "them": "Neon bills each branch's compute by CU-hour and storage by GB-month; child branches are billed for the data they change. Branches beyond the included 10 (Launch) or 25 (Scale) cost $1.50 per branch-month.",
+      "sources": [16, 17]
+    },
+    {
+      "key": "masking",
+      "them": "Neon anonymized branches mask data with PostgreSQL Anonymizer when the branch is created. The feature is in beta, and an anonymized branch cannot be reset to its parent or restored.",
+      "sources": [6]
+    }
+  ]
+}

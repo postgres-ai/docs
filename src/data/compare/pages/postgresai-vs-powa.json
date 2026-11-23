@@ -1,0 +1,211 @@
+{
+  "slug": "postgresai-vs-powa",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "PoWA",
+    "vendor": "PoWA team (open-source project)",
+    "url": "https://powa.readthedocs.io/en/latest/",
+    "category": "PostgreSQL workload analyzer",
+    "group": "open-source",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs PoWA: managed Postgres too vs extensions on each server",
+  "description": "PoWA is an open-source PostgreSQL workload analyzer with per-query stats and HypoPG index suggestions. PostgresAI also covers managed services and has experts on Scale.",
+  "summary": "PoWA, the PostgreSQL Workload Analyzer, takes snapshots of pg_stat_statements and optional extensions such as pg_qualstats, pg_stat_kcache and pg_wait_sampling, shows them in the powa-web UI and suggests indexes it checks with HypoPG. It is free under the PostgreSQL license. PostgresAI monitors Postgres, runs scheduled checkups and turns findings into Issues for you, your AI agent or a PostgresAI expert. Pick PoWA for per-query predicate, CPU and wait event detail with index suggestions on servers where you can install extensions. Pick PostgresAI for documented support of managed services, checkup Issues and expert help.",
+  "chooseThem": [
+    "Index suggestions: pg_qualstats records the predicates in WHERE and JOIN clauses, PoWA proposes indexes for a query or a whole database, and HypoPG checks with hypothetical indexes that PostgreSQL would use them.",
+    "Per-query OS metrics from pg_stat_kcache: user and system CPU time and physical disk reads and writes, which give a real cache hit ratio, not only the shared buffers hit ratio.",
+    "Wait events per query from pg_wait_sampling, which samples every 10 ms by default, shown on the overview, database and query pages.",
+    "Free and open source under the PostgreSQL license, packaged in the PGDG repositories, and documented for PostgreSQL versions down to 9.4.",
+    "Remote mode stores data from many servers, including standbys, in one dedicated repository database, with no restart of the monitored servers."
+  ],
+  "proofs": [
+    {
+      "key": "anywhere",
+      "them": "PoWA needs powa-archivist and at least pg_stat_statements installed on each monitored server, and HypoPG is installed by a superuser. The docs we reviewed describe remote servers and standbys and do not mention managed services.",
+      "sources": [3, 6, 1]
+    },
+    {
+      "key": "experts",
+      "them": "PoWA support is the #powa IRC channel and the GitHub issue tracker of each component. The sources we reviewed do not describe paid support or consulting.",
+      "sources": [12]
+    },
+    {
+      "key": "history",
+      "them": "PoWA's local background worker takes a snapshot every 5 minutes and purges data older than 1 day by default; both are settings you can change.",
+      "sources": [4]
+    },
+    {
+      "key": "fix",
+      "them": "PoWA suggests indexes from pg_qualstats predicates, checks them with HypoPG, and tracks configuration changes with pg_track_settings. The sources we reviewed do not describe checks on settings, vacuum or bloat with recommended fixes.",
+      "sources": [6, 1]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "An open-source workload analyzer. powa-archivist is a PostgreSQL extension that stores snapshots of statistics, powa-collector optionally gathers them from remote servers, and powa-web is the web UI. The data comes from stats extensions such as pg_stat_statements, pg_qualstats, pg_stat_kcache, pg_wait_sampling and pg_track_settings.",
+      "sources": [1, 2, 7]
+    },
+    {
+      "key": "platforms",
+      "v": "nd",
+      "them": "The docs describe PoWA as compatible with PostgreSQL versions down to 9.4. Remote mode needs powa-archivist and the chosen stats extensions installed on each monitored server, at least pg_stat_statements; HypoPG and pg_qualstats are installed by a superuser. The docs we reviewed describe remote servers and standbys and do not describe managed services.",
+      "sources": [3, 6, 11, 1]
+    },
+    {
+      "key": "deployment",
+      "v": "yes",
+      "them": "Runs on your servers. Local mode uses a background worker loaded with shared_preload_libraries, which needs a restart. Remote mode uses powa-collector and a dedicated repository instance (PostgreSQL 9.4 or newer) and needs no restart of the monitored servers.",
+      "sources": [5, 1, 3]
+    },
+    {
+      "key": "open-source",
+      "v": "yes",
+      "them": "Open source under the PostgreSQL license, with packages in the PGDG repositories.",
+      "sources": [2, 5]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "Per-query statistics from pg_stat_statements, the only mandatory extension. Query pages add predicates from pg_qualstats, CPU and physical I/O from pg_stat_kcache, wait events, and index suggestions with EXPLAIN plans. The UI shows a query only after it appears in two snapshots, about 10 minutes with defaults.",
+      "sources": [13, 10, 9, 11]
+    },
+    {
+      "key": "wait-events",
+      "v": "yes",
+      "them": "With pg_wait_sampling, which samples wait events every 10 ms by default: wait event tables for all databases, per database and per query, and a Wait Events tab with a graph by event type on the query page.",
+      "sources": [8]
+    },
+    {
+      "key": "health-checks",
+      "v": "partial",
+      "them": "Index suggestions for a query or a whole database, checked with HypoPG, and configuration change tracking with pg_track_settings. The sources we reviewed do not describe checks on settings, vacuum or bloat with recommended fixes.",
+      "sources": [6, 7]
+    },
+    {
+      "key": "agent-interface",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed.",
+      "sources": [1]
+    },
+    {
+      "key": "test-fix",
+      "v": "partial",
+      "them": "HypoPG creates hypothetical indexes that do not exist on disk, so EXPLAIN shows whether PostgreSQL would use an index before it is built. This runs on the monitored database; the sources we reviewed do not describe running a change on a separate copy of the data.",
+      "sources": [6]
+    },
+    {
+      "key": "expert-help",
+      "v": "nd",
+      "them": "The support page points to the #powa IRC channel and the GitHub issue trackers of each component. The sources we reviewed do not describe paid support or consulting.",
+      "sources": [12]
+    },
+    {
+      "key": "alerts",
+      "them": "Not documented in the sources we reviewed.",
+      "sources": [1]
+    },
+    {
+      "key": "retention",
+      "them": "For the local background worker, snapshots are taken every 5 minutes (powa.frequency) and data older than 1 day is purged (powa.retention) by default. Both are settings.",
+      "sources": [4]
+    },
+    {
+      "key": "compliance",
+      "them": "Not documented in the sources we reviewed. PoWA is software you run on your own servers.",
+      "sources": [1]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Open source",
+      "price": "Free",
+      "notes": "PostgreSQL license; you run powa-archivist, the stats extensions, powa-web and optionally powa-collector",
+      "sources": [2]
+    }
+  ],
+  "together": "PostgresAI monitoring needs pg_stat_statements, which PoWA also requires, so both can read the same server. On a self-managed server, PoWA can add predicate, OS-level and per-query wait event detail and HypoPG index checks, while PostgresAI runs scheduled checkups and tracks Issues.",
+  "faq": [
+    {
+      "q": "Is PoWA open source?",
+      "a": "Yes. PoWA is released under the PostgreSQL license, and its packages are in the PGDG repositories. PostgresAI monitoring is open source under Apache 2.0.",
+      "sources": [2, 5]
+    },
+    {
+      "q": "Does PoWA work with Amazon RDS or other managed Postgres?",
+      "a": "The PoWA docs we reviewed do not list managed services. Remote mode needs powa-archivist and the stats extensions you choose, at least pg_stat_statements, installed on each monitored server, so it depends on which extensions your provider allows.",
+      "sources": [3, 7]
+    },
+    {
+      "q": "How does PoWA suggest indexes?",
+      "a": "pg_qualstats records predicates from WHERE and JOIN clauses. PoWA turns them into index suggestions for a query or a database and uses HypoPG to create hypothetical indexes and check with EXPLAIN that PostgreSQL would use them. With default settings pg_qualstats samples only part of the queries.",
+      "sources": [6, 10, 11]
+    },
+    {
+      "q": "Does PoWA need a PostgreSQL restart?",
+      "a": "Local mode loads powa in shared_preload_libraries and needs a restart. Remote mode, where powa-collector stores snapshots on a separate repository server, does not need a restart, although stats extensions such as pg_stat_statements must still be configured on each server.",
+      "sources": [5, 1, 3]
+    },
+    {
+      "q": "Can I use PostgresAI and PoWA together?",
+      "a": "Yes. Both read pg_stat_statements on the monitored server. PoWA can add predicate, OS-level and wait event detail and HypoPG index checks where you can install its extensions, while PostgresAI runs checkups and tracks Issues.",
+      "sources": [7]
+    }
+  ],
+  "sources": [
+    {
+      "title": "PoWA documentation: overview",
+      "url": "https://powa.readthedocs.io/en/latest/"
+    },
+    {
+      "title": "PoWA repository",
+      "url": "https://github.com/powa-team/powa"
+    },
+    {
+      "title": "PoWA documentation: remote setup",
+      "url": "https://powa.readthedocs.io/en/latest/remote_setup.html"
+    },
+    {
+      "title": "PoWA documentation: powa-archivist configuration",
+      "url": "https://powa.readthedocs.io/en/latest/components/powa-archivist/configuration.html"
+    },
+    {
+      "title": "PoWA documentation: powa-archivist installation",
+      "url": "https://powa.readthedocs.io/en/latest/components/powa-archivist/installation.html"
+    },
+    {
+      "title": "PoWA documentation: HypoPG",
+      "url": "https://powa.readthedocs.io/en/latest/components/hypopg.html"
+    },
+    {
+      "title": "PoWA documentation: stats extensions",
+      "url": "https://powa.readthedocs.io/en/latest/components/stats_extensions/index.html"
+    },
+    {
+      "title": "PoWA documentation: pg_wait_sampling",
+      "url": "https://powa.readthedocs.io/en/latest/components/stats_extensions/pg_wait_sampling.html"
+    },
+    {
+      "title": "PoWA documentation: pg_stat_kcache",
+      "url": "https://powa.readthedocs.io/en/latest/components/stats_extensions/pg_stat_kcache.html"
+    },
+    {
+      "title": "PoWA documentation: pg_qualstats",
+      "url": "https://powa.readthedocs.io/en/latest/components/stats_extensions/pg_qualstats.html"
+    },
+    {
+      "title": "PoWA FAQ",
+      "url": "https://powa.readthedocs.io/en/latest/FAQ.html"
+    },
+    {
+      "title": "PoWA documentation: support",
+      "url": "https://powa.readthedocs.io/en/latest/support.html"
+    },
+    {
+      "title": "PoWA documentation: introduction to the components",
+      "url": "https://powa.readthedocs.io/en/latest/components/introduction.html"
+    }
+  ]
+}

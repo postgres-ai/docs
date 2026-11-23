@@ -1,0 +1,187 @@
+{
+  "slug": "dblab-vs-rds-snapshot-restore",
+  "kind": "branching",
+  "competitor": {
+    "name": "Amazon RDS snapshot restore",
+    "vendor": "Amazon Web Services",
+    "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_RestoreFromSnapshot.html",
+    "category": "Managed backup restore",
+    "group": "cloud",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs Amazon RDS snapshot restore: thin clones vs a new instance each",
+  "description": "Restoring an RDS snapshot or point in time creates a new DB instance with its own storage, loaded from S3 in the background. DBLab serves thin clones from one machine.",
+  "summary": "On Amazon RDS for PostgreSQL, restoring a DB snapshot or restoring to a point in time creates a new, separate DB instance from a backup. The instance is usable once available, but keeps loading data from Amazon S3 in the background, and each restored instance is billed for its own compute and storage. DBLab Engine is open-source software that keeps one copy of the database on a machine you run and gives many people thin clones of it in seconds. For an occasional full standalone copy or a recovery, a restore is built in. For many copies at once, refreshed often, DBLab fits.",
+  "chooseThem": [
+    "Built into Amazon RDS, with no other software or server to run. The copy is an ordinary RDS DB instance managed by AWS.",
+    "Point-in-time restore to any moment within the backup retention period, up to 35 days; RDS uploads transaction logs to Amazon S3 every five minutes.",
+    "Each copy is a separate DB instance whose class and storage you choose, so a heavy test does not share a machine with other copies.",
+    "The source instance is not modified, and restores can be scripted with the AWS CLI, the RDS API or CloudFormation.",
+    "Storage type and size can be changed during the restore, and the restored instance is a full standalone database that you keep, modify or delete like any RDS instance."
+  ],
+  "proofs": [
+    {
+      "key": "cost",
+      "them": "Every RDS restore creates a new DB instance; AWS says you can't restore a snapshot to an existing one. Each restored instance is billed for its own instance hours, with a 10-minute minimum, and its own provisioned storage.",
+      "sources": [1, 4]
+    },
+    {
+      "key": "seconds",
+      "them": "A restored RDS instance is usable once available, but keeps loading data from Amazon S3: lazily after a snapshot restore, at up to 4 TiB per hour after a point-in-time restore. The docs we read give no restore time.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "any-source",
+      "them": "Snapshot and point-in-time restore work from snapshots and automated backups of RDS DB instances, and the result is a new RDS DB instance.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "control",
+      "them": "Snapshot restore is part of Amazon RDS: \"Amazon RDS is responsible for hosting the software components and infrastructure of DB instances and DB clusters.\"",
+      "sources": [6]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A built-in RDS operation that creates a new DB instance from a DB snapshot, or from automated backups at a chosen point in time. \"You can't restore from a DB snapshot to an existing DB instance; you create a new DB instance when you restore the snapshot.\"",
+      "sources": [1, 2]
+    },
+    {
+      "key": "source",
+      "v": "partial",
+      "them": "Restores snapshots and automated backups of RDS DB instances into a new RDS DB instance. A snapshot that is both shared and encrypted must be copied before it can be restored.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "mechanism",
+      "them": "RDS snapshots back up the whole DB instance as a storage volume snapshot. A restore creates a new instance with its own storage; after it becomes available, its volumes keep loading data blocks from Amazon S3 in the background.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "speed",
+      "them": "The instance can be used once its status is available. After a snapshot restore, data not yet loaded is fetched from S3 on first access; after a point-in-time restore, volumes load from S3 at up to 4 TiB per hour on gp3 or io2 Block Express, and performance \"might not be at its fullest until initialization completes.\" The docs we read give no restore time.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "data",
+      "v": "yes",
+      "them": "The whole DB instance as of the snapshot, or as of any point within the backup retention period, which can be set from 0 to 35 days.",
+      "sources": [1, 2, 3]
+    },
+    {
+      "key": "masking",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "ci",
+      "v": "partial",
+      "them": "The sources we reviewed do not describe a CI integration. Restores can be scripted with the AWS CLI (restore-db-instance-from-db-snapshot, restore-db-instance-to-point-in-time), the RDS API, or CloudFormation (AWS::RDS::DBInstance).",
+      "sources": [1, 2]
+    },
+    {
+      "key": "interfaces",
+      "them": "AWS Management Console, AWS CLI, RDS API and CloudFormation. Initialization progress is shown in the StorageOperationStatus and StorageOperationPercentProgress fields of DescribeDBInstances.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "hosting",
+      "v": "no",
+      "them": "Amazon RDS is a managed AWS service. \"Amazon RDS is responsible for hosting the software components and infrastructure of DB instances and DB clusters.\"",
+      "sources": [6]
+    },
+    {
+      "key": "open-source",
+      "v": "na",
+      "them": "Snapshot restore is a feature of Amazon RDS, a managed AWS service used through the AWS console, CLI or API. The database engine is PostgreSQL.",
+      "sources": [6]
+    },
+    {
+      "key": "limits",
+      "them": "Each restore is a new DB instance and counts toward the DB instance quota: 40 per Region by default for PostgreSQL (20 in ap-south-1), adjustable. Storage cannot be reduced on restore, and an increase must be at least 10 percent. The default parameter group is used unless you choose one. Manual snapshots: 100 per Region by default.",
+      "sources": [5, 1, 2]
+    },
+    {
+      "key": "cost-model",
+      "them": "Each restored instance is billed as an RDS DB instance: instance hours by class, billed in 1-second increments with a 10-minute minimum, plus its own provisioned storage per GiB-month, provisioned IOPS where used, and backup storage.",
+      "sources": [4, 7]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Restored DB instance",
+      "price": "Per DB instance-hour, by instance class",
+      "notes": "Billed in 1-second increments with a 10-minute minimum; for example db.m7g.large, Single-AZ, $0.168 per hour in US East (N. Virginia)",
+      "sources": [7, 4]
+    },
+    {
+      "plan": "Storage of the restored instance",
+      "price": "Per GiB-month of provisioned storage",
+      "notes": "Each restored instance has its own storage; for example gp3, Single-AZ, $0.115 per GB-month in US East (N. Virginia); gp3 and Provisioned IOPS storage also bill provisioned IOPS",
+      "sources": [4]
+    },
+    {
+      "plan": "Backup storage",
+      "price": "Per GiB-month",
+      "notes": "Automated backups and manual snapshots; no additional charge up to 100% of your total database storage in the Region",
+      "sources": [4, 7]
+    }
+  ],
+  "pricingNote": "Rates vary by Region, instance class and storage type. There is no separate fee for the restore operation in the sources we read; you pay for the instance it creates.",
+  "together": "DBLab names Amazon RDS as a source: it copies an RDS database with dump and restore and refreshes it in full. For RDS and Aurora, that refresh can dump from a temporary RDS clone, leaving production untouched (DBLab 4.1 and later). Snapshot restore remains the way to recover an RDS instance or get a standalone full copy.",
+  "faq": [
+    {
+      "q": "How long does it take to restore an RDS snapshot?",
+      "a": "AWS does not give a restore time in the pages we read. The new instance can be used once its status is available but keeps loading data from Amazon S3 in the background: lazily after a snapshot restore, and at up to 4 TiB per hour on gp3 or io2 Block Express after a point-in-time restore. Restoring to a different storage type is slower.",
+      "sources": [1, 2]
+    },
+    {
+      "q": "Can I restore an RDS snapshot into an existing instance?",
+      "a": "No. AWS says you can't restore from a DB snapshot to an existing DB instance; a restore always creates a new DB instance. A point-in-time restore also creates a new instance without modifying the source.",
+      "sources": [1, 2]
+    },
+    {
+      "q": "What does a restored RDS instance cost?",
+      "a": "It is billed like any RDS DB instance: instance hours by class, billed per second with a 10-minute minimum, plus its own provisioned storage, provisioned IOPS where used, and backup storage. Ten restored copies are ten instances.",
+      "sources": [4, 7]
+    },
+    {
+      "q": "Can DBLab copy an Amazon RDS database?",
+      "a": "Yes. DBLab copies RDS with dump and restore in logical mode and refreshes it in full; the first copy is slow, about 1 TiB an hour. For RDS and Aurora, the refresh can dump from a temporary RDS clone, leaving production untouched (DBLab 4.1 and later).",
+      "sources": [1]
+    }
+  ],
+  "sources": [
+    {
+      "title": "RDS User Guide: Restoring to a DB instance",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_RestoreFromSnapshot.html"
+    },
+    {
+      "title": "RDS User Guide: Restoring a DB instance to a specified time",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIT.html"
+    },
+    {
+      "title": "RDS User Guide: Backup retention period",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.BackupRetention.html"
+    },
+    {
+      "title": "RDS User Guide: DB instance billing",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/User_DBInstanceBilling.html"
+    },
+    {
+      "title": "RDS User Guide: Quotas and constraints",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Limits.html"
+    },
+    {
+      "title": "RDS User Guide: What is Amazon RDS?",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html"
+    },
+    {
+      "title": "Amazon RDS for PostgreSQL pricing",
+      "url": "https://aws.amazon.com/rds/postgresql/pricing/"
+    }
+  ]
+}

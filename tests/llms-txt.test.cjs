@@ -4,13 +4,14 @@ const os = require('node:os');
 const path = require('node:path');
 const {test} = require('node:test');
 const llmsTxtPlugin = require('../plugins/llms-txt');
+const {readUs, makePage, makeDataDir} = require('./helpers/compare-fixture.cjs');
 
 const SITE = 'https://example.com';
 
 // The curated product entries reference these docs, so every fixture has them.
 const REQUIRED = ['monitoring/index', 'checkup/index', 'database-lab/index', 'postgres-howtos/index'];
 
-function fixture(extraDocs = []) {
+function fixture(extraDocs = [], options = {}) {
   const siteDir = fs.mkdtempSync(path.join(os.tmpdir(), 'llms-txt-'));
   const outDir = path.join(siteDir, 'build');
   fs.mkdirSync(outDir);
@@ -34,12 +35,12 @@ function fixture(extraDocs = []) {
       },
     },
   };
-  const plugin = llmsTxtPlugin({siteDir, siteConfig: {url: `${SITE}/`}});
+  const plugin = llmsTxtPlugin({siteDir, siteConfig: {url: `${SITE}/`}}, options);
   return {siteDir, outDir, plugin, allContent};
 }
 
-async function run(extraDocs) {
-  const {outDir, plugin, allContent} = fixture(extraDocs);
+async function run(extraDocs, options) {
+  const {outDir, plugin, allContent} = fixture(extraDocs, options);
   await plugin.allContentLoaded({allContent});
   await plugin.postBuild({outDir});
   return {
@@ -173,4 +174,52 @@ test('llms-full.txt leaves site-relative links in code as written', async () => 
   assert.ok(full.includes(`[the guide](${SITE}/docs/a)`), 'prose link before inline code');
   assert.ok(full.includes(`<a href="${SITE}/docs/b">b</a>`), 'prose href after inline code');
   assert.ok(full.includes(`After: [c](${SITE}/docs/c).`), 'prose link after fences');
+});
+
+// Comparison pages: a data directory with our real side and known pages.
+function compareOptions() {
+  const us = readUs();
+  const monitoring = makePage(us, 'monitoring');
+  const branching = makePage(us, 'branching');
+  return {compareDataDir: makeDataDir([branching, monitoring])};
+}
+
+test('plans, list prices and limits come before the first section', async () => {
+  const {index} = await run([], compareOptions());
+  const firstSection = index.findIndex((l) => l.startsWith('## '));
+  const at = (text) => index.findIndex((l) => l.startsWith(text));
+  assert.equal(index[firstSection], '## Products');
+  assert.ok(at('Plans and list prices (details: https://example.com/pricing):') < firstSection);
+  assert.ok(at('- PostgresAI Starter: $16 per cluster/month.') < firstSection);
+  assert.ok(at('- PostgresAI Scale: $512 per cluster/month.') < firstSection);
+  assert.ok(at('- DBLab SE: From $62/month.') < firstSection);
+  assert.ok(at('Limits:') > 0 && at('Limits:') < firstSection);
+  assert.ok(at('- DBLab SE is limited to 2,000 GiB per instance and a single user.') < firstSection);
+  assert.equal(index.filter((l) => l.startsWith('- DBLab SE: ')).length, 1, 'the shared DBLab price list is printed once');
+});
+
+test('the Compare section lists every page with its markdown twin', async () => {
+  const {index} = await run([], compareOptions());
+  const section = index.indexOf('## Compare');
+  assert.ok(section > index.indexOf('## Company'), 'after Company');
+  assert.ok(section < index.findIndex((l) => l.startsWith('## Docs')), 'before the docs sections');
+  assert.equal(
+    index[section + 4],
+    `- [All comparisons](${SITE}/compare): 2 comparisons, with a matrix for each kind of tool.`,
+  );
+  // Monitoring pages come first, as on /compare.
+  assert.equal(
+    index[section + 5],
+    `- [PostgresAI vs Example: a made-up product for the tests](${SITE}/compare/postgresai-vs-example): ` +
+      'Example is a made-up product used by the tests. It collects query statistics and shows them on dashboards, as a hosted service. ' +
+      `[Markdown](${SITE}/raw/compare/postgresai-vs-example.md)`,
+  );
+  assert.ok(index[section + 6].startsWith(`- [DBLab vs Example: a made-up product for the tests](${SITE}/compare/dblab-vs-example): `));
+  assert.equal(index[section + 7], '');
+});
+
+test('without comparison pages there is no Compare section', async () => {
+  const {index} = await run([], {compareDataDir: makeDataDir([])});
+  assert.ok(!index.includes('## Compare'));
+  assert.ok(index.includes('Limits:'));
 });

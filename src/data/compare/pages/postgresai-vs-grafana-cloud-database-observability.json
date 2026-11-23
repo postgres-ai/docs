@@ -1,0 +1,227 @@
+{
+  "slug": "postgresai-vs-grafana-cloud-database-observability",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "Grafana Cloud Database Observability",
+    "vendor": "Grafana Labs",
+    "url": "https://grafana.com/products/cloud/database-observability/",
+    "category": "Database observability in Grafana Cloud",
+    "group": "observability",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs Grafana Cloud Database Observability: checkups vs query data",
+  "description": "Grafana Cloud Database Observability collects Postgres query data and links it to traces. PostgresAI is open source and turns checkup findings into Issues with a fix.",
+  "summary": "Grafana Cloud Database Observability, generally available since April 2026, uses Grafana Alloy to collect query performance, samples, wait events, explain plans and schema details from PostgreSQL 14 and newer, and links them to traces and host metrics in Grafana Cloud. PostgresAI monitors PostgreSQL only, runs scheduled checkups and turns findings into Issues that you, your AI agent or a PostgresAI expert can act on. Both use Grafana: PostgresAI shows its data in Grafana dashboards. Pick Grafana Cloud if your team already uses it and wants query samples linked to traces and AI-suggested indexes. Pick PostgresAI for open-source monitoring you can self-host, scheduled Postgres checkups with expert help, or DBLab clones to test a fix.",
+  "chooseThem": [
+    "Query data sits next to the rest of Grafana Cloud: query samples link to traces and back, the Knowledge Graph shows which services depend on each database, and host and cloud metrics overlay query latency.",
+    "A free tier with 2,232 database host hours (3 database hosts), no credit card required.",
+    "Grafana Assistant, generally available in Database Observability, ranks slow queries, explains plans and wait events, and suggests CREATE INDEX statements and query rewrites with an EXPLAIN check to run afterwards.",
+    "Nothing is installed in the database engine or on the database server; Alloy runs EXPLAIN, not EXPLAIN ANALYZE, on sampled queries and redacts SQL text by default.",
+    "Setup guides for self-managed PostgreSQL 14 and newer, Amazon RDS and Aurora, Google Cloud SQL and Azure Database for PostgreSQL."
+  ],
+  "proofs": [
+    {
+      "key": "open",
+      "them": "Grafana Alloy, the collector, is open source under Apache 2.0. Database Observability itself is a Grafana Cloud service, and Grafana's announcement lists no self-managed release; it has a free tier of 2,232 host hours.",
+      "sources": [13, 3, 9]
+    },
+    {
+      "key": "test",
+      "them": "Grafana Assistant suggests CREATE INDEX statements and query rewrites, each with an EXPLAIN command to run afterwards. Grafana recommends reviewing suggested changes in a staging environment before production; the sources we reviewed do not describe providing one.",
+      "sources": [10]
+    },
+    {
+      "key": "fix",
+      "them": "Grafana Assistant suggests indexes and rewrites for a query when you ask from a query view. The sources we reviewed do not describe scheduled checks of settings, vacuum or bloat.",
+      "sources": [1, 10]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A Grafana Cloud app that surfaces query performance from PostgreSQL databases. Grafana Alloy collects query details, query samples, wait events, schema details and explain plans and sends them to Grafana Cloud as metrics and logs.",
+      "sources": [2, 6, 1]
+    },
+    {
+      "key": "platforms",
+      "v": "yes",
+      "them": "Setup guides for self-managed PostgreSQL, Amazon Aurora, Amazon RDS, Google Cloud SQL and Azure Database for PostgreSQL, on PostgreSQL 14 and newer; 13 and earlier are not supported. It needs pg_stat_statements, compute_query_id and Alloy 1.17.0 or newer.",
+      "sources": [5, 6, 7]
+    },
+    {
+      "key": "deployment",
+      "v": "partial",
+      "them": "Alloy runs in your network with direct access to the database host and sends data to Grafana Cloud; SQL text is redacted by default. Grafana's announcement lists no self-managed release of Database Observability. Enterprise lists Bring Your Own Cloud deployment.",
+      "sources": [6, 1, 3, 9]
+    },
+    {
+      "key": "open-source",
+      "v": "partial",
+      "them": "The collector, Grafana Alloy, is open source under Apache 2.0. Database Observability is a Grafana Cloud service with a free tier.",
+      "sources": [13, 9]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "Query-level RED metrics (rate, errors, duration) from pg_stat_statements, sortable by wait time, errors, latency or calls, plus query samples and visual explain plans with table schema and index details. Alloy runs EXPLAIN, not EXPLAIN ANALYZE, on sampled queries.",
+      "sources": [2, 1, 7]
+    },
+    {
+      "key": "wait-events",
+      "v": "yes",
+      "them": "Time is broken down by wait type, including lock, I/O and network, from query samples collected by Alloy.",
+      "sources": [1, 6]
+    },
+    {
+      "key": "health-checks",
+      "v": "partial",
+      "them": "Grafana Assistant suggests CREATE INDEX statements and query rewrites from schemas and explain plans when asked, and says so when existing indexes are adequate. The sources we reviewed do not describe scheduled health checks of settings, vacuum or bloat.",
+      "sources": [1, 10]
+    },
+    {
+      "key": "agent-interface",
+      "v": "yes",
+      "them": "Grafana Assistant is generally available in Database Observability, with no feature toggle. The open-source Grafana MCP server (Apache 2.0) works with Grafana Cloud and exposes Prometheus, Loki, alerting and other tools; it lists no Database Observability toolset.",
+      "sources": [10, 11, 12]
+    },
+    {
+      "key": "test-fix",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. Grafana recommends reviewing suggested changes in a staging environment before production, and each suggested rewrite comes with an EXPLAIN command to run afterwards.",
+      "sources": [10, 1]
+    },
+    {
+      "key": "expert-help",
+      "v": "partial",
+      "them": "Product support by tier: community on Free, 8x5 email on Pro, premium support on Enterprise. The sources we reviewed do not describe PostgreSQL consulting.",
+      "sources": [9]
+    },
+    {
+      "key": "alerts",
+      "them": "Grafana Alerting contact points include email, Slack, PagerDuty, Microsoft Teams, Opsgenie, Jira, Grafana IRM, webhooks and more than 15 others.",
+      "sources": [14]
+    },
+    {
+      "key": "retention",
+      "them": "Free: 14 days for metrics and for logs, including query samples. Pro: 13 months for metrics and 30 days for logs. Extended retention on Enterprise.",
+      "sources": [8]
+    },
+    {
+      "key": "compliance",
+      "them": "Grafana Labs states a SOC 2 Type 2 audit and ISO 27001 certification, and has completed CSA STAR.",
+      "sources": [15]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Free",
+      "price": "$0",
+      "notes": "Up to 2,232 host hours (3 database hosts); telemetry counts toward free tier allowances; community support",
+      "sources": [9]
+    },
+    {
+      "plan": "Pro",
+      "price": "$0.07 per host hour (~$51 per host)",
+      "notes": "After 2,232 included host hours; $19/month platform fee; metrics and logs billed separately; 8x5 email support",
+      "sources": [9]
+    },
+    {
+      "plan": "Enterprise",
+      "price": "Custom",
+      "notes": "Minimum commit of $25,000 per year; premium support",
+      "sources": [9]
+    }
+  ],
+  "pricingNote": "A host is a single database instance; each Aurora writer and reader counts separately, and databases on one instance count once. Host hours are billed for each hour Alloy keeps a connection, plus metrics and logs at standard Grafana Cloud rates.",
+  "together": "The two share Grafana: PostgresAI monitoring shows its metrics in Grafana dashboards. Separately, DBLab copies any PostgreSQL source, so an index or rewrite suggested in Grafana Cloud can be tried on a full-size DBLab clone before production.",
+  "faq": [
+    {
+      "q": "Is Grafana Cloud Database Observability generally available?",
+      "a": "Yes. Release 2.17.0 of April 1, 2026 made it generally available after a public preview. It supports PostgreSQL 14 and newer.",
+      "sources": [4, 7]
+    },
+    {
+      "q": "Does Grafana Database Observability work with Amazon RDS?",
+      "a": "Yes. Grafana has setup guides for Amazon RDS and Aurora, Google Cloud SQL, Azure Database for PostgreSQL and self-managed PostgreSQL 14 and newer. Grafana says Alloy should connect directly to the database host, not through PgBouncer or a load balancer.",
+      "sources": [5, 6, 7]
+    },
+    {
+      "q": "What does Grafana Cloud Database Observability cost?",
+      "a": "The free tier covers 2,232 host hours, about 3 database hosts. Pro is $0.07 per host hour (about $51 per host) after the included hours, plus a $19 monthly platform fee and metrics and logs usage. Enterprise starts at a $25,000 annual commit.",
+      "sources": [9, 8]
+    },
+    {
+      "q": "PostgresAI also uses Grafana. How is it different?",
+      "a": "PostgresAI monitoring uses Grafana only for dashboards; it collects and stores the metrics itself, and the monitoring software is open source and can be self-hosted. Grafana Cloud Database Observability is a hosted app fed by Grafana Alloy.",
+      "sources": [2, 13]
+    },
+    {
+      "q": "Can I use PostgresAI and Grafana Cloud Database Observability together?",
+      "a": "Yes. DBLab, the PostgresAI cloning product, copies any PostgreSQL source, so an index or query rewrite suggested by Grafana Assistant can be tested on a full-size DBLab clone before production.",
+      "sources": [10]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Grafana Cloud Database Observability product page",
+      "url": "https://grafana.com/products/cloud/database-observability/"
+    },
+    {
+      "title": "Grafana Cloud documentation: Database Observability",
+      "url": "https://grafana.com/docs/grafana-cloud/observe-and-act/monitor-infrastructure/database-observability/"
+    },
+    {
+      "title": "Grafana: Database Observability now generally available",
+      "url": "https://grafana.com/whats-new/2026-04-02-database-observability-now-generally-available/"
+    },
+    {
+      "title": "Database Observability release notes",
+      "url": "https://grafana.com/docs/grafana-cloud/observe-and-act/monitor-infrastructure/database-observability/release-notes/"
+    },
+    {
+      "title": "Grafana Cloud documentation: set up PostgreSQL",
+      "url": "https://grafana.com/docs/grafana-cloud/observe-and-act/monitor-infrastructure/database-observability/set-up/postgres/"
+    },
+    {
+      "title": "Grafana Cloud documentation: set up self-managed PostgreSQL",
+      "url": "https://grafana.com/docs/grafana-cloud/observe-and-act/monitor-infrastructure/database-observability/set-up/postgres/postgres/"
+    },
+    {
+      "title": "Grafana Cloud documentation: requirements and overhead",
+      "url": "https://grafana.com/docs/grafana-cloud/observe-and-act/monitor-infrastructure/database-observability/set-up/requirements-overhead/"
+    },
+    {
+      "title": "Grafana Cloud documentation: Database Observability pricing and usage",
+      "url": "https://grafana.com/docs/grafana-cloud/platform/pricing-and-usage/database-observability/"
+    },
+    {
+      "title": "Grafana pricing",
+      "url": "https://grafana.com/pricing/"
+    },
+    {
+      "title": "Grafana blog: Grafana Assistant integration for Database Observability (May 6, 2026)",
+      "url": "https://grafana.com/blog/troubleshoot-performance-issues-faster-with-the-new-grafana-assistant-integration-for-database-observability/"
+    },
+    {
+      "title": "Grafana: investigate database performance with Grafana Assistant",
+      "url": "https://grafana.com/whats-new/2026-08-26-investigate-database-performance-with-grafana-assistant/"
+    },
+    {
+      "title": "Grafana MCP server repository",
+      "url": "https://github.com/grafana/mcp-grafana"
+    },
+    {
+      "title": "Grafana Alloy repository",
+      "url": "https://github.com/grafana/alloy"
+    },
+    {
+      "title": "Grafana documentation: contact points",
+      "url": "https://grafana.com/docs/grafana/latest/alerting/configure-notifications/manage-contact-points/"
+    },
+    {
+      "title": "Grafana Labs security",
+      "url": "https://grafana.com/security/"
+    }
+  ]
+}

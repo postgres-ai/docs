@@ -1,0 +1,245 @@
+{
+  "slug": "postgresai-vs-dbtune",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "DBtune",
+    "vendor": "DBtune (DBT Solutions AB)",
+    "url": "https://www.dbtune.com/",
+    "category": "PostgreSQL parameter tuning",
+    "group": "ai",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs DBtune: monitoring and checkups vs automated parameter tuning",
+  "description": "DBtune tunes PostgreSQL server parameters against your workload, automatically or with approval. PostgresAI monitors queries and waits and files findings as Issues.",
+  "summary": "DBtune is a PostgreSQL configuration tuning service. An agent next to the database reports metrics, and DBtune tries parameter settings such as work_mem and max_wal_size, measures average query runtime or throughput, and applies the best ones automatically or after your approval. Its October 2026 release made index recommendations generally available and added autovacuum monitoring. PostgresAI monitors Postgres, runs scheduled checkups and turns findings into Issues that you, your AI agent or a PostgresAI expert can act on. Pick DBtune to tune server parameters from measured results. Pick PostgresAI for query-level monitoring, checkups and expert help. The two can run on the same database.",
+  "chooseThem": [
+    "Automated tuning of server parameters: on community PostgreSQL, up to 16 in reload-only mode with no restart, and 20 with restart mode, measured against average query runtime, throughput or a workload fingerprint.",
+    "Applies the best configuration automatically, or with Human in the loop, each configuration waits for your approval.",
+    "Guardrails: the agent reverts to the baseline configuration if memory use passes 90% of RAM, and thresholds on runtime and throughput can be set.",
+    "Starter is free for 3 database servers; Professional is $150 per core per year with unlimited servers.",
+    "SOC 2 Type II certified, and an Enterprise Server edition for self-hosting on Docker Compose or Kubernetes, with the full SaaS feature set."
+  ],
+  "proofs": [
+    {
+      "key": "open",
+      "them": "The DBtune agent is open source under Apache 2.0. The tuning service is sold as SaaS, with a free Starter tier for 3 servers, and self-hosting it is the Enterprise Server edition, priced on request.",
+      "sources": [10, 2, 7]
+    },
+    {
+      "key": "test",
+      "them": "DBtune tests parameter configurations on the connected database, or on a shadow system you set up. Index recommendations are modelled with HypoPG on a statistical snapshot, and the docs say reported speedups may not match production.",
+      "sources": [18, 5, 16]
+    },
+    {
+      "key": "waits",
+      "them": "The DBtune agent collects wait events every 5 seconds as tuning input. The sources we reviewed do not describe a wait event view.",
+      "sources": [8]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A configuration optimization service: it tunes PostgreSQL server parameters from measured workload results. Version 4.0.0 of October 2026 made index recommendations generally available and added autovacuum monitoring.",
+      "sources": [3, 1, 9]
+    },
+    {
+      "key": "platforms",
+      "v": "yes",
+      "them": "Setup guides for community PostgreSQL, Amazon RDS and Aurora, Azure Database for PostgreSQL flexible server, Google Cloud SQL, Aiven, CloudNativePG, EPAS and Patroni. The FAQ says it supports all PostgreSQL versions still maintained by the community. It needs pg_stat_statements.",
+      "sources": [4, 5, 6]
+    },
+    {
+      "key": "deployment",
+      "v": "yes",
+      "them": "SaaS with an agent next to the database, or Enterprise Server, self-hosted for enterprise customers. The agent sends metrics, settings and schema metadata, and query text with obfuscated parameters by default; no row data.",
+      "sources": [2, 7, 8]
+    },
+    {
+      "key": "open-source",
+      "v": "partial",
+      "them": "The agent is open source under Apache 2.0. The DBtune service is sold on paid plans with a free Starter tier; the sources we reviewed do not describe its source code as public.",
+      "sources": [10, 2]
+    },
+    {
+      "key": "query-analysis",
+      "v": "partial",
+      "them": "Uses pg_stat_statements to compute average query runtime and a workload fingerprint of queries by runtime and call count, as tuning targets. Index tuning lists the queries an index would affect, with their runtime over the last 7 days, and estimates the speedup with the planner and HypoPG.",
+      "sources": [11, 16]
+    },
+    {
+      "key": "wait-events",
+      "v": "partial",
+      "them": "The agent collects hot signals such as wait events every 5 seconds. The sources we reviewed do not describe a wait event analysis view.",
+      "sources": [8]
+    },
+    {
+      "key": "health-checks",
+      "v": "yes",
+      "them": "Index recommendations for new indexes and for unused, redundant or bloated ones, with expected speedup and DDL that you run yourself; autovacuum monitoring of transaction ID use, worker saturation and bloat on PostgreSQL 16 and newer; recommendations for restart-only parameters, max_connections and version upgrades.",
+      "sources": [16, 17, 9, 12]
+    },
+    {
+      "key": "agent-interface",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. DBtune describes itself as agentic AI, but the docs and release notes we read do not describe an MCP server or CLI for AI coding agents.",
+      "sources": [1, 9]
+    },
+    {
+      "key": "test-fix",
+      "v": "partial",
+      "them": "A tuning session tests configurations on the connected database and compares them with the baseline, with memory and performance guardrails; Human in the loop holds each one for approval. The FAQ says you can tune a shadow system and apply the result to production. Index recommendations are modelled with HypoPG on a statistical snapshot.",
+      "sources": [18, 14, 15, 5, 16]
+    },
+    {
+      "key": "expert-help",
+      "v": "partial",
+      "them": "Professional has a dedicated Slack channel and email support, answered within 24 hours during business hours. Enterprise adds phone support within 60 minutes during business hours, and Enterprise and Enterprise Server include onboarding with training and help configuring the first database servers.",
+      "sources": [2]
+    },
+    {
+      "key": "alerts",
+      "them": "When a guardrail threshold is reached, DBtune sends an email and shows an in-platform notification. Release 3.1.5 added alerts for an outdated workload fingerprint.",
+      "sources": [14, 9]
+    },
+    {
+      "key": "retention",
+      "them": "Not documented in the sources we reviewed.",
+      "sources": [8]
+    },
+    {
+      "key": "compliance",
+      "them": "The DBtune home page states that it is SOC 2 Type II certified. Release 3.6.8 of April 2026 says DBtune completed its SOC 2 Type II audit.",
+      "sources": [1, 9]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Starter",
+      "price": "Free",
+      "notes": "3 database servers, community support, SaaS with an agent",
+      "sources": [2]
+    },
+    {
+      "plan": "Professional",
+      "price": "$150 per core/year",
+      "notes": "Unlimited servers, recommended for servers under 32 cores; Slack and email support; buy through AWS or Azure Marketplace",
+      "sources": [2]
+    },
+    {
+      "plan": "Enterprise",
+      "price": "Contact sales",
+      "notes": "Unlimited servers, premium support with phone response within 60 minutes, onboarding",
+      "sources": [2]
+    },
+    {
+      "plan": "Enterprise Server",
+      "price": "Contact sales",
+      "notes": "Self-hosted in a private cloud or data center",
+      "sources": [2, 7]
+    }
+  ],
+  "pricingNote": "DBtune prices Professional per database server core per year; PostgresAI prices per cluster per month. The two units are not directly comparable.",
+  "together": "DBtune and PostgresAI monitoring both document Amazon RDS and Aurora, Google Cloud SQL, Azure Database for PostgreSQL and self-managed servers, and both read pg_stat_statements. A team can let DBtune tune server parameters while PostgresAI monitors queries and wait events and runs checkups on the same database.",
+  "faq": [
+    {
+      "q": "Does DBtune monitor queries?",
+      "a": "DBtune reads pg_stat_statements to measure average query runtime and a workload fingerprint, which it uses as tuning targets, and index tuning estimates how much a new index would speed up the queries you ran. Its main job is tuning server parameters; the sources we reviewed do not describe a query monitoring dashboard.",
+      "sources": [11, 16, 3]
+    },
+    {
+      "q": "Does DBtune restart my database?",
+      "a": "Not by default. The FAQ says DBtune by default only uses reloads. Restart mode, which you choose per session, can restart the database up to 30 times, typically over 2 to 4 hours.",
+      "sources": [5, 13]
+    },
+    {
+      "q": "What does DBtune cost?",
+      "a": "Starter is free for 3 database servers. Professional is $150 per year per database server core, recommended for servers under 32 cores. The pricing page shows no amount for Enterprise or the self-hosted Enterprise Server.",
+      "sources": [2]
+    },
+    {
+      "q": "Is DBtune open source?",
+      "a": "The DBtune agent is open source under Apache 2.0. The tuning service itself is sold as SaaS or as a self-hosted Enterprise Server. PostgresAI monitoring is open source under Apache 2.0.",
+      "sources": [10, 2]
+    },
+    {
+      "q": "Can I use PostgresAI and DBtune together?",
+      "a": "Yes. DBtune changes server parameters; PostgresAI monitors queries and wait events and runs checkups. Both support Amazon RDS and Aurora, Cloud SQL, Azure and self-managed Postgres.",
+      "sources": [4]
+    }
+  ],
+  "sources": [
+    {
+      "title": "DBtune home page",
+      "url": "https://www.dbtune.com/"
+    },
+    {
+      "title": "DBtune pricing",
+      "url": "https://www.dbtune.com/pricing"
+    },
+    {
+      "title": "DBtune documentation: how DBtune works",
+      "url": "https://www.dbtune.com/docs/overview"
+    },
+    {
+      "title": "DBtune documentation: supported PostgreSQL flavors",
+      "url": "https://www.dbtune.com/docs/category/supported-databases"
+    },
+    {
+      "title": "DBtune documentation: FAQ",
+      "url": "https://www.dbtune.com/docs/faq"
+    },
+    {
+      "title": "DBtune documentation: community PostgreSQL",
+      "url": "https://www.dbtune.com/docs/postgresql"
+    },
+    {
+      "title": "DBtune documentation: self-hosted deployment",
+      "url": "https://www.dbtune.com/docs/self-hosted-overview"
+    },
+    {
+      "title": "DBtune documentation: agent monitoring and privacy",
+      "url": "https://www.dbtune.com/docs/agent-monitoring-and-privacy"
+    },
+    {
+      "title": "DBtune release notes",
+      "url": "https://www.dbtune.com/release-notes"
+    },
+    {
+      "title": "DBtune agent license",
+      "url": "https://github.com/dbtuneai/dbtune-agent/blob/main/LICENSE"
+    },
+    {
+      "title": "DBtune documentation: tuning targets",
+      "url": "https://www.dbtune.com/docs/tuning-targets"
+    },
+    {
+      "title": "DBtune documentation: recommendations",
+      "url": "https://www.dbtune.com/docs/recommendations"
+    },
+    {
+      "title": "DBtune documentation: tuning modes",
+      "url": "https://www.dbtune.com/docs/tuning-modes"
+    },
+    {
+      "title": "DBtune documentation: production-safe tuning",
+      "url": "https://www.dbtune.com/docs/ensuring-production-safe-dbtune"
+    },
+    {
+      "title": "DBtune documentation: human in the loop",
+      "url": "https://www.dbtune.com/docs/Human-in-the-loop"
+    },
+    {
+      "title": "DBtune documentation: index tuning",
+      "url": "https://www.dbtune.com/docs/index-tuning"
+    },
+    {
+      "title": "DBtune documentation: autovacuum monitoring",
+      "url": "https://www.dbtune.com/docs/autovacuum"
+    },
+    {
+      "title": "DBtune documentation: server parameter tuning",
+      "url": "https://www.dbtune.com/docs/server-parameter-tuning"
+    }
+  ]
+}

@@ -1,0 +1,224 @@
+{
+  "slug": "postgresai-vs-devops-guru-for-rds",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "Amazon DevOps Guru for RDS",
+    "vendor": "Amazon Web Services",
+    "url": "https://docs.aws.amazon.com/devops-guru/latest/userguide/working-with-rds.html",
+    "category": "ML anomaly detection for RDS",
+    "group": "provider",
+    "status": "discontinued",
+    "statusNote": "AWS states that Amazon DevOps Guru stopped accepting new customers on October 29, 2026. Existing customers can keep using it until September 30, 2027; after that the console and API are no longer available and past insights cannot be retrieved. AWS recommends Amazon CloudWatch for anomaly detection and alerting, and Amazon DevOps Agent for operational investigation.",
+    "statusSources": [1]
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs Amazon DevOps Guru for RDS: any cloud vs ML on RDS (closing)",
+  "description": "DevOps Guru for RDS finds anomalies in Aurora and RDS for PostgreSQL with ML and closed to new customers in October 2026. PostgresAI is open source, for any provider.",
+  "summary": "Amazon DevOps Guru for RDS uses machine learning on Performance Insights data to detect anomalies in Aurora and RDS for PostgreSQL and recommends an investigation or a fix. AWS closed it to new customers on October 29, 2026 and ends support on September 30, 2027, recommending CloudWatch and Amazon DevOps Agent instead. PostgresAI monitors PostgreSQL on any provider, runs scheduled checkups and turns findings into Issues. Existing DevOps Guru users can keep both until the end date.",
+  "chooseThem": [
+    "Existing customers can keep using it until September 30, 2027, with security patches, critical bug fixes and AWS Support during that period.",
+    "Reactive insights flag anomalous DB load as it happens and point to a specific high-load SQL statement, wait event, CPU capacity or idle-in-transaction sessions.",
+    "Proactive insights warn before a problem grows, for example sessions that are connected but not doing work and may hold resources.",
+    "Recommendations draw on findings contributed by Amazon database engineers and point to the AWS wait event tuning guides for Aurora PostgreSQL and RDS for PostgreSQL.",
+    "Priced per analyzed resource-hour: $0.0042 for an RDS DB instance."
+  ],
+  "proofs": [
+    {
+      "key": "anywhere",
+      "them": "AWS states that DevOps Guru for RDS gives detailed analysis and recommendations only for Amazon Aurora and RDS for PostgreSQL instances, and DevOps Guru stopped accepting new customers on October 29, 2026.",
+      "sources": [3, 1]
+    },
+    {
+      "key": "open",
+      "them": "DevOps Guru is a fully managed AWS operations service. After September 30, 2027 its console and API are no longer available and insights it generated can no longer be retrieved.",
+      "sources": [14, 1]
+    },
+    {
+      "key": "test",
+      "them": "DevOps Guru for RDS recommends corrective actions such as more CPU capacity, and AWS recommends testing any change on a test instance before production. The sources we reviewed do not describe a way to do that in DevOps Guru.",
+      "sources": [6]
+    },
+    {
+      "key": "agents",
+      "them": "The DevOps Guru API lists insights and can feed other tools. AWS states that the API will no longer be available after September 30, 2027, and that integrations built on it will stop returning data.",
+      "sources": [1]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A feature of Amazon DevOps Guru that analyzes Performance Insights metrics with machine learning and statistical analysis, publishes anomalies as reactive or proactive insights, and recommends an investigation or a corrective action. Closed to new customers since October 29, 2026.",
+      "sources": [4, 8, 1]
+    },
+    {
+      "key": "platforms",
+      "v": "no",
+      "them": "Amazon RDS and Aurora only. AWS states that DevOps Guru for RDS gives detailed analysis and recommendations only for Amazon Aurora and RDS for PostgreSQL instances.",
+      "sources": [3]
+    },
+    {
+      "key": "deployment",
+      "v": "no",
+      "them": "Part of Amazon DevOps Guru, which AWS describes as \"a fully managed operations service\". It is enabled per account and Region, or scoped by CloudFormation stacks or tags. It reads Performance Insights data, which must be turned on for each DB instance.",
+      "sources": [14, 7, 9]
+    },
+    {
+      "key": "open-source",
+      "v": "na",
+      "them": "Does not apply: DevOps Guru for RDS is a feature of Amazon DevOps Guru, an AWS cloud service.",
+      "sources": [2]
+    },
+    {
+      "key": "query-analysis",
+      "v": "partial",
+      "them": "An anomaly can point to a specific high-load SQL statement to investigate. The query data comes from Performance Insights; the sources do not describe a separate query analysis view in DevOps Guru.",
+      "sources": [4, 6]
+    },
+    {
+      "key": "wait-events",
+      "v": "partial",
+      "them": "Recommendations can name specific wait events to investigate and link to the AWS wait event tuning guides. The wait event data itself comes from Performance Insights.",
+      "sources": [6, 5]
+    },
+    {
+      "key": "health-checks",
+      "v": "yes",
+      "them": "Reactive and proactive insights with a severity, metric graphs against a learned threshold and recommended actions, such as increasing CPU capacity, tuning application pool settings or closing idle-in-transaction sessions.",
+      "sources": [4, 5, 6, 13]
+    },
+    {
+      "key": "agent-interface",
+      "v": "partial",
+      "them": "The DevOps Guru API can export insights to other tools. AWS states the API will no longer be available after September 30, 2027. The sources we reviewed do not describe an MCP server.",
+      "sources": [1]
+    },
+    {
+      "key": "test-fix",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. AWS recommends testing any change on a test instance before production, but the sources do not describe a way to do it in DevOps Guru.",
+      "sources": [6]
+    },
+    {
+      "key": "expert-help",
+      "v": "partial",
+      "them": "AWS continues to offer support through AWS Support channels until September 30, 2027. The sources we reviewed do not describe PostgreSQL consulting beyond AWS Support plans.",
+      "sources": [1, 11]
+    },
+    {
+      "key": "alerts",
+      "them": "Notifications about events such as a new insight go to one or two Amazon SNS topics that you choose when you set it up.",
+      "sources": [9]
+    },
+    {
+      "key": "retention",
+      "them": "Not documented in the sources we reviewed. AWS states that insights are not retrievable after September 30, 2027, and recommends exporting them before that date.",
+      "sources": [1, 8]
+    },
+    {
+      "key": "compliance",
+      "them": "Amazon DevOps Guru is listed as in scope on the AWS SOC services-in-scope page.",
+      "sources": [12]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "RDS DB instance",
+      "price": "$0.0042 per resource per hour",
+      "notes": "Resource Price Group B; you pay for AWS resource hours analyzed, for each active resource",
+      "sources": [10]
+    },
+    {
+      "plan": "API calls",
+      "price": "$0.000040 per API call",
+      "notes": "$0.40 for 10,000 calls",
+      "sources": [10]
+    }
+  ],
+  "pricingNote": "The AWS Free Tier includes 7,200 resource hours for each of price groups A and B and 10,000 API calls a month for 3 months. New customers cannot sign up after October 29, 2026.",
+  "together": "PostgresAI monitoring supports Amazon RDS and Aurora, so an existing DevOps Guru customer can run both on the same databases until DevOps Guru ends on September 30, 2027, and keep PostgresAI after that.",
+  "faq": [
+    {
+      "q": "What happened to Amazon DevOps Guru for RDS?",
+      "a": "AWS stopped accepting new DevOps Guru customers on October 29, 2026. Existing customers can use it until September 30, 2027; after that the console and API are no longer available and past insights cannot be retrieved.",
+      "sources": [1]
+    },
+    {
+      "q": "What does AWS recommend instead of DevOps Guru?",
+      "a": "Amazon CloudWatch for metric anomaly detection and alerting, and Amazon DevOps Agent for AI-assisted operational investigation. AWS also says to remove DevOps Guru resources from CloudFormation, CDK or Terraform templates before end of support.",
+      "sources": [1]
+    },
+    {
+      "q": "Which PostgreSQL databases does DevOps Guru for RDS support?",
+      "a": "Aurora PostgreSQL and RDS for PostgreSQL. AWS states that detailed analysis and recommendations are given only for Amazon Aurora and RDS for PostgreSQL instances, and that Performance Insights must be turned on for each DB instance.",
+      "sources": [3, 7]
+    },
+    {
+      "q": "What does DevOps Guru for RDS cost?",
+      "a": "An RDS DB instance is billed at $0.0042 per resource-hour analyzed, and API calls at $0.000040 each. New customers cannot sign up after October 29, 2026.",
+      "sources": [10, 1]
+    },
+    {
+      "q": "Can I use PostgresAI and DevOps Guru together?",
+      "a": "Yes, until DevOps Guru ends. PostgresAI monitoring supports Amazon RDS and Aurora, so both can watch the same database; PostgresAI adds checkups, Issues and expert help.",
+      "sources": [1]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Amazon DevOps Guru end of support",
+      "url": "https://docs.aws.amazon.com/devops-guru/latest/userguide/devops-guru-end-of-support.html"
+    },
+    {
+      "title": "Working with anomalies in DevOps Guru for RDS",
+      "url": "https://docs.aws.amazon.com/devops-guru/latest/userguide/working-with-rds.html"
+    },
+    {
+      "title": "DevOps Guru for RDS: supported database engines",
+      "url": "https://docs.aws.amazon.com/devops-guru/latest/userguide/working-with-rds.overview.supported-engines.html"
+    },
+    {
+      "title": "How DevOps Guru for RDS works",
+      "url": "https://docs.aws.amazon.com/devops-guru/latest/userguide/working-with-rds.overview.how-it-works.html"
+    },
+    {
+      "title": "Benefits of DevOps Guru for RDS",
+      "url": "https://docs.aws.amazon.com/devops-guru/latest/userguide/working-with-rds.overview.benefits.html"
+    },
+    {
+      "title": "DevOps Guru for RDS: responding to recommendations",
+      "url": "https://docs.aws.amazon.com/devops-guru/latest/userguide/working-with-rds.analyzing.recommend.html"
+    },
+    {
+      "title": "Enabling DevOps Guru for RDS",
+      "url": "https://docs.aws.amazon.com/devops-guru/latest/userguide/working-with-rds.enabling.html"
+    },
+    {
+      "title": "DevOps Guru concepts",
+      "url": "https://docs.aws.amazon.com/devops-guru/latest/userguide/concepts.html"
+    },
+    {
+      "title": "Setting up Amazon DevOps Guru",
+      "url": "https://docs.aws.amazon.com/devops-guru/latest/userguide/setting-up.html"
+    },
+    {
+      "title": "Amazon DevOps Guru pricing",
+      "url": "https://aws.amazon.com/devops-guru/pricing/"
+    },
+    {
+      "title": "AWS Support plans",
+      "url": "https://aws.amazon.com/premiumsupport/plans/"
+    },
+    {
+      "title": "AWS services in scope: SOC",
+      "url": "https://aws.amazon.com/compliance/services-in-scope/SOC/"
+    },
+    {
+      "title": "DevOps Guru for RDS: viewing proactive anomalies",
+      "url": "https://docs.aws.amazon.com/devops-guru/latest/userguide/working-with-rds.analyzing.proactive.metrics.html"
+    },
+    {
+      "title": "What is Amazon DevOps Guru?",
+      "url": "https://docs.aws.amazon.com/devops-guru/latest/userguide/welcome.html"
+    }
+  ]
+}

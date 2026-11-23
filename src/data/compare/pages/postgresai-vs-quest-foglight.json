@@ -1,0 +1,230 @@
+{
+  "slug": "postgresai-vs-quest-foglight",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "Foglight for PostgreSQL",
+    "vendor": "Quest Software",
+    "url": "https://www.quest.com/foglight",
+    "category": "Database performance monitoring, on premises or SaaS",
+    "group": "observability",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs Foglight for PostgreSQL: open source vs workload drill-down",
+  "description": "Foglight monitors PostgreSQL with Performance Investigator, alarm rules and AI query tuning, on premises or as SaaS. PostgresAI is open source and publishes its prices.",
+  "summary": "Foglight for PostgreSQL is part of Foglight for Databases from Quest Software, on premises or as Foglight Cloud. For PostgreSQL it has dashboards, Performance Investigator with wait breakdowns, baselines and explain plans, 18 alarm rules and 10 advisories, plus an AI Optimizer and an MCP server. PostgresAI monitors PostgreSQL, runs scheduled checkups and turns findings into Issues that you, your AI agent or a PostgresAI expert can act on. Pick Foglight if you want per-minute workload drill-down with captured plans, on premises or as SaaS. Pick PostgresAI if you want open-source monitoring, public prices or human experts.",
+  "chooseThem": [
+    "Performance Investigator samples PostgreSQL every minute and breaks workload down by statement, database, user, client machine, program and session, with wait resources and a baseline chart.",
+    "Runs on premises or as Foglight Cloud, with agents on a Foglight Agent Manager that can be local or remote to the database.",
+    "Explain plans in Performance Investigator flag the costliest and largest operations and bad row estimates.",
+    "18 PostgreSQL alarm rules and 10 advisories, including replication slot WAL status, index bloat, autovacuum monitoring and slow query tuning.",
+    "Supports PostgreSQL from version 9.1, on Windows and Linux, RDS, Aurora, Cloud SQL and Azure, plus AlloyDB and Databricks Lakebase Postgres."
+  ],
+  "proofs": [
+    {
+      "key": "open",
+      "them": "Foglight Cloud for Databases is a subscription bought through Quest Sales, one unit per monitored database instance and host. If a subscription is not renewed within a set period after it expires, the data is deleted with no option for restoration.",
+      "sources": [14, 13]
+    },
+    {
+      "key": "price",
+      "them": "Quest's Foglight Cloud FAQ says to contact Quest Sales to buy a subscription, and PostgreSQL is licensed per instance. The sources we reviewed publish no price.",
+      "sources": [14, 13]
+    },
+    {
+      "key": "test",
+      "them": "The Foglight AI Optimizer rewrites a selected query and recommends schema and index changes, and Quest says you remain responsible for validating AI output before implementing it. The sources we reviewed do not describe running a change on a separate copy of the data.",
+      "sources": [8, 12]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "Part of Foglight for Databases. For PostgreSQL: dashboards, Performance Investigator (PI), alarm rules, advisories and explain plans. Agents collect telemetry and send it to a Foglight Management Server, on premises or in Foglight Cloud.",
+      "sources": [10, 4, 5, 7]
+    },
+    {
+      "key": "platforms",
+      "v": "yes",
+      "them": "PostgreSQL 9.1 and newer on Windows and Linux, Amazon RDS, Aurora, Google Cloud SQL and Azure Database for PostgreSQL; Databricks Lakebase Postgres (beta on Google Cloud) and AlloyDB are also listed. Performance Investigator needs PostgreSQL 10 and newer, or 11 and newer on Azure.",
+      "sources": [3, 2]
+    },
+    {
+      "key": "deployment",
+      "v": "yes",
+      "them": "On premises or Foglight Cloud. The PostgreSQL agent runs on an Agent Manager local or remote to the server. Foglight Cloud stores data in Azure data centers in the USA or Germany; string literals in SQL and plans are removed by default.",
+      "sources": [10, 2, 15, 16, 19]
+    },
+    {
+      "key": "open-source",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. Foglight Cloud is sold as a subscription with one unit per monitored database instance.",
+      "sources": [13, 14]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "A Statements dashboard lists top statements with calls, rows, total and average time and block read and write times. PI samples about every minute and shows explain plans that mark bad row estimates. The AI Optimizer, which needs a license, rewrites a selected PostgreSQL query and suggests schema changes.",
+      "sources": [4, 6, 5, 8]
+    },
+    {
+      "key": "wait-events",
+      "v": "yes",
+      "them": "PI groups wait events into resources and breaks workload down by SQL statement, database, user, client machine, program and session, compared with a baseline. The Connections dashboard shows each session's wait event and type.",
+      "sources": [5, 4]
+    },
+    {
+      "key": "health-checks",
+      "v": "yes",
+      "them": "18 PostgreSQL alarm rules, such as index bloat, replication lag and statement response time above its history, and 10 advisories, such as autovacuum monitoring, possible need for indexes and the 10 slowest queries of the last week.",
+      "sources": [7]
+    },
+    {
+      "key": "agent-interface",
+      "v": "yes",
+      "them": "The Foglight MCP Server, introduced in July 2026, gives AI clients read-only tools for alarms, agents, Performance Investigation, TopSQL and topology, with OAuth2. AI Insights, a chat that uses GPT-5.4 on Azure, added PostgreSQL execution plans in October 2026 and can query on-premises Foglight through the MCP Server.",
+      "sources": [9, 18, 11, 12]
+    },
+    {
+      "key": "test-fix",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. AI Query Optimization suggests a rewrite and schema changes; the sources do not describe running a change on a separate copy of the data.",
+      "sources": [8]
+    },
+    {
+      "key": "expert-help",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed.",
+      "sources": [14]
+    },
+    {
+      "key": "alerts",
+      "them": "Alarms rated Warning, Critical or Fatal, sent to contacts by email through notification channels. Rule thresholds can be changed or scoped. A bot for alarm analysis, added in February 2025, needs an additional license.",
+      "sources": [1, 17, 7, 18]
+    },
+    {
+      "key": "retention",
+      "them": "Foglight Cloud keeps performance data for paid accounts for one year for trend analysis, at different granularity levels.",
+      "sources": [16, 15]
+    },
+    {
+      "key": "compliance",
+      "them": "Foglight Cloud runs in Microsoft Azure. The FAQ says Azure, its data center provider, maintains ISO 27001 and SOC 2 Type II; those are Azure's certifications, not Quest's. Quest documents how Foglight security features meet NIST recommended standards under FISMA. The sources we reviewed do not list certifications held by Quest for Foglight.",
+      "sources": [16, 15]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Foglight Cloud for Databases",
+      "price": "No public price",
+      "notes": "One unit per monitored PostgreSQL instance and one host; buy through Quest Sales; free trial, proof-of-concept plan or demo environment",
+      "sources": [14, 13, 19]
+    }
+  ],
+  "pricingNote": "AI Query Optimization and AI alarm analysis need separate licenses. On-premises licensing is not covered in the Foglight Cloud documentation we reviewed.",
+  "together": "DBLab is a separate product that copies any PostgreSQL source, so a team that monitors with Foglight can still use a DBLab clone to try an index or query change on full-size data before production.",
+  "faq": [
+    {
+      "q": "Which PostgreSQL versions does Foglight support?",
+      "a": "Foglight for PostgreSQL supports PostgreSQL 9.1 and newer, on Windows and Linux and on Amazon RDS, Aurora, Google Cloud SQL and Azure Database for PostgreSQL. Performance Investigator needs version 10 or newer.",
+      "sources": [2, 3]
+    },
+    {
+      "q": "Is Foglight available as SaaS?",
+      "a": "Yes. Foglight for Databases runs on premises or as Foglight Cloud, which stores data in Azure data centers in the USA or Germany. The PostgreSQL agent runs on a Foglight Agent Manager, local or remote to the database server.",
+      "sources": [10, 15, 2, 19]
+    },
+    {
+      "q": "What does Foglight for PostgreSQL cost?",
+      "a": "Quest publishes no price in the sources we reviewed. Foglight Cloud for Databases is licensed per monitored database instance through Quest Sales. The product page offers a free trial, and the FAQ describes a proof-of-concept plan or a demo environment.",
+      "sources": [14, 13, 19]
+    },
+    {
+      "q": "Does Foglight show PostgreSQL execution plans?",
+      "a": "Yes. With Explain Plans and Explain Analyze enabled for the agent and an admin user configured, Performance Investigator shows execution plans and flags the costliest operations, the largest ones and bad row estimates.",
+      "sources": [6, 5]
+    },
+    {
+      "q": "Can I use PostgresAI and Foglight together?",
+      "a": "Yes. DBLab, the PostgresAI cloning product, copies any PostgreSQL source, so a team that monitors with Foglight can test an index or query change on a full-size DBLab clone before production."
+    }
+  ],
+  "sources": [
+    {
+      "title": "Foglight documentation: alarms",
+      "url": "https://docs.foglightcloud.com/foglightcloudmonitoringconcepts/alarms/"
+    },
+    {
+      "title": "Foglight documentation: prerequisites for monitoring PostgreSQL",
+      "url": "https://docs.foglightcloud.com/monitoringdatabases/monitoringpostgresql/requirements/"
+    },
+    {
+      "title": "Foglight documentation: supported platforms",
+      "url": "https://docs.foglightcloud.com/gettingstartedfoglightcloud/supportedplatforms/"
+    },
+    {
+      "title": "Foglight documentation: PostgreSQL dashboards",
+      "url": "https://docs.foglightcloud.com/monitoringdatabases/monitoringpostgresql/dashboards/"
+    },
+    {
+      "title": "Foglight documentation: PostgreSQL Performance Investigator",
+      "url": "https://docs.foglightcloud.com/monitoringdatabases/monitoringpostgresql/usingpostgresql/"
+    },
+    {
+      "title": "Foglight documentation: configuring PostgreSQL",
+      "url": "https://docs.foglightcloud.com/monitoringdatabases/monitoringpostgresql/configuringpostgresql/"
+    },
+    {
+      "title": "Foglight documentation: PostgreSQL rules",
+      "url": "https://docs.foglightcloud.com/monitoringdatabases/monitoringpostgresql/rules/"
+    },
+    {
+      "title": "Foglight documentation: AI query optimization",
+      "url": "https://docs.foglightcloud.com/monitoringdatabases/usingqueryoptimization/"
+    },
+    {
+      "title": "Foglight documentation: MCP Server",
+      "url": "https://docs.foglightcloud.com/integratingfoglight/mcpservercloud/"
+    },
+    {
+      "title": "Foglight AI Insights: architecture overview",
+      "url": "https://docs.foglightcloud.com/foglightaiinsights/gettingstarted/architecture/"
+    },
+    {
+      "title": "Foglight AI Insights: what's new",
+      "url": "https://docs.foglightcloud.com/foglightaiinsights/gettingstarted/whatsnew/"
+    },
+    {
+      "title": "Foglight AI Insights: FAQ",
+      "url": "https://docs.foglightcloud.com/foglightaiinsights/aifaqs/"
+    },
+    {
+      "title": "Foglight documentation: database licensing",
+      "url": "https://docs.foglightcloud.com/monitoringdatabases/databaselicensing/"
+    },
+    {
+      "title": "Foglight Cloud FAQ: subscription and activation",
+      "url": "https://docs.foglightcloud.com/faq/subscriptionactivation/"
+    },
+    {
+      "title": "Foglight Cloud: data handling and security",
+      "url": "https://docs.foglightcloud.com/datahandlingsecurity/"
+    },
+    {
+      "title": "Foglight Cloud FAQ: data handling and security",
+      "url": "https://docs.foglightcloud.com/faq/datahandlingsecurity/"
+    },
+    {
+      "title": "Foglight documentation: notification channels",
+      "url": "https://docs.foglightcloud.com/foglightcloudmonitoringconcepts/managingnotifications/managingnotificationchannels/"
+    },
+    {
+      "title": "Foglight Cloud: what's new",
+      "url": "https://docs.foglightcloud.com/gettingstartedfoglightcloud/whats-new/"
+    },
+    {
+      "title": "Quest Foglight product page",
+      "url": "https://www.quest.com/foglight"
+    }
+  ]
+}

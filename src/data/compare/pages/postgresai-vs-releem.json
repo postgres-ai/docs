@@ -1,0 +1,234 @@
+{
+  "slug": "postgresai-vs-releem",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "Releem",
+    "vendor": "Releem",
+    "url": "https://releem.com/postgresql",
+    "category": "Database performance tuning",
+    "group": "ai",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs Releem: monitoring with history vs config tuning it applies",
+  "description": "Releem added PostgreSQL in 2026, with config changes it can apply and index suggestions. PostgresAI keeps 13 months of history on Scale, and its software is open source.",
+  "summary": "Releem is a hosted database tuning service that added PostgreSQL in its May 2026 release (12 to 18 per its docs). An agent sends metrics and pg_stat_statements data; Releem recommends configuration changes it can apply for you, plus query and index suggestions. PostgresAI monitors PostgreSQL, runs scheduled checkups and turns findings into Issues that you, your AI agent or a PostgresAI expert act on. Pick Releem if you want configuration applied by an agent. Pick PostgresAI for wait event analysis, agent access, expert help, longer history or a self-hosted stack.",
+  "chooseThem": [
+    "Configuration recommendations it can apply for you: on a self-managed host the agent applies them, and on Amazon RDS and Aurora Releem changes the parameter group after you approve.",
+    "Query Optimization reviews the top 100 queries by total and by mean execution time, emails a summary of inefficient ones with ready-to-use CREATE INDEX statements, and keeps tracking each query after you change it.",
+    "Starter is $39 per database server a month billed annually ($49 on demand) and includes query optimization and the index advisor.",
+    "PostgreSQL configuration recommendations cover autovacuum, memory, storage, parallel query execution and idle transactions.",
+    "The agent is open source under GPL-3.0 and, per Releem, does not require opening inbound ports."
+  ],
+  "proofs": [
+    {
+      "key": "history",
+      "them": "Releem's public plans include three months of metric history. Business plans, priced on request, can include longer retention.",
+      "sources": [2]
+    },
+    {
+      "key": "open",
+      "them": "The Releem Agent is open source under GPL-3.0 and connects your database to the hosted Releem subscription service, which is sold on paid plans.",
+      "sources": [10, 2]
+    },
+    {
+      "key": "anywhere",
+      "them": "Releem's PostgreSQL install guides cover Linux, Docker, and Amazon RDS and Aurora; the agent README also lists Google Cloud SQL for PostgreSQL.",
+      "sources": [5, 10]
+    },
+    {
+      "key": "waits",
+      "them": "The Releem Agent reads pg_stat_activity for an Activity view of running sessions. The sources we reviewed do not describe wait event analysis.",
+      "sources": [6, 14]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A hosted database tuning service. The Releem Agent collects metrics, settings and query statistics; Releem recommends PostgreSQL configuration changes and index suggestions, applies configuration on request, and shows monitoring and health checks.",
+      "sources": [1, 10]
+    },
+    {
+      "key": "platforms",
+      "v": "yes",
+      "them": "PostgreSQL 12 to 18 per the supported databases page; the compatibility page lists 15.x to 18.x. Install guides cover Linux, Docker, and Amazon RDS and Aurora PostgreSQL, and the agent README also lists Google Cloud SQL for PostgreSQL. pg_stat_statements is required for query analytics and optimization.",
+      "sources": [3, 4, 5, 10, 6]
+    },
+    {
+      "key": "deployment",
+      "v": "nd",
+      "them": "The agent runs on the database host, or on an EC2 instance or Fargate task for RDS, and sends data over HTTPS to the hosted service. The sources we reviewed do not describe self-hosting the service. EU data storage is offered above 20 instances.",
+      "sources": [10, 6, 13]
+    },
+    {
+      "key": "open-source",
+      "v": "partial",
+      "them": "The Releem Agent is open source under GPL-3.0. It connects to the hosted Releem subscription service, which is sold on paid plans.",
+      "sources": [10, 2]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "Query Analytics shows pg_stat_statements data per statement: calls, total and mean execution time, normalized text. Optional Query Optimization, added for PostgreSQL in August 2026, collects EXPLAIN plans for the top 100 SELECT and WITH statements by total and by mean time.",
+      "sources": [6, 7, 11]
+    },
+    {
+      "key": "wait-events",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. The agent reads pg_stat_activity for an activity view of active sessions.",
+      "sources": [6, 7]
+    },
+    {
+      "key": "health-checks",
+      "v": "yes",
+      "them": "Health checks, security checks and configuration tuning for PostgreSQL since May 2026, and schema checks since August 2026. Configuration recommendations cover autovacuum, memory, storage, parallel query execution and idle transactions.",
+      "sources": [12, 11, 1]
+    },
+    {
+      "key": "agent-interface",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. Recommendations are reviewed in the Releem web interface, and the agent has a command-line apply step on self-managed hosts.",
+      "sources": [9, 10]
+    },
+    {
+      "key": "test-fix",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. Query Optimization proposals are presented for review, you run the SQL yourself in the manual workflow, and Releem then tracks the query until it is marked Optimized.",
+      "sources": [8]
+    },
+    {
+      "key": "expert-help",
+      "v": "partial",
+      "them": "Scale includes one consultation and 24/5 email and chat support; Business adds 24/7 premium support and an SLA. The sources we reviewed do not describe PostgreSQL consulting beyond that.",
+      "sources": [2]
+    },
+    {
+      "key": "alerts",
+      "them": "Releem emails a summary when Query Optimization flags inefficient queries, and the PostgreSQL page says it sends reports. The sources we reviewed do not list other alert channels for PostgreSQL.",
+      "sources": [8, 1]
+    },
+    {
+      "key": "retention",
+      "them": "Three months of metric history on the public plans (Starter, Scale and Hosting). Business plans can include longer retention.",
+      "sources": [2]
+    },
+    {
+      "key": "compliance",
+      "them": "Not documented in the sources we reviewed. The FAQ says the agent does not collect user data or table content, and transfers metrics over HTTPS.",
+      "sources": [13]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Starter",
+      "price": "$39 per database server/month",
+      "notes": "Billed annually, or $49/month on demand; configuration tuning, query analytics, query optimization, index advisor, three months of data, email support",
+      "sources": [2]
+    },
+    {
+      "plan": "Scale",
+      "price": "$123/month",
+      "notes": "Billed annually, or $199/month on demand; up to 5 servers, $39 per additional server; 24/5 email and chat support, 1 consultation",
+      "sources": [2]
+    },
+    {
+      "plan": "Hosting",
+      "price": "$99/month",
+      "notes": "Up to 9 database servers, $11 per additional server; no query optimization",
+      "sources": [2]
+    },
+    {
+      "plan": "Business",
+      "price": "Custom",
+      "notes": "Unlimited servers, 24/7 premium support, choice of data storage location, SLA",
+      "sources": [2]
+    }
+  ],
+  "pricingNote": "A PostgreSQL server counts as one database server. Read-only instances on Scale get a 50% discount. A payment method may be required to start the free trial.",
+  "together": "Both document Amazon RDS and Aurora PostgreSQL and self-managed servers, and both read pg_stat_statements. A team can apply Releem's configuration recommendations and monitor the same server with PostgresAI checkups, or test an index on a DBLab clone first.",
+  "faq": [
+    {
+      "q": "Does Releem support PostgreSQL?",
+      "a": "Yes. Releem added PostgreSQL in its May 31, 2026 release, with health checks, query analytics, activity monitoring and configuration tuning; query optimization and schema checks followed in the release dated August 31, 2026. The docs list PostgreSQL 12 to 18; the compatibility page lists 15.x to 18.x. The sources we reviewed do not label it beta.",
+      "sources": [11, 12, 3, 4]
+    },
+    {
+      "q": "Does Releem work with Amazon RDS for PostgreSQL?",
+      "a": "Yes. The agent runs on an EC2 instance or Fargate task that can reach the RDS or Aurora endpoint. To let Releem apply configuration, you grant rds:ModifyDBParameterGroup on a custom parameter group; you still approve each change.",
+      "sources": [6]
+    },
+    {
+      "q": "What does Releem cost?",
+      "a": "Starter is $39 per database server a month billed annually, or $49 on demand. Scale is $123 a month billed annually for up to 5 servers, plus $39 per additional server. Business is custom.",
+      "sources": [2]
+    },
+    {
+      "q": "Is Releem open source?",
+      "a": "The Releem Agent is open source under GPL-3.0. It connects to the hosted Releem service, which is sold on paid plans. PostgresAI monitoring is open source under Apache 2.0.",
+      "sources": [10, 2]
+    },
+    {
+      "q": "Can I use PostgresAI and Releem together?",
+      "a": "Yes, on servers both document, such as Amazon RDS and Aurora PostgreSQL or self-managed hosts. Both need pg_stat_statements. Releem can apply configuration while PostgresAI runs checkups and turns findings into Issues.",
+      "sources": [6, 7]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Releem for PostgreSQL",
+      "url": "https://releem.com/postgresql"
+    },
+    {
+      "title": "Releem pricing",
+      "url": "https://releem.com/pricing"
+    },
+    {
+      "title": "Releem docs: supported databases",
+      "url": "https://docs.releem.com/supported-databases"
+    },
+    {
+      "title": "Releem compatibility",
+      "url": "https://releem.com/compatibility"
+    },
+    {
+      "title": "Releem docs: installation",
+      "url": "https://docs.releem.com/installation"
+    },
+    {
+      "title": "Releem docs: Amazon RDS and Aurora PostgreSQL",
+      "url": "https://docs.releem.com/installation/postgresql/aws-rds"
+    },
+    {
+      "title": "Releem docs: PostgreSQL on Linux",
+      "url": "https://docs.releem.com/installation/postgresql/linux"
+    },
+    {
+      "title": "Releem docs: query optimization",
+      "url": "https://docs.releem.com/recommendations/query-optimization"
+    },
+    {
+      "title": "Releem docs: apply configuration",
+      "url": "https://docs.releem.com/recommendations/configuration-tuning/apply-configuration"
+    },
+    {
+      "title": "Releem Agent repository",
+      "url": "https://github.com/Releem/releem-agent"
+    },
+    {
+      "title": "Releem Agent release notes",
+      "url": "https://github.com/Releem/releem-agent/releases"
+    },
+    {
+      "title": "Releem blog: what's new, May 2026",
+      "url": "https://releem.com/blog/whats-new-at-releem-may-2026"
+    },
+    {
+      "title": "Releem FAQ",
+      "url": "https://releem.com/faq"
+    },
+    {
+      "title": "Releem docs: dashboard",
+      "url": "https://docs.releem.com/dashboard"
+    }
+  ]
+}

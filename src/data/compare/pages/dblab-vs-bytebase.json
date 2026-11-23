@@ -1,0 +1,222 @@
+{
+  "slug": "dblab-vs-bytebase",
+  "kind": "changes",
+  "competitor": {
+    "name": "Bytebase",
+    "vendor": "Bytebase",
+    "url": "https://www.bytebase.com/",
+    "category": "Database change governance",
+    "group": "tools",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs Bytebase: test a change on real data, then deploy it",
+  "description": "Bytebase reviews, approves and deploys database changes, PostgreSQL included. DBLab measures the locks a change holds on a full-size clone, not from the SQL text.",
+  "summary": "Bytebase governs database changes: SQL review rules, approval flows, staged rollouts through environments and data rollback, with PostgreSQL 12 and later among the supported databases. DBLab does none of that. It gives you a full-size thin clone of a PostgreSQL database, where DB Migration Checker runs the migration and fails it if it holds a dangerous lock too long. The two fit together: run the change on a clone in CI, then let Bytebase review, approve and deploy it. If you pick one, Bytebase is the change process; DBLab is evidence of how a Postgres change behaves on real data.",
+  "chooseThem": [
+    "Bytebase covers the change process itself: SQL review, approval, rollout across environments and an audit log. DBLab covers none of these steps.",
+    "47 SQL review rules list PostgreSQL support, including CREATE INDEX CONCURRENTLY, CHECK constraints with NOT VALID and no volatile column defaults.",
+    "Connects to PostgreSQL 12 and later, Aurora PostgreSQL and AlloyDB included, with documented setup for Amazon RDS, Cloud SQL, Azure, Supabase and Neon.",
+    "Prior backup copies the rows an UPDATE or DELETE will touch into a bbdataarchive schema in your database, so the data change can be rolled back in one click.",
+    "Custom approval flows route a change by environment, SQL type, risk level or affected rows; the pricing page lists the approval workflow on Enterprise."
+  ],
+  "proofs": [
+    {
+      "key": "locks",
+      "them": "Bytebase predicts lock risk from the SQL: PostgreSQL rules flag CREATE INDEX without CONCURRENTLY or a CHECK constraint without NOT VALID, and its docs say the risk level is currently set purely by statement type.",
+      "sources": [2, 7]
+    },
+    {
+      "key": "real-data",
+      "them": "Bytebase can roll a change out to a test database before production; both are databases you connect to it. The sources we reviewed do not describe it making a full-size copy of production data to run the change on.",
+      "sources": [4, 5]
+    },
+    {
+      "key": "rerun",
+      "them": "Bytebase rolls back UPDATE and DELETE changes from a prior backup of the changed rows; an UPDATE needs a primary key, and DDL and DML cannot be mixed. Schema changes are rolled back from the changelog or with schema sync.",
+      "sources": [8, 9]
+    },
+    {
+      "key": "open",
+      "them": "Bytebase source is MIT-licensed except enterprise directories and plan-enablement code, which need a paid subscription for production use. The approval workflow and risk assessment are on Enterprise only.",
+      "sources": [12, 16, 13]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "Database change and access governance for people and AI agents. Change management covers SQL review, risk-based approvals, UI or GitOps workflows, batch changes across database groups and data rollback. Access control and audit are separate parts of the product.",
+      "sources": [1, 4]
+    },
+    {
+      "key": "tests-on-data",
+      "v": "partial",
+      "them": "A rollout can run the change on a test database first, then on production, but that database is one you provide; the sources we reviewed do not describe making a full-size copy. For PostgreSQL, three review rules run EXPLAIN to dry-run DML and check affected or inserted rows.",
+      "sources": [2, 4, 5]
+    },
+    {
+      "key": "lock-risk",
+      "v": "partial",
+      "them": "Predicted from the SQL, not measured. PostgreSQL rules flag a CREATE INDEX without CONCURRENTLY, a CHECK constraint without NOT VALID and a NOT NULL added to an existing column. Risk levels come from statement types only.",
+      "sources": [2, 7]
+    },
+    {
+      "key": "static-checks",
+      "v": "yes",
+      "them": "SQL Review: the pricing page counts 200+ rules, on every plan; 47 rules on the rules reference list PostgreSQL support. Rules are grouped into policies per environment or project. Errors block a rollout; warnings do not.",
+      "sources": [2, 3, 13]
+    },
+    {
+      "key": "workflow",
+      "v": "yes",
+      "them": "A Plan holds the change and its targets; a Rollout runs it stage by stage, for example test then production. Changes come from the UI or from Git (GitOps), as versioned migrations or as declarative, state-based schema files.",
+      "sources": [4, 5, 13]
+    },
+    {
+      "key": "approvals",
+      "v": "yes",
+      "them": "Custom approval flows of one or more steps, each needing a role, chosen by conditions on environment, project, engine, SQL type, affected rows and risk level. The pricing page lists the approval workflow on Enterprise only; audit log retention is 7 days on Pro and unlimited on Enterprise.",
+      "sources": [6, 7, 13]
+    },
+    {
+      "key": "rollback",
+      "them": "Prior backup saves the rows changed by UPDATE or DELETE in a bbdataarchive schema in your own database; rollback SQL is generated from it in one click. An UPDATE needs a primary key, and DDL and DML cannot be mixed. Schema changes are rolled back from the changelog or with schema sync.",
+      "sources": [8, 9]
+    },
+    {
+      "key": "ci",
+      "them": "SQL Review runs in pull requests with documented examples for GitHub Actions, GitLab CI, Azure DevOps and Bitbucket Pipelines. The job calls a Bytebase server with a service account; by default it reports findings without failing the build.",
+      "sources": [10]
+    },
+    {
+      "key": "hosting",
+      "v": "partial",
+      "them": "Source is on GitHub under the MIT license, except enterprise directories and plan-enablement code, which need a paid subscription for production use. Self-host with Docker, or use Bytebase Cloud, hosted in Google Cloud US.",
+      "sources": [11, 12, 14, 16]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Community",
+      "price": "Free",
+      "notes": "Up to 20 users, 10 database instances; self-hosted or Cloud",
+      "sources": [11, 13]
+    },
+    {
+      "plan": "Pro",
+      "price": "$20 per user/month",
+      "notes": "10 database instances, Google and GitHub SSO, groups; Cloud only",
+      "sources": [11, 13]
+    },
+    {
+      "plan": "Enterprise",
+      "price": "No public price",
+      "notes": "Custom users and instances, custom approval, data masking, SCIM; yearly subscription, 14-day trial",
+      "sources": [13]
+    }
+  ],
+  "pricingNote": "Bytebase Pro is priced per user, and Community and Pro each include 10 database instances. DBLab SE is billed hourly by machine size.",
+  "together": "The two cover different steps of the same change. A developer opens a pull request with a migration. In CI, DB Migration Checker runs it on a full-size DBLab clone and fails it if it holds a dangerous lock too long, while Bytebase SQL Review lints the same files. After merge, Bytebase routes the change through approval and rolls it out environment by environment, with prior backup for data changes. DBLab does not deploy anything, so Bytebase or another migration tool still ships the change.",
+  "faq": [
+    {
+      "q": "Is Bytebase open source?",
+      "a": "Partly. The repository on GitHub is under the MIT license, except source in directories named enterprise and code that controls feature, permission, role and plan enablement. That code is under the Bytebase Enterprise license, which allows development and testing but needs a paid subscription for production use.",
+      "sources": [12, 14, 16]
+    },
+    {
+      "q": "Does Bytebase test a migration on production-size data?",
+      "a": "Its review rules check the SQL against a policy, and for PostgreSQL three of them run EXPLAIN to dry-run DML and estimate affected or inserted rows. A rollout can apply the change to a test database before production; that is a database you connect, and the sources we reviewed do not describe Bytebase making a copy of production data. DBLab gives you a full-size clone to run it on.",
+      "sources": [2, 3, 5]
+    },
+    {
+      "q": "What does Bytebase cost?",
+      "a": "Community is free for up to 20 users and 10 database instances. Pro is $20 per user per month, Cloud only, with 10 instances. The pricing page shows no amount for Enterprise; it is a yearly subscription with a 14-day trial.",
+      "sources": [11, 13]
+    },
+    {
+      "q": "Can I use DBLab and Bytebase together?",
+      "a": "Yes. Run the migration on a DBLab clone in CI to see its duration and locks on real data, and let Bytebase review, approve and deploy it. DBLab does not write or deploy migrations, so it does not replace Bytebase.",
+      "sources": [2, 4]
+    },
+    {
+      "q": "Which PostgreSQL versions does Bytebase support?",
+      "a": "PostgreSQL 12 and later, including Amazon Aurora PostgreSQL and AlloyDB, through a built-in driver. The docs give setup steps for self-managed servers, Amazon RDS and Aurora, Google Cloud SQL, Azure Database for PostgreSQL, Supabase and Neon.",
+      "sources": [17]
+    },
+    {
+      "q": "Does Bytebase have an MCP server?",
+      "a": "Yes. AI assistants such as Claude Code, Codex and VS Code connect with OAuth. A workspace access policy sets the limit: read-only by default, or read-write, where an assistant can propose a change that follows the project's review and rollout flow.",
+      "sources": [15]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Bytebase docs: what is Bytebase",
+      "url": "https://docs.bytebase.com/introduction/what-is-bytebase"
+    },
+    {
+      "title": "Bytebase docs: SQL review rules",
+      "url": "https://docs.bytebase.com/sql-review/review-rules"
+    },
+    {
+      "title": "Bytebase docs: SQL review in the change workflow",
+      "url": "https://docs.bytebase.com/change-database/review"
+    },
+    {
+      "title": "Bytebase docs: change workflow",
+      "url": "https://docs.bytebase.com/change-database/change-workflow"
+    },
+    {
+      "title": "Bytebase docs: move a schema change from test to prod",
+      "url": "https://docs.bytebase.com/tutorials/how-to-move-schema-change-from-test-to-prod"
+    },
+    {
+      "title": "Bytebase docs: custom approval",
+      "url": "https://docs.bytebase.com/change-database/approval"
+    },
+    {
+      "title": "Bytebase docs: Risk Center",
+      "url": "https://docs.bytebase.com/administration/risks"
+    },
+    {
+      "title": "Bytebase docs: data rollback",
+      "url": "https://docs.bytebase.com/change-database/rollback-data-changes"
+    },
+    {
+      "title": "Bytebase docs: schema rollback",
+      "url": "https://docs.bytebase.com/change-database/rollback-schema-changes"
+    },
+    {
+      "title": "Bytebase docs: SQL Review CI",
+      "url": "https://docs.bytebase.com/gitops/migration-based-workflow/sql-review-ci"
+    },
+    {
+      "title": "Bytebase docs: self-host vs Cloud",
+      "url": "https://docs.bytebase.com/get-started/self-host-vs-cloud"
+    },
+    {
+      "title": "Bytebase LICENSE file",
+      "url": "https://raw.githubusercontent.com/bytebase/bytebase/main/LICENSE"
+    },
+    {
+      "title": "Bytebase pricing",
+      "url": "https://www.bytebase.com/pricing"
+    },
+    {
+      "title": "Bytebase repository on GitHub",
+      "url": "https://github.com/bytebase/bytebase"
+    },
+    {
+      "title": "Bytebase docs: Model Context Protocol (MCP)",
+      "url": "https://docs.bytebase.com/integrations/mcp"
+    },
+    {
+      "title": "Bytebase LICENSE.enterprise file",
+      "url": "https://raw.githubusercontent.com/bytebase/bytebase/main/LICENSE.enterprise"
+    },
+    {
+      "title": "Bytebase docs: connect to PostgreSQL",
+      "url": "https://docs.bytebase.com/get-started/connect/postgresql"
+    }
+  ]
+}
