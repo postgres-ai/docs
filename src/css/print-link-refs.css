@@ -31,40 +31,51 @@
     white-space: nowrap;
   }
 
-  /* Links list. */
+  /* Links list: spans both columns, flows as a compact 2-column bibliography. */
   .pgai-print-refs {
     display: block;
-    margin-top: 2rem;
-    padding-top: 0.75rem;
-    border-top: 1px solid #999;
-    font-size: 8.5pt;
-    line-height: 1.35;
-    color: #000;
+    column-span: all;
+    margin-top: 12pt;
+    padding-top: 7pt;
+    border-top: 0.75pt solid #999;
+    font-family: var(--pgai-caption-font, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+    font-size: 7.5pt;
+    line-height: 1.3;
+    color: #141414;
   }
 
   .pgai-print-refs__title {
-    font-size: 12pt;
-    margin: 0 0 0.5rem;
+    font-size: 10pt !important;
+    font-weight: 700;
+    margin: 0 0 5pt !important;
     break-after: avoid;
+    page-break-after: avoid;
   }
 
   .pgai-print-refs__list {
     list-style: none;
-    margin: 0;
-    padding: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    column-count: 2;
+    column-gap: 16pt;
+    column-fill: balance;
   }
 
   .pgai-print-refs__list li {
     display: flex;
-    gap: 0.5em;
-    margin: 0 0 0.2rem;
+    gap: 0.4em;
+    margin: 0 0 2.5pt !important;
     break-inside: avoid;
+    page-break-inside: avoid;
+    font-size: 7.5pt !important;
+    line-height: 1.3 !important;
   }
 
   .pgai-print-refs__num {
-    flex: 0 0 2.6em;
+    flex: 0 0 2.4em;
     text-align: right;
     font-variant-numeric: tabular-nums;
+    color: #525860;
   }
 
   .pgai-print-refs__body {
@@ -74,12 +85,12 @@
 
   .pgai-print-refs a.pgai-print-refs__url {
     display: block;
-    color: inherit;
+    color: #333;
     text-decoration: none;
     overflow-wrap: anywhere;
     word-break: normal;
     font-family: var(--ifm-font-family-monospace, monospace);
-    font-size: 0.95em;
+    font-size: 0.9em;
   }
 
   /* Site chrome. Infima already hides .navbar, .footer, .menu and
@@ -91,7 +102,10 @@
   .blog-post-page .col--2,
   .blog-post-page nav[aria-label='Article contents'],
   .blog-post-page [aria-controls='blog-mobile-toc'],
-  .blog-post-page article button {
+  .blog-post-page article > div:has([aria-controls='blog-mobile-toc']),
+  .blog-post-page article button,
+  .blog-post-page article > footer,
+  .blog-post-page a.hash-link {
     display: none !important;
   }
 
@@ -112,10 +126,15 @@
   }
 
   /* Post body takes the full page width once the sidebars are gone. */
+  .blog-post-page .container,
+  .blog-post-page .container > .row,
   .blog-post-page main.col {
+    display: block !important;
     flex: 0 0 100%;
-    max-width: 100%;
-    margin-left: 0;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 }
 
@@ -253,5 +272,411 @@
   .blog-post-page .prism-code .token {
     color: inherit !important;
     font-style: normal !important;
+  }
+}
+
+/*
+ * Two-column paper print layout for blog posts (ACM / IEEE style).
+ * Header, hero abstract, figures, wide tables, expanded <details>, footnotes,
+ * and the numbered Links bibliography span full width; prose flows cleanly in
+ * two balanced columns at 9pt.
+ */
+@page {
+  size: auto;
+  margin: 0.55in 0.5in 0.6in;
+}
+
+@media print {
+  html,
+  body {
+    background: #fff !important;
+    color: #141414 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Full-width paper title block (title, date, author). */
+  .blog-post-page article > header,
+  .blog-post-page article:has(.pgai-longread) > header,
+  .blog-post-page article:has(.pgai-hero) > header {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 0 8pt !important;
+    padding: 0 0 7pt !important;
+    border-bottom: 0.75pt solid #c9c6bf;
+    text-align: left !important;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .blog-post-page article > header h1,
+  .blog-post-page article:has(.pgai-longread) > header h1,
+  .blog-post-page article:has(.pgai-hero) > header h1 {
+    max-width: none !important;
+    margin: 0 0 5pt !important;
+    font-size: 17pt !important;
+    line-height: 1.18 !important;
+    letter-spacing: -0.01em !important;
+    color: #111 !important;
+    text-align: left !important;
+  }
+
+  .blog-post-page article > header :is(time, .margin-vert--md),
+  .blog-post-page article:has(.pgai-hero) > header :is(time, .margin-vert--md) {
+    font-size: 8pt !important;
+    line-height: 1.3 !important;
+    color: #525860 !important;
+    margin-block: 0 4pt !important;
+  }
+
+  .blog-post-page article > header .row,
+  .blog-post-page article:has(.pgai-hero) > header .row {
+    justify-content: flex-start !important;
+    margin: 0 !important;
+  }
+
+  .blog-post-page article > header .avatar__photo {
+    width: 24pt !important;
+    height: 24pt !important;
+  }
+
+  .blog-post-page article > header .avatar__name {
+    font-size: 8.5pt !important;
+    line-height: 1.25 !important;
+  }
+
+  .blog-post-page article > header .avatar__name a {
+    color: #141414 !important;
+    text-decoration: none !important;
+  }
+
+  .blog-post-page article > header .avatar__subtitle,
+  .blog-post-page article > header small {
+    font-size: 7.5pt !important;
+    line-height: 1.25 !important;
+    color: #525860 !important;
+  }
+
+  /* Continuous 2-column article body. Making .pgai-longread display:contents
+     merges the pre- and post-truncate wrappers into one column flow so
+     column-span:all works on figures, tables, details, and Links. */
+  .blog-post-page #__blog-post-container {
+    column-count: 2;
+    column-gap: 18pt;
+    column-fill: balance;
+    font-size: 9pt;
+    line-height: 1.38;
+    color: #141414;
+    orphans: 3;
+    widows: 3;
+  }
+
+  .blog-post-page #__blog-post-container > .pgai-longread {
+    display: contents;
+  }
+
+  .blog-post-page #__blog-post-container .pgai-longread > * {
+    max-width: 100% !important;
+    margin-inline: 0 !important;
+  }
+
+  /* Full-width abstract / hero deck. Hide animated 3D hero art wrapper when
+     its canvas/stage is hidden in print so no empty gap remains. */
+  .blog-post-page #__blog-post-container .pgai-hero {
+    column-span: all;
+    margin: 0 0 9pt !important;
+    padding: 6pt 9pt !important;
+    border-left: 2pt solid #c9c6bf;
+    background: #f8f8f6 !important;
+    text-align: left !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .blog-post-page #__blog-post-container .pgai-hero-art:has(canvas, [class*='stage_']) {
+    display: none !important;
+  }
+
+  .blog-post-page #__blog-post-container .pgai-hero-art {
+    margin: 0 auto 6pt !important;
+    max-width: 5.4in !important;
+  }
+
+  html.blog-post-page body #__blog-post-container .pgai-longread .pgai-hero-deck {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    font-size: 9pt !important;
+    line-height: 1.4 !important;
+    color: #2c3138 !important;
+    text-align: left !important;
+    text-wrap: pretty;
+  }
+
+  /* Body prose inside the two columns. */
+  html.blog-post-page body #__blog-post-container :is(p, ul, ol, blockquote),
+  html.blog-post-page body #__blog-post-container :is(p, ul, ol, blockquote) :is(p, li),
+  html.blog-post-page body #__blog-post-container .pgai-longread > :is(p, ul, ol, blockquote),
+  html.blog-post-page body #__blog-post-container .pgai-longread > :is(p, ul, ol, blockquote) :is(p, li),
+  html.blog-post-page body #__blog-post-container .pgai-longread .pgai-box :is(p, li) {
+    font-size: 9pt !important;
+    line-height: 1.38 !important;
+    orphans: 3;
+    widows: 3;
+  }
+
+  html.blog-post-page body #__blog-post-container .pgai-longread .pgai-lede {
+    font-size: 9.5pt !important;
+    line-height: 1.4 !important;
+    font-weight: 500;
+    margin-block: 0 6pt !important;
+  }
+
+  .blog-post-page #__blog-post-container p {
+    margin: 0 0 5.5pt !important;
+    hyphens: auto;
+  }
+
+  .blog-post-page #__blog-post-container :is(ul, ol) {
+    margin: 0 0 6pt !important;
+    padding-inline-start: 1.3em !important;
+  }
+
+  .blog-post-page #__blog-post-container :is(ul, ol) li {
+    margin: 0 0 2.5pt !important;
+    hyphens: auto;
+  }
+
+  .blog-post-page #__blog-post-container :is(a, code) {
+    hyphens: none !important;
+  }
+
+  .blog-post-page #__blog-post-container :is(p, li, blockquote, summary) code {
+    font-size: 0.84em !important;
+    background: #f2f3f5 !important;
+    padding: 0 0.16em !important;
+    overflow-wrap: anywhere;
+  }
+
+  .blog-post-page #__blog-post-container a {
+    color: #141414 !important;
+    text-decoration-color: #8d949e !important;
+  }
+
+  /* Headings stay attached to their opening paragraph. */
+  .blog-post-page #__blog-post-container h2,
+  .blog-post-page #__blog-post-container .pgai-longread > h2 {
+    font-size: 11.2pt !important;
+    line-height: 1.24 !important;
+    font-weight: 700 !important;
+    margin: 10pt 0 4pt !important;
+    color: #111 !important;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .blog-post-page #__blog-post-container h3,
+  .blog-post-page #__blog-post-container .pgai-longread > h3 {
+    font-size: 9.8pt !important;
+    line-height: 1.25 !important;
+    font-weight: 700 !important;
+    margin: 8pt 0 3pt !important;
+    color: #111 !important;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .blog-post-page #__blog-post-container h4,
+  .blog-post-page #__blog-post-container .pgai-longread > h4 {
+    font-size: 9.2pt !important;
+    line-height: 1.25 !important;
+    margin: 6pt 0 2pt !important;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .blog-post-page #__blog-post-container blockquote,
+  .blog-post-page #__blog-post-container .pgai-box {
+    margin: 6pt 0 !important;
+    padding: 5pt 7pt !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Code blocks stay compact inside a column with wrapping enabled. */
+  .blog-post-page #__blog-post-container .theme-code-block {
+    margin: 5pt 0 6pt !important;
+    box-shadow: none !important;
+    border: 0.5pt solid #c9c6bf;
+    border-radius: 3pt;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .blog-post-page #__blog-post-container pre {
+    padding: 5pt 6pt !important;
+    font-size: 7.4pt !important;
+    line-height: 1.32 !important;
+    margin: 0 !important;
+  }
+
+  /* Figures and figure wrappers span both columns at full crisp vector width. */
+  .blog-post-page #__blog-post-container figure,
+  .blog-post-page #__blog-post-container .pgai-longread > figure,
+  .blog-post-page #__blog-post-container .pgai-longread > div:has(> figure) {
+    column-span: all;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin: 9pt auto !important;
+    max-width: 100% !important;
+  }
+
+  /* Constrain explicitly narrowed diagrams (e.g. 540px architecture diagram)
+     so they remain balanced and never eat an entire page vertically. */
+  .blog-post-page #__blog-post-container .pgai-longread > div[style*='max-width']:has(> figure) {
+    max-width: 5.4in !important;
+    margin-inline: auto !important;
+  }
+
+  .blog-post-page #__blog-post-container figure picture[class*='light_'] {
+    display: block !important;
+  }
+
+  .blog-post-page #__blog-post-container figure picture[class*='dark_'] {
+    display: none !important;
+  }
+
+  .blog-post-page #__blog-post-container figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 4.5in;
+    object-fit: contain;
+  }
+
+  .blog-post-page #__blog-post-container figure > div:first-child {
+    border: 0.5pt solid #c9c6bf !important;
+    background: #fff !important;
+  }
+
+  .blog-post-page #__blog-post-container figure > figcaption {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 4pt 2pt 0 !important;
+    font-size: 7.8pt !important;
+    line-height: 1.35 !important;
+    color: #444950 !important;
+    text-align: left !important;
+    align-items: flex-start !important;
+  }
+
+  .blog-post-page #__blog-post-container figure > figcaption [class*='label_'] {
+    font-size: 7.5pt !important;
+  }
+
+  /* Expanded <details> (method/full tables) and wide tables span both columns
+     with clean wrapping so 10-column tables never clip horizontally. */
+  .blog-post-page #__blog-post-container details,
+  .blog-post-page #__blog-post-container .pgai-longread > details {
+    column-span: all;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 8pt 0 !important;
+    padding: 6pt 8pt !important;
+    border: 0.5pt solid #c9c6bf !important;
+    background: #fafaf8 !important;
+  }
+
+  .blog-post-page #__blog-post-container details > summary,
+  #__blog-post-container .pgai-longread details.alert > summary {
+    font-size: 8.8pt !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  #__blog-post-container .pgai-longread details.alert > div > div > :is(p, ul, ol),
+  #__blog-post-container .pgai-longread details.alert > div > div > :is(ul, ol) li {
+    font-size: 8pt !important;
+    line-height: 1.35 !important;
+  }
+
+  .blog-post-page #__blog-post-container details > div > div {
+    margin-top: 4pt !important;
+    padding-top: 4pt !important;
+  }
+
+  .blog-post-page #__blog-post-container .pgai-table,
+  .blog-post-page #__blog-post-container .pgai-longread .pgai-table,
+  .blog-post-page #__blog-post-container > table,
+  .blog-post-page #__blog-post-container .pgai-longread > table {
+    column-span: all;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 6pt 0 !important;
+    overflow: visible !important;
+  }
+
+  #__blog-post-container table,
+  #__blog-post-container .pgai-table table,
+  #__blog-post-container .pgai-longread .pgai-table table,
+  #__blog-post-container .pgai-longread > table {
+    display: table !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    border-collapse: collapse !important;
+    border: 0.5pt solid #c9c6bf !important;
+    border-radius: 0 !important;
+    font-size: 6.9pt !important;
+    line-height: 1.25 !important;
+    background: #fff !important;
+  }
+
+  #__blog-post-container table thead {
+    display: table-header-group;
+  }
+
+  #__blog-post-container table tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  #__blog-post-container table :is(th, td),
+  #__blog-post-container .pgai-table :is(th, td),
+  #__blog-post-container .pgai-longread .pgai-table :is(th, td) {
+    position: static !important;
+    padding: 2.5pt 3.5pt !important;
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+    vertical-align: top !important;
+  }
+
+  #__blog-post-container .pgai-longread .pgai-table td:nth-child(n+3):not(:last-child) {
+    white-space: normal !important;
+  }
+
+  body #__blog-post-container .pgai-longread table code,
+  body #__blog-post-container .pgai-longread .pgai-table table code {
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    word-break: normal !important;
+    font-size: 0.92em !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+
+  /* Footnotes span full width in two columns. */
+  #__blog-post-container:has(.pgai-longread) section.footnotes,
+  .blog-post-page #__blog-post-container section.footnotes {
+    column-span: all;
+    max-width: 100% !important;
+    margin: 10pt 0 4pt !important;
+    padding-top: 6pt !important;
+    font-size: 7.8pt !important;
+    line-height: 1.35 !important;
   }
 }

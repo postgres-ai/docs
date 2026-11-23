@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 508" width="360" height="508" role="img" aria-label="Why primary dashboards mislead (live Postgres 18.7 trace): after Grok 4.7 dropped all three indexes on secret_lookup (two on k and one on v, at 54s, 75s, and 99s), primary median throughput rose +16% (2625 to 3040 TPS, 0 SQL errors, 12 ms max lock wait; secret_lookup receives no primary writes) and pooled workload p99 rose only 1.19x, while async standby query q20 client p99 slowed 18.0x (2.91 to 52.58 ms; server mean exec 0.0214 to 4.03 ms, 188x)." style="font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Inter,sans-serif;">
+<rect width="360" height="508" fill="#ffffff" rx="8"/>
+<text x="14" y="21" font-size="10.2" font-weight="700" fill="#111827">Primary stays green (+16% TPS), standby slows 18×</text>
+<rect x="12" y="31" width="336" height="216" rx="6" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="22" y="49" font-size="10.0" font-weight="700" fill="#047857">A. Primary stays green during drop index</text>
+<text x="22" y="63" font-size="8.4" fill="#4b5563">secret_lookup receives no primary writes</text>
+<line x1="52" y1="180.0" x2="336" y2="180.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="47" y="183.5" text-anchor="end" font-size="8.6" fill="#4b5563">0</text>
+<line x1="52" y1="128.0" x2="336" y2="128.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="47" y="131.5" text-anchor="end" font-size="8.6" fill="#4b5563">3,000</text>
+<line x1="52" y1="76.0" x2="336" y2="76.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="47" y="79.5" text-anchor="end" font-size="8.6" fill="#4b5563">6,000</text>
+<polyline points="52.0,149.8 53.2,130.0 54.3,126.8 55.5,107.2 56.7,131.4 57.8,124.3 59.0,121.6 60.1,119.2 61.3,118.4 62.5,141.7 63.6,128.1 64.8,133.0 66.0,135.1 67.1,127.1 68.3,140.8 69.5,142.2 70.6,129.1 71.8,140.7 72.9,141.7 74.1,135.0 75.3,132.7 76.4,129.3 77.6,131.5 78.8,130.7 79.9,129.9 81.1,136.0 82.3,135.8 83.4,134.8 84.6,142.6 85.8,139.5 86.9,141.6 88.1,135.6 89.2,127.6 90.4,129.8 91.6,137.7 92.7,134.5 93.9,128.9 95.1,133.3 96.2,132.2 97.4,136.1 98.6,141.3 99.7,145.0 100.9,132.2 102.0,132.4 103.2,139.0 104.4,127.5 105.5,134.4 106.7,146.6 107.9,143.8 109.0,138.2 110.2,140.8 111.4,136.4 112.5,137.8 113.7,132.5 114.8,130.1 116.0,142.8 117.2,139.6 118.3,135.3 119.5,130.1" fill="none" stroke="#2563eb" stroke-width="1.4"/>
+<polyline points="133.5,153.4 134.6,139.4 135.8,135.4 136.9,138.0 138.1,135.2 139.2,141.5 140.3,150.0 141.5,138.2 142.6,133.0 143.7,136.3 144.9,129.9 146.0,142.4 147.2,140.9 148.3,135.2 149.4,143.5 150.6,142.4 151.7,128.9 152.8,134.2 154.0,136.4 155.1,132.5 156.3,146.7 157.4,140.6 158.5,133.3 159.7,136.1 160.8,134.6 161.9,138.9 163.1,132.2 164.2,138.2 165.4,134.6 166.5,133.3 167.6,134.5 168.8,139.8 169.9,136.8 171.0,141.6 172.2,142.8 173.3,138.6 174.5,131.6 175.6,126.4 176.7,136.1 177.9,127.8 179.0,134.4 180.1,135.2 181.3,133.9 182.4,133.7 183.6,140.0 184.7,129.3 185.8,138.6 187.0,143.4 188.1,140.7 189.2,132.2 190.4,135.1 191.5,138.8 192.7,135.3 193.8,133.9 194.9,132.7 196.1,130.3 197.2,130.7 198.3,140.9 199.5,138.5 200.6,135.8 201.8,145.2 202.9,130.5 204.0,129.3 205.2,130.9 206.3,141.5 207.4,142.1 208.6,132.2 209.7,128.1 210.9,128.7 212.0,133.4 213.1,132.3 214.3,128.2 215.4,130.3 216.5,136.0 217.7,130.4 218.8,124.6 220.0,129.2 221.1,127.1 222.2,121.8 223.4,128.5 224.5,132.3 225.6,117.5 226.8,123.5 227.9,127.6 229.1,133.3 230.2,125.8 231.3,125.2 232.5,126.8 233.6,123.0 234.8,128.7 235.9,129.7 237.0,119.7 238.2,125.3 239.3,118.8 240.4,120.0 241.6,119.1 242.7,118.7 243.9,117.4 245.0,121.2 246.1,129.9 247.3,99.9 248.4,113.1 249.5,116.4 250.7,114.0 251.8,130.3 253.0,118.2 254.1,108.1 255.2,122.9 256.4,117.0 257.5,119.7 258.6,108.9 259.8,110.2 260.9,105.1 262.1,108.6 263.2,124.3 264.3,126.2 265.5,126.5 266.6,121.4 267.7,108.2 268.9,118.7 270.0,130.9 271.2,132.6 272.3,125.3 273.4,113.9 274.6,122.6 275.7,127.3 276.8,119.5 278.0,132.9 279.1,124.4 280.3,127.4 281.4,108.8 282.5,123.8 283.7,110.0 284.8,114.9 285.9,116.3 287.1,114.2 288.2,112.5 289.4,111.7 290.5,113.2 291.6,112.7 292.8,112.4 293.9,118.2 295.0,108.3 296.2,118.8 297.3,116.3 298.5,128.0 299.6,125.0 300.7,119.9 301.9,120.5 303.0,116.6 304.1,121.1 305.3,123.8 306.4,122.5 307.6,122.3 308.7,129.7 309.8,115.1 311.0,109.6 312.1,107.0 313.2,116.9 314.4,124.1 315.5,111.1 316.7,119.5 317.8,113.1 318.9,112.9 320.1,114.9 321.2,113.7 322.3,112.1 323.5,118.1 324.6,126.4 325.8,117.0 326.9,114.8 328.0,115.3 329.2,94.0 330.3,94.2 331.4,111.4 332.6,115.5 333.7,119.7 334.9,104.6 336.0,121.9" fill="none" stroke="#047857" stroke-width="1.4"/>
+<line x1="194.5" y1="76" x2="194.5" y2="180" stroke="#b45309" stroke-width="1.1" stroke-dasharray="3 2"/>
+<line x1="217.8" y1="76" x2="217.8" y2="180" stroke="#b45309" stroke-width="1.1" stroke-dasharray="3 2"/>
+<line x1="245.0" y1="76" x2="245.0" y2="180" stroke="#b45309" stroke-width="1.1" stroke-dasharray="3 2"/>
+<rect x="183.0" y="77" width="72" height="12" rx="2.5" fill="#f8fafc" opacity="0.92"/>
+<text x="219.0" y="86" text-anchor="middle" font-size="8.0" font-weight="600" fill="#b45309">drop index #1–#3</text>
+<text x="52" y="193" font-size="8.1" fill="#4b5563">Baseline 60s (2,625)</text>
+<text x="336" y="193" text-anchor="end" font-size="8.1" fill="#4b5563">Change window 180s (3,040 TPS)</text>
+<rect x="22" y="205" width="316" height="31" rx="4" fill="#ecfdf5"/>
+<text x="180" y="218" text-anchor="middle" font-size="8.5" font-weight="700" fill="#047857">Primary &amp; summary checks passed</text>
+<text x="180" y="230" text-anchor="middle" font-size="8.0" fill="#111827">0 SQL errors · 12 ms max lock wait · pooled p99 +19%</text>
+<rect x="12" y="258" width="336" height="238" rx="6" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="22" y="277" font-size="10.0" font-weight="700" fill="#dc2626">B. Meanwhile on async standby: q20 is 18× slower</text>
+<text x="22" y="292" font-size="8.5" fill="#4b5563">p99 latency slowdown vs. baseline (1.0× = unchanged)</text>
+<text x="22" y="314" font-size="9.3" font-weight="600" fill="#111827">Pooled workload p99, all queries (hides break)</text>
+<rect x="22" y="320" width="14.3" height="18" rx="3" fill="#047857"/>
+<text x="43.3" y="333" font-size="9.3" font-weight="700" fill="#047857">1.19×  (46.0 → 54.9 ms)</text>
+<text x="22" y="367" font-size="9.3" font-weight="600" fill="#111827">Standby query q20 p99 (both k indexes dropped)</text>
+<rect x="22" y="373" width="216.6" height="18" rx="3" fill="#dc2626"/>
+<text x="245.6" y="386" font-size="9.3" font-weight="700" fill="#dc2626">18.0×</text>
+<text x="22" y="404" font-size="8.2" fill="#4b5563">client p99 2.91→52.58 ms · server mean 0.0214→4.03 ms (188×)</text>
+<rect x="22" y="423" width="316" height="58" rx="4" fill="#fef2f2"/>
+<text x="30" y="439" font-size="8.6" font-weight="700" fill="#dc2626">The blind spot:</text>
+<text x="30" y="452" font-size="8.2" fill="#111827">pg_stat_user_indexes is per-node (idx_scan = 0 on primary).</text>
+<text x="30" y="465" font-size="8.2" fill="#111827">Primary TPS &amp; error checks passed while standby q20 broke.</text>
+</svg>
