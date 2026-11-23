@@ -1,0 +1,218 @@
+{
+  "slug": "dblab-vs-redgate-test-data-manager",
+  "kind": "branching",
+  "competitor": {
+    "name": "Redgate Test Data Manager",
+    "vendor": "Redgate",
+    "url": "https://documentation.red-gate.com/tdm",
+    "category": "Test data management",
+    "group": "test-data",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs Redgate Test Data Manager: Postgres clones vs mask and subset",
+  "description": "Redgate Test Data Manager masks and subsets PostgreSQL databases; Redgate Clone makes clones from backups on Kubernetes. DBLab makes thin clones of PostgreSQL.",
+  "summary": "Redgate Test Data Manager is commercial software that anonymizes and subsets databases, including PostgreSQL, with CLIs and a Windows GUI. Redgate Clone, documented alongside it, restores a backup into a data image on a Kubernetes cluster you run and creates data containers from it in seconds. DBLab Engine is open-source software for thin clones of PostgreSQL, filled by dump and restore or physical replication. Pick Redgate if you want classification, masking and subsetting from one vendor; pick DBLab for PostgreSQL clones that can follow the source, with a published price.",
+  "chooseThem": [
+    "A Redgate Clone data container can be graduated into a new data image, so a prepared or masked copy becomes the template for later containers.",
+    "Masking with classification: rganonymize classifies columns that hold personal data, proposes a masking file and applies it, with deterministic masking where you need the same output across runs.",
+    "Subsetting that follows foreign keys, to produce a smaller copy of a database for development and test.",
+    "A data container takes a few seconds to create whatever the size of the data image, and only stores its differences from that image.",
+    "Usable from AI coding tools: the docs provide prompts that walk Claude Code, Cursor or Copilot through install, classification and masking."
+  ],
+  "proofs": [
+    {
+      "key": "open",
+      "them": "Test Data Manager needs a license, and a free trial starts at sign-in. The sources we reviewed list no public price, and the product URL opened the SQL Provision page on 2026-11-18.",
+      "sources": [1, 18]
+    },
+    {
+      "key": "any-source",
+      "them": "Redgate Clone builds a data image by restoring a backup file from an NFS or SMB share, or starts empty; support for PostgreSQL 16 and 17 backups was added in February 2026.",
+      "sources": [12, 10, 16]
+    },
+    {
+      "key": "ci",
+      "them": "The rgclone CLI is meant to be scripted in pipelines, with clones per branch and CI pipeline, and the TDM CLIs can run headless in Docker. The sources we reviewed do not describe testing migrations.",
+      "sources": [8, 7]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "Test Data Manager gives \"a masked and subsetted copy of your database, ready for dev and test\", with anonymize and subset CLIs and a GUI. Redgate Clone creates disposable copies of databases, PostgreSQL among them, \"for development and test\".",
+      "sources": [1, 8, 2]
+    },
+    {
+      "key": "source",
+      "v": "yes",
+      "them": "Anonymize and subset connect to a database by connection string. Redgate Clone creates a data image from a backup file on an NFS or SMB share, or an empty one. PostgreSQL 16 and 17 backups were added in February 2026; version 11 support was removed in January 2025.",
+      "sources": [1, 12, 16]
+    },
+    {
+      "key": "mechanism",
+      "them": "A data image is a point-in-time copy of the database files of a whole instance, restored from a backup. A data container is a shallow copy of a data image that stores only the file differences, running on a Kubernetes cluster.",
+      "sources": [10, 11, 14]
+    },
+    {
+      "key": "speed",
+      "them": "Creating a data container takes no more than a few seconds and does not depend on database size. Creating a data image restores the backup, so it takes longer for larger backups; the docs we read give no PostgreSQL figure for it.",
+      "sources": [13, 11, 10]
+    },
+    {
+      "key": "data",
+      "v": "yes",
+      "them": "A data image holds the entire instance with all its databases, and each data container starts as an exact replica of it. Subsetting, which needs foreign key relationships, is a separate optional step.",
+      "sources": [10, 11, 1]
+    },
+    {
+      "key": "masking",
+      "v": "yes",
+      "them": "rganonymize classifies columns that hold personal data, builds a masking file and masks the data, with deterministic masking available. On PostgreSQL the mask command needs a superuser or the table owner, to disable triggers and constraints, so Redgate advises running it on a copy, not production.",
+      "sources": [5, 6, 1]
+    },
+    {
+      "key": "ci",
+      "v": "yes",
+      "them": "The rgclone CLI is meant to be scripted in DevOps pipelines, including clones per branch and CI pipeline. The TDM CLIs are documented for CI/CD and can run headless in Docker. The sources we reviewed do not describe migration testing.",
+      "sources": [8, 7, 1]
+    },
+    {
+      "key": "interfaces",
+      "them": "The rgclone CLI for data images and containers; rganonymize and the subset CLI; a Test Data Manager GUI for Windows, with a Docker image in preview. The docs include prompts for AI coding tools.",
+      "sources": [9, 7, 4, 5]
+    },
+    {
+      "key": "hosting",
+      "v": "yes",
+      "them": "Self-hosted. Redgate Clone installs on an Ubuntu Server 22.04 or RHEL VM with an embedded Kubernetes cluster, or on Azure Kubernetes Service; a POC starts at 8 vCPUs and 16 GB RAM. The TDM GUI runs on Windows 10/11 or Windows Server 2016 or later; AWS users can deploy it with CloudFormation.",
+      "sources": [14, 15, 4, 3]
+    },
+    {
+      "key": "open-source",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. Test Data Manager needs a license, and a free trial starts at sign-in.",
+      "sources": [1]
+    },
+    {
+      "key": "limits",
+      "them": "A PostgreSQL data container reserves 256Mi to 1Gi of RAM for its lifetime. Data images take about the same disk space as the uncompressed backup. Redgate recommends data containers live under a week. Subsetting needs foreign keys.",
+      "sources": [13, 11, 1]
+    },
+    {
+      "key": "cost-model",
+      "them": "No public price in the sources we reviewed. The docs say a license is needed and offer a free trial. Clone capacity is bounded by RAM and disk: the FAQ estimates 13 to 15 concurrent containers, more realistically about 10, on 32 GB RAM and a 1 TB disk with data images under 100 GB.",
+      "sources": [1, 13, 17]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Redgate Test Data Manager",
+      "price": "No public price",
+      "notes": "License required; free trial at sign-in",
+      "sources": [1, 17]
+    }
+  ],
+  "pricingNote": "On 2026-11-18 the Test Data Manager product URL opened the SQL Provision page, and the Redgate product list did not name Test Data Manager or Redgate Clone. The documentation was still being updated: Test Data Manager had a release on 2026-11-12 and Redgate Clone on 2026-10-07.",
+  "together": "Test Data Manager masks a PostgreSQL database in place, and DBLab can load an anonymized dump. A database masked with rganonymize can be dumped and used as the source for DBLab clones.",
+  "faq": [
+    {
+      "q": "Does Redgate Test Data Manager support PostgreSQL?",
+      "a": "Yes. The documentation lists PostgreSQL among the databases anonymize and subset work with. Redgate Clone lists PostgreSQL 11 to 17 on its engine support page; its release notes removed version 11 in January 2025 and added 16 and 17 in February 2026.",
+      "sources": [1, 9, 16]
+    },
+    {
+      "q": "Where does Redgate Clone run?",
+      "a": "On infrastructure you run: an Ubuntu Server 22.04 or RHEL VM with an embedded Kubernetes cluster, or Azure Kubernetes Service. Backups are read from an NFS or SMB share; data images and containers live on disks attached to the cluster.",
+      "sources": [14, 15, 12]
+    },
+    {
+      "q": "What does Redgate Test Data Manager cost?",
+      "a": "We found no public price. The documentation says a license is needed and that a free trial starts at sign-in. On 2026-11-18 the Test Data Manager product URL opened the SQL Provision page, while its release notes list a release on 2026-11-12.",
+      "sources": [1, 17, 18, 19]
+    },
+    {
+      "q": "Can I use Redgate Test Data Manager and DBLab together?",
+      "a": "Yes, for PostgreSQL. rganonymize masks a database in place, and DBLab can load an anonymized dump, so a masked copy can be the source for DBLab clones.",
+      "sources": [6, 1]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Redgate Test Data Manager documentation",
+      "url": "https://documentation.red-gate.com/tdm"
+    },
+    {
+      "title": "Redgate Test Data Manager: architecture",
+      "url": "https://documentation.red-gate.com/tdm/reference/architecture"
+    },
+    {
+      "title": "Redgate Test Data Manager: implementation checklist",
+      "url": "https://documentation.red-gate.com/tdm/getting-started/implementation-checklist"
+    },
+    {
+      "title": "Redgate Test Data Manager: GUI installation",
+      "url": "https://documentation.red-gate.com/tdm/getting-started/installation/gui-installation"
+    },
+    {
+      "title": "Redgate Test Data Manager: anonymize a database with AI coding tools",
+      "url": "https://documentation.red-gate.com/tdm/getting-started/set-up-with-ai-coding-tools/anonymize-a-database"
+    },
+    {
+      "title": "Redgate Test Data Manager: anonymization connection requirements",
+      "url": "https://documentation.red-gate.com/tdm/command-line-interface-cli/anonymization/anonymization-connection-requirements"
+    },
+    {
+      "title": "Redgate Test Data Manager: command line interface",
+      "url": "https://documentation.red-gate.com/tdm/command-line-interface-cli"
+    },
+    {
+      "title": "Redgate Clone documentation",
+      "url": "https://documentation.red-gate.com/redgate-clone"
+    },
+    {
+      "title": "Redgate Clone: database engine support",
+      "url": "https://documentation.red-gate.com/redgate-clone/database-engine-support"
+    },
+    {
+      "title": "Redgate Clone: data image",
+      "url": "https://documentation.red-gate.com/redgate-clone/concepts/data-image"
+    },
+    {
+      "title": "Redgate Clone: data container",
+      "url": "https://documentation.red-gate.com/redgate-clone/concepts/data-container"
+    },
+    {
+      "title": "Redgate Clone: data storage",
+      "url": "https://documentation.red-gate.com/redgate-clone/concepts/data-storage"
+    },
+    {
+      "title": "Redgate Clone: FAQ",
+      "url": "https://documentation.red-gate.com/redgate-clone/faq"
+    },
+    {
+      "title": "Redgate Clone: installing on VMs running Ubuntu or RHEL",
+      "url": "https://documentation.red-gate.com/redgate-clone/installation-quick-start-guide/installing-on-vms-running-ubuntu-or-rhel"
+    },
+    {
+      "title": "Redgate Clone: installation quick start guide",
+      "url": "https://documentation.red-gate.com/redgate-clone/installation-quick-start-guide"
+    },
+    {
+      "title": "Redgate Clone: release notes",
+      "url": "https://documentation.red-gate.com/redgate-clone/administration/release-notes"
+    },
+    {
+      "title": "Redgate products",
+      "url": "https://www.red-gate.com/products/"
+    },
+    {
+      "title": "Redgate Test Data Manager product URL",
+      "url": "https://www.red-gate.com/products/test-data-manager/"
+    },
+    {
+      "title": "Redgate Test Data Manager: release notes",
+      "url": "https://documentation.red-gate.com/tdm/release-notes"
+    }
+  ]
+}

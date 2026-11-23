@@ -1,0 +1,223 @@
+{
+  "slug": "postgresai-vs-zabbix",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "Zabbix",
+    "vendor": "Zabbix",
+    "url": "https://www.zabbix.com/",
+    "category": "Open-source monitoring",
+    "group": "observability",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs Zabbix: a fix with every finding vs threshold triggers",
+  "description": "Zabbix is open-source monitoring with PostgreSQL templates and threshold triggers. PostgresAI gives each finding a recommended fix and breaks load down by wait event.",
+  "summary": "Zabbix is open-source monitoring under AGPL-3.0. For PostgreSQL it offers templates for Zabbix agent, Zabbix agent 2 and ODBC that collect connections, locks, replication, WAL, cache hit ratio and database size, with threshold triggers. PostgresAI monitors only PostgreSQL, with query and wait event dashboards, scheduled checkups and Issues with a fix. Pick Zabbix if you already run it and want PostgreSQL threshold alerts in the same system. Add PostgresAI if you need query-level analysis, Postgres-specific recommendations or expert help. Both can watch the same server.",
+  "chooseThem": [
+    "Free and open source under AGPL-3.0, with PostgreSQL templates for Zabbix agent, Zabbix agent 2 and ODBC, tested on PostgreSQL 10 to 18 depending on the template.",
+    "Triggers for replication lag, oldest XID age and VACUUM FREEZE needed for wraparound, deadlocks, checksum failures, cache hit ratio, idle in transaction and slow queries, with thresholds set by macros.",
+    "The ODBC template reads workload totals from pg_stat_statements, such as calls, execution and plan time and temporary blocks, and logical replication subscription errors on PostgreSQL 15 to 18.",
+    "Templates for Amazon RDS (CloudWatch metrics, alarms and events) and Azure PostgreSQL Flexible Server, next to the PostgreSQL templates.",
+    "Zabbix Cloud as SaaS from $50 a month, and paid support tiers from the team that builds Zabbix, with consultancy hours on Enterprise and Global."
+  ],
+  "proofs": [
+    {
+      "key": "fix",
+      "them": "Zabbix PostgreSQL templates ship threshold triggers, such as oldest XID age, idle in transaction, cache hit ratio, replication lag and slow query count, defined as problem thresholds. The sources we reviewed do not describe recommended fixes.",
+      "sources": [1, 3]
+    },
+    {
+      "key": "waits",
+      "them": "Zabbix PostgreSQL templates count waiting connections from pg_stat_activity and locks by mode per database. The sources we reviewed do not describe a breakdown by wait event.",
+      "sources": [1]
+    },
+    {
+      "key": "test",
+      "them": "Zabbix monitors running hosts through templates, triggers and actions. The sources we reviewed do not describe trying an index or query change on a copy of the database.",
+      "sources": [3, 1]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "Open-source monitoring software. For PostgreSQL, templates for Zabbix agent, Zabbix agent 2 and ODBC collect metrics such as connections, locks, replication, WAL, cache hit ratio and database size, and ship threshold triggers.",
+      "sources": [3, 1]
+    },
+    {
+      "key": "platforms",
+      "v": "yes",
+      "them": "The PostgreSQL templates connect to an instance by URI, so any reachable server can be monitored; they are tested on PostgreSQL 10 to 18 (Zabbix agent), 10 to 17 (agent 2) and 11 to 18 (ODBC). Separate templates cover Amazon RDS through CloudWatch and Azure PostgreSQL Flexible Server through Azure APIs.",
+      "sources": [1, 7, 8]
+    },
+    {
+      "key": "deployment",
+      "v": "yes",
+      "them": "Self-hosted Zabbix server with agents, or Zabbix Cloud, described as a fully-managed SaaS platform. Configuration and collected data are stored in a database.",
+      "sources": [3, 6]
+    },
+    {
+      "key": "open-source",
+      "v": "yes",
+      "them": "Zabbix 7.0 and later are released under AGPL-3.0; versions up to 6.4 were GPL-2.0. Zabbix is available at no cost.",
+      "sources": [2, 3]
+    },
+    {
+      "key": "query-analysis",
+      "v": "partial",
+      "them": "Templates count slow queries per database (trigger default: more than 5). The ODBC template needs pg_stat_statements and reads workload totals from it, such as average and max execution time, total calls and plan time. The sources we reviewed do not describe a per-query drill-down.",
+      "sources": [1]
+    },
+    {
+      "key": "wait-events",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. The templates count waiting locks and waiting connections, but the sources do not describe wait event analysis.",
+      "sources": [1]
+    },
+    {
+      "key": "health-checks",
+      "v": "partial",
+      "them": "Threshold triggers, for example oldest XID age, idle in transaction, connection usage, cache hit ratio, replication lag, deadlocks, checksum failures and VACUUM FREEZE needed for wraparound. The sources we reviewed do not describe recommended fixes.",
+      "sources": [1]
+    },
+    {
+      "key": "agent-interface",
+      "v": "yes",
+      "them": "Zabbix MCP server lets AI agents work with Zabbix through the Model Context Protocol: read hosts, triggers, problems and item history, update problems, and manage maintenance periods. The Zabbix API, JSON-RPC 2.0 over HTTP, reads and changes configuration and gives access to historical data.",
+      "sources": [11, 9]
+    },
+    {
+      "key": "test-fix",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. Zabbix monitors running systems; the sources do not describe trying a change on a copy of the database.",
+      "sources": [3, 1]
+    },
+    {
+      "key": "expert-help",
+      "v": "partial",
+      "them": "Paid support subscriptions (Silver, Gold, Platinum, Enterprise, Global) and professional services for Zabbix itself: implementation, template building and consulting. Enterprise includes 40 remote consultancy hours. The sources we reviewed do not describe PostgreSQL consulting.",
+      "sources": [5]
+    },
+    {
+      "key": "alerts",
+      "them": "Media types for email, push notification, SMS, custom alert scripts and webhooks. Actions can also run remote commands.",
+      "sources": [4, 3]
+    },
+    {
+      "key": "retention",
+      "them": "Configurable history with a built-in housekeeping procedure. On Zabbix Cloud, the only limit on history and trend storage periods is the available disk space.",
+      "sources": [3, 6]
+    },
+    {
+      "key": "compliance",
+      "them": "Zabbix announced ISO/IEC 27001:2013 certification for information security in January 2023.",
+      "sources": [10]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Open source",
+      "price": "Free",
+      "notes": "AGPL-3.0 from Zabbix 7.0; you run the server",
+      "sources": [2, 3]
+    },
+    {
+      "plan": "Zabbix Cloud",
+      "price": "From $50/month",
+      "notes": "Nano tier, 50 NVPS; tiers up to 2xLarge at $5,000/month for 10,000 NVPS; 5-day free trial",
+      "sources": [6]
+    },
+    {
+      "plan": "Support Silver",
+      "price": "$325/month",
+      "notes": "Billed annually; 8x5 support, 1-day response",
+      "sources": [5]
+    },
+    {
+      "plan": "Support Gold",
+      "price": "From $825/month",
+      "notes": "Billed annually; 8x5 support, 4-hour response",
+      "sources": [5]
+    },
+    {
+      "plan": "Platinum, Enterprise, Global",
+      "price": "Custom",
+      "notes": "24x7 support; Enterprise adds 40 remote consultancy hours, Global 80",
+      "sources": [5]
+    }
+  ],
+  "pricingNote": "Zabbix Cloud prices are starting points; the page says they may vary with configuration. Values above a tier's NVPS limit are discarded.",
+  "together": "Zabbix can keep its PostgreSQL threshold triggers and alerts while PostgresAI adds query and wait event analysis, checkups and Issues for the same servers or managed services. Both read PostgreSQL statistics through a monitoring role, and PostgresAI also needs pg_stat_statements, which the Zabbix ODBC template already requires.",
+  "faq": [
+    {
+      "q": "Is Zabbix open source?",
+      "a": "Yes. Zabbix 7.0 and later are released under AGPL-3.0, and versions up to 6.4 under GPL-2.0. The software is free; Zabbix sells support, training, services and Zabbix Cloud.",
+      "sources": [2, 5]
+    },
+    {
+      "q": "Can Zabbix monitor PostgreSQL?",
+      "a": "Yes. Templates for Zabbix agent, Zabbix agent 2 and ODBC collect connections, locks, replication, WAL, cache hit ratio and database size, with triggers such as slow queries, deadlocks and XID age. They are tested on PostgreSQL 10 to 18, depending on the template.",
+      "sources": [1]
+    },
+    {
+      "q": "Does Zabbix work with Amazon RDS?",
+      "a": "Zabbix has an AWS RDS template that reads CloudWatch metrics, alarms and RDS events. The PostgreSQL templates connect to an instance by URI, so they can also point at a reachable RDS endpoint.",
+      "sources": [7, 1]
+    },
+    {
+      "q": "What does Zabbix cost?",
+      "a": "The software is free. Zabbix Cloud starts at $50 a month for 50 NVPS. Support starts at $325 a month for Silver, billed annually; higher tiers are quoted.",
+      "sources": [6, 5]
+    },
+    {
+      "q": "Can I use PostgresAI and Zabbix together?",
+      "a": "Yes. Zabbix can keep its PostgreSQL templates and triggers, and PostgresAI adds query and wait event analysis, checkups and Issues for the same PostgreSQL servers.",
+      "sources": [1]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Zabbix integrations: PostgreSQL templates",
+      "url": "https://www.zabbix.com/integrations/postgresql"
+    },
+    {
+      "title": "Zabbix license",
+      "url": "https://www.zabbix.com/license"
+    },
+    {
+      "title": "Zabbix 8.0 manual: what is Zabbix",
+      "url": "https://www.zabbix.com/documentation/current/en/manual/introduction"
+    },
+    {
+      "title": "Zabbix 8.0 manual: media types",
+      "url": "https://www.zabbix.com/documentation/current/en/manual/config/notifications/media"
+    },
+    {
+      "title": "Zabbix subscriptions",
+      "url": "https://www.zabbix.com/subscriptions"
+    },
+    {
+      "title": "Zabbix Cloud",
+      "url": "https://www.zabbix.com/cloud"
+    },
+    {
+      "title": "Zabbix integrations: AWS RDS instance by HTTP",
+      "url": "https://www.zabbix.com/integrations/aws_rds"
+    },
+    {
+      "title": "Zabbix integrations: Azure",
+      "url": "https://www.zabbix.com/integrations/azure"
+    },
+    {
+      "title": "Zabbix 8.0 manual: API",
+      "url": "https://www.zabbix.com/documentation/current/en/manual/api"
+    },
+    {
+      "title": "Zabbix is now ISO27001 certified",
+      "url": "https://www.zabbix.com/pr/pr429"
+    },
+    {
+      "title": "Zabbix 8.0 manual: MCP server",
+      "url": "https://www.zabbix.com/documentation/current/en/manual/concepts/mcp_server"
+    }
+  ]
+}

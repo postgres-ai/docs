@@ -1,0 +1,228 @@
+{
+  "slug": "postgresai-vs-azure-database-for-postgresql",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "Azure PostgreSQL built-in tools",
+    "vendor": "Microsoft",
+    "url": "https://learn.microsoft.com/en-us/azure/postgresql/monitor/concepts-query-store",
+    "category": "Managed Postgres built-in tuning",
+    "group": "provider",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs Azure PostgreSQL built-in tools: any provider vs Azure only",
+  "description": "Azure Database for PostgreSQL includes Query Store and autonomous tuning with index advice. PostgresAI runs the same checkups on any provider and files Issues with a fix.",
+  "summary": "Azure Database for PostgreSQL flexible server includes Query Store, Query Performance Insight, autonomous tuning (index, ANALYZE and VACUUM recommendations), intelligent tuning and adaptive autovacuum, and troubleshooting guides. They come with the server and Query Store has no extra charge. PostgresAI monitors PostgreSQL on any provider and turns checkup findings into Issues with a fix. On Azure, use both: keep the built-in tools, and add PostgresAI for checkups, agent access, history beyond Azure's limits or expert help.",
+  "chooseThem": [
+    "Built into the server: Query Store is available at no extra charge and troubleshooting guides cost nothing beyond the Log Analytics ingestion they need.",
+    "Autonomous tuning recommends CREATE INDEX, dropping duplicate or unused indexes, REINDEX of invalid indexes, ANALYZE and VACUUM, each with a SQL statement; index recommendations include estimated size and query cost impact.",
+    "Intelligent tuning and adaptive autovacuum change write and autovacuum parameters automatically; adaptive autovacuum records each change in an audit view.",
+    "Query Store records wait samples every 100 ms by default and can store query plans, all queryable as views in the azure_sys database.",
+    "The Azure MCP Server has PostgreSQL tools to list servers and tables, run queries, read table schemas and read or set server parameters."
+  ],
+  "proofs": [
+    {
+      "key": "anywhere",
+      "them": "Microsoft describes autonomous tuning as a built-in offering of Azure Database for PostgreSQL flexible server. It needs at least 4 vCores, adaptive autovacuum is not supported on elastic clusters, and Microsoft says not to enable Query Store on the Burstable tier.",
+      "sources": [3, 6, 1]
+    },
+    {
+      "key": "history",
+      "them": "Query Store keeps 7 days by default and at most 30. Azure Monitor metrics are kept up to 93 days, with at most 30 days on one chart. Autonomous tuning recommendations are deleted 35 days after they were last produced.",
+      "sources": [1, 8, 3]
+    },
+    {
+      "key": "test",
+      "them": "Autonomous tuning evaluates candidate indexes with the hypopg extension and reports the estimated plan cost improvement per query. The sources we reviewed do not describe running a change on a separate copy of the data.",
+      "sources": [3]
+    },
+    {
+      "key": "open",
+      "them": "These tools are features of Azure Database for PostgreSQL, which Microsoft describes as a fully managed database service, and they run only inside that service.",
+      "sources": [13, 3]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "Features of Azure Database for PostgreSQL flexible server: Query Store, Query Performance Insight in the portal, autonomous tuning recommendations, intelligent tuning and adaptive autovacuum that change parameters, troubleshooting guides, and Azure Monitor metrics and logs.",
+      "sources": [1, 2, 3, 5, 7]
+    },
+    {
+      "key": "platforms",
+      "v": "no",
+      "them": "Only Azure Database for PostgreSQL flexible server, which supports PostgreSQL 11 to 18, with 11 to 13 under extended support. Autonomous tuning needs PostgreSQL 12 or newer and adaptive autovacuum parameter tuning 14 or newer. Adaptive autovacuum is not supported on elastic clusters.",
+      "sources": [3, 14, 6]
+    },
+    {
+      "key": "deployment",
+      "v": "no",
+      "them": "Part of Azure Database for PostgreSQL, which Microsoft describes as \"a fully managed database service\". Query Store and recommendations are stored in the azure_sys database on your server; Query Performance Insight and the troubleshooting guides also need logs sent to a Log Analytics workspace.",
+      "sources": [13, 1, 2, 7]
+    },
+    {
+      "key": "open-source",
+      "v": "na",
+      "them": "Does not apply: these tools are features of Azure Database for PostgreSQL, a Microsoft cloud service.",
+      "sources": [1, 3]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "Query Store keeps runtime statistics in 15-minute windows by default, up to 500 queries per window, with optional query plans. Query Performance Insight shows long-running queries and top queries by calls, data usage, IOPS and temporary files. Query Store is opt-in, and Microsoft says not to enable it on the Burstable tier.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "wait-events",
+      "v": "yes",
+      "them": "Query Store wait sampling records wait event type and name per query, sampled every 100 ms by default, and Query Performance Insight has a Wait Statistics tab. An enhanced metric counts sessions by wait event type.",
+      "sources": [1, 2, 8]
+    },
+    {
+      "key": "health-checks",
+      "v": "yes",
+      "them": "Autonomous tuning runs every 12 hours by default and recommends B-tree indexes, dropping duplicate or unused indexes, REINDEX, ANALYZE and VACUUM. You apply them yourself. It needs Query Store and at least 4 vCores. Troubleshooting guides cover CPU, memory, IOPS, temp files and autovacuum.",
+      "sources": [3, 4, 7]
+    },
+    {
+      "key": "agent-interface",
+      "v": "yes",
+      "them": "The Azure MCP Server has PostgreSQL tools to list servers, databases and tables, run a query, get a table schema and get or set server parameters; it lists a GitHub Copilot subscription as a prerequisite. Recommendations are also available with az postgres flexible-server autonomous-tuning commands.",
+      "sources": [9, 10, 4]
+    },
+    {
+      "key": "test-fix",
+      "v": "partial",
+      "them": "Autonomous tuning uses the hypopg extension to evaluate candidate indexes and reports the estimated plan cost improvement per query. The sources we reviewed do not describe running a change on a separate copy of the data.",
+      "sources": [3]
+    },
+    {
+      "key": "expert-help",
+      "v": "partial",
+      "them": "Azure support plans from Developer ($29 a month) to Unified Enterprise, which includes advisory support, with Cloud Solution Architect services available. The sources we reviewed do not describe PostgreSQL-specific consulting.",
+      "sources": [11]
+    },
+    {
+      "key": "alerts",
+      "them": "Azure Monitor alerts on platform, enhanced, autovacuum and availability metrics, and log query alerts in Log Analytics.",
+      "sources": [8]
+    },
+    {
+      "key": "retention",
+      "them": "Query Store: 7 days by default, 1 to 30 days. Metrics: up to 93 days. Autonomous tuning recommendations are deleted 35 days after they were last produced. Adaptive autovacuum audit records: 90 days.",
+      "sources": [1, 8, 3, 6]
+    },
+    {
+      "key": "compliance",
+      "them": "Microsoft states that Azure undergoes independent SOC 2 Type 2 audits; the list of services in scope is in the Azure SOC 2 Type 2 attestation report.",
+      "sources": [12]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Query Store",
+      "price": "No extra charge",
+      "notes": "Opt-in; not recommended on the Burstable tier",
+      "sources": [1]
+    },
+    {
+      "plan": "Troubleshooting guides",
+      "price": "No extra charge",
+      "notes": "Beyond Log Analytics ingestion, which all guides need",
+      "sources": [7]
+    },
+    {
+      "plan": "Embedded Grafana dashboards",
+      "price": "No extra cost",
+      "notes": "Prebuilt dashboards in the Azure portal for Azure Monitor metrics",
+      "sources": [8]
+    }
+  ],
+  "pricingNote": "Logs sent to Log Analytics have ingestion, retention and query costs, and Query Performance Insight needs them. The sources we reviewed do not state a separate price for autonomous tuning, intelligent tuning or adaptive autovacuum.",
+  "together": "PostgresAI monitoring supports Azure Database for PostgreSQL, so it can run against the same server while Query Store, autonomous tuning and the troubleshooting guides stay on. Azure keeps its index and parameter tuning; PostgresAI adds scheduled checkups, Issues with a fix, 13 months of history on Scale and expert help.",
+  "faq": [
+    {
+      "q": "Does Azure Database for PostgreSQL recommend indexes?",
+      "a": "Yes. Autonomous tuning analyzes the Query Store workload and recommends B-tree indexes to create, duplicate or unused indexes to drop, and invalid indexes to reindex, with a SQL script for each. It also recommends ANALYZE and VACUUM. You run the scripts yourself.",
+      "sources": [3, 4]
+    },
+    {
+      "q": "What do the Azure tuning features need?",
+      "a": "Query Store must be enabled with pg_qs.query_capture_mode set to top or all. Autonomous tuning needs at least 4 vCores and PostgreSQL 12 or newer. Query Performance Insight also needs wait sampling and a Log Analytics workspace.",
+      "sources": [1, 2, 3]
+    },
+    {
+      "q": "Does Azure change PostgreSQL settings automatically?",
+      "a": "Intelligent tuning adjusts bgwriter_delay, checkpoint_completion_target, max_wal_size and min_wal_size. Adaptive autovacuum, when enabled, tunes five autovacuum parameters every 30 minutes and records each change in an audit view.",
+      "sources": [5, 6]
+    },
+    {
+      "q": "How long does Query Store keep data?",
+      "a": "7 days by default, configurable from 1 to 30 days with pg_qs.retention_period_in_days. Azure Monitor metrics are kept up to 93 days.",
+      "sources": [1, 8]
+    },
+    {
+      "q": "Can I use PostgresAI with Azure Database for PostgreSQL?",
+      "a": "Yes. PostgresAI monitoring supports Azure Database for PostgreSQL, so it runs next to Query Store and autonomous tuning on the same server and adds checkups, Issues and expert help.",
+      "sources": [1]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Azure Database for PostgreSQL: Query Store",
+      "url": "https://learn.microsoft.com/en-us/azure/postgresql/monitor/concepts-query-store"
+    },
+    {
+      "title": "Azure Database for PostgreSQL: Query Performance Insight",
+      "url": "https://learn.microsoft.com/en-us/azure/postgresql/monitor/concepts-query-performance-insight"
+    },
+    {
+      "title": "Azure Database for PostgreSQL: autonomous tuning",
+      "url": "https://learn.microsoft.com/en-us/azure/postgresql/monitor/concepts-autonomous-tuning"
+    },
+    {
+      "title": "Azure Database for PostgreSQL: use autonomous tuning recommendations",
+      "url": "https://learn.microsoft.com/en-us/azure/postgresql/monitor/how-to-get-apply-recommendations-from-autonomous-tuning"
+    },
+    {
+      "title": "Azure Database for PostgreSQL: intelligent tuning",
+      "url": "https://learn.microsoft.com/en-us/azure/postgresql/monitor/concepts-intelligent-tuning"
+    },
+    {
+      "title": "Azure Database for PostgreSQL: adaptive autovacuum",
+      "url": "https://learn.microsoft.com/en-us/azure/postgresql/monitor/concepts-adaptive-autovacuum"
+    },
+    {
+      "title": "Azure Database for PostgreSQL: troubleshooting guides",
+      "url": "https://learn.microsoft.com/en-us/azure/postgresql/troubleshoot/concepts-troubleshooting-guides"
+    },
+    {
+      "title": "Azure Database for PostgreSQL: monitor using metrics and logs",
+      "url": "https://learn.microsoft.com/en-us/azure/postgresql/monitor/concepts-monitoring"
+    },
+    {
+      "title": "Azure MCP Server tools for Azure Database for PostgreSQL",
+      "url": "https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/tools/azure-database-postgresql"
+    },
+    {
+      "title": "What is the Azure MCP Server?",
+      "url": "https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/overview"
+    },
+    {
+      "title": "Azure support plans",
+      "url": "https://azure.microsoft.com/en-us/support/plans/"
+    },
+    {
+      "title": "Azure compliance: SOC 2 Type 2",
+      "url": "https://learn.microsoft.com/en-us/azure/compliance/offerings/offering-soc-2"
+    },
+    {
+      "title": "What is Azure Database for PostgreSQL flexible server?",
+      "url": "https://learn.microsoft.com/en-us/azure/postgresql/overview"
+    },
+    {
+      "title": "Microsoft Learn: Supported versions of PostgreSQL in Azure Database for PostgreSQL",
+      "url": "https://learn.microsoft.com/en-us/azure/postgresql/configure-maintain/concepts-supported-versions"
+    }
+  ]
+}

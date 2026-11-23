@@ -1,0 +1,215 @@
+{
+  "slug": "postgresai-vs-eversql",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "EverSQL",
+    "vendor": "Aiven",
+    "url": "https://aiven.io/docs/products/postgresql/howto/ai-insights",
+    "category": "AI SQL query optimizer",
+    "group": "ai",
+    "status": "acquired",
+    "statusNote": "Aiven announced on November 21, 2023 that it had acquired EverSQL. Since May 28, 2024 the EverSQL engine powers Aiven AI Database Optimizer, built into Aiven for PostgreSQL. eversql.com now says \"EverSQL is now a part of Aiven\" and links to Aiven's free SQL Query Optimizer.",
+    "statusSources": [1, 3, 2]
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs EverSQL: any provider vs AI query rewrites on Aiven",
+  "description": "EverSQL is now Aiven AI Database Optimizer, with index and rewrite advice inside Aiven for PostgreSQL. PostgresAI works on any provider and gives each finding a fix.",
+  "summary": "EverSQL, bought by Aiven in 2023, is now Aiven AI Database Optimizer. It shows slow queries in the AI insights tab of Aiven for PostgreSQL services and suggests indexes and SQL rewrites; a free web tool takes a pasted PostgreSQL query. PostgresAI monitors PostgreSQL on any provider, runs scheduled checkups and turns findings into Issues for you, your AI agent or a PostgresAI expert. Pick Aiven if your databases run on Aiven and you want query and index suggestions in its console. Pick PostgresAI for databases hosted elsewhere, or for checkups and expert help.",
+  "chooseThem": [
+    "On Aiven for PostgreSQL, the optimizer is built into the console: open AI insights, click Optimize on a query, and get index and rewrite suggestions with a query diff and explanations.",
+    "In May 2024 Aiven announced it free for all Aiven for PostgreSQL users during early availability, and the current pricing page lists no separate charge for it.",
+    "The standalone SQL Query Optimizer takes a pasted PostgreSQL query plus optional schema statistics, needs no connection to the database, and is free during early availability.",
+    "It works without database credentials or access to table data, and masks query parameters with question marks by default.",
+    "On Aiven, service forks give a complete copy of a service for testing, and the Aiven MCP server lets AI assistants find slow queries and missing indexes in PostgreSQL."
+  ],
+  "proofs": [
+    {
+      "key": "anywhere",
+      "them": "Aiven AI Database Optimizer is documented for Aiven for PostgreSQL services. For a database elsewhere, Aiven points to the standalone SQL Query Optimizer, where you paste one query and optional statistics.",
+      "sources": [5, 6]
+    },
+    {
+      "key": "fix",
+      "them": "In Aiven AI insights you pick a query and click Optimize to get index and SQL rewrite suggestions, applied by running the SQL provided. The sources we reviewed do not describe scheduled checks of settings, autovacuum or bloat.",
+      "sources": [5]
+    },
+    {
+      "key": "waits",
+      "them": "Aiven says the optimizer processes query execution counts and average query times to find statements to optimize. The sources we reviewed do not describe wait event analysis.",
+      "sources": [4, 5]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "Aiven AI Database Optimizer, powered by the EverSQL engine: AI-driven index and SQL rewrite suggestions for slow queries in Aiven services. A separate free web tool optimizes a single pasted query.",
+      "sources": [3, 5, 6]
+    },
+    {
+      "key": "platforms",
+      "v": "partial",
+      "them": "The continuous optimizer is documented for Aiven for PostgreSQL services; the docs say to use the standalone tool \"when you do not run an Aiven for PostgreSQL service\". That tool takes a pasted PostgreSQL query and metadata and cannot connect to a database.",
+      "sources": [5, 6, 7]
+    },
+    {
+      "key": "deployment",
+      "v": "nd",
+      "them": "Built into the Aiven Console for Aiven services. Aiven services can run in your own cloud account with Bring your own cloud, offered case by case with a commitment deal. It needs no credentials or access to table data. The sources we reviewed do not describe a self-hosted version of the optimizer.",
+      "sources": [5, 12]
+    },
+    {
+      "key": "open-source",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. The optimizer and the web tool are offered as Aiven services.",
+      "sources": [3, 6]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "The AI insights tab lists running queries; Aiven says query execution counts and average query times are processed to find statements to optimize. Optimize returns index and SQL rewrite suggestions, alternatives, a query diff and an explanation, as SQL you run yourself.",
+      "sources": [5, 4, 3]
+    },
+    {
+      "key": "wait-events",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed for the optimizer.",
+      "sources": [4, 5]
+    },
+    {
+      "key": "health-checks",
+      "v": "partial",
+      "them": "Per-query suggestions in AI insights. eversql.com describes ongoing recommendations, including removing redundant indexes. The sources we reviewed do not describe scheduled checks of settings or vacuum.",
+      "sources": [5, 2]
+    },
+    {
+      "key": "agent-interface",
+      "v": "yes",
+      "them": "The Aiven MCP server lets AI assistants create and manage Aiven services; for PostgreSQL it can run read-only SQL queries and find slow queries and missing indexes. Clients listed include Cursor, Claude Code, Claude Desktop, VS Code and Gemini CLI. It is included with an Aiven account at no extra cost.",
+      "sources": [9]
+    },
+    {
+      "key": "test-fix",
+      "v": "partial",
+      "them": "Aiven service forking creates an independent, complete copy of a service, configuration and data, from its latest backup; Aiven lists testing upgrades and development copies of production as uses. The optimizer itself returns SQL to run. The sources we reviewed do not tie forks to testing optimizer suggestions.",
+      "sources": [10, 5]
+    },
+    {
+      "key": "expert-help",
+      "v": "partial",
+      "them": "Aiven offers Essential, Advanced and Premium support tiers on top of Basic support, and Premium includes service capacity and cost optimization up to an architectural review. The sources we reviewed do not describe PostgreSQL consulting as part of the optimizer.",
+      "sources": [13]
+    },
+    {
+      "key": "alerts",
+      "them": "Not documented in the sources we reviewed for the optimizer. At the acquisition, Aiven said monitoring and alerting would follow the first optimization features.",
+      "sources": [1, 5]
+    },
+    {
+      "key": "retention",
+      "them": "Not documented in the sources we reviewed. The docs say suggestion quality is proportional to the amount of performance data collected.",
+      "sources": [5]
+    },
+    {
+      "key": "compliance",
+      "them": "Aiven lists ISO/IEC 27001, 27017, 27018 and 27701, an ISAE 3000 Type 2 report aligned with SOC 2 criteria, PCI DSS, HIPAA, GDPR and CCPA.",
+      "sources": [11]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "AI Database Optimizer",
+      "price": "No separate public price",
+      "notes": "Announced free for all Aiven for PostgreSQL users during early availability; not listed on the pricing page",
+      "sources": [3, 8]
+    },
+    {
+      "plan": "SQL Query Optimizer (web tool)",
+      "price": "Free",
+      "notes": "Free during early availability; one pasted PostgreSQL query at a time, no database connection",
+      "sources": [6]
+    },
+    {
+      "plan": "Aiven for PostgreSQL",
+      "price": "From $0/month",
+      "notes": "Free $0, Developer $5, Hobbyist from $12, Startup from $75, Business from $180, Premium from $270 a month",
+      "sources": [8]
+    }
+  ],
+  "pricingNote": "eversql.com no longer lists its own plans; its buttons lead to Aiven's free SQL Query Optimizer. The sources we reviewed do not say what happened to existing EverSQL subscriptions.",
+  "faq": [
+    {
+      "q": "What happened to EverSQL?",
+      "a": "Aiven acquired EverSQL on November 21, 2023. In May 2024 Aiven launched AI Database Optimizer, powered by the EverSQL engine, in Aiven for PostgreSQL. eversql.com now says EverSQL is part of Aiven and links to Aiven's free SQL Query Optimizer.",
+      "sources": [1, 3, 2]
+    },
+    {
+      "q": "Does Aiven AI Database Optimizer work with Amazon RDS or self-managed Postgres?",
+      "a": "The continuous optimizer is documented for Aiven services. For a database elsewhere, Aiven points to the standalone SQL Query Optimizer, where you paste a query and optional schema statistics; it does not connect to the database.",
+      "sources": [5, 6, 7]
+    },
+    {
+      "q": "What does EverSQL cost now?",
+      "a": "Aiven announced AI Database Optimizer as free for Aiven for PostgreSQL users during early availability, and its pricing page lists no separate charge. The web SQL Query Optimizer is free during early availability. Aiven for PostgreSQL plans start at $0 a month.",
+      "sources": [3, 6, 8]
+    },
+    {
+      "q": "Does Aiven AI Database Optimizer need access to my data?",
+      "a": "Aiven says the optimizer gathers schema structure, database statistics and other signals without credentials or access to the data in the tables. Because slow query logs can contain sensitive values, it replaces query parameters with question marks by default.",
+      "sources": [5]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Aiven press release: Aiven acquires EverSQL (November 21, 2023)",
+      "url": "https://aiven.io/press/aiven-acquires-eversql"
+    },
+    {
+      "title": "eversql.com today",
+      "url": "https://eversql.com/"
+    },
+    {
+      "title": "Aiven press release: Aiven AI Database Optimizer launch (May 28, 2024)",
+      "url": "https://aiven.io/press/aiven-releases-ai-database-optimizer"
+    },
+    {
+      "title": "Aiven blog: AI Database Optimizer launch",
+      "url": "https://aiven.io/blog/aiven-ai-dboptimizer-launch"
+    },
+    {
+      "title": "Aiven docs: AI database optimizer for Aiven for PostgreSQL",
+      "url": "https://aiven.io/docs/products/postgresql/howto/ai-insights"
+    },
+    {
+      "title": "Aiven SQL Query Optimizer (free tool)",
+      "url": "https://aiven.io/tools/sql-query-optimizer"
+    },
+    {
+      "title": "Aiven docs: SQL query optimizer",
+      "url": "https://aiven.io/docs/products/postgresql/howto/query-optimizer"
+    },
+    {
+      "title": "Aiven pricing: PostgreSQL",
+      "url": "https://aiven.io/pricing/postgresql"
+    },
+    {
+      "title": "Aiven docs: MCP server",
+      "url": "https://aiven.io/docs/tools/mcp-server"
+    },
+    {
+      "title": "Aiven docs: service forking",
+      "url": "https://aiven.io/docs/platform/concepts/service-forking"
+    },
+    {
+      "title": "Aiven security and compliance",
+      "url": "https://aiven.io/security-compliance"
+    },
+    {
+      "title": "Aiven docs: Bring your own cloud",
+      "url": "https://aiven.io/docs/platform/concepts/byoc"
+    },
+    {
+      "title": "Aiven support services",
+      "url": "https://aiven.io/support-services"
+    }
+  ]
+}

@@ -1,0 +1,222 @@
+{
+  "slug": "dblab-vs-liquibase",
+  "kind": "changes",
+  "competitor": {
+    "name": "Liquibase",
+    "vendor": "Liquibase",
+    "url": "https://www.liquibase.com/",
+    "category": "Database change management",
+    "group": "tools",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs Liquibase: run a change on a clone, ship it with changelogs",
+  "description": "Liquibase tracks, versions and deploys schema changes from changelogs. DBLab, open source under Apache 2.0, runs the changelog on a full-size clone first.",
+  "summary": "Liquibase writes, orders and deploys schema changes: changesets in SQL, XML, YAML or JSON changelogs, preconditions, rollback commands and an update-sql preview, with policy checks and drift reports in the commercial Liquibase Secure. DBLab does none of that. It gives you a full-size thin clone of a PostgreSQL database where a change can be run to see how long it takes and which locks it holds. The two fit together: run the changelog against a clone in CI, then let Liquibase deploy it.",
+  "chooseThem": [
+    "Liquibase is the change process itself: changesets in a changelog, a DATABASECHANGELOG table that records what ran, update, rollback and preview commands. DBLab covers none of these steps.",
+    "Rollback commands (rollback, rollback-to-date, rollback-count) and their SQL previews are in every edition, including Community.",
+    "Supports PostgreSQL 12 to 18, with connection guides for PostgreSQL on Amazon RDS, Aurora PostgreSQL, Azure Database for PostgreSQL and Google Cloud SQL.",
+    "Liquibase Secure adds policy checks on changelogs before deploy, such as warnings on dropped tables and changed data types, and drift detection with dashboards.",
+    "Liquibase Community is free to use in production; each release moves to Apache 2.0 two years after it ships."
+  ],
+  "proofs": [
+    {
+      "key": "real-data",
+      "them": "Liquibase update-sql prints the SQL an update will run so you can inspect it; its docs say the command does not check SQL for correctness and does not anticipate deployment errors. Liquibase runs changes on the database you point it at.",
+      "sources": [6]
+    },
+    {
+      "key": "open",
+      "them": "Liquibase Community 5.0 and later is under the Functional Source License, which bars competing commercial use; each release reverts to Apache 2.0 two years after it ships. Liquibase Secure is commercially licensed.",
+      "sources": [1, 3]
+    },
+    {
+      "key": "rerun",
+      "them": "Liquibase rollback, rollback-to-date and rollback-count are in every edition. Undoing a single changeset or a single deployment (rollback-one-changeset, rollback-one-update) is Liquibase Secure only.",
+      "sources": [7]
+    },
+    {
+      "key": "locks",
+      "them": "Liquibase Secure policy checks inspect changelogs and SQL before deploy, with defaults that warn on dropped tables and columns, truncates and data type changes. The sources we reviewed do not describe a check for the locks a change takes.",
+      "sources": [8, 14]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A tool to track, version and deploy database schema changes. Liquibase Community is the free edition. Liquibase Secure is the commercial edition, sold as Change Automation, Change Governance (policies) and Change Intelligence (deployments, drift and history).",
+      "sources": [3, 2, 11]
+    },
+    {
+      "key": "tests-on-data",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. update-sql prints the SQL an update will run so you can evaluate it; the docs say it does not check SQL for correctness and does not anticipate deployment errors. Liquibase runs changes on whatever database you point it at.",
+      "sources": [6]
+    },
+    {
+      "key": "lock-risk",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. The policy checks we read warn about data loss and type changes (ChangeDropTableWarn, ChangeDropColumnWarn, ChangeTruncateTableWarn, ModifyDataTypeWarn); none of them is described as a check for table locks.",
+      "sources": [8, 14]
+    },
+    {
+      "key": "static-checks",
+      "v": "yes",
+      "them": "Policy checks inspect changelogs, changesets and SQL before a change deploys; each triggered check returns the exit code set for its severity, which can stop a pipeline. Default checks include warnings on dropped tables and columns, changed data types and Postgres reserved keywords in object names. They are a Liquibase Secure feature: the pricing page lists Change Governance as none for Community.",
+      "sources": [8, 13, 2]
+    },
+    {
+      "key": "workflow",
+      "v": "yes",
+      "them": "Changes are changesets in a changelog written in SQL, XML, YAML or JSON. Liquibase records deployed changesets in the DATABASECHANGELOG table. Preconditions such as tableExists or rowCount decide whether a changeset runs, and update-sql previews the SQL before update.",
+      "sources": [4, 5, 6]
+    },
+    {
+      "key": "approvals",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed as an approval workflow. Change Intelligence, on the Team, Business and Enterprise plans, shows deployments, policy outcomes, drift, failures and change history; role-based access control is listed on Business and Enterprise.",
+      "sources": [2, 11]
+    },
+    {
+      "key": "rollback",
+      "them": "rollback, rollback-to-date and rollback-count, each with a -sql preview, are in all editions including Community. rollback-one-changeset and rollback-one-update, which undo a single changeset or deployment, are Liquibase Secure only.",
+      "sources": [7]
+    },
+    {
+      "key": "ci",
+      "them": "The liquibase/setup-liquibase GitHub Action installs Community or Secure (version 4.32.0 or later) on a runner. In Liquibase Secure, a drift run can be marked as failed when drift meets a --drift-severity threshold.",
+      "sources": [10, 9]
+    },
+    {
+      "key": "hosting",
+      "v": "partial",
+      "them": "Community is a CLI you run yourself; Liquibase Secure adds a server hosted inside your own network. Since 5.0 (announced September 30, 2025) Community is under the Functional Source License: free in production, but third parties may not commercialize it in competition with Liquibase; each release reverts to Apache 2.0 after two years. Earlier releases stay Apache 2.0.",
+      "sources": [1, 3, 11]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Community",
+      "price": "Free",
+      "notes": "Functional Source License since 5.0, Apache 2.0 after two years",
+      "sources": [1, 2]
+    },
+    {
+      "plan": "Secure Starter",
+      "price": "No public price",
+      "notes": "Companies under $1B revenue; 250 database targets; Change Automation and Change Governance, no Change Intelligence or RBAC",
+      "sources": [2]
+    },
+    {
+      "plan": "Secure Team",
+      "price": "No public price",
+      "notes": "500 database targets; adds Change Intelligence",
+      "sources": [2]
+    },
+    {
+      "plan": "Secure Business",
+      "price": "No public price",
+      "notes": "750 database targets, RBAC, premium support with 24/7 SLA",
+      "sources": [2]
+    },
+    {
+      "plan": "Secure Enterprise",
+      "price": "No public price",
+      "notes": "2,000 database targets, RBAC, premium support with 24/7 SLA",
+      "sources": [2]
+    }
+  ],
+  "pricingNote": "Each Liquibase Secure plan requires a Professional Services package. Secure plans are sized by database targets, with more capacity available on every plan; DBLab SE is billed by machine size.",
+  "together": "The two cover different steps of the same change. A developer adds a changeset to the changelog and opens a pull request. In CI, a job creates a DBLab clone through the API or CLI and runs liquibase update against it, so the team sees how long the change takes and which locks it holds on full-size data; reset returns the clone to its snapshot for the next run. After merge, Liquibase deploys the changelog to production and records it in DATABASECHANGELOG. DBLab does not deploy anything.",
+  "faq": [
+    {
+      "q": "Is Liquibase open source?",
+      "a": "Releases before 5.0 are under Apache 2.0. Starting with 5.0, announced on September 30, 2025, Liquibase Community is under the Functional Source License: you can use and modify it in production, but third parties cannot commercialize it in competition with Liquibase. Each release reverts to Apache 2.0 two years after it ships. Liquibase Secure is commercially licensed.",
+      "sources": [1, 3]
+    },
+    {
+      "q": "Does Liquibase test a migration on production-size data?",
+      "a": "The sources we reviewed do not describe that. update-sql prints the SQL an update would run, and the docs say it does not anticipate deployment errors. Liquibase runs changes on the database you point it at, so it can run against a DBLab clone.",
+      "sources": [6]
+    },
+    {
+      "q": "What does Liquibase cost?",
+      "a": "Community is free. The four Liquibase Secure plans, Starter, Team, Business and Enterprise, are each quoted, sized by database targets, and require a Professional Services package. Starter is for companies under $1B in revenue.",
+      "sources": [2]
+    },
+    {
+      "q": "Can I use DBLab and Liquibase together?",
+      "a": "Yes. A DBLab clone is an ordinary PostgreSQL server, so a CI job can run liquibase update on a clone to see duration and locks on full-size data, then Liquibase deploys the same changelog to production. DBLab does not write or deploy migrations, so it does not replace Liquibase.",
+      "sources": [4, 10]
+    },
+    {
+      "q": "Which Liquibase edition has policy checks and drift detection?",
+      "a": "Liquibase Secure. The pricing page lists Change Governance (policies) on all Secure plans and Change Intelligence (deployments, policy outcomes, drift and history) on Team, Business and Enterprise, and none of the three for Community.",
+      "sources": [2, 9]
+    },
+    {
+      "q": "Which PostgreSQL versions does Liquibase support?",
+      "a": "PostgreSQL 12 through 18. The docs also have connection guides for PostgreSQL on Amazon RDS, Amazon Aurora PostgreSQL, Azure Database for PostgreSQL and Google Cloud SQL for PostgreSQL.",
+      "sources": [12]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Liquibase blog: Liquibase Community for the future (FSL)",
+      "url": "https://www.liquibase.com/blog/liquibase-community-for-the-future-fsl"
+    },
+    {
+      "title": "Liquibase pricing",
+      "url": "https://www.liquibase.com/pricing"
+    },
+    {
+      "title": "Liquibase repository on GitHub",
+      "url": "https://github.com/liquibase/liquibase"
+    },
+    {
+      "title": "Liquibase Community docs: what is a changelog",
+      "url": "https://docs.liquibase.com/community/user-guide-5-0/what-is-a-changelog"
+    },
+    {
+      "title": "Liquibase Community docs: preconditions",
+      "url": "https://docs.liquibase.com/community/user-guide-5-0/what-are-preconditions"
+    },
+    {
+      "title": "Liquibase Community docs: update-sql",
+      "url": "https://docs.liquibase.com/community/reference-guide-5-0-2/init-update-and-rollback-commands/update-sql"
+    },
+    {
+      "title": "Liquibase docs: rollback commands",
+      "url": "https://docs.liquibase.com/secure/reference-guide-5-2/init-update-and-rollback-commands/what-are-rollback-commands"
+    },
+    {
+      "title": "Liquibase Secure docs: default policy checks",
+      "url": "https://docs.liquibase.com/secure/user-guide-5-0/what-default-policy-checks-does-liquibase-offer"
+    },
+    {
+      "title": "Liquibase Secure docs: drift detection",
+      "url": "https://docs.liquibase.com/secure/monitor-6-0-2/what-is-drift-detection"
+    },
+    {
+      "title": "setup-liquibase GitHub Action",
+      "url": "https://github.com/liquibase/setup-liquibase"
+    },
+    {
+      "title": "Liquibase Secure docs: introduction",
+      "url": "https://docs.liquibase.com/secure/intro-to-liquibase-6-0-2"
+    },
+    {
+      "title": "Liquibase Secure docs: connect Liquibase with PostgreSQL",
+      "url": "https://docs.liquibase.com/secure/create-6-0-2/set-up-secure-automation/connect-6-0/connect-liquibase-with-postgresql"
+    },
+    {
+      "title": "Liquibase Secure docs: severity and exit codes in policy check automation",
+      "url": "https://docs.liquibase.com/secure/governance-6-0-2/severity-and-exit-codes-in-policy-check-automation"
+    },
+    {
+      "title": "Liquibase Secure docs: policy checks library",
+      "url": "https://docs.liquibase.com/secure/user-guide-5-2-2/policy-check-library"
+    }
+  ]
+}

@@ -1,0 +1,183 @@
+{
+  "slug": "dblab-vs-cloud-sql-clone",
+  "kind": "branching",
+  "competitor": {
+    "name": "Cloud SQL cloning",
+    "vendor": "Google Cloud",
+    "url": "https://docs.cloud.google.com/sql/docs/postgres/clone-instance",
+    "category": "Managed database cloning",
+    "group": "cloud",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs Cloud SQL cloning: thin clones vs a new Cloud SQL instance",
+  "description": "Cloud SQL cloning creates a new, independent Cloud SQL instance from an existing one. DBLab serves many thin clones of any PostgreSQL from one machine you control.",
+  "summary": "Cloud SQL cloning creates a new Cloud SQL for PostgreSQL instance that is independent of the source, with the same settings and database users; point-in-time recovery uses the same mechanism. Each clone is a full instance with its own machine and storage. DBLab Engine is open-source software that keeps one copy of any PostgreSQL, including Cloud SQL, on a machine you run and gives many people thin clones of it in seconds. For a standalone full copy or a recovery inside Cloud SQL, cloning is built in. For many copies at once on one machine, DBLab fits.",
+  "chooseThem": [
+    "Built into Cloud SQL, with no other software or server to run. The clone is an ordinary Cloud SQL instance managed by Google Cloud.",
+    "Fast clone, used in the same zone when disk properties match, is a metadata-only operation: \"the size of the data does not affect the clone creation time.\"",
+    "Google states that cloning has no performance impact on the source instance, and the clone gets its own machine, so tests do not share resources with other copies.",
+    "Clones from an earlier point in time through point-in-time recovery, with logs kept up to 7 days on Enterprise and up to 35 days on Enterprise Plus.",
+    "Database flags, connectivity, machine type and database users with their passwords are copied, so a clone is ready to use like the source."
+  ],
+  "proofs": [
+    {
+      "key": "any-source",
+      "them": "Cloud SQL cloning copies Cloud SQL instances. Google's clone FAQ: \"You can't clone a database to another project\" and \"You can't clone a replica.\"",
+      "sources": [1]
+    },
+    {
+      "key": "cost",
+      "them": "Each Cloud SQL clone is a new instance, independent of the source, with the source's machine type and storage settings. Cloud SQL bills instances per vCPU-hour, per GiB-hour of memory and per GiB-hour of storage.",
+      "sources": [1, 4]
+    },
+    {
+      "key": "seconds",
+      "them": "A standard Cloud SQL clone takes time proportional to database size, \"hours for large databases.\" Fast clone creation steps take seconds to minutes, but fast clone runs only in the source's zone with matching disk properties, and not for a point-in-time clone.",
+      "sources": [1]
+    },
+    {
+      "key": "control",
+      "them": "Cloud SQL is a fully managed service: each instance, including a clone, runs on a virtual machine on a host Google Cloud server.",
+      "sources": [6, 1]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A Cloud SQL operation that creates a new instance \"completely independent from the source instance\", with the same settings such as database flags, connectivity and machine type, and the same database users. Point-in-time recovery uses cloning to restore an instance from an earlier point in time.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "source",
+      "v": "partial",
+      "them": "Clones Cloud SQL instances in the same Google Cloud project. Google's FAQ: you can't clone a database to another project, and you can't clone a replica. A clone of a clone is allowed.",
+      "sources": [1]
+    },
+    {
+      "key": "mechanism",
+      "them": "Two workflows. Standard clone \"creates a full backup of the source instance\" and builds the new instance from it. Fast clone \"takes an Instant Snapshot\" and creates the new disk from it; Cloud SQL uses it when the clone is made in the source's zone without specifying a zone, and disk properties match. A point-in-time clone uses the standard workflow.",
+      "sources": [1]
+    },
+    {
+      "key": "speed",
+      "them": "Standard clone: \"proportional to the database size.\" Fast clone: metadata-only, so data size does not affect creation time. Many recent changes on the source can make cloning a long-running operation. Google's comparison table gives hours for large databases with standard clone, and seconds to minutes for fast clone creation steps.",
+      "sources": [1]
+    },
+    {
+      "key": "data",
+      "v": "yes",
+      "them": "The new instance is \"a functionally independent copy of the source at the time the operation began\", or of an earlier timestamp within the point-in-time recovery window.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "masking",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed.",
+      "sources": [1]
+    },
+    {
+      "key": "ci",
+      "v": "partial",
+      "them": "The sources we reviewed do not describe a CI integration. Clones are created from the Google Cloud console, the gcloud CLI, Terraform or the REST API, which any pipeline can call.",
+      "sources": [1]
+    },
+    {
+      "key": "interfaces",
+      "them": "Google Cloud console, gcloud CLI, Terraform and Cloud SQL Admin REST API. With gcloud or REST you can set a different primary zone, or primary and secondary zones for a high-availability clone, in the source's region.",
+      "sources": [1]
+    },
+    {
+      "key": "hosting",
+      "v": "no",
+      "them": "Cloud SQL is \"a fully managed relational database service.\" \"Each Cloud SQL instance is powered by a virtual machine (VM) running on a host Google Cloud server.\" Clones run as Cloud SQL instances in Google Cloud.",
+      "sources": [6]
+    },
+    {
+      "key": "open-source",
+      "v": "na",
+      "them": "Cloning is a feature of Cloud SQL, a managed Google Cloud service used through the console, the gcloud CLI or the REST API. The database engine is PostgreSQL.",
+      "sources": [6]
+    },
+    {
+      "key": "limits",
+      "them": "No cloning to another project and no cloning of replicas. Replicas, manual backups and maintenance settings are not copied, and the clone gets new IP addresses. Up to 1,000 instances per project with the new network architecture, 100 with the old one; read replicas count as instances. Point-in-time window: up to 7 days on Enterprise, up to 35 on Enterprise Plus.",
+      "sources": [1, 5, 3]
+    },
+    {
+      "key": "cost-model",
+      "them": "The clone page does not mention billing. A clone is a new Cloud SQL instance, and dedicated-core instances are priced per vCPU-hour and per GiB-hour of memory, plus storage per GiB-hour.",
+      "sources": [1, 4]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Enterprise edition vCPU",
+      "price": "$0.0413 per vCPU-hour",
+      "notes": "General purpose machine series, Iowa (us-central1), per use; HA (regional) instances $0.0826",
+      "sources": [4]
+    },
+    {
+      "plan": "Enterprise edition memory",
+      "price": "$0.007 per GiB-hour",
+      "notes": "Iowa (us-central1), per use; HA instances $0.014",
+      "sources": [4]
+    },
+    {
+      "plan": "SSD storage",
+      "price": "$0.000232877 per GiB-hour",
+      "notes": "Iowa (us-central1); each clone has its own storage; HA storage $0.000465753",
+      "sources": [4]
+    }
+  ],
+  "pricingNote": "Prices depend on region, edition and machine series; committed use discounts apply to CPU and memory, not storage. The sources we read list no separate fee for the clone operation.",
+  "together": "DBLab names Cloud SQL as a source: it copies a Cloud SQL database with dump and restore and refreshes it in full, so developers get thin clones without a new Cloud SQL instance per copy. Cloud SQL cloning remains the way to get a standalone full instance or to recover to an earlier point in time.",
+  "faq": [
+    {
+      "q": "Is a Cloud SQL clone a full copy of the database?",
+      "a": "Yes. Google describes it as a functionally independent copy of the source at the time the operation began, and the new instance is completely independent from the source. Settings and database users are copied; replicas, manual backups and maintenance settings are not.",
+      "sources": [1]
+    },
+    {
+      "q": "How long does it take to clone a Cloud SQL instance?",
+      "a": "It depends on the workflow. A standard clone takes time proportional to the database size. A fast clone, used in the same zone when disk properties match, is metadata-only, so data size does not affect creation time. A point-in-time clone uses the standard workflow.",
+      "sources": [1]
+    },
+    {
+      "q": "Can I clone a Cloud SQL instance to another project or clone a read replica?",
+      "a": "No to both, according to Google's clone FAQ. A clone stays in the source's project, and replicas cannot be cloned. You can clone an instance that was itself a clone.",
+      "sources": [1]
+    },
+    {
+      "q": "Can DBLab copy a Cloud SQL for PostgreSQL database?",
+      "a": "Yes. DBLab copies Cloud SQL with dump and restore in logical mode and refreshes it in full; the first copy is slow, about 1 TiB an hour. After that, clones take seconds and share one physical copy on the DBLab machine.",
+      "sources": [1]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Cloud SQL for PostgreSQL: Clone instances",
+      "url": "https://docs.cloud.google.com/sql/docs/postgres/clone-instance"
+    },
+    {
+      "title": "Cloud SQL for PostgreSQL: Point-in-time recovery",
+      "url": "https://docs.cloud.google.com/sql/docs/postgres/backup-recovery/pitr"
+    },
+    {
+      "title": "Cloud SQL for PostgreSQL: Editions overview",
+      "url": "https://docs.cloud.google.com/sql/docs/postgres/editions-intro"
+    },
+    {
+      "title": "Cloud SQL pricing",
+      "url": "https://cloud.google.com/sql/pricing"
+    },
+    {
+      "title": "Cloud SQL: Quotas and limits",
+      "url": "https://docs.cloud.google.com/sql/docs/quotas"
+    },
+    {
+      "title": "Cloud SQL for PostgreSQL: Introduction",
+      "url": "https://docs.cloud.google.com/sql/docs/postgres/introduction"
+    }
+  ]
+}

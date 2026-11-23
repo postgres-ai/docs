@@ -1,0 +1,218 @@
+{
+  "slug": "postgresai-vs-tiger-data-insights",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "Tiger Data Insights",
+    "vendor": "Tiger Data",
+    "url": "https://www.tigerdata.com/docs/deploy/tiger-cloud/tiger-cloud-aws/monitoring",
+    "category": "Managed Postgres built-in monitoring",
+    "group": "provider",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs Tiger Data Insights: any provider vs built into Tiger Cloud",
+  "description": "Tiger Data Insights shows top queries, EXPLAIN plans and metrics in the Tiger Cloud Console. PostgresAI keeps 13 months of history on Scale and covers other providers.",
+  "summary": "Tiger Data, formerly Timescale, builds Insights into the Tiger Cloud Console on every plan: the top 50 queries with drill-down graphs, automatic EXPLAIN plans for queries over 10 seconds, 30 days of resource metrics, configuration recommendations, forks for testing and an MCP server in the open-source Tiger CLI. PostgresAI monitoring supports Tiger Data and runs on the same service, adding wait event analysis, scheduled checkups turned into Issues, 13-month history on Scale and human experts. Add PostgresAI if you want those, or one tool across several providers.",
+  "chooseThem": [
+    "Included on every Tiger Cloud plan, with pg_stat_statements pre-installed and nothing to set up.",
+    "Per-query drill-down with execution time, rows, buffer hit ratio, CPU, memory and storage I/O, and EXPLAIN plans collected automatically for queries over 10 seconds.",
+    "Forks are exact copies of a service with data, for testing; forks of free services, which are in beta, use copy-on-write storage, so only diverging chunks are billed.",
+    "Tiger MCP, in the Apache 2.0 Tiger CLI, gives agents metrics, logs, SQL and fork tools for Tiger Cloud services.",
+    "Exporters send metrics and logs to Datadog, Amazon CloudWatch, Azure Monitor or Prometheus on Scale and Enterprise."
+  ],
+  "proofs": [
+    {
+      "key": "history",
+      "them": "Tiger Cloud shows CPU, memory and storage metrics for up to 30 previous days. The sources we reviewed do not state how long Insights query data is kept.",
+      "sources": [1]
+    },
+    {
+      "key": "anywhere",
+      "them": "Tiger Data lists Insights among the Tiger Cloud exclusive features; Tiger Cloud is its managed service on AWS and Azure.",
+      "sources": [13, 12]
+    },
+    {
+      "key": "waits",
+      "them": "Tiger Cloud's Connections view shows current lock contention, the number of queries or transactions waiting for locks. The sources we reviewed do not describe wait event analysis.",
+      "sources": [1]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "Monitoring built into the Tiger Cloud Console: Metrics, Logs, Insights for query statistics, Jobs, Connections with current lock contention, and Recommendations with configuration tips.",
+      "sources": [1, 3]
+    },
+    {
+      "key": "platforms",
+      "v": "no",
+      "them": "Built into Tiger Cloud: Tiger Data lists Insights among the Tiger Cloud exclusive features, and the monitoring page covers Tiger Cloud services.",
+      "sources": [13, 1]
+    },
+    {
+      "key": "deployment",
+      "v": "no",
+      "them": "Part of Tiger Cloud, which Tiger Data describes as \"our fully managed service on AWS and Azure\"; Insights is listed among the Tiger Cloud exclusive features. The self-hosted TimescaleDB Enterprise console has its own server metrics, kept 30 days by default.",
+      "sources": [12, 13, 14]
+    },
+    {
+      "key": "open-source",
+      "v": "partial",
+      "them": "Tiger CLI, which includes Tiger MCP, is open source under Apache 2.0. The sources we reviewed do not describe the Insights code as public.",
+      "sources": [8, 7]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "The top 50 queries matching a search, with executions, total time, CPU and storage read, as median or P95. A drill-down shows execution time, rows, plans, buffer hits, CPU, memory and I/O, and an EXPLAIN plan for queries over 10 seconds.",
+      "sources": [1]
+    },
+    {
+      "key": "wait-events",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. The Connections view shows current lock contention: how many queries or transactions are waiting for locks.",
+      "sources": [1]
+    },
+    {
+      "key": "health-checks",
+      "v": "partial",
+      "them": "Recommendations give specific tips on configuring a service, from finishing account setup to tuning, such as a more suitable chunk interval or consistently failing jobs.",
+      "sources": [1]
+    },
+    {
+      "key": "agent-interface",
+      "v": "yes",
+      "them": "Tiger MCP, bundled with Tiger CLI, has read-only metrics tools (service_metrics_series and others), service_logs, db_query, db_schema and service_fork for AI agents.",
+      "sources": [7, 8]
+    },
+    {
+      "key": "test-fix",
+      "v": "yes",
+      "them": "A fork is an exact copy of a service at a point in time, with its own data, for testing. Standard services take typically 5 to 20+ minutes to fork and are billed for the whole service; free services, in beta, use copy-on-write and fork in about 30 to 90 seconds, and a standard service cannot be forked to a free one.",
+      "sources": [9, 3]
+    },
+    {
+      "key": "expert-help",
+      "v": "partial",
+      "them": "Developer Support by email on all paid plans, Production Support (24x7) as an add-on or on Enterprise, and integration and migration services on Enterprise. The sources we reviewed do not describe PostgreSQL consulting beyond these.",
+      "sources": [3, 2]
+    },
+    {
+      "key": "alerts",
+      "them": "Exporters send telemetry to Datadog, Amazon CloudWatch, Azure Monitor and Prometheus for alerting; metrics export is on Scale and Enterprise, one exporter per service. Exported metrics cover CPU, disk and memory, plus optional PostgreSQL lock, replication and statistics metrics. In the Console, Recommendations may flag a problem; the sources we reviewed do not describe Console alert notifications.",
+      "sources": [4, 5, 6, 1, 3]
+    },
+    {
+      "key": "retention",
+      "them": "CPU, memory and storage metrics for up to 30 previous days at down to 10-second granularity. The sources we reviewed do not state how long Insights query data is kept.",
+      "sources": [1]
+    },
+    {
+      "key": "compliance",
+      "them": "Tiger Cloud is SOC 2 Type 2 compliant; the report is available on Scale and Enterprise. The Enterprise plan is HIPAA compliant.",
+      "sources": [10]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Performance",
+      "price": "From $30/month",
+      "notes": "Hourly billing; Performance Insights included; basic support 9-5 ET",
+      "sources": [2]
+    },
+    {
+      "plan": "Scale",
+      "price": "From $36/month",
+      "notes": "Pay as you go; integrations with observability tools; SOC 2 report",
+      "sources": [2, 10]
+    },
+    {
+      "plan": "Enterprise",
+      "price": "Custom",
+      "notes": "Production support (24x7, 1-hour response for Sev 1), HIPAA, integration and migration services",
+      "sources": [2]
+    }
+  ],
+  "pricingNote": "These are Tiger Cloud plans; Insights is not sold separately. Compute is billed hourly and storage by average GB used.",
+  "together": "PostgresAI monitoring supports Tiger Data, so it can run on the same Tiger Cloud service while Insights stays available in the Console. PostgresAI adds wait events, scheduled checkups as Issues, longer history and expert help.",
+  "faq": [
+    {
+      "q": "What happened to Timescale?",
+      "a": "On June 17, 2025 the company changed its name from Timescale to Tiger Data. Its managed service is Tiger Cloud, and Insights is part of the Tiger Cloud Console.",
+      "sources": [11, 1]
+    },
+    {
+      "q": "Which Tiger Cloud plans include Insights?",
+      "a": "The Console shows dashboards with performance insights on all plans. Exporting metrics to tools such as Datadog needs Scale or Enterprise.",
+      "sources": [3, 5]
+    },
+    {
+      "q": "Does Tiger Cloud have an MCP server?",
+      "a": "Yes. Tiger MCP ships in the open-source Tiger CLI and lets an AI agent manage services, read metrics and logs, run SQL and fork services.",
+      "sources": [7, 8]
+    },
+    {
+      "q": "Can I use PostgresAI and Tiger Data Insights together?",
+      "a": "Yes. PostgresAI monitoring supports Tiger Data and runs alongside the Console. It adds wait event history, scheduled checkups as Issues, 13-month retention on Scale and expert requests.",
+      "sources": [1]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Tiger Data docs: monitor your Tiger Cloud services",
+      "url": "https://www.tigerdata.com/docs/deploy/tiger-cloud/tiger-cloud-aws/monitoring"
+    },
+    {
+      "title": "Tiger Data pricing",
+      "url": "https://www.tigerdata.com/pricing"
+    },
+    {
+      "title": "Tiger Data docs: pricing and account management",
+      "url": "https://www.tigerdata.com/docs/deploy/tiger-cloud/tiger-cloud-aws/pricing-and-account-management"
+    },
+    {
+      "title": "Tiger Data docs: observability and alerting integrations",
+      "url": "https://www.tigerdata.com/docs/integrate/observability-alerting"
+    },
+    {
+      "title": "Tiger Data docs: integrate with Datadog",
+      "url": "https://www.tigerdata.com/docs/integrate/observability-alerting/datadog"
+    },
+    {
+      "title": "Tiger Data docs: exported metrics reference",
+      "url": "https://www.tigerdata.com/docs/integrate/observability-alerting/exported-metrics"
+    },
+    {
+      "title": "Tiger Data docs: Tiger MCP reference",
+      "url": "https://www.tigerdata.com/docs/reference/tiger-cloud/tiger-mcp"
+    },
+    {
+      "title": "Tiger CLI repository",
+      "url": "https://github.com/timescale/tiger-cli"
+    },
+    {
+      "title": "Tiger Data docs: fork services",
+      "url": "https://www.tigerdata.com/docs/deploy/tiger-cloud/tiger-cloud-aws/service-management/fork-services"
+    },
+    {
+      "title": "Tiger Data docs: security overview",
+      "url": "https://www.tigerdata.com/docs/deploy/tiger-cloud/tiger-cloud-aws/security/overview"
+    },
+    {
+      "title": "Tiger Data blog: Timescale becomes Tiger Data",
+      "url": "https://www.tigerdata.com/blog/timescale-becomes-tigerdata"
+    },
+    {
+      "title": "Tiger Data documentation home",
+      "url": "https://www.tigerdata.com/docs"
+    },
+    {
+      "title": "Tiger Data docs: Tiger Cloud exclusive features",
+      "url": "https://www.tigerdata.com/docs/get-started/cloud-exclusive-features"
+    },
+    {
+      "title": "Tiger Data docs: TimescaleDB Enterprise exclusive features",
+      "url": "https://www.tigerdata.com/docs/get-started/enterprise-exclusive-features"
+    }
+  ]
+}

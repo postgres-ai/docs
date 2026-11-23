@@ -1,0 +1,169 @@
+{
+  "slug": "dblab-vs-postgres-template-cloning",
+  "kind": "branching",
+  "competitor": {
+    "name": "CREATE DATABASE ... TEMPLATE",
+    "vendor": "PostgreSQL Global Development Group",
+    "url": "https://www.postgresql.org/docs/current/sql-createdatabase.html",
+    "category": "Built-in PostgreSQL feature",
+    "group": "diy",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs CREATE DATABASE TEMPLATE: thin clones vs in-server copies",
+  "description": "CREATE DATABASE ... TEMPLATE copies a database inside the same PostgreSQL server, built in and free. DBLab makes thin clones of a full database on its own machine.",
+  "summary": "CREATE DATABASE with TEMPLATE copies one database into a new database in the same PostgreSQL server. It is built in, and in PostgreSQL 18 STRATEGY FILE_COPY with file_copy_method = clone lets the kernel share disk blocks on file systems that support it. The docs say it is not yet intended as a general-purpose COPY DATABASE facility: no other session may be connected to the source while it is copied, and the copy lives in the same server. DBLab makes thin clones on its own machine, each an ordinary PostgreSQL server. To copy a database that nobody is connected to, such as a test fixture, the built-in command needs nothing else.",
+  "chooseThem": [
+    "Built into every PostgreSQL server: one SQL command, or createdb -T, with no extra software, machine or license.",
+    "You can make your own template databases: mark one with IS_TEMPLATE and any user with the CREATEDB privilege can copy it.",
+    "Objects added to a template are in every copy. The docs give the example of a procedural language installed in template1 being available in every new database.",
+    "In PostgreSQL 18, STRATEGY FILE_COPY with file_copy_method = clone uses copy_file_range() on Linux and FreeBSD or copyfile on macOS, so the kernel can share disk blocks on some file systems.",
+    "The copy is an ordinary database in the server you already run, with no second server to start, connect to or pay for."
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A built-in SQL command. CREATE DATABASE works by copying an existing database, template1 by default; TEMPLATE name copies another database in the same cluster. The docs say this is \"not (yet) intended as a general-purpose 'COPY DATABASE' facility.\"",
+      "sources": [1, 2]
+    },
+    {
+      "key": "source",
+      "v": "partial",
+      "them": "Any database in the same PostgreSQL cluster, on any server where you may create databases. Any user with CREATEDB can copy a database marked as a template; otherwise only superusers and the owner can. Source and copy are in the same cluster.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "mechanism",
+      "them": "WAL_LOG, the default, copies block by block and writes each block to WAL. FILE_COPY copies directories at file system level, with a checkpoint before and after. In PostgreSQL 18, file_copy_method = clone makes FILE_COPY use copy_file_range() (Linux, FreeBSD) or copyfile (macOS), letting the kernel share disk blocks on some file systems.",
+      "sources": [1, 3, 4]
+    },
+    {
+      "key": "speed",
+      "them": "The docs give no times. WAL_LOG is described as the most efficient strategy when the template is small. FILE_COPY reduces WAL volume for a large template but forces two checkpoints. Whether clone shares blocks depends on the file system; the docs do not name which ones do.",
+      "sources": [1, 3]
+    },
+    {
+      "key": "data",
+      "v": "yes",
+      "them": "The whole source database. Database-level settings (set with ALTER DATABASE) and database-level GRANT permissions are not copied. Encoding and locale must match the template, except when template0 is used.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "masking",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. CREATE DATABASE copies the template database as it is.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "ci",
+      "v": "partial",
+      "them": "No CI feature is documented. A CI job can run CREATE DATABASE ... TEMPLATE or createdb -T, as long as no other session is connected to the template at that moment.",
+      "sources": [1, 5]
+    },
+    {
+      "key": "interfaces",
+      "them": "SQL: CREATE DATABASE with TEMPLATE, STRATEGY and IS_TEMPLATE. The createdb program connects to the postgres database and issues the same command.",
+      "sources": [1, 5]
+    },
+    {
+      "key": "hosting",
+      "v": "yes",
+      "them": "Inside the PostgreSQL server that holds the source. The new database is in the same cluster, served by the same server; the docs warn that FILE_COPY's checkpoints may have a noticeable negative impact on overall system performance.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "open-source",
+      "v": "yes",
+      "them": "Part of PostgreSQL, released under the PostgreSQL License, which the project describes as a liberal open-source license similar to BSD or MIT.",
+      "sources": [6]
+    },
+    {
+      "key": "limits",
+      "them": "No other session may be connected to the template: CREATE DATABASE fails if one is, and new connections to it are blocked until the copy completes. Encoding and locale must match (except for template0). Database-level settings and GRANTs are not copied. file_copy_method = clone needs operating system support.",
+      "sources": [1, 2, 3]
+    },
+    {
+      "key": "cost-model",
+      "them": "Free, part of PostgreSQL. Copies use disk in the same server: WAL_LOG writes each block again and to WAL. With FILE_COPY and file_copy_method = clone, the kernel may share blocks on file systems that support it.",
+      "sources": [1, 3, 6]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Open source",
+      "price": "Free",
+      "notes": "Part of PostgreSQL, PostgreSQL License",
+      "sources": [6]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can I copy a production database with CREATE DATABASE ... TEMPLATE?",
+      "a": "Only when no other session is connected to it. CREATE DATABASE fails if any other connection exists when it starts, and new connections to the source are blocked during the copy. The docs say this is not yet intended as a general-purpose COPY DATABASE facility. The copy also lives in the same server as the source.",
+      "sources": [1, 2]
+    },
+    {
+      "q": "What does file_copy_method = clone do in PostgreSQL 18?",
+      "a": "It changes how CREATE DATABASE ... STRATEGY=FILE_COPY and ALTER DATABASE ... SET TABLESPACE copy files. The default is COPY. CLONE uses copy_file_range() on Linux and FreeBSD or copyfile on macOS, giving the kernel the opportunity to share disk blocks. The setting was added in PostgreSQL 18.",
+      "sources": [3, 4]
+    },
+    {
+      "q": "Which file systems support cloning with file_copy_method?",
+      "a": "The PostgreSQL docs do not name any. They say CLONE uses copy_file_range() or copyfile, \"giving the kernel the opportunity to share disk blocks or push work down to lower layers on some file systems.\" Check your file system's own documentation.",
+      "sources": [3]
+    },
+    {
+      "q": "Who can copy a database with TEMPLATE?",
+      "a": "Creating a database needs superuser or the CREATEDB privilege. If the source is marked as a template (IS_TEMPLATE, datistemplate), any user with CREATEDB can copy it; if not, only superusers and the owner of the database can.",
+      "sources": [1, 2]
+    },
+    {
+      "q": "How is DBLab different from a template copy?",
+      "a": "A template copy is a new database in the same server as its source. DBLab copies any PostgreSQL from version 10 up, including Amazon RDS, onto its own machine, then makes thin clones of that copy; each clone is an ordinary PostgreSQL server.",
+      "sources": [1, 2]
+    }
+  ],
+  "sources": [
+    {
+      "title": "PostgreSQL docs: CREATE DATABASE",
+      "url": "https://www.postgresql.org/docs/current/sql-createdatabase.html"
+    },
+    {
+      "title": "PostgreSQL docs: Template Databases",
+      "url": "https://www.postgresql.org/docs/current/manage-ag-templatedbs.html"
+    },
+    {
+      "title": "PostgreSQL docs: file_copy_method",
+      "url": "https://www.postgresql.org/docs/current/runtime-config-resource.html#GUC-FILE-COPY-METHOD"
+    },
+    {
+      "title": "PostgreSQL 18 docs: Release 18",
+      "url": "https://www.postgresql.org/docs/18/release-18.html"
+    },
+    {
+      "title": "PostgreSQL docs: Creating a Database",
+      "url": "https://www.postgresql.org/docs/current/manage-ag-createdb.html"
+    },
+    {
+      "title": "PostgreSQL License",
+      "url": "https://www.postgresql.org/about/licence/"
+    }
+  ],
+  "proofs": [
+    {
+      "key": "any-source",
+      "them": "CREATE DATABASE ... TEMPLATE copies a database into the same PostgreSQL cluster. No other session may be connected to the template while it is copied, and the docs say it is not yet intended as a general-purpose COPY DATABASE facility.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "cost",
+      "them": "With the default WAL_LOG strategy, the copy writes every block again and to WAL, in the same server. With FILE_COPY and file_copy_method = clone (PostgreSQL 18), the kernel may share disk blocks on some file systems.",
+      "sources": [1, 3]
+    },
+    {
+      "key": "ci",
+      "them": "A CI job can run CREATE DATABASE ... TEMPLATE or createdb -T while no other session is connected to the template. The sources we reviewed do not describe running migrations on the copy or checking the locks they take.",
+      "sources": [1, 5]
+    }
+  ]
+}

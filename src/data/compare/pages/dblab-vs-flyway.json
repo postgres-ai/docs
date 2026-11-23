@@ -1,0 +1,210 @@
+{
+  "slug": "dblab-vs-flyway",
+  "kind": "changes",
+  "competitor": {
+    "name": "Flyway",
+    "vendor": "Redgate",
+    "url": "https://www.red-gate.com/products/flyway/",
+    "category": "Database migration tool",
+    "group": "tools",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs Flyway: test on a full-size clone, deploy with migrations",
+  "description": "Flyway by Redgate applies versioned SQL migrations, with undo and drift checks in paid editions. DBLab runs them on a full-size clone and resets it for the next run.",
+  "summary": "Flyway writes, orders and deploys schema changes: versioned and repeatable migrations in SQL, Java or scripts, recorded in a schema history table. Paid editions add undo migrations, dry run scripts, Redgate code review rules, drift detection and change reports. DBLab does none of that. It gives you a full-size thin clone of a PostgreSQL database where a migration can be run to see how long it takes and which locks it holds. The two fit together: run the migrations on a clone in CI, then let Flyway deploy them.",
+  "chooseThem": [
+    "Flyway is the migration process itself: versioned, repeatable and baseline migrations, applied in order and recorded in the schema history table. DBLab covers none of these steps.",
+    "The Flyway engine is open source under Apache 2.0, and Flyway Community, with the CLI, API and Flyway Desktop, is free.",
+    "PostgreSQL 12 to 18 is listed for both foundational and advanced capabilities, 9.0 to 11 for migrations, with Amazon RDS, Aurora, Google Cloud and Azure variants.",
+    "Code review with SQLFluff in every edition; Enterprise adds the Redgate rules, such as Drop Table, Drop Column, Modify Data Type and TRUNCATE, and custom regex rules.",
+    "Enterprise adds drift detection, change reports and generated versioned and undo scripts from Redgate's comparison engine, with PostgreSQL among the supported platforms."
+  ],
+  "proofs": [
+    {
+      "key": "real-data",
+      "them": "Flyway runs migrations on the database you point it at. Its example pipeline migrates a CI database built from scratch, then an acceptance environment you provision, which may be a copy of production.",
+      "sources": [10]
+    },
+    {
+      "key": "rerun",
+      "them": "Flyway undo rolls back the most recently applied versioned migration, using an undo script; the undo command needs Teams or Enterprise, and generated undo scripts are Enterprise only.",
+      "sources": [6, 5]
+    },
+    {
+      "key": "open",
+      "them": "The Flyway engine is open source under Apache 2.0. Redgate's editions with a GUI and additional capabilities, such as undo, dry run and drift detection, are not part of the open-source project and are licensed per user.",
+      "sources": [11, 5, 13]
+    },
+    {
+      "key": "locks",
+      "them": "Flyway Enterprise Redgate rules flag DROP TABLE, DROP COLUMN, data type changes and TRUNCATE in the SQL text. The sources we reviewed do not describe measuring the locks a migration takes.",
+      "sources": [9]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "Database change management by Redgate. The open-source engine applies migrations; Redgate sells editions with a GUI and more features. The product pages list Community, for individuals and education, and Enterprise, which adds policy-as-code, drift detection and audit-ready change control.",
+      "sources": [1, 2, 11]
+    },
+    {
+      "key": "tests-on-data",
+      "v": "partial",
+      "them": "Flyway runs migrations on the database you point it at. The example pipeline migrates a CI database built from scratch, then an acceptance environment that you provision, which the docs say may be a copy of production (consider masking the data). Check DryRun (Teams and Enterprise) previews changes; Enterprise change reports show what will change on the target.",
+      "sources": [10, 6, 3]
+    },
+    {
+      "key": "lock-risk",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. The Redgate rules flag statements such as DROP TABLE, DROP COLUMN, data type changes and TRUNCATE, and RG05 asks for indexes in a separate script because index creation is time and resource intensive; none is described as a check for table locks.",
+      "sources": [9]
+    },
+    {
+      "key": "static-checks",
+      "v": "yes",
+      "them": "Code review runs SQLFluff rules in every edition and regex rules in Enterprise. Enterprise adds the Redgate rules RG01 to RG23, 20 of which apply to PostgreSQL; the Enterprise page counts 95+ rules. Teams and Enterprise can fail a pipeline on rule violations.",
+      "sources": [5, 8, 9, 3]
+    },
+    {
+      "key": "workflow",
+      "v": "yes",
+      "them": "Migrations are versioned, repeatable or baseline, most often written in SQL, also Java or scripts. Versioned migrations run once in order. Teams and Enterprise also offer state-based projects, and Enterprise generates migration scripts with Redgate's comparison engine.",
+      "sources": [7, 5, 3]
+    },
+    {
+      "key": "approvals",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed as an approval workflow in Flyway. The example pipeline puts an approval gate in your CI/CD system, where the change report and deployment script are reviewed; Enterprise change reports are described as the DBA review packet.",
+      "sources": [10, 3]
+    },
+    {
+      "key": "rollback",
+      "them": "Undo migrations undo the versioned migration with the same version. The undo command needs Teams or Enterprise; Enterprise can generate undo scripts for every versioned migration.",
+      "sources": [7, 6, 3]
+    },
+    {
+      "key": "ci",
+      "them": "The docs have example pipelines for Azure DevOps, Bitbucket, GitHub, GitLab, Jenkins, Octopus Deploy and TeamCity.",
+      "sources": [10]
+    },
+    {
+      "key": "hosting",
+      "v": "yes",
+      "them": "The engine on GitHub is under Apache 2.0; Redgate's editions with a GUI and extra capabilities are not part of the open-source project. Community is free; Teams and Enterprise are licensed per user. You run it yourself.",
+      "sources": [11, 2, 13]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Open source engine",
+      "price": "Free",
+      "notes": "Apache 2.0; API and CLI",
+      "sources": [11, 12]
+    },
+    {
+      "plan": "Community",
+      "price": "Free",
+      "notes": "For individuals and education; CLI, API and Flyway Desktop; SQLFluff code review",
+      "sources": [2, 5]
+    },
+    {
+      "plan": "Enterprise",
+      "price": "Not listed",
+      "notes": "Get in touch with sales; per user; 28-day free trial; undo, drift detection, change reports, Redgate rules",
+      "sources": [3, 4, 13]
+    }
+  ],
+  "pricingNote": "The documentation still lists a Teams edition, licensed per user, with undo and dry run; the current product pages list only Community and Enterprise.",
+  "together": "The two cover different steps of the same change. A developer adds a versioned migration and opens a pull request. In CI, a job creates a DBLab clone through the API or CLI and runs flyway migrate against it, so the team sees how long the migration takes and which locks it holds on full-size data, while Flyway code review lints the same files. Reset returns the clone to its snapshot for the next run. After merge, Flyway applies the migration to production. DBLab does not deploy anything.",
+  "faq": [
+    {
+      "q": "Is Flyway open source?",
+      "a": "The engine is. The flyway/flyway repository is under Apache 2.0, and the README says Redgate's editions with a GUI and additional capabilities are not part of the open-source project. Flyway Community is free; Teams and Enterprise are commercial and licensed per user.",
+      "sources": [11, 2, 13]
+    },
+    {
+      "q": "Which Flyway edition has undo migrations and code analysis?",
+      "a": "Undo and dry run scripts need Teams or Enterprise. Code review with SQLFluff is in every edition; the Redgate rules and custom regex rules are Enterprise. Drift detection and change reports are Enterprise only.",
+      "sources": [5, 6]
+    },
+    {
+      "q": "Does Flyway test a migration on production-size data?",
+      "a": "Flyway runs migrations on the database you point it at; its example pipeline includes an acceptance environment you provision, which may be a copy of production. A dry run previews changes, and Enterprise change reports show what will change on the target. A DBLab clone can be that copy.",
+      "sources": [10, 6, 3]
+    },
+    {
+      "q": "What does Flyway cost?",
+      "a": "The open-source engine and Flyway Community are free. The product pages we reviewed do not list an Enterprise price; Redgate asks you to get in touch, licenses it per user and offers a 28-day free trial.",
+      "sources": [2, 3, 13]
+    },
+    {
+      "q": "Which PostgreSQL versions does Flyway support?",
+      "a": "PostgreSQL 12 to 18 is supported for both foundational and advanced capabilities, and 9.0 to 11 for foundational migrations only. The list also includes Amazon RDS for PostgreSQL, Aurora PostgreSQL, Google Cloud for PostgreSQL and Azure PostgreSQL Flexible Server.",
+      "sources": [14]
+    },
+    {
+      "q": "Can I use DBLab and Flyway together?",
+      "a": "Yes. A DBLab clone is an ordinary PostgreSQL server, so a CI job can run flyway migrate on a clone to see duration and locks on full-size data, then Flyway applies the same migrations to production. DBLab does not write or deploy migrations, so it does not replace Flyway.",
+      "sources": [7, 10]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Redgate Flyway product page",
+      "url": "https://www.red-gate.com/products/flyway/"
+    },
+    {
+      "title": "Flyway Community",
+      "url": "https://www.red-gate.com/products/flyway/community/"
+    },
+    {
+      "title": "Flyway Enterprise",
+      "url": "https://red-gate.com/products/flyway/enterprise/"
+    },
+    {
+      "title": "Flyway Enterprise free trial",
+      "url": "https://www.red-gate.com/products/flyway/enterprise/trial/"
+    },
+    {
+      "title": "Flyway docs: feature summary",
+      "url": "https://documentation.red-gate.com/flyway/learn-more-about-flyway/feature-summary"
+    },
+    {
+      "title": "Flyway docs: commands",
+      "url": "https://documentation.red-gate.com/flyway/reference/commands"
+    },
+    {
+      "title": "Flyway docs: migrations",
+      "url": "https://documentation.red-gate.com/fd/migrations-271585107.html"
+    },
+    {
+      "title": "Flyway docs: code review rules",
+      "url": "https://documentation.red-gate.com/flyway/reference/code-review-rules"
+    },
+    {
+      "title": "Flyway docs: Redgate SQLFluff rules library",
+      "url": "https://documentation.red-gate.com/fd/redgate-sqlfluff-rules-library-317489950.html"
+    },
+    {
+      "title": "Flyway docs: example CI/CD pipelines",
+      "url": "https://documentation.red-gate.com/fd/example-ci-cd-pipelines-138347137.html"
+    },
+    {
+      "title": "Flyway repository on GitHub",
+      "url": "https://github.com/flyway/flyway"
+    },
+    {
+      "title": "Flyway docs: the Flyway engine, OSS and Redgate",
+      "url": "https://documentation.red-gate.com/fd/the-flyway-engine-oss-open-source-software-and-redgate-205226036.html"
+    },
+    {
+      "title": "Flyway docs: commercial licensing FAQ",
+      "url": "https://documentation.red-gate.com/fd/commercial-licensing-faq-181633028.html"
+    },
+    {
+      "title": "Flyway docs: supported databases and versions",
+      "url": "https://documentation.red-gate.com/flyway/getting-started-with-flyway/system-requirements/supported-databases-and-versions"
+    }
+  ]
+}

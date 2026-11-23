@@ -1,0 +1,207 @@
+{
+  "slug": "dblab-vs-delphix",
+  "kind": "branching",
+  "competitor": {
+    "name": "Delphix",
+    "vendor": "Perforce",
+    "url": "https://www.perforce.com/products/delphix",
+    "category": "Test data and database virtualization",
+    "group": "test-data",
+    "status": "acquired",
+    "statusNote": "Perforce completed its acquisition of Delphix on March 25, 2024. The product is still sold as Perforce Delphix.",
+    "statusSources": [12, 13]
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs Delphix: open-source thin clones vs a test data platform",
+  "description": "Delphix provisions virtual PostgreSQL databases from a staging copy and adds masking and a control plane, priced by quote. DBLab is open-source thin cloning.",
+  "summary": "Perforce Delphix is a commercial test data platform. Its engine ingests a source PostgreSQL database into a staging copy, keeps snapshots, and provisions writable virtual databases (VDBs) on target hosts; Continuous Compliance masks data, and Data Control Tower manages it all. DBLab Engine is open-source software that makes thin clones of PostgreSQL on one machine you run. Pick Delphix if you want masking, governance and VDB lifecycle in one commercial platform; pick DBLab if you need PostgreSQL clones with a published price or no license cost.",
+  "chooseThem": [
+    "VDBs have their own timeflow of snapshots and can be refreshed from a parent VDB or dSource; DCT 2026.5 adds a wizard to export a PostgreSQL VDB back to a physical database (V2P).",
+    "Masking is part of the platform. The Continuous Compliance PostgreSQL connector offers in-place and on-the-fly masking and profiling, and lists RDS, Aurora, Azure Database for PostgreSQL and Cloud SQL.",
+    "Several ways to keep the copy current: streaming replication or log shipping into a staging database, with a timeflow of snapshots from which VDBs are provisioned or refreshed.",
+    "Ready-made integrations: a Jenkins plugin, a Terraform provider, a Kubernetes driver, ServiceNow, Liquibase, and an MCP server (preview) that can provision and refresh VDBs.",
+    "The engine is a virtual appliance documented for VMware, KVM, Hyper-V, AWS EC2, Azure, GCP, OCI and IBM Cloud."
+  ],
+  "proofs": [
+    {
+      "key": "open",
+      "them": "Delphix is commercial software: the PostgreSQL connector license \"is included with the standard Delphix License Agreement\", and the platform is priced by quote, by the capabilities chosen and deployment size.",
+      "sources": [1, 11]
+    },
+    {
+      "key": "agents",
+      "them": "The Delphix MCP Server lets AI clients provision VDBs, refresh datasets and take snapshots through DCT. Its release notes mark every version, up to 2026.0.3.0 (September 25, 2026), as a preview release.",
+      "sources": [15, 14]
+    },
+    {
+      "key": "ci",
+      "them": "Delphix has a Jenkins plugin and a Terraform provider that provision and tear down VDBs in pipelines. The sources we reviewed do not describe checking migrations for locks or other risks.",
+      "sources": [9, 10]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A commercial data platform. Continuous Data ingests a source and provisions virtual databases (VDBs), \"full read-write capable database instances\". Continuous Compliance masks data. Data Control Tower (DCT) is the control plane across engines.",
+      "sources": [6, 4, 13]
+    },
+    {
+      "key": "source",
+      "v": "yes",
+      "them": "PostgreSQL 9.4 and later on certified Linux hosts (RHEL, Debian and others), including EDB. Amazon RDS, Aurora and Azure Flexible Server (11 to 17) and Cloud SQL (14 to 17) are certified as sources only, with single database ingestion by pg_dump and pg_restore; staging push may allow other methods.",
+      "sources": [2, 1]
+    },
+    {
+      "key": "mechanism",
+      "them": "The production database is copied into a staging database whose storage the engine captures as snapshots in a timeflow. A VDB is provisioned from a snapshot as a new PostgreSQL instance on a target host; its changes are written as new compressed blocks in Delphix storage.",
+      "sources": [1, 6, 3]
+    },
+    {
+      "key": "speed",
+      "them": "Delphix says that \"from any snapshot in a timeflow, you can instantly create or update a virtual database\". The sources we reviewed give no time in seconds. The first ingestion copies the full source into staging.",
+      "sources": [6, 1]
+    },
+    {
+      "key": "data",
+      "v": "yes",
+      "them": "A VDB is a full read-write copy of the linked database as of a snapshot. Streaming replication or log shipping can keep the staging copy in sync with the source; single database ingestion copies one database with a backup.",
+      "sources": [6, 1]
+    },
+    {
+      "key": "masking",
+      "v": "yes",
+      "them": "Continuous Compliance has a PostgreSQL connector with in-place masking, on-the-fly masking and profiling. It lists Unix, Linux, Windows, AWS RDS, AWS Aurora, Azure Database for PostgreSQL and Google Cloud SQL, versions 9.2 to 15 and EDB.",
+      "sources": [8]
+    },
+    {
+      "key": "ci",
+      "v": "yes",
+      "them": "A Jenkins plugin for VDB management in CI/CD pipelines, and a Terraform provider built on the DCT API (DCT 2025.1.2 or later) that provisions and tears down data environments. The sources we reviewed do not describe migration testing.",
+      "sources": [9, 10]
+    },
+    {
+      "key": "interfaces",
+      "them": "DCT web UI and API, the engine's management UI (not included in new engine installs from release 2026.5), and a CLI. The Delphix MCP Server, a preview release, lets AI clients provision VDBs, refresh datasets, take snapshots and manage bookmarks, within each user's DCT permissions.",
+      "sources": [5, 6, 9, 14, 15]
+    },
+    {
+      "key": "hosting",
+      "v": "yes",
+      "them": "Self-hosted. The engine is a virtual appliance documented for VMware, KVM, Hyper-V, AWS EC2, Azure, GCP, OCI and IBM Cloud. Staging and target environments are hosts you register over SSH; a cloud managed service cannot be a staging or target environment.",
+      "sources": [7, 4, 2]
+    },
+    {
+      "key": "open-source",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. The PostgreSQL connector license \"is included with the standard Delphix License Agreement\".",
+      "sources": [1]
+    },
+    {
+      "key": "limits",
+      "them": "Each VDB needs a new PostgreSQL instance with its own port; it cannot go into an existing cluster. Cloud managed services work only as sources. Single database ingestion needs PostgreSQL 10 or later. In DCT, connector downgrades are not supported.",
+      "sources": [1, 2, 4]
+    },
+    {
+      "key": "cost-model",
+      "them": "By quote. Perforce says the price depends on which capabilities you choose and scales with deployment size for each one; a quote is requested through a form.",
+      "sources": [11]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Perforce Delphix",
+      "price": "No public price",
+      "notes": "Priced by the capabilities chosen (masking, data delivery, synthetic data), scaling with deployment size; request a quote",
+      "sources": [11]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Does Delphix work with Amazon RDS for PostgreSQL?",
+      "a": "As a source. The support matrix certifies Amazon RDS and Aurora PostgreSQL 11 to 17 with single database ingestion by pg_dump and pg_restore. Staging and target environments must be self-managed hosts, because a cloud managed service cannot be used as either.",
+      "sources": [2]
+    },
+    {
+      "q": "Is the Delphix PostgreSQL connector in early access in Data Control Tower?",
+      "a": "Not in the release notes we read. DCT 2026.3 (May 19, 2026) lists the PostgreSQL connector among Select connectors whose environment creation, dSource linking, snapshots and VDB provisioning are now supported in DCT, without an Early Access label. The Delphix MCP Server is still a preview release.",
+      "sources": [5, 4, 15]
+    },
+    {
+      "q": "What does Delphix cost?",
+      "a": "Delphix is priced by quote. Perforce says the price depends on the capabilities you choose and scales with deployment size, and asks you to request a quote.",
+      "sources": [11]
+    },
+    {
+      "q": "Can Delphix mask PostgreSQL data?",
+      "a": "Yes. Continuous Compliance has a PostgreSQL connector with in-place masking, on-the-fly masking and profiling. DBLab's documented options are loading an anonymized dump, or applying SQL transformations or PostgreSQL Anonymizer before snapshots are taken.",
+      "sources": [8]
+    },
+    {
+      "q": "What happened to Delphix?",
+      "a": "Perforce completed its acquisition of Delphix on March 25, 2024. Delphix is still sold as Perforce Delphix.",
+      "sources": [12, 13]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Delphix docs: PostgreSQL connector",
+      "url": "https://developer.perforce.com/delphix/ecosystem-hub/docs/postgresql-data-sources"
+    },
+    {
+      "title": "Delphix docs: PostgreSQL support matrix (connector 2026.2.0)",
+      "url": "https://developer.perforce.com/delphix/ecosystem-hub/docs/postgres-support-matrix-v2026-2-0"
+    },
+    {
+      "title": "Delphix docs: PostgreSQL staging push",
+      "url": "https://developer.perforce.com/delphix/ecosystem-hub/docs/postgresql-dct-staging-push"
+    },
+    {
+      "title": "Delphix docs: PostgreSQL operations in Data Control Tower",
+      "url": "https://developer.perforce.com/delphix/ecosystem-hub/docs/postgresql-operations-in-dct"
+    },
+    {
+      "title": "Data Control Tower 2026.3 release notes",
+      "url": "https://developer.perforce.com/delphix/data-control-tower/docs/20263release"
+    },
+    {
+      "title": "Delphix Continuous Data: overview",
+      "url": "https://developer.perforce.com/delphix/continuous-data/docs/overview"
+    },
+    {
+      "title": "Delphix Continuous Data: deployment",
+      "url": "https://developer.perforce.com/delphix/continuous-data/docs/deployment"
+    },
+    {
+      "title": "Delphix Continuous Compliance: PostgreSQL connector",
+      "url": "https://developer.perforce.com/delphix/continuous-compliance/docs/postgresql-connector"
+    },
+    {
+      "title": "Delphix docs: integrations",
+      "url": "https://developer.perforce.com/delphix/ecosystem-hub/docs/integrations"
+    },
+    {
+      "title": "Delphix docs: Terraform provider",
+      "url": "https://developer.perforce.com/delphix/ecosystem-hub/docs/terraform"
+    },
+    {
+      "title": "Perforce Delphix pricing",
+      "url": "https://www.perforce.com/products/delphix/pricing"
+    },
+    {
+      "title": "Perforce completes acquisition of Delphix",
+      "url": "https://www.perforce.com/press-releases/perforce-completes-delphix-acquisition"
+    },
+    {
+      "title": "Perforce Delphix product page",
+      "url": "https://www.perforce.com/products/delphix"
+    },
+    {
+      "title": "Data Control Tower 2026.5 release notes",
+      "url": "https://developer.perforce.com/delphix/data-control-tower/docs/20265release"
+    },
+    {
+      "title": "Delphix docs: MCP Server release notes",
+      "url": "https://developer.perforce.com/delphix/ecosystem-hub/docs/release-notes-mcp-server"
+    }
+  ]
+}

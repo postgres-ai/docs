@@ -1,0 +1,210 @@
+{
+  "slug": "postgresai-vs-prometheus-postgres-exporter",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "postgres_exporter and Grafana",
+    "vendor": "Prometheus community and Grafana Labs",
+    "url": "https://github.com/prometheus-community/postgres_exporter",
+    "category": "Open-source metrics stack",
+    "group": "open-source",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs postgres_exporter and Grafana: Issues vs your own rules",
+  "description": "postgres_exporter, Prometheus and Grafana form a metrics stack you assemble yourself. PostgresAI pairs each finding with a fix and keeps 13 months of history on Scale.",
+  "summary": "postgres_exporter exposes PostgreSQL metrics for Prometheus to scrape; Grafana draws dashboards and Alertmanager sends alerts. Every part is free and open source, and you choose the collectors, dashboards, alert rules and retention. The repository includes a mixin with alert rules and a Grafana dashboard. PostgresAI monitoring comes assembled, with collection, storage and pre-built Grafana dashboards (with Scale on hosted plans), and adds scheduled checkups that become Issues. Pick the exporter stack if you already run Prometheus and want full control. Pick PostgresAI for Postgres checkups, Issues and expert help.",
+  "chooseThem": [
+    "Free and open source: postgres_exporter and Prometheus under Apache 2.0, Grafana under AGPL-3.0-only.",
+    "The stat_activity collector, on by default, exports session counts by state, wait_event_type and wait_event at every scrape.",
+    "Alertmanager can notify email, Slack, PagerDuty, Opsgenie, Microsoft Teams, Discord, Telegram, Jira, webhooks and more, with silencing, inhibition and aggregation.",
+    "Collectors are switched on and off one by one, including Amazon Aurora collectors, and a multi-target mode lets one exporter probe managed services where a sidecar is not possible.",
+    "Full control over retention, scrape intervals, dashboards and alert thresholds."
+  ],
+  "proofs": [
+    {
+      "key": "fix",
+      "them": "The postgres_exporter repository includes a mixin with alert rules such as PostgreSQLSlowQueries and PostgresTablesNotVaccumed; its README calls it a work in progress. The sources we reviewed do not describe recommendations or fixes.",
+      "sources": [3, 14]
+    },
+    {
+      "key": "history",
+      "them": "Prometheus keeps 15 days by default when neither a retention time nor a size is set. Its docs say local storage is not clustered or replicated; longer history uses a remote storage integration.",
+      "sources": [5]
+    },
+    {
+      "key": "test",
+      "them": "postgres_exporter exposes metrics from PostgreSQL statistics views for Prometheus to scrape. The sources we reviewed do not describe running an index or query change on a separate copy of the data.",
+      "sources": [11]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A stack you assemble: postgres_exporter exposes PostgreSQL server metrics on port 9187, Prometheus scrapes and stores them, Grafana draws dashboards, and Alertmanager sends notifications. The exporter repository includes a mixin with alerting and recording rules and a Grafana dashboard.",
+      "sources": [1, 2, 6]
+    },
+    {
+      "key": "platforms",
+      "v": "yes",
+      "them": "The exporter connects as a regular database user; from PostgreSQL 10 its role is granted pg_monitor, or the narrower pg_read_all_stats. CI tests PostgreSQL 13 to 18. A guide covers Amazon RDS, Aurora collectors are off by default, and a multi-target mode is meant for cases where a sidecar is not possible, for example SaaS-managed services.",
+      "sources": [11, 12, 13, 1]
+    },
+    {
+      "key": "deployment",
+      "v": "yes",
+      "them": "You run every part: the exporter as a binary or the quay.io/prometheuscommunity/postgres-exporter image, Prometheus, Alertmanager and Grafana. The stat_statements collector does not export query text unless include_query is enabled.",
+      "sources": [1, 6]
+    },
+    {
+      "key": "open-source",
+      "v": "yes",
+      "them": "postgres_exporter and Prometheus are under Apache 2.0. Grafana is distributed under AGPL-3.0-only, with Apache 2.0 exceptions listed in its LICENSING.md.",
+      "sources": [1, 9, 10]
+    },
+    {
+      "key": "query-analysis",
+      "v": "partial",
+      "them": "A stat_statements collector reads pg_stat_statements, but it is disabled by default. When enabled it returns up to 100 statements by default, by queryId; query text is off by default and cut to 120 characters when on. Dashboards for it are yours to build.",
+      "sources": [1]
+    },
+    {
+      "key": "wait-events",
+      "v": "yes",
+      "them": "The stat_activity collector, on by default, exports session counts from pg_stat_activity labeled by state, wait_event_type and wait_event at each scrape. Dashboards for it are yours to build.",
+      "sources": [4, 1]
+    },
+    {
+      "key": "health-checks",
+      "v": "partial",
+      "them": "The mixin defines alert rules, among them PostgreSQLDown, PostgreSQLHighConnections, PostgreSQLSlowQueries, PostgreSQLCacheHitRatio, PostgresHasHighDeadLocks, PostgresReplicationLaggingMore1Hour, PostgresHasReplicationSlotUsed and PostgresTablesNotVaccumed; its README calls it a work in progress. The sources we reviewed do not describe recommendations or fixes.",
+      "sources": [3, 14]
+    },
+    {
+      "key": "agent-interface",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed.",
+      "sources": [1, 6]
+    },
+    {
+      "key": "test-fix",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed.",
+      "sources": [1]
+    },
+    {
+      "key": "expert-help",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed.",
+      "sources": [1]
+    },
+    {
+      "key": "alerts",
+      "them": "You write alerting rules as PromQL expressions in Prometheus, which sends alerts to Alertmanager. Alertmanager receivers include email, Slack, PagerDuty, Opsgenie, Microsoft Teams, Discord, Telegram, Jira, Amazon SNS and webhooks.",
+      "sources": [7, 6, 8]
+    },
+    {
+      "key": "retention",
+      "them": "Prometheus keeps 15 days by default when neither a retention time nor a size is set. Local storage is not clustered or replicated; remote storage integrations can keep longer history.",
+      "sources": [5]
+    },
+    {
+      "key": "compliance",
+      "them": "Not documented in the sources we reviewed. The stack is software you run in your own environment.",
+      "sources": [1]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Open source",
+      "price": "Free",
+      "notes": "postgres_exporter and Prometheus under Apache 2.0, Grafana under AGPL-3.0-only; you run and operate all parts",
+      "sources": [1, 9, 10]
+    }
+  ],
+  "together": "Both use Grafana for dashboards. A team with Prometheus and postgres_exporter can keep its metrics and alert rules and add PostgresAI checkups and Issues for the same databases.",
+  "faq": [
+    {
+      "q": "Is postgres_exporter free?",
+      "a": "Yes. postgres_exporter and Prometheus are open source under Apache 2.0, and Grafana under AGPL-3.0-only. You run and operate them yourself. PostgresAI monitoring is also open source under Apache 2.0, with paid hosted plans.",
+      "sources": [1, 9, 10]
+    },
+    {
+      "q": "Does postgres_exporter collect pg_stat_statements?",
+      "a": "Yes, through the stat_statements collector, which is disabled by default. It returns up to 100 statements by default; query text is off unless include_query is enabled, and is cut to 120 characters.",
+      "sources": [1]
+    },
+    {
+      "q": "Does postgres_exporter come with dashboards and alerts?",
+      "a": "The exporter repository includes postgres_mixin, which builds Prometheus alert and recording rules and Grafana dashboard JSON with mixtool. Notifications go through Alertmanager, which you configure.",
+      "sources": [2, 6]
+    },
+    {
+      "q": "How long does Prometheus keep metrics?",
+      "a": "15 days by default, if neither storage.tsdb.retention.time nor storage.tsdb.retention.size is set. Longer history needs more local disk or a remote storage integration.",
+      "sources": [5]
+    },
+    {
+      "q": "Can I use PostgresAI and postgres_exporter together?",
+      "a": "Yes. Both read PostgreSQL statistics, and both use Grafana for dashboards. A team can keep postgres_exporter alert rules in Prometheus and add PostgresAI checkups and Issues.",
+      "sources": [1]
+    }
+  ],
+  "sources": [
+    {
+      "title": "postgres_exporter repository and README",
+      "url": "https://github.com/prometheus-community/postgres_exporter"
+    },
+    {
+      "title": "postgres_exporter: postgres_mixin",
+      "url": "https://github.com/prometheus-community/postgres_exporter/tree/master/postgres_mixin"
+    },
+    {
+      "title": "postgres_mixin alert rules (source)",
+      "url": "https://raw.githubusercontent.com/prometheus-community/postgres_exporter/master/postgres_mixin/alerts/postgres.libsonnet"
+    },
+    {
+      "title": "postgres_exporter stat_activity collector (source, v0.21.0)",
+      "url": "https://raw.githubusercontent.com/prometheus-community/postgres_exporter/v0.21.0/collector/pg_stat_activity.go"
+    },
+    {
+      "title": "Prometheus documentation: storage",
+      "url": "https://prometheus.io/docs/prometheus/latest/storage/"
+    },
+    {
+      "title": "Prometheus documentation: alerting overview",
+      "url": "https://prometheus.io/docs/alerting/latest/overview/"
+    },
+    {
+      "title": "Prometheus documentation: alerting rules",
+      "url": "https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/"
+    },
+    {
+      "title": "Alertmanager configuration",
+      "url": "https://prometheus.io/docs/alerting/latest/configuration/"
+    },
+    {
+      "title": "Prometheus repository",
+      "url": "https://github.com/prometheus/prometheus"
+    },
+    {
+      "title": "Grafana repository",
+      "url": "https://github.com/grafana/grafana"
+    },
+    {
+      "title": "postgres_exporter documentation: overview",
+      "url": "https://github.com/prometheus-community/postgres_exporter/blob/master/docs/README.md"
+    },
+    {
+      "title": "postgres_exporter documentation: database permissions",
+      "url": "https://github.com/prometheus-community/postgres_exporter/blob/master/docs/database-permissions.md"
+    },
+    {
+      "title": "postgres_exporter documentation: AWS RDS",
+      "url": "https://github.com/prometheus-community/postgres_exporter/blob/master/docs/aws-rds.md"
+    },
+    {
+      "title": "postgres_mixin README",
+      "url": "https://github.com/prometheus-community/postgres_exporter/blob/master/postgres_mixin/README.md"
+    }
+  ]
+}

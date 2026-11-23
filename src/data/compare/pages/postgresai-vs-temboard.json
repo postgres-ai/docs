@@ -1,0 +1,212 @@
+{
+  "slug": "postgresai-vs-temboard",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "temBoard",
+    "vendor": "Dalibo Labs",
+    "url": "https://labs.dalibo.com/temboard",
+    "category": "PostgreSQL management console",
+    "group": "open-source",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs temBoard: managed Postgres too vs an agent on each host",
+  "description": "temBoard by Dalibo is an open-source console to monitor, vacuum and configure PostgreSQL servers. PostgresAI also covers managed services such as Amazon RDS.",
+  "summary": "temBoard, from Dalibo Labs, is a free web UI with an agent on each PostgreSQL server. It shows fleet and instance dashboards, manages running sessions, tracks bloat, runs or schedules VACUUM, ANALYZE and REINDEX, edits configuration and tracks slow queries. PostgresAI monitors Postgres, runs scheduled checkups and turns findings into Issues for you, your AI agent or a PostgresAI expert. Pick temBoard if you run your own Linux servers and want to act on them from one console. Pick PostgresAI for managed services such as Amazon RDS, checkup Issues and expert help.",
+  "chooseThem": [
+    "Actions, not only charts: run or schedule VACUUM, ANALYZE and REINDEX on tables and indexes, manage running sessions and change PostgreSQL configuration from the web UI.",
+    "Free and open source under the PostgreSQL license, with packages for Debian, Ubuntu and RHEL from the Dalibo Labs repositories.",
+    "Monitoring history is kept for 730 days by default, with probes every 60 seconds.",
+    "Alerting checks with warning and critical thresholds, such as CPU, memory, file system usage, WAL files, cache hit ratio and waiting sessions, with notifications by email or SMS.",
+    "Made by Dalibo, which offers commercial support for temBoard."
+  ],
+  "proofs": [
+    {
+      "key": "anywhere",
+      "them": "temBoard's agent must run on the same host as the PostgreSQL instance, with superuser access over the local UNIX socket; the docs say running an agent on a remote host is not yet supported. The sources we reviewed do not mention managed services.",
+      "sources": [4, 6]
+    },
+    {
+      "key": "waits",
+      "them": "temBoard has an alerting check that counts waiting sessions per database, with warning and critical thresholds. The sources we reviewed do not describe wait event analysis.",
+      "sources": [10]
+    },
+    {
+      "key": "test",
+      "them": "temBoard runs VACUUM, ANALYZE and REINDEX on the managed instance, immediately or at a scheduled time. The sources we reviewed do not describe running a change on a separate copy of the data first.",
+      "sources": [8]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A management tool for PostgreSQL: an agent on every server and a central server that collects metrics and presents a web UI. Features: fleet and instance dashboards, monitoring, session management, bloat tracking and maintenance, configuration changes, slow query tracking and query plan visualization.",
+      "sources": [1, 3]
+    },
+    {
+      "key": "platforms",
+      "v": "partial",
+      "them": "Self-managed Linux servers running PostgreSQL 13 to 18. The agent must run on the same host as the PostgreSQL instance and use superuser access over the local UNIX socket; the docs say running an agent on a remote host is not yet supported. The sources we reviewed do not mention managed services.",
+      "sources": [4, 6, 12]
+    },
+    {
+      "key": "deployment",
+      "v": "yes",
+      "them": "Runs on your servers: the UI server needs a PostgreSQL 13 or newer repository instance, and the agent runs on each PostgreSQL host. Install from the Dalibo Labs APT or RPM repositories; PyPI packages are no longer provided.",
+      "sources": [5, 4, 13]
+    },
+    {
+      "key": "open-source",
+      "v": "yes",
+      "them": "Open source under the PostgreSQL license, developed by Dalibo Labs.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "The Statements view shows performance statistics of the SQL queries run on the instance, from the pg_stat_statements extension, and the UI can visualize query plans. Statement history is kept 7 days by default.",
+      "sources": [9, 1, 7]
+    },
+    {
+      "key": "wait-events",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. An alerting check counts waiting sessions per database.",
+      "sources": [10, 1]
+    },
+    {
+      "key": "health-checks",
+      "v": "yes",
+      "them": "Alerting checks with warning and critical thresholds for load, CPU, memory, swap, file systems, WAL files, rollbacks, cache hit ratio, session usage and waiting sessions. Maintenance shows sizes, bloat and TOAST estimates and may suggest actions for tables or indexes.",
+      "sources": [10, 8]
+    },
+    {
+      "key": "agent-interface",
+      "v": "nd",
+      "them": "An HTTP API lists alerting checks, check changes and alerts as JSON. The sources we reviewed do not describe an MCP server or an interface for AI agents.",
+      "sources": [10]
+    },
+    {
+      "key": "test-fix",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. Maintenance actions such as VACUUM, ANALYZE and REINDEX run on the managed instance, immediately or at a scheduled time.",
+      "sources": [8]
+    },
+    {
+      "key": "expert-help",
+      "v": "partial",
+      "them": "Community support through issues on the project page. Dalibo offers commercial support for temBoard on request through contact@dalibo.com.",
+      "sources": [3]
+    },
+    {
+      "key": "alerts",
+      "them": "Visual alerts in the UI, and notifications by email (SMTP) or SMS (Twilio) when a check changes state. Thresholds can be changed or checks disabled per instance, and notifications are turned on per instance.",
+      "sources": [10, 11, 7]
+    },
+    {
+      "key": "retention",
+      "them": "Monitoring data is kept 730 days and statements data 7 days by default; both are settings. The agent runs monitoring probes every 60 seconds by default.",
+      "sources": [7, 6]
+    },
+    {
+      "key": "compliance",
+      "them": "Not documented in the sources we reviewed. temBoard is software you run on your own servers.",
+      "sources": [1]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Open source",
+      "price": "Free",
+      "notes": "PostgreSQL license; you run the temBoard UI, its repository database and an agent on each server",
+      "sources": [1]
+    },
+    {
+      "plan": "Commercial support",
+      "price": "No public price",
+      "notes": "Offered by Dalibo on request",
+      "sources": [3]
+    }
+  ],
+  "together": "PostgresAI monitoring reads statistics through a database connection and needs pg_stat_statements, which temBoard's Statements view also uses. On a self-managed server, temBoard can stay the console for sessions, maintenance and configuration while PostgresAI runs scheduled checkups and tracks Issues.",
+  "faq": [
+    {
+      "q": "Is temBoard open source?",
+      "a": "Yes. temBoard is developed by Dalibo Labs and released under the PostgreSQL license. PostgresAI monitoring is open source under Apache 2.0.",
+      "sources": [1, 2]
+    },
+    {
+      "q": "Does temBoard work with Amazon RDS or other managed Postgres?",
+      "a": "The docs say the temBoard agent must run on the same host as the PostgreSQL instance and connect as a superuser over the local UNIX socket. The sources we reviewed do not mention managed services.",
+      "sources": [4, 6]
+    },
+    {
+      "q": "Which PostgreSQL versions does temBoard support?",
+      "a": "The compatibility guide for temBoard 10 lists PostgreSQL 13 to 18 on Debian 12 and 13, Ubuntu 22.04 and 24.04, and RHEL 8, 9 and 10, with Python 3.9 or newer.",
+      "sources": [12]
+    },
+    {
+      "q": "Can temBoard run VACUUM for me?",
+      "a": "Yes. The maintenance feature shows sizes and estimated bloat and lets a user logged on to the agent run VACUUM, ANALYZE or REINDEX immediately or schedule it for a later time.",
+      "sources": [8]
+    },
+    {
+      "q": "Can I use PostgresAI and temBoard together?",
+      "a": "Yes, on self-managed servers. Both use pg_stat_statements. temBoard handles sessions, maintenance and configuration from its console, and PostgresAI adds scheduled checkups and Issues.",
+      "sources": [9, 4]
+    }
+  ],
+  "sources": [
+    {
+      "title": "temBoard documentation: overview",
+      "url": "https://temboard.readthedocs.io/en/latest/"
+    },
+    {
+      "title": "temBoard repository",
+      "url": "https://github.com/dalibo/temboard"
+    },
+    {
+      "title": "Dalibo Labs: temBoard",
+      "url": "https://labs.dalibo.com/temboard"
+    },
+    {
+      "title": "temBoard documentation: agent installation",
+      "url": "https://temboard.readthedocs.io/en/latest/agent_install/"
+    },
+    {
+      "title": "temBoard documentation: server installation",
+      "url": "https://temboard.readthedocs.io/en/latest/server_install/"
+    },
+    {
+      "title": "temBoard documentation: agent configuration",
+      "url": "https://temboard.readthedocs.io/en/latest/agent_configure/"
+    },
+    {
+      "title": "temBoard documentation: server configuration",
+      "url": "https://temboard.readthedocs.io/en/latest/server_configure/"
+    },
+    {
+      "title": "temBoard documentation: maintenance",
+      "url": "https://temboard.readthedocs.io/en/latest/temboard-howto-maintenance/"
+    },
+    {
+      "title": "temBoard documentation: statements",
+      "url": "https://temboard.readthedocs.io/en/latest/temboard-howto-statements/"
+    },
+    {
+      "title": "temBoard documentation: alerting internals",
+      "url": "https://temboard.readthedocs.io/en/latest/alerting/"
+    },
+    {
+      "title": "temBoard documentation: alerting how-to",
+      "url": "https://temboard.readthedocs.io/en/latest/temboard-howto-alerting/"
+    },
+    {
+      "title": "temBoard documentation: compatibility guide",
+      "url": "https://temboard.readthedocs.io/en/latest/compatibility_guide/"
+    },
+    {
+      "title": "temBoard changelog",
+      "url": "https://temboard.readthedocs.io/en/latest/changelog/"
+    }
+  ]
+}

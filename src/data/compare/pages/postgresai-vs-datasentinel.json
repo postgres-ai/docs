@@ -1,0 +1,246 @@
+{
+  "slug": "postgresai-vs-datasentinel",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "Datasentinel",
+    "vendor": "Datasentinel",
+    "url": "https://www.datasentinel.io/",
+    "category": "PostgreSQL performance monitoring",
+    "group": "postgres-tools",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs Datasentinel: open source with fixes vs session and plan data",
+  "description": "Datasentinel samples sessions every 10 seconds and keeps per-plan statistics, on-premises or SaaS. PostgresAI is open source and files findings as Issues with a fix.",
+  "summary": "Datasentinel is a commercial PostgreSQL performance monitoring platform, run on-premises or as SaaS. It samples active sessions every 10 seconds, collects query statistics and execution plans every minute, and since release 2026.10 offers AI Connector, an MCP server and Skill sold as an add-on. PostgresAI monitors Postgres, runs scheduled checkups and turns findings into Issues that you, your AI agent or a PostgresAI expert can act on. Pick Datasentinel for per-plan runtime statistics, 10-second session history and a large fleet on your own servers. Pick PostgresAI for open-source monitoring you can self-host with no licence fee, published prices, or human experts on the plan.",
+  "chooseThem": [
+    "Execution plans are collected every minute with runtime statistics per plan, through Datasentinel's fork of pg_store_plans, so plan changes over time are visible.",
+    "Active sessions are sampled every 10 seconds, with wait event type, wait event, application, client, user and query as filterable tags.",
+    "AI Connector, released in 2026.10, lets Claude, ChatGPT, Copilot, Cursor and other MCP clients query the metrics read-only, with OAuth 2.1 sign-in and the same role-based access as the web interface.",
+    "Agentless monitoring covers Amazon RDS and Aurora, Google Cloud SQL and AlloyDB, Azure, Kubernetes and Docker, and works with PostgreSQL 9.4 and newer.",
+    "Live360 connects to an instance in real time to show current sessions and blocking chains, and can terminate a session for users with the right privilege."
+  ],
+  "proofs": [
+    {
+      "key": "open",
+      "them": "Datasentinel is commercial software, licensed by annual subscription and run on-premises or as SaaS. Datasentinel publishes open-source PostgreSQL extensions, pg_datasentinel and a fork of pg_store_plans.",
+      "sources": [10, 1, 13]
+    },
+    {
+      "key": "price",
+      "them": "Datasentinel is priced by the number of PostgreSQL instances, on an annual subscription; the documentation refers buyers to the sales team for licensing. A 60-day free trial is available.",
+      "sources": [10, 16]
+    },
+    {
+      "key": "fix",
+      "them": "Datasentinel checks for changed parameters every hour and alerts on thresholds. Recommendations on missing or unused indexes, bloat, autovacuum and settings come from AI Connector, an add-on enabled by a licence token.",
+      "sources": [18, 7, 11, 8]
+    },
+    {
+      "key": "test",
+      "them": "The Datasentinel AI Connector compare command compares two time windows on the same instance, for example before and after a release. The sources we reviewed do not describe trying a change on a copy of the database.",
+      "sources": [11]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A PostgreSQL performance monitoring platform: Session History, Top Queries, Top Tables, Lock Explorer, cluster and system metrics, Live360, PDF reports and alerting. The platform bundles InfluxDB for metrics and a Grafana-based interface.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "platforms",
+      "v": "yes",
+      "them": "Local agents on self-managed hosts, or agentless monitoring for Amazon RDS and Aurora, Google Cloud SQL and AlloyDB, Azure, Kubernetes, Docker and other managed services. Monitored clusters need PostgreSQL 9.4 or newer and pg_stat_statements. Agentless setups get no OS metrics unless the system_stats extension is installed.",
+      "sources": [2, 6]
+    },
+    {
+      "key": "deployment",
+      "v": "yes",
+      "them": "On-premises on a dedicated machine you run, or SaaS on a dedicated machine hosted by Datasentinel with agents on your side. A read-only internal function adds column and extended statistics without SELECT on application tables, and never returns table contents.",
+      "sources": [2, 12]
+    },
+    {
+      "key": "open-source",
+      "v": "partial",
+      "them": "Datasentinel is commercial software on an annual subscription. Datasentinel publishes open-source PostgreSQL extensions: pg_datasentinel and its fork of pg_store_plans, used for plan collection. The sources we reviewed do not describe the platform's source code as public.",
+      "sources": [10, 1, 13]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "Statistics for all queries every minute, ranked by time, calls, rows, buffers, temp I/O, read and write time or WAL. Execution plans and their runtime metrics are collected every minute and shown as text or a tree, per query over time.",
+      "sources": [4, 5]
+    },
+    {
+      "key": "wait-events",
+      "v": "yes",
+      "them": "Session History samples pg_stat_activity every 10 seconds and tags each sample with wait_event_type and wait_event, so load can be broken down by wait, query, user or application.",
+      "sources": [3]
+    },
+    {
+      "key": "health-checks",
+      "v": "partial",
+      "them": "Changed parameters are checked hourly and alert rules cover connections, blocking, WAL, archiving and replication. Advice on bloat, missing or unused indexes, autovacuum and settings comes from AI Connector commands, a licensed add-on.",
+      "sources": [18, 7, 11, 9, 8]
+    },
+    {
+      "key": "agent-interface",
+      "v": "yes",
+      "them": "AI Connector, released in 2026.10 on November 2, 2026: an MCP server on each platform server plus a Skill, with guides for Claude Code, Codex, Copilot, Cursor, VS Code, ChatGPT and Gemini. It is read-only and licensed as an add-on. A REST API is also documented.",
+      "sources": [8, 9, 19]
+    },
+    {
+      "key": "test-fix",
+      "v": "nd",
+      "them": "The AI Connector compare command compares two time windows, for example before and after a release. The sources we reviewed do not describe trying a change on a copy before production.",
+      "sources": [11]
+    },
+    {
+      "key": "expert-help",
+      "v": "partial",
+      "them": "Product support by email, with remote support over video conference if needed. The sources we reviewed do not describe PostgreSQL consulting.",
+      "sources": [14]
+    },
+    {
+      "key": "alerts",
+      "them": "Off by default. Templates assigned by tag set WARNING and CRITICAL thresholds for instance status, connections, blocked sessions, WAL, archiving, replication lag and host metrics, checked every minute. Notifications go to email, webhooks or a custom script.",
+      "sources": [17, 7]
+    },
+    {
+      "key": "retention",
+      "them": "14 days by default, adjustable in Global Settings. Each platform has its own retention period.",
+      "sources": [15]
+    },
+    {
+      "key": "compliance",
+      "them": "The sources we reviewed do not describe SOC 2 or ISO 27001 attestations. On-premises installs keep all metrics on your own machine.",
+      "sources": [1, 2]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Subscription",
+      "price": "No public price",
+      "notes": "Annual subscription priced by the number of PostgreSQL instances; contact sales",
+      "sources": [10]
+    },
+    {
+      "plan": "AI Connector",
+      "price": "No public price",
+      "notes": "Add-on enabled by a licence token for the whole installation",
+      "sources": [8]
+    },
+    {
+      "plan": "Free trial",
+      "price": "Free for 60 days",
+      "notes": "On-premises or SaaS, no limit on the number of clusters",
+      "sources": [16]
+    }
+  ],
+  "together": "DBLab is a separate product that copies any PostgreSQL source, so a team that monitors with Datasentinel can still use a DBLab clone to try an index or query change on full-size data before production.",
+  "faq": [
+    {
+      "q": "Is Datasentinel open source?",
+      "a": "Datasentinel is commercial software licensed by annual subscription, and the sources we reviewed do not describe the platform's source code as public. Its open-source PostgreSQL extensions, pg_datasentinel and a fork of pg_store_plans, are on GitHub. PostgresAI monitoring is open source under Apache 2.0.",
+      "sources": [10, 1, 13]
+    },
+    {
+      "q": "Does Datasentinel work with Amazon RDS?",
+      "a": "Yes. Agentless monitoring connects remotely to Amazon RDS and Aurora, Google Cloud SQL and AlloyDB, and Azure. Host metrics such as CPU and memory need the system_stats extension in that mode.",
+      "sources": [6]
+    },
+    {
+      "q": "What does Datasentinel cost?",
+      "a": "The pricing page we reviewed shows no amount. Datasentinel is sold by annual subscription priced by the number of PostgreSQL instances, and AI Connector is a separate add-on. A 60-day free trial is available on-premises or as SaaS.",
+      "sources": [10, 8, 16]
+    },
+    {
+      "q": "What is Datasentinel AI Connector, and is it generally available?",
+      "a": "It is an MCP server plus a Skill that let an AI assistant read Datasentinel metrics and return findings with recommendations, read-only. It shipped in release 2026.10 on November 2, 2026, as a licensed add-on; the changelog does not mark it as preview.",
+      "sources": [9, 8]
+    },
+    {
+      "q": "Can I use PostgresAI and Datasentinel together?",
+      "a": "Yes. DBLab, the PostgresAI cloning product, copies any PostgreSQL source, so a team that monitors with Datasentinel can test an index or query change on a full-size DBLab clone before production."
+    }
+  ],
+  "sources": [
+    {
+      "title": "Datasentinel home page",
+      "url": "https://www.datasentinel.io/"
+    },
+    {
+      "title": "Datasentinel documentation: architecture",
+      "url": "https://docs.datasentinel.io/manual/getting-started/architecture"
+    },
+    {
+      "title": "Datasentinel documentation: Session History",
+      "url": "https://docs.datasentinel.io/manual/features/key-features/session-history"
+    },
+    {
+      "title": "Datasentinel documentation: Top Queries",
+      "url": "https://docs.datasentinel.io/manual/features/key-features/top-queries"
+    },
+    {
+      "title": "Datasentinel documentation: execution plans",
+      "url": "https://docs.datasentinel.io/manual/features/other-features/execution-plans"
+    },
+    {
+      "title": "Datasentinel documentation: agentless monitoring",
+      "url": "https://docs.datasentinel.io/manual/features/other-features/agentless-monitoring"
+    },
+    {
+      "title": "Datasentinel documentation: alerting templates",
+      "url": "https://docs.datasentinel.io/manual/features/key-features/alerting/templates"
+    },
+    {
+      "title": "Datasentinel changelog",
+      "url": "https://docs.datasentinel.io/manual/changelog"
+    },
+    {
+      "title": "Datasentinel documentation: AI Connector",
+      "url": "https://docs.datasentinel.io/manual/ai-connector"
+    },
+    {
+      "title": "Datasentinel documentation: welcome and licensing",
+      "url": "https://docs.datasentinel.io/manual"
+    },
+    {
+      "title": "Datasentinel documentation: Skill commands reference",
+      "url": "https://docs.datasentinel.io/manual/ai-connector/use-the-assistant/skill-commands"
+    },
+    {
+      "title": "Datasentinel documentation: internal function",
+      "url": "https://docs.datasentinel.io/manual/getting-started/postgresql-clusters/internal-function"
+    },
+    {
+      "title": "Datasentinel pg_store_plans repository",
+      "url": "https://github.com/datasentinel/pg_store_plans"
+    },
+    {
+      "title": "Datasentinel documentation: how to contact us",
+      "url": "https://docs.datasentinel.io/manual/support/how-to-contact-us"
+    },
+    {
+      "title": "Datasentinel documentation: platform FAQ",
+      "url": "https://docs.datasentinel.io/manual/getting-started/faqs/platform-faq"
+    },
+    {
+      "title": "Datasentinel documentation: free trial",
+      "url": "https://docs.datasentinel.io/manual/free-trial"
+    },
+    {
+      "title": "Datasentinel documentation: alerting settings",
+      "url": "https://docs.datasentinel.io/manual/features/key-features/alerting/settings"
+    },
+    {
+      "title": "Datasentinel documentation: changed parameters",
+      "url": "https://docs.datasentinel.io/manual/features/other-features/changed-parameters"
+    },
+    {
+      "title": "Datasentinel documentation: automate with the API",
+      "url": "https://docs.datasentinel.io/manual/guides/readme/automate-with-the-api"
+    }
+  ]
+}

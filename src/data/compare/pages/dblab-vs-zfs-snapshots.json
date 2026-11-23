@@ -1,0 +1,173 @@
+{
+  "slug": "dblab-vs-zfs-snapshots",
+  "kind": "branching",
+  "competitor": {
+    "name": "ZFS snapshots and clones",
+    "vendor": "OpenZFS project",
+    "url": "https://openzfs.github.io/openzfs-docs/",
+    "category": "Copy-on-write file system",
+    "group": "diy",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs ZFS snapshots and clones: same copy-on-write, by hand or managed",
+  "description": "ZFS snapshots and clones give free, writable copy-on-write copies of a PostgreSQL data directory by hand. DBLab uses ZFS or LVM underneath and manages the clones.",
+  "summary": "OpenZFS snapshots a dataset atomically and turns a snapshot into a writable clone almost instantly, using no extra space at first. With a PostgreSQL data directory and its WAL on ZFS, you snapshot, clone and start a server on the clone; PostgreSQL replays WAL as after a crash. DBLab Engine does the same underneath, with ZFS or LVM, and adds loading data from any source including managed services, refresh, clone lifecycle, an API, CLI and web UI, and CI migration checks. Doing it by hand is free and gives full control over every command; the scripts around it are then yours to write and run.",
+  "chooseThem": [
+    "Free and open source under the CDDL, on Linux and FreeBSD, with no extra service to run.",
+    "The same mechanism DBLab relies on: snapshots are created atomically, and a clone is nearly instantaneous and initially consumes no additional space.",
+    "Full control: you choose the datasets, recordsize, compression and when to snapshot, and zfs promote can make a tested clone the main file system.",
+    "A self-managed server already on ZFS needs no data loading step: the PostgreSQL docs describe snapshotting the data directory while the server runs, with WAL included.",
+    "zfs snapshot -r creates snapshots of descendent datasets at the same time, so separate data and WAL datasets, as OpenZFS suggests for PostgreSQL, can be snapshotted together."
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A copy-on-write file system; a storage pool holds file systems and volumes. A snapshot is a read-only copy of a dataset; a clone is a writable file system whose initial contents are the same as a snapshot. A clone of a dataset holding a PostgreSQL data directory is a writable copy of the whole cluster.",
+      "sources": [1, 3, 7, 5]
+    },
+    {
+      "key": "source",
+      "v": "partial",
+      "them": "Whatever sits on a ZFS dataset you control. The PostgreSQL docs describe snapshotting the data directory of a server, so this needs access to its files: a self-managed server on ZFS, or a physical copy placed on ZFS.",
+      "sources": [7, 1]
+    },
+    {
+      "key": "mechanism",
+      "them": "Copy-on-write in the file system. A snapshot is a consistent image including all completed writes; a clone shares blocks with its snapshot. Starting PostgreSQL on a clone replays WAL as after a crash, so the WAL files must be in the snapshot.",
+      "sources": [1, 2, 7]
+    },
+    {
+      "key": "speed",
+      "them": "Snapshots \"can be created extremely quickly\" and creating a clone \"is nearly instantaneous.\" PostgreSQL then has to start and replay WAL; a CHECKPOINT before the snapshot reduces that recovery time.",
+      "sources": [1, 7]
+    },
+    {
+      "key": "data",
+      "v": "yes",
+      "them": "The whole PostgreSQL cluster as of the snapshot, every database included. Single tables or databases cannot be copied at file level, because table files are not usable without the commit log (pg_xact).",
+      "sources": [7, 3]
+    },
+    {
+      "key": "masking",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. A clone's initial contents are the same as its snapshot.",
+      "sources": [1, 3]
+    },
+    {
+      "key": "ci",
+      "v": "partial",
+      "them": "No CI feature is documented. The zfs commands can be scripted in a CI job; starting PostgreSQL on each clone and destroying clones afterwards is left to your scripts.",
+      "sources": [2, 3]
+    },
+    {
+      "key": "interfaces",
+      "them": "The zfs command line: zfs snapshot, zfs clone, zfs promote and zfs destroy. The PostgreSQL server on each clone is started and managed with the usual PostgreSQL tools.",
+      "sources": [2, 3, 4]
+    },
+    {
+      "key": "hosting",
+      "v": "yes",
+      "them": "On your own machine with an OpenZFS pool. The Getting Started guide covers Alpine, Arch, Debian, Fedora, FreeBSD, Gentoo, NixOS, openSUSE, RHEL-based distros, Slackware and Ubuntu.",
+      "sources": [8]
+    },
+    {
+      "key": "open-source",
+      "v": "yes",
+      "them": "OpenZFS is licensed under the CDDL. Because of the license combination it is not distributed as part of the Linux kernel binary, but as a binary module or as source code.",
+      "sources": [6]
+    },
+    {
+      "key": "limits",
+      "them": "All files must be in one simultaneous snapshot: if WAL or tablespaces are on other file systems, the PostgreSQL docs say snapshot backup may not be possible. A snapshot cannot be destroyed while a clone of it exists; zfs promote reverses that dependency.",
+      "sources": [7, 1, 4]
+    },
+    {
+      "key": "cost-model",
+      "them": "Free software. Snapshots and clones initially consume no additional space; space grows as the clone or its origin changes. You run the machine, the pool and the scripts.",
+      "sources": [1, 6]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Open source",
+      "price": "Free",
+      "notes": "OpenZFS, CDDL license",
+      "sources": [6]
+    }
+  ],
+  "together": "DBLab uses copy-on-write in the file system, with ZFS or LVM. A DBLab machine with a ZFS pool runs the same snapshots and clones, with data loading, refresh, clone management, an API, CLI and web UI, and CI migration checks added on top.",
+  "faq": [
+    {
+      "q": "Can I make PostgreSQL test copies with ZFS clones myself?",
+      "a": "Yes. Put the data directory and WAL on ZFS, take a snapshot, clone it and start PostgreSQL on the clone. The PostgreSQL docs say such a copy starts as if the server had crashed and replays WAL, and that a CHECKPOINT before the snapshot reduces recovery time. OpenZFS suggests separate datasets for data and WAL, with compression=lz4 and recordsize=32K.",
+      "sources": [7, 2, 3, 5]
+    },
+    {
+      "q": "Is a ZFS snapshot of a running PostgreSQL server consistent?",
+      "a": "Yes, if the data directory, WAL and all tablespaces are captured at the same moment. ZFS snapshots are atomic, and zfs snapshot -r creates snapshots of descendent datasets at the same time. If they cannot be captured together, the PostgreSQL docs suggest shutting the server down briefly or taking a continuous archiving base backup.",
+      "sources": [2, 7]
+    },
+    {
+      "q": "Does DBLab use ZFS?",
+      "a": "Yes. DBLab makes clones with copy-on-write in the file system, using ZFS or LVM, so clones share unchanged blocks. It adds loading data from any PostgreSQL source, clone management through an API, CLI and web UI, and CI migration checks.",
+      "sources": [1]
+    },
+    {
+      "q": "Is OpenZFS free?",
+      "a": "Yes. The OpenZFS software is licensed under the CDDL, and its documentation under CC BY-SA 3.0. It is distributed as a binary module or source code rather than inside the Linux kernel binary.",
+      "sources": [6]
+    }
+  ],
+  "sources": [
+    {
+      "title": "OpenZFS docs: zfsconcepts(7)",
+      "url": "https://openzfs.github.io/openzfs-docs/man/master/7/zfsconcepts.7.html"
+    },
+    {
+      "title": "OpenZFS docs: zfs-snapshot(8)",
+      "url": "https://openzfs.github.io/openzfs-docs/man/master/8/zfs-snapshot.8.html"
+    },
+    {
+      "title": "OpenZFS docs: zfs-clone(8)",
+      "url": "https://openzfs.github.io/openzfs-docs/man/master/8/zfs-clone.8.html"
+    },
+    {
+      "title": "OpenZFS docs: zfs-promote(8)",
+      "url": "https://openzfs.github.io/openzfs-docs/man/master/8/zfs-promote.8.html"
+    },
+    {
+      "title": "OpenZFS docs: Workload tuning, PostgreSQL",
+      "url": "https://openzfs.github.io/openzfs-docs/Performance%20and%20Tuning/Workload%20Tuning.html#postgresql"
+    },
+    {
+      "title": "OpenZFS docs: License",
+      "url": "https://openzfs.github.io/openzfs-docs/License.html"
+    },
+    {
+      "title": "PostgreSQL docs: File System Level Backup",
+      "url": "https://www.postgresql.org/docs/current/backup-file.html"
+    },
+    {
+      "title": "OpenZFS docs: Getting Started",
+      "url": "https://openzfs.github.io/openzfs-docs/Getting%20Started/index.html"
+    }
+  ],
+  "proofs": [
+    {
+      "key": "any-source",
+      "them": "A ZFS snapshot copies a dataset on a pool you control. The PostgreSQL docs describe snapshotting a server's data directory, which needs access to its files; if WAL or tablespaces are on other file systems, snapshot backup may not be possible.",
+      "sources": [1, 7]
+    },
+    {
+      "key": "masking",
+      "them": "A ZFS clone is a writable file system whose initial contents are the same as its snapshot, so it holds the data exactly as captured. The sources we reviewed do not describe masking.",
+      "sources": [3, 1]
+    },
+    {
+      "key": "ci",
+      "them": "OpenZFS provides zfs snapshot, clone, promote and destroy on the command line. Starting PostgreSQL on each clone is done with the usual PostgreSQL tools; the sources we reviewed do not describe CI or migration checks.",
+      "sources": [2, 3, 4, 7]
+    }
+  ]
+}

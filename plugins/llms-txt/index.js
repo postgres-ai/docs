@@ -10,11 +10,18 @@
 // Titles and descriptions come from the loaded docs/blog content (frontmatter,
 // or the excerpt Docusaurus derives when `description` is missing). The
 // curated entries below use the canonical one-liners from the live pages.
+//
+// Above the sections, llms.txt states plans, list prices and our documented
+// limits, and a "Compare" section lists every comparison page with its
+// markdown twin. Both come from src/data/compare, the data the pages are
+// built from, so the index cannot drift from the pages.
 
 const fs = require('fs')
 const path = require('path')
 
 const { SITE_NAME } = require('../../src/config/site.json')
+const { loadCompare } = require('../compare-pages/load')
+const { orderedPages, pagePath, markdownPath, INDEX_PATH } = require('../compare-pages/view')
 
 const SITE_SUMMARY =
   'Zero drama Postgres. We fix Postgres trouble and keep it fixed. Every change, upgrades included, is rehearsed on a full copy of your data with evidence before it lands.'
@@ -217,7 +224,24 @@ function absolutizeLinks(source, siteUrl) {
     .join('\n')
 }
 
-module.exports = function llmsTxtPlugin(context) {
+// `- <Product> <plan>: <price>. <notes>.` for each plan, once per price list
+// (two kinds of comparison share the DBLab list).
+function planLines(us) {
+  const lines = []
+  const seen = new Set()
+  for (const kind of Object.values(us.kinds)) {
+    const key = JSON.stringify(kind.pricing)
+    if (seen.has(key)) continue
+    seen.add(key)
+    for (const p of kind.pricing) {
+      const name = p.plan.startsWith(kind.product) ? p.plan : `${kind.product} ${p.plan}`
+      lines.push(`- ${name}: ${p.price}.${p.notes ? ` ${p.notes}.` : ''}`)
+    }
+  }
+  return lines
+}
+
+module.exports = function llmsTxtPlugin(context, options = {}) {
   const { siteDir, siteConfig } = context
   const siteUrl = siteConfig.url.replace(/\/+$/, '')
   const abs = (p) => siteUrl + p
@@ -271,8 +295,42 @@ module.exports = function llmsTxtPlugin(context) {
         ''
       )
 
+      const compare = loadCompare(options.compareDataDir)
+      out.push(`Plans and list prices (details: ${abs('/pricing')}):`, '', ...planLines(compare.us), '')
+      out.push('Limits:', '', ...compare.us.limits.map((limit) => `- ${limit}`), '')
+
       out.push('## Products', '', ...PRODUCTS.map((e) => link(resolve(e))), '')
       out.push('## Company', '', ...COMPANY.map((e) => link(resolve(e))), '')
+
+      // One line per comparison page, in the order of /compare. Descriptions
+      // are kept whole: each one is written to stand alone as the answer.
+      if (compare.pages.length) {
+        out.push('## Compare', '')
+        out.push(
+          `Side-by-side comparisons with other Postgres tools, checked on ${compare.us.checkedOn}. ` +
+            'Every statement about another product cites its own documentation. ' +
+            `Each page has a markdown twin under ${abs('/raw/compare/')}.`,
+          ''
+        )
+        out.push(
+          link({
+            title: 'All comparisons',
+            url: abs(INDEX_PATH),
+            description: `${compare.pages.length} comparisons, with a matrix for each kind of tool.`,
+          })
+        )
+        for (const page of orderedPages(compare.us, compare.pages)) {
+          out.push(
+            link({
+              title: page.title,
+              url: abs(pagePath(page)),
+              description: page.description,
+              markdown: abs(markdownPath(page)),
+            })
+          )
+        }
+        out.push('')
+      }
 
       const sectionOf = (d) => (d.id.includes('/') ? d.id.split('/')[0] : '')
       const known = new Set(DOC_SECTIONS.map(([key]) => key))

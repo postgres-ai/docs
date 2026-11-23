@@ -1,0 +1,233 @@
+{
+  "slug": "postgresai-vs-supabase-advisors",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "Supabase advisors",
+    "vendor": "Supabase",
+    "url": "https://supabase.com/docs/guides/observability/advisors",
+    "category": "Managed Postgres built-in advisors",
+    "group": "provider",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs Supabase advisors: history and wait events vs built-in lints",
+  "description": "Supabase advisors run security, performance and health checks on every project. PostgresAI keeps 13 months of history on Scale and adds a wait event dashboard.",
+  "summary": "Supabase advisors are deterministic checks that ship with the Supabase platform: security and performance lints from the open-source splinter project, health checks on error rates, and a Query Performance report with index_advisor. Agents reach them through the Supabase MCP server, CLI and Management API. PostgresAI monitoring supports Supabase and runs on the same database, adding wait event history, scheduled checkups turned into Issues, 13-month retention on Scale and human experts. Keep the advisors on; add PostgresAI if you want longer history, wait events or expert help, or one tool across several providers.",
+  "chooseThem": [
+    "Included with the platform: the advisors are deterministic checks that ship with Supabase, with nothing to install or pay for separately.",
+    "Security lints for Supabase's API layer, such as RLS disabled in public, tables exposed through pg_graphql and SECURITY DEFINER functions callable by anon or authenticated users.",
+    "Agent access in several forms: get_advisors in the Supabase MCP server, supabase db advisors in the CLI, the Management API, and a documented hourly read-only agent for performance.",
+    "The Query Performance report links slow queries to index_advisor, which suggests CREATE INDEX statements for a query; it builds on the hypopg extension.",
+    "splinter and index_advisor are open source under the PostgreSQL License, and the Postgres best practices agent skill is for Postgres running anywhere."
+  ],
+  "proofs": [
+    {
+      "key": "history",
+      "them": "Supabase reports cover up to 24 hours on Free, 7 days on Pro and 28 days on Team and Enterprise. Logs are kept 1, 7, 28 and 90 days on those plans.",
+      "sources": [5, 7]
+    },
+    {
+      "key": "test",
+      "them": "Supabase branches are separate environments for testing changes. New branches start with no data by default; data comes from a seed file or the Include data option, and branch creation in the Dashboard is in beta.",
+      "sources": [12]
+    },
+    {
+      "key": "waits",
+      "them": "A Supabase detection check reads wait events from a current pg_stat_activity snapshot of long-running or blocked sessions, and cannot reconstruct sessions that ended between runs. The sources we reviewed do not describe wait event history.",
+      "sources": [16]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "Security, Performance and Health advisors in Supabase Studio, a Query Performance report with index_advisor, and an AI Assistant in the Dashboard for SQL, schema design, error debugging and RLS policies (its feature page says public alpha).",
+      "sources": [1, 5, 4, 10, 11]
+    },
+    {
+      "key": "platforms",
+      "v": "partial",
+      "them": "Supabase projects. The index_advisor extension and the Postgres best practices agent skill are documented for Postgres outside Supabase; index_advisor needs hypopg.",
+      "sources": [1, 9, 14, 13]
+    },
+    {
+      "key": "deployment",
+      "v": "partial",
+      "them": "Part of the Supabase platform. Supabase can be self-hosted with Docker, but the self-hosting guide lists advanced metrics beyond logs among features not available, and does not say whether the advisors are included.",
+      "sources": [1, 13]
+    },
+    {
+      "key": "open-source",
+      "v": "yes",
+      "them": "splinter, the lint queries behind the advisors, and index_advisor are open source under the PostgreSQL License.",
+      "sources": [8, 9]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "The Query Performance report gives a detailed analysis of slow queries, and index_advisor is opened from it per query. The CLI adds supabase inspect db commands such as outliers, cache-hit and unused-indexes, and most of them work on any Postgres database.",
+      "sources": [5, 4, 15]
+    },
+    {
+      "key": "wait-events",
+      "v": "partial",
+      "them": "The performance detection check reads wait_event_type, wait_event and blocking PIDs from a current pg_stat_activity snapshot for long-running or blocked sessions; Supabase notes it cannot reconstruct sessions that ended between runs. The sources we reviewed do not describe wait event history.",
+      "sources": [16, 3]
+    },
+    {
+      "key": "health-checks",
+      "v": "yes",
+      "them": "Lints include unindexed foreign keys, missing primary keys, unused and duplicate indexes, table bloat, disabled autovacuum, RLS initplan and multiple permissive policies, plus security lints and health checks on API, Auth, Storage and Edge Function error rates.",
+      "sources": [1]
+    },
+    {
+      "key": "agent-interface",
+      "v": "yes",
+      "them": "The Supabase MCP server has get_advisors, query_logs and execute_sql, with a read_only mode. A documented hourly agent uses get_advisors and read-only execute_sql to report performance findings; it does not create indexes or cancel sessions.",
+      "sources": [2, 3]
+    },
+    {
+      "key": "test-fix",
+      "v": "partial",
+      "them": "Branches are separate Supabase environments for testing. New branches start with no data by default; data comes from a seed file or the Include data option, and branch creation in the Dashboard is in beta.",
+      "sources": [12]
+    },
+    {
+      "key": "expert-help",
+      "v": "partial",
+      "them": "Support by plan: community on Free, email on Pro, priority email with SLAs on Team, 24x7x365 enterprise support on Enterprise. The sources we reviewed do not describe PostgreSQL consulting.",
+      "sources": [7]
+    },
+    {
+      "key": "alerts",
+      "them": "The Metrics API, in beta, exposes about 200 Postgres series to scrape once a minute into Grafana or another tool, where you build alerting policies such as saturation detection and index regression. The documented agent prompts report findings in your agent harness. The sources we reviewed do not describe advisor email notifications.",
+      "sources": [6, 3, 1]
+    },
+    {
+      "key": "retention",
+      "them": "Report time ranges: 24 hours on Free, 7 days on Pro, 28 days on Team and Enterprise. Logs are kept 1, 7, 28 and 90 days on Free, Pro, Team and Enterprise.",
+      "sources": [5, 7]
+    },
+    {
+      "key": "compliance",
+      "them": "The pricing page lists SOC 2 and ISO 27001 as included on Team and Enterprise, and HIPAA as a paid add-on on those plans.",
+      "sources": [7]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Free",
+      "price": "$0/month",
+      "notes": "Advisors ship with the platform; 1-day log retention, reports up to 24 hours, community support",
+      "sources": [7, 1, 5]
+    },
+    {
+      "plan": "Pro",
+      "price": "From $25/month",
+      "notes": "$10/month compute credits, 7-day log retention, email support",
+      "sources": [7]
+    },
+    {
+      "plan": "Team",
+      "price": "From $599/month",
+      "notes": "28-day log retention, SOC 2 and ISO 27001, priority email support and SLAs",
+      "sources": [7]
+    },
+    {
+      "plan": "Enterprise",
+      "price": "Custom",
+      "notes": "90-day log retention, 24x7x365 enterprise support",
+      "sources": [7]
+    }
+  ],
+  "pricingNote": "These are Supabase platform plans; the advisors are not sold separately.",
+  "together": "PostgresAI monitoring supports Supabase, so it runs on the same project while the Supabase advisors stay on in Studio and through MCP. PostgresAI adds wait events, scheduled checkups as Issues, longer history and expert help; DBLab can copy a Supabase database with dump and restore to test a fix on full-size data.",
+  "disclosure": "PostgresAI has a Supabase integration: the PostgresAI Console can connect to Supabase projects and set up monitoring for them.",
+  "faq": [
+    {
+      "q": "What do Supabase advisors check?",
+      "a": "Security lints such as RLS disabled in public tables and exposed SECURITY DEFINER functions, performance lints such as unindexed foreign keys, unused or duplicate indexes and table bloat, and health checks on API and Auth error rates.",
+      "sources": [1]
+    },
+    {
+      "q": "Can an AI agent read Supabase advisors?",
+      "a": "Yes. The Supabase MCP server has a get_advisors tool for security and performance findings, and Supabase documents an hourly read-only agent for Claude, Codex and Cursor that reports new performance findings.",
+      "sources": [2, 3]
+    },
+    {
+      "q": "Are Supabase advisors open source?",
+      "a": "The lint queries come from splinter and index recommendations from index_advisor, both open source under the PostgreSQL License.",
+      "sources": [8, 9]
+    },
+    {
+      "q": "Can I use PostgresAI and Supabase advisors together?",
+      "a": "Yes. PostgresAI monitoring supports Supabase and runs alongside the built-in advisors. It adds wait event history, scheduled checkups as Issues, 13-month retention on Scale and expert requests.",
+      "sources": [1]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Supabase docs: advisors",
+      "url": "https://supabase.com/docs/guides/observability/advisors"
+    },
+    {
+      "title": "Supabase docs: Supabase MCP server",
+      "url": "https://supabase.com/docs/guides/ai-tools/mcp"
+    },
+    {
+      "title": "Supabase docs: automate performance checks with agents",
+      "url": "https://supabase.com/docs/guides/observability/automate-with-agents/performance"
+    },
+    {
+      "title": "Supabase docs: index_advisor",
+      "url": "https://supabase.com/docs/guides/database/extensions/index_advisor"
+    },
+    {
+      "title": "Supabase docs: reports",
+      "url": "https://supabase.com/docs/guides/observability/reports"
+    },
+    {
+      "title": "Supabase docs: metrics",
+      "url": "https://supabase.com/docs/guides/observability/metrics"
+    },
+    {
+      "title": "Supabase pricing",
+      "url": "https://supabase.com/pricing"
+    },
+    {
+      "title": "splinter repository",
+      "url": "https://github.com/supabase/splinter"
+    },
+    {
+      "title": "index_advisor repository",
+      "url": "https://github.com/supabase/index_advisor"
+    },
+    {
+      "title": "Supabase blog: AI Assistant v2",
+      "url": "https://supabase.com/blog/supabase-ai-assistant-v2"
+    },
+    {
+      "title": "Supabase AI Assistant",
+      "url": "https://supabase.com/features/ai-assistant"
+    },
+    {
+      "title": "Supabase docs: branching",
+      "url": "https://supabase.com/docs/guides/deployment/branching"
+    },
+    {
+      "title": "Supabase docs: self-hosting",
+      "url": "https://supabase.com/docs/guides/self-hosting"
+    },
+    {
+      "title": "Supabase docs: agent skills",
+      "url": "https://supabase.com/docs/guides/ai-tools/ai-skills"
+    },
+    {
+      "title": "Supabase docs: inspect the database",
+      "url": "https://supabase.com/docs/guides/observability/inspect"
+    },
+    {
+      "title": "Supabase docs: detection checks",
+      "url": "https://supabase.com/docs/guides/observability/detecting"
+    }
+  ]
+}

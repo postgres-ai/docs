@@ -1,0 +1,221 @@
+{
+  "slug": "dblab-vs-tonic",
+  "kind": "branching",
+  "competitor": {
+    "name": "Tonic.ai",
+    "vendor": "Tonic.ai",
+    "url": "https://www.tonic.ai/",
+    "category": "Test data de-identification",
+    "group": "test-data",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs Tonic.ai: thin clones vs de-identified database copies",
+  "description": "Tonic Structural de-identifies, subsets and synthesizes a source database into a destination database. DBLab makes thin, writable clones of a PostgreSQL database.",
+  "summary": "Tonic Structural reads a source database, replaces sensitive values with generators, optionally subsets it, and writes the result to a destination database or a container volume. Each run produces a new physical copy of transformed data. DBLab Engine makes thin clones of one PostgreSQL copy in seconds, with masking by rules you define. Pick Tonic if your main need is de-identified or reduced PostgreSQL test data. Pick DBLab if you need many full-size PostgreSQL copies on demand. They also fit together: a Tonic destination database is an ordinary PostgreSQL database that DBLab can copy.",
+  "chooseThem": [
+    "De-identification is the core of the product: a privacy scan, a generator library, cross-table consistency, privacy reports and schema change alerts.",
+    "Subsetting that preserves referential integrity: pick target tables by percentage or WHERE clause, and Structural pulls the related rows through foreign keys or virtual foreign keys.",
+    "Structural Cloud is hosted by Tonic.ai, which handles monitoring and updates, and a 14-day free trial runs on it; Enterprise can also be self-hosted with Docker Compose or Helm.",
+    "The Structural Agent summarizes the sensitivity scan and suggests generators, and an MCP server lets AI clients such as Claude Code perform the same actions.",
+    "For PostgreSQL, output can be written to a container repository as a data volume, with a Docker Compose file to start a database on it."
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "Tonic Structural de-identifies, subsets and synthesizes structured data. A workspace has a source database and a destination database, where Structural writes the data after applying table modes, generators and subsetting.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "source",
+      "v": "yes",
+      "them": "PostgreSQL 14 to 18, and Amazon Aurora through the same connector; support for 10 to 13 ended on April 1, 2026. Tonic.ai says Structural works with databases on AWS, Azure and GCP. Tonic recommends using a backup rather than production as the source.",
+      "sources": [3, 4, 13, 5]
+    },
+    {
+      "key": "mechanism",
+      "them": "Structural connects to source and destination as a SQL client, transforms the data on the Structural server and writes it to the destination database. It can instead write to a container volume in a registry; that option requires Kubernetes.",
+      "sources": [2, 7]
+    },
+    {
+      "key": "speed",
+      "them": "Not documented in the sources we reviewed. Each data generation run reads the source and writes a new copy of the data to the destination.",
+      "sources": [2]
+    },
+    {
+      "key": "data",
+      "v": "yes",
+      "them": "The destination gets the source data with each table's mode and generators applied. Subsetting is optional: you decide at generation time whether to use it, for example 5% of transactions or all rows tied to customers in California.",
+      "sources": [2, 6]
+    },
+    {
+      "key": "masking",
+      "v": "yes",
+      "them": "The core function. Features include a generator library, privacy scan, privacy reports, cross-table consistency, custom sensitivity rules and schema change alerts; the Privacy Report and custom permission sets need an Enterprise license.",
+      "sources": [13, 10]
+    },
+    {
+      "key": "ci",
+      "v": "yes",
+      "them": "The REST API can start and schedule data generation jobs; webhooks and post-job actions are listed features. A Tonic.ai guide shows API-triggered refreshes from cron or CI/CD tools such as Jenkins, GitLab CI or GitHub Actions. The basic API comes with Professional; configuring generators or subsetting by API needs Enterprise. The sources we reviewed do not describe migration testing.",
+      "sources": [12, 11, 13, 14]
+    },
+    {
+      "key": "interfaces",
+      "them": "The Structural web application, the Structural Agent, an MCP server for AI clients, and a versioned REST API (a new version about once per quarter). Output in a container repository comes with a Docker Compose file that holds the connection settings.",
+      "sources": [11, 16, 15, 7]
+    },
+    {
+      "key": "hosting",
+      "v": "yes",
+      "them": "Structural Cloud, hosted by Tonic.ai, or self-hosted with Docker Compose or Kubernetes Helm. The pricing page lists self-hosting on Enterprise; the docs say self-hosting is for customers who bought Structural or are in a formal evaluation. Structural Cloud has a 14-day free trial.",
+      "sources": [8, 9, 13, 17]
+    },
+    {
+      "key": "open-source",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. Self-hosted instances need a license key.",
+      "sources": [9]
+    },
+    {
+      "key": "limits",
+      "them": "Source and destination must use the same connector, and the destination version cannot be older than the source. They must have the same extensions, and the destination user needs superuser. Professional allows 10 users, two connector types and up to 10 TB of source data.",
+      "sources": [2, 3, 5, 13]
+    },
+    {
+      "key": "cost-model",
+      "them": "Annual pricing set by plan and by the amount of source data connected, measured as total size on disk excluding logs and indexes, with volume discounts per GB.",
+      "sources": [13]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Structural Professional",
+      "price": "No public price",
+      "notes": "Custom pricing; up to 10 TB source data, up to 10 users, 2 data source types, Tonic Cloud deployment",
+      "sources": [13, 10]
+    },
+    {
+      "plan": "Structural Enterprise",
+      "price": "No public price",
+      "notes": "Custom pricing; unlimited source data, users and data source types, Tonic Cloud or self-hosted, RBAC, SSO/SAML",
+      "sources": [13]
+    }
+  ],
+  "pricingNote": "The same pricing page lists separate plans for Tonic Fabricate (AI-powered synthetic data generation, with database masking on its Enterprise plan) and Tonic Textual (unstructured data), which this page does not cover.",
+  "together": "Tonic Structural writes de-identified data to a destination PostgreSQL database, and DBLab copies any PostgreSQL it can reach by dump and restore, or loads an anonymized dump. A Structural destination database can therefore be the source for DBLab clones.",
+  "faq": [
+    {
+      "q": "Does Tonic Structural make database clones?",
+      "a": "Each run makes a new, transformed copy. Structural reads the source as a SQL client, applies generators and optional subsetting on the Structural server, and writes the result to a destination database or a container volume. DBLab makes thin clones that share one physical copy.",
+      "sources": [2, 7]
+    },
+    {
+      "q": "Which PostgreSQL versions does Tonic Structural support?",
+      "a": "PostgreSQL 14 through 18, plus Amazon Aurora through the PostgreSQL connector. Support for PostgreSQL 10 to 13 ended on April 1, 2026.",
+      "sources": [3]
+    },
+    {
+      "q": "What does Tonic Structural cost?",
+      "a": "Tonic.ai lists custom pricing for Professional and Enterprise; annual pricing depends on the plan and on the size of the connected source data, excluding logs and indexes.",
+      "sources": [13]
+    },
+    {
+      "q": "Can I use Tonic.ai and DBLab together?",
+      "a": "Yes. Structural writes de-identified data to a destination PostgreSQL database. DBLab can use that database as its source, or load an anonymized dump of it, and then give each developer or CI job a thin clone.",
+      "sources": [2, 4]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Tonic.ai product documentation",
+      "url": "https://docs.tonic.ai/"
+    },
+    {
+      "title": "Tonic Structural: about data connectors",
+      "url": "https://docs.tonic.ai/app/setting-up-your-database/database-connectors"
+    },
+    {
+      "title": "Tonic Structural: system requirements for PostgreSQL",
+      "url": "https://docs.tonic.ai/app/setting-up-your-database/postgres/postgresql-system-requirements"
+    },
+    {
+      "title": "Tonic Structural: PostgreSQL",
+      "url": "https://docs.tonic.ai/app/setting-up-your-database/postgres"
+    },
+    {
+      "title": "Tonic Structural: before you create a PostgreSQL workspace",
+      "url": "https://docs.tonic.ai/app/setting-up-your-database/postgres/postgresql-before-create-workspace"
+    },
+    {
+      "title": "Tonic Structural: about subsetting",
+      "url": "https://docs.tonic.ai/app/generation/subsetting/subsetting-about"
+    },
+    {
+      "title": "Tonic Structural: writing output to a container repository",
+      "url": "https://docs.tonic.ai/app/workspace/workspace-configuration-settings/workspace-config-write-to-container-artifacts"
+    },
+    {
+      "title": "Tonic Structural: deployment types",
+      "url": "https://docs.tonic.ai/app/readme-1/tonic-deployment-types"
+    },
+    {
+      "title": "Tonic Structural: self-hosted deployment",
+      "url": "https://docs.tonic.ai/app/admin/on-premise-deployment"
+    },
+    {
+      "title": "Tonic Structural: license plans",
+      "url": "https://docs.tonic.ai/app/readme-1/tonic-license-plans"
+    },
+    {
+      "title": "Tonic Structural: about the API",
+      "url": "https://docs.tonic.ai/app/api/api-documentation"
+    },
+    {
+      "title": "Tonic Structural: using the API to perform tasks",
+      "url": "https://docs.tonic.ai/app/api/quick-start-guide"
+    },
+    {
+      "title": "Tonic.ai pricing",
+      "url": "https://www.tonic.ai/pricing"
+    },
+    {
+      "title": "Tonic.ai guide: integrating Tonic Structural into data refresh and CI/CD pipelines",
+      "url": "https://www.tonic.ai/guides/integrating-tonic-into-your-data-refresh-and-ci-cd-pipelines"
+    },
+    {
+      "title": "Tonic Structural: using the Structural MCP server",
+      "url": "https://docs.tonic.ai/app/api/structural-mcp-server"
+    },
+    {
+      "title": "Tonic Structural: about the Structural Agent",
+      "url": "https://docs.tonic.ai/app/structural-ai-and-agent/agent-about"
+    },
+    {
+      "title": "Tonic Structural: getting started with the free trial",
+      "url": "https://docs.tonic.ai/app/quick-start-guide"
+    }
+  ],
+  "proofs": [
+    {
+      "key": "cost",
+      "them": "Tonic Structural writes a new copy of the data to the destination database on each data generation run. Annual pricing is set by plan and by the amount of source data connected, with a lower price per GB as more data is connected.",
+      "sources": [2, 13]
+    },
+    {
+      "key": "control",
+      "them": "Structural Professional is deployed on Structural Cloud, hosted by Tonic.ai. Self-hosting comes with Enterprise and is only available to customers who bought Structural or are in a formal evaluation.",
+      "sources": [13, 9]
+    },
+    {
+      "key": "any-source",
+      "them": "Tonic Structural supports PostgreSQL 14 through 18, including Amazon Aurora through the same connector. As of April 1, 2026, it does not support PostgreSQL 10 to 13.",
+      "sources": [3]
+    },
+    {
+      "key": "open",
+      "them": "Tonic Structural is sold on Professional and Enterprise plans with custom pricing, and a self-hosted instance needs a license key. The sources we reviewed do not describe an open-source edition.",
+      "sources": [13, 9]
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "slug": "dblab-vs-pg-schema-diff",
+  "kind": "changes",
+  "competitor": {
+    "name": "pg-schema-diff",
+    "vendor": "Stripe",
+    "url": "https://github.com/stripe/pg-schema-diff",
+    "category": "Declarative PostgreSQL schema migrations",
+    "group": "tools",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs pg-schema-diff: plan an online change, then run it on a clone",
+  "description": "pg-schema-diff by Stripe diffs a target schema against PostgreSQL and plans online DDL with hazards. DBLab runs the plan on a full-size clone and measures its locks.",
+  "summary": "pg-schema-diff is an open-source Go library and CLI from Stripe. You describe the schema you want in plain DDL; it diffs it against a database and generates a plan that uses online operations such as concurrent index builds and NOT VALID constraints, with hazards for anything risky. It validates the plan on a temporary database that has the same schema but no data. DBLab does not plan or deploy changes; it gives you a full-size clone. Together: generate the plan with pg-schema-diff and apply it to a DBLab clone to see its duration and locks on real data before production.",
+  "chooseThem": [
+    "Declarative: you keep the target schema as DDL files, and pg-schema-diff works out the statements to get there. DBLab does not write or order migrations.",
+    "Plans use online operations: concurrent index builds, new indexes built before old ones are dropped, CHECK and foreign key constraints added NOT VALID then validated, NOT NULL via a check constraint.",
+    "Each plan statement carries its own statement_timeout and lock_timeout, and risky statements carry hazards such as ACQUIRES_ACCESS_EXCLUSIVE_LOCK, INDEX_BUILD or DELETES_DATA.",
+    "apply refuses a plan whose hazards are not listed in --allow-hazards, and asks for confirmation before it runs.",
+    "It is a Go library as well as a CLI, so it can be built into your own deploy tooling."
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A Go library and CLI that computes the differences between Postgres schemas and generates the SQL to migrate from one to the other with minimal downtime and locks. The desired schema is defined in plain DDL. The README says the project is in its early stages.",
+      "sources": [1]
+    },
+    {
+      "key": "tests-on-data",
+      "v": "partial",
+      "them": "Plan validation runs the migration against a temporary database with the same schema as the original and checks that it reaches the target schema. The code creates that schema in an empty database and runs the plan with timeouts ignored, so validation does not test against your data.",
+      "sources": [1, 3, 4]
+    },
+    {
+      "key": "lock-risk",
+      "v": "partial",
+      "them": "Predicted at plan time, not measured. Statements carry hazards such as ACQUIRES_ACCESS_EXCLUSIVE_LOCK, ACQUIRES_SHARE_LOCK, INDEX_BUILD and DELETES_DATA, and the plan sets lock_timeout and statement_timeout for each statement. The README says not all migrations are lock-free and some may need downtime.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "static-checks",
+      "v": "partial",
+      "them": "The sources we reviewed do not describe lint rules for SQL you write; pg-schema-diff writes the SQL itself. Its review step is the hazard list attached to each generated statement, which apply checks against the hazards you allow.",
+      "sources": [1, 2, 5]
+    },
+    {
+      "key": "workflow",
+      "v": "yes",
+      "them": "Declarative: dump an existing schema, edit the DDL files, then plan and apply against a database by connection string. Library users apply the plan themselves; the README leaves plan application up to the user. Renames are treated as a drop and an add, and of custom types only enums are supported.",
+      "sources": [1, 4]
+    },
+    {
+      "key": "approvals",
+      "v": "partial",
+      "them": "apply fails if the plan contains hazards not listed in --allow-hazards, and prompts for confirmation unless --skip-confirm-prompt is set. The README suggests a second user may approve a plan before it is applied. An audit trail is not documented in the sources we reviewed.",
+      "sources": [1, 5]
+    },
+    {
+      "key": "rollback",
+      "them": "Not documented in the sources we reviewed. Statements marked DELETES_DATA warn that a change removes data.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "ci",
+      "them": "Not documented in the sources we reviewed. pg-schema-diff is a CLI and a Go library that connect to Postgres by connection string.",
+      "sources": [1, 4]
+    },
+    {
+      "key": "hosting",
+      "v": "yes",
+      "them": "Open source under the MIT license, from Stripe. Install the CLI with Homebrew or go install, or use it as a Go library. Version 1.0.9 was released on August 6, 2026.",
+      "sources": [1, 2, 6]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Open source",
+      "price": "Free",
+      "notes": "MIT license",
+      "sources": [1]
+    }
+  ],
+  "together": "pg-schema-diff produces the statements; DBLab shows what they do on real data. Point pg-schema-diff plan or apply at a DBLab clone with --from-dsn: the plan is generated against the clone's schema and applied with its own lock and statement timeouts to a full-size copy of the data. You see how long the concurrent index builds and constraint validations take and whether any statement hits a timeout. Reset the clone and try again. Then run apply against production, which plans again from the production schema. pg-schema-diff lists PostgreSQL 14 to 17 as supported, so the clone should run one of those versions.",
+  "faq": [
+    {
+      "q": "Is pg-schema-diff open source?",
+      "a": "Yes. Stripe publishes it on GitHub under the MIT license, as a CLI and a Go library. The README says the project is in its early stages and the maintainers have limited time to review direct code contributions.",
+      "sources": [1]
+    },
+    {
+      "q": "Does pg-schema-diff test a migration on real data?",
+      "a": "Not by itself. Plan validation runs the plan on a temporary database with an identical schema and no data, and checks that the result matches the target schema. To see duration and locks on real data, apply the plan to a full-size copy such as a DBLab clone.",
+      "sources": [3, 4]
+    },
+    {
+      "q": "Which PostgreSQL versions does pg-schema-diff support?",
+      "a": "14, 15, 16 and 17. The README says 13 and older are not supported.",
+      "sources": [1]
+    },
+    {
+      "q": "Can I use DBLab and pg-schema-diff together?",
+      "a": "Yes. A DBLab clone is an ordinary PostgreSQL server, so pg-schema-diff can plan and apply against it by connection string. Run the plan on the clone to measure it, reset the clone, then run apply against production.",
+      "sources": [1]
+    }
+  ],
+  "sources": [
+    {
+      "title": "pg-schema-diff repository and README",
+      "url": "https://github.com/stripe/pg-schema-diff"
+    },
+    {
+      "title": "pg-schema-diff Go package docs: diff",
+      "url": "https://pkg.go.dev/github.com/stripe/pg-schema-diff/pkg/diff"
+    },
+    {
+      "title": "pg-schema-diff source: plan generator and validation",
+      "url": "https://raw.githubusercontent.com/stripe/pg-schema-diff/main/pkg/diff/plan_generator.go"
+    },
+    {
+      "title": "pg-schema-diff source: plan command",
+      "url": "https://raw.githubusercontent.com/stripe/pg-schema-diff/main/cmd/pg-schema-diff/plan_cmd.go"
+    },
+    {
+      "title": "pg-schema-diff source: apply command",
+      "url": "https://raw.githubusercontent.com/stripe/pg-schema-diff/main/cmd/pg-schema-diff/apply_cmd.go"
+    },
+    {
+      "title": "pg-schema-diff releases",
+      "url": "https://github.com/stripe/pg-schema-diff/releases"
+    }
+  ],
+  "proofs": [
+    {
+      "key": "real-data",
+      "them": "pg-schema-diff validates a plan on a temporary database with an identical schema: the code creates the schema in an empty database and runs the plan there with timeouts ignored, so validation does not use your data.",
+      "sources": [4, 3]
+    },
+    {
+      "key": "locks",
+      "them": "pg-schema-diff marks statements with hazards such as ACQUIRES_ACCESS_EXCLUSIVE_LOCK and INDEX_BUILD and sets a lock_timeout per statement. The hazards are predicted at plan time; the README says not all migrations will be lock-free.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "rerun",
+      "them": "pg-schema-diff applies a plan to the database you point it at, and its README example warns that a failed statement may leave the database in a dirty state. The sources we reviewed do not describe resetting data between runs.",
+      "sources": [1, 5]
+    }
+  ]
+}

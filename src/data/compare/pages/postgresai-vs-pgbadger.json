@@ -1,0 +1,164 @@
+{
+  "slug": "postgresai-vs-pgbadger",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "pgBadger",
+    "vendor": "Gilles Darold",
+    "url": "https://pgbadger.darold.net/",
+    "category": "PostgreSQL log analyzer",
+    "group": "open-source",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs pgBadger: continuous monitoring vs log file reports",
+  "description": "pgBadger is an open-source PostgreSQL log analyzer that builds HTML reports from log files. PostgresAI monitors continuously and files findings as Issues with a fix.",
+  "summary": "pgBadger, by Gilles Darold, is a PostgreSQL log analyzer: a Perl script that reads PostgreSQL and PgBouncer log files and writes HTML reports on slow queries, errors, locks, checkpoints, autovacuum and connections. It works from log files after the fact and answers a different question: what the logs say happened. PostgresAI collects statistics continuously, samples wait events and turns checkup findings into Issues. The two can run side by side; pick pgBadger when you need per-statement detail from logs, and add monitoring for live metrics and alerts.",
+  "chooseThem": [
+    "Open source under the PostgreSQL Licence; a single Perl script with no server, agent or database to run.",
+    "Reports from logs cover what statistics views do not keep: errors by class, cancelled queries, lock waits, temporary files, checkpoints, autovacuum per table, sessions and connections.",
+    "Reads log formats from stderr, csvlog, jsonlog and syslog to Amazon RDS, Cloud SQL, Heroku logplex and CloudNativePG, from local files, SSH or journalctl.",
+    "Parses PgBouncer logs into reports on throughput, sessions, connections and pools.",
+    "Incremental mode builds a daily report and a cumulative weekly report, and can process logs in parallel on several CPUs."
+  ],
+  "proofs": [
+    {
+      "key": "waits",
+      "them": "pgBadger reports lock waits from the logs when log_lock_waits is on: the most frequent waiting queries and the queries that waited the most. The sources we reviewed do not describe wait event sampling.",
+      "sources": [1]
+    },
+    {
+      "key": "agents",
+      "them": "pgBadger can write its reports as JSON for other tools to read. The sources we reviewed do not describe an MCP server or an interface for AI agents.",
+      "sources": [1]
+    },
+    {
+      "key": "fix",
+      "them": "pgBadger reports on checkpoints, autovacuum per table, temporary files, cancelled queries and errors by class. The sources we reviewed do not describe recommendations or fixes for what it finds.",
+      "sources": [1]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A PostgreSQL log analyzer: a standalone Perl script that parses PostgreSQL and PgBouncer log files and writes HTML, JSON, text or binary reports. It runs when you call it, for example from cron, and can build daily and weekly incremental reports.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "platforms",
+      "v": "yes",
+      "them": "Any server whose logs you can read: local files, remote files over SSH, journalctl output, Heroku logplex streams, Amazon RDS and CloudWatch logs, and Cloud SQL and CloudNativePG JSON logs.",
+      "sources": [1]
+    },
+    {
+      "key": "deployment",
+      "v": "yes",
+      "them": "Runs on your own machine with Perl; charts render in the browser. Optional Perl modules are needed for CSV input and JSON output. It works from log files, which can be fetched from remote hosts over SSH.",
+      "sources": [1]
+    },
+    {
+      "key": "open-source",
+      "v": "yes",
+      "them": "Free software under the PostgreSQL Licence. Version 13.3 was released on 2026-11-03.",
+      "sources": [1, 4, 3]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "From logged statements: slowest queries, queries that took the most time, most frequent queries, histograms of query times and prepare/bind statistics. Needs log_min_duration_statement; it also processes auto_explain output and links to a graphical explain tool.",
+      "sources": [1]
+    },
+    {
+      "key": "wait-events",
+      "v": "partial",
+      "them": "With log_lock_waits on, reports show the most frequent waiting queries, the queries that waited the most and lock statistics. The sources we reviewed do not describe wait event sampling.",
+      "sources": [1]
+    },
+    {
+      "key": "health-checks",
+      "v": "nd",
+      "them": "Reports cover checkpoints, autovacuum and autoanalyze per table, temporary files, cancelled queries and errors by class. The sources we reviewed do not describe recommendations or scheduled checks.",
+      "sources": [1]
+    },
+    {
+      "key": "agent-interface",
+      "v": "nd",
+      "them": "Reports can be written as JSON for other tools to read. The sources we reviewed do not describe an MCP server or an interface for AI agents.",
+      "sources": [1]
+    },
+    {
+      "key": "test-fix",
+      "v": "na",
+      "them": "pgBadger reports on statements that already ran and were logged. The sources we reviewed do not describe testing changes.",
+      "sources": [1]
+    },
+    {
+      "key": "expert-help",
+      "v": "nd",
+      "them": "The pgBadger site points readers to the PostgreSQL Professional Services list for commercial support. The sources we reviewed do not describe support offered by the maintainer.",
+      "sources": [2]
+    },
+    {
+      "key": "alerts",
+      "them": "Watch mode (-w) reports only errors, like logwatch. The sources we reviewed do not describe alert notifications.",
+      "sources": [1]
+    },
+    {
+      "key": "retention",
+      "them": "Reports are files you keep. In incremental mode, --retention sets the number of weeks to keep; the default, 0, disables removal.",
+      "sources": [1]
+    },
+    {
+      "key": "compliance",
+      "them": "pgBadger is software you run yourself. The sources we reviewed do not describe security attestations.",
+      "sources": [1]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Open source",
+      "price": "Free",
+      "notes": "PostgreSQL Licence; a Perl script you run",
+      "sources": [1, 4]
+    }
+  ],
+  "together": "pgBadger and PostgresAI answer different questions and run side by side: pgBadger reads PostgreSQL logs, which needs settings such as log_min_duration_statement, while PostgresAI monitoring reads statistics views and needs pg_stat_statements. A slow query found in either can be tested on a full-size DBLab clone, since DBLab copies any PostgreSQL source.",
+  "faq": [
+    {
+      "q": "Is pgBadger a monitoring tool?",
+      "a": "pgBadger is a log analyzer. It builds reports from PostgreSQL log files when you run it, for example daily from cron in incremental mode. It reads log files and does not sample live metrics, so it can run alongside a monitoring tool.",
+      "sources": [1]
+    },
+    {
+      "q": "Does pgBadger work with Amazon RDS?",
+      "a": "Yes. pgBadger has an rds log format that auto-detects Amazon RDS and CloudWatch PostgreSQL logs. It also reads Cloud SQL and CloudNativePG JSON logs and Heroku logplex streams.",
+      "sources": [1]
+    },
+    {
+      "q": "What PostgreSQL settings does pgBadger need?",
+      "a": "Query logging through log_min_duration_statement, a log_line_prefix with a time and a process escape, and, for fuller reports, log_checkpoints, log_connections, log_disconnections, log_lock_waits, log_temp_files and log_autovacuum_min_duration. Log messages must be in English.",
+      "sources": [1]
+    },
+    {
+      "q": "Can I use PostgresAI and pgBadger together?",
+      "a": "Yes. pgBadger reads logs and PostgresAI monitoring reads statistics views, so both can run against the same server. DBLab, the PostgresAI cloning product, can then test a fix for a slow query on a full-size clone."
+    }
+  ],
+  "sources": [
+    {
+      "title": "pgBadger repository README",
+      "url": "https://github.com/darold/pgbadger"
+    },
+    {
+      "title": "pgBadger website",
+      "url": "https://pgbadger.darold.net/"
+    },
+    {
+      "title": "pgBadger ChangeLog",
+      "url": "https://github.com/darold/pgbadger/blob/master/ChangeLog"
+    },
+    {
+      "title": "pgBadger license",
+      "url": "https://github.com/darold/pgbadger/blob/master/LICENSE"
+    }
+  ]
+}

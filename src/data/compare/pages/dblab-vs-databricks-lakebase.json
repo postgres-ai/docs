@@ -1,0 +1,200 @@
+{
+  "slug": "dblab-vs-databricks-lakebase",
+  "kind": "branching",
+  "competitor": {
+    "name": "Databricks Lakebase",
+    "vendor": "Databricks",
+    "url": "https://www.databricks.com/product/lakebase",
+    "category": "Managed Postgres on Databricks",
+    "group": "hosted",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs Databricks Lakebase: clones of any Postgres vs Lakebase branches",
+  "description": "Databricks Lakebase is managed Postgres in a Databricks workspace, with copy-on-write branches. DBLab clones any PostgreSQL, wherever it runs, on a machine you control.",
+  "summary": "Databricks Lakebase is a fully managed Postgres database inside the Databricks platform, built on Neon technology and generally available since January 22, 2026. A Lakebase branch is a copy-on-write copy of its parent with all of its schema and data, from now or a point in the restore window, with its own compute. DBLab Engine is open-source software that makes full-size thin clones of any PostgreSQL, including Amazon RDS, Aurora and self-managed servers, on a machine you run. If your app database lives in Databricks, or you want it next to lakehouse data, Lakebase branches are the direct path. If production stays on another provider, DBLab clones it where it is.",
+  "chooseThem": [
+    "Your data platform is Databricks. Lakebase is managed Postgres in your Databricks workspace, with Unity Catalog integration.",
+    "Branches inherit the parent's schema and data through copy-on-write, from the latest state or any point in a restore window of 2 to 30 days (7 by default).",
+    "Each branch has its own compute from 0.5 to 112 CU, autoscaling up to 64 CU and scaling to zero when idle.",
+    "Branch housekeeping is built in: automatic expiration (up to 30 days), reset from parent, schema diff against the parent, and one protected branch per project.",
+    "Branches can be managed from the UI, the Databricks CLI, the REST API and the Databricks SDKs (Python, Java, Go); programmatic management is generally available."
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "Lakebase is \"a fully managed Postgres database integrated into the Databricks platform\", with autoscaling, scale to zero, branching and Unity Catalog integration. Databricks launched it \"powered by Neon technology\"; it became generally available on January 22, 2026.",
+      "sources": [1, 7, 6]
+    },
+    {
+      "key": "source",
+      "v": "partial",
+      "them": "Branches are made within a Lakebase project. An external database can be brought in by logical replication: Lakebase \"can act as a subscriber that receives changes from an external publisher\". Tables must be created first, as schema is not replicated, and replication runs over public networking only.",
+      "sources": [2, 5]
+    },
+    {
+      "key": "mechanism",
+      "them": "Copy-on-write: a branch \"inherits both the schema and data from its parent, but shares the underlying storage through pointers\". New data is written separately only when something changes. A branch has its own primary compute and can have read replicas.",
+      "sources": [2, 8]
+    },
+    {
+      "key": "speed",
+      "them": "Databricks says branches appear instantly and that database size has no impact on creation time; the docs we read give no time in seconds. A Databricks blog says compute resumes from scale to zero in a few hundred milliseconds.",
+      "sources": [2, 9]
+    },
+    {
+      "key": "data",
+      "v": "yes",
+      "them": "A new branch \"inherits both the schema and data from its parent\", either from the latest state or \"from a specific point in time within your restore window\". The sources we reviewed do not describe a schema-only option.",
+      "sources": [2, 3]
+    },
+    {
+      "key": "masking",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. A branch holds the same data as its parent.",
+      "sources": [2, 3]
+    },
+    {
+      "key": "ci",
+      "v": "partial",
+      "them": "The sources we reviewed do not describe a CI integration or migration check for branches. Branches can be created, reset and deleted through the CLI, REST API and SDKs, and given an expiration time.",
+      "sources": [3]
+    },
+    {
+      "key": "interfaces",
+      "them": "Lakebase UI, the Databricks CLI (databricks postgres create-branch), the REST API (/api/2.0/postgres/projects/{project}/branches), and the Databricks SDKs for Python, Java and Go. The UI also shows a schema diff, DDL only, between a branch and its parent.",
+      "sources": [3, 6]
+    },
+    {
+      "key": "hosting",
+      "v": "nd",
+      "them": "A managed service in your Databricks workspace region, which cannot be changed later; the AWS docs list 12 supported AWS regions, and release notes cover Azure regions. The sources we reviewed do not describe a self-hosted option.",
+      "sources": [4, 6]
+    },
+    {
+      "key": "open-source",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed for Lakebase itself. Databricks says \"Lakebase runs the open source Postgres engine\", not a fork.",
+      "sources": [11]
+    },
+    {
+      "key": "limits",
+      "them": "500 branches per project; 20 concurrently active computes per project by default, the default branch exempt. Compute from 0.5 to 112 CU, 2 GB RAM per CU; autoscaling up to 64 CU. Restore window 2 to 30 days. Postgres 16, 17 and 18. Branch expiration up to 30 days ahead. Per-branch storage quota adjustable on request.",
+      "sources": [4, 3, 12]
+    },
+    {
+      "key": "cost-model",
+      "them": "Usage: compute is metered by CU usage over time and storage separately. An expiring branch is billed only for the data it changes; a branch that never expires is billed for its full data size. Point-in-time restore history is $0.200 per GB-month and snapshots $0.090 per GB-month.",
+      "sources": [2, 9]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Pay as you go",
+      "price": "Usage-based",
+      "notes": "Compute metered by CU usage over time, storage separately; rates vary by cloud, region and tier. 14-day free trial",
+      "sources": [10, 9]
+    },
+    {
+      "plan": "Committed use",
+      "price": "Contact sales",
+      "notes": "Committed-use discounts or custom requirements",
+      "sources": [10]
+    }
+  ],
+  "pricingNote": "The Databricks pricing page gives rates by cloud, region and tier, so no single list price is shown here. A cost blog from Databricks gives $0.200 per GB-month for point-in-time restore storage and $0.090 per GB-month for snapshot storage.",
+  "faq": [
+    {
+      "q": "Is Databricks Lakebase the same as Neon?",
+      "a": "Lakebase was launched as \"powered by Neon technology\", and the Databricks pricing page notes that Lakebase Postgres is also available on Neon. Lakebase on Databricks runs inside a Databricks workspace, with Databricks billing, CLI, SDKs and Unity Catalog integration.",
+      "sources": [7, 10, 1]
+    },
+    {
+      "q": "Can Lakebase branch a database that runs on Amazon RDS?",
+      "a": "Not in place. Branches are made inside a Lakebase project, so the data comes in first, for example by logical replication, with Lakebase subscribing to an external Postgres publisher. DBLab clones such a database where it is, by dump and restore onto a machine you run.",
+      "sources": [5]
+    },
+    {
+      "q": "Do Lakebase branches contain data?",
+      "a": "Yes. A new branch inherits its parent's schema and data, sharing storage through copy-on-write, from the latest state or a point in the restore window, which is 2 to 30 days (7 by default).",
+      "sources": [2, 12]
+    },
+    {
+      "q": "Is Lakebase generally available?",
+      "a": "Yes. The release notes say Lakebase became generally available on January 22, 2026, including autoscaling, scale to zero, instant branching and automated backups. It was first announced in Public Preview on June 11, 2025.",
+      "sources": [6, 7]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Databricks docs: Lakebase Postgres",
+      "url": "https://docs.databricks.com/aws/en/oltp/projects/"
+    },
+    {
+      "title": "Databricks docs: Lakebase branches",
+      "url": "https://docs.databricks.com/aws/en/oltp/projects/branches"
+    },
+    {
+      "title": "Databricks docs: Manage branches",
+      "url": "https://docs.databricks.com/aws/en/oltp/projects/manage-branches"
+    },
+    {
+      "title": "Databricks docs: Manage projects",
+      "url": "https://docs.databricks.com/aws/en/oltp/projects/manage-projects"
+    },
+    {
+      "title": "Databricks docs: Lakebase logical replication",
+      "url": "https://docs.databricks.com/aws/en/oltp/projects/logical-replication"
+    },
+    {
+      "title": "Databricks docs: Lakebase release notes",
+      "url": "https://docs.databricks.com/aws/en/release-notes/lakebase/"
+    },
+    {
+      "title": "Databricks press release: Databricks launches Lakebase",
+      "url": "https://www.databricks.com/company/newsroom/press-releases/databricks-launches-lakebase-new-class-operational-database-ai-apps"
+    },
+    {
+      "title": "Databricks docs: Manage computes",
+      "url": "https://docs.databricks.com/aws/en/oltp/projects/manage-computes"
+    },
+    {
+      "title": "Databricks blog: Cost optimization with Lakebase Postgres",
+      "url": "https://www.databricks.com/blog/practical-guide-cost-optimization-lakebase-postgres"
+    },
+    {
+      "title": "Databricks Lakebase pricing",
+      "url": "https://www.databricks.com/product/pricing/lakebase"
+    },
+    {
+      "title": "Databricks Lakebase product page",
+      "url": "https://www.databricks.com/product/lakebase"
+    },
+    {
+      "title": "Databricks docs: Lakebase point-in-time restore",
+      "url": "https://docs.databricks.com/aws/en/oltp/projects/point-in-time-restore"
+    }
+  ],
+  "proofs": [
+    {
+      "key": "any-source",
+      "them": "Lakebase branches are made within a Lakebase project. An external Postgres comes in by logical replication, with Lakebase as subscriber: tables are created first, schema changes are not replicated, and replication runs over public networking only.",
+      "sources": [2, 5]
+    },
+    {
+      "key": "cost",
+      "them": "Each Lakebase branch has its own compute, billed for active hours. An expiring branch is billed for the data it changes; a branch with no expiration is billed for its full data size, like an independent database.",
+      "sources": [2]
+    },
+    {
+      "key": "control",
+      "them": "Lakebase is a fully managed Postgres service in the Databricks platform. A project is created in your Databricks workspace region, which cannot be changed.",
+      "sources": [1, 4]
+    },
+    {
+      "key": "masking",
+      "them": "A Lakebase branch inherits its parent's schema and data. The sources we reviewed do not describe masking or anonymizing data in a branch.",
+      "sources": [2, 3]
+    }
+  ]
+}

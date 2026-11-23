@@ -1,0 +1,190 @@
+{
+  "slug": "postgresai-vs-pgmonitor",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "pgMonitor",
+    "vendor": "Crunchy Data",
+    "url": "https://github.com/CrunchyData/pgmonitor",
+    "category": "Open-source PostgreSQL monitoring stack",
+    "group": "open-source",
+    "status": "acquired",
+    "statusNote": "Crunchy Data announced on June 2, 2025 that it is joining Snowflake. pgMonitor is still published on GitHub under Apache 2.0, with a Snowflake copyright for 2025-2026; the latest release is v5.3.0 of July 10, 2025.",
+    "statusSources": [10, 2, 3]
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs pgMonitor: findings with fixes vs a Prometheus bundle",
+  "description": "pgMonitor by Crunchy Data, now part of Snowflake, bundles Prometheus alert rules and Grafana dashboards. PostgresAI pairs each finding with a fix, on any provider.",
+  "summary": "pgMonitor is an open-source, Apache 2.0 bundle from Crunchy Data, now part of Snowflake: sql_exporter queries, Prometheus and Alertmanager rules and Grafana dashboards that you install and run, also used by Crunchy Postgres for Kubernetes. PostgresAI monitoring is open source too and also uses Grafana; it adds wait event analysis, scheduled checkups as Issues, an MCP server and hosted plans with experts. Pick pgMonitor if you already run Prometheus and want its alert rules; pick PostgresAI for checkups, managed Postgres support or expert help.",
+  "chooseThem": [
+    "Free and open source under Apache 2.0, built on Prometheus, Alertmanager and Grafana, which you may already run.",
+    "An example PostgreSQL alert rule file with rules for replication lag, XID wraparound, emergency vacuum, idle transactions, connection use, checksum failures, archive failures and sequence exhaustion.",
+    "Grafana dashboards for pgBackRest backups and the PITR window, PgBouncer, bloat, and per-table CRUD and size.",
+    "Crunchy Postgres for Kubernetes adds the Crunchy PostgreSQL Exporter configured with pgMonitor through the cluster spec, and its monitoring stack uses pgMonitor dashboards."
+  ],
+  "proofs": [
+    {
+      "key": "fix",
+      "them": "pgMonitor ships threshold alert rules, for example XID wraparound over 50% and idle in transaction over 5 minutes, and a Bloat Details dashboard. Its docs say it gives you the information to make adjustments yourself; the sources we reviewed do not describe fix recommendations.",
+      "sources": [8, 7, 4]
+    },
+    {
+      "key": "anywhere",
+      "them": "pgMonitor setup loads pg_stat_statements, auto_explain and pgmonitor_bgw through shared_preload_libraries in postgresql.conf, restarts PostgreSQL and installs the pgmonitor-extension. Tested operating systems are RHEL 8 and 9 and Ubuntu 20 and 22.",
+      "sources": [5, 4]
+    },
+    {
+      "key": "waits",
+      "them": "The pgMonitor dashboard list has PostgreSQL Details for connections, replication and wraparound, and Query Statistics from pg_stat_statements. It lists no wait event dashboard.",
+      "sources": [7]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "An open-source bundle to visualize the health and performance of a PostgreSQL cluster: sql_exporter metric queries with the pgmonitor-extension, node_exporter, Prometheus alert rules, Alertmanager configuration and Grafana dashboards.",
+      "sources": [4, 1, 5]
+    },
+    {
+      "key": "platforms",
+      "v": "partial",
+      "them": "Self-managed servers, tested on RHEL 8 and 9 and Ubuntu 20 and 22, and Kubernetes through Crunchy Postgres for Kubernetes. pgMonitor plans to support the PostgreSQL versions the community supports. Setup edits postgresql.conf and pg_hba.conf; the sources we reviewed do not describe managed services such as Amazon RDS.",
+      "sources": [4, 5, 9]
+    },
+    {
+      "key": "deployment",
+      "v": "yes",
+      "them": "You install and run every component in your own infrastructure. Metrics are stored in your own Prometheus.",
+      "sources": [4, 6]
+    },
+    {
+      "key": "open-source",
+      "v": "yes",
+      "them": "Open source under the Apache License 2.0.",
+      "sources": [2]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "A Query Statistics dashboard from pg_stat_statements: top N queries by max, mean and total time, and calls, rows and time per user and database. The docs advise against collecting every per-query metric.",
+      "sources": [5, 7]
+    },
+    {
+      "key": "wait-events",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. The dashboard list has no wait event dashboard; PostgreSQL Details shows connections, replication and wraparound.",
+      "sources": [7]
+    },
+    {
+      "key": "health-checks",
+      "v": "partial",
+      "them": "Threshold alert rules (for example XID wraparound over 50% warning and 75% critical, idle in transaction over 5 minutes) and a Bloat Details dashboard. The sources we reviewed do not describe fix recommendations.",
+      "sources": [8, 7]
+    },
+    {
+      "key": "agent-interface",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. Metrics are in Prometheus, which any tool can query.",
+      "sources": [4, 6]
+    },
+    {
+      "key": "test-fix",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed.",
+      "sources": [4]
+    },
+    {
+      "key": "expert-help",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. The repository says Crunchy Data sponsors pgMonitor.",
+      "sources": [1]
+    },
+    {
+      "key": "alerts",
+      "them": "Example Prometheus alert rule files, including a PostgreSQL rule file, routed by Alertmanager to a target you configure, such as SMTP or SMS. A Grafana dashboard lists current and recent alerts.",
+      "sources": [6, 8, 7]
+    },
+    {
+      "key": "retention",
+      "them": "Set by your own Prometheus. The pgMonitor docs we reviewed do not state a default.",
+      "sources": [6]
+    },
+    {
+      "key": "compliance",
+      "them": "Software you run yourself, so attestations depend on your environment. The sources we reviewed list none for pgMonitor.",
+      "sources": [1]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Open source",
+      "price": "Free",
+      "notes": "Apache 2.0; you run Prometheus, Alertmanager, Grafana and the exporters",
+      "sources": [2, 4]
+    }
+  ],
+  "together": "pgMonitor and PostgresAI monitoring both use Grafana but collect and store metrics in different ways; pgMonitor uses sql_exporter and Prometheus. DBLab is a separate product that copies any PostgreSQL source, so a team that keeps pgMonitor can still use a DBLab clone to test an index or query change.",
+  "faq": [
+    {
+      "q": "Is pgMonitor still maintained after Snowflake bought Crunchy Data?",
+      "a": "Crunchy Data announced on June 2, 2025 that it is joining Snowflake. The pgMonitor repository is still public; its latest release is v5.3.0 of July 10, 2025, and its license carries a Snowflake copyright for 2025-2026.",
+      "sources": [10, 3, 2]
+    },
+    {
+      "q": "Is pgMonitor open source?",
+      "a": "Yes, under the Apache License 2.0. You run every component yourself. PostgresAI monitoring is also open source under Apache 2.0, with optional hosted plans.",
+      "sources": [2]
+    },
+    {
+      "q": "Does pgMonitor use postgres_exporter?",
+      "a": "As of pgMonitor 5.0.0, postgres_exporter is deprecated in favor of sql_exporter, which uses the Crunchy Data pgmonitor-extension (minimum version 2.1.0). postgres_exporter still works but only gets bug fixes.",
+      "sources": [5]
+    },
+    {
+      "q": "Does pgMonitor work with Amazon RDS?",
+      "a": "The sources we reviewed do not describe it. Setup edits postgresql.conf and shared_preload_libraries and installs the pgmonitor-extension. PostgresAI monitoring documents support for Amazon RDS and Aurora.",
+      "sources": [5]
+    }
+  ],
+  "sources": [
+    {
+      "title": "pgMonitor repository",
+      "url": "https://github.com/CrunchyData/pgmonitor"
+    },
+    {
+      "title": "pgMonitor license",
+      "url": "https://github.com/CrunchyData/pgmonitor/blob/development/LICENSE"
+    },
+    {
+      "title": "pgMonitor releases",
+      "url": "https://github.com/CrunchyData/pgmonitor/releases"
+    },
+    {
+      "title": "pgMonitor documentation",
+      "url": "https://access.crunchydata.com/documentation/pgmonitor/latest/"
+    },
+    {
+      "title": "pgMonitor documentation: exporter setup",
+      "url": "https://access.crunchydata.com/documentation/pgmonitor/latest/exporter/"
+    },
+    {
+      "title": "pgMonitor documentation: Prometheus and Alertmanager",
+      "url": "https://access.crunchydata.com/documentation/pgmonitor/latest/prometheus/"
+    },
+    {
+      "title": "pgMonitor documentation: Grafana dashboards",
+      "url": "https://access.crunchydata.com/documentation/pgmonitor/latest/grafana/"
+    },
+    {
+      "title": "pgMonitor PostgreSQL alert rules",
+      "url": "https://github.com/CrunchyData/pgmonitor/blob/development/prometheus/common/alert-rules.d/crunchy-alert-rules-pg.yml.example"
+    },
+    {
+      "title": "Crunchy Postgres for Kubernetes: monitoring",
+      "url": "https://access.crunchydata.com/documentation/postgres-operator/latest/tutorials/day-two/monitoring"
+    },
+    {
+      "title": "Crunchy Data blog: Crunchy Data joins Snowflake",
+      "url": "https://www.crunchydata.com/blog/crunchy-data-joins-snowflake"
+    }
+  ]
+}

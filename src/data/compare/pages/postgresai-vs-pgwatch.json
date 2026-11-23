@@ -1,0 +1,215 @@
+{
+  "slug": "postgresai-vs-pgwatch",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "pgwatch",
+    "vendor": "CYBERTEC",
+    "url": "https://pgwat.ch/latest/",
+    "category": "PostgreSQL metrics collector",
+    "group": "open-source",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs pgwatch: checkups and Issues vs a metrics collector",
+  "description": "pgwatch is an open-source PostgreSQL metrics collector, and you pick the storage and dashboards. PostgresAI adds checkups, Issues with a fix and an MCP server for agents.",
+  "summary": "pgwatch, maintained by CYBERTEC, is an open-source metrics collector for PostgreSQL: you choose the metrics, the storage sink and the Grafana dashboards, and run the stack yourself. PostgresAI monitoring comes assembled, hosted or self-hosted, and adds scheduled checkups, Issues, agent access and expert help. Pick pgwatch if you want to assemble and tune your own stack. Pick PostgresAI if you want monitoring packaged with checkups and people to act on the findings.",
+  "disclosure": "PostgresAI monitoring was built on pgwatch: versions released up to November 2026 use it as the metrics collector.",
+  "chooseThem": [
+    "Open source under the BSD 3-Clause license and free to run; CYBERTEC provides commercial 9-to-5 and 24/7 support for it.",
+    "Four sink types: PostgreSQL (including TimescaleDB), Prometheus, JSON file and a custom gRPC backend, so metrics can go into storage you already run.",
+    "Also monitors the tools around PostgreSQL: Patroni cluster members, PgBouncer and Pgpool poolers, and pgBackRest and WAL-G backups.",
+    "Metrics are SQL definitions grouped into presets, including presets for Amazon RDS, Aurora, Azure, Google Cloud SQL and Aiven; you can add your own metrics.",
+    "A REST API and web UI to manage sources, metrics and presets, and 15 dashboards in the gallery, including Health Check and Recommendations."
+  ],
+  "proofs": [
+    {
+      "key": "waits",
+      "them": "pgwatch has a wait_events metric that counts active sessions in pg_stat_activity by wait event type and wait event. Among the shipped presets only debug includes it, at a 30-second interval; with other presets you add it yourself.",
+      "sources": [11, 4]
+    },
+    {
+      "key": "agents",
+      "them": "pgwatch has a REST API, with JWT authentication, for managing sources, metrics and presets. The sources we reviewed do not describe an MCP server or an interface that gives an AI agent findings to work through.",
+      "sources": [5]
+    },
+    {
+      "key": "test",
+      "them": "pgwatch collects and stores metrics from the databases it monitors. The sources we reviewed do not describe running an index or query change on a separate copy of the data.",
+      "sources": [1, 9]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A PostgreSQL metrics collector, the pgwatch daemon written in Go. It reads sources and metric definitions from a configuration database or YAML files, writes measurements to one or more sinks, and ships Grafana dashboards to view them.",
+      "sources": [1, 9, 4]
+    },
+    {
+      "key": "platforms",
+      "v": "yes",
+      "them": "Self-managed servers and managed services: presets for Amazon RDS and Aurora (rds), Azure Database for PostgreSQL (azure) and Google Cloud SQL (gce), and a documented setup for Aiven. On Aurora some metrics are missing compared with RDS, and OS helper metrics in PL/Python do not run on managed platforms. The installation guide lists PostgreSQL 14 or newer as a requirement.",
+      "sources": [3, 9]
+    },
+    {
+      "key": "deployment",
+      "v": "yes",
+      "them": "Self-hosted: a Debian/Ubuntu package, RPM packages, Docker images or a build from source. You run the collector, the configuration store, the sink and Grafana. Metric SQL decides what is collected; the stat_statements metric stores normalized query texts from pg_stat_statements.",
+      "sources": [9, 2, 11]
+    },
+    {
+      "key": "open-source",
+      "v": "yes",
+      "them": "Open source under the BSD 3-Clause license, copyright CYBERTEC PostgreSQL International GmbH. Version 6.2.0 was released in November 2026.",
+      "sources": [8, 13]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "A stat_statements metric from pg_stat_statements, every 180 seconds in the standard preset. The docs say pg_stat_statements powers the Stat statements Top dashboard and many panels across other dashboards; the gallery shows a Query Performance Analysis dashboard.",
+      "sources": [10, 11, 12]
+    },
+    {
+      "key": "wait-events",
+      "v": "partial",
+      "them": "A wait_events metric counts active sessions in pg_stat_activity by wait event type and wait event. Among the shipped presets only debug includes it, so you add it to the preset you use.",
+      "sources": [11, 4]
+    },
+    {
+      "key": "health-checks",
+      "v": "yes",
+      "them": "Health Check and Recommendations dashboards. Recommendation metrics cover indexes to add or drop, partial index candidates, disabled triggers, nested views, the public schema, functions without search_path and superusers; other metrics cover invalid and unused indexes and approximate table bloat.",
+      "sources": [12, 11]
+    },
+    {
+      "key": "agent-interface",
+      "v": "nd",
+      "them": "A REST API manages sources, metrics and presets, with JWT authentication. The sources we reviewed do not describe an MCP server or an interface for AI agents.",
+      "sources": [5]
+    },
+    {
+      "key": "test-fix",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed.",
+      "sources": [1]
+    },
+    {
+      "key": "expert-help",
+      "v": "partial",
+      "them": "The docs state that Cybertec provides commercial 9-to-5 and 24/7 support for pgwatch. The project's own sources we reviewed do not describe PostgreSQL consulting.",
+      "sources": [1]
+    },
+    {
+      "key": "alerts",
+      "them": "Alerting is done in Grafana: the guide wires Grafana's built-in alerting to the metrics pgwatch stores, with contact points such as Slack, PagerDuty, email and webhooks.",
+      "sources": [6]
+    },
+    {
+      "key": "retention",
+      "them": "The --retention option deletes metrics older than a PostgreSQL interval, 14 days by default. Maintenance tasks such as deleting old metrics run on the sinks every 12 hours by default.",
+      "sources": [7]
+    },
+    {
+      "key": "compliance",
+      "them": "pgwatch is software you run yourself. The sources we reviewed do not describe security attestations.",
+      "sources": [1]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Open source",
+      "price": "Free",
+      "notes": "BSD 3-Clause license; you run the collector, storage and Grafana",
+      "sources": [8]
+    },
+    {
+      "plan": "CYBERTEC support",
+      "price": "No public price",
+      "notes": "Commercial 9-to-5 and 24/7 support for pgwatch",
+      "sources": [1]
+    }
+  ],
+  "together": "Versions of PostgresAI monitoring released up to November 2026 include pgwatch as the collector. DBLab, a separate product, copies any PostgreSQL source, so a team that runs its own pgwatch stack can still use a DBLab clone to test an index or query change on full-size data.",
+  "faq": [
+    {
+      "q": "Does PostgresAI use pgwatch?",
+      "a": "Versions of PostgresAI monitoring released up to November 2026 use pgwatch as the metrics collector. PostgresAI adds scheduled checkups, Issues, an MCP server and expert requests on the Scale plan."
+    },
+    {
+      "q": "Is pgwatch open source?",
+      "a": "Yes. pgwatch is open source under the BSD 3-Clause license and is maintained by CYBERTEC, which also sells commercial 9-to-5 and 24/7 support for it.",
+      "sources": [8, 1]
+    },
+    {
+      "q": "Does pgwatch work with Amazon RDS?",
+      "a": "Yes. pgwatch ships an rds preset used for Amazon RDS and Aurora, plus presets for Azure Database for PostgreSQL and Google Cloud SQL. On Aurora some metrics are missing compared with RDS, and PL/Python helper metrics do not run on managed platforms.",
+      "sources": [3]
+    },
+    {
+      "q": "Where does pgwatch store metrics?",
+      "a": "In the sinks you configure: PostgreSQL (including TimescaleDB), Prometheus, a JSON file or a custom gRPC backend. More than one sink can be used at once. The --retention option deletes metrics older than 14 days by default.",
+      "sources": [14, 1, 7]
+    },
+    {
+      "q": "Can I use PostgresAI and pgwatch together?",
+      "a": "Versions of PostgresAI monitoring released up to November 2026 include pgwatch as the collector. A team running its own pgwatch stack can also use DBLab, which copies any PostgreSQL source, to test a fix on a full-size clone."
+    }
+  ],
+  "sources": [
+    {
+      "title": "pgwatch documentation: introduction",
+      "url": "https://pgwat.ch/latest/"
+    },
+    {
+      "title": "pgwatch repository",
+      "url": "https://github.com/cybertec-postgresql/pgwatch"
+    },
+    {
+      "title": "pgwatch documentation: managed PostgreSQL support",
+      "url": "https://pgwat.ch/latest/reference/managed_postgres_support.html"
+    },
+    {
+      "title": "pgwatch documentation: metrics and presets",
+      "url": "https://pgwat.ch/latest/concept/metrics_and_presets.html"
+    },
+    {
+      "title": "pgwatch documentation: REST API",
+      "url": "https://pgwat.ch/latest/reference/rest.html"
+    },
+    {
+      "title": "pgwatch documentation: set up alerting",
+      "url": "https://pgwat.ch/latest/howto/set_up_alerting.html"
+    },
+    {
+      "title": "pgwatch documentation: command-line options",
+      "url": "https://pgwat.ch/latest/reference/cli_env.html"
+    },
+    {
+      "title": "pgwatch license",
+      "url": "https://pgwat.ch/latest/developer/LICENSE.html"
+    },
+    {
+      "title": "pgwatch documentation: custom installation",
+      "url": "https://pgwat.ch/latest/tutorial/custom_installation.html"
+    },
+    {
+      "title": "pgwatch documentation: preparing databases",
+      "url": "https://pgwat.ch/latest/tutorial/preparing_databases.html"
+    },
+    {
+      "title": "pgwatch built-in metric and preset definitions",
+      "url": "https://github.com/cybertec-postgresql/pgwatch/blob/master/internal/metrics/metrics.yaml"
+    },
+    {
+      "title": "pgwatch dashboard gallery",
+      "url": "https://pgwat.ch/latest/gallery/dashboards.html"
+    },
+    {
+      "title": "pgwatch releases",
+      "url": "https://github.com/cybertec-postgresql/pgwatch/releases"
+    },
+    {
+      "title": "pgwatch documentation: sinks",
+      "url": "https://pgwat.ch/latest/reference/sinks_options.html"
+    }
+  ]
+}

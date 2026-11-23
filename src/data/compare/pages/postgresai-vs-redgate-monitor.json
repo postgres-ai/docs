@@ -1,0 +1,223 @@
+{
+  "slug": "postgresai-vs-redgate-monitor",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "Redgate Monitor",
+    "vendor": "Redgate",
+    "url": "https://www.red-gate.com/products/redgate-monitor/",
+    "category": "Database monitoring, self-hosted or SaaS",
+    "group": "observability",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs Redgate Monitor: open source vs captured plans and alerts",
+  "description": "Redgate Monitor watches PostgreSQL with auto_explain plans, top waits and alerts. PostgresAI is open source and covers Amazon RDS, which Redgate marks as preview.",
+  "summary": "Redgate Monitor monitors PostgreSQL from a self-hosted Base Monitor or as Redgate Monitor SaaS. For Postgres it shows top queries, plans captured by auto_explain, top waits, configuration advice and 13 alerts, and Redgate Assistant explains slow queries. PostgresAI monitors PostgreSQL, runs scheduled checkups and turns findings into Issues that you, your AI agent or a PostgresAI expert can act on. Pick Redgate Monitor if you want captured plans compared side by side and a SaaS or self-hosted choice with published per-server prices. Pick PostgresAI if you want open-source monitoring, scheduled checkups or human experts.",
+  "chooseThem": [
+    "Captures PostgreSQL execution plans with auto_explain, and Query Compare shows two captured plans of the same query side by side.",
+    "Self-hosted Base Monitor on Windows or Linux, or Redgate Monitor SaaS hosted on AWS in an EU or US region with a tenancy per customer.",
+    "Top waits for PostgreSQL, filterable by database, link each wait type or event to the queries that waited.",
+    "Redgate Assistant, generally available since 14.40.0, explains slow PostgreSQL queries from their text and plan; a read-only MCP server is available for self-hosted installs.",
+    "A Configuration tab compares each PostgreSQL instance's settings with recommendations, and an estate-level PostgreSQL tab shows which clusters' settings have drifted."
+  ],
+  "proofs": [
+    {
+      "key": "anywhere",
+      "them": "Redgate Monitor supports PostgreSQL on Linux and Windows hosts, Aurora, Azure Flexible Server, Cloud SQL and AlloyDB. Amazon RDS for PostgreSQL is marked preview, and monitoring logical replication is not supported.",
+      "sources": [4]
+    },
+    {
+      "key": "open",
+      "them": "Redgate Monitor is sold as a subscription: Standard (Self-hosted) lists $1,233 per server a year for 1 to 4 servers. The sources we reviewed do not describe it as open source.",
+      "sources": [2]
+    },
+    {
+      "key": "agents",
+      "them": "Redgate Monitor has a read-only MCP server for self-hosted Monitor 14.28 and later. Redgate states that it is not available on Redgate Monitor SaaS.",
+      "sources": [7]
+    },
+    {
+      "key": "test",
+      "them": "Query Compare compares captured plans and Redgate Assistant suggests fixes, which Redgate says to verify against your own environment before making changes. The sources we reviewed do not describe running a change on a separate copy of the data.",
+      "sources": [10, 9]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "Database estate monitoring that covers PostgreSQL. A Base Monitor collects data into a repository database you run, which can be PostgreSQL with TimescaleDB, or Redgate runs it for you as Redgate Monitor SaaS.",
+      "sources": [1, 3, 12]
+    },
+    {
+      "key": "platforms",
+      "v": "yes",
+      "them": "PostgreSQL 10 to 18 on Linux (Ubuntu, RHEL, Rocky, SLES) or Windows hosts, on VMs in Azure, EC2 and Compute Engine, plus Aurora PostgreSQL, Azure Flexible Server, Cloud SQL and AlloyDB. Amazon RDS for PostgreSQL is marked preview. Windows hosts need a Windows Base Monitor; logical replication is not monitored.",
+      "sources": [4]
+    },
+    {
+      "key": "deployment",
+      "v": "yes",
+      "them": "Self-hosted Base Monitor on Windows or on Linux with .NET 10 (Docker tested), storing data in a repository database; a PostgreSQL repository needs version 16 or newer with TimescaleDB 2.17+ Community Edition and the Toolkit. Redgate Monitor SaaS is hosted by Redgate on AWS in an EU or US region.",
+      "sources": [3, 12]
+    },
+    {
+      "key": "open-source",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. Redgate Monitor is sold as a subscription priced per server per year.",
+      "sources": [2]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "Query statistics from pg_stat_statements and execution plans captured by auto_explain from the server log. Query Compare highlights differences between two captured plans. Query analysis in Redgate Assistant gives AI explanations and tuning suggestions for PostgreSQL queries.",
+      "sources": [5, 10, 9]
+    },
+    {
+      "key": "wait-events",
+      "v": "yes",
+      "them": "Top waits for PostgreSQL on the server overview and database pages since 14.10.0, with a link from each wait type or event to the queries that waited. The sources we reviewed do not state the sampling interval.",
+      "sources": [8, 10]
+    },
+    {
+      "key": "health-checks",
+      "v": "yes",
+      "them": "A Configuration tab compares PostgreSQL settings with recommendations, an estate-level PostgreSQL tab shows settings drift across clusters, a Databases section shows unused indexes, and a table bloat alert fires when dead tuples pass a threshold.",
+      "sources": [11, 10]
+    },
+    {
+      "key": "agent-interface",
+      "v": "partial",
+      "them": "An MCP server for self-hosted Monitor 14.28 and later, with read-only tools; for PostgreSQL it returns servers, metrics, top queries, query details, plans and alerts. It is not available on Redgate Monitor SaaS. It shipped in preview in 14.28.0 and is listed without a preview label in 14.36.0. Redgate Assistant became generally available in 14.40.0.",
+      "sources": [7, 8, 11]
+    },
+    {
+      "key": "test-fix",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. Query Compare compares captured plans and Redgate Assistant suggests tuning; the sources do not describe running a change on a separate copy of the data.",
+      "sources": [10, 9]
+    },
+    {
+      "key": "expert-help",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. The product page points to Redgate support, training resources and a community, not to PostgreSQL experts.",
+      "sources": [1]
+    },
+    {
+      "key": "alerts",
+      "them": "13 alerts for PostgreSQL on Linux, including long-running query, long-running and idle transactions, configuration change, replica role change, low cache hit ratio, server log entry and table bloat percentage.",
+      "sources": [6]
+    },
+    {
+      "key": "retention",
+      "them": "Not documented in the sources we reviewed.",
+      "sources": [1, 12]
+    },
+    {
+      "key": "compliance",
+      "them": "Redgate states that it is ISO 27001:2022 certified. Redgate Monitor SaaS gives each customer its own tenancy. The sources we reviewed do not mention SOC 2.",
+      "sources": [13, 12]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Standard (Self-hosted)",
+      "price": "$1,233 per server/year",
+      "notes": "List price for 1-4 servers; $1,170 for 5-9 and $1,110 for 10-19 servers, 20+ by quote; monitoring with alerts and diagnostics; 14-day free trial",
+      "sources": [2, 1]
+    },
+    {
+      "plan": "Standard (SaaS)",
+      "price": "$1,581 per server/year",
+      "notes": "List price for 5-9 servers; $1,500 for 10-19 servers, 20+ by quote; hosted by Redgate",
+      "sources": [2]
+    },
+    {
+      "plan": "Enterprise",
+      "price": "Contact us",
+      "notes": "Adds security monitoring and auditing, high availability architecture, a Data API and a sensitive action log; SaaS Enterprise excludes the Data API and sensitive action log",
+      "sources": [1, 11]
+    }
+  ],
+  "pricingNote": "Prices are the figures the Redgate pricing page showed in US dollars, excluding tax, for a 1 year subscription; the page loads them in the browser. One license covers one server, or one node of a managed service such as Aurora, Azure Flexible Server or Cloud SQL.",
+  "together": "DBLab is a separate product that copies any PostgreSQL source, so a team that monitors with Redgate Monitor can still use a DBLab clone to try an index or query change on full-size data before production.",
+  "faq": [
+    {
+      "q": "Does Redgate Monitor support PostgreSQL?",
+      "a": "Yes. Redgate Monitor supports PostgreSQL 10 to 18 on Linux and Windows hosts, Aurora PostgreSQL, Azure Flexible Server, Cloud SQL and AlloyDB. Amazon RDS for PostgreSQL is marked preview.",
+      "sources": [4]
+    },
+    {
+      "q": "Does Redgate Monitor capture PostgreSQL execution plans?",
+      "a": "Yes. It uses pg_stat_statements for query statistics and auto_explain to capture plans; on Cloud SQL and AlloyDB auto_explain is turned on with a database flag. Query Compare highlights differences between two captured plans.",
+      "sources": [5, 10]
+    },
+    {
+      "q": "Is Redgate Monitor self-hosted or SaaS?",
+      "a": "Both. The Base Monitor can run on your own Windows or Linux servers, or you can use Redgate Monitor SaaS, hosted on AWS in an EU or US region. The MCP server is available only on self-hosted installs.",
+      "sources": [3, 12, 7]
+    },
+    {
+      "q": "What does Redgate Monitor cost?",
+      "a": "Standard (Self-hosted) lists $1,233 per server per year for 1 to 4 servers, $1,170 for 5 to 9 and $1,110 for 10 to 19, excluding tax. Standard (SaaS) lists $1,581 per server per year for 5 to 9 servers and $1,500 for 10 to 19. Enterprise and 20 or more servers are priced on request. A 14-day free trial is offered.",
+      "sources": [2, 1]
+    },
+    {
+      "q": "Can I use PostgresAI and Redgate Monitor together?",
+      "a": "Yes. DBLab, the PostgresAI cloning product, copies any PostgreSQL source, so a team that monitors with Redgate Monitor can test an index or query change on a full-size DBLab clone before production."
+    }
+  ],
+  "sources": [
+    {
+      "title": "Redgate Monitor product page",
+      "url": "https://www.red-gate.com/products/redgate-monitor/"
+    },
+    {
+      "title": "Redgate Monitor pricing",
+      "url": "https://www.red-gate.com/products/redgate-monitor/pricing"
+    },
+    {
+      "title": "Redgate Monitor documentation: supported platforms",
+      "url": "https://documentation.red-gate.com/monitor/supported-platforms-239667385.html"
+    },
+    {
+      "title": "Redgate Monitor documentation: monitored PostgreSQL instances",
+      "url": "https://documentation.red-gate.com/monitor/monitored-postgresql-instances-239667387.html"
+    },
+    {
+      "title": "Redgate Monitor documentation: PostgreSQL configuration choices",
+      "url": "https://documentation.red-gate.com/monitor/guidance-for-postgresql-configuration-choices-259621636.html"
+    },
+    {
+      "title": "Redgate Monitor documentation: PostgreSQL on Linux metrics and alerts",
+      "url": "https://documentation.red-gate.com/monitor/postgresql-on-linux-metrics-and-alerts-239667984.html"
+    },
+    {
+      "title": "Redgate Monitor documentation: connecting an MCP client",
+      "url": "https://documentation.red-gate.com/monitor/connecting-an-mcp-client-to-redgate-monitor-mcp-346161824.html"
+    },
+    {
+      "title": "Redgate Monitor 14 release notes",
+      "url": "https://documentation.red-gate.com/monitor/redgate-monitor-14-1+-release-notes-317489801.html"
+    },
+    {
+      "title": "Redgate Monitor documentation: query analysis",
+      "url": "https://documentation.red-gate.com/monitor/query-analysis-317494885.html"
+    },
+    {
+      "title": "Redgate blog: compare queries, spot unused indexes and diagnose waits in Postgres",
+      "url": "https://www.red-gate.com/blog/smarter-postgres-monitoring-compare-queries-spot-unused-indexes-and-diagnose-waits"
+    },
+    {
+      "title": "Redgate blog: Redgate Monitor product updates, September 2026",
+      "url": "https://www.red-gate.com/blog/redgate-monitor-product-updates-september-2026/"
+    },
+    {
+      "title": "Redgate Monitor documentation: what is Redgate Monitor SaaS",
+      "url": "https://documentation.red-gate.com/monitor/what-is-redgate-monitor-saas-331352317.html"
+    },
+    {
+      "title": "Redgate Trust Center",
+      "url": "https://www.red-gate.com/trust"
+    }
+  ]
+}

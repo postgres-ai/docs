@@ -1,0 +1,178 @@
+{
+  "slug": "dblab-vs-snaplet",
+  "kind": "branching",
+  "competitor": {
+    "name": "Snaplet",
+    "vendor": "Snaplet",
+    "url": "https://github.com/supabase-community/seed",
+    "category": "Postgres seed and snapshot tools",
+    "group": "test-data",
+    "status": "discontinued",
+    "statusNote": "Snaplet shut down as a company in 2024. On August 14, 2024 Supabase announced that Snaplet's Copycat, Seed and Snapshot were released under the MIT license. The repositories now live in the supabase-community GitHub organization; Snapshot was archived on May 11, 2026.",
+    "statusSources": [1, 2, 4]
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs Snaplet: full-size clones vs seed and subset (closed 2024)",
+  "description": "Snaplet shut down in 2024 and open-sourced Seed, Snapshot and Copycat under MIT. DBLab makes full-size thin clones of PostgreSQL with masking rules you define.",
+  "summary": "Snaplet made tools to capture, subset and transform a Postgres snapshot and to seed a database with generated data. The company shut down in 2024 and released Copycat, Seed and Snapshot under MIT; they now live in the supabase-community GitHub organization. Seed is still in Supabase's docs as an optional tool; Snapshot was archived in May 2026. If you used Snaplet to seed a dev database with fake data, Seed is the same tool, now community-maintained. If you used it to get a copy of production, DBLab gives full-size thin clones of PostgreSQL with masking rules you define; it does not generate seed data or subsets.",
+  "chooseThem": [
+    "Seed generates realistic synthetic data from your database schema, with a TypeScript client, so no production data is needed at all.",
+    "Supabase's docs still describe Seed as an option for large volumes of realistic data in local development.",
+    "Copycat generates deterministic fake values: the same input always gives the same output.",
+    "Snapshot can subset a Postgres database and transform the data while capturing it, giving a small copy for a laptop or CI; its repository is archived and read-only.",
+    "All three tools are free under the MIT license."
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "Three open-source tools from the former Snaplet: Copycat \"generates fake data\", Seed \"generates realistic synthetic data based off a database schema\", and Snapshot captures, transforms and restores database snapshots, with subsetting.",
+      "sources": [1]
+    },
+    {
+      "key": "source",
+      "v": "partial",
+      "them": "Snapshot captures from a source database given by SNAPLET_SOURCE_DATABASE_URL, typically production, and is described as a tool for Postgres. The repository is archived and read-only. Seed does not copy a source; it generates data from the schema.",
+      "sources": [4, 3]
+    },
+    {
+      "key": "mechanism",
+      "them": "Snapshot captures data from the source into a snapshot, optionally subset and transformed, and restores it into a target database. Seed reads the schema and inserts generated rows through a TypeScript client.",
+      "sources": [4, 3]
+    },
+    {
+      "key": "speed",
+      "them": "Not documented in the sources we reviewed.",
+      "sources": [4, 3]
+    },
+    {
+      "key": "data",
+      "v": "partial",
+      "them": "\"Snapshots can be subset (reduced in size), and the source data can be transformed to meet your requirements.\" Seed creates synthetic rows, not a copy of production data.",
+      "sources": [4, 3]
+    },
+    {
+      "key": "masking",
+      "v": "yes",
+      "them": "Snapshot transforms source data while capturing it, for example to obfuscate personally identifiable information. Copycat generates deterministic fake values. Seed avoids real data by generating it.",
+      "sources": [4, 5, 1]
+    },
+    {
+      "key": "ci",
+      "v": "partial",
+      "them": "Snapshot's README says snapshots are restored into a database as part of your workflow, locally or in CI/CD, but the repository is archived. Supabase runs seed files on supabase start and supabase db reset.",
+      "sources": [4, 2]
+    },
+    {
+      "key": "interfaces",
+      "them": "Command-line tools run with npx: npx @snaplet/seed init, and snapshot capture, ls and restore in @snaplet/snapshot. Seed can use an LLM, with an OpenAI or Groq API key, to generate examples for text columns.",
+      "sources": [3, 4]
+    },
+    {
+      "key": "hosting",
+      "v": "yes",
+      "them": "The open-sourced tools run where you run them: on a laptop or in a CI job, installed from npm. The sources we reviewed do not describe a hosted Snaplet service after the shutdown.",
+      "sources": [3, 4, 1]
+    },
+    {
+      "key": "open-source",
+      "v": "yes",
+      "them": "Copycat, Seed and Snapshot are released under the MIT license, in the supabase-community GitHub organization.",
+      "sources": [1, 3, 4, 5]
+    },
+    {
+      "key": "limits",
+      "them": "Snapshot was archived on May 11, 2026 and is read-only. Seed's latest tagged release is v0.98.0 from July 30, 2024; Supabase says it is community-maintained and \"receives only occasional fixes\".",
+      "sources": [4, 6, 2]
+    },
+    {
+      "key": "cost-model",
+      "them": "Free. The tools are MIT-licensed; you pay only for the machines that run them and the databases they write to.",
+      "sources": [1]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Seed",
+      "price": "Free",
+      "notes": "Open source, MIT; community-maintained in supabase-community/seed",
+      "sources": [3, 2]
+    },
+    {
+      "plan": "Snapshot",
+      "price": "Free",
+      "notes": "Open source, MIT; repository archived on May 11, 2026",
+      "sources": [4]
+    },
+    {
+      "plan": "Copycat",
+      "price": "Free",
+      "notes": "Open source, MIT",
+      "sources": [5]
+    }
+  ],
+  "faq": [
+    {
+      "q": "What happened to Snaplet?",
+      "a": "Snaplet shut down in 2024. On August 14, 2024 Supabase announced that Snaplet's three main tools, Copycat, Seed and Snapshot, were released under the MIT license and that Supabase would move them into its GitHub organization. Supabase's docs say Snaplet \"wound down as a company in 2024 and open-sourced its tooling\".",
+      "sources": [1, 2]
+    },
+    {
+      "q": "What can I use instead of Snaplet?",
+      "a": "It depends on the job. To seed a dev database with fake data, Seed is the same tool, open-sourced and community-maintained, and Supabase's docs still cover it. To work on a full-size copy of production, DBLab gives thin clones of PostgreSQL with masking rules you define. DBLab does not generate seed data or subsets.",
+      "sources": [2, 3]
+    },
+    {
+      "q": "Is Snaplet Seed still maintained?",
+      "a": "Supabase's docs say @snaplet/seed is community-maintained at supabase-community/seed and \"receives only occasional fixes\", so they treat it as an optional convenience. The latest tagged release is v0.98.0 from July 30, 2024.",
+      "sources": [2, 6]
+    },
+    {
+      "q": "Is Snaplet Snapshot still available?",
+      "a": "The code is on GitHub under MIT at supabase-community/snapshot, but the repository was archived on May 11, 2026 and is read-only.",
+      "sources": [4]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Supabase blog: Snaplet is now open source",
+      "url": "https://supabase.com/blog/snaplet-is-now-open-source"
+    },
+    {
+      "title": "Supabase docs: seeding your database",
+      "url": "https://supabase.com/docs/guides/local-development/seeding-your-database"
+    },
+    {
+      "title": "supabase-community/seed repository",
+      "url": "https://github.com/supabase-community/seed"
+    },
+    {
+      "title": "supabase-community/snapshot repository",
+      "url": "https://github.com/supabase-community/snapshot"
+    },
+    {
+      "title": "supabase-community/copycat repository",
+      "url": "https://github.com/supabase-community/copycat"
+    },
+    {
+      "title": "supabase-community/seed releases",
+      "url": "https://github.com/supabase-community/seed/releases"
+    }
+  ],
+  "proofs": [
+    {
+      "key": "data",
+      "them": "Snaplet Snapshot captures a snapshot of a Postgres database that can be subset and transformed while it is captured. Snaplet Seed generates synthetic rows from the database schema.",
+      "sources": [4, 3]
+    },
+    {
+      "key": "any-source",
+      "them": "Snaplet Snapshot captures from the database given by SNAPLET_SOURCE_DATABASE_URL; its repository was archived on May 11, 2026 and is read-only. Seed generates data from the schema rather than copying a source.",
+      "sources": [4, 3]
+    },
+    {
+      "key": "ci",
+      "them": "Snapshot's README says snapshots are restored into a database locally or in CI/CD. The sources we reviewed do not describe running migrations on a copy or checking the locks they take.",
+      "sources": [4]
+    }
+  ]
+}

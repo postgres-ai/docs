@@ -1,0 +1,219 @@
+{
+  "slug": "dblab-vs-atlas",
+  "kind": "changes",
+  "competitor": {
+    "name": "Atlas",
+    "vendor": "Ariga",
+    "url": "https://atlasgo.io/",
+    "category": "Schema as code tool",
+    "group": "tools",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs Atlas: run a change on real data vs plan and lint it",
+  "description": "Atlas plans, lints and applies schema changes as code, verified on an empty dev database. DBLab runs the result on a full-size clone and measures the locks it holds.",
+  "summary": "Atlas manages schemas as code: a declarative workflow that diffs a desired schema against the database, and a versioned workflow with planned, linted migration files. Its Pro analyzers predict PostgreSQL lock and rewrite risks from the SQL, and it verifies changes on a dev database, which must be empty. DBLab does not write, plan or deploy migrations. It gives you a full-size thin clone of a PostgreSQL database where a change runs on real data, so you see its duration and locks. The two fit together: Atlas plans and lints, DBLab runs the result on a clone.",
+  "chooseThem": [
+    "Atlas is the change process itself: declarative schema-as-code in HCL, SQL or an ORM, or versioned migration files that it plans for you. DBLab covers none of these steps.",
+    "PostgreSQL-specific Pro checks name the lock or rewrite a statement causes, such as PG101, an index built without CONCURRENTLY, and PG305, a CHECK constraint that requires a full table scan.",
+    "Profiling, in preview, measures the locks, rewrites and disk use of each statement during a test, and an expect \"profile\" block can fail the test when a lock lasts longer than a bound.",
+    "Pro adds schema plans that are reviewed and approved in pull requests or the Atlas Registry, drift detection and audit trails.",
+    "GitHub Actions cover lint, test, plan, apply and drift, and the docs list GitLab CI, CircleCI, Bitbucket Pipes and Azure DevOps integrations."
+  ],
+  "proofs": [
+    {
+      "key": "real-data",
+      "them": "Atlas verifies changes on a dev database, which it requires to be empty. Datasets can load sampled rows from an RDS snapshot export, CSV files or synthetic data, but they are in preview for a subset of Teams and Enterprise customers.",
+      "sources": [5, 7]
+    },
+    {
+      "key": "locks",
+      "them": "Atlas Pro analyzers predict locks from the SQL (PG101 to PG109, PG301 to PG320). Profiling measures lock time on the dev database during a test, but it is in preview, and the docs say empty tables make every lock short.",
+      "sources": [3, 6]
+    },
+    {
+      "key": "open",
+      "them": "The Atlas Community Edition is Apache 2.0 but omits linting, testing, schema plan, drift detection and down migrations. The standard binary is under the Atlas MSA, and migrate lint needs Atlas Pro since v0.38.",
+      "sources": [8, 4]
+    },
+    {
+      "key": "rerun",
+      "them": "atlas migrate down reverts changes applied by the migration directory, computing the plan from the current database state; it is not in the Community Edition. Atlas describes its history model as roll-forward by default.",
+      "sources": [13, 8]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A language-independent tool for managing and migrating database schemas. The declarative workflow works like Terraform: it compares the database with the desired schema, then plans and applies the difference. The versioned workflow plans, lints and applies migration files. Schemas are written in HCL, SQL or an ORM.",
+      "sources": [1]
+    },
+    {
+      "key": "tests-on-data",
+      "v": "preview",
+      "them": "Tests run on the dev database, which Atlas requires to be empty. Datasets can load rows from an Amazon RDS snapshot export, CSV files or synthetic data, optionally sampled; the docs say a test rarely needs the whole export. Datasets are in preview for a subset of Teams and Enterprise customers.",
+      "sources": [5, 6, 7]
+    },
+    {
+      "key": "lock-risk",
+      "v": "preview",
+      "them": "Predicted from the SQL by Pro analyzers: PG101 to PG109 for index and constraint builds that lock the table, PG301 to PG320 for blocking and table-rewrite changes. Measured with --profile, which reports the locks each statement takes and for how long on the dev database, and can fail a test past a set bound; profiling is in preview, and the docs say empty tables make every lock short.",
+      "sources": [3, 6]
+    },
+    {
+      "key": "static-checks",
+      "v": "yes",
+      "them": "atlas migrate lint analyzes migration files for destructive, data-dependent, backward-incompatible and locking changes. Since v0.38 it is available only to Atlas Pro users. The concurrent index, blocking and nested transaction analyzers are marked Pro; destructive and data-dependent checks are not.",
+      "sources": [4, 3]
+    },
+    {
+      "key": "workflow",
+      "v": "yes",
+      "them": "Versioned: Atlas plans migration files from schema changes, then lints and applies them; each file runs in its own transaction by default. Declarative: atlas schema apply moves the database to the desired state, and Pro users can pre-plan, review and approve the plan first.",
+      "sources": [1, 12, 11]
+    },
+    {
+      "key": "approvals",
+      "v": "yes",
+      "them": "atlas schema plan, Pro only, stores a plan in the Atlas Registry, where it is approved from the CLI, the Registry UI or a pull request workflow; a lint-review policy asks for human review only when the linter finds issues. Protected Flows limit who can push or approve. Audit trails are listed on Pro.",
+      "sources": [11, 2]
+    },
+    {
+      "key": "rollback",
+      "them": "Migration files are roll-forward in a linear history, but atlas migrate down can revert changes made by specific files. Down migrations are among the features the open-source Community Edition omits.",
+      "sources": [13, 8]
+    },
+    {
+      "key": "ci",
+      "them": "GitHub Actions for migrate lint, test, apply, down and drift and for schema plan, lint, test and apply; the drift actions need an Atlas Pro cloud token. The docs also list GitLab CI Components, CircleCI Orbs, Bitbucket Pipes and Azure DevOps.",
+      "sources": [9, 4]
+    },
+    {
+      "key": "hosting",
+      "v": "partial",
+      "them": "The CLI source on GitHub is under Apache 2.0, and a Community Edition built from it omits linting, testing, schema plan, drift detection, down migrations, integrations and database objects such as views, triggers and functions. The standard binary adds proprietary features and is free to download under the Atlas MSA; atlas login unlocks Pro. Atlas Cloud hosts the Registry, Pipelines and schema monitoring.",
+      "sources": [8, 10, 2]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Starter",
+      "price": "Free",
+      "notes": "Includes PostgreSQL; ORM integration, migration planning and execution; basic database features",
+      "sources": [2]
+    },
+    {
+      "plan": "Pro",
+      "price": "$9 per user/month",
+      "notes": "Up to 50 seats; migration linting, drift detection, schema policy, audit trails; usage-based charges on top",
+      "sources": [2]
+    },
+    {
+      "plan": "Atlas Pipelines (Pro)",
+      "price": "$59 per project/month",
+      "notes": "Includes 2 target databases; $39/month per additional target; 90-day history",
+      "sources": [2]
+    },
+    {
+      "plan": "Schema Monitoring (Pro)",
+      "price": "$39 per monitored database/month",
+      "notes": "Schema changelog, ERD, lineage, drift detection and alerts",
+      "sources": [2]
+    },
+    {
+      "plan": "Enterprise",
+      "price": "Custom",
+      "notes": "Starting from 20 databases; SSO, air-gapped deployment, offline licenses",
+      "sources": [2]
+    },
+    {
+      "plan": "Community Edition",
+      "price": "Free",
+      "notes": "Open source, Apache 2.0; omits linting, testing, schema plan, drift detection and down migrations",
+      "sources": [8]
+    }
+  ],
+  "pricingNote": "Atlas Pro prices per user, plus usage-based charges for CI/CD pipelines and monitored databases. DBLab SE is billed by machine size.",
+  "together": "The two cover different steps of the same change. Atlas plans the migration and atlas migrate lint flags statements that will take locks or rewrite tables, using an empty dev database to verify it. A CI job then creates a DBLab clone through the API or CLI and applies the same migration to it, so the team sees how long it takes and which locks it holds on full-size data; reset returns the clone to its snapshot for the next run. After merge, Atlas applies the change to production. DBLab does not deploy anything.",
+  "faq": [
+    {
+      "q": "Is Atlas open source?",
+      "a": "The CLI source on GitHub is under Apache 2.0, and Ariga publishes a Community Edition built from it. That edition omits many commands, including migration linting, testing and down migrations, and support for database objects such as views, triggers and functions. The standard binary includes proprietary features and is free to download under the Atlas MSA.",
+      "sources": [8, 10]
+    },
+    {
+      "q": "What is the Atlas dev database, and is it production data?",
+      "a": "No. The docs describe it as a temporary, isolated database that Atlas uses as a sandbox to simulate the real environment, and Atlas rejects a dev database that already contains objects. It can be a Docker container such as docker://postgres/15/dev. Atlas uses it to plan, normalize and verify changes, not to hold production data.",
+      "sources": [5]
+    },
+    {
+      "q": "Does Atlas measure locks on real data?",
+      "a": "Its Pro analyzers predict locks from the SQL. The --profile flag measures the locks each statement takes on the dev database and can fail a test past a set bound, but it is in preview, and the docs note that on an empty table every lock is short, so tables should be loaded first. Datasets that load sampled RDS exports or synthetic rows are also in preview.",
+      "sources": [3, 6, 7]
+    },
+    {
+      "q": "What does Atlas cost?",
+      "a": "Starter is free and includes PostgreSQL. Pro is $9 per user per month, plus $59 per project per month for Atlas Pipelines with 2 target databases and $39 per monitored database per month for schema monitoring. Enterprise is custom, starting from 20 databases.",
+      "sources": [2]
+    },
+    {
+      "q": "Can I use DBLab and Atlas together?",
+      "a": "Yes. Atlas plans and lints the migration; a DBLab clone is an ordinary PostgreSQL server, so CI can apply the same migration to a clone to see duration and locks on full-size data before Atlas applies it to production. DBLab does not plan or deploy migrations, so it does not replace Atlas.",
+      "sources": [4, 12]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Atlas docs: introduction",
+      "url": "https://atlasgo.io/docs"
+    },
+    {
+      "title": "Atlas pricing",
+      "url": "https://atlasgo.io/pricing"
+    },
+    {
+      "title": "Atlas docs: lint analyzers",
+      "url": "https://atlasgo.io/lint/analyzers"
+    },
+    {
+      "title": "Atlas docs: migrate lint",
+      "url": "https://atlasgo.io/versioned/lint"
+    },
+    {
+      "title": "Atlas docs: dev database",
+      "url": "https://atlasgo.io/concepts/dev-database"
+    },
+    {
+      "title": "Atlas docs: profiling migrations",
+      "url": "https://atlasgo.io/testing/profile"
+    },
+    {
+      "title": "Atlas docs: test datasets",
+      "url": "https://atlasgo.io/testing/datasets"
+    },
+    {
+      "title": "Atlas Community Edition",
+      "url": "https://atlasgo.io/community-edition"
+    },
+    {
+      "title": "Atlas docs: GitHub Actions",
+      "url": "https://atlasgo.io/integrations/github-actions"
+    },
+    {
+      "title": "Atlas repository on GitHub",
+      "url": "https://github.com/ariga/atlas"
+    },
+    {
+      "title": "Atlas docs: schema plan",
+      "url": "https://atlasgo.io/declarative/plan"
+    },
+    {
+      "title": "Atlas docs: applying versioned migrations",
+      "url": "https://atlasgo.io/versioned/apply"
+    },
+    {
+      "title": "Atlas docs: down migrations",
+      "url": "https://atlasgo.io/versioned/down"
+    }
+  ]
+}

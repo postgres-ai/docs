@@ -1,0 +1,162 @@
+{
+  "slug": "dblab-vs-sqitch",
+  "kind": "changes",
+  "competitor": {
+    "name": "Sqitch",
+    "vendor": "Sqitch open-source project",
+    "url": "https://sqitch.org/",
+    "category": "Database change management",
+    "group": "tools",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs Sqitch: deploy and revert scripts, tested on a clone",
+  "description": "Sqitch deploys, verifies and reverts SQL change scripts in dependency order. DBLab gives the deploy real data on a full-size clone, and reset restores it for a rerun.",
+  "summary": "Sqitch is an open-source database change manager. Each change is a set of native SQL scripts, deploy, revert and verify, ordered by a plan file and declared dependencies, with no ORM or framework involved. It supports PostgreSQL 8.4 and newer. DBLab does not write, order or deploy migrations; it gives you a full-size thin clone of a PostgreSQL database. The two fit together: deploy with Sqitch to a DBLab clone to see how long the change takes on real data, revert or reset, then deploy to production with Sqitch.",
+  "chooseThem": [
+    "Sqitch deploys and reverts changes and records them in registry tables in the target database. DBLab does neither.",
+    "Every change has deploy, revert and verify scripts in the database's own SQL, and changes can declare dependencies on other changes, even from other Sqitch projects.",
+    "Sqitch is not tied to any framework, ORM or platform; PostgreSQL changes are plain SQL scripts for psql, and PostgreSQL 8.4 and newer is supported.",
+    "With deploy --verify, a failed verify script triggers the revert script; by default a failed deploy reverts all changes back to where it started.",
+    "Open source under the MIT license, installable from CPAN, Homebrew, Linux packages or a Docker image."
+  ],
+  "proofs": [
+    {
+      "key": "real-data",
+      "them": "Sqitch deploys to the target you name; the PostgreSQL tutorial creates an empty flipr_test database for it. Verify scripts are written to check a deploy without regard to any data that might be in the database.",
+      "sources": [3, 4]
+    },
+    {
+      "key": "rerun",
+      "them": "Sqitch undoes changes by running each change's revert script, in reverse order. It assumes each change is atomic, so when a deploy script fails it assumes there is nothing to revert.",
+      "sources": [4, 5]
+    },
+    {
+      "key": "locks",
+      "them": "For PostgreSQL the Sqitch tutorial wraps each deploy script in a transaction, so a failing script fails the whole change. The sources we reviewed do not describe measuring the locks a change holds or how long it runs.",
+      "sources": [3]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A database change management application. Changes are scripts native to your database engine, managed with their dependencies through a plan file. Sqitch is not tied to any framework, ORM or platform.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "tests-on-data",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. Sqitch deploys to whatever target you name, by URI or configured name; the tutorial creates an empty flipr_test database. Verify scripts check a deploy without regard to any data in the database.",
+      "sources": [3, 4]
+    },
+    {
+      "key": "lock-risk",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. For PostgreSQL the tutorial wraps each deploy script in a transaction, so a failing script fails the whole change.",
+      "sources": [3]
+    },
+    {
+      "key": "static-checks",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. Verify scripts run after a change is deployed; they are tests against the database, not lint rules.",
+      "sources": [3, 4]
+    },
+    {
+      "key": "workflow",
+      "v": "yes",
+      "them": "sqitch add writes deploy, revert and verify scripts and adds the change to the plan, with --requires and --conflicts for dependencies. Changes are tagged for release, deployed to a target by URI or name, and can be bundled for distribution.",
+      "sources": [2, 3, 4, 6]
+    },
+    {
+      "key": "approvals",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. Sqitch reads deployment state from registry tables in the database, and sqitch log keeps a record of changes after they are reverted. Revert asks for confirmation unless -y is given.",
+      "sources": [3, 5]
+    },
+    {
+      "key": "rollback",
+      "them": "Each change has a revert script. sqitch revert undoes changes in reverse order, all of them or back to a given change with --to. On a failed deploy, the default mode reverts everything deployed in that run; rebase combines a revert and a deploy.",
+      "sources": [3, 4, 5]
+    },
+    {
+      "key": "ci",
+      "them": "Not documented in the sources we reviewed. Sqitch is a command-line tool; the download page offers a Docker image that runs like a local install.",
+      "sources": [8]
+    },
+    {
+      "key": "hosting",
+      "v": "yes",
+      "them": "Open source under the MIT license; you run it. Install from CPAN or GitHub, Homebrew, RPM or apt packages, Strawberry Perl on Windows, or Docker. Version 1.6.1 was released on January 6, 2026.",
+      "sources": [1, 7, 8]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Open source",
+      "price": "Free",
+      "notes": "MIT license",
+      "sources": [1, 9]
+    }
+  ],
+  "together": "Sqitch ships the change; DBLab shows what it does first. Add a DBLab clone as a Sqitch target and run sqitch deploy against it: the deploy and verify scripts run on a full-size copy of the data, and you see how long each change takes. Reset the clone to its snapshot, or exercise the revert scripts on it, and repeat. When the change behaves, deploy the same plan to production with Sqitch.",
+  "faq": [
+    {
+      "q": "Is Sqitch still maintained?",
+      "a": "The repository is active: version 1.6.1 was released on January 6, 2026, following 1.6.0 on October 6, 2025. The README copyright runs to 2026.",
+      "sources": [1, 7]
+    },
+    {
+      "q": "Is Sqitch open source?",
+      "a": "Yes, under the MIT license. The site lists no commercial plans or prices.",
+      "sources": [1, 9]
+    },
+    {
+      "q": "Does Sqitch work with PostgreSQL?",
+      "a": "Yes. PostgreSQL 8.4 and newer is supported. Changes are written in plain SQL for psql, which Sqitch needs to run them, and in the PostgreSQL tutorial each deploy script runs in a transaction.",
+      "sources": [1, 2, 3, 8]
+    },
+    {
+      "q": "Can I use DBLab and Sqitch together?",
+      "a": "Yes. A DBLab clone is an ordinary PostgreSQL server, so it can be a Sqitch target. Deploy to the clone to see how the change behaves on real data, reset it, then deploy to production. DBLab does not deploy migrations, so it does not replace Sqitch.",
+      "sources": [4]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Sqitch repository and README",
+      "url": "https://github.com/sqitchers/sqitch"
+    },
+    {
+      "title": "About Sqitch",
+      "url": "https://sqitch.org/about/"
+    },
+    {
+      "title": "Sqitch tutorial (PostgreSQL)",
+      "url": "https://sqitch.org/docs/manual/sqitchtutorial/"
+    },
+    {
+      "title": "Sqitch manual: sqitch-deploy",
+      "url": "https://sqitch.org/docs/manual/sqitch-deploy/"
+    },
+    {
+      "title": "Sqitch manual: sqitch-revert",
+      "url": "https://sqitch.org/docs/manual/sqitch-revert/"
+    },
+    {
+      "title": "Sqitch manual: sqitch-add",
+      "url": "https://sqitch.org/docs/manual/sqitch-add/"
+    },
+    {
+      "title": "Sqitch releases",
+      "url": "https://github.com/sqitchers/sqitch/releases"
+    },
+    {
+      "title": "Sqitch download",
+      "url": "https://sqitch.org/download/"
+    },
+    {
+      "title": "Sqitch home page",
+      "url": "https://sqitch.org/"
+    }
+  ]
+}

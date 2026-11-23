@@ -1,0 +1,871 @@
+/* Comparison pages. Dense and text-first, in the site's own vocabulary:
+   monospace type, one orange accent, bordered cards, a terminal block. */
+
+.page {
+  /* An explicit width: with auto margins the page would otherwise grow to fit
+     its widest table instead of letting the table scroll. */
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 4rem;
+  font-size: 14px;
+  line-height: 1.55;
+
+  --cmp-accent: var(--ifm-color-primary);
+  --cmp-accent-text: #c2410c;
+  --cmp-line: var(--ifm-color-emphasis-200);
+  --cmp-panel: var(--ifm-color-emphasis-100);
+  --cmp-muted: var(--ifm-color-emphasis-700);
+  --cmp-ours: rgba(255, 97, 18, 0.06);
+}
+
+:global([data-theme='dark']) .page {
+  --cmp-accent-text: #ff8a4c;
+  --cmp-ours: rgba(255, 97, 18, 0.07);
+}
+
+.page *,
+.page *::before,
+.page *::after {
+  box-sizing: border-box;
+}
+
+.page section {
+  margin-top: 2.75rem;
+}
+
+.page h2 {
+  font-size: 1.3rem;
+  line-height: 1.3;
+  margin: 0 0 0.75rem;
+}
+
+.page h3 {
+  font-size: 0.95rem;
+  margin: 1.25rem 0 0.5rem;
+}
+
+.page p {
+  max-width: 78ch;
+}
+
+.crumbs {
+  font-size: 12.5px;
+  color: var(--cmp-muted);
+}
+
+/* Hero: the two names, the difference in one line, the short answer and the
+   first action, all in the first screen. */
+.hero {
+  padding: 1.75rem 0 0.5rem;
+}
+
+.heroSplit {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.heroMain {
+  min-width: 0;
+}
+
+.hero h1 {
+  font-size: 2.3rem;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.vs {
+  color: var(--cmp-muted);
+  font-weight: 400;
+}
+
+.angle {
+  margin: 0.6rem 0 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--cmp-accent-text);
+}
+
+.lead {
+  margin: 1rem 0 0;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.meta,
+.note,
+.sectionNote {
+  font-size: 12.5px;
+  color: var(--cmp-muted);
+}
+
+.meta {
+  margin: 0.9rem 0 0;
+}
+
+.note {
+  margin: 0.75rem 0 0;
+}
+
+.sectionNote {
+  margin: -0.35rem 0 1rem;
+}
+
+.status {
+  margin: 1.25rem 0 0;
+  padding: 0.6rem 0.8rem;
+  border-left: 3px solid #b45309;
+  background: var(--cmp-panel);
+}
+
+/* Actions */
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+  margin: 1.25rem 0 0;
+}
+
+.ctaPrimary,
+.ctaSecondary {
+  display: inline-block;
+  padding: 0.6rem 1.1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+
+.ctaPrimary {
+  background: #c2410c;
+  color: #fff;
+}
+
+.ctaPrimary:hover {
+  background: #9a3412;
+  color: #fff;
+  text-decoration: none;
+}
+
+.ctaSecondary {
+  border-color: var(--ifm-color-emphasis-400);
+  color: var(--ifm-font-color-base);
+}
+
+.ctaSecondary:hover {
+  border-color: var(--cmp-accent);
+  color: var(--ifm-font-color-base);
+  text-decoration: none;
+}
+
+.ctaLink::after {
+  content: ' →';
+}
+
+/* What a reader can run to check us. */
+.tryIt {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid var(--cmp-line);
+  border-radius: 8px;
+  background: var(--cmp-panel);
+}
+
+.tryItTitle {
+  margin: 0 0 0.6rem;
+  font-weight: 700;
+}
+
+.tryItText {
+  margin: 0.75rem 0 0;
+  font-size: 13px;
+}
+
+.tryItLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  margin: 0.5rem 0 0;
+  font-size: 13px;
+}
+
+.terminal {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  background: #12142a;
+  color: #d5d9e6;
+  font-size: 12.5px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.term_cmd {
+  color: #fff;
+  font-weight: 600;
+}
+
+.term_cmd::before {
+  content: '$ ';
+  color: #ff8a4c;
+}
+
+.term_dim {
+  color: #8d93ab;
+}
+
+/* Evidence cards: our fact with our docs, their documented state with theirs.
+   The three parts of every card line up across the row. */
+.proofs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 0 0.9rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: proof;
+}
+
+.proof {
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
+  min-width: 0;
+  margin-bottom: 0.9rem;
+  border: 1px solid var(--cmp-line);
+  border-radius: 8px;
+  background: var(--cmp-panel);
+  overflow: hidden;
+  counter-increment: proof;
+}
+
+.page .proof h3 {
+  margin: 0;
+  padding: 0.85rem 1rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+.proof h3::before {
+  content: counter(proof);
+  display: inline-block;
+  min-width: 1.5rem;
+  margin-right: 0.5rem;
+  padding: 0 0.3rem;
+  border-radius: 4px;
+  background: #c2410c;
+  color: #fff;
+  font-size: 12px;
+  line-height: 1.5rem;
+  text-align: center;
+}
+
+.proofUs,
+.proofThem {
+  padding: 0.7rem 1rem 0.8rem;
+  border-top: 1px solid var(--cmp-line);
+  font-size: 13px;
+}
+
+.proofUs {
+  background: var(--cmp-ours);
+}
+
+.proofUs p,
+.proofThem p {
+  margin: 0;
+}
+
+.who {
+  display: block;
+  margin-bottom: 0.2rem;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cmp-muted);
+}
+
+.proofUs .who {
+  color: var(--cmp-accent-text);
+}
+
+/* One screenshot of the product, next to the action. */
+.seeIt {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 1.5rem 2.5rem;
+  align-items: center;
+}
+
+.figure {
+  margin: 0;
+  border: 1px solid var(--cmp-line);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.seeIt p {
+  margin: 0;
+}
+
+.seeIt .cta {
+  margin-top: 1.1rem;
+}
+
+.figure a {
+  display: block;
+}
+
+/* Tables */
+.scroll {
+  overflow-x: auto;
+}
+
+.table {
+  display: table;
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.table th,
+.table td {
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--cmp-line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.table thead th {
+  background: var(--cmp-panel);
+  font-weight: 700;
+}
+
+.table tbody th {
+  font-weight: 600;
+  background: transparent;
+}
+
+.table tr {
+  background: transparent;
+  border: 0;
+}
+
+.question {
+  width: 19%;
+}
+
+.sides td {
+  width: 40.5%;
+}
+
+/* Our column and our rows carry a light tint of the accent. */
+.table td.oursCol,
+.oursRow td {
+  background: var(--cmp-ours);
+}
+
+.table thead th.oursCol {
+  box-shadow: inset 0 3px 0 #c2410c;
+}
+
+.price {
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+/* One-word answers. The word carries the meaning; colour only supports it. */
+.verdict {
+  display: inline-block;
+  margin-right: 0.45rem;
+  padding: 0 0.4rem;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.55;
+  white-space: nowrap;
+}
+
+.verdict_yes {
+  color: #15803d;
+  background: rgba(21, 128, 61, 0.08);
+}
+
+.verdict_partial,
+.verdict_preview {
+  color: #b45309;
+  background: rgba(180, 83, 9, 0.08);
+}
+
+.verdict_no {
+  color: #b91c1c;
+  background: rgba(185, 28, 28, 0.08);
+}
+
+.verdict_nd,
+.verdict_na {
+  color: var(--cmp-muted);
+}
+
+:global([data-theme='dark']) .verdict_yes {
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.1);
+}
+
+:global([data-theme='dark']) .verdict_partial,
+:global([data-theme='dark']) .verdict_preview {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.1);
+}
+
+:global([data-theme='dark']) .verdict_no {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.1);
+}
+
+/* Source links: a number for theirs, "docs" for ours. */
+.ref {
+  margin-left: 0.2rem;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.ref::before {
+  content: '[';
+}
+
+.ref::after {
+  content: ']';
+}
+
+/* The verdict in a paragraph, next to the reasons to pick the other product. */
+.answer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.5rem 2.5rem;
+  align-items: start;
+}
+
+.answer p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.page .answer h3 {
+  margin: 0.2rem 0 0.75rem;
+  font-size: 1.05rem;
+}
+
+/* Where the other product is the better choice, and our own limits. */
+.fair {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--cmp-line);
+  border-radius: 8px;
+  list-style: none;
+}
+
+.fair li {
+  position: relative;
+  padding-left: 1.1rem;
+}
+
+.fair li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--ifm-color-emphasis-500);
+}
+
+.faq {
+  margin: 0;
+  border-top: 1px solid var(--cmp-line);
+}
+
+.faq > div {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--cmp-line);
+}
+
+.faq dt {
+  font-weight: 700;
+}
+
+.faq dd {
+  margin: 0.3rem 0 0;
+  max-width: 82ch;
+}
+
+.closing {
+  padding: 1.25rem 1.25rem 1.4rem;
+  border: 1px solid var(--cmp-line);
+  border-left: 3px solid #c2410c;
+  border-radius: 8px;
+  background: var(--cmp-panel);
+}
+
+.closing p {
+  margin: 0;
+}
+
+.sources {
+  margin: 0;
+  padding-left: 1.8rem;
+  font-size: 13px;
+  columns: 2;
+  column-gap: 2.5rem;
+}
+
+.sources li {
+  break-inside: avoid;
+}
+
+.sources li:target {
+  background: var(--ifm-color-emphasis-200);
+}
+
+/* Links to other comparisons: a name and the difference in a few words. */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  height: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--cmp-line);
+  border-radius: 8px;
+  color: var(--ifm-font-color-base);
+  text-decoration: none;
+}
+
+.card:hover {
+  border-color: var(--cmp-accent);
+  color: var(--ifm-font-color-base);
+  text-decoration: none;
+}
+
+.cardName {
+  font-weight: 700;
+}
+
+.card:hover .cardName {
+  color: var(--cmp-accent-text);
+}
+
+.cardNote {
+  font-size: 12.5px;
+  color: var(--cmp-muted);
+}
+
+.cardAll {
+  justify-content: center;
+  border-style: dashed;
+}
+
+.badge {
+  margin-left: 0.5rem;
+  padding: 0 0.35rem;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--cmp-muted);
+  white-space: nowrap;
+}
+
+/* Index */
+.kinds {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.kind {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--cmp-line);
+  border-radius: 8px;
+  background: var(--cmp-panel);
+  color: var(--ifm-font-color-base);
+  text-decoration: none;
+}
+
+.kind:hover {
+  border-color: var(--cmp-accent);
+  color: var(--ifm-font-color-base);
+  text-decoration: none;
+}
+
+.kindCount {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--cmp-accent-text);
+}
+
+.page h3.groupLabel {
+  margin: 1.5rem 0 0.6rem;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--cmp-muted);
+}
+
+.matrix {
+  font-size: 12px;
+}
+
+.matrix th,
+.matrix td {
+  padding: 0.35rem 0.5rem;
+}
+
+.matrix tbody th {
+  min-width: 8.5rem;
+  max-width: 15rem;
+}
+
+.matrix thead th {
+  font-size: 11.5px;
+  line-height: 1.35;
+}
+
+.matrix td {
+  white-space: nowrap;
+}
+
+.matrix .verdict {
+  margin-right: 0;
+}
+
+/* The product name stays in view while a wide matrix scrolls sideways. */
+.matrix th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--ifm-background-color);
+}
+
+.matrix thead th:first-child,
+.matrix .ours th:first-child {
+  background: var(--cmp-panel);
+}
+
+.ours th,
+.ours td {
+  background: var(--cmp-panel);
+}
+
+/* What the matrix adds up to. */
+.tallyNote {
+  max-width: 62rem;
+  margin: 0 0 0.75rem;
+  padding: 0.6rem 0.8rem;
+  border-left: 3px solid var(--ifm-color-primary);
+  background: var(--cmp-ours);
+  font-size: 13.5px;
+}
+
+.tally th,
+.tally td {
+  border-top: 2px solid var(--ifm-color-emphasis-300);
+  background: var(--cmp-panel);
+  color: var(--cmp-muted);
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+.matrix .tally th:first-child {
+  background: var(--cmp-panel);
+}
+
+@media (max-width: 900px) {
+  .heroSplit {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .hero {
+    padding-top: 1.25rem;
+  }
+
+  .hero h1 {
+    font-size: 1.7rem;
+  }
+
+  .angle {
+    font-size: 0.98rem;
+  }
+
+  .ctaPrimary,
+  .ctaSecondary {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+
+  .answer,
+  .seeIt,
+  .kinds {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sources {
+    columns: 1;
+  }
+
+  .price {
+    white-space: normal;
+  }
+
+  /* The price table becomes one block per plan. */
+  .prices thead {
+    display: none;
+  }
+
+  .prices,
+  .prices tbody,
+  .prices tr,
+  .prices td {
+    display: block;
+    width: auto;
+  }
+
+  .prices tr {
+    padding: 0.5rem 0.6rem;
+    border: 1px solid var(--cmp-line);
+    border-bottom: 0;
+  }
+
+  .prices tbody tr:last-child {
+    border-bottom: 1px solid var(--cmp-line);
+  }
+
+  .table.prices td {
+    padding: 0.1rem 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .prices tr.oursRow {
+    background: var(--cmp-ours);
+  }
+
+  .table.prices td:nth-child(1),
+  .table.prices td:nth-child(2) {
+    display: inline;
+    padding: 0;
+    font-weight: 600;
+  }
+
+  .prices td:nth-child(1)::after {
+    content: ' · ';
+    font-weight: 400;
+  }
+
+  .prices td:last-child {
+    font-size: 12.5px;
+    color: var(--cmp-muted);
+  }
+
+  .matrix tbody th {
+    min-width: 7rem;
+    max-width: 9rem;
+  }
+
+  .table th,
+  .table td {
+    padding: 0.4rem 0.5rem;
+  }
+
+  /* The side-by-side table becomes one block per question. */
+  .stack thead {
+    display: none;
+  }
+
+  .stack,
+  .stack tbody,
+  .stack tr,
+  .stack th,
+  .stack td {
+    display: block;
+    width: auto;
+  }
+
+  .stack tr {
+    margin-bottom: 1rem;
+    border: 1px solid var(--cmp-line);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .stack th,
+  .stack td {
+    border: 0;
+    border-bottom: 1px solid var(--cmp-line);
+  }
+
+  .stack tr > :last-child {
+    border-bottom: 0;
+  }
+
+  .stack tbody th {
+    background: var(--cmp-panel);
+  }
+
+  .stack td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 0.2rem;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--cmp-muted);
+  }
+
+  .stack td.oursCol::before {
+    color: var(--cmp-accent-text);
+  }
+}

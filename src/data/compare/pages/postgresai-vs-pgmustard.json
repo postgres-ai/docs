@@ -1,0 +1,205 @@
+{
+  "slug": "postgresai-vs-pgmustard",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "pgMustard",
+    "vendor": "pgMustard Ltd",
+    "url": "https://www.pgmustard.com/",
+    "category": "Query plan review tool",
+    "group": "postgres-tools",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs pgMustard: whole-database monitoring vs one plan at a time",
+  "description": "pgMustard reviews one EXPLAIN ANALYZE plan at a time and scores tips by time saved. PostgresAI monitors the whole database and files findings as Issues with a fix.",
+  "summary": "The two are different kinds of tool. pgMustard reviews a single EXPLAIN ANALYZE plan that you paste into the web app or send to its API, scores tips 0 to 5 by estimated time saved and highlights the best three. PostgresAI monitors Postgres continuously, runs scheduled checkups and turns findings into Issues that you, your AI agent or a PostgresAI expert can act on. Pick pgMustard when you already know which query is slow and want help reading its plan, from 95 EUR a year. Pick PostgresAI to find the slow queries and other problems across a database. The two can be used together.",
+  "disclosure": "Michael Christofides, the founder of pgMustard, co-hosts the Postgres FM podcast with Nikolay Samokhvalov, the founder of PostgresAI.",
+  "chooseThem": [
+    "Focused on one job: reading an EXPLAIN ANALYZE plan, with per-operation timings, a timing bar and 17 kinds of tips, such as index potential, bad row estimates, operations on disk and JIT.",
+    "Needs no access to your database: you paste TEXT or JSON plans from PostgreSQL 9.6 to 18, and plans are not stored server-side unless you opt in.",
+    "A score endpoint returns tips and scores as JSON, documented for CI checks such as failing a test when an index tip scores 5.0.",
+    "Pro costs 95 EUR a year for one user with unlimited plan reviews, and the trial covers five of your own plans with no time limit.",
+    "The founder offers Postgres consulting, including performance work and health checks."
+  ],
+  "proofs": [
+    {
+      "key": "open",
+      "them": "pgMustard is a hosted web app sold as an annual subscription, from 95 EUR a year. Its pricing FAQ says there is currently no on-premise option.",
+      "sources": [2]
+    },
+    {
+      "key": "test",
+      "them": "pgMustard reviews EXPLAIN ANALYZE output that you produce on your own database. Its docs note that the analyze parameter causes the query to be executed, so to be aware of that for data-modifying and long-running queries.",
+      "sources": [3]
+    },
+    {
+      "key": "fix",
+      "them": "pgMustard starts from a plan you submit: its home page describes the step from knowing which query is a problem to working out what can be done about it, with tips scored 0 to 5 for that plan.",
+      "sources": [1, 3]
+    },
+    {
+      "key": "agents",
+      "them": "pgMustard has a REST API with score and save endpoints on paid plans; each request uses one credit, 1,000 a year on Pro. The sources we reviewed do not describe an MCP server.",
+      "sources": [3, 2]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A web tool that reviews PostgreSQL query plans. You submit EXPLAIN ANALYZE output; it shows a timing bar and an operation tree and scores tips from 0 to 5 by estimated time saving, highlighting the best three. The sources we reviewed do not describe connecting to or monitoring a database.",
+      "sources": [1, 3]
+    },
+    {
+      "key": "platforms",
+      "v": "na",
+      "them": "Does not apply: pgMustard reads plans you paste or send, so where the database runs does not matter as long as you can run EXPLAIN ANALYZE and copy the output.",
+      "sources": [3]
+    },
+    {
+      "key": "deployment",
+      "v": "no",
+      "them": "Hosted only; the pricing FAQ says there is no on-premise option. Plans are processed in Google Cloud in Finland and are not stored unless you opt in, save or publish them. Sign-in is with a GitHub or Google account.",
+      "sources": [2, 7, 3]
+    },
+    {
+      "key": "open-source",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. pgMustard is sold as a paid annual subscription.",
+      "sources": [2]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "Analysis of one plan at a time: per-operation timings and rows, taking loops, threads, subplans and CTEs into account, and tips such as index potential, poor index efficiency, operations on disk and excessive planning time. The sources we reviewed do not describe collecting workload statistics.",
+      "sources": [1, 3]
+    },
+    {
+      "key": "wait-events",
+      "v": "na",
+      "them": "Does not apply: pgMustard analyzes plans you submit; the sources we reviewed do not describe sampling sessions on a database.",
+      "sources": [3]
+    },
+    {
+      "key": "health-checks",
+      "v": "na",
+      "them": "Does not apply to the product, which reviews single query plans. Health checks of a database are offered as consulting by the founder.",
+      "sources": [3, 6]
+    },
+    {
+      "key": "agent-interface",
+      "v": "partial",
+      "them": "A REST API with a score endpoint, returning tips and scores as JSON, and a save endpoint, returning a URL. It needs a paid plan and uses credits, 1,000 a year on Pro. The sources we reviewed do not describe an MCP server.",
+      "sources": [4, 2, 3, 5]
+    },
+    {
+      "key": "test-fix",
+      "v": "partial",
+      "them": "The score endpoint is documented for automated performance testing, for example failing a test when an index tip scores 5.0. It scores plans from whatever database you ran them on; the sources we reviewed do not describe providing a copy of the data.",
+      "sources": [4]
+    },
+    {
+      "key": "expert-help",
+      "v": "yes",
+      "them": "The founder, Michael Christofides, offers Postgres consulting on performance, health checks and reliability, aimed at small teams without a DBA.",
+      "sources": [6]
+    },
+    {
+      "key": "alerts",
+      "them": "The sources we reviewed do not describe alerts: pgMustard analyzes plans on request.",
+      "sources": [1, 3]
+    },
+    {
+      "key": "retention",
+      "them": "Plans are not stored server-side unless you opt in. The 20 most recent plans are kept in browser local storage; paid plans include unlimited saved plans.",
+      "sources": [3, 2]
+    },
+    {
+      "key": "compliance",
+      "them": "The privacy policy, updated 15 October 2026, says plans are processed in Google Cloud in Finland and not logged. The sources we reviewed do not describe SOC 2 or ISO 27001 attestations.",
+      "sources": [7]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Pro",
+      "price": "95 EUR/year",
+      "notes": "Single user, unlimited plan reviews and saved plans, 1,000 API credits",
+      "sources": [2]
+    },
+    {
+      "plan": "Team",
+      "price": "500 EUR/year",
+      "notes": "Up to 20 users, unlimited plan reviews and saved plans, 20,000 API credits",
+      "sources": [2]
+    },
+    {
+      "plan": "Company",
+      "price": "2000 EUR/year",
+      "notes": "Unlimited users, unlimited plan reviews and saved plans, 200,000 API credits",
+      "sources": [2]
+    }
+  ],
+  "pricingNote": "pgMustard offers annual plans only; prices exclude tax. The free trial covers five of your own plans with no time limit, and refunds are offered for 60 days.",
+  "together": "They work at different steps. PostgresAI monitoring shows which queries take the most time; Joe can run EXPLAIN for one of them on a DBLab clone, which is an ordinary PostgreSQL server; the plan output can then be pasted into pgMustard for scored tips. Timings on a clone differ from production because of copy-on-write storage.",
+  "faq": [
+    {
+      "q": "Is pgMustard a monitoring tool?",
+      "a": "No. pgMustard reviews EXPLAIN ANALYZE plans that you paste into its web app or send to its API; the sources we reviewed do not describe it connecting to your database. The same team is building a separate monitoring tool, pgCustard, which is in early access.",
+      "sources": [1, 3, 8]
+    },
+    {
+      "q": "Does pgMustard work with Amazon RDS?",
+      "a": "pgMustard works from EXPLAIN ANALYZE output you submit, so the provider does not matter. It accepts TEXT or JSON EXPLAIN ANALYZE output from PostgreSQL 9.6 to 18, wherever you can run the query.",
+      "sources": [3]
+    },
+    {
+      "q": "What does pgMustard cost?",
+      "a": "Pro is 95 EUR a year for one user, Team is 500 EUR a year for up to 20 users, and Company is 2000 EUR a year for unlimited users. All include unlimited plan reviews; they differ in API credits. Prices exclude tax.",
+      "sources": [2]
+    },
+    {
+      "q": "Does pgMustard have an API or MCP server?",
+      "a": "It has a REST API with score and save endpoints, on any paid plan, using annual credits. The sources we reviewed do not describe an MCP server.",
+      "sources": [4, 3, 2]
+    },
+    {
+      "q": "Can I use PostgresAI and pgMustard together?",
+      "a": "Yes. PostgresAI monitoring shows which queries to look at, Joe can produce an EXPLAIN plan on a DBLab clone, and that plan can be pasted into pgMustard. Clone timings differ from production because of copy-on-write storage.",
+      "sources": [3]
+    }
+  ],
+  "sources": [
+    {
+      "title": "pgMustard home page",
+      "url": "https://www.pgmustard.com/"
+    },
+    {
+      "title": "pgMustard pricing",
+      "url": "https://www.pgmustard.com/pricing"
+    },
+    {
+      "title": "pgMustard documentation",
+      "url": "https://www.pgmustard.com/docs"
+    },
+    {
+      "title": "pgMustard documentation: score endpoint",
+      "url": "https://www.pgmustard.com/docs/score-endpoint"
+    },
+    {
+      "title": "pgMustard changelog",
+      "url": "https://www.pgmustard.com/changelog"
+    },
+    {
+      "title": "pgMustard Postgres consulting",
+      "url": "https://www.pgmustard.com/consulting"
+    },
+    {
+      "title": "pgMustard privacy policy",
+      "url": "https://www.pgmustard.com/privacy"
+    },
+    {
+      "title": "pgCustard, from the team behind pgMustard",
+      "url": "https://pgcustard.com/"
+    }
+  ]
+}

@@ -1,0 +1,227 @@
+{
+  "slug": "dblab-vs-xata",
+  "kind": "branching",
+  "competitor": {
+    "name": "Xata",
+    "vendor": "Xata",
+    "url": "https://xata.io/",
+    "category": "Postgres platform with branching",
+    "group": "hosted",
+    "status": "acquired",
+    "statusNote": "ClickHouse announced on November 9, 2026 that it is acquiring Xata. Xata is still onboarding customers; ClickHouse plans to integrate it into ClickHouse Managed Postgres in the coming months.",
+    "statusSources": [14]
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs Xata: thin clones on one machine vs a branching platform",
+  "description": "Xata clones or streams an existing Postgres into its platform and branches it with copy-on-write storage. DBLab makes thin clones of any Postgres on one machine you run.",
+  "summary": "Xata is a Postgres platform with copy-on-write branches, scale to zero and anonymization, offered as Xata Cloud, in your own cloud (BYOC), or as open-source software on Kubernetes. It copies an existing Postgres into Xata with xata clone, once, on a schedule or as a continuous stream, and masks data on the way. DBLab Engine is open-source software that makes full-size thin clones of any PostgreSQL on a single machine you run. Both serve dev, CI and agents from a copy of production. Xata runs each branch as its own Postgres instance on Kubernetes; DBLab keeps all clones on one machine. ClickHouse announced in November 2026 that it is acquiring Xata.",
+  "chooseThem": [
+    "Each branch is its own Postgres instance with its own compute that scales to zero when idle, about 1 second to wake on Xata Cloud and BYOC, so branches do not share one machine.",
+    "Anonymization is part of the copy: xata clone applies column transformers (deterministic, masking, templating) while it copies or streams production into Xata.",
+    "The copy can follow production: xata clone stream takes a snapshot, then keeps it in sync with logical replication.",
+    "A GitHub App creates a child branch for each pull request and deletes it when the pull request closes; GitHub Actions and Vercel preview flows are documented too.",
+    "Three ways to run it: Xata Cloud from $0.012 per hour plus $0.28 per GB-month, BYOC on your own Kubernetes, or the Apache 2.0 open-source platform for free."
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "A Postgres platform that \"runs vanilla PostgreSQL with high-performance storage, isolation, and instant branching built in\", with scale to zero and anonymization. Used for dev environments, preview deployments, CI and AI agents.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "source",
+      "v": "yes",
+      "them": "xata clone copies any Postgres reachable by a postgres:// connection string into a Xata branch, then you branch from that copy. Xata names RDS, Aurora, Cloud SQL and self-hosted sources. xata clone stream keeps the copy in sync by logical replication.",
+      "sources": [4, 5, 13]
+    },
+    {
+      "key": "mechanism",
+      "them": "Copy-on-write block storage: at branch time \"no data blocks are copied\"; blocks are copied only when written. Xata Cloud and BYOC use Xatastor storage; the open-source edition uses OpenEBS/Mayastor. Each branch runs as its own Postgres instance on Kubernetes (CloudNativePG).",
+      "sources": [2, 3, 7]
+    },
+    {
+      "key": "speed",
+      "them": "The branching docs say creation \"completes in seconds even for terabyte-scale databases\"; Xata's documentation summary says a child branch takes about three seconds. Scaled-to-zero branches wake in about 1 second on Xata Cloud and about 10 seconds in the open-source edition.",
+      "sources": [2, 13, 3]
+    },
+    {
+      "key": "data",
+      "v": "yes",
+      "them": "A child branch \"contains the exact schema and data of its parent at the moment of creation\". The first copy of an external database comes from xata clone, which can copy selected tables and mask columns on the way.",
+      "sources": [2, 4]
+    },
+    {
+      "key": "masking",
+      "v": "yes",
+      "them": "xata clone, built on pgstream, anonymizes data while it is copied or streamed, with per-column transformers that can be deterministic, mask values or use templates; custom ones can be written in Go. BYOC lists \"Advanced (HIPAA)\" anonymization.",
+      "sources": [6, 5, 3]
+    },
+    {
+      "key": "ci",
+      "v": "yes",
+      "them": "A GitHub App creates a child branch from a configured root branch when a pull request opens and deletes it when it closes; it does not refresh the branch on each push. GitHub Actions workflows cover custom pull request flows, scheduled clones and bulk cleanup.",
+      "sources": [8, 17]
+    },
+    {
+      "key": "interfaces",
+      "them": "Console, REST API, the open-source xata CLI (xata branch create --parent-branch, xata clone), and an MCP server whose run_sql tool is read-only by default; writes need write=true and confirm=true.",
+      "sources": [9, 4, 11, 10]
+    },
+    {
+      "key": "hosting",
+      "v": "yes",
+      "them": "Xata Cloud on AWS and GCP; BYOC, with the data plane on your Kubernetes in AWS, Azure, GCP, Hetzner or on-premises and the control plane in Xata's AWS account; or the open-source platform self-hosted on your own Kubernetes with Helm charts.",
+      "sources": [11, 3, 7]
+    },
+    {
+      "key": "open-source",
+      "v": "yes",
+      "them": "The xataio/xata platform (branch operator, SQL gateway, scale-to-zero plugin, CLI) is on GitHub under Apache 2.0. pgstream (replication) and pgroll (schema migrations) are separate Apache 2.0 projects. Xata Cloud and BYOC are paid offerings.",
+      "sources": [7, 12, 15, 16]
+    },
+    {
+      "key": "limits",
+      "them": "\"The number of branches per project and the branch creation rate depend on your plan\"; the docs give no numbers. Branch storage can only grow, up to 1024 Gi (1 TB). A minimal BYOC setup needs three Kubernetes nodes.",
+      "sources": [2, 9, 11]
+    },
+    {
+      "key": "cost-model",
+      "them": "Xata Cloud bills each running instance by the hour, from $0.012 (micro) to $1.536 (8xlarge), plus storage at $0.28 per GB-month, billed by the minute. Idle branches scale to zero. There are no per-branch, per-developer or per-database fees.",
+      "sources": [3]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Open Source",
+      "price": "Free",
+      "notes": "Apache 2.0; self-host on your own Kubernetes; community support",
+      "sources": [3, 7]
+    },
+    {
+      "plan": "Xata Cloud",
+      "price": "From $0.012/hour plus $0.28/GB-month storage",
+      "notes": "Instances from micro (1 GB RAM, $9/month) to 8xlarge (128 GB RAM, $1121/month); AWS and GCP; SOC 2 and GDPR; free trial",
+      "sources": [3]
+    },
+    {
+      "plan": "BYOC",
+      "price": "No public price",
+      "notes": "Percentage of Xata managed cloud spend, estimate on request, with a minimum annual commitment; AWS, Azure and GCP; HIPAA anonymization, BAA",
+      "sources": [3, 18]
+    }
+  ],
+  "pricingNote": "Xata says there are no per-branch, per-developer or per-database fees; you pay for instances while they run and for storage.",
+  "faq": [
+    {
+      "q": "Can Xata branch a database that stays on Amazon RDS?",
+      "a": "Yes, through a copy. xata clone snapshots the RDS database into a Xata branch, optionally on a schedule, and xata clone stream keeps it current with logical replication. Branches are then made from that copy inside Xata; production stays on RDS.",
+      "sources": [4, 5, 13]
+    },
+    {
+      "q": "Is Xata open source?",
+      "a": "Yes. The Xata platform (xataio/xata) is on GitHub under Apache 2.0 and runs on Kubernetes, built on CloudNativePG. Xata Cloud and BYOC are paid. pgstream and pgroll are separate Apache 2.0 projects from Xata.",
+      "sources": [7, 15, 16]
+    },
+    {
+      "q": "What does Xata cost?",
+      "a": "The open-source edition is free. Xata Cloud starts at $0.012 per hour for a micro instance plus $0.28 per GB-month of storage, with no per-branch fees. BYOC is priced as a percentage of managed cloud spend, quoted on request.",
+      "sources": [3]
+    },
+    {
+      "q": "What happened to Xata?",
+      "a": "On November 9, 2026, ClickHouse announced it is acquiring Xata. The announcement says ClickHouse is still onboarding customers to Xata and plans to bring Xata's branching into ClickHouse Managed Postgres in the coming months.",
+      "sources": [14]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Xata home page",
+      "url": "https://xata.io/"
+    },
+    {
+      "title": "Xata docs: Branching",
+      "url": "https://xata.io/docs/core-concepts/branching"
+    },
+    {
+      "title": "Xata pricing",
+      "url": "https://xata.io/pricing"
+    },
+    {
+      "title": "Xata docs: Create a production clone",
+      "url": "https://xata.io/docs/tutorials/create-production-clone.md"
+    },
+    {
+      "title": "Xata docs: Create streaming replica",
+      "url": "https://xata.io/docs/tutorials/streaming-replication.md"
+    },
+    {
+      "title": "Xata docs: Data anonymization",
+      "url": "https://xata.io/docs/core-concepts/anonymization.md"
+    },
+    {
+      "title": "xataio/xata repository",
+      "url": "https://github.com/xataio/xata"
+    },
+    {
+      "title": "Xata docs: GitHub App",
+      "url": "https://xata.io/docs/automations/github-app.md"
+    },
+    {
+      "title": "Xata docs: Branches",
+      "url": "https://xata.io/docs/platform/branch.md"
+    },
+    {
+      "title": "Xata docs: MCP server",
+      "url": "https://xata.io/docs/platform/mcp.md"
+    },
+    {
+      "title": "Xata docs: Deployment models",
+      "url": "https://xata.io/docs/core-concepts/deployment.md"
+    },
+    {
+      "title": "Xata Core",
+      "url": "https://xata.io/open-source/xata-core.md"
+    },
+    {
+      "title": "Xata documentation summary for LLMs",
+      "url": "https://xata.io/llms-full.txt"
+    },
+    {
+      "title": "ClickHouse blog: Managed Postgres GA and Xata acquisition",
+      "url": "https://clickhouse.com/blog/managed-postgres-ga-xata-acquisition"
+    },
+    {
+      "title": "pgroll repository",
+      "url": "https://github.com/xataio/pgroll"
+    },
+    {
+      "title": "pgstream repository",
+      "url": "https://github.com/xataio/pgstream"
+    },
+    {
+      "title": "Xata documentation index",
+      "url": "https://xata.io/docs/llms.txt"
+    },
+    {
+      "title": "Xata pricing specification",
+      "url": "https://xata.io/pricing.md"
+    }
+  ],
+  "proofs": [
+    {
+      "key": "control",
+      "them": "Xata runs each branch as a Postgres instance on Kubernetes. The open-source platform self-hosts on your own Kubernetes cluster; BYOC needs at least three Kubernetes nodes and keeps the control plane in Xata's AWS account.",
+      "sources": [7, 11]
+    },
+    {
+      "key": "cost",
+      "them": "Xata Cloud bills each running branch instance by the hour, from $0.012 (micro) to $1.536 (8xlarge), plus $0.28 per GB-month of storage; idle branches scale to zero. BYOC adds a management fee with a minimum annual commitment.",
+      "sources": [3, 18]
+    },
+    {
+      "key": "agents",
+      "them": "Xata's MCP server gives assistants run_sql on a branch, read-only by default; writes need write=true and confirm=true. The sources we reviewed do not describe a mode that returns query plans without the rows.",
+      "sources": [10]
+    }
+  ]
+}

@@ -1,0 +1,231 @@
+{
+  "slug": "postgresai-vs-coroot",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "Coroot",
+    "vendor": "Coroot, Inc.",
+    "url": "https://coroot.com/",
+    "category": "Open-source observability and APM",
+    "group": "observability",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs Coroot: Postgres experts and history vs eBPF query capture",
+  "description": "Coroot is open-source observability that captures Postgres queries per application with eBPF. PostgresAI adds checkups, Issues with a fix and Postgres experts on Scale.",
+  "summary": "Coroot is an open-source observability and APM tool. For PostgreSQL it captures queries between applications and the database with eBPF, reads pg_stat_statements and pg_stat_activity, and runs inspections that name the cause of autovacuum, replication, wraparound and bloat problems. Community Edition is free under Apache 2.0; AI root cause analysis, SSO and RBAC are in the paid Enterprise Edition. PostgresAI monitors only PostgreSQL, runs scheduled checkups and turns findings into Issues for you, your AI agent or a PostgresAI expert. Pick Coroot to see which services send which Postgres queries; pick PostgresAI for checkup Issues, 13 months of history and expert help.",
+  "chooseThem": [
+    "eBPF captures Postgres queries between each application and the database, including over TLS, with latency and errors per application and no database instrumentation.",
+    "Postgres inspections with stated default thresholds: average query latency 0.1 s, replication lag 30 s, 90% of max_connections, transaction ID wraparound at 50%, bloat at 50%, last backup older than 24 hours.",
+    "Inspections name the cause and the fix: the transaction or slot holding the xmin horizon, throttled or busy autovacuum workers, ANALYZE for stale statistics, REINDEX or pg_repack for bloat.",
+    "Community Edition is free under Apache 2.0, with alerting and an MCP server for AI agents. AI root cause analysis is in Enterprise Edition from $1 per monitored CPU core a month, or 10 free investigations a month through Coroot Cloud.",
+    "Postgres 10 and later on Amazon RDS and Aurora, Cloud SQL, OCI and Kubernetes operators (CloudNativePG, Percona Operator, Zalando, StackGres), with backup state read from the CloudNativePG and Percona operators."
+  ],
+  "proofs": [
+    {
+      "key": "experts",
+      "them": "Coroot plans include product support: business hours by email, chat or ticket on Standard, 24x7 and phone support on Premium. The sources we reviewed do not describe PostgreSQL expert requests on a Coroot plan.",
+      "sources": [3]
+    },
+    {
+      "key": "history",
+      "them": "Coroot keeps traces, logs and profiles, and metrics when ClickHouse stores them, with a default TTL of 7 days. Flags such as --metrics-ttl change it, on storage you run.",
+      "sources": [10]
+    },
+    {
+      "key": "test",
+      "them": "Coroot compares each release with the previous one to catch performance regressions after deployment. The sources we reviewed do not describe running a change on a separate copy of the data before it ships.",
+      "sources": [1]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "An open-source observability and APM tool with AI-powered root cause analysis. For Postgres it combines eBPF capture of queries between applications and the database with statistics from pg_stat_statements and pg_stat_activity, and runs automated Postgres inspections.",
+      "sources": [1, 4, 5]
+    },
+    {
+      "key": "platforms",
+      "v": "yes",
+      "them": "Postgres 10 and later. Self-managed servers and VMs, Kubernetes operators (CloudNativePG, Percona Operator, Zalando, StackGres), and Amazon RDS and Aurora, Cloud SQL and OCI through cloud integrations. It needs a pg_monitor user and pg_stat_statements.",
+      "sources": [4, 6, 11]
+    },
+    {
+      "key": "deployment",
+      "v": "yes",
+      "them": "Self-hosted on Kubernetes (Helm and the Coroot Operator), Docker, Docker Swarm, Ubuntu, Debian or RHEL, with a Prometheus server and ClickHouse. Query text is obfuscated before it is stored, and the docs say Coroot never modifies data, schema or configuration on the Postgres server.",
+      "sources": [12, 4]
+    },
+    {
+      "key": "open-source",
+      "v": "yes",
+      "them": "Community Edition is open source under Apache 2.0. AI root cause analysis, agentic anomaly detection, SSO, RBAC, capacity planning and 24x7 support are in the paid Enterprise Edition.",
+      "sources": [1, 2, 7]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "From pg_stat_statements and pg_stat_activity: call rate, execution time and I/O time for the top 20 queries by execution time at each scrape, with in-flight queries included. eBPF also observes Postgres queries between applications and the database.",
+      "sources": [4, 5, 6]
+    },
+    {
+      "key": "wait-events",
+      "v": "yes",
+      "them": "Connection counts from pg_stat_activity by database, user, state and wait event type, and Locked queries and Blocking queries charts that attribute blocking with pg_blocking_pids().",
+      "sources": [4, 5]
+    },
+    {
+      "key": "health-checks",
+      "v": "yes",
+      "them": "Postgres inspections for availability, latency, replication lag, connections, checkpoints, transaction ID wraparound, autovacuum, stale statistics, bloat, WAL archiving and backups, with default thresholds that can be set per project and per application. Findings name the cause, for example the transaction or slot holding back vacuum, and the fix.",
+      "sources": [5, 6]
+    },
+    {
+      "key": "agent-interface",
+      "v": "yes",
+      "them": "An MCP server at the Coroot instance, with tools in Community Edition and two anomaly tools in Enterprise Edition. Documented clients are Claude Code, Cursor and Codex, with OAuth 2.0 or a service account API key and server-side RBAC.",
+      "sources": [8, 2]
+    },
+    {
+      "key": "test-fix",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. Coroot compares each release with the previous one to catch regressions after deployment.",
+      "sources": [1]
+    },
+    {
+      "key": "expert-help",
+      "v": "partial",
+      "them": "Product support plans: business hours on Standard, 24x7 with phone support on Premium. Coroot Percona Edition, announced with Percona at Percona Live 2026 and offered as early access, adds dedicated support. The sources we reviewed do not describe PostgreSQL consulting from Coroot.",
+      "sources": [3, 13, 14]
+    },
+    {
+      "key": "alerts",
+      "them": "Alerting and notifications are in Community Edition. Built-in integrations include Slack, Microsoft Teams, PagerDuty, Opsgenie and webhooks.",
+      "sources": [9, 2]
+    },
+    {
+      "key": "retention",
+      "them": "Traces, logs and profiles, and metrics when ClickHouse is used as the metrics storage, are kept in ClickHouse with a default TTL of 7 days, set with flags such as --metrics-ttl.",
+      "sources": [10]
+    },
+    {
+      "key": "compliance",
+      "them": "The coroot.com site shows a SOC 2 Type I badge that links to its trust portal.",
+      "sources": [15]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Community Edition",
+      "price": "Free",
+      "notes": "Open source, Apache 2.0; no limit on monitored infrastructure; community support",
+      "sources": [1, 2]
+    },
+    {
+      "plan": "Standard",
+      "price": "$1 per monitored CPU core/month",
+      "notes": "Enterprise Edition features: AI root cause analysis, SSO and RBAC; business-hours support; volume discounts",
+      "sources": [3, 16]
+    },
+    {
+      "plan": "Premium",
+      "price": "Contact sales",
+      "notes": "Everything in Standard plus 24x7 and phone support, capacity planning, air-gapped installation support",
+      "sources": [3]
+    }
+  ],
+  "pricingNote": "Coroot bills by monitored CPU core, not data volume, and offers a 14-day trial. Community Edition users can connect to Coroot Cloud for 10 free AI investigations a month.",
+  "together": "Coroot links Postgres queries to the applications that send them and runs its own Postgres inspections; PostgresAI adds scheduled checkups and Issues. Both are documented for Amazon RDS and Aurora, Cloud SQL and Kubernetes, and both read pg_stat_statements, so they can watch the same databases.",
+  "faq": [
+    {
+      "q": "Is Coroot open source?",
+      "a": "Coroot Community Edition is open source under Apache 2.0 and free with no limit on monitored infrastructure. AI root cause analysis, SSO, RBAC and 24x7 support are in the paid Enterprise Edition. PostgresAI monitoring is open source under Apache 2.0.",
+      "sources": [1, 2]
+    },
+    {
+      "q": "What does Coroot cost?",
+      "a": "Community Edition is free. The Standard plan is $1 per monitored CPU core a month with volume discounts; Premium is priced by sales. There is a 14-day trial. Community Edition users can connect to Coroot Cloud for 10 free AI investigations a month.",
+      "sources": [3, 7]
+    },
+    {
+      "q": "What does Coroot monitor in PostgreSQL?",
+      "a": "With a pg_monitor user and pg_stat_statements, Coroot collects the top 20 queries by execution time, connections by wait event type, locks and blocking, replication, WAL and archiving, wraparound, bloat, autovacuum, and schema and settings changes, and checks them against default thresholds.",
+      "sources": [4, 5]
+    },
+    {
+      "q": "Is Coroot partnered with Percona?",
+      "a": "Yes. A Coroot blog post dated September 17, 2026 says Coroot and Percona announced Coroot Percona Edition at Percona Live 2026. Percona's page offers early access and says it adds unlimited AI root cause analysis, SSO and RBAC, and dedicated support to the free Community Edition.",
+      "sources": [13, 14]
+    },
+    {
+      "q": "Can I use PostgresAI and Coroot together?",
+      "a": "Yes. Coroot links Postgres queries to the applications that send them, and PostgresAI adds scheduled checkups and Issues. Both read pg_stat_statements and are documented for Amazon RDS, Aurora and Cloud SQL.",
+      "sources": [4, 6]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Coroot repository",
+      "url": "https://github.com/coroot/coroot"
+    },
+    {
+      "title": "Coroot editions",
+      "url": "https://coroot.com/editions"
+    },
+    {
+      "title": "Coroot pricing",
+      "url": "https://coroot.com/pricing/"
+    },
+    {
+      "title": "Coroot documentation: Postgres",
+      "url": "https://docs.coroot.com/databases/postgres"
+    },
+    {
+      "title": "Coroot documentation: Postgres inspections",
+      "url": "https://docs.coroot.com/inspections/postgres"
+    },
+    {
+      "title": "Coroot: PostgreSQL observability",
+      "url": "https://coroot.com/postgres"
+    },
+    {
+      "title": "Coroot documentation: AI root cause analysis",
+      "url": "https://docs.coroot.com/ai/"
+    },
+    {
+      "title": "Coroot documentation: MCP server",
+      "url": "https://docs.coroot.com/mcp/overview"
+    },
+    {
+      "title": "Coroot documentation: alerting",
+      "url": "https://docs.coroot.com/alerting/"
+    },
+    {
+      "title": "Coroot documentation: configuration flags",
+      "url": "https://docs.coroot.com/configuration/configuration"
+    },
+    {
+      "title": "Coroot documentation: AWS integration",
+      "url": "https://docs.coroot.com/configuration/aws"
+    },
+    {
+      "title": "Coroot documentation: quick start",
+      "url": "https://docs.coroot.com/"
+    },
+    {
+      "title": "Coroot blog: Percona Live 2026",
+      "url": "https://coroot.com/blog/percona-live-2026/"
+    },
+    {
+      "title": "Percona: Coroot Percona Edition",
+      "url": "https://www.percona.com/coroot/"
+    },
+    {
+      "title": "Coroot home page",
+      "url": "https://coroot.com/"
+    },
+    {
+      "title": "Coroot documentation: Enterprise Edition",
+      "url": "https://docs.coroot.com/quick-start/enterprise"
+    }
+  ]
+}

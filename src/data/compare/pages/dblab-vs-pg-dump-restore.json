@@ -1,0 +1,170 @@
+{
+  "slug": "dblab-vs-pg-dump-restore",
+  "kind": "branching",
+  "competitor": {
+    "name": "pg_dump and pg_restore",
+    "vendor": "PostgreSQL Global Development Group",
+    "url": "https://www.postgresql.org/docs/current/app-pgdump.html",
+    "category": "PostgreSQL logical backup tools",
+    "group": "diy",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "DBLab vs pg_dump and pg_restore: thin clones vs a full copy each time",
+  "description": "pg_dump and pg_restore copy a PostgreSQL database in full and come with PostgreSQL. DBLab loads one copy, for managed services with these tools, then makes thin clones.",
+  "summary": "pg_dump exports a consistent snapshot of one PostgreSQL database without blocking readers or writers, and pg_restore loads it into another server, in parallel with the directory or custom format. Each copy is a full, separate database: the restore loads every row and builds every index again. DBLab Engine uses the same dump and restore to load data from managed services such as Amazon RDS, then makes thin clones of that one copy in seconds. For one copy, they need nothing beyond PostgreSQL itself. For many copies of a large database, DBLab restores once instead of once per copy.",
+  "chooseThem": [
+    "Part of PostgreSQL and free under the PostgreSQL License. There is nothing extra to install, run or pay for.",
+    "Works against any server pg_dump can connect to, back to PostgreSQL 9.2, and the output loads into newer major versions. The docs call it the only method that moves a database to a different machine architecture.",
+    "Selective copies: -n and -t pick schemas or tables, --exclude-table-data keeps a table's definition without its rows, and pg_restore can restore chosen items from an archive.",
+    "Parallel dump (-j with the directory format) and parallel restore (-j with custom or directory archives) shorten the copy on a multi-core server.",
+    "The result is an independent database with its own storage, on any server. DBLab notes that timings on its copy-on-write clones should not be compared directly with production."
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "Two client programs that ship with PostgreSQL. pg_dump exports one database to a SQL script or an archive; pg_restore loads an archive into a database. Used for logical backups and to copy a database from one server to another.",
+      "sources": [1, 2, 3]
+    },
+    {
+      "key": "source",
+      "v": "yes",
+      "them": "Any PostgreSQL server pg_dump can connect to, back to version 9.2. pg_dump refuses to dump a server newer than its own major version. A dump can be piped straight from one server into another.",
+      "sources": [1, 3]
+    },
+    {
+      "key": "mechanism",
+      "them": "A logical copy. pg_dump reads the database in one consistent snapshot and writes SQL commands or archive entries. pg_restore creates the tables, loads the rows, then builds indexes and constraints; indexes are dumped as commands, not contents.",
+      "sources": [1, 2, 6]
+    },
+    {
+      "key": "speed",
+      "them": "The docs give no times. By default a dump reads and a restore writes the whole database. pg_dump -j dumps several tables at once (directory format only); pg_restore -j loads data and creates indexes and constraints in parallel.",
+      "sources": [1, 2, 3]
+    },
+    {
+      "key": "data",
+      "v": "yes",
+      "them": "The whole database by default, as of the moment pg_dump started. Optimizer statistics are left out unless pg_dump --statistics is used, an option added in PostgreSQL 18; the docs still suggest ANALYZE after a restore.",
+      "sources": [1, 3, 4]
+    },
+    {
+      "key": "masking",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed. --exclude-table-data dumps a table's definition without its rows, and schemas or tables can be left out, but the docs do not describe masking values.",
+      "sources": [1]
+    },
+    {
+      "key": "ci",
+      "v": "partial",
+      "them": "No CI feature is documented. Both are command-line programs, and -w (--no-password) is described as useful in batch jobs and scripts. Each copy made in CI is a full restore.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "interfaces",
+      "them": "Command line only. pg_dump writes plain SQL or custom, directory or tar archives; plain SQL is loaded with psql, archives with pg_restore.",
+      "sources": [1, 3]
+    },
+    {
+      "key": "hosting",
+      "v": "yes",
+      "them": "Runs wherever you run the PostgreSQL client programs. pg_dump connects over the network, so the source and the target can be on different machines.",
+      "sources": [1, 3]
+    },
+    {
+      "key": "open-source",
+      "v": "yes",
+      "them": "Part of PostgreSQL, released under the PostgreSQL License, which the project describes as a liberal open-source license similar to BSD or MIT.",
+      "sources": [5]
+    },
+    {
+      "key": "limits",
+      "them": "pg_dump copies one database, not roles or tablespaces (pg_dumpall does). It cannot dump a newer major version. A parallel dump needs the directory format and aborts if another session requests an exclusive lock meanwhile. pg_restore -j cannot be combined with --single-transaction.",
+      "sources": [1, 2, 3]
+    },
+    {
+      "key": "cost-model",
+      "them": "Free software. You pay for the target server and its disk: every copy is a full, separate database, and a new copy repeats the dump or the restore. A parallel dump also increases the load on the source server.",
+      "sources": [1, 2, 5]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Open source",
+      "price": "Free",
+      "notes": "Part of PostgreSQL, PostgreSQL License",
+      "sources": [5]
+    }
+  ],
+  "together": "DBLab logical mode, the only mode for managed services such as Amazon RDS, Aurora, Cloud SQL and Supabase, copies the source with dump and restore, then makes thin clones of that copy. pg_dump and pg_restore make the one full copy; DBLab serves it to many developers, CI jobs and agents. A full refresh repeats the dump and restore.",
+  "faq": [
+    {
+      "q": "Is pg_dump enough to make a test copy of a production database?",
+      "a": "For a single copy, yes. pg_dump takes a consistent snapshot without blocking readers or writers, and pg_restore loads it into another server. Each copy is full size and needs a full restore, including index builds. When many people or CI jobs need copies of the same large database, DBLab restores once and gives each a thin clone.",
+      "sources": [1, 2, 3]
+    },
+    {
+      "q": "Does pg_dump copy optimizer statistics?",
+      "a": "Not by default. PostgreSQL 18 added pg_dump --statistics, which dumps most optimizer statistics, and pg_restore restores them when the archive has them. Statistics created with CREATE STATISTICS or by extensions are not included, so the docs still suggest running ANALYZE after a restore.",
+      "sources": [1, 2, 4]
+    },
+    {
+      "q": "Can pg_dump and pg_restore run in parallel?",
+      "a": "Yes. pg_dump -j dumps several tables at once, with the directory format only, and needs synchronized snapshots (PostgreSQL 9.2 for primaries, 10 for standbys). pg_restore -j loads data and creates indexes and constraints in parallel from custom or directory archives.",
+      "sources": [1, 2, 3]
+    },
+    {
+      "q": "Does DBLab use pg_dump?",
+      "a": "Yes, for managed services such as Amazon RDS, Aurora, Cloud SQL and Supabase. DBLab logical mode copies the source once with dump and restore, then makes thin clones of that copy; a full refresh repeats it. Self-managed sources can instead be copied physically with WAL-G, pgBackRest or pg_basebackup.",
+      "sources": [1, 2]
+    },
+    {
+      "q": "Is pg_dump free?",
+      "a": "Yes. pg_dump and pg_restore are part of PostgreSQL, released under the PostgreSQL License. The cost is the target server's disk and the time to load and index a full copy each time.",
+      "sources": [5, 2]
+    }
+  ],
+  "sources": [
+    {
+      "title": "PostgreSQL docs: pg_dump",
+      "url": "https://www.postgresql.org/docs/current/app-pgdump.html"
+    },
+    {
+      "title": "PostgreSQL docs: pg_restore",
+      "url": "https://www.postgresql.org/docs/current/app-pgrestore.html"
+    },
+    {
+      "title": "PostgreSQL docs: SQL Dump",
+      "url": "https://www.postgresql.org/docs/current/backup-dump.html"
+    },
+    {
+      "title": "PostgreSQL 18 docs: Release 18",
+      "url": "https://www.postgresql.org/docs/18/release-18.html"
+    },
+    {
+      "title": "PostgreSQL License",
+      "url": "https://www.postgresql.org/about/licence/"
+    },
+    {
+      "title": "PostgreSQL docs: File System Level Backup",
+      "url": "https://www.postgresql.org/docs/current/backup-file.html"
+    }
+  ],
+  "proofs": [
+    {
+      "key": "seconds",
+      "them": "pg_dump reads the whole database, and pg_restore loads every row, then creates indexes and constraints; -j runs these steps in parallel. The docs give no times, and each new copy repeats the restore.",
+      "sources": [1, 2, 6]
+    },
+    {
+      "key": "cost",
+      "them": "Each restore creates a full, separate database on the target server; pg_dump dumps index definitions, so indexes are built again. A parallel dump also increases the load on the source server.",
+      "sources": [2, 6, 1]
+    },
+    {
+      "key": "ci",
+      "them": "pg_dump and pg_restore are command-line programs, and -w is described as useful in batch jobs and scripts. The sources we reviewed do not describe running migrations on a copy or checking the locks they take.",
+      "sources": [1]
+    }
+  ]
+}

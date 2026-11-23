@@ -1,0 +1,218 @@
+{
+  "slug": "postgresai-vs-percona-pmm",
+  "kind": "monitoring",
+  "competitor": {
+    "name": "Percona PMM",
+    "vendor": "Percona",
+    "url": "https://www.percona.com/software/database-tools/percona-monitoring-and-management",
+    "category": "Open-source database monitoring",
+    "group": "open-source",
+    "status": "active"
+  },
+  "checkedOn": "2026-11-18",
+  "title": "PostgresAI vs Percona PMM: wait events and clone tests vs QAN and Advisors",
+  "description": "Percona PMM is open-source, self-hosted monitoring with Query Analytics and Advisors. PostgresAI adds a wait event dashboard and fixes you can test on a DBLab clone.",
+  "summary": "Percona Monitoring and Management (PMM) is a self-hosted, open-source monitoring platform; for PostgreSQL it has Query Analytics from pg_stat_statements or pg_stat_monitor, Advisors and alert templates. Every feature is free, and Percona sells support and services. PostgresAI runs scheduled checkups and turns findings into Issues for you, your AI agent or a PostgresAI expert. Pick PMM if you want free Query Analytics and Advisors or Percona as your support vendor. Pick PostgresAI for PostgreSQL wait event analysis, Issues with agent access, or DBLab clones to test a fix.",
+  "chooseThem": [
+    "Monitors Amazon RDS and Aurora, Google Cloud SQL and Azure (technical preview) remotely, with nothing installed on the database host; RDS instances are discovered through the AWS API.",
+    "Every feature is open source and there is no paid edition: PMM Server is AGPLv3 and PMM Client is Apache 2.0.",
+    "Query Analytics works with pg_stat_statements or pg_stat_monitor; with pg_stat_monitor it adds query examples, histograms and a Plan tab.",
+    "Advisors run security, configuration, performance and query checks every 24 hours by default, including PostgreSQL wraparound, bloat, unused indexes and CVEs.",
+    "Percona offers 24x7 PostgreSQL support, project consulting and ExpertOps managed operations from the same vendor."
+  ],
+  "proofs": [
+    {
+      "key": "waits",
+      "them": "PMM's PostgreSQL Top Queries dashboard ranks queries by time spent waiting on disk reads and writes, which requires track_io_timing. The sources we reviewed do not describe a wait event dashboard for PostgreSQL.",
+      "sources": [10, 11]
+    },
+    {
+      "key": "data",
+      "them": "PMM is self-hosted. With pg_stat_monitor it collects query examples, which store actual query values, by default; they can be turned off per service. With pg_stat_statements, query examples are not collected.",
+      "sources": [5, 2]
+    },
+    {
+      "key": "test",
+      "them": "PMM Query Analytics shows query metrics, and with pg_stat_monitor a Plan tab. The sources we reviewed do not describe running an index or query change on a separate copy of the data.",
+      "sources": [4, 9]
+    }
+  ],
+  "rows": [
+    {
+      "key": "scope",
+      "them": "An open-source database observability, monitoring and management platform. PMM Server (Grafana, VictoriaMetrics, ClickHouse and PostgreSQL) stores metrics and query data; PMM Client (pmm-agent plus exporters) runs next to each database. For PostgreSQL it adds Query Analytics, Advisors and alert templates.",
+      "sources": [2, 3]
+    },
+    {
+      "key": "platforms",
+      "v": "yes",
+      "them": "Self-managed servers, Amazon RDS (the PostgreSQL guide names RDS and Aurora PostgreSQL), Google Cloud SQL, and Azure Database for PostgreSQL, which is in technical preview. Managed instances are monitored remotely without installing anything on the database host. The PostgreSQL guide says pg_stat_monitor is compatible with PostgreSQL 13 through 18.",
+      "sources": [6, 5, 7, 8, 3]
+    },
+    {
+      "key": "deployment",
+      "v": "yes",
+      "them": "Self-hosted. PMM Server runs with Docker, Podman, Helm on Kubernetes, or as a virtual machine, including from AWS Marketplace. PMM Client runs next to each database, or PMM connects remotely to managed instances.",
+      "sources": [3, 2, 6]
+    },
+    {
+      "key": "open-source",
+      "v": "yes",
+      "them": "PMM Server is licensed under GNU AGPLv3 and PMM Client under Apache 2.0. The README states that every feature is open source and that there is no paid edition.",
+      "sources": [2]
+    },
+    {
+      "key": "query-analysis",
+      "v": "yes",
+      "them": "Query Analytics collects metrics once a minute from pg_stat_statements or pg_stat_monitor. With pg_stat_monitor it shows a Plan tab; the Explain tab is not supported for PostgreSQL. A PostgreSQL Top Queries dashboard ranks queries by time, calls, rows, I/O wait, CPU and memory.",
+      "sources": [4, 9, 5, 10]
+    },
+    {
+      "key": "wait-events",
+      "v": "nd",
+      "them": "The PostgreSQL Top Queries dashboard has a Top 10 Queries by I/O Wait panel, which requires track_io_timing. The sources we reviewed do not describe a wait event dashboard for PostgreSQL.",
+      "sources": [10, 11]
+    },
+    {
+      "key": "health-checks",
+      "v": "yes",
+      "them": "Advisors run checks every 24 hours by default (4 or 78 hours are options). PostgreSQL checks cover end-of-life versions, fsync, max_connections, autovacuum settings, transaction ID wraparound, table bloat, stale replication slots, unused indexes, excessive sequential scans and CVEs.",
+      "sources": [12, 16]
+    },
+    {
+      "key": "agent-interface",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "test-fix",
+      "v": "nd",
+      "them": "Not documented in the sources we reviewed.",
+      "sources": [1, 2]
+    },
+    {
+      "key": "expert-help",
+      "v": "yes",
+      "them": "Percona sells PostgreSQL support with 24x7 teams and fifteen-minute response times for mission-critical environments, Expert Consulting for performance, architecture and migration projects, and ExpertOps managed operations. The PMM README points to Percona Support for production.",
+      "sources": [13, 2]
+    },
+    {
+      "key": "alerts",
+      "them": "Percona Alerting is built on Grafana alerting, with Percona-supplied alert templates and Grafana-managed rules. Notifications go to contact points you configure.",
+      "sources": [14]
+    },
+    {
+      "key": "retention",
+      "them": "Time-series data is stored for 30 days by default; the data retention setting can be changed in Advanced Settings.",
+      "sources": [15]
+    },
+    {
+      "key": "compliance",
+      "them": "PMM is software you run yourself. The sources we reviewed do not describe security attestations for it.",
+      "sources": [2]
+    }
+  ],
+  "pricing": [
+    {
+      "plan": "Open source",
+      "price": "Free",
+      "notes": "PMM Server AGPLv3, PMM Client Apache 2.0; every feature included, no paid edition",
+      "sources": [2]
+    },
+    {
+      "plan": "Percona support and services",
+      "price": "No public price",
+      "notes": "24x7 support, Expert Consulting and ExpertOps; contact Percona",
+      "sources": [13]
+    }
+  ],
+  "together": "DBLab is a separate product that copies any PostgreSQL source, so a team that monitors with PMM can still use a DBLab clone to try an index or query change on full-size data before production.",
+  "faq": [
+    {
+      "q": "Is Percona PMM free?",
+      "a": "Yes. PMM is open source, with PMM Server under AGPLv3 and PMM Client under Apache 2.0. The README says every feature is in the open-source release and Percona sells support, not features.",
+      "sources": [2]
+    },
+    {
+      "q": "Does Percona PMM work with Amazon RDS?",
+      "a": "Yes. PMM discovers RDS instances through the AWS API and monitors them remotely, with nothing installed on the database host. Query Analytics needs pg_stat_statements, and Enhanced Monitoring should be enabled. Google Cloud SQL and Azure (technical preview) have their own guides.",
+      "sources": [6, 7, 8]
+    },
+    {
+      "q": "Does Percona PMM show EXPLAIN plans for PostgreSQL?",
+      "a": "The Query Analytics Explain tab is not supported for PostgreSQL. With pg_stat_monitor, a Plan tab shows the plan for PostgreSQL queries; the PostgreSQL guide warns that enabling query plans in pg_stat_monitor can make timings incorrect and advises keeping it off.",
+      "sources": [9, 5]
+    },
+    {
+      "q": "Can I use PostgresAI and Percona PMM together?",
+      "a": "Yes. DBLab, the PostgresAI cloning product, copies any PostgreSQL source, so a team that monitors with PMM can test an index or query change on a full-size DBLab clone before production."
+    }
+  ],
+  "sources": [
+    {
+      "title": "PMM 3 documentation: home",
+      "url": "https://docs.percona.com/percona-monitoring-and-management/3/"
+    },
+    {
+      "title": "PMM repository README",
+      "url": "https://github.com/percona/pmm"
+    },
+    {
+      "title": "PMM documentation: architecture",
+      "url": "https://docs.percona.com/percona-monitoring-and-management/3/reference/index.html"
+    },
+    {
+      "title": "PMM documentation: Query Analytics",
+      "url": "https://docs.percona.com/percona-monitoring-and-management/3/use/qan/index.html"
+    },
+    {
+      "title": "PMM documentation: connect PostgreSQL",
+      "url": "https://docs.percona.com/percona-monitoring-and-management/3/install-pmm/install-pmm-client/connect-database/postgresql.html"
+    },
+    {
+      "title": "PMM documentation: connect Amazon RDS",
+      "url": "https://docs.percona.com/percona-monitoring-and-management/3/install-pmm/install-pmm-client/connect-database/aws.html"
+    },
+    {
+      "title": "PMM documentation: connect Google Cloud",
+      "url": "https://docs.percona.com/percona-monitoring-and-management/3/install-pmm/install-pmm-client/connect-database/google.html"
+    },
+    {
+      "title": "PMM documentation: connect Microsoft Azure",
+      "url": "https://docs.percona.com/percona-monitoring-and-management/3/install-pmm/install-pmm-client/connect-database/azure.html"
+    },
+    {
+      "title": "PMM documentation: Query Analytics details panel",
+      "url": "https://docs.percona.com/percona-monitoring-and-management/3/use/qan/panels/details.html"
+    },
+    {
+      "title": "PMM documentation: PostgreSQL Top Queries dashboard",
+      "url": "https://docs.percona.com/percona-monitoring-and-management/3/reference/dashboards/dashboard-postgresql-topqueries.html"
+    },
+    {
+      "title": "PMM documentation: dashboards overview",
+      "url": "https://docs.percona.com/percona-monitoring-and-management/3/use/dashboards-panels/index.html"
+    },
+    {
+      "title": "PMM documentation: Percona Advisors",
+      "url": "https://docs.percona.com/percona-monitoring-and-management/3/advisors/advisors.html"
+    },
+    {
+      "title": "Percona PostgreSQL support",
+      "url": "https://www.percona.com/postgresql/support/"
+    },
+    {
+      "title": "PMM documentation: Percona Alerting",
+      "url": "https://docs.percona.com/percona-monitoring-and-management/3/alert/index.html"
+    },
+    {
+      "title": "PMM documentation: advanced settings",
+      "url": "https://docs.percona.com/percona-monitoring-and-management/3/configure-pmm/advanced_settings.html"
+    },
+    {
+      "title": "PMM documentation: Advisor checks",
+      "url": "https://docs.percona.com/percona-monitoring-and-management/3/advisors/advisor-details.html"
+    }
+  ]
+}
