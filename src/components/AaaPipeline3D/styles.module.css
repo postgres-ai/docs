@@ -1,0 +1,294 @@
+/*
+ * The AAA architecture in 3D (index.tsx). The canvas draws the wireframe on a
+ * transparent background; these rules style the HTML labels laid over it.
+ * The flow colours match the canvas palettes in index.tsx.
+ *
+ * No <p>, <li> or <code> in the scene: the blog styles those for prose.
+ */
+.root {
+  --a3-ink: #18181b;
+  --a3-muted: #6b6b66;
+  --a3-pill: #ffffff;
+  --a3-rehearse: #2c60d0;
+  --a3-telemetry: #0e7490;
+  --a3-review: #7448cc;
+  --a3-apply: #0a8a5e;
+  --a3-reject: #cc342c;
+  --a3-mono: var(--ifm-font-family-monospace, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+  --a3-sans: var(--pgai-caption-font, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif);
+  position: relative;
+  color: var(--a3-ink);
+  font-family: var(--a3-sans);
+  font-size: 13px;
+  line-height: 1.25;
+  text-align: start;
+  container-type: inline-size;
+}
+
+html[data-theme='dark'] .root {
+  --a3-ink: #ecece6;
+  --a3-muted: #a3a39d;
+  --a3-pill: #1b1b1d;
+  --a3-rehearse: #7ca3f8;
+  --a3-telemetry: #38bdf8;
+  --a3-review: #b292fa;
+  --a3-apply: #3ec791;
+  --a3-reject: #f27c71;
+}
+
+.stage {
+  position: relative;
+  height: clamp(375px, 48cqi, 435px); /* = heightFor() in index.tsx */
+  container-type: inline-size;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+@container (max-width: 559.98px) {
+  .stage {
+    height: clamp(246px, 76cqi, 340px);
+  }
+}
+
+.stage[data-dragging] {
+  cursor: grabbing;
+}
+
+.pauseBtn {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px 4px 7px;
+  border: 1px solid color-mix(in srgb, var(--a3-ink) 30%, transparent);
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--a3-pill) 94%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: var(--a3-ink);
+  font: 500 11px/1.2 var(--a3-mono);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.16s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.stage:hover .pauseBtn,
+.stage:focus-within .pauseBtn,
+.pauseBtn[data-paused='true'] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.pauseBtn:hover {
+  border-color: color-mix(in srgb, var(--a3-ink) 45%, transparent);
+  background: var(--a3-pill);
+}
+
+.pauseBtn:focus-visible {
+  outline: 2px solid var(--a3-rehearse);
+  outline-offset: 2px;
+}
+
+.pauseIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+}
+
+@media (hover: none) {
+  .pauseBtn {
+    opacity: 0.85;
+    pointer-events: auto;
+  }
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background: transparent;
+}
+
+.labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* ---------- labels: bare node names and past.dev micro-pills ---------- */
+
+.label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  will-change: transform;
+  transition: opacity 0.25s ease;
+}
+
+.node {
+  align-items: baseline;
+  gap: 7px;
+}
+
+.nodeName {
+  color: var(--a3-ink);
+  font: 600 13px/1.2 var(--a3-sans);
+  letter-spacing: -0.01em;
+}
+
+.nodeHint {
+  color: var(--a3-muted);
+  font: 400 10.5px/1.2 var(--a3-mono);
+  letter-spacing: 0.01em;
+}
+
+.pill {
+  --c: var(--a3-ink);
+  gap: 5px;
+  padding: 2px 7px 2px 6px;
+  border: 1px solid color-mix(in srgb, var(--c) 36%, transparent);
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--c) 7%, color-mix(in srgb, var(--a3-pill) 88%, transparent));
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  pointer-events: auto;
+  cursor: default;
+}
+
+.dashed {
+  border-style: dashed;
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 1px;
+  background: var(--c);
+  flex-shrink: 0;
+}
+
+.pillText {
+  color: color-mix(in srgb, var(--c) 70%, var(--a3-ink));
+  font: 500 10.5px/1.3 var(--a3-mono);
+  letter-spacing: 0;
+}
+
+.pillBody {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.15;
+}
+
+.pillSub {
+  color: var(--a3-muted);
+  font: 400 9px/1.2 var(--a3-mono);
+  letter-spacing: 0;
+}
+
+.rehearse {
+  --c: var(--a3-rehearse);
+}
+
+.telemetry,
+.feedback {
+  --c: var(--a3-telemetry);
+}
+
+.review {
+  --c: var(--a3-review);
+}
+
+.apply {
+  --c: var(--a3-apply);
+}
+
+.reject {
+  color: var(--a3-reject);
+  font: 600 10.5px/1.2 var(--a3-mono);
+}
+
+.dim {
+  opacity: 0.25;
+}
+
+/* the long part of a hint, only where the slab has room for it */
+@container (max-width: 800px) {
+  .hintLong {
+    display: none;
+  }
+}
+
+/* ---------- narrow screens ---------- */
+
+@media (max-width: 600px) {
+  .pauseBtn {
+    top: 8px;
+    right: 10px;
+    bottom: auto;
+    padding: 3px 7px 3px 6px;
+    font-size: 10px;
+  }
+
+  .nodeName {
+    font-size: 11.5px;
+  }
+
+  .pill {
+    gap: 4px;
+    padding: 1px 5px 1px 4px;
+  }
+
+  .pillText,
+  .reject {
+    font-size: 9.5px;
+  }
+
+  .dot {
+    width: 4px;
+    height: 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .label {
+    transition: none;
+  }
+
+  .pauseBtn {
+    display: none;
+  }
+}
+
+@media print {
+  .stage {
+    display: none;
+  }
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

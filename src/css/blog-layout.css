@@ -86,15 +86,12 @@ body #__blog-post-container .pgai-longread .pgai-hero-deck {
   text-wrap: pretty;
 }
 
-/* Hanging markers keep the list text on the same edge as paragraphs.
- * The page's 24px gutter leaves room for markers on a phone, too. */
+/* Indent lists cleanly inside the reading column at all viewport widths. */
 #__blog-post-container .pgai-longread > :is(ul, ol) {
-  padding-inline-start: 0;
+  padding-inline-start: 1.5em;
   list-style-position: outside;
 }
-#__blog-post-container .pgai-longread > :is(ul, ol) > li { padding-inline-start: 0; }
-/* Below the width where the column has free margins, hanging markers sit on
- * the screen edge. Indent lists inside the column instead. */
+#__blog-post-container .pgai-longread > :is(ul, ol) > li { padding-inline-start: 0.15em; }
 @media (max-width: 767px) {
   #__blog-post-container .pgai-longread > :is(ul, ol) { padding-inline-start: 1.4em; }
 }

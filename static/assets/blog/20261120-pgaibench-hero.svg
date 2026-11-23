@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 544 190" width="544" height="190" aria-hidden="true" focusable="false">
+
+<rect width="544" height="190" rx="10" fill="#18191c"/>
+<rect x="0.5" y="0.5" width="543" height="189" rx="10" fill="none" stroke="#2c2e34"/>
+<line x1="144" y1="16" x2="144" y2="105" stroke="#3a3c42" stroke-width="1"/>
+<line x1="282" y1="16" x2="282" y2="105" stroke="#3a3c42" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="38" y="28" width="18" height="18" rx="2" fill="#5f6f85"/>
+<rect x="38" y="51" width="18" height="18" rx="2" fill="#5f6f85"/>
+<rect x="38" y="74" width="18" height="18" rx="2" fill="#5f6f85"/>
+<rect x="61" y="28" width="18" height="18" rx="2" fill="#5f6f85"/>
+<rect x="61" y="51" width="18" height="18" rx="2" fill="#5f6f85"/>
+<rect x="61" y="74" width="18" height="18" rx="2" fill="#5f6f85"/>
+<rect x="84" y="28" width="18" height="18" rx="2" fill="#5f6f85"/>
+<rect x="84" y="51" width="18" height="18" rx="2" fill="#5f6f85"/>
+<rect x="84" y="74" width="18" height="18" rx="2" fill="#5f6f85"/>
+<rect x="176" y="28" width="18" height="18" rx="2" fill="#34d399"/>
+<rect x="176" y="51" width="18" height="18" rx="2" fill="#34d399"/>
+<rect x="176" y="74" width="18" height="18" rx="2" fill="#34d399"/>
+<rect x="199" y="28" width="18" height="18" rx="2" fill="#34d399"/>
+<rect x="199" y="51" width="18" height="18" rx="2" fill="#34d399"/>
+<rect x="199" y="74" width="18" height="18" rx="2" fill="#34d399"/>
+<rect x="222" y="28" width="18" height="18" rx="2" fill="#34d399"/>
+<rect x="222" y="51" width="18" height="18" rx="2" fill="#34d399"/>
+<rect x="222" y="74" width="18" height="18" rx="2" fill="#34d399"/>
+<rect x="314.8" y="28.8" width="16.4" height="16.4" rx="2" fill="none" stroke="#c8c7c1" stroke-width="1.3"/>
+<rect x="314.8" y="51.8" width="16.4" height="16.4" rx="2" fill="none" stroke="#c8c7c1" stroke-width="1.3"/>
+<rect x="314.8" y="74.8" width="16.4" height="16.4" rx="2" fill="none" stroke="#c8c7c1" stroke-width="1.3"/>
+<rect x="337.8" y="28.8" width="16.4" height="16.4" rx="2" fill="none" stroke="#c8c7c1" stroke-width="1.3"/>
+<rect x="337.8" y="51.8" width="16.4" height="16.4" rx="2" fill="none" stroke="#c8c7c1" stroke-width="1.3"/>
+<rect x="337.8" y="74.8" width="16.4" height="16.4" rx="2" fill="none" stroke="#c8c7c1" stroke-width="1.3"/>
+<rect x="360.8" y="28.8" width="16.4" height="16.4" rx="2" fill="none" stroke="#c8c7c1" stroke-width="1.3"/>
+<rect x="360.8" y="51.8" width="16.4" height="16.4" rx="2" fill="none" stroke="#c8c7c1" stroke-width="1.3"/>
+<rect x="360.8" y="74.8" width="16.4" height="16.4" rx="2" fill="none" stroke="#c8c7c1" stroke-width="1.3"/>
+<rect x="383.8" y="28.8" width="16.4" height="16.4" rx="2" fill="none" stroke="#c8c7c1" stroke-width="1.3"/>
+<rect x="383.8" y="51.8" width="16.4" height="16.4" rx="2" fill="none" stroke="#c8c7c1" stroke-width="1.3"/>
+<rect x="383.8" y="74.8" width="16.4" height="16.4" rx="2" fill="none" stroke="#c8c7c1" stroke-width="1.3"/>
+<rect x="406.8" y="28.8" width="16.4" height="16.4" rx="2" fill="none" stroke="#c8c7c1" stroke-width="1.3"/>
+<rect x="406.8" y="51.8" width="16.4" height="16.4" rx="2" fill="none" stroke="#c8c7c1" stroke-width="1.3"/>
+<rect x="406.8" y="74.8" width="16.4" height="16.4" rx="2" fill="none" stroke="#c8c7c1" stroke-width="1.3"/>
+<rect x="429.8" y="28.8" width="16.4" height="16.4" rx="2" fill="none" stroke="#c8c7c1" stroke-width="1.3"/>
+<rect x="429.8" y="51.8" width="16.4" height="16.4" rx="2" fill="none" stroke="#c8c7c1" stroke-width="1.3"/>
+<rect x="429.8" y="74.8" width="16.4" height="16.4" rx="2" fill="none" stroke="#c8c7c1" stroke-width="1.3"/>
+<text x="38" y="131" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="19" font-weight="600" fill="#93b4e0">9</text>
+<text x="38" y="149" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#c4c3bd">clone gate</text>
+<text x="38" y="163" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="10.5" fill="#8b8a84">$0 reviewer cost</text>
+<text x="176" y="131" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="19" font-weight="600" fill="#34d399">9</text>
+<text x="176" y="149" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#c4c3bd">AI auditor</text>
+<text x="176" y="163" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="10.5" fill="#8b8a84">0 escapes (Fable)</text>
+<text x="314" y="131" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="19" font-weight="600" fill="#ecebe6">18</text>
+<text x="314" y="149" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#c4c3bd">safe CRs approved</text>
+<text x="314" y="163" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="10.5" fill="#8b8a84">0 false alarms</text>
+</svg>

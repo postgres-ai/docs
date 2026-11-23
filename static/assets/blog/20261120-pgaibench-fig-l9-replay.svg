@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 344" width="720" height="344" role="img" aria-label="Why primary dashboards mislead (live Postgres 18.7 trace): after Grok 4.7 dropped all three indexes on secret_lookup (two on k and one on v, at 54s, 75s, and 99s), primary median throughput rose +16% (2625 to 3040 TPS, 0 SQL errors, 12 ms max lock wait; secret_lookup receives no primary writes) and pooled workload p99 rose only 1.19x, while async standby query q20 client p99 slowed 18.0x (2.91 to 52.58 ms; server mean exec 0.0214 to 4.03 ms, 188x)." style="font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Inter,sans-serif;">
+<rect width="720" height="344" fill="#ffffff" rx="8"/>
+<text x="16" y="24" font-size="11.6" font-weight="700" fill="#111827">Why primary dashboards mislead: primary checks stay green (+16% TPS) while standby q20 slows 18×</text>
+<rect x="14" y="36" width="376" height="294" rx="7" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="26" y="56" font-size="10.6" font-weight="700" fill="#047857">A. Primary stays green during drop index (+16% TPS)</text>
+<text x="26" y="71" font-size="8.7" fill="#4b5563">secret_lookup gets no primary writes; TPS &amp; error checks stayed green</text>
+<line x1="64" y1="224.0" x2="374" y2="224.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="58" y="227.5" text-anchor="end" font-size="9.2" fill="#4b5563">0</text>
+<line x1="64" y1="155.0" x2="374" y2="155.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="58" y="158.5" text-anchor="end" font-size="9.2" fill="#4b5563">3,000</text>
+<line x1="64" y1="86.0" x2="374" y2="86.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="58" y="89.5" text-anchor="end" font-size="9.2" fill="#4b5563">6,000</text>
+<text x="26" y="155.0" text-anchor="middle" font-size="9" fill="#4b5563" transform="rotate(-90 26 155.0)">Primary TPS (1 Hz)</text>
+<polyline points="64.0,183.9 65.3,157.7 66.5,153.4 67.8,127.4 69.1,159.5 70.3,150.1 71.6,146.5 72.9,143.3 74.1,142.2 75.4,173.2 76.7,155.1 77.9,161.6 79.2,164.4 80.5,153.8 81.7,172.0 83.0,173.9 84.3,156.5 85.5,171.8 86.8,173.1 88.1,164.2 89.3,161.3 90.6,156.8 91.9,159.6 93.1,158.6 94.4,157.6 95.7,165.6 96.9,165.3 98.2,164.1 99.5,174.4 100.8,170.2 102.0,173.0 103.3,165.1 104.6,154.4 105.8,157.4 107.1,167.8 108.4,163.6 109.6,156.2 110.9,162.0 112.2,160.5 113.4,165.8 114.7,172.6 116.0,177.6 117.2,160.6 118.5,160.8 119.8,169.6 121.0,154.3 122.3,163.5 123.6,179.6 124.8,175.9 126.1,168.6 127.4,172.0 128.6,166.1 129.9,168.0 131.2,160.9 132.4,157.8 133.7,174.6 135.0,170.4 136.2,164.8 137.5,157.8" fill="none" stroke="#2563eb" stroke-width="1.5"/>
+<polyline points="153.5,188.7 154.7,170.1 156.0,164.8 157.2,168.3 158.5,164.6 159.7,172.9 160.9,184.2 162.2,168.5 163.4,161.6 164.6,166.0 165.9,157.5 167.1,174.1 168.4,172.1 169.6,164.5 170.8,175.6 172.1,174.1 173.3,156.2 174.6,163.2 175.8,166.1 177.0,161.0 178.3,179.8 179.5,171.7 180.8,162.1 182.0,165.7 183.2,163.7 184.5,169.4 185.7,160.5 186.9,168.5 188.2,163.8 189.4,162.0 190.7,163.6 191.9,170.6 193.1,166.6 194.4,173.0 195.6,174.6 196.9,169.1 198.1,159.7 199.3,152.8 200.6,165.8 201.8,154.8 203.1,163.5 204.3,164.5 205.5,162.8 206.8,162.6 208.0,170.9 209.2,156.7 210.5,169.1 211.7,175.4 213.0,171.8 214.2,160.6 215.4,164.4 216.7,169.4 217.9,164.6 219.2,162.8 220.4,161.3 221.6,158.0 222.9,158.6 224.1,172.1 225.3,168.9 226.6,165.4 227.8,177.8 229.1,158.3 230.3,156.7 231.5,158.9 232.8,173.0 234.0,173.8 235.3,160.5 236.5,155.2 237.7,156.0 239.0,162.1 240.2,160.8 241.5,155.3 242.7,158.0 243.9,165.6 245.2,158.2 246.4,150.5 247.6,156.6 248.9,153.8 250.1,146.7 251.4,155.6 252.6,160.7 253.8,141.1 255.1,149.0 256.3,154.5 257.6,162.0 258.8,152.1 260.0,151.3 261.3,153.4 262.5,148.3 263.8,155.9 265.0,157.2 266.2,144.0 267.5,151.5 268.7,142.8 269.9,144.4 271.2,143.2 272.4,142.7 273.7,141.0 274.9,145.9 276.1,157.6 277.4,117.7 278.6,135.2 279.9,139.6 281.1,136.4 282.3,158.0 283.6,141.9 284.8,128.6 286.0,148.2 287.3,140.4 288.5,144.0 289.8,129.6 291.0,131.4 292.2,124.6 293.5,129.2 294.7,150.1 296.0,152.7 297.2,153.0 298.4,146.2 299.7,128.7 300.9,142.7 302.2,158.8 303.4,161.1 304.6,151.4 305.9,136.3 307.1,147.8 308.3,154.1 309.6,143.8 310.8,161.6 312.1,150.3 313.3,154.3 314.5,129.5 315.8,149.5 317.0,131.1 318.3,137.7 319.5,139.5 320.7,136.6 322.0,134.4 323.2,133.4 324.4,135.4 325.7,134.7 326.9,134.3 328.2,141.9 329.4,128.9 330.6,142.8 331.9,139.5 333.1,155.0 334.4,151.0 335.6,144.3 336.8,145.1 338.1,139.9 339.3,145.8 340.6,149.4 341.8,147.6 343.0,147.5 344.3,157.3 345.5,137.8 346.7,130.5 348.0,127.1 349.2,140.3 350.5,149.8 351.7,132.5 352.9,143.8 354.2,135.2 355.4,135.0 356.7,137.7 357.9,136.0 359.1,134.0 360.4,141.9 361.6,152.9 362.9,140.4 364.1,137.5 365.3,138.2 366.6,109.9 367.8,110.1 369.0,133.0 370.3,138.4 371.5,144.0 372.8,124.0 374.0,146.9" fill="none" stroke="#047857" stroke-width="1.5"/>
+<line x1="219.9" y1="86" x2="219.9" y2="224" stroke="#b45309" stroke-width="1.2" stroke-dasharray="3 2"/>
+<line x1="245.3" y1="86" x2="245.3" y2="224" stroke="#b45309" stroke-width="1.2" stroke-dasharray="3 2"/>
+<line x1="274.9" y1="86" x2="274.9" y2="224" stroke="#b45309" stroke-width="1.2" stroke-dasharray="3 2"/>
+<rect x="206.4" y="87.5" width="78" height="13" rx="2.5" fill="#f8fafc" opacity="0.92"/>
+<text x="245.4" y="97" text-anchor="middle" font-size="8.4" font-weight="600" fill="#b45309">drop index #1–#3</text>
+<rect x="310.0" y="88" width="62" height="14" rx="3" fill="#ecfdf5" opacity="0.94"/>
+<text x="341.0" y="97.5" text-anchor="middle" font-size="8.3" font-weight="700" fill="#047857">+16% TPS</text>
+<text x="64" y="240" font-size="8.8" fill="#4b5563">Baseline: 60s (med 2,625)</text>
+<text x="374" y="240" text-anchor="end" font-size="8.8" fill="#4b5563">Change window: 180s (med 3,040 TPS)</text>
+<rect x="26" y="256" width="352" height="60" rx="5" fill="#ecfdf5"/>
+<text x="38" y="274" font-size="9.5" font-weight="700" fill="#047857">Primary &amp; summary checks passed</text>
+<text x="38" y="290" font-size="8.9" fill="#111827">0 SQL errors · 12 ms max lock wait · 0 s lag</text>
+<text x="38" y="305" font-size="8.5" fill="#4b5563">Medians omit the 1 s startup bucket; primary TPS &amp; error checks passed.</text>
+<rect x="404" y="36" width="302" height="294" rx="7" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="418" y="56" font-size="10.6" font-weight="700" fill="#dc2626">B. Async read replica: query q20 is 18× slower</text>
+<text x="418" y="71" font-size="8.9" fill="#4b5563">p99 latency slowdown vs. baseline (1.0× = unchanged)</text>
+<text x="418" y="104" font-size="9.6" font-weight="600" fill="#111827">Pooled workload p99, all queries (hides break)</text>
+<rect x="418" y="111" width="13.4" height="20" rx="3" fill="#047857"/>
+<text x="439.4" y="125" font-size="9.9" font-weight="700" fill="#047857">1.19×  (46.0 → 54.9 ms)</text>
+<text x="418" y="166" font-size="9.6" font-weight="600" fill="#111827">Standby query q20 p99 (both k indexes dropped)</text>
+<rect x="418" y="173" width="203.1" height="20" rx="3" fill="#dc2626"/>
+<text x="629.1" y="187" font-size="10.3" font-weight="700" fill="#dc2626">18.0×</text>
+<text x="418" y="208" font-size="8.0" fill="#4b5563">client p99 2.91 → 52.58 ms · server mean 0.0214 → 4.03 ms (188×)</text>
+<rect x="418" y="242" width="274" height="74" rx="5" fill="#fef2f2"/>
+<text x="428" y="260" font-size="9.5" font-weight="700" fill="#dc2626">The blind spot:</text>
+<text x="428" y="275" font-size="8.8" fill="#111827">pg_stat_user_indexes counts scans per node</text>
+<text x="428" y="288" font-size="8.8" fill="#111827">(idx_scan = 0 on primary). Primary TPS &amp; error</text>
+<text x="428" y="301" font-size="8.8" fill="#111827">checks passed while dropping k indexes broke q20.</text>
+</svg>

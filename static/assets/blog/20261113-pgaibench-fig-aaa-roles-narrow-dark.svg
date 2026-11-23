@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358 494" width="358" height="494" role="img" aria-labelledby="t d">
+<title id="t">AAA: three roles, and the path of one change request</title>
+<desc id="d">AAA: Analyst, Auditor, Actor, and the path of one change request in two phases. Phase 1, prepare and test: the Analyst is the most capable model, and it is not trusted. It observes production, and its budget is hours. It finds root causes, and it writes and tests change requests. It gives a draft change to the Actor. The Actor has almost no AI: it runs the exact steps and logs them, and a fast risk check can abort and revert. The Actor rehearses the draft on a clone of production, and the test results go back to the Analyst, who can repeat this. Phase 2, review and apply: the Analyst sends the change request with the test evidence to the Auditor, a small model tuned to detect harm, with a budget of minutes. The Auditor reviews change requests, and it checks production after a change. It decides: approve, send back to the Analyst, or reject. After an approval the Actor applies the same steps to production Postgres. Only the Actor changes production.</desc>
+<style>text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}</style>
+<rect fill="#202124" width="358" height="494" rx="8"/>
+<text x="12" y="22" font-size="16" fill="#e6e6e1" font-weight="600">AAA: three roles, and the path</text>
+<text x="12" y="42" font-size="16" fill="#e6e6e1" font-weight="600">of one change request</text>
+<text x="12" y="68" font-size="13" fill="#a3a39d" font-weight="600">1. Prepare, test</text>
+<text x="218" y="68" font-size="13" fill="#a3a39d" font-weight="600">2. Review, apply</text>
+<rect x="12" y="78" width="128" height="146" fill="#2b2d31" stroke="#6d6c68" stroke-width="1.2" rx="6"/>
+<text x="24" y="102" font-size="15" fill="#e6e6e1" font-weight="600">Analyst</text>
+<text x="24" y="122" font-size="13" fill="#a3a39d">top model,</text>
+<text x="24" y="138" font-size="13" fill="#a3a39d">not trusted;</text>
+<text x="24" y="154" font-size="13" fill="#a3a39d">budget: hours</text>
+<text x="24" y="178" font-size="13" fill="#e6e6e1">finds root</text>
+<text x="24" y="194" font-size="13" fill="#e6e6e1">causes; writes,</text>
+<text x="24" y="210" font-size="13" fill="#e6e6e1">tests changes</text>
+<rect x="218" y="78" width="128" height="146" fill="#2b2d31" stroke="#e6e6e1" stroke-width="2" rx="6"/>
+<text x="230" y="102" font-size="15" fill="#e6e6e1" font-weight="600">Auditor</text>
+<text x="230" y="122" font-size="13" fill="#a3a39d">small model</text>
+<text x="230" y="138" font-size="13" fill="#a3a39d">tuned to detect</text>
+<text x="230" y="154" font-size="13" fill="#a3a39d">harm; minutes</text>
+<text x="230" y="178" font-size="13" fill="#e6e6e1">reviews</text>
+<text x="230" y="194" font-size="13" fill="#e6e6e1">changes, checks</text>
+<text x="230" y="210" font-size="13" fill="#e6e6e1">results</text>
+<line x1="140" y1="124" x2="214" y2="124" stroke="#a3a39d" stroke-width="1.5" />
+<path d="M214 124 L208 127 L208 121 Z" fill="#a3a39d"/>
+<text x="179" y="99" font-size="13" fill="#a3a39d" text-anchor="middle">change</text>
+<text x="179" y="115" font-size="13" fill="#a3a39d" text-anchor="middle">request</text>
+<line x1="218" y1="166" x2="144" y2="166" stroke="#e6e6e1" stroke-width="1.5" />
+<path d="M144 166 L150 163 L150 169 Z" fill="#e6e6e1"/>
+<text x="179" y="185" font-size="13" fill="#e6e6e1" font-weight="600" text-anchor="middle">send back</text>
+<rect x="12" y="284" width="334" height="88" fill="#2b2d31" stroke="#6d6c68" stroke-width="1.2" rx="6"/>
+<text x="179" y="308" font-size="15" fill="#e6e6e1" font-weight="600" text-anchor="middle">Actor</text>
+<text x="179" y="327" font-size="13" fill="#a3a39d" text-anchor="middle">almost no AI: runs the exact steps, logs</text>
+<text x="179" y="343" font-size="13" fill="#a3a39d" text-anchor="middle">them; a fast risk check can abort</text>
+<text x="179" y="362" font-size="13" fill="#e6e6e1" text-anchor="middle">rehearses on a clone, applies in production</text>
+<line x1="34" y1="224" x2="34" y2="280" stroke="#a3a39d" stroke-width="1.5" />
+<path d="M34 280 L31 274 L37 274 Z" fill="#a3a39d"/>
+<text x="43" y="251" font-size="13" fill="#a3a39d">draft</text>
+<text x="43" y="267" font-size="13" fill="#a3a39d">change</text>
+<line x1="100" y1="284" x2="100" y2="228" stroke="#a3a39d" stroke-width="1.5" />
+<path d="M100 228 L103 234 L97 234 Z" fill="#a3a39d"/>
+<text x="109" y="251" font-size="13" fill="#a3a39d">test</text>
+<text x="109" y="267" font-size="13" fill="#a3a39d">results</text>
+<line x1="236" y1="224" x2="236" y2="280" stroke="#e6e6e1" stroke-width="1.5" />
+<path d="M236 280 L233 274 L239 274 Z" fill="#e6e6e1"/>
+<text x="245" y="259" font-size="13" fill="#e6e6e1" font-weight="600">approve</text>
+<line x1="322" y1="224" x2="322" y2="241" stroke="#e6e6e1" stroke-width="1.5" />
+<rect x="311" y="241" width="22" height="5" rx="1.5" fill="#e6e6e1"/>
+<text x="322" y="264" font-size="13" fill="#e6e6e1" font-weight="600" text-anchor="middle">reject</text>
+<line x1="34" y1="372" x2="34" y2="414" stroke="#a3a39d" stroke-width="1.5" />
+<path d="M34 414 L31 408 L37 408 Z" fill="#a3a39d"/>
+<text x="43" y="400" font-size="13" fill="#a3a39d">rehearse</text>
+<line x1="236" y1="372" x2="236" y2="414" stroke="#a3a39d" stroke-width="1.5" />
+<path d="M236 414 L233 408 L239 408 Z" fill="#a3a39d"/>
+<text x="245" y="400" font-size="13" fill="#a3a39d">apply</text>
+<rect x="12" y="418" width="128" height="62" fill="none" stroke="#6d6c68" stroke-width="1.2" rx="6"/>
+<text x="24" y="443" font-size="14" fill="#e6e6e1" font-weight="600">Clones of</text>
+<text x="24" y="462" font-size="14" fill="#e6e6e1" font-weight="600">production</text>
+<rect x="218" y="418" width="128" height="62" fill="none" stroke="#e6e6e1" stroke-width="1.5" rx="6"/>
+<text x="230" y="443" font-size="14" fill="#e6e6e1" font-weight="600">Production</text>
+<text x="230" y="462" font-size="14" fill="#e6e6e1" font-weight="600">Postgres</text>
+</svg>
