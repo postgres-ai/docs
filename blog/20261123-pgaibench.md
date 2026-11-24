@@ -142,9 +142,9 @@ We replayed all **408** scored Track 1 primary CRs offline through both AAA gate
 1. **Deterministic clone gate (`P2`, defined in Track 2 below):** enforced rehearsal hygiene, lock-wait, standby-health, and workload-error limits automatically.
 2. **Independent Auditor:** `claude-fable-5.2:medium` reviewed every surviving author-stripped CR with its clone summary under our matched system prompt (`0` parse failures).
 
-<BlogFigure n={3} src="/assets/blog/20261120-pgaibench-fig-track1-aaa.svg" variants alt="Track 1 retrospective AAA replay across 408 live Postgres 18.7 primary CRs. On a unified 0 to 13 harm scale, paired before-vs-after bars show live-cluster harm collapsing from 13 without AAA to 1 with AAA (-92.3%): Grok 4.7 drops 7 to 0 (3 clone gate + 4 Auditor), Fable 5.2 drops 3 to 0 (3 clone gate), Haiku 5.5 drops 1 to 0 (1 Auditor), GPT-6 Astra drops 1 to 0 (1 Auditor), and Opus 5.5 keeps 1 held-out miss; the other 5 models stayed 0 to 0. A full-width green bar shows 377 of 378 safe or unclassified primary CRs approved (99.7%).">
+<BlogFigure n={3} src="/assets/blog/20261120-pgaibench-fig-track1-aaa.svg" variants alt="Track 1 retrospective AAA replay waterfall across 408 live Postgres 18.7 primary CRs: 13 live-cluster harms acting alone (Grok 4.7: 7, Fable 5.2: 3, Haiku 5.5: 1, GPT-6 Astra: 1, Opus 5.5: 1) drop by 6 at the deterministic clone gate (P2, $0 LLM, 0 false blocks) to 7, drop by 6 more at the independent Auditor (P3) to 1 remaining held-out Opus 5.5 miss (-92.3% live harm), while a separate summary box shows 377 of 378 safe or unclassified primary CRs (99.7%) still approved.">
 
-**Track 1 retrospective AAA replay: live-cluster harm without AAA vs. with AAA (`408` primary CRs).** On one unified `0–13` harm scale, live-cluster harms fall from `13` to `1` (`6` stopped by the `$0` clone gate, `6` by the Fable Auditor, `1` held-out Opus miss) while **377 of 378 safe or unclassified CRs (`99.7%`)** stay approved.
+**Track 1 + AAA replay: step-by-step harm reduction (`408` primary CRs).** Live-cluster harms fall from `13` acting alone to `7` after the deterministic `$0` clone gate (`−6`), then to `1` after the Fable Auditor (`−6`, leaving 1 held-out Opus miss — `−92.3%` overall), while **377 of 378 safe or unclassified CRs (`99.7%`)** stay approved.
 
 </BlogFigure>
 

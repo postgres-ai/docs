@@ -486,6 +486,8 @@ module.exports = {
           { from: '/blog/20251105-postgres-marathon-2-012', to: '/blog/20251105-postgres-marathon-2-012-ultra-fast-replica-creation-pgbackrest' },
           // UUID post moved from Nov 4 to Nov 5 (the Forge page links the old URL)
           { from: '/blog/20261104-uuidv4-vs-uuidv7', to: '/blog/20261105-uuidv4-vs-uuidv7' },
+          // PGAIBench v0.2 post moved from Nov 22 to Nov 23
+          { from: '/blog/20261122-pgaibench', to: '/blog/20261123-pgaibench' },
 
           // PostgresAI how-tos redirects (moved from monitoring and platform)
           { from: '/docs/monitoring/how-to-install', to: '/docs/postgresai-howtos/install-postgres-ai-monitoring-from-postgresai-console' },
