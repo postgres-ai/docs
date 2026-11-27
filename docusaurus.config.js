@@ -128,7 +128,9 @@ module.exports = {
     // A square fallback stays legible in compact link previews. Page images override it.
     image: 'img/social-icon.png',
     colorMode: {
-      defaultMode: 'dark',
+      // Follow the OS until the visitor explicitly chooses Light or Dark.
+      defaultMode: 'light',
+      respectPrefersColorScheme: true,
     },
 
     metadata: [

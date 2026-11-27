@@ -44,7 +44,13 @@ ENV UMAMI_SCRIPT_URL=$ARG_UMAMI_SCRIPT_URL
 COPY . .
 # Compilation caches help local rebuilds, but are not read by the runtime or
 # restored into subsequent Docker builds. Do not ship them to the registry/VM.
-RUN bun run build && bash .ci/validate-feeds.sh --skip-build && rm -rf node_modules/.cache
+# Bound build parallelism inside the image, not just in the outer CI job.
+# Native compiler pools otherwise size themselves from the runner's CPU count,
+# which can exceed the memory available to this Docker-in-Docker build.
+# Keep these limits build-only; the runtime server does not need them.
+RUN RAYON_NUM_THREADS=2 TOKIO_WORKER_THREADS=2 \
+    DOCUSAURUS_GIT_COMMAND_CONCURRENCY=4 DOCUSAURUS_SSR_CONCURRENCY=4 \
+    bun run build && bash .ci/validate-feeds.sh --skip-build && rm -rf node_modules/.cache
 
 EXPOSE 3000
 CMD ["bun", "run", "serve"]
