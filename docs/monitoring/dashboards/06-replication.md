@@ -8,8 +8,8 @@ sidebar_position: 7
 
 Monitor streaming replication, replication lag, and high availability status.
 
-:::info Dashboard in development
-This dashboard is currently under development. Replication metrics are collected as part of the health check system, and the full dashboard visualization is coming soon.
+:::info Availability
+Available in PostgresAI 0.18+.
 :::
 
 ## Purpose
@@ -26,12 +26,11 @@ Ensure replication health for:
 - Validating HA setup
 - Capacity planning for replicas
 
-## Dashboard status
+## Replication metrics
 
-In 0.15.0 this dashboard ships as a single placeholder panel ("Coming soon...") and has no data
-panels or template variables yet. Replication metrics are still collected by the stack (for
-example `replication`, `replication_slots`, and `pg_stat_replication` in the `full` preset), so
-until the visualizations land you can inspect replication health directly via SQL using the
+Replication metrics are collected by the stack (for example `replication`,
+`replication_slots`, and `pg_stat_replication` in the `full` preset). In addition to
+the dashboard, you can inspect replication health directly via SQL using the
 queries below.
 
 :::warning WAL retention
