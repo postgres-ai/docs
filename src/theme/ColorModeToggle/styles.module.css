@@ -1,0 +1,59 @@
+.group {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  height: 28px;
+  box-sizing: border-box;
+  border-radius: 999px;
+  background: var(--ifm-color-emphasis-100);
+  border: 1px solid transparent;
+  padding: 2px;
+  line-height: 1;
+}
+.chip {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  width: 24px;
+  border-radius: 999px;
+  /* Opaque: Infima's light --ifm-background-color is transparent. */
+  background: #fff;
+  box-shadow: 0 0 0 1px var(--ifm-color-emphasis-300);
+  transition: left .22s cubic-bezier(.4, 0, .2, 1), background-color .15s ease;
+  pointer-events: none;
+}
+/* Dark: a lighter surface than the pill (#444950 on #1c1e21). */
+html[data-theme='dark'] .chip { background: var(--ifm-color-emphasis-200); }
+.segment {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  appearance: none;
+  cursor: pointer;
+  border-radius: 999px;
+  color: var(--ifm-font-color-secondary);
+  opacity: .7;
+  transition: color .15s ease, opacity .15s ease;
+}
+.segment:hover, .segment[aria-checked='true'] {
+  color: var(--ifm-font-color-base);
+  opacity: 1;
+}
+.segment[aria-checked='true'] { cursor: default; }
+.segment:focus-visible {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 1px;
+}
+.icon { width: 18px; height: 18px; display: block; flex-shrink: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .chip, .segment { transition: none; }
+}

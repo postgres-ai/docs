@@ -33,3 +33,17 @@ status; run these checks on temporary copies, never alter published output.
 When timing this path, report the first validator-tools installation separately
 from subsequent builds with that layer cached. Change a tracked build-context
 file to force compilation; retrying an identical commit only measures a cache hit.
+
+## Build memory
+
+The Docker compilation step caps Rayon and Tokio pools at two workers, Git
+metadata subprocesses at four, and page-render concurrency at four. These
+build-only settings prevent parallel work from scaling with the shared runner's
+CPU count independently of its available memory. They apply inside BuildKit
+for review, staging, and production images; setting them only on the outer CI
+job would not pass them into `docker build`.
+
+Compiler pool settings: https://rspack.dev/guide/diagnostics/profile#working-thread-pool-size
+
+Keep feed validation and all site content enabled. Validate changes with a cold
+compilation in the MR pipeline, not only a Docker layer cache hit.
