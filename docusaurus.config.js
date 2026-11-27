@@ -146,9 +146,9 @@ module.exports = {
     ],
 
     announcementBar: {
-      id: 'postgres_free_health_check',
+      id: 'pgaibench_aaa_20261123',
       content:
-        "Find what’s slowing Postgres down. <a href='/postgres-check'>Explore health checks →</a>",
+        "<a href='/blog/20261123-pgaibench'>PGAIBench and AAA: can AI safely change production Postgres? →</a>",
       backgroundColor: '#D7EEF2',
       textColor: '#013A44',
       isCloseable: true,
