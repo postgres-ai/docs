@@ -118,3 +118,75 @@ body #__blog-post-container .pgai-longread .pgai-hero-deck {
     overflow-wrap: anywhere;
   }
 }
+
+/*
+ * Blog post header: author on the left, date + reading time on the right.
+ * Docusaurus renders header > h1, info (time), authors; we lay them out with
+ * a grid so semantic markup stays intact. Applies to post pages only
+ * (list cards keep their default stacked layout).
+ */
+.blog-post-page article > header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'title title'
+    'authors info';
+  align-items: center;
+  column-gap: 1rem;
+  row-gap: 0.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.blog-post-page article > header > h1 { grid-area: title; }
+
+.blog-post-page article > header > div:has(> time) {
+  grid-area: info;
+  margin: 0;
+  white-space: nowrap;
+  text-align: end;
+}
+
+.blog-post-page article > header > div:has(.avatar) {
+  grid-area: authors;
+  margin: 0;
+  min-width: 0;
+}
+
+/* Multiple authors: flow side by side, wrapping, instead of 50% columns. */
+.blog-post-page article > header > div:has(.avatar) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+}
+.blog-post-page article > header > div:has(.avatar) > [class*='authorCol'] {
+  flex: 0 1 auto;
+  max-width: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* No authors: date stays on the left. */
+.blog-post-page article > header:not(:has(.avatar)) {
+  grid-template-areas:
+    'title'
+    'info';
+  grid-template-columns: minmax(0, 1fr);
+}
+.blog-post-page article > header:not(:has(.avatar)) > div:has(> time) { text-align: start; }
+
+@media (max-width: 600px) {
+  .blog-post-page article > header {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'title'
+      'info'
+      'authors';
+    row-gap: 0.75rem;
+  }
+  .blog-post-page article > header > div:has(> time) {
+    text-align: start;
+    white-space: normal;
+  }
+}
+
+.blog-post-page article > header > h1 { margin-bottom: 0.75rem; }
