@@ -3,8 +3,8 @@ title: "PGAIBench and AAA: can AI safely change production Postgres?"
 date: 2026-11-23 12:00:00
 slug: 20261123-pgaibench
 authors: [nik]
-description: "Across 949 live Postgres 18.7 runs (10 models), 13 of 408 scored primary changes caused harm. Replaying them through AAA would have blocked 12 of 13 while approving 377 of 378 safe or unclassified changes."
-image: /assets/blog/20261120-pgaibench-card.png
+description: "Frontier AI models acting alone broke live Postgres 18 clusters 13 times. Separating duties with AAA blocked 12 of 13 harms (99.7% safe approved)."
+image: /assets/blog/20261123-pgaibench-og.png
 hide_cover_image: true
 tags: [Postgres insights, AI, benchmarks, LLM, PGAIBench, AI agents, safety]
 ---
