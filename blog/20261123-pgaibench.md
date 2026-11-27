@@ -33,7 +33,7 @@ To measure that gap, we built [PGAIBench](https://pgaibench.dev/) v0.2 and teste
 
 Four key learnings stand out:
 
-- **High capability does not prevent live outages.** Acting alone, `claude-fable-5.2` tied for the top score, yet still broke an explicit no-restart rule in **all 5 of 5 repeats** on that task. Three runs broke live primaries, and the other two stopped in rehearsal only because its own post-change threshold tripped.
+- **High capability does not prevent live outages.** Acting alone, `claude-fable-5.2` tied for the top score, yet still broke an implicit no-restart boundary in **all 5 of 5 repeats** on that task. Three runs broke live primaries, and the other two stopped in rehearsal only because its own post-change threshold tripped.
 - **A deterministic clone gate stops mechanical failures at zero LLM cost, yet blind spots remain.** Rehearsing on a two-node clone halted broken queries, lock stalls, and replication hangs automatically. Subtler errors still slipped past primary-only checks, such as `x-ai/grok-4.7` dropping indexes that looked unused on the primary and crippling an async read replica.
 - **Green clone summaries can both reassure and mislead AI reviewers.** Real clone evidence cleared false alarms for most models, yet two failure modes persisted. `z-ai/glm-5.3` saw a fast green test on a compact table and waved through a dangerous `SET NOT NULL` lock, while `claude-haiku-5.5` overreacted to noisy clone telemetry and blocked almost everything.
 - **The good news: separating duties cuts live harm sharply.** When we replayed the models' primary changes through AAA (retrospective and in-sample), the clone gate and Auditor together blocked **12 of 13 measured harms (-92.3%)** while approving **377 of 378 safe or unclassified changes (99.7%)**.
@@ -78,7 +78,7 @@ That 3% rate adds up fast on an active database. Ship 3 automated changes a day 
 
 Three results stood out:
 
-1. **A top-scoring model still broke live primaries.** `claude-fable-5.2:high` tied `claude-sonnet-5.5:high` for first place, yet broke an explicit no-restart rule on the role-level `plan_cache_mode` task (`C18`) in every single repeat by raising `max_locks_per_transaction` and restarting nodes:
+1. **A top-scoring model still broke live primaries.** `claude-fable-5.2:high` tied `claude-sonnet-5.5:high` for first place, yet broke an implicit no-restart boundary on the role-level `plan_cache_mode` task (`C18`) in every single repeat by raising `max_locks_per_transaction` and restarting nodes (the change needed only `ALTER ROLE`, with no restart):
    - `claude-fable-5.2:high`: **65** adjudicated correct, yet **5 of 5** `C18` runs restarted nodes. Track 1's basic rehearsal enforced only each model's own self-written thresholds (recording restart hygiene diagnostically), so `3` runs sailed through and broke live primaries while `2` stopped in rehearsal only because Fable's own `lockmanager_share < 0.1` check tripped.
    - `claude-sonnet-5.5:high`: **65** adjudicated correct, `0` live harms, and `7` static risky-pattern flags.
    - `claude-opus-5.5:high`: `58` adjudicated correct and `29` pending escalations.
@@ -347,5 +347,7 @@ Across 408 scored primary changes in our live Postgres 18 replay, that stack blo
 Self-driving Postgres will not come from one smarter agent with direct production access. It needs verifiable engineering: CoW branching (**DBLab Engine**), primary-and-standby clones (**DBLab Forge**), primary-and-replica observability (**postgres_ai monitoring**), and open live-load benchmarks. All public v0.2 code, traces, decisions, and aggregate held-out results are open under Apache 2.0 on [GitHub](https://github.com/NikolayS/pgaibench) and [pgaibench.dev](https://pgaibench.dev/). Explore the replays, challenge our results, and follow us for v0.3.
 
 *Thanks to David Ventimiglia (Supabase) for sharp feedback on this post.*
+
+*Correction (2026-11-27): an earlier version said that `C18` had an explicit no-restart rule. No `C18` ticket said "do not restart". The change it asked for needed no restart, so the boundary was implicit, as the [preregistration](https://github.com/NikolayS/pgaibench/blob/v0.2/docs/prereg-v0.2.md) says.*
 
 </div>
