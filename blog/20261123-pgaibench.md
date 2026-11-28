@@ -38,6 +38,18 @@ Four key learnings stand out:
 - **Green clone summaries can both reassure and mislead AI reviewers.** Real clone evidence cleared false alarms for most models, yet two failure modes persisted. `z-ai/glm-5.3` saw a fast green test on a compact table and waved through a dangerous `SET NOT NULL` lock, while `claude-haiku-5.5` overreacted to noisy clone telemetry and blocked almost everything.
 - **The good news: separating duties cuts live harm sharply.** When we replayed the models' primary changes through AAA (retrospective and in-sample), the clone gate and Auditor together blocked **12 of 13 measured harms (-92.3%)** while approving **377 of 378 safe or unclassified changes (99.7%)**.
 
+Watch the podcast discussion: [Can AI safely change production Postgres?](https://www.youtube.com/watch?v=2ndlAxb32Fo)
+
+<iframe
+  width="100%"
+  style={{ aspectRatio: '16 / 9', border: 0 }}
+  src="https://www.youtube-nocookie.com/embed/2ndlAxb32Fo"
+  title="Postgres.FM: Can AI safely change production Postgres?"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerPolicy="strict-origin-when-cross-origin"
+  allowFullScreen
+></iframe>
+
 </div>
 
 <!--truncate-->
